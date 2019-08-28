@@ -2,9 +2,9 @@
 
 ## 概述
 
-该项目由**忧伤-蓝河**团队共同完成 ,  团队里人内都是多家公司的首席架构师
+该项目由**忧伤-蓝河**团队共同完成 ,  团队内都是多家公司的首席架构师
 
-团队架构历史        单体  ->  SOA Server  ->  微服务  ->   Server Mesh   ->  Server Less      ,      LaaS  -> PaaS  ->  SaaS ->  BaaS  -> FasS
+团队架构历史        单体  ->  SOA Server  ->  微服务  ->   Server Mesh   ->  Server Less           ,             LaaS  -> PaaS  ->  SaaS ->  BaaS  -> FasS
 
 团队开发模式 :  遵循  ->     极限编程 、敏捷开发 、DevOps 、领域模型 、代码重构 、无状态 、轻应用          等架构思想
 
