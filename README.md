@@ -22,6 +22,7 @@ Spring Cloud Feign | 基于HTTP服务远程调用
 Spring Cloud GateWay | 基于webflux网关、限流、熔断、过滤、降级
 Spring Cloud Sentinel | 阿里巴巴双十一限流、熔断
 Spring Cloud Skywalking | 探针形链路跟踪
+Spring Boot Admin | 监控服务健康状态/参数
 Spring Boot | 新一代 JavaEE 开发标准
 Spring Security oAuth2 | 基于Oauth2协议实现SSO单点登录、安全认证、授权框架
 Kryo | Dubbo高性能序列化
@@ -48,7 +49,7 @@ Redis | 高性能 K V  Nosql数据库
 Zookeeper | 分布式协调
 Elasticsearch | 倒排索引搜索引擎
 ELK | 实现Elasticsearch数据同步
-EFK | 实现分布式日志手机
+EFK | 实现分布式日志系统
 RabbitMq | 高并发消息队列
 Kafka | 高吞吐量消息队列
 MyCat | 数据库分表分库
@@ -71,6 +72,7 @@ Jenkins | CD
 Docker | 容器化引擎
 Docker Compose | 容器编排工具
 Kubernetes | 容器编排系统
+Prometheus Grafana | 自动监控报警系统
 
 
 
