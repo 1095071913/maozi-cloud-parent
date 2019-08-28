@@ -44,10 +44,11 @@ Keepalived | 基于虚拟VIP实现高可用、单点故障问题
 Haproxy | 四层网络模型实现高可用、负载均衡
 Nginx | 实现反向代理、负载均衡等
 Undertow | 高吞吐量Web容器
-Redis | 高速Nosql数据库
+Redis | 高性能 K V  Nosql数据库
 Zookeeper | 分布式协调
 Elasticsearch | 倒排索引搜索引擎
 ELK | 实现Elasticsearch数据同步
+EFK | 实现分布式日志手机
 RabbitMq | 高并发消息队列
 Kafka | 高吞吐量消息队列
 MyCat | 数据库分表分库
@@ -65,7 +66,7 @@ Nexus | Maven私服依赖管理
 ZenTao | 项目管理
 Harbor | Docker私服镜像存储
 GitLab-Runner | CI
-Ansible | 无状态管理多态云服务器
+Ansible | 无状态管理多台云 Kubernetes 服务器
 Jenkins | CD
 Docker | 容器化引擎
 Docker Compose | 容器编排工具
