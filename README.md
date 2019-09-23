@@ -13,6 +13,7 @@
 
 技术 | 说明 
 ----|----
+JDK13 | ZGC垃圾回收 , var类型
 Istio | 新一代微服务 2.0 服务网格 
 Spring Cloud Alibaba | 阿里巴巴基于 Spring Cloud 编程模型的微服务生态 
 Spring Cloud Alibaba Dubbo  | 与 Spring Cloud Alibaba 生态相结合的高性能 Java RPC 框架
@@ -35,7 +36,7 @@ WebSocket | 长连接网络框架
 Swagger-bootstrap-ui | 基于Swagger二次开发API文档生成工具
 MyBatisPlus | 基于 MyBatis 二次开发的轻量级框架，用于简化 MyBatis 操作 
 PageHelper | MyBatis 分页插件
-DDD | 团队共同设计的领域模型,让开发再次减少百分80的代码量
+DDD | 团队共同设计的领域模型,让开发再次减少百分80的代码量,更加专注于业务
 
 ## 中间件
 
