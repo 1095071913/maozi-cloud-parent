@@ -36,7 +36,10 @@ WebSocket | 长连接网络框架
 Swagger-bootstrap-ui | 基于Swagger二次开发API文档生成工具
 MyBatisPlus | 基于 MyBatis 二次开发的轻量级框架，用于简化 MyBatis 操作 
 PageHelper | MyBatis 分页插件
-DDD | 团队共同设计的领域模型,让开发再次减少百分80的代码量,更加专注于业务
+DDD | 团队设计的领域模型,让开发再次减少百分80的代码量,更加专注于业务
+GenerateCode | 团队自研代码生成器,支持Mybatis 一对一 一对多 全程生成
+Cloud Log | 团队自研代码超级友好日志,瞬间定位错误，链式日志定位
+名字没想好 | 该项目经重重封装过后已是脚手架企业级成品，11-12月内发布1.0.0Release
 
 ## 中间件
 
