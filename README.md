@@ -84,7 +84,7 @@ Prometheus Grafana | 自动监控报警系统
 
 ###项目目录
 
-![](http://py6qtmuqs.bkt.clouddn.com/mountain-shop-parent.png)
+![](http://q02xon8xk.bkt.clouddn.com/a4761a458a66cddef27120e75f2cfe8.png)
 
 
 
