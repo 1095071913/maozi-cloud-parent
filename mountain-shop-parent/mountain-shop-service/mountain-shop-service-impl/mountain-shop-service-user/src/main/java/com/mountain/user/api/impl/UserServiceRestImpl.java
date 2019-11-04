@@ -113,9 +113,9 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 					put("token", token);
 				}
 			});
-		} catch (Exception e) {
+		} catch (Exception e) {  
 			e.printStackTrace();
-			return error(code(500));
+			return error(code(600));
 		}
 		/* 采用OKhttp调用SSO获取Token End */
 

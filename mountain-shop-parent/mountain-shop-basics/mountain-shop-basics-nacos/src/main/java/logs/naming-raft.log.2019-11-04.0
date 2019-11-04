@@ -1,0 +1,108 @@
+2019-11-04 19:11:22,863 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 19:11:23,658 INFO initializing Raft sub-system
+
+2019-11-04 19:11:23,690 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 19:11:23,690 INFO raft notifier started
+
+2019-11-04 19:11:24,033 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2019-11-04 19:11:24,048 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2019-11-04 19:11:24,064 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2019-11-04 19:11:24,064 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2019-11-04 19:11:24,080 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2019-11-04 19:11:24,080 INFO finish loading all datums, size: 3 cost 390 ms.
+
+2019-11-04 19:11:24,095 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2019-11-04 19:11:24,142 INFO cache loaded, datum count: 3, current term: 5939
+
+2019-11-04 19:11:24,142 INFO finish to load data from disk, cost: 452 ms.
+
+2019-11-04 19:11:24,158 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2019-11-04 19:11:24,423 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2019-11-04 19:11:24,423 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 19:11:25,546 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2019-11-04 19:11:25,671 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 19:11:25,686 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2019-11-04 19:11:25,686 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 19:11:25,686 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2019-11-04 19:11:47,776 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2019-11-04 19:12:22,814 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 19:12:22,814 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 19:12:23,001 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 19:12:45,246 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 19:42:21,141 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.43.250:8848","leaderDueMs":19554,"state":"FOLLOWER","term":5939,"voteFor":""}, term: 5939
+
+2019-11-04 22:32:47,657 INFO initializing Raft sub-system
+
+2019-11-04 22:32:47,672 INFO raft notifier started
+
+2019-11-04 22:32:47,079 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 22:32:47,797 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 22:32:47,969 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2019-11-04 22:32:47,984 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2019-11-04 22:32:48,031 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2019-11-04 22:32:48,031 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2019-11-04 22:32:48,031 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2019-11-04 22:32:48,047 INFO finish loading all datums, size: 3 cost 375 ms.
+
+2019-11-04 22:32:48,047 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2019-11-04 22:32:48,062 INFO cache loaded, datum count: 3, current term: 5939
+
+2019-11-04 22:32:48,062 INFO finish to load data from disk, cost: 390 ms.
+
+2019-11-04 22:32:48,062 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2019-11-04 22:32:48,359 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2019-11-04 22:32:48,359 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 22:32:49,123 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2019-11-04 22:32:49,263 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 22:32:49,263 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2019-11-04 22:32:49,263 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2019-11-04 22:32:49,279 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2019-11-04 22:33:02,968 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2019-11-04 22:33:31,866 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 22:33:31,866 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2019-11-04 22:33:31,866 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 22:33:52,036 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.43.250","key":"192.168.43.250:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2019-11-04 22:47:51,184 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.43.250:8848","leaderDueMs":19260,"state":"FOLLOWER","term":5939,"voteFor":""}, term: 5939
+

@@ -1,8 +1,0 @@
-2019-10-27 00:29:38,666 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.43.250:8848","leaderDueMs":19315,"state":"CANDIDATE","term":5940,"voteFor":"192.168.43.250:8848"}, term: 5940
-
-2019-10-27 02:12:46,828 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.43.250:8848","leaderDueMs":18388,"state":"CANDIDATE","term":5941,"voteFor":"192.168.43.250:8848"}, term: 5941
-
-2019-10-27 03:03:39,334 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
-
-2019-10-27 05:00:11,316 INFO leader timeout, start voting,leader: {"heartbeatDueMs":3500,"ip":"192.168.43.250:8848","leaderDueMs":17542,"state":"CANDIDATE","term":5942,"voteFor":"192.168.43.250:8848"}, term: 5942
-

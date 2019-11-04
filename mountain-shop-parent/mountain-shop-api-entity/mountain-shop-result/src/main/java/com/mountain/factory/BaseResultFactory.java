@@ -82,7 +82,7 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 	
 	
 	protected static String fuseMessage;
-	@Value("${fuseMessage:错误熔断}")
+	@Value("${fuseMessage:\"错误熔断\"}")
 	public void setFuseMessage(String fuseMessage) {
 		BaseResultFactory.fuseMessage=fuseMessage;
 	}
@@ -106,8 +106,8 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 			this.put(new CodeAttribute(500,"系统错误"));
 			
 			this.put(new CodeAttribute(403,"权限不足"));
-			 
-			this.put(new CodeAttribute(600,fuseMessage));
+			  
+			this.put(new CodeAttribute(600,"错误熔断")); 
 			
 			this.put(new CodeAttribute(700,"网关错误"));
 			
