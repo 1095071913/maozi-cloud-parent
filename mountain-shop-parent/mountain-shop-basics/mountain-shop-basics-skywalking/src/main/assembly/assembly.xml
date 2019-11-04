@@ -1,0 +1,26 @@
+<assembly>
+    <id>6.0.0-Beta</id>
+    <formats>
+        <!-- 打包的文件格式，支持 zip、tar.gz、tar.bz2、jar、dir、war -->
+        <format>tar.gz</format>
+    </formats>
+    <!-- tar.gz 压缩包下是否生成和项目名相同的根目录，有需要请设置成 true -->
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <!-- 是否把本项目添加到依赖文件夹下，有需要请设置成 true -->
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!-- 将 scope 为 runtime 的依赖包打包 -->
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+        <fileSet>
+            <!-- 设置需要打包的文件路径 -->
+            <directory>agent</directory>
+            <!-- 打包后的输出路径 -->
+            <outputDirectory></outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

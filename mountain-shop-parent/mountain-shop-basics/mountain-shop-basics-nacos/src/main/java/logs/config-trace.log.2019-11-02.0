@@ -1,0 +1,12 @@
+2019-11-02 21:54:07,363|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572702844780|192.168.43.250|persist|pub|-1|401de27fe5fdf94ef86495e058952b2e
+2019-11-02 21:54:08,133|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572702844780|192.168.43.250|notify|ok|3321|192.168.43.250:8848
+2019-11-02 21:54:08,251|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572702844780|192.168.43.250|dump|ok|3471|344
+2019-11-02 21:57:12,571|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703031279|192.168.43.250|notify|ok|1292|192.168.43.250:8848
+2019-11-02 21:57:12,591|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703031279|192.168.43.250|persist|pub|-1|fd372b4923b90bb3abb9fb8eb3ea9726
+2019-11-02 21:57:12,621|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703031279|192.168.43.250|dump|ok|1342|416
+2019-11-02 22:06:21,705|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703581554|192.168.43.250|persist|pub|-1|1339ac1a79871427e6f1b628ddabf611
+2019-11-02 22:06:21,807|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703581554|192.168.43.250|notify|ok|251|192.168.43.250:8848
+2019-11-02 22:06:21,852|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703581554|192.168.43.250|dump|ok|298|643
+2019-11-02 22:07:55,863|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703675696|192.168.43.250|persist|pub|-1|1339ac1a79871427e6f1b628ddabf611
+2019-11-02 22:07:56,026|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703675696|192.168.43.250|notify|ok|330|192.168.43.250:8848
+2019-11-02 22:07:56,119|192.168.43.250|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP|null|null|1572703675696|192.168.43.250|dump|ok|423|643

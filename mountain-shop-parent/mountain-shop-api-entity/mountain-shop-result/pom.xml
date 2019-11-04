@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.mountain</groupId>
+		<artifactId>mountain-shop-api-entity</artifactId>
+		<version>1.0.0-RELEASE</version>  
+	</parent>
+	<artifactId>mountain-shop-result</artifactId>
+
+
+	<dependencies>
+	
+		
+		<!-- Project Begin -->
+	  
+		<dependency>
+			<groupId>com.mountain</groupId>  
+			<artifactId>mountain-shop-base-do</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mountain</groupId>
+			<artifactId>mountain-shop-common-tool</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Project End -->
+		
+		
+		
+		
+		<!-- Web Begin -->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>  
+		
+		<!-- Web End -->
+  
+
+		
+		
+		<!-- Dubbo Begin -->
+
+		<dependency> 
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-dubbo</artifactId>  
+        </dependency>
+        
+        <!-- Dubbo End -->
+        
+        
+         
+        
+        <!-- SpringCloud Begin -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
+
+		<!-- SpringCloud End -->  
+
+ 
+	</dependencies>
+
+
+
+</project>

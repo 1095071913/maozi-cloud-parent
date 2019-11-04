@@ -1,0 +1,4 @@
+2019-11-02 21:54:07,576|2855|true|0:0:0:0:0:0:0:1|publish|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP||401de27fe5fdf94ef86495e058952b2e|null
+2019-11-02 21:57:12,591|1312|true|0:0:0:0:0:0:0:1|publish|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP||fd372b4923b90bb3abb9fb8eb3ea9726|null
+2019-11-02 22:06:21,705|151|true|0:0:0:0:0:0:0:1|publish|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP||1339ac1a79871427e6f1b628ddabf611|null
+2019-11-02 22:07:55,864|168|true|0:0:0:0:0:0:0:1|publish|mountain-shop-user-mq-consume.yml|DEFAULT_GROUP||1339ac1a79871427e6f1b628ddabf611|null

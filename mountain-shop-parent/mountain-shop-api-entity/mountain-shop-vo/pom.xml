@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.mountain</groupId>
+		<artifactId>mountain-shop-api-entity</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
+	<artifactId>mountain-shop-vo</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>mountain-shop-user-vo</module>
+	</modules>
+ 
+
+	<dependencies>  
+	   
+		<!-- JSR303 Begin -->
+		<dependency> 
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.16.Final</version>
+		</dependency>   
+		<!-- JSR303 End -->
+
+
+		<!-- Project Begin -->
+		<dependency>  
+			<groupId>com.mountain</groupId>
+			<artifactId>mountain-shop-base-vo</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+		<!-- Project End -->   
+		
+		
+	</dependencies>
+
+</project>

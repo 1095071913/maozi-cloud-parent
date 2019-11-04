@@ -1,0 +1,6 @@
+2019-11-01 10:37:59,250 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2019-11-01 10:37:59,250 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2019-11-01 11:18:26,779 INFO leader timeout, start voting,leader: {"heartbeatDueMs":4000,"ip":"192.168.43.250:8848","leaderDueMs":18570,"state":"CANDIDATE","term":5940,"voteFor":"192.168.43.250:8848"}, term: 5940
+

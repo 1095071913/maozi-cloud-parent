@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.mountain.alibaba.dubbo.core.SpringCloudAlibabaDubboAutoConfiguration
