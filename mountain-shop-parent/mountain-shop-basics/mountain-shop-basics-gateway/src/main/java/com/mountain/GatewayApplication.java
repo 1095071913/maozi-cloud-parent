@@ -15,7 +15,7 @@
  * 
  */
 
-package com.mountain.gateway;
+package com.mountain;
 
 import java.util.ArrayList;
 import java.util.List;

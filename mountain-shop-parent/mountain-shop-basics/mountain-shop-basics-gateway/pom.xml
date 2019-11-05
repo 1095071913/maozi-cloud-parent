@@ -24,11 +24,11 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<dependency>  
+		<!-- <dependency>  
 			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-result</artifactId>
 			<version>1.0.0-RELEASE</version>
-		</dependency>
+		</dependency>   -->  
 		<!-- Project End -->
 
 
@@ -65,8 +65,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
+		  
+		<!-- <dependency> 
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-dubbo</artifactId>  
+        </dependency> -->  
 
-		<!-- SpringCloud End -->
+		<!-- SpringCloud End -->  
 
 
 

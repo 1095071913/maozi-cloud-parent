@@ -20,8 +20,8 @@ package com.mountain.gateway.fallback;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.mountain.factory.BaseResultFactory;
-import com.mountain.factory.result.AbstractBaseResult;
+//import com.mountain.factory.BaseResultFactory;
+//import com.mountain.factory.result.AbstractBaseResult;
 
 /**
  * 
@@ -39,11 +39,11 @@ import com.mountain.factory.result.AbstractBaseResult;
 
 
 @RestController
-public class FallbackService extends BaseResultFactory{
+public class FallbackService {
 	
 	@GetMapping("/defaultFallback")
-    public AbstractBaseResult defaultFallback() {
-        return error(code(700));
+    public String defaultFallback() {
+        return "error";
     }
 	
 }
