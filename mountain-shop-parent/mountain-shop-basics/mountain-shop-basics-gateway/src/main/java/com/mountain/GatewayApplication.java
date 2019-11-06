@@ -64,17 +64,14 @@ import reactor.core.publisher.Mono;
  *
  */
 
+  
 
-@EnableDiscoveryClient
-@EnableFeignClients  
-@SpringBootApplication
-public class GatewayApplication{
+public class GatewayApplication extends BaseApplication{
 
-	
 	
 	
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
+		ApplicationRun(GatewayApplication.class);
 	}
 	
 	

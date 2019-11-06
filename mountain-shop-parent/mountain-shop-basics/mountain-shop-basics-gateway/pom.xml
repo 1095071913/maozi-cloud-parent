@@ -24,11 +24,41 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- <dependency>  
+		<dependency>
+			<groupId>com.mountain</groupId>
+			<artifactId>mountain-shop-service-base-run</artifactId>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-undertow</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.spring4all</groupId>  
+					<artifactId>swagger-spring-boot-starter</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-result</artifactId>
 			<version>1.0.0-RELEASE</version>
-		</dependency>   -->  
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-oauth2</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- Project End -->
 
 
@@ -65,13 +95,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
-		  
-		<!-- <dependency> 
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-dubbo</artifactId>  
-        </dependency> -->  
 
-		<!-- SpringCloud End -->  
+		<!-- <dependency> <groupId>com.alibaba.cloud</groupId> <artifactId>spring-cloud-starter-dubbo</artifactId> 
+			</dependency> -->
+
+		<!-- SpringCloud End -->
 
 
 

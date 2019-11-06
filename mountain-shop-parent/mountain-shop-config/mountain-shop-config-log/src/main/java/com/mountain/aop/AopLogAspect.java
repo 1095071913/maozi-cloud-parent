@@ -39,6 +39,7 @@ import com.mountain.factory.BaseResultFactory;
 //import com.mountain.kafka.KafkaSender;
 import com.mountain.factory.result.AbstractBaseResult;
 import com.mountain.factory.result.error.ErrorResult;
+import com.mountain.tool.UserAgentUtils;
 
 /**
  * 
@@ -120,7 +121,7 @@ public class AopLogAspect extends BaseResultFactory {
 			printLog.append("                                             "+"\r\n");
 			printLog.append("访问时间 ：" + new SimpleDateFormat("yyy-MM-dd HH:mm:ss").format(new Date())+"\r\n");
 			printLog.append("                                             "+"\r\n");
-			printLog.append("访问IP ：" + request.getRemoteAddr()+"\r\n");
+			printLog.append("访问IP ：" + UserAgentUtils.getIpAddr(request) +"\r\n");
 			printLog.append("                                             "+"\r\n");
 			printLog.append("访问地址 ：" + request.getRequestURL().toString()+"\r\n");
 			printLog.append("                                             "+"\r\n");

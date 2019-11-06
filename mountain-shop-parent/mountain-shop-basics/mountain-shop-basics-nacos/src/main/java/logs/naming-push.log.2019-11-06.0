@@ -1,0 +1,182 @@
+2019-11-06 02:15:51,929 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:20:56,859 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:21:12,630 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:23:54,421 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:32:36,927 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2019-11-06 02:39:44,826 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:39:46,281 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:55789, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,55789,140754011971203
+
+2019-11-06 02:39:46,302 INFO send udp packet: 192.168.43.250,55789,140754011971203
+
+2019-11-06 02:39:52,881 INFO received ack: {"type": "push-ack", "lastRefTime":"140754011971203", "data":""} from: 192.168.43.250:, cost: 55789 ms, unacked: 6499, total push: 0
+
+2019-11-06 02:40:03,638 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:40:03,639 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:55789, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,55789,140772803142807
+
+2019-11-06 02:40:03,639 INFO send udp packet: 192.168.43.250,55789,140772803142807
+
+2019-11-06 02:40:04,272 INFO received ack: {"type": "push-ack", "lastRefTime":"140772803142807", "data":""} from: 192.168.43.250:, cost: 55789 ms, unacked: 633, total push: 0
+
+2019-11-06 02:40:05,408 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:40:05,409 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:55789, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,55789,140774573293581
+
+2019-11-06 02:40:05,410 INFO send udp packet: 192.168.43.250,55789,140774573293581
+
+2019-11-06 02:40:05,481 INFO received ack: {"type": "push-ack", "lastRefTime":"140774573293581", "data":""} from: 192.168.43.250:, cost: 55789 ms, unacked: 71, total push: 0
+
+2019-11-06 02:46:48,599 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:46:48,599 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:55789, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:46:48,833 INFO send udp packet: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:46:58,615 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2019-11-06 02:46:58,927 INFO retry to push data, key: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:46:58,927 INFO send udp packet: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:47:03,825 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 02:47:08,950 INFO retry to push data, key: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:47:08,950 WARN max re-push times reached, retry times 2, key: 192.168.43.250,55789,141177756307860
+
+2019-11-06 02:47:13,739 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2019-11-06 02:59:44,136 INFO DEFAULT_GROUP@@mountain-shop-bootadmin is changed, add it to push queue.
+
+2019-11-06 02:59:44,198 INFO serviceName: DEFAULT_GROUP@@mountain-shop-bootadmin changed, schedule push for: 192.168.43.250:64412, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,64412,141953330905718
+
+2019-11-06 02:59:44,198 INFO send udp packet: 192.168.43.250,64412,141953330905718
+
+2019-11-06 02:59:44,252 INFO received ack: {"type": "push-ack", "lastRefTime":"141953330905718", "data":""} from: 192.168.43.250:, cost: 64412 ms, unacked: 54, total push: 0
+
+2019-11-06 03:01:17,225 INFO DEFAULT_GROUP@@mountain-shop-bootadmin is changed, add it to push queue.
+
+2019-11-06 03:01:32,372 INFO DEFAULT_GROUP@@mountain-shop-bootadmin is changed, add it to push queue.
+
+2019-11-06 04:03:37,051 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 04:05:27,885 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 04:05:39,061 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 04:05:57,072 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 04:30:40,695 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 04:30:55,835 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 05:29:09,239 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 05:30:40,481 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 05:30:55,561 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 05:59:57,216 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 06:01:33,723 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 06:01:48,757 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 06:09:08,771 INFO DEFAULT_GROUP@@mountain-shop-redis is changed, add it to push queue.
+
+2019-11-06 06:09:52,225 INFO DEFAULT_GROUP@@mountain-shop-redis is changed, add it to push queue.
+
+2019-11-06 06:10:08,199 INFO DEFAULT_GROUP@@mountain-shop-redis is changed, add it to push queue.
+
+2019-11-06 06:12:31,599 INFO DEFAULT_GROUP@@mountain-shop-user-mq-consume is changed, add it to push queue.
+
+2019-11-06 06:15:01,053 INFO DEFAULT_GROUP@@mountain-shop-user-mq-consume is changed, add it to push queue.
+
+2019-11-06 06:15:18,803 INFO DEFAULT_GROUP@@mountain-shop-user-mq-consume is changed, add it to push queue.
+
+2019-11-06 06:17:49,590 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 18:56:58,673 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 19:17:53,754 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:35:28,948 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:35:29,145 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,201696585040860
+
+2019-11-06 19:35:29,162 INFO send udp packet: 192.168.43.250,53337,201696585040860
+
+2019-11-06 19:35:33,722 INFO received ack: {"type": "push-ack", "lastRefTime":"201696585040860", "data":""} from: 192.168.43.250:, cost: 53337 ms, unacked: 4559, total push: 0
+
+2019-11-06 19:36:14,720 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 19:36:14,722 INFO serviceName: DEFAULT_GROUP@@mountain-shop-gateway changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,201742355372768
+
+2019-11-06 19:36:14,723 INFO send udp packet: 192.168.43.250,53337,201742355372768
+
+2019-11-06 19:36:14,847 INFO received ack: {"type": "push-ack", "lastRefTime":"201742355372768", "data":""} from: 192.168.43.250:, cost: 53337 ms, unacked: 124, total push: 0
+
+2019-11-06 19:36:15,372 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:36:15,373 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,201743006662653
+
+2019-11-06 19:36:15,374 INFO send udp packet: 192.168.43.250,53337,201743006662653
+
+2019-11-06 19:36:15,418 INFO received ack: {"type": "push-ack", "lastRefTime":"201743006662653", "data":""} from: 192.168.43.250:, cost: 53337 ms, unacked: 44, total push: 0
+
+2019-11-06 19:36:19,491 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 19:36:19,492 INFO serviceName: DEFAULT_GROUP@@mountain-shop-gateway changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,201747126194731
+
+2019-11-06 19:36:19,494 INFO send udp packet: 192.168.43.250,53337,201747126194731
+
+2019-11-06 19:36:19,543 INFO received ack: {"type": "push-ack", "lastRefTime":"201747126194731", "data":""} from: 192.168.43.250:, cost: 53337 ms, unacked: 49, total push: 0
+
+2019-11-06 19:46:32,723 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:46:32,725 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,202360342910335
+
+2019-11-06 19:46:32,726 INFO send udp packet: 192.168.43.250,53337,202360342910335
+
+2019-11-06 19:46:32,780 INFO received ack: {"type": "push-ack", "lastRefTime":"202360342910335", "data":""} from: 192.168.43.250:, cost: 53337 ms, unacked: 54, total push: 0
+
+2019-11-06 19:48:46,278 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:48:46,279 INFO serviceName: DEFAULT_GROUP@@mountain-shop-user changed, schedule push for: 192.168.43.250:53337, agent: Nacos-Java-Client:v1.1.1, key: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:48:46,280 INFO send udp packet: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:48:56,280 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 19:48:56,315 INFO retry to push data, key: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:48:56,315 INFO send udp packet: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:49:01,334 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2019-11-06 19:49:06,319 INFO retry to push data, key: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:49:06,320 WARN max re-push times reached, retry times 2, key: 192.168.43.250,53337,202493893689472
+
+2019-11-06 19:49:11,396 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 20:04:15,308 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 20:11:05,413 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 20:11:20,445 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 21:43:47,916 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 22:20:55,348 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 22:21:11,317 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2019-11-06 23:38:48,765 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+

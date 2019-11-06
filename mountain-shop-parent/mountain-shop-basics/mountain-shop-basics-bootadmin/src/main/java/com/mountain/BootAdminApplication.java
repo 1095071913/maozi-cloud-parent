@@ -15,7 +15,7 @@
  * 
  */
 
-package com.mountain.bootadmin;
+package com.mountain;
 
 import com.mountain.BaseApplication;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;

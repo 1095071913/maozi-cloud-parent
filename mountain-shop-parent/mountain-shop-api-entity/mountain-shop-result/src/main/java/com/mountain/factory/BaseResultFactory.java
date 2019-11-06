@@ -55,6 +55,7 @@ import java.util.Map;
  *
  */
 
+@SuppressWarnings("serial")
 @RefreshScope
 @Service
 @Data
@@ -103,9 +104,11 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 			
 			this.put(new CodeAttribute(200,"成功"));
 			
-			this.put(new CodeAttribute(500,"系统错误"));
+			this.put(new CodeAttribute(500,"内部服务错误"));
 			
 			this.put(new CodeAttribute(403,"权限不足"));
+			
+			this.put(new CodeAttribute(404,"没有此资源")); 
 			  
 			this.put(new CodeAttribute(600,"错误熔断")); 
 			
