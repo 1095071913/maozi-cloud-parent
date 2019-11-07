@@ -59,6 +59,7 @@ public class BaseApplication extends BaseResultFactory {
 	
 	@Value("${spring.cloud.nacos.config.shared-dataids}")
 	public void setLoadConfig(String loadConfig) {
+		
 		BaseApplication.loadConfig=loadConfig;
 	}
 	

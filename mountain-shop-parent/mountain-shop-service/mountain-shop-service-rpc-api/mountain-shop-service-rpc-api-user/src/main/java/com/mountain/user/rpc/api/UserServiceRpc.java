@@ -40,6 +40,6 @@ import com.mountain.user.UserDo;
 public interface UserServiceRpc{
 	
 	default AbstractBaseResult<UserDo> rpcSelectUserOne(UserDo userDo){
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 }

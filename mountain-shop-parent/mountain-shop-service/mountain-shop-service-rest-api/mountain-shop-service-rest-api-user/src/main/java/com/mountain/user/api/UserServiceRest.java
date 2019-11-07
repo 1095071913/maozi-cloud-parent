@@ -60,14 +60,14 @@ public interface UserServiceRest extends BaseService<UserDo> {
 	@PostMapping("/userRegister")
 	@ApiOperation(value = "用户注册")
 	default AbstractBaseResult<UserDo> UserRegister(@Validated @RequestBody LoginAndRegisterVo loginAndRegisterVo,BindingResult bindingResult){
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 
 	
 	@PostMapping("/login")
 	@ApiOperation(value = "用户登录")
 	default AbstractBaseResult userLogin(@Validated @RequestBody LoginAndRegisterVo loginAndRegisterVo,BindingResult bindingResult) {
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 
 	
@@ -77,29 +77,29 @@ public interface UserServiceRest extends BaseService<UserDo> {
 		@ApiImplicitParam(name = "token", value = "token", required = false, paramType = "query", dataType = "String") 
 	})
 	default AbstractBaseResult userLogout(HttpServletRequest request) {
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 	
 	
 	@GetMapping("/info")
 	@ApiOperation(value = "用户信息")
 	default AbstractBaseResult userInfo() {
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 	
 	
 	@PostMapping("/updatePassword")
 	@ApiOperation(value = "用户修改密码")
 	default AbstractBaseResult userUpdatePassword(String password,String updatePassword,HttpServletRequest request) {
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 	
 	
 	@PostMapping("/updateUser")
 	@ApiOperation(value = "用户修改信息")
 	default AbstractBaseResult userUpdate(@Validated @RequestBody UpdateUserVo userVo,BindingResult bindingResult) {
-		return BaseResultFactory.error(BaseResultFactory.code(4));
+		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
-	
+	 
 	
 }

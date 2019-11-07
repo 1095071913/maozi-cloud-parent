@@ -100,7 +100,7 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 
 			this.put(new CodeAttribute(3,"Token错误"));
 			
-			this.put(new CodeAttribute(4,"服务未启动"));
+			this.put(new CodeAttribute(6,"服务未启动"));
 			
 			this.put(new CodeAttribute(200,"成功"));
 			
@@ -296,7 +296,7 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 		}
 		if(isNotNull(returnResult)) {
 			returnResult=codeDatas.get("mountain-shop-base-code").get(2);
-		};
+		}
 		return returnResult;
 	}
 	

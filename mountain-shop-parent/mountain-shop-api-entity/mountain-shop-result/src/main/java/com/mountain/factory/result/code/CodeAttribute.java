@@ -52,4 +52,9 @@ public class CodeAttribute implements Serializable {
 		this.message+=message;
 		return this;
 	}
+	
+	public CodeAttribute setMessage(String message) {
+		this.message=message;
+		return this;
+	}
 }

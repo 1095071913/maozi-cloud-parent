@@ -1,0 +1,128 @@
+2019-11-06 01:25:04,677 INFO [dump-all-ok] mountain-shop-user-flow-rules+DEFAULT_GROUP, 1565168692526, length=163, md5=2ecacdf3dc2ba75e035a229b0ee6a88a
+
+2019-11-06 01:25:04,677 INFO [dump-all-ok] mountain-shop-user-degrade-rules+DEFAULT_GROUP, 1565168834105, length=134, md5=474b057f6132af8cbf95745e2c20dd6c
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] gateway-router+DEFAULT_GROUP, 1568777768335, length=832, md5=468b4971fb52b897b687c82903fe24d6
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] mountain-shop-user.yml+DEFAULT_GROUP, 1572573357541, length=1045, md5=82f2c3e9d0fe19b59d51a0c30de328db
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] cloud-default.yml+DEFAULT_GROUP, 1571197614051, length=373, md5=32d45ed48e1eb7c386d7a3dab59d323d
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] cloud-nacos.yml+DEFAULT_GROUP, 1568303002352, length=203, md5=217e9815c3af6dfffb4661f86f6a15de
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] cloud-dubbo.yml+DEFAULT_GROUP, 1569087731967, length=260, md5=1cf30f006e8883d93db4de6b49248956
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] cloud-sentinel.yml+DEFAULT_GROUP, 1568303061735, length=126, md5=9577902cf42c7c45602f5bf8e4bee00d
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] cloud-security.yml+DEFAULT_GROUP, 1570119192278, length=361, md5=4d0d771bdbf64442f621ec6ab4dca430
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] boot-admin.yml+DEFAULT_GROUP, 1569390402359, length=287, md5=bc7619ea016116ab5430dcc07051c2a9
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] boot-datasource.yml+DEFAULT_GROUP, 1570661479044, length=1155, md5=74dc612450461232a2fcc693cd866a71
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] boot-mybatisplus.yml+DEFAULT_GROUP, 1568307045735, length=726, md5=39f3abf23f98595108d3b5bf484aa689
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] boot-redis.yml+DEFAULT_GROUP, 1568305819509, length=469, md5=eb2618c47e6eb85c78fe0c23e607b400
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] boot-swagger.yml+DEFAULT_GROUP, 1568307466593, length=300, md5=3653fa713ebe29cad521debd84cafabd
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] mountain-shop-bootadmin.yml+DEFAULT_GROUP, 1569310676318, length=879, md5=b6789462faedfdda794ea2192795d949
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] mountain-shop-redis.yml+DEFAULT_GROUP, 1569219047443, length=322, md5=4c280055b21d887ffb1789e89e719245
+
+2019-11-06 01:25:04,692 INFO [dump-all-ok] mountain-shop-sso.yml+DEFAULT_GROUP, 1571074834568, length=486, md5=9cc1b0f8ec084ad19c1e73b81fc40ab6
+
+2019-11-06 01:25:04,708 INFO [dump-all-ok] mountain-shop-gateway.yml+DEFAULT_GROUP, 1570019048342, length=2478, md5=db709e13c4ab46dc4a73dd0bca95af08
+
+2019-11-06 01:25:04,708 INFO [dump-all-ok] boot-elasticsearch.yml+DEFAULT_GROUP, 1570650418687, length=145, md5=d47b7f0b36136cbfbf17237c8cbc9fff
+
+2019-11-06 01:25:04,708 INFO [dump-all-ok] cloud-rocket.yml+DEFAULT_GROUP, 1572578593339, length=125, md5=aa8dcb59a180c6f3da30a18c1a205731
+
+2019-11-06 01:25:04,708 INFO [dump-all-ok] mountain-shop-user-mq-consume.yml+DEFAULT_GROUP, 1572766485254, length=643, md5=8158c4e6209c3ef0e22153c6e02edbb3
+
+2019-11-06 01:43:57,606 WARN [dump-ignore] ignore to save cache file. groupKey=cloud-dubbo.yml+DEFAULT_GROUP, md5=1cf30f006e8883d93db4de6b49248956, lastModifiedOld=1569087731967, lastModifiedNew=1572975837412
+
+2019-11-06 15:28:09,316 INFO [dump-all-ok] mountain-shop-user-flow-rules+DEFAULT_GROUP, 1565168692526, length=163, md5=2ecacdf3dc2ba75e035a229b0ee6a88a
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] mountain-shop-user-degrade-rules+DEFAULT_GROUP, 1565168834105, length=134, md5=474b057f6132af8cbf95745e2c20dd6c
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] gateway-router+DEFAULT_GROUP, 1568777768335, length=832, md5=468b4971fb52b897b687c82903fe24d6
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] mountain-shop-user.yml+DEFAULT_GROUP, 1572975166484, length=785, md5=7b0edff7954e61e492bdccfb181bad1b
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] cloud-default.yml+DEFAULT_GROUP, 1571197614051, length=373, md5=32d45ed48e1eb7c386d7a3dab59d323d
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] cloud-nacos.yml+DEFAULT_GROUP, 1568303002352, length=203, md5=217e9815c3af6dfffb4661f86f6a15de
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] cloud-dubbo.yml+DEFAULT_GROUP, 1572980229767, length=223, md5=55323e8c97f169ac5c992c6e2a88be88
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] cloud-sentinel.yml+DEFAULT_GROUP, 1568303061735, length=126, md5=9577902cf42c7c45602f5bf8e4bee00d
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] cloud-security.yml+DEFAULT_GROUP, 1570119192278, length=361, md5=4d0d771bdbf64442f621ec6ab4dca430
+
+2019-11-06 15:28:09,363 INFO [dump-all-ok] boot-admin.yml+DEFAULT_GROUP, 1569390402359, length=287, md5=bc7619ea016116ab5430dcc07051c2a9
+
+2019-11-06 15:28:09,379 INFO [dump-all-ok] boot-datasource.yml+DEFAULT_GROUP, 1570661479044, length=1155, md5=74dc612450461232a2fcc693cd866a71
+
+2019-11-06 15:28:09,379 INFO [dump-all-ok] boot-mybatisplus.yml+DEFAULT_GROUP, 1568307045735, length=726, md5=39f3abf23f98595108d3b5bf484aa689
+
+2019-11-06 15:28:09,379 INFO [dump-all-ok] boot-redis.yml+DEFAULT_GROUP, 1568305819509, length=469, md5=eb2618c47e6eb85c78fe0c23e607b400
+
+2019-11-06 15:28:09,379 INFO [dump-all-ok] boot-swagger.yml+DEFAULT_GROUP, 1568307466593, length=300, md5=3653fa713ebe29cad521debd84cafabd
+
+2019-11-06 15:28:09,379 INFO [dump-all-ok] mountain-shop-bootadmin.yml+DEFAULT_GROUP, 1572979892732, length=642, md5=ed94b1474801b87b0ced8e529b8b7f34
+
+2019-11-06 15:28:09,395 INFO [dump-all-ok] mountain-shop-redis.yml+DEFAULT_GROUP, 1572991620197, length=58, md5=b5e711af9ae116f597c4999ab962ec81
+
+2019-11-06 15:28:09,396 INFO [dump-all-ok] mountain-shop-sso.yml+DEFAULT_GROUP, 1572978586720, length=222, md5=957b2f9183a6d7d44ca8ca48730f90da
+
+2019-11-06 15:28:09,398 INFO [dump-all-ok] mountain-shop-gateway.yml+DEFAULT_GROUP, 1572981124397, length=2249, md5=1daa570c8bbd445e4b3fc3644fee50c6
+
+2019-11-06 15:28:09,399 INFO [dump-all-ok] boot-elasticsearch.yml+DEFAULT_GROUP, 1570650418687, length=145, md5=d47b7f0b36136cbfbf17237c8cbc9fff
+
+2019-11-06 15:28:09,400 INFO [dump-all-ok] cloud-rocket.yml+DEFAULT_GROUP, 1572578593339, length=125, md5=aa8dcb59a180c6f3da30a18c1a205731
+
+2019-11-06 15:28:09,401 INFO [dump-all-ok] mountain-shop-user-mq-consume.yml+DEFAULT_GROUP, 1572991832793, length=416, md5=b08097cc7f9cddfbfbe9f30e81e9e4e2
+
+2019-11-06 18:55:09,596 INFO [dump-all-ok] mountain-shop-user-flow-rules+DEFAULT_GROUP, 1565168692526, length=163, md5=2ecacdf3dc2ba75e035a229b0ee6a88a
+
+2019-11-06 18:55:09,611 INFO [dump-all-ok] mountain-shop-user-degrade-rules+DEFAULT_GROUP, 1565168834105, length=134, md5=474b057f6132af8cbf95745e2c20dd6c
+
+2019-11-06 18:55:09,613 INFO [dump-all-ok] gateway-router+DEFAULT_GROUP, 1568777768335, length=832, md5=468b4971fb52b897b687c82903fe24d6
+
+2019-11-06 18:55:09,614 INFO [dump-all-ok] mountain-shop-user.yml+DEFAULT_GROUP, 1572975166484, length=785, md5=7b0edff7954e61e492bdccfb181bad1b
+
+2019-11-06 18:55:09,615 INFO [dump-all-ok] cloud-default.yml+DEFAULT_GROUP, 1571197614051, length=373, md5=32d45ed48e1eb7c386d7a3dab59d323d
+
+2019-11-06 18:55:09,616 INFO [dump-all-ok] cloud-nacos.yml+DEFAULT_GROUP, 1568303002352, length=203, md5=217e9815c3af6dfffb4661f86f6a15de
+
+2019-11-06 18:55:09,643 INFO [dump-all-ok] cloud-dubbo.yml+DEFAULT_GROUP, 1572980229767, length=223, md5=55323e8c97f169ac5c992c6e2a88be88
+
+2019-11-06 18:55:09,644 INFO [dump-all-ok] cloud-sentinel.yml+DEFAULT_GROUP, 1568303061735, length=126, md5=9577902cf42c7c45602f5bf8e4bee00d
+
+2019-11-06 18:55:09,646 INFO [dump-all-ok] cloud-security.yml+DEFAULT_GROUP, 1570119192278, length=361, md5=4d0d771bdbf64442f621ec6ab4dca430
+
+2019-11-06 18:55:09,647 INFO [dump-all-ok] boot-admin.yml+DEFAULT_GROUP, 1569390402359, length=287, md5=bc7619ea016116ab5430dcc07051c2a9
+
+2019-11-06 18:55:09,651 INFO [dump-all-ok] boot-datasource.yml+DEFAULT_GROUP, 1570661479044, length=1155, md5=74dc612450461232a2fcc693cd866a71
+
+2019-11-06 18:55:09,653 INFO [dump-all-ok] boot-mybatisplus.yml+DEFAULT_GROUP, 1568307045735, length=726, md5=39f3abf23f98595108d3b5bf484aa689
+
+2019-11-06 18:55:09,655 INFO [dump-all-ok] boot-redis.yml+DEFAULT_GROUP, 1568305819509, length=469, md5=eb2618c47e6eb85c78fe0c23e607b400
+
+2019-11-06 18:55:09,656 INFO [dump-all-ok] boot-swagger.yml+DEFAULT_GROUP, 1568307466593, length=300, md5=3653fa713ebe29cad521debd84cafabd
+
+2019-11-06 18:55:09,657 INFO [dump-all-ok] mountain-shop-bootadmin.yml+DEFAULT_GROUP, 1572979892732, length=642, md5=ed94b1474801b87b0ced8e529b8b7f34
+
+2019-11-06 18:55:09,668 INFO [dump-all-ok] mountain-shop-redis.yml+DEFAULT_GROUP, 1572991620197, length=58, md5=b5e711af9ae116f597c4999ab962ec81
+
+2019-11-06 18:55:09,669 INFO [dump-all-ok] mountain-shop-sso.yml+DEFAULT_GROUP, 1572978586720, length=222, md5=957b2f9183a6d7d44ca8ca48730f90da
+
+2019-11-06 18:55:09,671 INFO [dump-all-ok] mountain-shop-gateway.yml+DEFAULT_GROUP, 1572981124397, length=2249, md5=1daa570c8bbd445e4b3fc3644fee50c6
+
+2019-11-06 18:55:09,671 INFO [dump-all-ok] boot-elasticsearch.yml+DEFAULT_GROUP, 1570650418687, length=145, md5=d47b7f0b36136cbfbf17237c8cbc9fff
+
+2019-11-06 18:55:09,672 INFO [dump-all-ok] cloud-rocket.yml+DEFAULT_GROUP, 1572578593339, length=125, md5=aa8dcb59a180c6f3da30a18c1a205731
+
+2019-11-06 18:55:09,673 INFO [dump-all-ok] mountain-shop-user-mq-consume.yml+DEFAULT_GROUP, 1572991832793, length=416, md5=b08097cc7f9cddfbfbe9f30e81e9e4e2
+

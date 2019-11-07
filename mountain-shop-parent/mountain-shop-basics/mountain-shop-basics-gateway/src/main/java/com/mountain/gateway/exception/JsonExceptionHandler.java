@@ -115,7 +115,7 @@ public class JsonExceptionHandler extends BaseResultFactory implements ErrorWebE
 			result=error(code(404)); 
 		} else if (throwable instanceof ResponseStatusException) {
 			ResponseStatusException responseStatusException = (ResponseStatusException) throwable;
-			result=error(code(1).addMessage(responseStatusException.getMessage()));
+			result=error(code(1).setMessage(responseStatusException.getMessage()));
 		} else {
 			result=error(code(500));
 		}

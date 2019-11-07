@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.dubbo.rpc.RpcException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -172,7 +174,17 @@ public class AopLogAspect extends BaseResultFactory {
 			printLog.append("                                             "+"\r\n");
 			printLog.append("                                             "+"\r\n");
 			printLog.append("===============  Error	"+(isNotNull(requestAttributes) ? "RPC":"")+"  Begin   ==============="+"\r\n");
-			resultData = error(code(500));
+			
+			
+			if(e instanceof RpcException) {
+				RpcException rpcError = ((RpcException) e);
+				String errorMessage=rpcError.getLocalizedMessage().split("com.mountain.")[1];
+				resultData = error(code(rpcError.getCode()).addMessage((code(rpcError.getCode()).getMessage().lastIndexOf("(")!=-1?"":"("+errorMessage.substring(0,errorMessage.indexOf("."))+")")));
+			}else {
+				resultData = error(code(500));
+			}
+			
+			
 			if(!isNotNull(authentication)) {
 				printLog.append("                                             "+"\r\n");
 				printLog.append("触发异常用户："+authentication.getName()+"\r\n");
@@ -211,7 +223,7 @@ public class AopLogAspect extends BaseResultFactory {
 			}else {
 				System.err.println(printLog);
 				ErrorResult errorResult = (ErrorResult) resultData;
-				if(resultData.getCode()==500 && isNotNull(errorResult.getId())) {
+				if(resultData.getCode()!=200 && isNotNull(errorResult.getId())) {
 					errorResult.setId(id);
 					return errorResult;
 				}
