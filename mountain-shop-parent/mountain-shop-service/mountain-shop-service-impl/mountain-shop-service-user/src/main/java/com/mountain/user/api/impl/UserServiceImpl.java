@@ -21,9 +21,10 @@ package com.mountain.user.api.impl;
 import java.util.concurrent.ExecutionException;
 import javax.annotation.Resource;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.mountain.api.base.service.impl.BaseServiceImpl;
-import com.mountain.factory.result.AbstractBaseResult;
 import com.mountain.factory.result.code.CodeAttribute;
 import com.mountain.factory.result.code.CodeHashMap;
 import com.mountain.user.mapper.UserMapper;
@@ -35,12 +36,12 @@ import com.mountain.user.api.UserService;
 /**
  * 
  * 	功能说明：用户服务实现
- * 
+ *	 
  * 	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
  *
  * 	创建日期：2019-08-03 ：1:32:00
  *
- * 	版权归属：蓝河团队
+ *	 版权归属：蓝河团队
  *
  * 	协议说明：Apache2.0（ 文件顶端 ）
  *
@@ -51,7 +52,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 	static {
 
 		code(new CodeHashMap(applicationName, port) {
-			
+
 			{
 
 				this.put(new CodeAttribute(40001, "图形认证码不正确"));
@@ -65,17 +66,21 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 				this.put(new CodeAttribute(40005, "用户密码错误"));
 
 				this.put(new CodeAttribute(40006, "用户旧密码或新密码不能为空"));
-				
+
 				this.put(new CodeAttribute(40007, "用户未登录"));
 
+				this.put(new CodeAttribute(40008, "用戶文件上傳失敗"));
+
+				this.put(new CodeAttribute(40009, "用戶未上傳圖片"));
+				
+				this.put(new CodeAttribute(40010, "用户不存在"));
+
 			}
-			
+
 		});
 
 	}
 
-	
-	
 	@Reference
 	protected UserDetailsServiceRpc userDetailsServicePRC;
 
@@ -86,17 +91,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 	protected BCryptPasswordEncoder passwordEncoder;
 
 	
-
-	
-	//查询用户信息
-	protected AbstractBaseResult<UserDo> selectUserOne(UserDo userDo) {
+	// 查询用户信息
+	protected UserDo userInfo() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try {
-			return success(this.selectOne(UserDo.builder().username(userDo.getUsername()).build()).get());
+			return this.selectOne(UserDo.builder().username(authentication.getName()).build()).get();
 		} catch (InterruptedException | ExecutionException e) {
-			return error(code(40007));
+			return null;
 		}
 	}
-	
-	
-	
+
 }

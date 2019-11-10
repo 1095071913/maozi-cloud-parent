@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.mountain.api.base.service.BaseService;
 import com.mountain.factory.BaseResultFactory;
 import com.mountain.factory.result.AbstractBaseResult;
@@ -83,7 +85,7 @@ public interface UserServiceRest extends BaseService<UserDo> {
 	
 	@GetMapping("/info")
 	@ApiOperation(value = "用户信息")
-	default AbstractBaseResult userInfo() {
+	default AbstractBaseResult getUserInfo() {
 		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 	
@@ -98,6 +100,12 @@ public interface UserServiceRest extends BaseService<UserDo> {
 	@PostMapping("/updateUser")
 	@ApiOperation(value = "用户修改信息")
 	default AbstractBaseResult userUpdate(@Validated @RequestBody UpdateUserVo userVo,BindingResult bindingResult) {
+		return BaseResultFactory.error(BaseResultFactory.code(6));
+	}
+	
+	@PostMapping("/upLoadFile")
+	@ApiOperation(value = "用户上传图片")
+	default AbstractBaseResult upLoadFile(MultipartFile multipartFile) {
 		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 	 

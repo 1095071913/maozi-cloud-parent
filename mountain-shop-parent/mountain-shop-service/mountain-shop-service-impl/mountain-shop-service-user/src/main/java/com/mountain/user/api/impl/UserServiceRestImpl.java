@@ -1,18 +1,41 @@
+/*
+ * Copyright 2012-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
+
 package com.mountain.user.api.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.PutObjectRequest;
 import com.google.common.collect.Maps;
 import com.mountain.factory.result.AbstractBaseResult;
 import com.mountain.factory.result.success.SuccessResult;
 import com.mountain.tool.MapperUtils;
 import com.mountain.tool.OkHttpClientUtil;
+import com.mountain.user.FileInfo;
 import com.mountain.user.UserDo;
 import com.mountain.user.api.UserServiceRest;
 import com.mountain.uservo.LoginAndRegisterVo;
@@ -51,7 +74,7 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		/* 校验参数 End */
 
 		/* 查询用户是否存在 Begin */
-		Integer userCount = count(UserDo.builder().phone(loginAndRegisterVo.getUsername()).build());
+		Integer userCount = count(UserDo.builder().username(loginAndRegisterVo.getUsername()).build());
 		if (userCount > 0) {
 			return error(code(40002));
 		}
@@ -85,8 +108,7 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		/* 校验参数 End */
 
 		/* PRC调用SSO登录 Begin */
-		AbstractBaseResult userDetailsResult = userDetailsServicePRC
-				.loadUserByUsername(loginAndRegisterVo.getUsername());
+		AbstractBaseResult userDetailsResult = userDetailsServicePRC.loadUserByUsername(loginAndRegisterVo.getUsername());
 		if (!userDetailsResult.ifStatus()) {
 			return userDetailsResult;
 		}
@@ -136,9 +158,9 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 	
 	// Rest查询用户
 	@Override
-	public AbstractBaseResult<UserDo> userInfo() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return selectUserOne(UserDo.builder().username(authentication.getName()).build());
+	public AbstractBaseResult<UserDo> getUserInfo() {
+		UserDo user = userInfo();  
+		return isNotNull(user) ? error(code(40010)) : success(user);
 	}
 
 	
@@ -155,14 +177,13 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		/* 校验参数 End */
 
 		/* 查询用户信息 Begin */
-		AbstractBaseResult<UserDo> UserInfoResult = userInfo();
-		if (!UserInfoResult.ifStatus()) {
-			return UserInfoResult;
+		UserDo userDo = userInfo();
+		if (isNotNull(userDo)) {
+			return error(code(40010));
 		}
 		/* 查询用户信息 End */
 
 		/* 对比旧密码 Begin */
-		UserDo userDo = ((SuccessResult<UserDo>) UserInfoResult).getDatabeans().get(0).getData();
 		if (!passwordEncoder.matches(password, userDo.getPassword())) {
 			return error(code(40005));
 		}
@@ -198,14 +219,13 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		/* 参数校验 End */
 
 		/* 查询用户信息 Begin */
-		AbstractBaseResult<UserDo> UserInfoResult = userInfo();
-		if (!UserInfoResult.ifStatus()) {
-			return UserInfoResult;
+		UserDo userDo = userInfo();
+		if (isNotNull(userDo)) {
+			return error(code(40010));
 		}
 		/* 查询用户信息 End */
 
 		/* 更新用户信息 Begin */
-		UserDo userDo = ((SuccessResult<UserDo>) UserInfoResult).getDatabeans().get(0).getData();
 		UserDo user = userVo.voToDo();
 		user.setId(userDo.getId());
 		Integer updateUser = update(user, user.getUsername());
@@ -217,6 +237,62 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		return success(user);
 	}
 
+	
+	
+	private String ENDPOINT = "oss-cn-shenzhen.aliyuncs.com";
+    private String ACCESS_KEY_ID = "LTAIUEM4x1YOqT0O";
+    private String ACCESS_KEY_SECRET = "XVRECYNWqS7uzssIXeNrcgKIamBjTh";
+    private String BUCKET_NAME = "javasite";
+	//用戶上傳圖片
+	@Override
+	public AbstractBaseResult upLoadFile(MultipartFile multipartFile) {
+		
+		/* 判斷文件是否為空 Begin */
+		if(isNotNull(multipartFile)) {
+			return error(code(40009));
+		}
+		/* 判斷文件是否為空 End */
+		
+		
+		
+		/* 圖片上傳oss Begin */
+		String fileName = multipartFile.getOriginalFilename();
+        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String newName = UUID.randomUUID() + "." + suffix;
+        String fileUrl = "http://" + BUCKET_NAME + "." + ENDPOINT + "/" + newName;
+        OSS client = new OSSClientBuilder().build(ENDPOINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        try {
+            client.putObject(new PutObjectRequest(BUCKET_NAME, newName, new ByteArrayInputStream(multipartFile.getBytes())));
+            // 上传文件路径 = http://BUCKET_NAME.ENDPOINT/自定义路径/fileName
+        } catch (IOException e) {
+            return error(code(40008));   
+        } finally {
+            client.shutdown();
+        }
+        /* 圖片上傳oss End */
+        
+        
+        
+        /* 查询用户信息 Begin */
+		UserDo userDo = userInfo();
+		if (isNotNull(userDo)) { 
+			return error(code(40010));
+		}
+		/* 查询用户信息 End */
+		
+		
+		
+
+		/* 更新用户信息 Begin */
+		userDo.setIcon(fileUrl); 
+		Integer updateUser = update(userDo, userDo.getUsername());
+		if (updateUser < 1) {
+			return error(code(500));
+		}
+		/* 更新用户信息 End */
+		
+		return success(new FileInfo(fileUrl));
+    }
 	
 
 }

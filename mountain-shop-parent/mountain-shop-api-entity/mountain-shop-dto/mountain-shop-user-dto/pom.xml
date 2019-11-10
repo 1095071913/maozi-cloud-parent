@@ -2,19 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.mountain</groupId>
-    <artifactId>mountain-shop-api-entity</artifactId>
+    <artifactId>mountain-shop-dto</artifactId>
     <version>1.0.0-RELEASE</version>
   </parent>
-  <artifactId>mountain-shop-dto</artifactId>
-  <packaging>pom</packaging>
-  
-  
-  
-  
-  <modules>
-  	<module>mountain-shop-sso-dto</module>
-  	<module>mountain-shop-user-dto</module>
-  </modules>
-  
-  
+  <artifactId>mountain-shop-user-dto</artifactId>
 </project>

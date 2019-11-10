@@ -21,8 +21,9 @@
 		<dubbo-registry-nacos.version>0.0.1</dubbo-registry-nacos.version>   
 		<dubbo-serialization-kryo.version>2.6.6</dubbo-serialization-kryo.version>
 		<alibaba-spring-context-support.version>1.0.2</alibaba-spring-context-support.version>
-		<version.swagger>2.9.2</version.swagger>
+		<version.swagger>2.9.2</version.swagger>   
 		<bitwalker.version>1.21</bitwalker.version>
+		<oss.version>3.6.0</oss.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>

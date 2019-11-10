@@ -5,18 +5,18 @@
 	<parent>
 		<groupId>com.mountain</groupId>
 		<artifactId>mountain-shop-service-impl</artifactId>
-		<version>1.0.0-RELEASE</version> 
+		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>mountain-shop-service-user</artifactId>
 
 	<properties>
 		<application-run>com.mountain.UserApplication</application-run>
 	</properties>
-    
+
 	<dependencies>
 
 
-		<!-- Project Begin -->  
+		<!-- Project Begin -->
 
 		<dependency>
 			<groupId>com.mountain</groupId>
@@ -29,45 +29,66 @@
 			<artifactId>mountain-shop-service-rest-api-user</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>com.mountain</groupId>    
+			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-service-base-impl</artifactId>
 			<version>${project.version}</version>
-		</dependency>    
-		
-		<dependency>     
-			<groupId>com.mountain</groupId>    
+		</dependency>
+
+		<dependency>
+			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-service-rpc-api-sso</artifactId>
 			<version>${project.version}</version>
-		</dependency> 
-		
-		 
-		<dependency>  
+		</dependency>
+
+
+		<dependency>
 			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-config-db</artifactId>
 			<version>${project.version}</version>
-		</dependency> 
-		   
-		
-		<dependency>    
-			<groupId>com.mountain</groupId>  
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-service-rpc-api-user</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
-		<dependency>    
-			<groupId>com.mountain</groupId>    
+
+		<dependency>
+			<groupId>com.mountain</groupId>
 			<artifactId>mountain-shop-service-mq-api-user</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-  
+		
+		<dependency>  
+			<groupId>com.mountain</groupId>
+			<artifactId>mountain-shop-user-dto</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Project End -->
+
+
+		<!-- OSS Begin -->
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>${oss.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>    
+		<!-- OSS End -->
 
 
 	</dependencies>
 
 
-  
-	
+
+
 </project>
