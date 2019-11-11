@@ -17,6 +17,8 @@
 
 package com.mountain.user.rpc.api;
 
+import java.util.concurrent.ExecutionException;
+
 import com.mountain.factory.BaseResultFactory;
 import com.mountain.factory.result.AbstractBaseResult;
 import com.mountain.user.UserDo;
@@ -39,7 +41,7 @@ import com.mountain.user.UserDo;
 
 public interface UserServiceRpc{
 	
-	default AbstractBaseResult<UserDo> rpcSelectUserOne(UserDo userDo){
+	default AbstractBaseResult<UserDo> rpcSelectUserOne(UserDo userDo) {
 		return BaseResultFactory.error(BaseResultFactory.code(6));
 	}
 }

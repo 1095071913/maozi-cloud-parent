@@ -230,7 +230,7 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		user.setId(userDo.getId());
 		Integer updateUser = update(user, user.getUsername());
 		if (updateUser < 1) {
-			return error(code(500));
+			return error(code(7));
 		}
 		/* 更新用户信息 End */
 
@@ -243,19 +243,19 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
     private String ACCESS_KEY_ID = "LTAIUEM4x1YOqT0O";
     private String ACCESS_KEY_SECRET = "XVRECYNWqS7uzssIXeNrcgKIamBjTh";
     private String BUCKET_NAME = "javasite";
-	//用戶上傳圖片
+	//用戶上传图片
 	@Override
 	public AbstractBaseResult upLoadFile(MultipartFile multipartFile) {
 		
-		/* 判斷文件是否為空 Begin */
+		/* 判断文件是否为空 Begin */
 		if(isNotNull(multipartFile)) {
 			return error(code(40009));
 		}
-		/* 判斷文件是否為空 End */
+		/* 判断文件是否为空 End */
 		
 		
 		
-		/* 圖片上傳oss Begin */
+		/* 图片上传oss Begin */
 		String fileName = multipartFile.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         String newName = UUID.randomUUID() + "." + suffix;
@@ -269,7 +269,7 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
         } finally {
             client.shutdown();
         }
-        /* 圖片上傳oss End */
+        /* 图片上传oss End */
         
         
         
@@ -287,8 +287,8 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		userDo.setIcon(fileUrl); 
 		Integer updateUser = update(userDo, userDo.getUsername());
 		if (updateUser < 1) {
-			return error(code(500));
-		}
+			return error(code(7));
+		}  
 		/* 更新用户信息 End */
 		
 		return success(new FileInfo(fileUrl));

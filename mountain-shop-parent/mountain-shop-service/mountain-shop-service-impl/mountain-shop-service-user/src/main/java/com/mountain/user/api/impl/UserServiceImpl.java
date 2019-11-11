@@ -61,7 +61,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 
 				this.put(new CodeAttribute(40003, "账号或密码错误"));
 
-				this.put(new CodeAttribute(40004, "用户添加失败"));
+				this.put(new CodeAttribute(40004, "用户注册失败"));
 
 				this.put(new CodeAttribute(40005, "用户密码错误"));
 
@@ -69,9 +69,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 
 				this.put(new CodeAttribute(40007, "用户未登录"));
 
-				this.put(new CodeAttribute(40008, "用戶文件上傳失敗"));
+				this.put(new CodeAttribute(40008, "用戶文件上传失败"));
 
-				this.put(new CodeAttribute(40009, "用戶未上傳圖片"));
+				this.put(new CodeAttribute(40009, "用戶未上传图片"));
 				
 				this.put(new CodeAttribute(40010, "用户不存在"));
 
