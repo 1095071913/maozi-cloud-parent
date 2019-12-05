@@ -540,6 +540,8 @@
 		<module>mountain-shop-service</module>
 		
 		<module>mountain-shop-config</module>
+		
+		<module>mountain-shop-test</module>
 	</modules>
 
 </project>

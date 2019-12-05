@@ -179,7 +179,7 @@ public class AopLogAspect extends BaseResultFactory {
 			if(e instanceof RpcException) {
 				RpcException rpcError = ((RpcException) e);
 				String errorMessage=rpcError.getLocalizedMessage().split("com.mountain.")[1];
-				resultData = error(code(rpcError.getCode()).addMessage((code(rpcError.getCode()).getMessage().lastIndexOf("(")!=-1?"":"("+errorMessage.substring(0,errorMessage.indexOf("."))+")")));
+				resultData = error(code(6).addMessage((code(6).getMessage().lastIndexOf("(")!=-1?"":"("+errorMessage.substring(0,errorMessage.indexOf("."))+")")));
 			}else {
 				resultData = error(code(500));
 			}

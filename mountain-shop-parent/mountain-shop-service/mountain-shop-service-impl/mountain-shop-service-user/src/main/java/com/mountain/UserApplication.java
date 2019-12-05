@@ -18,6 +18,8 @@
 package com.mountain;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
+
+import com.mountain.tool.SQLType;
 import com.mountain.user.api.LogMessage;
 
 /**

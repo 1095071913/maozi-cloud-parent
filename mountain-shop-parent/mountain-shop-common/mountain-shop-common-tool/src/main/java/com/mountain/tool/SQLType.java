@@ -108,7 +108,7 @@ public class SQLType {
 	 */
 	public static int mathematics(int min, int max) {
 		return Math.random() > 0.5 ? (int) (Math.random() * (max - min + 1) + min)
-				: -((int) (Math.random() * (max - min + 1) + min));
+				: ((int) (Math.random() * (max - min + 1) + min));//-((int) (Math.random() * (max - min + 1) + min))
 	};
 	
 	

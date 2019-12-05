@@ -81,15 +81,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserDo, UserMapper> impleme
 
 	}
 
-	@Reference
-	protected UserDetailsServiceRpc userDetailsServicePRC;
-
-	@Reference
-	protected UserLogoutServiceRpc userLogoutService;
-
-	@Resource
-	protected BCryptPasswordEncoder passwordEncoder;
-
 	
 	// 查询用户信息
 	protected UserDo userInfo() {

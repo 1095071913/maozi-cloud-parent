@@ -20,11 +20,19 @@ package com.mountain.user.api.impl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import com.aliyun.oss.OSS;
@@ -33,8 +41,11 @@ import com.aliyun.oss.model.PutObjectRequest;
 import com.google.common.collect.Maps;
 import com.mountain.factory.result.AbstractBaseResult;
 import com.mountain.factory.result.success.SuccessResult;
+import com.mountain.sso.api.UserDetailsServiceRpc;
+import com.mountain.sso.api.UserLogoutServiceRpc;
 import com.mountain.tool.MapperUtils;
 import com.mountain.tool.OkHttpClientUtil;
+import com.mountain.tool.SQLType;
 import com.mountain.user.FileInfo;
 import com.mountain.user.UserDo;
 import com.mountain.user.api.UserServiceRest;
@@ -59,7 +70,17 @@ import okhttp3.Response;
 
 public class UserServiceRestImpl extends UserServiceImpl implements UserServiceRest {
 	
+	@Resource
+	private DiscoveryClient discoveryClient;
 	
+	@Reference
+	protected UserDetailsServiceRpc userDetailsServicePRC;
+
+	@Reference
+	protected UserLogoutServiceRpc userLogoutService;
+
+	@Resource
+	protected BCryptPasswordEncoder passwordEncoder;
 	
 	
 	// 用户注册
@@ -96,7 +117,6 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 	
 	
 	// 用户登录
-	private final String URL_OAUTH_TOKEN = "http://localhost:1000/auth/oauth/token";
 	@Override
 	public AbstractBaseResult userLogin(LoginAndRegisterVo loginAndRegisterVo, BindingResult bindingResult) {
 
@@ -126,7 +146,8 @@ public class UserServiceRestImpl extends UserServiceImpl implements UserServiceR
 		params.put("client_id", "client");
 		params.put("client_secret", "secret");
 		try {
-			Response response = OkHttpClientUtil.getInstance().postData(URL_OAUTH_TOKEN, params);
+			List<ServiceInstance> instances = discoveryClient.getInstances("mountain-shop-sso");
+			Response response = OkHttpClientUtil.getInstance().postData(instances.get(SQLType.mathematics(1, instances.size())%instances.size()).getUri().toString()+"/auth/oauth/token", params);
 			String jsonString = Objects.requireNonNull(response.body()).string();
 			Map<String, Object> jsonMap = MapperUtils.json2map(jsonString);
 			String token = String.valueOf(jsonMap.get("access_token"));

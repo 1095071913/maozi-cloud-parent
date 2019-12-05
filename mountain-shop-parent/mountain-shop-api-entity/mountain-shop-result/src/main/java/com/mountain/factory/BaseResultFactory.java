@@ -83,7 +83,7 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 	
 	
 	protected static String fuseMessage;
-	@Value("${fuseMessage:\"错误熔断\"}")
+	@Value("${fuseMessage:错误熔断}")  
 	public void setFuseMessage(String fuseMessage) {
 		code(6).setMessage(fuseMessage); 
 	}
