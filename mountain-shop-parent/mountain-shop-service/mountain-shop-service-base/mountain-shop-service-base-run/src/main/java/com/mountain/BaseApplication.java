@@ -53,13 +53,12 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @EnableSwagger2Doc
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,  
 		DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
-public class BaseApplication extends BaseResultFactory {
+public class BaseApplication{ 
 	
 	public static String loadConfig;
 	
 	@Value("${spring.cloud.nacos.config.shared-dataids}")
 	public void setLoadConfig(String loadConfig) {
-		
 		BaseApplication.loadConfig=loadConfig;
 	}
 	
@@ -102,7 +101,7 @@ public class BaseApplication extends BaseResultFactory {
 			System.err.println("                                      ");
 			System.err.println("============  服务启动失败     Begin    ==============");
 			System.err.println("                                      ");
-			System.err.println("服务模块："+applicationName);
+			System.err.println("服务模块："+BaseResultFactory.applicationName);
 			System.err.println("                                      ");
 			System.err.println("服务启动异常："+e.getLocalizedMessage());
 			System.err.println("                                      ");
@@ -141,7 +140,7 @@ public class BaseApplication extends BaseResultFactory {
 		System.out.println("                                      ");
 		System.out.println("                                      ");
 		System.out.println("                                      ");
-		System.out.println("                                      ");
+		System.out.println("                                      ");  
 		System.out.println("                                      ");
 		System.out.println("                                      ");
 		System.out.println("                                      ");
@@ -151,9 +150,9 @@ public class BaseApplication extends BaseResultFactory {
 		System.out.println("                                      ");
 		System.out.println("============  服务启动完成     Begin    ==============");
 		System.out.println("                                      ");
-		System.out.println("服务模块："+applicationName);
+		System.out.println("服务模块："+BaseResultFactory.applicationName);
 		System.out.println("                                      ");
-		System.out.println("服务端口：127.0.0.1:"+port);
+		System.out.println("服务端口：127.0.0.1:"+BaseResultFactory.port);
 		System.out.println("                                      ");
 		System.out.println("服务加载配置："+loadConfig);
 		System.out.println("                                      ");

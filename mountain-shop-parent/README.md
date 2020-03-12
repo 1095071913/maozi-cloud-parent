@@ -28,6 +28,7 @@ Spring Boot | 新一代 JavaEE 开发标准
 Spring Security oAuth2 | 基于Oauth2协议实现SSO单点登录、安全认证、授权框架
 Kryo | Dubbo高性能序列化
 LCN | TCC分布式事务
+Seata | TCC分布式事务
 Elastic-Job | 分布式任务调度
 Sharing-JDBC | 数据库分表分库
 Spring Social | 第三方登录接入框架  

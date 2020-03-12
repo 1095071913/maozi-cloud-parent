@@ -15,5 +15,6 @@
   	<module>mountain-shop-config-log</module>
   	<module>mountain-shop-config-sso</module>
   	<module>mountain-shop-config-mvc</module>
+  	<module>mountain-shop-config-seata</module>
   </modules>
 </project>

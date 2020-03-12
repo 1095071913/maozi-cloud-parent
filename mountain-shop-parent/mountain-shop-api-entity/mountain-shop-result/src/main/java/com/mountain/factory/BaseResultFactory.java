@@ -65,8 +65,8 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 	private static final long serialVersionUID = -4666437508651446479L;
 	  
 	protected static Map<String, CodeHashMap> codeDatas=new HashMap<>();
-	  
-	protected static String applicationName;
+	   
+	public static String applicationName;
 	@Value("${spring.application.name}")
 	public void setApplicationName(String applicationName) {
 		BaseResultFactory.applicationName=applicationName;
@@ -74,7 +74,7 @@ public class BaseResultFactory<T extends AbstractBaseDomain> implements Serializ
 	
 	
 	
-	protected static Integer port;
+	public static Integer port;
 	@Value("${application-port}")
 	public void setPort(Integer port) {
 		BaseResultFactory.port=port;
