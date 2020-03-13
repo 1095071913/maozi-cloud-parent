@@ -1,6 +1,6 @@
 # Istio + SpringCloud Alibaba Dubbo + K8S 
 
-## 对不起对不起，近期离职了,没更新,打算在过年前更新一下添加下云组件构建脚本，另外看看有没有什么可以优化的地方，持续更新噢
+## 对不起对不起，近期离职了慢慢会恢复频繁更新状态,将会更新云组件构建脚本，另外看看有没有什么可以优化的地方，持续更新噢
 
 ## 概述
 
@@ -30,6 +30,7 @@ Spring Boot | 新一代 JavaEE 开发标准
 Spring Security oAuth2 | 基于Oauth2协议实现SSO单点登录、安全认证、授权框架
 Kryo | Dubbo高性能序列化
 LCN | TCC分布式事务
+Seata | TCC分布式事务
 Elastic-Job | 分布式任务调度
 Sharing-JDBC | 数据库分表分库
 Spring Social | 第三方登录接入框架  
