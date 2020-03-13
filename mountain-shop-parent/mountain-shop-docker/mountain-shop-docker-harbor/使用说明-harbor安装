@@ -1,0 +1,13 @@
+1.去下载离线harbor安装包https://github.com/goharbor/harbor
+tar -zxvf harbor-offline-installer-v1.8.0.tgz
+
+2.修改配置文件harbor.yml
+#######内容 Begin##########
+
+hostname: 服务器ip
+
+#######内容 End##########
+
+
+3.执行安装脚本
+./install.sh

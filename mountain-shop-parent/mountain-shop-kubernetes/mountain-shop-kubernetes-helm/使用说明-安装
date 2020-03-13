@@ -1,0 +1,32 @@
+1.安装 Helm
+wget https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz
+tar -zxvf helm-v2.14.3-linux-amd64.tar.gz
+cp linux-amd64/helm /usr/local/bin/
+helm init --upgrade --tiller-image registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3 --stable-repo-url http://mirror.azure.cn/kubernetes/charts/
+#创建tiller-adminuser.yaml文件为 Tiller 创建服务帐号和绑定角色
+
+
+###################内容 Begin#################
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tiller-cluster-rule
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: tiller
+  namespace: kube-system
+  
+###################内容 End#################
+
+kubectl apply -f tiller-adminuser.yaml
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'

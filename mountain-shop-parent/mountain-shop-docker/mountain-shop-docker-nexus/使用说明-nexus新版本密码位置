@@ -1,0 +1,1 @@
+cat /var/lib/docker/volumes/nexus_data/_data/admin.password

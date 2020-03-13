@@ -1,0 +1,16 @@
+1.卸载 Istio
+cd istio
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl delete -f -
+helm delete --purge istio
+helm delete --purge istio-init
+helm delete --purge istio-cni
+kubectl delete -f install/kubernetes/helm/istio-init/files
+kubectl delete namespace istio-system
+
+
+2.卸载 Naftis
+cd naftis
+kubectl delete -n naftis -f naftis.yaml
+kubectl delete -n naftis -f mysql.yaml
+kubectl delete namespace naftis
+

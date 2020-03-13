@@ -1,0 +1,7 @@
+docker ps
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/containers/json: dial unix /var/run/docker.sock: connect: permission denied
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo systemctl restart docker
+newgrp - docker
+sudo reboot

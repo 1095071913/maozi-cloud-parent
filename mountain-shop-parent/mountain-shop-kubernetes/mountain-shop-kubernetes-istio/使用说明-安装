@@ -1,0 +1,28 @@
+1.添加 Istio 到 Helm 仓库
+helm repo add istio.io https://storage.googleapis.com/istio-release/releases/1.4.0/charts/
+
+
+2.下载Istio
+wget https://github.com/istio/istio/releases/download/1.4.0/istio-1.4.0-linux.tar.gz
+tar -zxvf istio-1.4.0-linux.tar.gz
+mv istio-1.4.0 istio
+cd istio
+
+
+3.部署 Istio
+kubectl create namespace istio-system
+helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
+kubectl -n istio-system wait --for=condition=complete job --all
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
+
+4.验证是否成功
+kubectl get svc -n istio-system
+
+5.部署 Istio 控制面板Naftis
+wget -O - https://raw.githubusercontent.com/XiaoMi/naftis/master/tool/getlatest.sh | bash
+kubectl create namespace naftis
+kubectl apply -n naftis -f mysql.yaml
+kubectl apply -n naftis -f naftis.yaml
+
+6.访问 Naftis
+kubectl -n naftis port-forward $(kubectl -n naftis get pod -l app=naftis-ui -o jsonpath='{.items[0].metadata.name}') 32569:80 --address 0.0.0.0 &

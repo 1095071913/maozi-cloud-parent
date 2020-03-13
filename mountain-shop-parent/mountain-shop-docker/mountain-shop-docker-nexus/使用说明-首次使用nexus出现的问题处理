@@ -1,0 +1,5 @@
+#首次使用可能会出现权限问题
+
+chmod 777 /usr/local/docker/nexus/data
+
+#赋予数据卷目录可读可写的权限
