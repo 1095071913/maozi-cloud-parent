@@ -13,10 +13,10 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 功能说明:	OKHttp3
- * 功能作者:	彭晋龙
- * 创建日期:	2019.8.14
- * 版权归属:	忧伤-蓝河
+ * 	功能说明:	OKHttp3
+ * 	功能作者:	彭晋龙
+ * 	创建日期:	2019.8.14
+ * 	版权归属:	忧伤-蓝河
  */
 
 public class OkHttpClientUtil {
