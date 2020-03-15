@@ -538,9 +538,7 @@
 		<module>mountain-shop-basics</module>
 		<module>mountain-shop-common</module>          
 		<module>mountain-shop-service</module>
-		
 		<module>mountain-shop-config</module>
-		
 		<module>mountain-shop-test</module>
 	</modules>
 

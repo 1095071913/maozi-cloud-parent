@@ -1,0 +1,52 @@
+1.mkdir es 
+2.mkdir config1 && mkdir config2
+3.cd config1
+4.编写es1.yml
+
+###########内容 Begin###########
+cluster.name: elasticsearch-cluster
+node.name: es-node1
+network.bind_host: 0.0.0.0
+network.publish_host: 192.168.2.123
+http.port: 9200
+transport.tcp.port: 9300
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+node.master: true
+node.data: true
+discovery.zen.ping.unicast.hosts: ["192.168.2.123:9300","192.168.2.123:9301"]
+discovery.zen.minimum_master_nodes: 1
+###########内容 End###########
+
+
+5.cd ../config2
+6. 编写es2.yml
+###########内容 Begin###########
+cluster.name: elasticsearch-cluster
+node.name: es-node2
+network.bind_host: 0.0.0.0
+network.publish_host: 192.168.2.123
+http.port: 9201
+transport.tcp.port: 9301
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+node.master: true
+node.data: true
+discovery.zen.ping.unicast.hosts: ["192.168.2.123:9300","192.168.2.123:9301"]
+discovery.zen.minimum_master_nodes: 1
+###########内容 End#############
+
+7. mkdir ../data1
+8. mkdir data2
+9. mkdir plugins1
+10.mkdir plugins2
+11. nano esstart
+#########内容 Begin##########
+docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d  -p 9200:9200 -p 9300:9300 -p 5601:5601 -v /usr/local/docker/es/config1/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml  -v /usr/local/docker/es/plugins1:/usr/share/elasticsearch/p$
+docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d -p 9201:9201 -p 9301:9301 -v /usr/local/docker/es/config2/es2.yml:/usr/share/elasticsearch/config/elasticsearch.yml  -v /usr/local/docker/es/plugins2:/usr/share/elasticsearch/plugins    -v /$
+docker run -it -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:ES01 kibana
+#########内容 End##########
+
+12. chmod 777 esstart
+13. sysctl -w vm.max_map_count=262144
+14. ./esstart
