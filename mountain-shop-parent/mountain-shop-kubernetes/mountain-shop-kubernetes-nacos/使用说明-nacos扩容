@@ -1,0 +1,14 @@
+#在扩容前，使用 kubectl exec 获取在 pod 中的 Nacos 集群配置文件信息
+for i in 0 1; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
+
+#使用 kubectl scale 对 Nacos 动态扩容
+kubectl scale sts nacos --replicas=3
+
+#在扩容后，使用 kubectl exec 获取在 pod 中的 Nacos 集群配置文件信息
+for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
+
+#使用 kubectl exec 执行 Nacos API 在每台节点上获取当前 Leader 是否一致
+for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
+
+
+#注意： 扩容后可能依然无法正确选举出 Leader，使用 kubectl delete pods nacos-$i 的形式手动删除 Pod ，让 k8s 自动恢复，再观察 naming-raft.log 日志

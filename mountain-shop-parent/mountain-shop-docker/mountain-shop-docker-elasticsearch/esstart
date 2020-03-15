@@ -1,0 +1,4 @@
+sysctl -w vm.max_map_count=262144
+docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d  -p 9200:9200 -p 9300:9300 -p 5601:5601 -v /usr/local/docker/es/config1/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml  -v /usr/local/docker/es/plugins1:/usr/share/elasticsearch/p$
+docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d -p 9201:9201 -p 9301:9301 -v /usr/local/docker/es/config2/es2.yml:/usr/share/elasticsearch/config/elasticsearch.yml  -v /usr/local/docker/es/plugins2:/usr/share/elasticsearch/plugins    -v /$
+docker run -it -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:ES01 kibana
