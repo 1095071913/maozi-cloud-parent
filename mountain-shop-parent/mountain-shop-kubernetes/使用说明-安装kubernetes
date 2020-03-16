@@ -1,0 +1,272 @@
+1.设置好全部节点
+swapoff -a
+
+#注释开头的节点
+nano /etc/fstab
+
+ufw disable
+
+#取消 DNS 行注释，并增加 DNS 配置如：114.114.114.114，修改后重启下计算机
+nano /etc/systemd/resolved.conf
+
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get -y update
+sudo apt-get -y install docker-ce
+
+
+nano /etc/docker/daemon.json
+#######内容 Begin########
+
+{
+  "registry-mirrors": [
+    "https://registry.docker-cn.com"
+  ]
+}
+
+#######内容 Begin########
+
+
+sudo apt-get update
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
+
+cat << EOF >/etc/apt/sources.list.d/kubernetes.list
+deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+EOF
+
+apt-get update && apt-get install -y kubelet=1.15.4-00 kubeadm=1.15.4-00 kubectl=1.15.4-00
+
+
+#选择 Asia（亚洲） 选择 Shanghai（上海）
+dpkg-reconfigure tzdata
+apt-get install ntpdate
+ntpdate cn.pool.ntp.org
+hwclock --systohc
+
+
+apt-get install -y ipset ipvsadm
+
+nano /etc/sysconfig/modules/
+#########内容 Begin###########
+
+#!/bin/bash
+modprobe -- ip_vs
+modprobe -- ip_vs_rr
+modprobe -- ip_vs_wrr
+modprobe -- ip_vs_sh
+modprobe -- nf_conntrack_ipv4
+
+#########内容 End###########
+
+chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+
+
+nano /etc/sysctl.d/k8s.conf
+###########内容 Begin############
+
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_nonlocal_bind = 1
+net.ipv4.ip_forward = 1
+vm.swappiness=0
+
+###########内容 Begin############
+
+sysctl --system
+
+#修改为preserve_hostname: true
+nano cloud.cfg
+
+hostnamectl set-hostname kubernetes-master-01
+
+cat >> /etc/hosts << EOF
+192.168.141.150 kubernetes-master-01
+EOF
+
+
+2.设置好master节点
+
+nano /usr/local/kubernetes/lb/start-haproxy.sh
+#########内容 Begin############
+
+#!/bin/bash
+# 修改为你自己的 Master 地址
+MasterIP1=192.168.141.150
+MasterIP2=192.168.141.151
+MasterIP3=192.168.141.152
+# 这是 kube-apiserver 默认端口，不用修改
+MasterPort=6443
+
+# 容器将 HAProxy 的 6444 端口暴露出去
+docker run -d --restart=always --name HAProxy-K8S -p 6444:6444 \
+        -e MasterIP1=$MasterIP1 \
+        -e MasterIP2=$MasterIP2 \
+        -e MasterIP3=$MasterIP3 \
+        -e MasterPort=$MasterPort \
+        wise2c/haproxy-k8s
+
+#########内容 End############
+
+chmod +x start-haproxy.sh
+
+
+nano /usr/local/kubernetes/lb/start-keepalived.sh
+###########内容 Begin###########
+
+#!/bin/bash
+# 修改为你自己的虚拟 IP 地址
+VIRTUAL_IP=192.168.141.200
+# 虚拟网卡设备名
+INTERFACE=ens33
+# 虚拟网卡的子网掩码
+NETMASK_BIT=24
+# HAProxy 暴露端口，内部指向 kube-apiserver 的 6443 端口
+CHECK_PORT=6444
+# 路由标识符
+RID=10
+# 虚拟路由标识符
+VRID=160
+# IPV4 多播地址，默认 224.0.0.18
+MCAST_GROUP=224.0.0.18
+
+docker run -itd --restart=always --name=Keepalived-K8S \
+        --net=host --cap-add=NET_ADMIN \
+        -e VIRTUAL_IP=$VIRTUAL_IP \
+        -e INTERFACE=$INTERFACE \
+        -e CHECK_PORT=$CHECK_PORT \
+        -e RID=$RID \
+        -e VRID=$VRID \
+        -e NETMASK_BIT=$NETMASK_BIT \
+        -e MCAST_GROUP=$MCAST_GROUP \
+        wise2c/keepalived-k8s
+        
+        
+###########内容 End###########        
+
+chmod +x start-keepalived.sh
+sh /usr/local/kubernetes/lb/start-haproxy.sh && sh /usr/local/kubernetes/lb/start-keepalived.sh
+
+
+3.初始化 Master
+mkdir -p /usr/local/kubernetes/cluster
+kubeadm config print init-defaults --kubeconfig ClusterConfiguration > kubeadm.yml
+
+########修改内容 Begin########
+
+apiVersion: kubeadm.k8s.io/v1beta1
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.141.150
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: kubernetes-master-01
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta1
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controlPlaneEndpoint: "192.168.141.200:6444"
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: registry.aliyuncs.com/google_containers
+kind: ClusterConfiguration
+kubernetesVersion: v1.15.4
+networking:
+  dnsDomain: cluster.local
+  # 主要修改在这里，替换 Calico 网段为我们虚拟机不重叠的网段（这里用的是 Flannel 默认网段）
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+featureGates:
+  SupportIPVSProxyMode: true
+mode: ipvs
+
+########修改内容 End#########
+
+kubeadm init --config=kubeadm.yml --experimental-upload-certs | tee kubeadm-init.log
+
+4.配置kubectl
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
+5.下载 Calico 配置文件并修改
+
+#修改第 611 行，将 192.168.0.0/16 修改为 10.244.0.0/16，可以通过如下命令快速查找
+wget https://docs.projectcalico.org/v3.7/manifests/calico.yaml
+
+kubectl apply -f calico.yaml
+
+#kubeadm init --config=kubeadm.yml --experimental-upload-certs | tee kubeadm-init.log
+#这段脚本刚刚执行时出现的提醒有
+
+#这段是添加master节点的
+#kubeadm join 192.168.141.200:6444 --token abcdef.0123456789abcdef \
+#    --discovery-token-ca-cert-hash sha256:2ea8c138021fb1e184a24ed2a81c16c92f9f25c635c73918b1402df98f9c8aad \
+#    --experimental-control-plane --certificate-key a662b8364666f82c93cc5cd4fb4fabb623bbe9afdb182da353ac40f1752dfa4a
+
+
+#这段是添加slave节点的
+#kubeadm join 192.168.141.200:6444 --token abcdef.0123456789abcdef \
+#    --discovery-token-ca-cert-hash sha256:2ea8c138021fb1e184a24ed2a81c16c92f9f25c635c73918b1402df98f9c8aad 
+
+
+#添加好master节点与slave节点
+
+
+6.安装 Nginx Ingress Controller
+#修改配置文件，找到配置如下位置 (搜索 serviceAccountName) 在下面增加一句 hostNetwork: true
+wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
+
+6.配置nfs服务器
+mkdir -p /usr/local/kubernetes/volumes
+chmod a+rw /usr/local/kubernetes/volumes
+apt-get update
+apt-get install -y nfs-kernel-server
+
+#写入 /usr/local/kubernetes/volumes *(rw,sync,no_subtree_check)
+nano /etc/exports
+
+/etc/init.d/nfs-kernel-server restart
+
+
+7.全部node节点配置nfs
+apt-get install -y nfs-common
+/usr/local/kubernetes/volumes *(rw,sync,no_subtree_check,no_root_squash)
+
+
+8.安装Kuboard
+kubectl apply -f https://kuboard.cn/install-script/kuboard.yaml
+#访问需要token 在这获取
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep kuboard-user | awk '{print $1}')
+
+
+
+
+
+
+
