@@ -1,0 +1,39 @@
+1.下载安装包
+ http://skywalking.apache.org/downloads/
+ 
+ 2.请准备es
+ #docker-compose为
+###########内容 Begin###########
+ 
+ version: '3.3'
+services:
+  elasticsearch:
+    image: wutang/elasticsearch-shanghai-zone:6.3.2
+    container_name: elasticsearch
+    restart: always
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      cluster.name: elasticsearch
+      
+############内容 End###############
+
+3.解压后进入apache-skywalking-apm-incubating/config目录并修改 application.yml 配置文件
+#注释 H2 存储方案
+#启用 ElasticSearch 存储方案
+#修改 ElasticSearch 服务器地址
+#启动 SkyWalking
+
+
+
+4.修改完配置后，进入 apache-skywalking-apm-incubating\bin 目录，运行 startup.bat 启动服务端
+
+
+
+
+
+
+
+
+ 
