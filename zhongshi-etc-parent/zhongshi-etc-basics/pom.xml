@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zhongshi</groupId>
+		<artifactId>zhongshi-etc-parent</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
+	<artifactId>zhongshi-etc-basics</artifactId>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>zhongshi-etc-basics-nacos</module>
+		<module>zhongshi-etc-basics-gateway</module>
+		<module>zhongshi-etc-basics-sentinel</module>
+		<module>zhongshi-etc-basics-lcn</module>  
+		<module>zhongshi-etc-basics-skywalking</module> 
+		<module>zhongshi-etc-basics-job</module>
+		<module>zhongshi-etc-basics-sso</module>
+		<module>zhongshi-etc-basics-bootadmin</module>
+	</modules>
+
+	<!-- boot打包 Begin -->    
+   
+	<build>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>  
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.1.5.RELEASE</version>
+				<configuration> 
+					<mainClass>${application-run}</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version> 
+					</dependency>
+				</dependencies>
+			</plugin>   
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>   
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>  
+		</plugins>
+	</build>
+
+	<!-- boot打包 End -->
+
+</project>

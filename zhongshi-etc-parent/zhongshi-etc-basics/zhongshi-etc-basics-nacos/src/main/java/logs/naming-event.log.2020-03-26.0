@@ -1,0 +1,434 @@
+2020-03-26 15:51:47,156 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 15:51:47,164 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 15:52:28,473 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 15:52:28,475 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 15:59:24,623 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 15:59:24,629 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:00:21,570 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:00:21,570 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:03:39,666 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585209799938
+
+2020-03-26 16:03:41,625 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585209801798
+
+2020-03-26 16:03:54,957 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:03:54,957 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:03:56,650 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:03:56,650 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:04:20,757 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:04:20,757 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:05:07,701 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:05:07,702 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:05:59,968 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585209940907
+
+2020-03-26 16:06:02,711 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585209942747
+
+2020-03-26 16:06:14,977 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:06:14,977 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:06:17,715 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:06:17,715 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:08:21,698 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:08:21,698 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:12:55,064 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585210356989
+
+2020-03-26 16:13:10,071 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:13:10,071 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:14:15,647 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:14:15,647 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:15:02,260 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:15:02,260 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:15:45,669 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585210525778
+
+2020-03-26 16:15:47,270 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585210527284
+
+2020-03-26 16:16:00,674 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:16:00,674 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:16:02,277 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:16:02,277 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:19:54,649 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:19:54,649 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:21:04,818 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:21:04,818 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:25:59,745 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585211140068
+
+2020-03-26 16:26:04,877 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585211145212
+
+2020-03-26 16:26:14,754 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:26:14,754 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:26:19,881 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:26:19,881 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:27:56,408 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:27:56,408 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:28:30,744 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:28:30,744 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:29:26,430 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585211346507
+
+2020-03-26 16:29:30,756 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585211350779
+
+2020-03-26 16:29:41,439 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:29:41,439 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:29:45,771 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:29:45,771 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:30:13,966 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:30:13,967 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:31:00,211 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:31:00,212 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:32:23,991 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585211524192
+
+2020-03-26 16:32:25,235 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585211525272
+
+2020-03-26 16:32:38,999 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:32:38,999 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:32:40,241 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:32:40,241 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:33:21,923 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:33:21,923 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:34:37,100 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:34:37,100 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:38:05,341 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:38:05,345 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:38:05,346 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:38:43,119 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:38:43,119 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:39:15,329 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585211935422
+
+2020-03-26 16:39:18,126 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585211938149
+
+2020-03-26 16:39:30,488 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:39:30,488 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:39:33,137 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:39:33,137 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:40:14,525 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:40:14,525 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:41:36,867 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:41:36,867 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:43:56,900 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585212216973
+
+2020-03-26 16:43:59,584 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585212219793
+
+2020-03-26 16:44:11,907 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:44:11,907 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:44:14,588 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:44:14,588 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:47:14,616 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:47:14,616 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:47:49,499 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:47:49,499 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:48:19,507 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585212479514
+
+2020-03-26 16:48:19,630 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585212479712
+
+2020-03-26 16:48:34,519 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:48:34,520 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:48:34,636 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:48:34,636 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 16:49:22,585 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:49:22,585 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:49:58,430 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:49:58,430 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:54:07,277 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:54:07,281 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:54:07,283 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 16:54:39,936 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 16:54:39,937 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 16:56:09,960 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585212950009
+
+2020-03-26 16:56:12,275 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585212952396
+
+2020-03-26 16:56:25,091 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:56:25,091 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 16:56:27,280 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 16:56:27,280 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 17:04:44,868 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:04:44,868 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 17:05:21,358 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:05:21,358 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 17:06:37,678 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585213580024
+
+2020-03-26 17:06:40,364 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585213581423
+
+2020-03-26 17:06:52,695 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:06:52,695 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 17:06:55,369 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:06:55,369 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 17:07:40,612 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:07:40,612 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 17:08:12,509 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:08:12,509 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 17:10:35,655 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585213815881
+
+2020-03-26 17:10:37,540 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585213817659
+
+2020-03-26 17:10:50,662 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:10:50,662 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 17:10:52,548 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:10:52,548 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 17:11:40,765 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:11:40,765 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 17:13:03,857 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:13:03,857 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 17:13:40,782 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585214000934
+
+2020-03-26 17:13:43,863 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585214003888
+
+2020-03-26 17:13:55,792 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:13:55,792 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 17:13:58,866 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:13:58,866 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 17:16:03,066 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:16:03,066 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 192.168.31.93:40000_true,
+
+2020-03-26 17:16:41,455 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:16:41,456 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 192.168.31.93:1000_true,
+
+2020-03-26 17:17:21,108 INFO DEFAULT_GROUP@@zhongshi-etc-redis {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:60000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:17:21,108 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 192.168.31.93:60000_true,
+
+2020-03-26 17:17:21,108 INFO DEFAULT_GROUP@@zhongshi-etc-redis {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:60000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:17:21,108 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 192.168.31.93:60000_true,
+
+2020-03-26 17:18:28,226 INFO DEFAULT_GROUP@@zhongshi-etc-gateway {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:80:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:18:28,227 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 192.168.31.93:80_true,
+
+2020-03-26 17:18:28,229 INFO DEFAULT_GROUP@@zhongshi-etc-gateway {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:80:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:18:28,231 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 192.168.31.93:80_true,
+
+2020-03-26 17:18:28,232 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 192.168.31.93:80_true,
+
+2020-03-26 17:18:28,232 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 192.168.31.93:80_true,
+
+2020-03-26 17:18:44,559 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:18:44,560 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:20:19,578 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585214399657
+
+2020-03-26 17:20:34,624 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:20:34,625 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+
+2020-03-26 17:20:44,202 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:20:44,202 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:26:54,261 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585214794607
+
+2020-03-26 17:27:09,284 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:27:09,284 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+
+2020-03-26 17:27:27,674 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:27:27,674 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:29:32,703 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585214952779
+
+2020-03-26 17:29:47,712 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:29:47,712 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+
+2020-03-26 17:36:41,670 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:60000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-redis, region: unknown, msg: client timeout after 15000, last beat: 1585215382652
+
+2020-03-26 17:36:41,803 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:1000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-sso, region: unknown, msg: client timeout after 15000, last beat: 1585215383010
+
+2020-03-26 17:36:43,438 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:80@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-gateway, region: unknown, msg: client timeout after 15000, last beat: 1585215384341
+
+2020-03-26 17:36:43,438 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:80@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-gateway, region: unknown, msg: client timeout after 15000, last beat: 1585215384341
+
+2020-03-26 17:36:43,543 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:40000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-user, region: unknown, msg: client timeout after 15000, last beat: 1585215384783
+
+2020-03-26 17:36:56,680 INFO DEFAULT_GROUP@@zhongshi-etc-redis {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:60000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:56,680 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 
+
+2020-03-26 17:36:56,680 INFO DEFAULT_GROUP@@zhongshi-etc-redis {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:60000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:56,680 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 
+
+2020-03-26 17:36:56,680 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 
+
+2020-03-26 17:36:56,680 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-redis, ips: 
+
+2020-03-26 17:36:56,809 INFO DEFAULT_GROUP@@zhongshi-etc-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:56,809 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-sso, ips: 
+
+2020-03-26 17:36:58,442 INFO DEFAULT_GROUP@@zhongshi-etc-gateway {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:80:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:58,442 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 
+
+2020-03-26 17:36:58,442 INFO DEFAULT_GROUP@@zhongshi-etc-gateway {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:80:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:58,443 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 
+
+2020-03-26 17:36:58,443 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 
+
+2020-03-26 17:36:58,443 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-gateway, ips: 
+
+2020-03-26 17:36:58,548 INFO DEFAULT_GROUP@@zhongshi-etc-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:36:58,548 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-user, ips: 
+
+2020-03-26 17:38:18,462 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:38:18,462 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:38:43,465 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585215503481
+
+2020-03-26 17:38:58,472 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:38:58,472 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+
+2020-03-26 17:42:19,562 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:42:19,562 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:43:18,526 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585215779618
+
+2020-03-26 17:43:33,533 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:43:33,533 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+
+2020-03-26 17:45:15,805 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2020-03-26 17:45:15,805 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_true,
+
+2020-03-26 17:48:15,850 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585216075955
+
+2020-03-26 17:48:22,553 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 192.168.31.93:2000_false,
+
+2020-03-26 17:48:22,560 INFO service: DEFAULT_GROUP@@zhongshi-etc-bootadmin {POS} {IP-ENABLED} valid: 192.168.31.93:2000@DEFAULT, region: unknown, msg: client beat ok
+
+2020-03-26 17:57:00,963 INFO {POS} {IP-DISABLED} valid: 192.168.31.93:2000@DEFAULT@DEFAULT_GROUP@@zhongshi-etc-bootadmin, region: unknown, msg: client timeout after 15000, last beat: 1585216602950
+
+2020-03-26 17:57:15,969 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.31.93:2000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2020-03-26 17:57:15,969 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@zhongshi-etc-bootadmin, ips: 
+

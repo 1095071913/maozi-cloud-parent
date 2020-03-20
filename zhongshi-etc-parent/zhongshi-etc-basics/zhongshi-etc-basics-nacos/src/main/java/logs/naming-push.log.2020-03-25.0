@@ -1,0 +1,150 @@
+2020-03-25 10:00:43,280 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:01:30,076 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:02:38,321 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:02:40,091 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:02:53,440 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:02:55,097 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:03:54,977 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:05:44,998 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:06:00,011 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:07:10,214 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:07:50,206 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:10:30,248 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:10:35,237 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:10:45,255 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:10:50,240 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:11:30,024 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:12:22,538 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:13:05,044 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:13:07,550 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:13:20,049 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:13:22,555 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:15:13,027 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:15:47,721 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:19:08,064 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:19:12,772 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:19:23,070 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:19:27,768 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:28:28,804 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:29:33,017 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:30:53,037 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:30:53,834 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:31:08,044 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:31:08,840 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:31:56,138 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:32:28,951 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:34:46,177 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:34:48,975 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 10:35:01,183 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 10:35:03,977 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:17:05,935 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:17:48,664 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:19:05,926 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:19:08,682 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:19:21,053 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:19:23,685 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:21:54,206 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:22:25,682 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:22:25,685 INFO serviceName: DEFAULT_GROUP@@mountain-shop-sso changed, schedule push for: 192.168.31.93:59625, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,59625,185854272992200
+
+2020-03-25 14:22:25,685 INFO send udp packet: 192.168.31.93,59625,185854272992200
+
+2020-03-25 14:22:25,704 INFO received ack: {"type": "push-ack", "lastRefTime":"185854272992200", "data":""} from: 192.168.31.93:, cost: 59625 ms, unacked: 19, total push: 0
+
+2020-03-25 14:24:03,741 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:24:06,097 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:24:18,750 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:24:21,100 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:25:41,788 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:26:33,874 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:27:38,886 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:27:41,970 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:27:53,892 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 14:27:56,977 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:50:25,146 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 14:51:41,522 INFO DEFAULT_GROUP@@mountain-shop-sso is changed, add it to push queue.
+
+2020-03-25 16:14:16,771 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2020-03-25 16:19:23,590 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2020-03-25 16:19:26,317 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2020-03-25 16:22:58,637 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2020-03-25 16:23:13,731 INFO DEFAULT_GROUP@@mountain-shop-gateway is changed, add it to push queue.
+
+2020-03-25 16:24:49,590 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:14:03,222 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:16:58,195 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:17:13,418 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:21:09,675 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:22:38,450 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:22:53,458 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+
+2020-03-25 17:34:24,011 INFO DEFAULT_GROUP@@mountain-shop-user is changed, add it to push queue.
+

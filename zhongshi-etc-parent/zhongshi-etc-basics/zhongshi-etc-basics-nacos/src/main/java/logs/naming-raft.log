@@ -1,0 +1,838 @@
+2020-03-27 11:30:52,873 INFO initializing Raft sub-system
+
+2020-03-27 11:30:52,874 INFO raft notifier started
+
+2020-03-27 11:30:52,777 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 11:30:52,891 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 11:30:52,925 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-27 11:30:52,929 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-27 11:30:52,930 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-27 11:30:52,930 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-27 11:30:52,931 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-27 11:30:52,931 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-27 11:30:52,931 INFO finish loading all datums, size: 3 cost 57 ms.
+
+2020-03-27 11:30:52,933 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-27 11:30:52,933 INFO finish to load data from disk, cost: 59 ms.
+
+2020-03-27 11:30:52,936 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-27 11:30:52,995 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-27 11:30:52,995 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 11:30:53,174 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 11:30:53,206 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 11:30:53,210 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 11:30:53,211 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 11:30:53,214 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 11:30:55,206 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-27 11:30:57,773 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 11:30:57,773 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 11:30:57,773 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 11:31:12,777 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 11:31:34,994 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:52:52,606 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:43,006 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 12:54:43,008 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 12:54:43,008 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 12:54:43,008 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-27 12:54:43,008 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 12:54:43,008 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-27 12:54:43,009 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 12:54:45,181 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:45,181 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:45,181 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:45,181 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 12:54:45,181 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:45,181 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 12:54:45,182 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:54:46,706 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 12:54:46,706 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 12:54:46,706 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 12:54:46,707 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-27 12:54:46,707 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 12:54:46,707 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-27 12:54:46,707 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 12:54:49,972 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 12:54:49,972 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 12:54:49,972 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 12:54:49,972 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-27 12:54:49,972 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 12:54:49,972 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-27 12:54:49,972 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 12:56:19,346 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:57:36,540 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:57:36,540 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:57:36,540 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:57:36,540 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 12:57:36,540 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:57:36,540 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 12:57:36,541 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:57:38,272 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:57:38,272 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:57:38,272 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:57:38,273 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 12:57:38,273 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:57:38,273 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 12:57:38,273 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 12:58:19,488 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 12:59:06,817 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:04,367 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:04,367 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:04,367 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:04,368 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:07:04,368 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:04,368 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:07:04,368 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:07:06,070 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:07:06,070 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:07:06,070 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:07:06,073 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:07:06,073 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:07:06,073 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:07:06,074 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:07:31,139 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:08:53,623 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:33,025 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:33,033 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:33,033 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:33,035 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:13:33,041 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:33,041 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:13:33,041 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:13:34,708 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:13:34,708 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:13:34,708 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:13:34,711 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:13:34,711 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:13:34,711 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:13:34,711 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:14:00,956 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:14:35,947 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:08,322 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:08,323 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:08,323 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:08,323 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:16:08,324 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:08,324 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:16:08,324 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:16:10,125 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:16:10,125 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:16:10,125 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:16:10,126 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:16:10,126 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:16:10,126 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:16:10,126 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:16:35,367 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:18:49,991 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:23,791 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:23,791 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:23,791 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:23,792 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:22:23,793 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:23,793 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:22:23,793 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:22:25,483 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:22:25,483 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:22:25,483 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:22:25,483 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:22:25,483 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:22:25,483 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:22:25,483 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:22:58,214 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:23:51,601 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:33,980 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:33,980 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:33,980 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:33,981 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:25:33,981 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:33,981 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:25:33,981 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:25:35,694 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:25:35,694 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:25:35,694 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:25:35,695 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:25:35,695 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:25:35,695 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:25:35,695 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:25:56,763 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:26:33,236 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:31:01,011 INFO initializing Raft sub-system
+
+2020-03-27 13:31:01,012 INFO raft notifier started
+
+2020-03-27 13:31:00,942 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:01,022 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:01,039 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-27 13:31:01,042 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-27 13:31:01,043 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-27 13:31:01,043 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-27 13:31:01,044 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:01,044 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:01,044 INFO finish loading all datums, size: 3 cost 32 ms.
+
+2020-03-27 13:31:01,045 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-27 13:31:01,045 INFO finish to load data from disk, cost: 33 ms.
+
+2020-03-27 13:31:01,047 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-27 13:31:01,086 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-27 13:31:01,086 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 13:31:01,203 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:01,221 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 13:31:01,223 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:01,224 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-27 13:31:01,226 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:02,976 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-27 13:31:05,938 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:05,938 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:05,938 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:12,725 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:12,725 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:12,725 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:12,726 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-27 13:31:12,727 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:12,727 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-27 13:31:12,727 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-27 13:31:14,612 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:14,612 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:14,612 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:14,613 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-27 13:31:14,613 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:14,613 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-27 13:31:14,613 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-27 13:31:16,354 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:16,354 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:16,354 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:16,354 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-27 13:31:16,355 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:16,355 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-27 13:31:16,355 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-27 13:31:20,946 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.63","key":"192.168.31.63:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-27 13:31:54,957 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:32:27,482 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:17,553 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:17,553 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:17,553 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:17,553 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:35:17,554 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:17,554 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:35:17,554 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:35:19,659 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:35:19,659 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:35:19,659 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:35:19,659 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:35:19,659 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:35:19,659 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:35:19,660 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:35:55,778 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:37:10,970 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:52,876 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:52,877 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:52,877 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:40:52,877 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:52,877 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:52,877 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:40:52,877 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:40:54,493 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:40:54,493 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:40:54,493 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:40:54,493 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:40:54,494 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:40:54,494 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:40:54,494 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:41:31,230 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:42:12,943 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:44:30,531 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:45:57,621 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:45:57,622 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:45:57,622 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:45:57,622 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:45:57,622 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:45:57,622 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 13:45:57,623 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:46:00,630 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:46:00,632 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:46:00,632 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:46:00,633 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 13:46:00,633 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:46:00,633 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 13:46:00,633 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 13:46:16,214 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:46:16,214 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:46:16,214 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:46:16,214 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:46:16,214 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:46:16,214 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 13:46:16,214 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 13:51:27,480 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 13:54:05,642 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:49,437 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:49,438 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:49,438 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:49,438 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:04:49,438 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:49,438 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:04:49,439 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:04:51,017 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:04:51,017 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:04:51,017 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:04:51,018 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:04:51,018 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:04:51,018 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:04:51,018 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:22:11,865 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:22:51,665 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:23:17,067 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:07,845 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:27:07,846 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:27:07,846 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:27:07,847 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:27:07,847 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:27:07,847 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:27:07,847 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:27:10,063 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:10,064 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:10,064 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:10,064 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 14:27:10,064 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:10,064 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 14:27:10,066 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:27:12,045 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:27:12,045 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:27:12,045 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:27:12,045 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:27:12,045 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:27:12,045 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:27:12,045 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:27:44,753 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:28:27,726 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:03,912 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:03,913 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 14:35:03,914 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:03,914 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:03,914 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:03,914 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 14:35:03,914 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 14:35:05,629 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:35:05,629 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:35:05,629 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:35:05,629 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:35:05,629 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:35:05,629 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:35:05,629 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:35:40,728 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:37:12,189 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:18,801 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:18,801 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:18,801 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:18,802 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:56:18,802 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:18,802 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:56:18,802 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:56:21,190 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:56:21,190 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:56:21,190 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:56:21,191 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:56:21,191 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:56:21,191 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:56:21,191 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:57:08,200 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:58:03,081 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:33,843 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:33,843 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:33,843 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:33,843 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:59:33,843 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:33,843 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 14:59:33,844 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 14:59:38,029 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:59:38,029 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:59:38,029 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:59:38,030 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:59:38,030 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 14:59:38,030 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 14:59:38,030 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 15:00:42,110 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 15:15:07,804 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 15:15:42,509 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:36,200 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:01:36,201 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:01:36,201 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:01:36,202 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:01:36,202 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:01:36,202 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:01:36,204 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:01:55,512 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:55,512 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:55,512 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:55,512 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:01:55,512 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:55,512 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:01:55,512 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:01:57,327 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:01:57,327 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:01:57,327 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:01:57,328 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:01:57,328 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:01:57,328 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:01:57,328 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:03:02,501 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:03:52,104 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:04:23,930 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:42,358 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:42,358 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:42,358 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:42,359 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:28:42,359 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:42,359 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:28:42,361 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:28:43,903 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:28:43,903 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:28:43,903 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:28:43,905 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:28:43,905 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:28:43,905 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:28:43,905 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:28:45,494 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:28:45,495 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:28:45,495 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:28:45,495 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:28:45,495 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:28:45,495 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:28:45,496 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:29:20,444 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:30:01,357 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:30:36,504 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:51,082 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:51,082 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:51,082 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:51,083 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:39:51,083 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:51,083 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway, term=5940
+
+2020-03-27 17:39:51,085 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+
+2020-03-27 17:39:52,818 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:39:52,818 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:39:52,818 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:39:52,818 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:39:52,818 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:39:52,818 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso, term=5940
+
+2020-03-27 17:39:52,819 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:39:54,203 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:39:54,203 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:39:54,203 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:39:54,204 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:39:54,204 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:39:54,204 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user, term=5940
+
+2020-03-27 17:39:54,204 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:41:27,070 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-user
+
+2020-03-27 17:42:06,022 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-sso
+
+2020-03-27 17:42:32,181 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@zhongshi-etc-gateway
+

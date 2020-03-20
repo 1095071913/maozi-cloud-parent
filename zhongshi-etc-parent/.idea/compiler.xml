@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mountain-shop-config-feign" />
+        <module name="mountain-shop-config-db" />
+        <module name="mountain-shop-config-sso" />
+        <module name="mountain-shop-basics-lcn" />
+        <module name="mountain-shop-service-rest-api-pay" />
+        <module name="mountain-shop-service-rest-api-user" />
+        <module name="mountain-shop-pay-do" />
+        <module name="mountain-shop-user-dto" />
+        <module name="mountain-shop-config-bootadmin" />
+        <module name="mountain-shop-service-base-run" />
+        <module name="mountain-shop-service-pay" />
+        <module name="mountain-shop-user-vo" />
+        <module name="mountain-shop-base-dto" />
+        <module name="mountain-shop-common-tool" />
+        <module name="mountain-shop-service-rpc-api-sso" />
+        <module name="mountain-shop-service-base-impl" />
+        <module name="mountain-shop-basics-nacos" />
+        <module name="mountain-shop-basics-sentinel" />
+        <module name="mountain-shop-basics-gateway" />
+        <module name="mountain-shop-base-vo" />
+        <module name="mountain-shop-basics-sso" />
+        <module name="mountain-shop-service-base-api" />
+        <module name="mountain-shop-service-rest-api-redis" />
+        <module name="mountain-shop-common-unionpay" />
+        <module name="mountain-shop-base-do" />
+        <module name="mountain-shop-sso-do" />
+        <module name="mountain-shop-basics-bootadmin" />
+        <module name="mountain-shop-user-do" />
+        <module name="mountain-shop-config-seata" />
+        <module name="mountain-shop-config-sentinel" />
+        <module name="mountain-shop-common-generate" />
+        <module name="mountain-shop-service-rpc-api-user" />
+        <module name="mountain-shop-service-user-mq-consume" />
+        <module name="mountain-shop-common-pdman" />
+        <module name="mountain-shop-sso-dto" />
+        <module name="mountain-shop-config-mvc" />
+        <module name="mountain-shop-result" />
+        <module name="mountain-shop-service-user" />
+        <module name="mountain-shop-basics-skywalking" />
+        <module name="mountain-shop-config-log" />
+        <module name="mountain-shop-common-dubbo-generic" />
+        <module name="mountain-shop-service-mq-api-user" />
+        <module name="mountain-shop-service-redis" />
+        <module name="mountain-shop-service-rest-api-sso" />
+        <module name="mountain-shop-test-lambda" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mountain-shop-api-entity" target="8" />
+      <module name="mountain-shop-base-do" target="8" />
+      <module name="mountain-shop-base-dto" target="8" />
+      <module name="mountain-shop-base-entity" target="8" />
+      <module name="mountain-shop-base-vo" target="8" />
+      <module name="mountain-shop-basics" target="8" />
+      <module name="mountain-shop-basics-bootadmin" target="8" />
+      <module name="mountain-shop-basics-gateway" target="8" />
+      <module name="mountain-shop-basics-job" target="1.7" />
+      <module name="mountain-shop-basics-lcn" target="1.8" />
+      <module name="mountain-shop-basics-nacos" target="8" />
+      <module name="mountain-shop-basics-sentinel" target="8" />
+      <module name="mountain-shop-basics-skywalking" target="8" />
+      <module name="mountain-shop-basics-sso" target="8" />
+      <module name="mountain-shop-common" target="8" />
+      <module name="mountain-shop-common-dubbo-generic" target="8" />
+      <module name="mountain-shop-common-generate" target="8" />
+      <module name="mountain-shop-common-pay-core" target="8" />
+      <module name="mountain-shop-common-pdman" target="8" />
+      <module name="mountain-shop-common-tool" target="8" />
+      <module name="mountain-shop-common-unionpay" target="8" />
+      <module name="mountain-shop-config" target="8" />
+      <module name="mountain-shop-config-bootadmin" target="8" />
+      <module name="mountain-shop-config-db" target="8" />
+      <module name="mountain-shop-config-feign" target="8" />
+      <module name="mountain-shop-config-log" target="8" />
+      <module name="mountain-shop-config-mvc" target="8" />
+      <module name="mountain-shop-config-seata" target="8" />
+      <module name="mountain-shop-config-sentinel" target="8" />
+      <module name="mountain-shop-config-sso" target="8" />
+      <module name="mountain-shop-do" target="8" />
+      <module name="mountain-shop-dto" target="8" />
+      <module name="mountain-shop-parent" target="8" />
+      <module name="mountain-shop-pay-do" target="8" />
+      <module name="mountain-shop-result" target="8" />
+      <module name="mountain-shop-service" target="8" />
+      <module name="mountain-shop-service-base" target="8" />
+      <module name="mountain-shop-service-base-api" target="8" />
+      <module name="mountain-shop-service-base-impl" target="8" />
+      <module name="mountain-shop-service-base-run" target="8" />
+      <module name="mountain-shop-service-impl" target="8" />
+      <module name="mountain-shop-service-mq-api" target="8" />
+      <module name="mountain-shop-service-mq-api-user" target="8" />
+      <module name="mountain-shop-service-mq-consume" target="8" />
+      <module name="mountain-shop-service-pay" target="8" />
+      <module name="mountain-shop-service-redis" target="8" />
+      <module name="mountain-shop-service-rest-api" target="8" />
+      <module name="mountain-shop-service-rest-api-pay" target="8" />
+      <module name="mountain-shop-service-rest-api-redis" target="8" />
+      <module name="mountain-shop-service-rest-api-sso" target="8" />
+      <module name="mountain-shop-service-rest-api-user" target="8" />
+      <module name="mountain-shop-service-rpc-api" target="8" />
+      <module name="mountain-shop-service-rpc-api-sso" target="8" />
+      <module name="mountain-shop-service-rpc-api-user" target="8" />
+      <module name="mountain-shop-service-user" target="8" />
+      <module name="mountain-shop-service-user-mq-consume" target="8" />
+      <module name="mountain-shop-sso-do" target="8" />
+      <module name="mountain-shop-sso-dto" target="8" />
+      <module name="mountain-shop-test" target="8" />
+      <module name="mountain-shop-test-lambda" target="8" />
+      <module name="mountain-shop-user-do" target="8" />
+      <module name="mountain-shop-user-dto" target="8" />
+      <module name="mountain-shop-user-vo" target="8" />
+      <module name="mountain-shop-vo" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,39 @@
+2020-03-24 09:29:06,743 INFO distro notifier started
+
+2020-03-24 11:15:27,567 INFO distro notifier started
+
+2020-03-24 11:36:26,129 INFO distro notifier started
+
+2020-03-24 11:44:51,272 INFO distro notifier started
+
+2020-03-24 11:55:18,331 INFO distro notifier started
+
+2020-03-24 12:53:14,319 INFO distro notifier started
+
+2020-03-24 13:25:15,779 INFO distro notifier started
+
+2020-03-24 13:43:18,136 INFO distro notifier started
+
+2020-03-24 13:49:08,492 INFO distro notifier started
+
+2020-03-24 14:08:01,140 INFO distro notifier started
+
+2020-03-24 14:13:22,220 INFO distro notifier started
+
+2020-03-24 14:18:35,445 ERROR [NACOS-DISTRO] Error while handling notifying task
+
+java.lang.NullPointerException: null
+	at com.alibaba.nacos.naming.consistency.ephemeral.distro.DistroConsistencyServiceImpl$Notifier.run(DistroConsistencyServiceImpl.java:401)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+2020-03-24 14:25:54,342 INFO distro notifier started
+
+2020-03-24 14:38:22,912 INFO distro notifier started
+
+2020-03-24 18:00:02,238 INFO distro notifier started
+

@@ -1,0 +1,466 @@
+2020-03-26 15:51:48,164 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 15:52:29,475 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 15:59:25,631 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:00:22,571 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:03:40,667 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:03:42,626 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:03:55,959 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:03:57,652 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:04:21,758 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:05:08,702 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:05:08,705 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-sso changed, schedule push for: 192.168.31.93:64241, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,64241,278418477153300
+
+2020-03-26 16:05:08,706 INFO send udp packet: 192.168.31.93,64241,278418477153300
+
+2020-03-26 16:05:08,716 INFO received ack: {"type": "push-ack", "lastRefTime":"278418477153300", "data":""} from: 192.168.31.93:, cost: 64241 ms, unacked: 10, total push: 0
+
+2020-03-26 16:06:00,969 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:06:03,711 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:06:15,978 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:06:18,716 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:08:22,700 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:12:56,066 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:13:11,072 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:14:16,649 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:15:03,261 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:15:46,670 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:15:48,272 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:16:01,676 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:16:03,279 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:19:55,650 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:21:05,819 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:26:00,746 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:26:05,877 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:26:15,754 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:26:20,883 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:27:57,409 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:28:31,745 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:29:27,431 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:29:31,758 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:29:42,440 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:29:46,772 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:30:14,968 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:31:01,212 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:31:01,212 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-sso changed, schedule push for: 192.168.31.93:63718, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,63718,279970986682700
+
+2020-03-26 16:31:01,212 INFO send udp packet: 192.168.31.93,63718,279970986682700
+
+2020-03-26 16:31:01,218 INFO received ack: {"type": "push-ack", "lastRefTime":"279970986682700", "data":""} from: 192.168.31.93:, cost: 63718 ms, unacked: 6, total push: 0
+
+2020-03-26 16:32:24,991 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:32:26,236 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:32:40,000 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:32:41,242 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:33:22,924 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:34:38,101 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:38:06,346 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:38:44,121 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:39:16,330 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:39:19,128 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:39:31,489 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:39:34,139 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:40:15,526 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:41:37,869 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:43:57,901 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:44:00,585 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:44:12,909 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:44:15,590 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:47:15,618 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:47:50,501 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:48:20,509 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:48:20,632 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:48:35,521 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:48:35,636 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:49:23,587 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:49:59,431 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:54:08,282 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:54:40,938 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:56:10,962 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:56:13,277 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 16:56:26,093 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 16:56:28,282 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:04:45,869 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:05:22,359 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:05:22,363 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-sso changed, schedule push for: 192.168.31.93:52037, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52037,282032135089100
+
+2020-03-26 17:05:22,363 INFO send udp packet: 192.168.31.93,52037,282032135089100
+
+2020-03-26 17:05:22,386 INFO received ack: {"type": "push-ack", "lastRefTime":"282032135089100", "data":""} from: 192.168.31.93:, cost: 52037 ms, unacked: 22, total push: 0
+
+2020-03-26 17:06:38,679 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:06:41,367 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:06:53,697 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:06:56,370 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:07:41,614 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:08:13,510 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:10:36,656 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:10:38,542 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:10:51,663 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:10:53,550 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:11:41,766 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:13:04,857 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:13:41,783 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:13:44,865 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:13:56,793 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:13:59,868 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:16:04,068 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:16:42,457 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:17:22,109 INFO DEFAULT_GROUP@@zhongshi-etc-redis is changed, add it to push queue.
+
+2020-03-26 17:18:29,229 INFO DEFAULT_GROUP@@zhongshi-etc-gateway is changed, add it to push queue.
+
+2020-03-26 17:18:45,560 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:18:45,562 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52185, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52185,282835334991200
+
+2020-03-26 17:18:45,562 INFO send udp packet: 192.168.31.93,52185,282835334991200
+
+2020-03-26 17:18:45,571 INFO received ack: {"type": "push-ack", "lastRefTime":"282835334991200", "data":""} from: 192.168.31.93:, cost: 52185 ms, unacked: 9, total push: 0
+
+2020-03-26 17:20:20,586 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:20:20,590 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,282930361746100
+
+2020-03-26 17:20:20,590 INFO send udp packet: 192.168.31.93,56460,282930361746100
+
+2020-03-26 17:20:20,591 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,282930361746100
+
+2020-03-26 17:20:20,591 INFO send udp packet: 192.168.31.93,54387,282930361746100
+
+2020-03-26 17:20:20,593 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,282930361746100
+
+2020-03-26 17:20:20,593 INFO send udp packet: 192.168.31.93,54401,282930361746100
+
+2020-03-26 17:20:20,594 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,282930361746100
+
+2020-03-26 17:20:20,595 INFO send udp packet: 192.168.31.93,52188,282930361746100
+
+2020-03-26 17:20:20,628 INFO received ack: {"type": "push-ack", "lastRefTime":"282930361746100", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 38, total push: 3
+
+2020-03-26 17:20:20,629 INFO received ack: {"type": "push-ack", "lastRefTime":"282930361746100", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 38, total push: 2
+
+2020-03-26 17:20:20,630 INFO received ack: {"type": "push-ack", "lastRefTime":"282930361746100", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 35, total push: 1
+
+2020-03-26 17:20:20,631 INFO received ack: {"type": "push-ack", "lastRefTime":"282930361746100", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 38, total push: 0
+
+2020-03-26 17:20:35,626 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:20:35,627 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,282945400645000
+
+2020-03-26 17:20:35,627 INFO send udp packet: 192.168.31.93,56460,282945400645000
+
+2020-03-26 17:20:35,627 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,282945400645000
+
+2020-03-26 17:20:35,627 INFO send udp packet: 192.168.31.93,54387,282945400645000
+
+2020-03-26 17:20:35,627 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,282945400645000
+
+2020-03-26 17:20:35,627 INFO send udp packet: 192.168.31.93,54401,282945400645000
+
+2020-03-26 17:20:35,628 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,282945400645000
+
+2020-03-26 17:20:35,628 INFO send udp packet: 192.168.31.93,52188,282945400645000
+
+2020-03-26 17:20:35,632 INFO received ack: {"type": "push-ack", "lastRefTime":"282945400645000", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 5, total push: 3
+
+2020-03-26 17:20:35,633 INFO received ack: {"type": "push-ack", "lastRefTime":"282945400645000", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 6, total push: 2
+
+2020-03-26 17:20:35,633 INFO received ack: {"type": "push-ack", "lastRefTime":"282945400645000", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 6, total push: 1
+
+2020-03-26 17:20:35,634 INFO received ack: {"type": "push-ack", "lastRefTime":"282945400645000", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 6, total push: 0
+
+2020-03-26 17:20:45,205 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:20:45,205 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:59819, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,59819,282954979402700
+
+2020-03-26 17:20:45,205 INFO send udp packet: 192.168.31.93,59819,282954979402700
+
+2020-03-26 17:20:45,206 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,282954979402700
+
+2020-03-26 17:20:45,206 INFO send udp packet: 192.168.31.93,52188,282954979402700
+
+2020-03-26 17:20:45,209 INFO received ack: {"type": "push-ack", "lastRefTime":"282954979402700", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 3, total push: 1
+
+2020-03-26 17:20:45,211 INFO received ack: {"type": "push-ack", "lastRefTime":"282954979402700", "data":""} from: 192.168.31.93:, cost: 59819 ms, unacked: 6, total push: 0
+
+2020-03-26 17:26:55,263 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:26:55,265 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,283325038455300
+
+2020-03-26 17:26:55,266 INFO send udp packet: 192.168.31.93,56460,283325038455300
+
+2020-03-26 17:26:55,268 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,283325038455300
+
+2020-03-26 17:26:55,268 INFO send udp packet: 192.168.31.93,54387,283325038455300
+
+2020-03-26 17:26:55,271 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,283325038455300
+
+2020-03-26 17:26:55,271 INFO send udp packet: 192.168.31.93,54401,283325038455300
+
+2020-03-26 17:26:55,273 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,283325038455300
+
+2020-03-26 17:26:55,273 INFO send udp packet: 192.168.31.93,52188,283325038455300
+
+2020-03-26 17:26:55,274 INFO received ack: {"type": "push-ack", "lastRefTime":"283325038455300", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 8, total push: 3
+
+2020-03-26 17:26:55,275 INFO received ack: {"type": "push-ack", "lastRefTime":"283325038455300", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 7, total push: 2
+
+2020-03-26 17:26:55,280 INFO received ack: {"type": "push-ack", "lastRefTime":"283325038455300", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 7, total push: 1
+
+2020-03-26 17:26:55,281 INFO received ack: {"type": "push-ack", "lastRefTime":"283325038455300", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 10, total push: 0
+
+2020-03-26 17:27:10,289 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:27:10,290 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,283340064435900
+
+2020-03-26 17:27:10,290 INFO send udp packet: 192.168.31.93,56460,283340064435900
+
+2020-03-26 17:27:10,290 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,283340064435900
+
+2020-03-26 17:27:10,290 INFO send udp packet: 192.168.31.93,54387,283340064435900
+
+2020-03-26 17:27:10,290 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,283340064435900
+
+2020-03-26 17:27:10,290 INFO send udp packet: 192.168.31.93,54401,283340064435900
+
+2020-03-26 17:27:10,291 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,283340064435900
+
+2020-03-26 17:27:10,291 INFO send udp packet: 192.168.31.93,52188,283340064435900
+
+2020-03-26 17:27:10,292 INFO received ack: {"type": "push-ack", "lastRefTime":"283340064435900", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 2, total push: 3
+
+2020-03-26 17:27:10,294 INFO received ack: {"type": "push-ack", "lastRefTime":"283340064435900", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 4, total push: 2
+
+2020-03-26 17:27:10,294 INFO received ack: {"type": "push-ack", "lastRefTime":"283340064435900", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 4, total push: 1
+
+2020-03-26 17:27:10,296 INFO received ack: {"type": "push-ack", "lastRefTime":"283340064435900", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 5, total push: 0
+
+2020-03-26 17:27:28,675 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:27:28,677 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,283358449880500
+
+2020-03-26 17:27:28,677 INFO send udp packet: 192.168.31.93,56460,283358449880500
+
+2020-03-26 17:27:28,677 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,283358449880500
+
+2020-03-26 17:27:28,677 INFO send udp packet: 192.168.31.93,54387,283358449880500
+
+2020-03-26 17:27:28,677 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:53554, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,53554,283358449880500
+
+2020-03-26 17:27:28,677 INFO send udp packet: 192.168.31.93,53554,283358449880500
+
+2020-03-26 17:27:28,677 INFO received ack: {"type": "push-ack", "lastRefTime":"283358449880500", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 0, total push: 2
+
+2020-03-26 17:27:28,678 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,283358449880500
+
+2020-03-26 17:27:28,678 INFO send udp packet: 192.168.31.93,52188,283358449880500
+
+2020-03-26 17:27:28,678 INFO received ack: {"type": "push-ack", "lastRefTime":"283358449880500", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 1, total push: 1
+
+2020-03-26 17:27:28,679 INFO received ack: {"type": "push-ack", "lastRefTime":"283358449880500", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 1, total push: 1
+
+2020-03-26 17:27:28,682 INFO received ack: {"type": "push-ack", "lastRefTime":"283358449880500", "data":""} from: 192.168.31.93:, cost: 53554 ms, unacked: 5, total push: 0
+
+2020-03-26 17:29:33,704 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:29:33,705 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,283483478364600
+
+2020-03-26 17:29:33,705 INFO send udp packet: 192.168.31.93,56460,283483478364600
+
+2020-03-26 17:29:33,705 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,283483478364600
+
+2020-03-26 17:29:33,705 INFO send udp packet: 192.168.31.93,54387,283483478364600
+
+2020-03-26 17:29:33,706 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,283483478364600
+
+2020-03-26 17:29:33,706 INFO received ack: {"type": "push-ack", "lastRefTime":"283483478364600", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 1, total push: 1
+
+2020-03-26 17:29:33,706 INFO send udp packet: 192.168.31.93,54401,283483478364600
+
+2020-03-26 17:29:33,707 INFO received ack: {"type": "push-ack", "lastRefTime":"283483478364600", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 2, total push: 1
+
+2020-03-26 17:29:33,707 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,283483478364600
+
+2020-03-26 17:29:33,707 INFO send udp packet: 192.168.31.93,52188,283483478364600
+
+2020-03-26 17:29:33,707 INFO received ack: {"type": "push-ack", "lastRefTime":"283483478364600", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 1, total push: 1
+
+2020-03-26 17:29:33,708 INFO received ack: {"type": "push-ack", "lastRefTime":"283483478364600", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 1, total push: 0
+
+2020-03-26 17:29:48,713 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:29:48,713 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:56460, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,56460,283498487513100
+
+2020-03-26 17:29:48,713 INFO send udp packet: 192.168.31.93,56460,283498487513100
+
+2020-03-26 17:29:48,713 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54387, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54387,283498487513100
+
+2020-03-26 17:29:48,713 INFO send udp packet: 192.168.31.93,54387,283498487513100
+
+2020-03-26 17:29:48,713 INFO received ack: {"type": "push-ack", "lastRefTime":"283498487513100", "data":""} from: 192.168.31.93:, cost: 56460 ms, unacked: 0, total push: 1
+
+2020-03-26 17:29:48,713 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54401, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54401,283498487513100
+
+2020-03-26 17:29:48,713 INFO send udp packet: 192.168.31.93,54401,283498487513100
+
+2020-03-26 17:29:48,714 INFO received ack: {"type": "push-ack", "lastRefTime":"283498487513100", "data":""} from: 192.168.31.93:, cost: 54387 ms, unacked: 1, total push: 1
+
+2020-03-26 17:29:48,714 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:52188, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,52188,283498487513100
+
+2020-03-26 17:29:48,714 INFO send udp packet: 192.168.31.93,52188,283498487513100
+
+2020-03-26 17:29:48,714 INFO received ack: {"type": "push-ack", "lastRefTime":"283498487513100", "data":""} from: 192.168.31.93:, cost: 52188 ms, unacked: 0, total push: 1
+
+2020-03-26 17:29:48,715 INFO received ack: {"type": "push-ack", "lastRefTime":"283498487513100", "data":""} from: 192.168.31.93:, cost: 54401 ms, unacked: 2, total push: 0
+
+2020-03-26 17:36:42,671 INFO DEFAULT_GROUP@@zhongshi-etc-redis is changed, add it to push queue.
+
+2020-03-26 17:36:42,806 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:36:44,439 INFO DEFAULT_GROUP@@zhongshi-etc-gateway is changed, add it to push queue.
+
+2020-03-26 17:36:44,544 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:36:57,681 INFO DEFAULT_GROUP@@zhongshi-etc-redis is changed, add it to push queue.
+
+2020-03-26 17:36:57,810 INFO DEFAULT_GROUP@@zhongshi-etc-sso is changed, add it to push queue.
+
+2020-03-26 17:36:59,443 INFO DEFAULT_GROUP@@zhongshi-etc-gateway is changed, add it to push queue.
+
+2020-03-26 17:36:59,549 INFO DEFAULT_GROUP@@zhongshi-etc-user is changed, add it to push queue.
+
+2020-03-26 17:38:19,464 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:38:19,464 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:57055, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,57055,284009238798700
+
+2020-03-26 17:38:19,464 INFO send udp packet: 192.168.31.93,57055,284009238798700
+
+2020-03-26 17:38:19,469 INFO received ack: {"type": "push-ack", "lastRefTime":"284009238798700", "data":""} from: 192.168.31.93:, cost: 57055 ms, unacked: 5, total push: 0
+
+2020-03-26 17:38:44,467 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:38:59,473 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:42:20,564 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:42:20,564 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:53985, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,53985,284250339044100
+
+2020-03-26 17:42:20,564 INFO send udp packet: 192.168.31.93,53985,284250339044100
+
+2020-03-26 17:42:20,576 INFO received ack: {"type": "push-ack", "lastRefTime":"284250339044100", "data":""} from: 192.168.31.93:, cost: 53985 ms, unacked: 12, total push: 0
+
+2020-03-26 17:43:19,527 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:43:34,535 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:45:16,807 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:45:16,807 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:58513, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,58513,284426581931600
+
+2020-03-26 17:45:16,807 INFO send udp packet: 192.168.31.93,58513,284426581931600
+
+2020-03-26 17:45:16,811 INFO received ack: {"type": "push-ack", "lastRefTime":"284426581931600", "data":""} from: 192.168.31.93:, cost: 58513 ms, unacked: 4, total push: 0
+
+2020-03-26 17:48:16,850 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:48:23,553 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:48:23,553 INFO serviceName: DEFAULT_GROUP@@zhongshi-etc-bootadmin changed, schedule push for: 192.168.31.93:54414, agent: Nacos-Java-Client:v1.1.1, key: 192.168.31.93,54414,284613327629000
+
+2020-03-26 17:48:23,553 INFO send udp packet: 192.168.31.93,54414,284613327629000
+
+2020-03-26 17:48:23,557 INFO received ack: {"type": "push-ack", "lastRefTime":"284613327629000", "data":""} from: 192.168.31.93:, cost: 54414 ms, unacked: 4, total push: 0
+
+2020-03-26 17:57:01,964 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+
+2020-03-26 17:57:16,971 INFO DEFAULT_GROUP@@zhongshi-etc-bootadmin is changed, add it to push queue.
+

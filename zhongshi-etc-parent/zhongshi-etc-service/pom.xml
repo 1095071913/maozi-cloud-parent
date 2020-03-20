@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zhongshi</groupId>
+		<artifactId>zhongshi-etc-parent</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
+	<artifactId>zhongshi-etc-service</artifactId> 
+	<packaging>pom</packaging>
+
+
+	<dependencies>
+
+		 
+		
+		<!-- RocketMq Begin -->
+		<dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+        </dependency>
+        <!-- RocketMq End -->
+
+
+		<!-- ORM Page Begin -->
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.0</version>
+		</dependency>
+
+		<!-- ORM Page End -->
+
+
+		
+
+
+
+		<!-- Dubbo Begin -->
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-dubbo</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-serialization-kryo</artifactId>
+			<version>2.7.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Dubbo End -->
+
+
+
+		<!-- Swagger Begin -->
+
+		<dependency>
+			<groupId>com.spring4all</groupId>
+			<artifactId>swagger-spring-boot-starter</artifactId>
+			<version>1.9.0.RELEASE</version>
+		</dependency>
+
+		<!-- Swagger End -->
+		
+		
+		
+		<!-- ES Begin -->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>
+		  
+		<!-- ES End -->
+
+
+
+		<!-- Project Begin -->
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-result</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency> 
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-sentinel</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		    
+
+		<!-- <dependency> <groupId>com.mountain</groupId> <artifactId>mountain-shop-common-dubbo-generic</artifactId> 
+			<version>0.0.1-SNAPSHOT</version> </dependency> -->
+
+		<!-- <dependency> <groupId>com.mountain</groupId> <artifactId>mountain-shop-common-springcloud-alibaba-dubbo-starter</artifactId> 
+			<version>0.0.1-SNAPSHOT</version> </dependency> -->
+
+		<!-- Project End -->
+
+	</dependencies>
+
+
+
+	<modules>
+		<module>zhongshi-etc-service-rest-api</module>
+		<module>zhongshi-etc-service-impl</module> 
+		<module>zhongshi-etc-service-base</module>
+		<module>zhongshi-etc-service-rpc-api</module>
+		<module>zhongshi-etc-service-mq-api</module>  
+		<module>zhongshi-etc-service-mq-consume</module>
+	</modules>
+
+</project>

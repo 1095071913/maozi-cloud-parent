@@ -1,0 +1,166 @@
+2019-12-05 19:06:37,667 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 19:06:37,723 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 19:06:37,725 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 19:11:23,221 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 19:11:23,222 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 19:11:23,223 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 19:22:15,705 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575544916566
+
+2019-12-05 19:22:20,239 INFO service: DEFAULT_GROUP@@mountain-shop-user {POS} {IP-ENABLED} valid: 192.168.43.250:40000@DEFAULT, region: unknown, msg: client beat ok
+
+2019-12-05 19:32:26,582 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575545529533
+
+2019-12-05 19:32:46,593 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 19:32:46,594 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+
+2019-12-05 19:43:11,849 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575546175826
+
+2019-12-05 19:43:26,883 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 19:43:26,883 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 19:47:12,172 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 19:47:12,172 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 20:05:10,442 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575547492514
+
+2019-12-05 20:05:25,673 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:05:25,673 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 20:09:16,236 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:09:16,236 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 20:15:48,560 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:15:48,560 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 20:21:37,301 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575548479054
+
+2019-12-05 20:21:40,927 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575548485085
+
+2019-12-05 20:21:55,558 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:21:55,558 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 20:21:56,126 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:21:56,126 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+
+2019-12-05 20:24:59,909 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:24:59,909 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 20:25:00,061 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 20:28:10,037 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:28:10,037 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 20:41:55,657 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575549695901
+
+2019-12-05 20:41:55,672 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575549699221
+
+2019-12-05 20:42:10,810 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:42:10,810 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+
+2019-12-05 20:42:10,811 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:42:10,811 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 20:46:41,311 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:46:41,311 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 20:49:34,570 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:49:34,570 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 20:49:34,608 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 20:56:29,514 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575550572682
+
+2019-12-05 20:56:45,328 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 20:56:45,330 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 20:59:04,983 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 20:59:04,983 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 21:01:02,070 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575550844212
+
+2019-12-05 21:01:09,959 INFO service: DEFAULT_GROUP@@mountain-shop-sso {POS} {IP-ENABLED} valid: 192.168.43.250:1000@DEFAULT, region: unknown, msg: client beat ok
+
+2019-12-05 21:03:02,453 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575550965427
+
+2019-12-05 21:03:17,550 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:03:17,550 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+
+2019-12-05 21:10:52,626 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575551435001
+
+2019-12-05 21:11:07,816 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:11:07,816 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 21:14:01,041 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 21:14:01,041 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 21:17:08,969 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 21:17:08,969 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 21:17:08,985 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 21:19:45,827 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575551970669
+
+2019-12-05 21:20:01,304 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:20:01,305 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 21:23:21,656 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 21:23:21,656 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 21:24:26,721 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575552246856
+
+2019-12-05 21:24:41,904 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:24:41,905 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+
+2019-12-05 21:26:01,784 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575552342654
+
+2019-12-05 21:26:16,832 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:26:16,832 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 
+
+2019-12-05 21:37:40,503 INFO DEFAULT_GROUP@@mountain-shop-user {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:40000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 21:37:40,503 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-user, ips: 192.168.43.250:40000_true,
+
+2019-12-05 21:41:51,486 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-NEW} cluster: DEFAULT, new ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_true_false_DEFAULT]
+
+2019-12-05 21:41:51,487 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 192.168.43.250:1000_true,
+
+2019-12-05 21:50:19,767 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:40000@DEFAULT@DEFAULT_GROUP@@mountain-shop-user, region: unknown, msg: client timeout after 15000, last beat: 1575553803993
+
+2019-12-05 21:50:20,001 INFO {POS} {IP-DISABLED} valid: 192.168.43.250:1000@DEFAULT@DEFAULT_GROUP@@mountain-shop-sso, region: unknown, msg: client timeout after 15000, last beat: 1575553801367
+
+2019-12-05 21:50:23,535 INFO service: DEFAULT_GROUP@@mountain-shop-user {POS} {IP-ENABLED} valid: 192.168.43.250:40000@DEFAULT, region: unknown, msg: client beat ok
+
+2019-12-05 21:50:36,500 INFO DEFAULT_GROUP@@mountain-shop-sso {SYNC} {IP-DEAD} cluster: DEFAULT, dead ips size: 1, content: [192.168.43.250:1000:unknown:DEFAULT_1.0_false_false_DEFAULT]
+
+2019-12-05 21:50:36,501 INFO [IP-UPDATED] namespace: public, service: DEFAULT_GROUP@@mountain-shop-sso, ips: 
+

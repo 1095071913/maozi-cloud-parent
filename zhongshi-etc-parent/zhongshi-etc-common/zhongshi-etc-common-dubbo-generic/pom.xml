@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zhongshi</groupId>
+		<artifactId>zhongshi-etc-common</artifactId>
+		<version>1.0.0-RELEASE</version>
+	</parent>
+	<artifactId>zhongshi-etc-common-dubbo-generic</artifactId>
+
+
+	<dependencies>
+
+
+
+		<!-- Dubbo Begin -->
+
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-serialization-kryo</artifactId>
+			<version>2.7.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-dubbo</artifactId>
+		</dependency>
+		
+		<!-- Dubbo End -->
+
+
+
+
+
+		<!-- Project Begin -->
+
+		<!-- <dependency>
+			<groupId>com.mountain</groupId>
+			<artifactId>mountain-shop-common-tool</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency> -->
+		
+		<dependency> 
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-result</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Project End -->
+
+
+	</dependencies>
+
+
+</project>

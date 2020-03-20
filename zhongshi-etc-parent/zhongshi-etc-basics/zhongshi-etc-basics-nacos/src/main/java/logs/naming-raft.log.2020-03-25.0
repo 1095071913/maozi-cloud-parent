@@ -1,0 +1,750 @@
+2020-03-25 09:59:53,297 INFO initializing Raft sub-system
+
+2020-03-25 09:59:53,297 INFO raft notifier started
+
+2020-03-25 09:59:53,228 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 09:59:53,311 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 09:59:53,339 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 09:59:53,343 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 09:59:53,344 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 09:59:53,344 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 09:59:53,345 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 09:59:53,345 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 09:59:53,345 INFO finish loading all datums, size: 3 cost 48 ms.
+
+2020-03-25 09:59:53,347 INFO cache loaded, datum count: 3, current term: 5939
+
+2020-03-25 09:59:53,347 INFO finish to load data from disk, cost: 50 ms.
+
+2020-03-25 09:59:53,349 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 09:59:53,400 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 09:59:53,401 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 09:59:53,557 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 09:59:53,576 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 09:59:53,578 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 09:59:53,579 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 09:59:53,581 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 09:59:55,041 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 09:59:58,226 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 09:59:58,226 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 09:59:58,226 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 09:59:58,852 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.31.93:8848","leaderDueMs":16170,"state":"FOLLOWER","term":5939,"voteFor":""}, term: 5939
+
+2020-03-25 10:00:13,228 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 10:00:42,251 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:01:29,072 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:04,489 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:04,489 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:04,489 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:04,490 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:03:04,490 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:04,491 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:03:04,491 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:03:07,067 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 10:03:07,067 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 10:03:07,067 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 10:03:07,068 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-25 10:03:07,068 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 10:03:07,068 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-25 10:03:07,068 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 10:03:08,876 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:03:08,876 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:03:08,876 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:03:08,877 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:03:08,878 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:03:08,878 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:03:08,878 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:03:10,609 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 10:03:10,609 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 10:03:10,609 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 10:03:10,609 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-25 10:03:10,611 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 10:03:10,611 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-25 10:03:10,612 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 10:03:12,178 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 10:03:12,178 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 10:03:12,179 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 10:03:12,179 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-25 10:03:12,179 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 10:03:12,179 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-25 10:03:12,179 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 10:03:53,974 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:06:35,638 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:06:35,638 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:06:35,638 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:06:35,638 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:06:35,638 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:06:35,638 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:06:35,639 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:07:09,212 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:07:49,203 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:54,249 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:54,250 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:54,250 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:54,250 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:10:54,250 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:54,250 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:10:54,250 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:10:57,734 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:10:57,734 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:10:57,735 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:10:57,735 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:10:57,735 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:10:57,735 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:10:57,735 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:11:29,021 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:12:21,536 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:35,979 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:35,979 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:35,979 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:35,980 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:14:35,980 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:35,980 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:14:35,980 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:14:37,568 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:14:37,568 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:14:37,568 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:14:37,568 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:14:37,568 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:14:37,569 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:14:37,569 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:15:12,025 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:15:46,720 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:27,902 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:27,902 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:27,902 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:27,903 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:19:27,903 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:27,903 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:19:27,903 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:19:30,050 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:19:30,050 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:19:30,050 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:19:30,051 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:19:30,051 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:19:30,051 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:19:30,051 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:28:27,802 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:29:32,015 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:11,982 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:11,982 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:11,982 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:11,982 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:31:11,983 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:11,983 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 10:31:11,983 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 10:31:13,834 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:31:13,834 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:31:13,834 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:31:13,835 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:31:13,835 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:31:13,835 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 10:31:13,835 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:31:55,135 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 10:32:27,948 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:15:30,833 INFO initializing Raft sub-system
+
+2020-03-25 14:15:30,834 INFO raft notifier started
+
+2020-03-25 14:15:30,740 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 14:15:30,846 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 14:15:30,867 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 14:15:30,870 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 14:15:30,871 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 14:15:30,871 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 14:15:30,872 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:15:30,872 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:15:30,872 INFO finish loading all datums, size: 3 cost 38 ms.
+
+2020-03-25 14:15:30,874 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 14:15:30,874 INFO finish to load data from disk, cost: 40 ms.
+
+2020-03-25 14:15:30,877 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 14:15:30,926 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 14:15:30,926 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 14:15:31,072 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:15:31,095 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 14:15:31,097 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:15:31,098 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 14:15:31,100 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:15:32,556 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 14:15:35,737 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 14:15:35,737 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 14:15:35,737 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 14:15:50,738 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 14:17:04,904 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:17:47,663 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:23:35,344 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:23:35,345 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:23:35,345 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-25 14:23:35,346 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:23:35,346 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:23:35,346 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis, term=5940
+
+2020-03-25 14:23:35,346 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 14:23:37,660 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:23:37,660 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:23:37,660 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:23:37,660 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-25 14:23:37,660 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:23:37,660 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway, term=5940
+
+2020-03-25 14:23:37,660 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 14:23:39,445 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:23:39,445 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:23:39,445 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:23:39,446 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-25 14:23:39,446 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:23:39,446 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService, term=5940
+
+2020-03-25 14:23:39,446 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 14:25:07,229 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:25:07,229 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:25:07,229 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:25:07,230 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 14:25:07,230 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:25:07,230 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 14:25:07,230 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:25:08,961 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:25:08,961 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:25:08,961 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:25:08,962 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 14:25:08,962 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:25:08,962 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 14:25:08,962 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:25:40,786 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:26:32,872 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:47,391 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:47,391 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:47,391 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:47,392 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 14:49:47,392 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:47,392 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso, term=5940
+
+2020-03-25 14:49:47,392 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 14:49:49,270 INFO add task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:49:49,270 INFO remove task com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:49:49,271 INFO [RAFT-NOTIFIER] datum is deleted, key: com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:49:49,271 INFO data removed, key=com.alibaba.nacos.naming.domains.meta.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 14:49:49,271 INFO add task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:49:49,271 INFO data removed, key=com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user, term=5940
+
+2020-03-25 14:49:49,271 INFO remove task com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:50:24,144 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 14:51:40,519 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-sso
+
+2020-03-25 16:13:52,411 INFO initializing Raft sub-system
+
+2020-03-25 16:13:52,412 INFO raft notifier started
+
+2020-03-25 16:13:52,319 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:13:52,427 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:13:52,450 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:13:52,454 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:13:52,455 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:13:52,455 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:13:52,456 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:13:52,456 INFO finish loading all datums, size: 3 cost 45 ms.
+
+2020-03-25 16:13:52,456 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:13:52,458 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 16:13:52,458 INFO finish to load data from disk, cost: 47 ms.
+
+2020-03-25 16:13:52,460 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 16:13:52,517 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 16:13:52,517 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:13:52,716 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 16:13:52,740 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:13:52,744 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 16:13:52,744 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:13:52,747 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:13:54,582 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 16:13:57,314 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:13:57,314 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:13:57,314 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:13:58,463 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.31.93:8848","leaderDueMs":18488,"state":"FOLLOWER","term":5940,"voteFor":""}, term: 5940
+
+2020-03-25 16:14:12,316 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:24:48,587 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 16:28:40,934 INFO initializing Raft sub-system
+
+2020-03-25 16:28:40,935 INFO raft notifier started
+
+2020-03-25 16:28:40,864 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:28:40,944 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:28:40,959 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:28:40,962 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:28:40,963 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:28:40,963 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:28:40,963 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:28:40,964 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:28:40,964 INFO finish loading all datums, size: 3 cost 29 ms.
+
+2020-03-25 16:28:40,965 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 16:28:40,965 INFO finish to load data from disk, cost: 30 ms.
+
+2020-03-25 16:28:40,967 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 16:28:41,009 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 16:28:41,009 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:28:41,151 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 16:28:41,172 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:28:41,176 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 16:28:41,176 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:28:41,179 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:28:42,583 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 16:28:45,861 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:28:45,861 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:28:45,861 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:29:00,863 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:08,989 INFO initializing Raft sub-system
+
+2020-03-25 16:34:08,990 INFO raft notifier started
+
+2020-03-25 16:34:08,923 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:09,000 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:09,015 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:34:09,018 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:34:09,018 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:34:09,019 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:34:09,019 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:34:09,019 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:34:09,019 INFO finish loading all datums, size: 3 cost 29 ms.
+
+2020-03-25 16:34:09,021 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 16:34:09,021 INFO finish to load data from disk, cost: 31 ms.
+
+2020-03-25 16:34:09,022 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 16:34:09,062 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 16:34:09,062 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:34:09,193 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 16:34:09,215 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:34:09,218 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 16:34:09,218 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:34:09,221 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:34:10,605 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 16:34:13,921 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:13,921 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:13,921 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:34:28,922 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:40:53,104 INFO initializing Raft sub-system
+
+2020-03-25 16:40:53,105 INFO raft notifier started
+
+2020-03-25 16:40:53,026 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:40:53,113 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:40:53,133 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:40:53,135 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:40:53,136 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:40:53,136 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:40:53,137 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:40:53,137 INFO finish loading all datums, size: 3 cost 32 ms.
+
+2020-03-25 16:40:53,137 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:40:53,139 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 16:40:53,139 INFO finish to load data from disk, cost: 34 ms.
+
+2020-03-25 16:40:53,140 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 16:40:53,184 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 16:40:53,184 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:40:53,304 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 16:40:53,328 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:40:53,331 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 16:40:53,332 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:40:53,335 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:41:34,807 INFO initializing Raft sub-system
+
+2020-03-25 16:41:34,807 INFO raft notifier started
+
+2020-03-25 16:41:34,729 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:41:34,818 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:41:34,837 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:41:34,840 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 16:41:34,841 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:41:34,841 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 16:41:34,842 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:41:34,842 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:41:34,842 INFO finish loading all datums, size: 3 cost 35 ms.
+
+2020-03-25 16:41:34,843 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 16:41:34,843 INFO finish to load data from disk, cost: 36 ms.
+
+2020-03-25 16:41:34,845 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 16:41:34,893 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 16:41:34,893 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:41:35,005 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 16:41:35,020 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:41:35,022 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 16:41:35,023 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 16:41:35,024 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 16:41:36,350 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 16:41:39,725 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:41:39,725 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 16:41:39,725 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 16:41:54,728 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 17:14:02,159 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+
+2020-03-25 17:33:11,986 INFO initializing Raft sub-system
+
+2020-03-25 17:33:11,987 INFO raft notifier started
+
+2020-03-25 17:33:11,894 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 17:33:11,999 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 17:33:12,021 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 17:33:12,024 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway
+
+2020-03-25 17:33:12,025 INFO add task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 17:33:12,025 INFO remove task com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis
+
+2020-03-25 17:33:12,026 INFO add task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 17:33:12,026 INFO remove task com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService
+
+2020-03-25 17:33:12,026 INFO finish loading all datums, size: 3 cost 40 ms.
+
+2020-03-25 17:33:12,028 INFO cache loaded, datum count: 3, current term: 5940
+
+2020-03-25 17:33:12,028 INFO finish to load data from disk, cost: 42 ms.
+
+2020-03-25 17:33:12,030 INFO timer started: leader timeout ms: 15000, heart-beat timeout ms: 5000
+
+2020-03-25 17:33:12,077 INFO add listener: com.alibaba.nacos.naming.domains.meta.
+
+2020-03-25 17:33:12,077 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-gateway, value: Service{name='DEFAULT_GROUP@@mountain-shop-gateway', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 17:33:12,206 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-gateway
+
+2020-03-25 17:33:12,225 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##mountain-shop-redis, value: Service{name='DEFAULT_GROUP@@mountain-shop-redis', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 17:33:12,227 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-redis
+
+2020-03-25 17:33:12,228 INFO [RAFT-NOTIFIER] datum is changed, key: com.alibaba.nacos.naming.domains.meta.public##providers:com.mountain.redis.api.RedisService, value: Service{name='DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService', protectThreshold=0.0, appName='null', groupName='DEFAULT_GROUP', metadata={}}
+
+2020-03-25 17:33:12,230 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@providers:com.mountain.redis.api.RedisService
+
+2020-03-25 17:33:13,691 INFO add listener: com.alibaba.nacos.naming.domains.meta.00-00---000-NACOS_SWITCH_DOMAIN-000---00-00
+
+2020-03-25 17:33:16,888 INFO server list is updated, new: 1 servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 17:33:16,888 INFO server list is updated, dead: 1, servers: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:0","lastRefTime":0,"lastRefTimeStr":"","servePort":0,"site":"unknown","weight":1}]
+
+2020-03-25 17:33:16,888 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 17:33:20,033 INFO leader timeout, start voting,leader: {"heartbeatDueMs":5000,"ip":"192.168.31.93:8848","leaderDueMs":15940,"state":"FOLLOWER","term":5940,"voteFor":""}, term: 5940
+
+2020-03-25 17:33:31,892 INFO raft peers changed: [{"adWeight":0,"alive":false,"ip":"192.168.31.93","key":"192.168.31.93:8848","lastRefTime":0,"lastRefTimeStr":"","servePort":8848,"site":"unknown","weight":1}]
+
+2020-03-25 17:34:22,938 INFO add listener: com.alibaba.nacos.naming.iplist.public##DEFAULT_GROUP@@mountain-shop-user
+

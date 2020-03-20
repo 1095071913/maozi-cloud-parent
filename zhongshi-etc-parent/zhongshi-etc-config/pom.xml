@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.zhongshi</groupId>
+    <artifactId>zhongshi-etc-parent</artifactId>
+    <version>1.0.0-RELEASE</version>
+  </parent> 
+  <artifactId>zhongshi-etc-config</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>zhongshi-etc-config-feign</module>
+  	<module>zhongshi-etc-config-bootadmin</module>
+  	<module>zhongshi-etc-config-sentinel</module>
+  	<module>zhongshi-etc-config-db</module>
+  	<module>zhongshi-etc-config-log</module>
+  	<module>zhongshi-etc-config-sso</module>
+  	<module>zhongshi-etc-config-mvc</module>
+  	<module>zhongshi-etc-config-seata</module>
+  </modules>
+</project>

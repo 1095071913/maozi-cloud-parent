@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.spring4all:swagger-spring-boot-starter:1.9.0.RELEASE">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/spring4all/swagger-spring-boot-starter/1.9.0.RELEASE/swagger-spring-boot-starter-1.9.0.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/spring4all/swagger-spring-boot-starter/1.9.0.RELEASE/swagger-spring-boot-starter-1.9.0.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/spring4all/swagger-spring-boot-starter/1.9.0.RELEASE/swagger-spring-boot-starter-1.9.0.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
