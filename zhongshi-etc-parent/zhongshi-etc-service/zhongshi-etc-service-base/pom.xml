@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zhongshi</groupId>
+        <artifactId>zhongshi-etc-service</artifactId>
+        <version>1.5.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>zhongshi-etc-service-base</artifactId>
+    <packaging>pom</packaging>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zhongshi</groupId>
+                <artifactId>zhongshi-etc-base-contract</artifactId>
+                <version>1.5.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <modules>
+        <module>zhongshi-etc-service-base-api</module>
+        <module>zhongshi-etc-service-base-impl</module>
+        <module>zhongshi-etc-service-base-run</module>
+    </modules>
+
+
+</project>    

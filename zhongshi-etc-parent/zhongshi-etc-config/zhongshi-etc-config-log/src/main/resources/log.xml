@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <contextName>logback</contextName>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="environment" converterClass="com.zhongshi.log.convert.EnvironmentMessageConverter" />
+	<conversionRule conversionWord="applicationName" converterClass="com.zhongshi.log.convert.ApplicationNameMessageConverter" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <appender name="console-log" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr([ %d{yyyy-MM-dd HH:mm:ss} ])  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+
+    
+	<appender name="grpc-log" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender"></appender>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- ALL -->
+    <appender name="all-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 ，注意LOG_PATH是默认值,它的配置对应application.properties里的logging.path值-->
+        <file>${LOG_PATH:-./log.log}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 文件名称 -->
+            <fileNamePattern>log-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 文件最大保存历史数量 -->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr([ %d{yyyy-MM-dd HH:mm:ss} ])  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+    
+    <!-- INFO -->
+    <!-- <appender name="info-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        文件路径 ，注意LOG_PATH是默认值,它的配置对应application.properties里的logging.path值
+        <file>${LOG_DIR:-.}/log/info/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            文件名称
+            <fileNamePattern>log/info/info-%d{yyyy-MM-dd}.log</fileNamePattern>
+            文件最大保存历史数量
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss})  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    DEBUG
+    <appender name="debug-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        文件路径 ，注意LOG_PATH是默认值,它的配置对应application.properties里的logging.path值
+        <file>${LOG_DIR:-.}/log/debug/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            文件名称
+            <fileNamePattern>log/debug/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
+            文件最大保存历史数量
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss})  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    
+    WARN
+    <appender name="warn-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        文件路径 ，注意LOG_PATH是默认值,它的配置对应application.properties里的logging.path值
+        <file>${LOG_DIR:-.}/log/warn/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            文件名称
+            <fileNamePattern>log/warn/warn-%d{yyyy-MM-dd}.log</fileNamePattern>
+            文件最大保存历史数量
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss})  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+
+    ERROR
+    <appender name="error-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR:-.}/log/error/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            文件名称
+            <fileNamePattern>log/error/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            文件最大保存历史数量
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss})  %clr([ level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ app：%applicationName ]){red}  %clr([ environment：%environment ]){greed}  %clr([ %m ]){orange}%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender> -->
+   
+    
+    
+    
+    
+    
+    
+    
+    <appender name ="console-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="console-log" />
+    </appender>
+    
+    <appender name ="all-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="all-log" />
+    </appender>
+    
+    <!-- <appender name ="info-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="info-log" />
+    </appender>
+    
+    <appender name ="debug-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="debug-log" />
+    </appender>
+    
+    <appender name ="warn-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="warn-log" />
+    </appender>
+    
+    <appender name ="error-log-async" class= "ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1000000</queueSize>
+        <includeCallerData>false</includeCallerData>
+        <neverBlock>false</neverBlock>
+		<appender-ref ref="error-log" />
+    </appender> -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+	
+	<logger name="root" >
+		<appender-ref ref="all-log-async" />
+		<appender-ref ref="console-log-async" />
+		<appender-ref ref="grpc-log" /> 
+	</logger>
+	
+<!--  	<logger name="com" level="INFO"> 
+		<appender-ref ref="info-log-async" />
+	</logger>
+	
+	<logger name="org" level="INFO">
+		<appender-ref ref="info-log-async" />
+	</logger>
+	  
+	<logger name="com" level="DEBUG">
+		<appender-ref ref="debug-log-async" />
+	</logger> 
+	
+	<logger name="com" level="WARN">
+		<appender-ref ref="warn-log-async" /> 
+	</logger>
+	
+	<logger name="com" level="ERROR">
+		<appender-ref ref="error-log-async" />
+	</logger>
+	
+	<logger name="org" level="ERROR">
+		<appender-ref ref="error-log-async" />
+	</logger> -->
+	
+	
+</configuration>
+
+
+
+
+
+

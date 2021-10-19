@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zhongshi</groupId>
+		<artifactId>zhongshi-etc-service</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>zhongshi-etc-service-impl</artifactId>
+	<packaging>pom</packaging>
+
+
+	<dependencies>
+
+
+		<!-- Project Begin -->
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-common-tool</artifactId>
+			<version>${zhongshi-etc-common-tool.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-service-base-run</artifactId>
+			<version>${zhongshi-etc-service-base-run.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-log</artifactId>
+			<version>${zhongshi-etc-config-log.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-sentinel</artifactId>
+			<version>${zhongshi-etc-config-sentinel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-bootadmin</artifactId>
+			<version>${zhongshi-etc-config-bootadmin.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-sso</artifactId>
+			<version>${zhongshi-etc-config-sso.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-mvc</artifactId>
+			<version>${zhongshi-etc-config-mvc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-swagger</artifactId>
+			<version>${zhongshi-etc-config-swagger.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-dubbo</artifactId>
+			<version>${zhongshi-etc-config-dubbo.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-feign</artifactId>
+			<version>${zhongshi-etc-config-feign.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zhongshi</groupId>
+			<artifactId>zhongshi-etc-config-discovery</artifactId>
+			<version>${zhongshi-etc-config-discovery.version}</version>
+		</dependency>
+		<!-- Project End -->
+
+
+
+
+		<!-- SpringCloud Begin -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<!-- SpringCloud End -->
+
+
+
+	</dependencies>
+
+
+
+
+
+
+	<!-- boot打包 Begin -->
+	<build>
+		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.1.5.RELEASE</version>
+				<configuration>
+					<mainClass>${application-run}</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- boot打包 End -->
+
+
+
+
+
+</project>
