@@ -1,4 +1,0 @@
-1.下载
-https://github.com/ctripcorp/apollo/tree/master/scripts/docker-quick-start
-
-2.cd docker-quick-start && docker-compose up -d

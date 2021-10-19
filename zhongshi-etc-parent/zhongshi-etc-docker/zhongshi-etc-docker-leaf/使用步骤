@@ -1,8 +1,0 @@
-git clone https://github.com/funtl/Leaf.git
-cd Leaf
-mvn clean install -DskipTests
-cd leaf-docker
-chmod +x build.sh
-./build.sh
-docker-compose up -d
-curl http://localhost:8080/api/snowflake/get/test
