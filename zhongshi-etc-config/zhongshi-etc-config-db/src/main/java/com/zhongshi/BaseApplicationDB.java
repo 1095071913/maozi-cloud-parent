@@ -18,11 +18,13 @@
 package com.zhongshi;
 
 import javax.sql.DataSource;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 
@@ -40,7 +42,8 @@ import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.zhongshi.*.mapper")
+@ComponentScan(basePackages = "com.gitee.sunchenbin.mybatis.actable.manager.*")
+@MapperScan(basePackages = {"com.zhongshi.*.mapper","com.gitee.sunchenbin.mybatis.actable.dao.*"})
 public class BaseApplicationDB {
 
 	@Bean(name = "select-datasource")
