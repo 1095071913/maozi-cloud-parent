@@ -425,7 +425,7 @@ public class BaseResultFactory implements Serializable {
 	public void functionReturn(Object result) {
 	}
 
-	@Trace
+	@Trace(operationName = "错误值")
 	@Tags({ @Tag(key = "错误值", value = "arg[0]") })
 	public void functionError(Object errorMessage) {
 	}
