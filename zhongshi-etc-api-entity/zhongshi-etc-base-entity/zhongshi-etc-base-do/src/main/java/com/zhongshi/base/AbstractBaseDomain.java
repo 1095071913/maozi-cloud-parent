@@ -22,11 +22,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 功能说明：领域模型Do
@@ -65,12 +63,10 @@ public abstract class AbstractBaseDomain implements Serializable {
 	@TableField(fill = FieldFill.INSERT)
 	private Integer version;
 
-	@JsonFormat
 	@TableField(fill = FieldFill.INSERT)
-	private Date createDate;
-
-	@JsonFormat
+	private Long createTime;
+	
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Date updateDate;
+	private Long updateTime;
 
 }

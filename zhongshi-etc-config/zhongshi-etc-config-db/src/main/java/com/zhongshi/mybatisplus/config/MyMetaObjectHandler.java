@@ -17,14 +17,10 @@
 
 package com.zhongshi.mybatisplus.config;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
 /**
@@ -47,8 +43,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 	@Override
 	public void insertFill(MetaObject metaObject) {
 
-		this.strictInsertFill(metaObject, "createDate", Date.class, new Date());
-		this.strictInsertFill(metaObject, "updateDate", Date.class, new Date());
+		this.strictInsertFill(metaObject, "createTime", Long.class, System.currentTimeMillis());
+		this.strictInsertFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
 		this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -62,7 +58,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 	@Override
 	public void updateFill(MetaObject metaObject) {
 		
-		this.strictUpdateFill(metaObject, "updateDate", Date.class, new Date());
+		this.strictUpdateFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if(authentication != null && authentication.getName() != null) {
