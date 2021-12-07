@@ -18,7 +18,6 @@ package com.zhongshi;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,13 +25,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-//import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import com.zhongshi.factory.BaseResultFactory;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -47,22 +43,21 @@ import lombok.extern.slf4j.Slf4j;
  * 协议说明：Apache2.0（ 文件顶端 ）
  */
 
-// @EnableElasticsearchRepositories(basePackages = "com.zhongshi.repository")
 @Slf4j
 @EnableAsync
 @EnableCaching
 @EnableScheduling
 @EnableFeignClients
+@DependsOn("restCode")
 @EnableDiscoveryClient
 @SpringBootApplication
-@Import(cn.hutool.extra.spring.SpringUtil.class)
 public class BaseApplication {
 
 	public static String loadConfig;
 
-	private static String nacosAddr;
+	public static String nacosAddr;
 
-	private static String rpcServerNames;
+	public static String rpcServerNames;
 
 	@Value("${spring.cloud.nacos.config.shared-dataids}")
 	public void setLoadConfig(String loadConfig) {
@@ -79,11 +74,11 @@ public class BaseApplication {
 		BaseApplication.rpcServerNames = rpcServerNames;
 	}
 
-	protected static void ApplicationRun(Class applicationClass) {
+	protected static void ApplicationRun() {
 
 		Long begin = System.currentTimeMillis();
 
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(applicationClass);
+		SpringApplicationBuilder builder = new SpringApplicationBuilder(BaseApplication.class);
 
 		Map<String, String> logs = new LinkedHashMap<String, String>();
 

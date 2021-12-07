@@ -18,7 +18,6 @@
 package com.zhongshi;
 
 import javax.sql.DataSource;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -59,8 +58,8 @@ public class BaseApplicationDB {
 	}
 	
 
-	protected static void ApplicationRun(Class applicationClass) {
-		BaseApplication.ApplicationRun(applicationClass);
+	protected static void ApplicationRun() {
+		BaseApplication.ApplicationRun();
 	}
 
 }

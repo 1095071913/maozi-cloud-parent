@@ -1,22 +1,25 @@
-package com.zhongshi.factory.result.code;
+package com.zhongshi.result.rest;
 
 import java.util.Map;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zhongshi.factory.BaseResultFactory;
 import com.zhongshi.factory.result.AbstractBaseResult;
+import com.zhongshi.factory.result.code.CodeAttribute;
+import com.zhongshi.factory.result.code.CodeHashMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RequestMapping("/Application")
+
 @RestController
-@Api("应用对应的code信息")
-public class RestCode extends BaseResultFactory {
+@Api("Application-Code")
+@RequestMapping("/application")
+public class RestCode extends BaseResultFactory{
 
 	static {
 
-		code(new CodeHashMap(BasicCode, 0) {
+		codes(new CodeHashMap() {
 
 			{
 
@@ -76,7 +79,7 @@ public class RestCode extends BaseResultFactory {
 
 	}
 
-	@PostMapping("/getCode")
+	@GetMapping("/getCode")
 	@ApiOperation(value = "获取应用对应的code信息")
 	public AbstractBaseResult<Map<String, CodeHashMap>> getCode() {
 		return success(codeDatas);

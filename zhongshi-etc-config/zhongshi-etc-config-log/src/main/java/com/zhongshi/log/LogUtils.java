@@ -2,9 +2,12 @@ package com.zhongshi.log;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
+
 import com.zhongshi.factory.BaseResultFactory;
 
 public class LogUtils extends BaseResultFactory{

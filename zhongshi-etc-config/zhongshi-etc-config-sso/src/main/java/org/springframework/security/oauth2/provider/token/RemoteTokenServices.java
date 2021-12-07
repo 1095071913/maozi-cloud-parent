@@ -14,6 +14,7 @@ package org.springframework.security.oauth2.provider.token;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,12 +28,12 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
 import com.zhongshi.factory.BaseResultFactory;
 import com.zhongshi.factory.result.AbstractBaseResult;
 import com.zhongshi.factory.result.error.ErrorResult;
 import com.zhongshi.resource.config.OauthTokenServiceConfig;
-
-import cn.hutool.extra.spring.SpringUtil;
+import com.zhongshi.tool.SpringUtil;
 
 /**
  * Queries the /check_token endpoint to obtain the contents of an access token.

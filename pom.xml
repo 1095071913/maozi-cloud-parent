@@ -473,6 +473,7 @@
 		<module>zhongshi-etc-common</module>
 		<module>zhongshi-etc-service</module>
 		<module>zhongshi-etc-config</module>
+		<module>zhongshi-etc-test</module>
 	</modules>
 
 

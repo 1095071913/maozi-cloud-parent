@@ -46,27 +46,24 @@ public abstract class AbstractBaseDomain implements Serializable {
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
 
-	@TableField(fill = FieldFill.INSERT)
-	private String createBy;
+	@TableField(value = "create_by" , fill = FieldFill.INSERT)
+	private Long createBy;
 
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private String updateBy;
-
-	@TableField(exist = false)
-	private String remarks;
+	@TableField(value ="update_by" ,fill = FieldFill.INSERT_UPDATE)
+	private Long updateBy;
 
 	@TableLogic
-	@TableField(fill = FieldFill.INSERT)
+	@TableField(value = "deleted" , fill = FieldFill.INSERT)
 	private Integer deleted;
 
 	@Version
-	@TableField(fill = FieldFill.INSERT)
+	@TableField(value= "version" , fill = FieldFill.INSERT)
 	private Integer version;
 
-	@TableField(fill = FieldFill.INSERT)
+	@TableField(value= "create_time" , fill = FieldFill.INSERT)
 	private Long createTime;
 	
-	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@TableField(value= "update_time" , fill = FieldFill.INSERT_UPDATE)
 	private Long updateTime;
 
 }

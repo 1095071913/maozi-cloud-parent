@@ -25,7 +25,7 @@ public class ApiWhitelistProperties {
     		add("/actuator");
     		
     		add("/actuator/**");
-    		add("/Application/**");
+    		add("/application/**");
     		
 			add("/doc.html");
 			add("/v2/api-docs/**");

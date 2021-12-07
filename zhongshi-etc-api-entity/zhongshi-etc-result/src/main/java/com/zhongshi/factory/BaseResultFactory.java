@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,29 +55,17 @@ import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.alibaba.fastjson.JSONObject;
-import com.zhongshi.dingding.DingDingMessage;
 import com.zhongshi.base.AbstractBaseDomain;
+import com.zhongshi.dingding.DingDingMessage;
 import com.zhongshi.factory.result.code.CodeAttribute;
 import com.zhongshi.factory.result.code.CodeHashMap;
 import com.zhongshi.factory.result.error.ErrorResult;
 import com.zhongshi.factory.result.success.SuccessResult;
 import com.zhongshi.sso.OauthUserDetails;
 import com.zhongshi.tool.MapperUtils;
-
 import cn.hutool.extra.cglib.CglibUtil;
 import lombok.Data;
 
-/**
- * 功能说明：Result工厂
- * <p>
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * <p>
- * 创建日期：2019-08-05：04:23:00
- * <p>
- * 版权归属：蓝河团队
- * <p>
- * 协议说明：Apache2.0（ 文件顶端 ）
- */
 
 @Data
 @DubboService
@@ -90,7 +77,7 @@ public class BaseResultFactory implements Serializable {
 
 	public static FastDateFormat DETAULT_DATE_FORMAT = FastDateFormat.getInstance("yyy-MM-dd HH:mm:ss");
 
-	public static final String BasicCode = "zhongshi-etc-base";
+	public static final String BasicCode = "zhongshi-etc-base-service-code";
 	
 	private final static String dingdingUri = "https://oapi.dingtalk.com/robot/send?access_token=f4152fa1590798ccbc7b927a30473ea34274dc904fb31b771f5d63b4f20e56f1";
 
@@ -102,10 +89,9 @@ public class BaseResultFactory implements Serializable {
 
 	public static ThreadLocal<String> sql = new ThreadLocal<String>();
 	
-	
 	public static AsyncRestTemplate asyncRestTemplate;
 	
-	@Autowired(required=false)
+	@Autowired(required = false)
 	public void setAsyncRestTemplate(AsyncRestTemplate asyncRestTemplate) {
 		this.asyncRestTemplate = asyncRestTemplate;
 	}
@@ -131,11 +117,11 @@ public class BaseResultFactory implements Serializable {
 		this.port = port;
 	}
 
-	public static Boolean test = false;
+	public static Boolean isTest = false;
 
-	@Value("${logging.level.test:ON}")
-	public void setLogLevel(Boolean test) {
-		this.test = test;
+	@Value("${logging.test:ON}")
+	public void setLogLevel(Boolean isTest) {
+		this.isTest = isTest;
 	}
 	
 	public static String environment;
@@ -144,15 +130,25 @@ public class BaseResultFactory implements Serializable {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
-	
 
-	protected static void code(CodeHashMap codeHashMap) {
+	protected static void codes(CodeHashMap codeHashMap) {
+		
 		if (codeDatas.containsKey(codeHashMap.getKey())) {
-			codeDatas.get(codeHashMap.getKey() + "-code").putAll(codeHashMap);
+			codeDatas.get(isNull(applicationName)?BasicCode:applicationName+"-service-"+codeHashMap.getKey()+"-code").putAll(codeHashMap);
+		}else {
+			codeDatas.put(isNull(applicationName)?BasicCode:applicationName+"-service-"+codeHashMap.getKey()+"-code", codeHashMap);
 		}
-		else {
-			codeDatas.put(codeHashMap.getKey() + "-code", codeHashMap);
+		
+	}
+	
+	protected static void enums(CodeHashMap codeHashMap) {
+		
+		if (codeDatas.containsKey(codeHashMap.getKey())) {
+			codeDatas.get(applicationName+"-service-"+codeHashMap.getKey()+"-enum").putAll(codeHashMap);
+		}else {
+			codeDatas.put(applicationName+"-service-"+codeHashMap.getKey()+"-enum", codeHashMap);
 		}
+		
 	}
 
 	public static CodeAttribute code(Integer code) {
@@ -168,21 +164,19 @@ public class BaseResultFactory implements Serializable {
 		CodeAttribute returnResult = null;
 
 		if (isNull(key) && code >= 1 && code < 1000) {
-			returnResult = codeDatas.get(BasicCode + "-code").get(code);
+			returnResult = codeDatas.get(BasicCode).get(code);
 		}
 
 		if (isNull(key)) {
 			key = applicationName;
 		}
 
-		key += "-code";
-
 		if (isNull(returnResult)) {
-			returnResult = codeDatas.get(key).get(code);
+			returnResult = codeDatas.get(applicationName+"-service-"+key+"-code").get(code);
 		}
 
 		if (isNull(returnResult)) {
-			returnResult = codeDatas.get(BasicCode + "-code").get(2);
+			returnResult = codeDatas.get(BasicCode).get(2);
 		}
 
 		return returnResult;
@@ -190,10 +184,10 @@ public class BaseResultFactory implements Serializable {
 
 	public static CodeAttribute code(String key, String valueKey) {
 
-		CodeAttribute returnResult = codeDatas.get(key + "-code").get(valueKey);
+		CodeAttribute returnResult = codeDatas.get(applicationName+"-service-"+key+"-code").get(valueKey);
 
 		if (isNull(returnResult)) {
-			returnResult = codeDatas.get(BasicCode + "-code").get(2);
+			returnResult = codeDatas.get(BasicCode).get(2);
 		}
 
 		return returnResult;
