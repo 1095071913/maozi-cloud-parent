@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.ibatis.reflection.property.PropertyNamer;
 import org.apache.skywalking.apm.toolkit.trace.ActiveSpan;
 import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
@@ -55,6 +56,8 @@ import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.zhongshi.base.AbstractBaseDomain;
 import com.zhongshi.dingding.DingDingMessage;
 import com.zhongshi.factory.result.code.CodeAttribute;
@@ -77,7 +80,7 @@ public class BaseResultFactory implements Serializable {
 
 	public static FastDateFormat DETAULT_DATE_FORMAT = FastDateFormat.getInstance("yyy-MM-dd HH:mm:ss");
 
-	public static final String BasicCode = "zhongshi-etc-base-service-code";
+	public static final String BasicCode = "zhongshi-etc-base-code";
 	
 	private final static String dingdingUri = "https://oapi.dingtalk.com/robot/send?access_token=f4152fa1590798ccbc7b927a30473ea34274dc904fb31b771f5d63b4f20e56f1";
 
@@ -131,24 +134,13 @@ public class BaseResultFactory implements Serializable {
 		this.environment = environment;
 	}
 
-	protected static void codes(CodeHashMap codeHashMap) {
-		
-		if (codeDatas.containsKey(codeHashMap.getKey())) {
-			codeDatas.get(isNull(applicationName)?BasicCode:applicationName+"-service-"+codeHashMap.getKey()+"-code").putAll(codeHashMap);
+	protected static void code(CodeHashMap codeHashMap) {
+		String key = isNull(applicationName)?BasicCode:applicationName+"-code";
+		if(codeDatas.containsKey(key)) {
+			codeDatas.get(key).putAll(codeHashMap);
 		}else {
-			codeDatas.put(isNull(applicationName)?BasicCode:applicationName+"-service-"+codeHashMap.getKey()+"-code", codeHashMap);
+			codeDatas.put(key, codeHashMap);
 		}
-		
-	}
-	
-	protected static void enums(CodeHashMap codeHashMap) {
-		
-		if (codeDatas.containsKey(codeHashMap.getKey())) {
-			codeDatas.get(applicationName+"-service-"+codeHashMap.getKey()+"-enum").putAll(codeHashMap);
-		}else {
-			codeDatas.put(applicationName+"-service-"+codeHashMap.getKey()+"-enum", codeHashMap);
-		}
-		
 	}
 
 	public static CodeAttribute code(Integer code) {
@@ -172,7 +164,7 @@ public class BaseResultFactory implements Serializable {
 		}
 
 		if (isNull(returnResult)) {
-			returnResult = codeDatas.get(applicationName+"-service-"+key+"-code").get(code);
+			returnResult = codeDatas.get(applicationName+"-code").get(code);
 		}
 
 		if (isNull(returnResult)) {
@@ -184,7 +176,7 @@ public class BaseResultFactory implements Serializable {
 
 	public static CodeAttribute code(String key, String valueKey) {
 
-		CodeAttribute returnResult = codeDatas.get(applicationName+"-service-"+key+"-code").get(valueKey);
+		CodeAttribute returnResult = codeDatas.get(applicationName+"-code").get(valueKey);
 
 		if (isNull(returnResult)) {
 			returnResult = codeDatas.get(BasicCode).get(2);
@@ -208,6 +200,10 @@ public class BaseResultFactory implements Serializable {
 	public static <S, T> List<T> copyList(Collection<S> source, Supplier<T> target){
 		return CglibUtil.copyList(source, target);
 	}
+	
+	public static <T> String column(SFunction<T, ?> column){
+		return PropertyNamer.methodToProperty(LambdaUtils.extract(column).getImplMethodName());
+	}	
 
 	private void initResponse() {
 		HttpServletResponse response = getResponse();

@@ -19,12 +19,7 @@ package com.zhongshi.factory.result.code;
 
 import java.io.Serializable;
 import java.util.HashMap;
-
-import com.zhongshi.factory.BaseResultFactory;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
@@ -41,50 +36,10 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CodeHashMap extends HashMap<Object, CodeAttribute> implements Serializable {
 
-	private String key;
-
 	public void put(CodeAttribute codeAttribute) {
-
-		if (!BaseResultFactory.isNull(codeAttribute.getCode())) {
-			
-			super.put(codeAttribute.getCode(), codeAttribute);
-			
-		} else if (BaseResultFactory.isNotNull(codeAttribute.getData()) && codeAttribute.getData() instanceof IBaseEnum[]) {
-
-			IBaseEnum[] iBaseEnum = (IBaseEnum[]) codeAttribute.getData();
-
-			HashMap<Object, Object> enumMap = new HashMap<Object, Object>();
-
-			for (int i = 0; i < iBaseEnum.length; i++) {
-				enumMap.put(iBaseEnum[i].getKey(), iBaseEnum[i].getValue());
-			}
-			
-			codeAttribute.setData(enumMap);
-			
-			String key = lowerFirstCapse(codeAttribute.getMessage());
-			
-			codeAttribute.setMessage(null);
-			
-			super.put(key, codeAttribute);
-
-		} else {
-			super.put(codeAttribute.getMessage(), codeAttribute);
-		}
-
-	}
-
-	public static String lowerFirstCapse(String str) {
-
-		char[] chars = str.toCharArray();
-
-		chars[0] += 32;
-
-		return String.valueOf(chars);
-
+		super.put(codeAttribute.getCode(), codeAttribute);
 	}
 
 }

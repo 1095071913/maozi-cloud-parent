@@ -19,6 +19,8 @@ package com.zhongshi.test.api.impl.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.zhongshi.factory.result.error.ErrorResult;
 import com.zhongshi.test.api.impl.TestServiceImpl;
 
 /**
@@ -42,7 +44,8 @@ public class TestServiceRestImpl extends TestServiceImpl{
 	
 	@GetMapping("/test")
 	public Object test() {
-		System.out.println(isTest);
+		ErrorResult error = error(code(3001));
+		System.out.println(error.getMessage());
 		return getTestDo();
 	}
 	

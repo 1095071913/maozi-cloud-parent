@@ -19,7 +19,7 @@ public class RestCode extends BaseResultFactory{
 
 	static {
 
-		codes(new CodeHashMap() {
+		code(new CodeHashMap() {
 
 			{
 

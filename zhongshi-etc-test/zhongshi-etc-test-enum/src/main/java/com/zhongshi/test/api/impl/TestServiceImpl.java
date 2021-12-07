@@ -18,15 +18,26 @@
 
 package com.zhongshi.test.api.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import org.apache.ibatis.reflection.property.PropertyNamer;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.zhongshi.api.base.service.impl.ServiceImpl;
 import com.zhongshi.factory.result.code.CodeAttribute;
 import com.zhongshi.factory.result.code.CodeHashMap;
 import com.zhongshi.factory.result.code.IBaseEnum;
 import com.zhongshi.test.api.TestService;
 import com.zhongshi.test.domain.TestDo;
-import com.zhongshi.test.enums.TestEnum;
+import com.zhongshi.test.enums.TestEnum1;
 import com.zhongshi.test.mapper.TestMapper;
+
+import cn.hutool.extra.cglib.CglibUtil;
   
 /**
  * 
@@ -46,20 +57,11 @@ public class TestServiceImpl extends ServiceImpl<TestMapper, TestDo> implements 
 
 	static{
 
-		codes(new CodeHashMap("test") {
+		code(new CodeHashMap() {
 
 			{
-
-				this.put(new CodeAttribute<String>(2001, "图形认证码不正确"));
-			}
-
-		});
-		
-		enums(new CodeHashMap("test") {
-
-			{
-
-				this.put(new CodeAttribute<IBaseEnum[]>(TestEnum.class.getSimpleName(), TestEnum.values()));
+				
+				this.put(new CodeAttribute<String>(3001, "图形认证码不正确"));
 			}
 
 		});

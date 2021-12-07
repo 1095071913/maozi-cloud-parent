@@ -7,11 +7,11 @@ import com.zhongshi.factory.result.code.IBaseEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-public enum TestEnum implements IBaseEnum{
+public enum TestEnum1 implements IBaseEnum{
 
 	test1(0,"test1"),test2(1,"test2");
 	
-	TestEnum(Integer key,String value) {
+	TestEnum1(Integer key,String value) {
 		this.key=key;
 		this.value=value;
 	}

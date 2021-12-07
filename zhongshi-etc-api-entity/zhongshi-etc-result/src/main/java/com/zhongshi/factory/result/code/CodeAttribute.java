@@ -18,10 +18,6 @@
 package com.zhongshi.factory.result.code;
 
 import java.io.Serializable;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.zhongshi.factory.BaseResultFactory;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -50,8 +46,6 @@ public class CodeAttribute<D> implements Serializable {
 	private Integer code;
 
 	private String message;
-	
-	private String serviceName=BaseResultFactory.applicationName;
 
 	private D data;
 

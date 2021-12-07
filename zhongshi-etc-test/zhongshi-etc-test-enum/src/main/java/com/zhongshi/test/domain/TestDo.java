@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 import com.zhongshi.base.AbstractBaseDomain;
-import com.zhongshi.test.enums.TestEnum;
+import com.zhongshi.test.enums.TestEnum1;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +19,6 @@ import lombok.NoArgsConstructor;
 public class TestDo extends AbstractBaseDomain{
 
 	@Column(value = "type_id" , type = MySqlTypeConstant.INT)
-	private TestEnum typeId;
+	private TestEnum1 typeId;
 	
 }
