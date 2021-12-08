@@ -66,19 +66,29 @@ public class RestCode extends BaseResultFactory {
 	public void setCode(String codeJson) {
 
 		try {
+			
 			JSONObject codeMaps = JSONObject.fromObject(codeJson);
 			Map<String, CodeHashMap> newCodeDatas = new HashMap<>();
 			for(Object serviceCodeNameObject : codeMaps.keySet()) {
 				
 				String serviceCodeName=serviceCodeNameObject.toString();
 				
-				if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(environmentConfig.getProperty("spring.application.name"))) {
+				if(serviceCodeName.contains("enums")) {
+					
+					JSONObject serviceEnums = codeMaps.getJSONObject(serviceCodeName.toString());
+					for(Object serviceEnumKey:serviceEnums.keySet()) {
+						enums.put(serviceEnumKey.toString(), serviceEnums.get(serviceEnumKey.toString()));
+					}
+					
+				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(environmentConfig.getProperty("spring.application.name"))){
+					
 					CodeHashMap codeHashMap = new CodeHashMap();
 					JSONObject serviceCodes = codeMaps.getJSONObject(serviceCodeName.toString());
 					for(Object serviceCodeKey:serviceCodes.keySet()) {
 						codeHashMap.put(MapperUtils.json2pojo(serviceCodes.get(serviceCodeKey.toString()).toString(), CodeAttribute.class));
 					}
 					newCodeDatas.put(serviceCodeName.toString(), codeHashMap);
+					
 				}
 				
 			}
