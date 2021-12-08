@@ -38,7 +38,7 @@ public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
 		}
-		return new ResponseEntity<>(BaseResultFactory.error(BaseResultFactory.code(status.value()),status.value()), headers, status);
+		return new ResponseEntity<>(BaseResultFactory.error(BaseResultFactory.baseCode(status.value()),status.value()), headers, status);
 	}
 
 }

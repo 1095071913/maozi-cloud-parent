@@ -52,7 +52,7 @@ public class GenericDubbo {
 			return (AbstractBaseResult) genericService.$invoke(methodName, paramType, paramValue); 
 		} catch (Exception e) {
 			BaseResultFactory.log.error(BaseResultFactory.getStackTrace(e));
-			return BaseResultFactory.error(BaseResultFactory.code(600));
+			return BaseResultFactory.error(BaseResultFactory.baseCode(600));
 		}
 	}
 

@@ -1,92 +1,44 @@
 package com.zhongshi.result.rest;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.nacos.api.NacosFactory;
+import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.config.listener.Listener;
 import com.zhongshi.factory.BaseResultFactory;
 import com.zhongshi.factory.result.AbstractBaseResult;
 import com.zhongshi.factory.result.code.CodeAttribute;
 import com.zhongshi.factory.result.code.CodeHashMap;
+import com.zhongshi.tool.MapperUtils;
 import cn.hutool.core.util.ClassUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 
 @RestController
 @Api("Application-Code")
 @RequestMapping("/application")
 public class RestCode extends BaseResultFactory {
 
+	private String dataId = "zhongshi-etc-code.json";
+
+	private String group = "DEFAULT_GROUP";
+
 	private Map<String, Object> enums = new HashMap<String, Object>();
 
-	static {
-
-		code(new CodeHashMap() {
-
-			{
-
-				this.put(new CodeAttribute<String>(1, ""));
-
-				this.put(new CodeAttribute<String>(2, "服务没有此code"));
-
-				this.put(new CodeAttribute<String>(3, "Token错误"));
-
-				this.put(new CodeAttribute<String>(6, "服务未启动"));
-
-				this.put(new CodeAttribute<String>(7, "更新失败"));
-
-				this.put(new CodeAttribute<String>(8, "添加失败"));
-
-				this.put(new CodeAttribute<String>(9, "删除失败"));
-
-				this.put(new CodeAttribute<String>(10, "分页参数错误"));
-
-				this.put(new CodeAttribute<String>(11, "游客"));
-
-				this.put(new CodeAttribute<String>(12, "验签失败"));
-
-				this.put(new CodeAttribute<String>(13, "验证失败"));
-
-				this.put(new CodeAttribute<String>(14, "字段全部为空"));
-
-				this.put(new CodeAttribute<String>(16, "重复提交错误"));
-
-				this.put(new CodeAttribute<String>(17, "未找到第三方接口转换器"));
-
-				this.put(new CodeAttribute<String>(18, "未找到第三方数据请求转换器"));
-
-				this.put(new CodeAttribute<String>(500, "内部服务错误"));
-
-				this.put(new CodeAttribute<String>(400, "参数错误"));
-
-				this.put(new CodeAttribute<String>(401, "用户未授权"));
-
-				this.put(new CodeAttribute<String>(403, "权限不足"));
-
-				this.put(new CodeAttribute<String>(404, "没有此资源"));
-
-				this.put(new CodeAttribute<String>(405, "请求格式错误"));
-
-				this.put(new CodeAttribute<String>(600, "错误熔断"));
-
-				this.put(new CodeAttribute<String>(601, "限流中"));
-
-				this.put(new CodeAttribute<String>(700, "网关错误"));
-
-				this.put(new CodeAttribute<String>(800, "获取Token失败"));
-
-			}
-
-		});
-
-	}
-
 	@Autowired
-	public RestCode(Environment environmentConfig) {
+	public RestCode(Environment environmentConfig) throws Exception {
+		
+		this.environmentConfig=environmentConfig;
 
 		ClassUtil.scanPackage("com.zhongshi."+ environmentConfig.getProperty("spring.application.name").replace("zhongshi-etc-", "") + ".enums")
 				.forEach(item -> {
@@ -97,6 +49,45 @@ public class RestCode extends BaseResultFactory {
 						enums.put(new String(charArray), enumConstants);
 					}
 				});
+
+		ConfigService configService = NacosFactory.createConfigService(environmentConfig.getProperty("spring.cloud.nacos.config.server-addr"));
+		setCode(configService.getConfig(dataId, group, 5000));
+		configService.addListener(dataId, group, new Listener() {
+			@Override
+			public void receiveConfigInfo(String codeJson) {
+				setCode(codeJson);
+			}
+
+			@Override
+			public Executor getExecutor() {
+				return null;
+			}
+		});
+	}
+
+	public void setCode(String codeJson) {
+
+		try {
+			JSONObject codeMaps = JSONObject.fromObject(codeJson);
+			Map<String, CodeHashMap> newCodeDatas = new HashMap<>();
+			for(Object serviceCodeNameObject : codeMaps.keySet()) {
+				
+				String serviceCodeName=serviceCodeNameObject.toString();
+				
+				if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(environmentConfig.getProperty("spring.application.name"))) {
+					CodeHashMap codeHashMap = new CodeHashMap();
+					JSONObject serviceCodes = codeMaps.getJSONObject(serviceCodeName.toString());
+					for(Object serviceCodeKey:serviceCodes.keySet()) {
+						codeHashMap.put(MapperUtils.json2pojo(serviceCodes.get(serviceCodeKey.toString()).toString(), CodeAttribute.class));
+					}
+					newCodeDatas.put(serviceCodeName.toString(), codeHashMap);
+				}
+				
+			}
+			codeDatas = newCodeDatas;
+			
+		} catch (Exception e) {e.printStackTrace();}
+
 	}
 
 	@GetMapping("/getCode")

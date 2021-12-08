@@ -20,8 +20,6 @@ package com.zhongshi.test.api.impl;
 
 import java.util.List;
 import com.zhongshi.api.base.service.impl.ServiceImpl;
-import com.zhongshi.factory.result.code.CodeAttribute;
-import com.zhongshi.factory.result.code.CodeHashMap;
 import com.zhongshi.test.api.TestService;
 import com.zhongshi.test.domain.TestDo;
 import com.zhongshi.test.mapper.TestMapper;
@@ -41,19 +39,8 @@ import com.zhongshi.test.mapper.TestMapper;
  */
 
 public class TestServiceImpl extends ServiceImpl<TestMapper, TestDo> implements TestService {
-
-	static{
-
-		code(new CodeHashMap() {
-
-			{
-				
-				this.put(new CodeAttribute<String>(3001, "图形认证码不正确"));
-			}
-
-		});
-
-	}
+	
+	public TestServiceImpl() { setServiceName("test"); }
 	
 	public List<TestDo> getTestDo() {
 		return list();

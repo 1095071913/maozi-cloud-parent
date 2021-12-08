@@ -46,6 +46,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -68,10 +69,12 @@ import com.zhongshi.sso.OauthUserDetails;
 import com.zhongshi.tool.MapperUtils;
 import cn.hutool.extra.cglib.CglibUtil;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @DubboService
+@NoArgsConstructor
 public class BaseResultFactory implements Serializable {
 
 	private static final long serialVersionUID = -4666437508651446479L;
@@ -92,66 +95,47 @@ public class BaseResultFactory implements Serializable {
 
 	public static ThreadLocal<String> sql = new ThreadLocal<String>();
 	
+	public static Environment environmentConfig;
+	
 	public static AsyncRestTemplate asyncRestTemplate;
 	
-	@Autowired(required = false)
-	public void setAsyncRestTemplate(AsyncRestTemplate asyncRestTemplate) {
-		this.asyncRestTemplate = asyncRestTemplate;
-	}
-
 	public static DiscoveryClient discoveryClient;
-
-	@Resource
-	public void setDiscoveryClient(DiscoveryClient discoveryClient) {
+	
+	@Autowired(required = false)
+	public BaseResultFactory(AsyncRestTemplate asyncRestTemplate,DiscoveryClient discoveryClient) {
+		
+		this.asyncRestTemplate = asyncRestTemplate;
+		
 		this.discoveryClient = discoveryClient;
+		
+		applicationName=environmentConfig.getProperty("spring.application.name");
+		
+		environment=environmentConfig.getProperty("project.environment");
+		
+		isTest=environmentConfig.getProperty("logging.test",Boolean.class);
 	}
-
+	
 	public static String applicationName;
-
-	@Value("${spring.application.name}")
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
-	}
-
-	public static Integer port;
-
-	@Value("${application-port}")
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	public static Boolean isTest = false;
-
-	@Value("${logging.test:ON}")
-	public void setLogLevel(Boolean isTest) {
-		this.isTest = isTest;
-	}
 	
 	public static String environment;
 
-	@Value("${project.environment:localhost}")
-	public void setEnvironment(String environment) {
-		this.environment = environment;
+	public static Boolean isTest;
+	
+	protected String serviceName;
+	
+	protected void setServiceName(String serviceName) {
+		this.serviceName=environmentConfig.getProperty("spring.application.name")+"-service"+"-"+serviceName;
 	}
 
-	protected static void code(CodeHashMap codeHashMap) {
-		String key = isNull(applicationName)?BasicCode:applicationName+"-code";
-		if(codeDatas.containsKey(key)) {
-			codeDatas.get(key).putAll(codeHashMap);
-		}else {
-			codeDatas.put(key, codeHashMap);
-		}
-	}
-
-	public static CodeAttribute code(Integer code) {
+	public CodeAttribute code(Integer code) {
 		return getCode(null, code);
 	}
 
-	public static CodeAttribute code(String key, Integer code) {
+	public CodeAttribute code(String key, Integer code) {
 		return getCode(key, code);
 	}
 
-	private static CodeAttribute getCode(String key, Integer code) {
+	private CodeAttribute getCode(String key, Integer code) {
 
 		CodeAttribute returnResult = null;
 
@@ -160,11 +144,11 @@ public class BaseResultFactory implements Serializable {
 		}
 
 		if (isNull(key)) {
-			key = applicationName;
+			key = serviceName;
 		}
 
 		if (isNull(returnResult)) {
-			returnResult = codeDatas.get(applicationName+"-code").get(code);
+			returnResult = codeDatas.get(key+"-code").get(code);
 		}
 
 		if (isNull(returnResult)) {
@@ -174,14 +158,31 @@ public class BaseResultFactory implements Serializable {
 		return returnResult;
 	}
 
-	public static CodeAttribute code(String key, String valueKey) {
+	public CodeAttribute code(String key, String valueKey) {
+		
+		if(isNull(key)) {
+			key=serviceName;
+		}else {
+			key=applicationName+"-service-"+key;
+		}
 
-		CodeAttribute returnResult = codeDatas.get(applicationName+"-code").get(valueKey);
+		CodeAttribute returnResult = codeDatas.get(key+"-code").get(valueKey);
 
 		if (isNull(returnResult)) {
 			returnResult = codeDatas.get(BasicCode).get(2);
 		}
 
+		return returnResult;
+	}
+	
+	public static CodeAttribute baseCode(Integer code) {
+		
+		CodeAttribute returnResult = codeDatas.get(BasicCode).get(code);
+
+		if (isNull(returnResult)) {
+			returnResult = codeDatas.get(BasicCode).get(2);
+		}
+		
 		return returnResult;
 	}
 
