@@ -1,8 +1,6 @@
 package com.zhongshi.result.rest;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import org.springframework.beans.factory.annotation.Autowired;
