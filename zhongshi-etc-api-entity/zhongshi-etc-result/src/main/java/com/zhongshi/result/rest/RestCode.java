@@ -1,21 +1,27 @@
 package com.zhongshi.result.rest;
 
+import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zhongshi.factory.BaseResultFactory;
 import com.zhongshi.factory.result.AbstractBaseResult;
 import com.zhongshi.factory.result.code.CodeAttribute;
 import com.zhongshi.factory.result.code.CodeHashMap;
+import cn.hutool.core.util.ClassUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 
 @RestController
 @Api("Application-Code")
 @RequestMapping("/application")
-public class RestCode extends BaseResultFactory{
+public class RestCode extends BaseResultFactory {
+
+	private Map<String, Object> enums = new HashMap<String, Object>();
 
 	static {
 
@@ -48,13 +54,13 @@ public class RestCode extends BaseResultFactory{
 				this.put(new CodeAttribute<String>(14, "字段全部为空"));
 
 				this.put(new CodeAttribute<String>(16, "重复提交错误"));
-				
+
 				this.put(new CodeAttribute<String>(17, "未找到第三方接口转换器"));
-				
+
 				this.put(new CodeAttribute<String>(18, "未找到第三方数据请求转换器"));
 
 				this.put(new CodeAttribute<String>(500, "内部服务错误"));
-				
+
 				this.put(new CodeAttribute<String>(400, "参数错误"));
 
 				this.put(new CodeAttribute<String>(401, "用户未授权"));
@@ -62,11 +68,11 @@ public class RestCode extends BaseResultFactory{
 				this.put(new CodeAttribute<String>(403, "权限不足"));
 
 				this.put(new CodeAttribute<String>(404, "没有此资源"));
-				
+
 				this.put(new CodeAttribute<String>(405, "请求格式错误"));
 
 				this.put(new CodeAttribute<String>(600, "错误熔断"));
-				
+
 				this.put(new CodeAttribute<String>(601, "限流中"));
 
 				this.put(new CodeAttribute<String>(700, "网关错误"));
@@ -79,10 +85,30 @@ public class RestCode extends BaseResultFactory{
 
 	}
 
+	@Autowired
+	public RestCode(Environment environmentConfig) {
+
+		ClassUtil.scanPackage("com.zhongshi."+ environmentConfig.getProperty("spring.application.name").replace("zhongshi-etc-", "") + ".enums")
+				.forEach(item -> {
+					if (item.isEnum()) {
+						Object[] enumConstants = item.getEnumConstants();
+						char[] charArray = item.getSimpleName().toCharArray();
+						charArray[0] += 32;
+						enums.put(new String(charArray), enumConstants);
+					}
+				});
+	}
+
 	@GetMapping("/getCode")
-	@ApiOperation(value = "获取应用对应的code信息")
+	@ApiOperation(value = "获取应用错误编码信息")
 	public AbstractBaseResult<Map<String, CodeHashMap>> getCode() {
 		return success(codeDatas);
+	}
+
+	@GetMapping("/getEnum/{name}")
+	@ApiOperation(value = "获取应用枚举编码信息")
+	public AbstractBaseResult<Map<String, CodeHashMap>> getEnum(@PathVariable("name") String name) {
+		return success(enums.get(name));
 	}
 
 }

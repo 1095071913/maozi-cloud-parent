@@ -17,11 +17,14 @@
 
 package com.zhongshi.test.api.impl.rest;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.zhongshi.factory.result.error.ErrorResult;
+import com.zhongshi.factory.result.AbstractBaseResult;
 import com.zhongshi.test.api.impl.TestServiceImpl;
+import com.zhongshi.test.enums.TestEnum;
+import com.zhongshi.tool.SpringUtil;
 
 /**
  * 
@@ -43,10 +46,8 @@ public class TestServiceRestImpl extends TestServiceImpl{
 	
 	
 	@GetMapping("/test")
-	public Object test() {
-		ErrorResult error = error(code(3001));
-		System.out.println(error.getMessage());
-		return getTestDo();
+	public AbstractBaseResult test() {
+		return success(getTestDo());
 	}
 	
 }

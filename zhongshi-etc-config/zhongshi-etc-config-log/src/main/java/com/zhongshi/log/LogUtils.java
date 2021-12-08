@@ -54,9 +54,6 @@ public class LogUtils extends BaseResultFactory{
     	
     	String ip = request.getHeader("x-forwarded-for");
 		
-		if ("0:0:0:0:0:0:0:1".equals(ip)) {
-			ip = "127.0.0.1";
-		}
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
@@ -71,6 +68,9 @@ public class LogUtils extends BaseResultFactory{
 		}
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
+		}
+		if ("0:0:0:0:0:0:0:1".equals(ip)) {
+			ip = "127.0.0.1";
 		}
 		return ip;
 	}
