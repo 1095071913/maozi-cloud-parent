@@ -18,7 +18,6 @@ package com.zhongshi;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,6 +28,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import com.zhongshi.factory.BaseResultFactory;
+import com.zhongshi.tool.ApplicationEnvironmentConfig;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -48,31 +48,10 @@ import lombok.extern.slf4j.Slf4j;
 @EnableCaching
 @EnableScheduling
 @EnableFeignClients
-@DependsOn("restCode")
 @EnableDiscoveryClient
 @SpringBootApplication
+@DependsOn({"applicationEnvironmentConfig"})
 public class BaseApplication {
-
-	public static String loadConfig;
-
-	public static String nacosAddr;
-
-	public static String rpcServerNames;
-
-	@Value("${spring.cloud.nacos.config.shared-dataids}")
-	public void setLoadConfig(String loadConfig) {
-		BaseApplication.loadConfig = loadConfig;
-	}
-
-	@Value("${spring.cloud.nacos.config.server-addr}")
-	public void setNacosAddr(String nacosAddr) {
-		BaseApplication.nacosAddr = nacosAddr;
-	}
-
-	@Value("${application-rpc-service-name:#{null}}")
-	public void setRpcServerNames(String rpcServerNames) {
-		BaseApplication.rpcServerNames = rpcServerNames;
-	}
 
 	protected static void ApplicationRun() {
 
@@ -88,9 +67,9 @@ public class BaseApplication {
 
 			builder.bannerMode(Mode.OFF).run(new String[] {});
 			logs.put("uptime", (System.currentTimeMillis() - begin) + " ms");
-			logs.put("config", loadConfig);
-			logs.put("nacosAddr", nacosAddr + " net");
-			logs.put("subscribe", rpcServerNames);
+			logs.put("config", ApplicationEnvironmentConfig.loadConfig);
+			logs.put("nacosAddr", ApplicationEnvironmentConfig.nacosAddr + " net");
+			logs.put("subscribe", ApplicationEnvironmentConfig.rpcServerNames);
 
 		}
 		catch (Exception e) {
@@ -99,8 +78,8 @@ public class BaseApplication {
 
 			errorBoo = true;
 			StackTraceElement stackTraceElement = e.getStackTrace()[0];
-			logs.put("config", loadConfig);
-			logs.put("nacosAddr", nacosAddr + " net");
+			logs.put("config", ApplicationEnvironmentConfig.loadConfig);
+			logs.put("nacosAddr", ApplicationEnvironmentConfig.nacosAddr + " net");
 			logs.put("errorDesc", e.getLocalizedMessage());
 			logs.put("errorLine", stackTraceElement.toString());
 

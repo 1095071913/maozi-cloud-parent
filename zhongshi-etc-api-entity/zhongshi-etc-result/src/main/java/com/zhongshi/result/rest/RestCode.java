@@ -16,6 +16,7 @@ import com.zhongshi.factory.BaseResultFactory;
 import com.zhongshi.factory.result.AbstractBaseResult;
 import com.zhongshi.factory.result.code.CodeAttribute;
 import com.zhongshi.factory.result.code.CodeHashMap;
+import com.zhongshi.tool.ApplicationEnvironmentConfig;
 import com.zhongshi.tool.MapperUtils;
 import cn.hutool.core.util.ClassUtil;
 import io.swagger.annotations.Api;
@@ -33,12 +34,9 @@ public class RestCode extends BaseResultFactory {
 
 	private Map<String, Object> enums = new HashMap<String, Object>();
 
-	@Autowired
-	public RestCode(Environment environmentConfig) throws Exception {
-		
-		this.environmentConfig=environmentConfig;
+	public RestCode() throws Exception {
 
-		ClassUtil.scanPackage("com.zhongshi."+ environmentConfig.getProperty("spring.application.name").replace("zhongshi-etc-", "") + ".enums")
+		ClassUtil.scanPackage("com.zhongshi."+ ApplicationEnvironmentConfig.applicationName.replace("zhongshi-etc-", "") + ".enums")
 				.forEach(item -> {
 					if (item.isEnum()) {
 						Object[] enumConstants = item.getEnumConstants();
@@ -48,7 +46,7 @@ public class RestCode extends BaseResultFactory {
 					}
 				});
 
-		ConfigService configService = NacosFactory.createConfigService(environmentConfig.getProperty("spring.cloud.nacos.config.server-addr"));
+		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentConfig.nacosAddr);
 		setCode(configService.getConfig(dataId, group, 5000));
 		configService.addListener(dataId, group, new Listener() {
 			@Override
@@ -80,7 +78,7 @@ public class RestCode extends BaseResultFactory {
 						enums.put(serviceEnumKey.toString(), serviceEnums.get(serviceEnumKey.toString()));
 					}
 					
-				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(environmentConfig.getProperty("spring.application.name"))){
+				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName)){
 					
 					CodeHashMap codeHashMap = new CodeHashMap();
 					JSONObject serviceCodes = codeMaps.getJSONObject(serviceCodeName.toString());

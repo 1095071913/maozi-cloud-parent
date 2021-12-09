@@ -38,6 +38,7 @@ import com.alibaba.nacos.client.utils.ValidatorUtils;
 import com.alibaba.nacos.common.utils.ConvertUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.zhongshi.factory.BaseResultFactory;
+import com.zhongshi.tool.ApplicationEnvironmentConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -205,7 +206,7 @@ public class NacosNamingService implements NamingService {
     @Override
     public void registerInstance(String serviceName, String groupName, Instance instance) throws NacosException {
 
-        if (!(serviceName.contains("Rpc") || serviceName.contains("rpc") || serviceName.equals(BaseResultFactory.applicationName)) || serviceName.equals("providers:org.apache.dubbo.rpc.Filter::")) {
+        if (!(serviceName.contains("Rpc") || serviceName.contains("rpc") || serviceName.equals(ApplicationEnvironmentConfig.applicationName)) || serviceName.equals("providers:org.apache.dubbo.rpc.Filter::")) {
             return;
         }
 

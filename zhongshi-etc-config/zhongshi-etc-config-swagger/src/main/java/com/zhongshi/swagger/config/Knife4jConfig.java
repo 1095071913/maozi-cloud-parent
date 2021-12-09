@@ -9,11 +9,14 @@ package com.zhongshi.swagger.config;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
-import com.zhongshi.factory.BaseResultFactory;
+import com.zhongshi.tool.ApplicationEnvironmentConfig;
+
 import cn.hutool.core.collection.CollectionUtil;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -62,7 +65,7 @@ public class Knife4jConfig {
 
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .groupName(BaseResultFactory.applicationName)
+                .groupName(ApplicationEnvironmentConfig.applicationName)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com"))
                 .paths(PathSelectors.any())
@@ -74,8 +77,8 @@ public class Knife4jConfig {
    
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title(BaseResultFactory.applicationName)
-                .description(BaseResultFactory.applicationName+"接口文档")
+                .title(ApplicationEnvironmentConfig.applicationName)
+                .description(ApplicationEnvironmentConfig.applicationName+"接口文档")
                 .termsOfServiceUrl("https://www.gdzskj.tech")
                 .contact(new Contact("龙宝","https://www.gdzskj.tech","zhongshi@zhongshi.info"))
                 .version("1.0")

@@ -64,6 +64,7 @@ import com.zhongshi.factory.result.code.CodeHashMap;
 import com.zhongshi.factory.result.error.ErrorResult;
 import com.zhongshi.factory.result.success.SuccessResult;
 import com.zhongshi.sso.OauthUserDetails;
+import com.zhongshi.tool.ApplicationEnvironmentConfig;
 import com.zhongshi.tool.MapperUtils;
 import cn.hutool.extra.cglib.CglibUtil;
 import lombok.Data;
@@ -82,8 +83,6 @@ public class BaseResultFactory implements Serializable {
 	public static FastDateFormat DETAULT_DATE_FORMAT = FastDateFormat.getInstance("yyy-MM-dd HH:mm:ss");
 
 	public static final String BasicCode = "zhongshi-etc-base-code";
-	
-	private final static String dingdingUri = "https://oapi.dingtalk.com/robot/send?access_token=f4152fa1590798ccbc7b927a30473ea34274dc904fb31b771f5d63b4f20e56f1";
 
 	public static Map<String, CodeHashMap> codeDatas = new HashMap<>();
 
@@ -92,8 +91,6 @@ public class BaseResultFactory implements Serializable {
 	private static BaseResultFactory baseResultFactory;
 
 	public static ThreadLocal<String> sql = new ThreadLocal<String>();
-	
-	public static Environment environmentConfig;
 	
 	public static AsyncRestTemplate asyncRestTemplate;
 	
@@ -105,24 +102,12 @@ public class BaseResultFactory implements Serializable {
 		this.asyncRestTemplate = asyncRestTemplate;
 		
 		this.discoveryClient = discoveryClient;
-		
-		applicationName=environmentConfig.getProperty("spring.application.name");
-		
-		environment=environmentConfig.getProperty("project.environment");
-		
-		isTest=environmentConfig.getProperty("logging.test",Boolean.class);
 	}
-	
-	public static String applicationName;
-	
-	public static String environment;
-
-	public static Boolean isTest;
 	
 	protected String serviceName;
 	
 	protected void setServiceName(String serviceName) {
-		this.serviceName=environmentConfig.getProperty("spring.application.name")+"-service"+"-"+serviceName;
+		this.serviceName=ApplicationEnvironmentConfig.applicationName+"-service"+"-"+serviceName;
 	}
 
 	public CodeAttribute code(Integer code) {
@@ -161,7 +146,7 @@ public class BaseResultFactory implements Serializable {
 		if(isNull(key)) {
 			key=serviceName;
 		}else {
-			key=applicationName+"-service-"+key;
+			key=ApplicationEnvironmentConfig.applicationName+"-service-"+key;
 		}
 
 		CodeAttribute returnResult = codeDatas.get(key+"-code").get(valueKey);
@@ -350,7 +335,7 @@ public class BaseResultFactory implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("[ TID ]"+"："+getTraceId()+"\r\n");
-		sb.append("[ APP ]"+"："+applicationName+"\r\n");
+		sb.append("[ APP ]"+"："+ApplicationEnvironmentConfig.applicationName+"\r\n");
 		sb.append("[ TIME ]"+"："+DETAULT_DATE_FORMAT.format(new Date())+"\r\n");
         
         for(String logKey:errorLogs.keySet()) {
@@ -366,7 +351,7 @@ public class BaseResultFactory implements Serializable {
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
         headers.setContentType(type);
         HttpEntity<String> formEntity = new HttpEntity<String>(JSONObject.toJSONString(message).toString(), headers);
-        asyncRestTemplate.postForEntity(dingdingUri,formEntity,String.class);
+        asyncRestTemplate.postForEntity("https://oapi.dingtalk.com/robot/send?access_token="+ApplicationEnvironmentConfig.dingdingToken,formEntity,String.class);
         
 	}
 

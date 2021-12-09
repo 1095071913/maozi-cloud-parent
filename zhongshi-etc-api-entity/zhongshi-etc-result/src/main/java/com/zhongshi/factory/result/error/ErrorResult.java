@@ -57,8 +57,6 @@ public class ErrorResult<D> extends AbstractBaseResult<D> implements Serializabl
 	private Integer code;
 	
 	private String message;
-	
-	private String serviceName=BaseResultFactory.applicationName;
 
 	public ErrorResult(CodeAttribute<D> codeData) {
 		
