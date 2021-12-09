@@ -14,7 +14,7 @@ import lombok.Data;
 public class ApplicationEnvironmentConfig {
 
 	public static String applicationName;
-	@Value("spring.application.name")
+	@Value("${spring.application.name}")
 	public void setApplicationName(String applicationName) {
 		this.applicationName=applicationName;
 	}
