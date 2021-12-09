@@ -21,7 +21,6 @@ public class ApplicationEnvironmentConfig {
 	public void setLoadConfig(String loadConfig) {
 		this.loadConfig = loadConfig;
 	}
-
 	
 	public static String nacosAddr;
 	@Value("${spring.cloud.nacos.config.server-addr}")
@@ -45,21 +44,20 @@ public class ApplicationEnvironmentConfig {
 	@Value("${logging.test}")
 	public void setIsTest(Boolean isTest) {
 		this.isTest = isTest;
-	}
-	
-	
-	private static Environment environmentConfig;
-	
-	@Resource
-	public void setEnvironmentConfig(Environment environmentConfig) {
-		this.environmentConfig=environmentConfig;
-	}
+	}	
 	
 	public static String dingdingToken;
 	@Value("${project.dingdingToken:f4152fa1590798ccbc7b927a30473ea34274dc904fb31b771f5d63b4f20e56f1}")
 	public void setDingdingToken(String dingdingToken) {
 		this.dingdingToken = dingdingToken;
 	}
+	
+	private static Environment environmentConfig;
+	@Resource
+	public void setEnvironmentConfig(Environment environmentConfig) {
+		this.environmentConfig=environmentConfig;
+	}
+
 	
 	
 }
