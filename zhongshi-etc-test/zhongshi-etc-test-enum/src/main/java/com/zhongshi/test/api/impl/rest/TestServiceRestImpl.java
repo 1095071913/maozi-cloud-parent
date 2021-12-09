@@ -41,8 +41,6 @@ public class TestServiceRestImpl extends TestServiceImpl{
 	
 	@GetMapping("/test")
 	public AbstractBaseResult test() {
-		System.out.println(code(3001));
-		System.out.println(code(500));
 		return success(getTestDo());
 	}
 	

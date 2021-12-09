@@ -18,6 +18,12 @@
 
 		<!-- Other Component Begin --> 
 		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId> 
+			<version>3.3.0</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId> 
 		</dependency>
