@@ -3,8 +3,6 @@ package com.zhongshi.result.rest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,14 +69,14 @@ public class RestCode extends BaseResultFactory {
 				
 				String serviceCodeName=serviceCodeNameObject.toString();
 				
-				if(serviceCodeName.contains("enums")) {
+				if(serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName) && serviceCodeName.contains("enums")) {
 					
 					JSONObject serviceEnums = codeMaps.getJSONObject(serviceCodeName.toString());
 					for(Object serviceEnumKey:serviceEnums.keySet()) {
 						enums.put(serviceEnumKey.toString(), serviceEnums.get(serviceEnumKey.toString()));
 					}
 					
-				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName)){
+				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName) ||  serviceCodeName.contains("zhongshi-etc-gateway")){
 					
 					CodeHashMap codeHashMap = new CodeHashMap();
 					JSONObject serviceCodes = codeMaps.getJSONObject(serviceCodeName.toString());

@@ -1,16 +1,13 @@
 package com.zhongshi.tool;
 
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import lombok.Data;
 
 @Data
 @Component
-@RefreshScope
 public class ApplicationEnvironmentConfig {
 
 	public static String applicationName;
