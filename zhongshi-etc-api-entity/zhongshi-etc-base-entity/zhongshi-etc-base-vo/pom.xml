@@ -14,10 +14,10 @@
 
 		<!-- Project Begin -->  
 		<dependency>
-			<groupId>com.zhongshi</groupId>
-			<artifactId>zhongshi-etc-result</artifactId>
-			<version>${zhongshi-etc-result.version}</version>
-		</dependency> 
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.22</version>
+        </dependency>
 		<!-- Project End -->
 
 

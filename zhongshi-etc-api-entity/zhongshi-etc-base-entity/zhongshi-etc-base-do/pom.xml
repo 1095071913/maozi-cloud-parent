@@ -18,7 +18,7 @@
 		<!-- ORM Begin --> 
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
+			<artifactId>mybatis-plus-core</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!-- ORM End -->

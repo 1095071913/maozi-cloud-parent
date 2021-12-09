@@ -33,4 +33,4 @@ import java.io.Serializable;
  */
 
 
-public abstract class AbstractBaseVomain<Do extends AbstractBaseDomain> implements Serializable {}
+public abstract class AbstractBaseVomain implements Serializable {}
