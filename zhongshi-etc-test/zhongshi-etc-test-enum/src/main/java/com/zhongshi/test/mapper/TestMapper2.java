@@ -18,7 +18,7 @@
 package com.zhongshi.test.mapper;
 
 import com.github.yulichang.base.MPJBaseMapper;
-import com.zhongshi.test.domain.TestDo;
+import com.zhongshi.test.domain.TestDo2;
 
 /**
  * 
@@ -35,6 +35,6 @@ import com.zhongshi.test.domain.TestDo;
  */
 
 
-public interface TestMapper extends MPJBaseMapper<TestDo>{
+public interface TestMapper2 extends MPJBaseMapper<TestDo2>{
 	
 } 

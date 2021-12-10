@@ -1,13 +1,14 @@
 package com.zhongshi.test.domain;
 
+import java.util.List;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
+import com.github.yulichang.annotation.EntityMapping;
 import com.zhongshi.base.AbstractBaseDomain;
 import com.zhongshi.test.enums.TestEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,8 @@ public class TestDo extends AbstractBaseDomain{
 	@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 	private TestEnum typeId;
 	
-	@TableField(select = false)
-	private String test1;
+    @TableField(exist = false)
+    @EntityMapping(joinField = "testId")
+    private List<TestDo2> testDo2;
 	
 }

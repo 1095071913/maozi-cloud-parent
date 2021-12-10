@@ -19,9 +19,11 @@
 package com.zhongshi.test.api.impl;
 
 import java.util.List;
-import com.zhongshi.api.base.service.impl.ServiceImpl;
+import com.github.yulichang.base.MPJBaseServiceImpl;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.zhongshi.test.api.TestService;
 import com.zhongshi.test.domain.TestDo;
+import com.zhongshi.test.domain.TestDo2;
 import com.zhongshi.test.mapper.TestMapper;
   
 /**
@@ -38,12 +40,12 @@ import com.zhongshi.test.mapper.TestMapper;
  *
  */
 
-public class TestServiceImpl extends ServiceImpl<TestMapper, TestDo> implements TestService {
+public class TestServiceImpl extends MPJBaseServiceImpl<TestMapper, TestDo> implements TestService {
 	
 	public TestServiceImpl() { setServiceName("test"); }
 	
 	public List<TestDo> getTestDo() {
-		return list();
+		return listDeep();
 	}
 	
 }

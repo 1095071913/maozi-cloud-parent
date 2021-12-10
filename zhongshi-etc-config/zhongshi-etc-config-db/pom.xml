@@ -60,7 +60,13 @@
 			<artifactId>zhongshi-etc-config-redis</artifactId>
 			<version>${zhongshi-etc-config-redis.version}</version>
 		</dependency>
-		<!-- Project End -->
+
+		<dependency>
+			<groupId>com.github.yulichang</groupId>
+			<artifactId>mybatis-plus-join</artifactId>
+			<version>${mybatis-plus-join.version}</version>
+		</dependency>
+		<!-- Project End --> 
 
 
 	</dependencies>

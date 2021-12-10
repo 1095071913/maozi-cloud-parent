@@ -28,24 +28,23 @@
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
 		<spring-boot-admin-starter.version>2.5.4</spring-boot-admin-starter.version>
-		<redisson-spring-boot-starter.version>3.10.4</redisson-spring-boot-starter.version>
 		<spring-cloud-starter-oauth2.version>2.2.4.RELEASE</spring-cloud-starter-oauth2.version>
 		<!-- Spring Component End -->
 
 
 
 		<!-- Other Component Begin -->
-		<poi.version>3.17</poi.version>
+		<cglib.version>3.3.0</cglib.version>
 		<dubbo.version>2.7.8</dubbo.version>
 		<apollo.version>1.8.0</apollo.version>
 		<sentry.version>3.1.1</sentry.version>
+		<json-lib.version>2.4</json-lib.version>
 		<easypoi.version>4.3.0</easypoi.version>
-		<bitwalker.version>1.21</bitwalker.version>
 		<skywalking.version>8.4.0</skywalking.version>
 		<hutool-all.version>5.6.5</hutool-all.version> 
 		<mybatis-plus.version>3.4.3</mybatis-plus.version>
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
-		<redis.redisson.version>3.6.0</redis.redisson.version>
+		<mybatis-plus-join.version>1.2.1</mybatis-plus-join.version>
 		<knife4j-spring-boot-starter.version>2.0.9</knife4j-spring-boot-starter.version>
 		<mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
 		<sharding-jdbc-self-id-generator.version>1.4.2</sharding-jdbc-self-id-generator.version>
