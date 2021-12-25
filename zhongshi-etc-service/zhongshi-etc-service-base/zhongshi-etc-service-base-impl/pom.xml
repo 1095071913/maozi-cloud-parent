@@ -19,16 +19,10 @@
             <version>${zhongshi-etc-service-base-api.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.zhongshi</groupId>
             <artifactId>zhongshi-etc-config-db</artifactId>
             <version>${zhongshi-etc-config-db.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
         <!-- Project End -->
 

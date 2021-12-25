@@ -13,27 +13,12 @@
 
 
 		<!-- Dubbo Begin -->
-		<!-- <dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-spring-boot-starter</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-registry-nacos</artifactId>
-			<version>3.0.1</version>
-		</dependency> -->
 		<dependency> 
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-dubbo</artifactId>
 		</dependency>
 		<!-- Dubbo Begin -->
-
-		<dependency>
-			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>
-			<version>2.1</version>
-		</dependency>
+		
 
 		<!-- Project Begin -->
 		<dependency>
