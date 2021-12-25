@@ -23,6 +23,10 @@
 			<version>${zhongshi-etc-result.version}</version>
 		</dependency>
 		
+		<dependency>
+   			<groupId>org.springframework.cloud</groupId>
+   			<artifactId>spring-cloud-loadbalancer</artifactId>
+		</dependency>
 	</dependencies>
 
 
