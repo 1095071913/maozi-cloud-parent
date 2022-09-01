@@ -111,7 +111,7 @@ public class GenerateEntity {
 					
 					
 					/* 导包 Begin */
-					entityImport(entity, entityName,tableComment);
+					entityImport(entity,tableData.getTableName(),tableComment);
 					/* 导包 End */
 					
 					
