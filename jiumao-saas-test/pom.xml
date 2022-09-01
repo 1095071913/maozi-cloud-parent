@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.jiumao</groupId>
+    <artifactId>jiumao-saas-parent</artifactId>
+    <version>1.5.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>jiumao-saas-test</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>jiumao-saas-test-enum</module>
+  </modules>
+  
+  
+  <properties>
+
+		<application-run>com.jiumao.TestApplication</application-run>
+
+		<!-- jiumao-saas-cloud Begin -->
+		<jiumao-saas-service-base-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-impl.version>
+		<!-- jiumao-saas-cloud End -->
+
+
+		<!-- Parent Begin -->
+		<jiumao-saas-vo.version>1.5.0-SNAPSHOT</jiumao-saas-vo.version>
+		<jiumao-saas-do.version>1.5.0-SNAPSHOT</jiumao-saas-do.version>
+		<jiumao-saas-dto.version>1.5.0-SNAPSHOT</jiumao-saas-dto.version>
+		<jiumao-saas-service-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-impl.version>
+		<jiumao-saas-service-rpc-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rpc-api.version>
+		<jiumao-saas-service-rest-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rest-api.version>
+		<!-- Parent End -->
+
+	</properties>
+
+	<dependencies>
+	
+	
+		<!-- jiumao-saas-cloud Begin -->
+		<dependency>
+				<groupId>com.jiumao</groupId> 
+				<artifactId>jiumao-saas-vo</artifactId>
+				<type>pom</type>
+				<version>${jiumao-saas-vo.version}</version>
+			</dependency>
+   
+			<dependency>
+				<groupId>com.jiumao</groupId>
+				<artifactId>jiumao-saas-do</artifactId>
+				<type>pom</type>
+				<version>${jiumao-saas-do.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.jiumao</groupId>  
+				<artifactId>jiumao-saas-service-impl</artifactId>
+				<type>pom</type>
+				<version>${jiumao-saas-service-impl.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.jiumao</groupId>
+				<artifactId>jiumao-saas-service-base-impl</artifactId>
+				<version>${jiumao-saas-service-base-impl.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.jiumao</groupId>
+				<artifactId>jiumao-saas-dto</artifactId>
+				<type>pom</type>
+				<version>${jiumao-saas-dto.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.jiumao</groupId>
+				<artifactId>jiumao-saas-service-rest-api</artifactId>
+				<type>pom</type>
+				<version>${jiumao-saas-service-rest-api.version}</version>
+			</dependency>
+  
+			<dependency>
+				<groupId>com.jiumao</groupId>
+				<artifactId>jiumao-saas-service-rpc-api</artifactId>
+				<type>pom</type>  
+				<version>${jiumao-saas-service-rpc-api.version}</version>
+			</dependency>
+		<!-- jiumao-saas-cloud End -->
+		
+		
+	</dependencies>
+  
+  
+</project>

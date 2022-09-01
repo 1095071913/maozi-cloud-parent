@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jiumao</groupId>
+		<artifactId>jiumao-saas-service</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>jiumao-saas-service-impl</artifactId>
+	<packaging>pom</packaging>
+
+
+	<dependencies>
+
+
+		<!-- Project Begin -->
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-common-tool</artifactId>
+			<version>${jiumao-saas-common-tool.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-service-base-run</artifactId>
+			<version>${jiumao-saas-service-base-run.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-log</artifactId>
+			<version>${jiumao-saas-config-log.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-sentinel</artifactId>
+			<version>${jiumao-saas-config-sentinel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-bootadmin</artifactId>
+			<version>${jiumao-saas-config-bootadmin.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-sso</artifactId>
+			<version>${jiumao-saas-config-sso.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-mvc</artifactId>
+			<version>${jiumao-saas-config-mvc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-swagger</artifactId>
+			<version>${jiumao-saas-config-swagger.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-dubbo</artifactId>
+			<version>${jiumao-saas-config-dubbo.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-feign</artifactId>
+			<version>${jiumao-saas-config-feign.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-discovery</artifactId>
+			<version>${jiumao-saas-config-discovery.version}</version>
+		</dependency>
+		<!-- Project End -->
+
+
+
+
+		<!-- SpringCloud Begin -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<!-- SpringCloud End -->
+
+
+
+	</dependencies>
+	
+
+	<modules>
+		<module>jiumao-saas-service-qny</module>
+		<module>jiumao-saas-service-ss</module>
+		<module>jiumao-saas-service-bd</module>
+		<module>jiumao-saas-service-company-wechat</module>
+	</modules>
+
+
+</project>

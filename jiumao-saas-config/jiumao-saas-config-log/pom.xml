@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.jiumao</groupId>
+		<artifactId>jiumao-saas-config</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>jiumao-saas-config-log</artifactId>
+
+
+	<dependencies>
+	
+
+		<!-- Project Begin -->
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-result</artifactId>
+			<version>${jiumao-saas-result.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-sso</artifactId>
+			<version>${jiumao-saas-config-sso.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-sentinel</artifactId>
+			<version>${jiumao-saas-config-sentinel.version}</version>
+		</dependency>
+		
+		<dependency> 
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency> 
+			<groupId>com.jiumao</groupId>
+			<artifactId>jiumao-saas-config-sentry</artifactId>
+			<version>${jiumao-saas-config-sentry.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+		</dependency>
+		<!-- Project End -->
+
+
+	</dependencies>
+
+
+</project>

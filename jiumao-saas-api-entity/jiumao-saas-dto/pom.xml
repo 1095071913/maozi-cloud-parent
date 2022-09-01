@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.jiumao</groupId>
+        <artifactId>jiumao-saas-api-entity</artifactId>
+        <version>1.5.0-SNAPSHOT</version>
+    </parent>  
+    <artifactId>jiumao-saas-dto</artifactId>
+    <packaging>pom</packaging>
+     
+    
+    <dependencies>
+    	<dependency>
+			<groupId>com.jiumao</groupId>  
+			<artifactId>jiumao-saas-base-dto</artifactId>
+			<version>${jiumao-saas-base-dto.version}</version>
+		</dependency>
+    </dependencies>
+
+
+    <modules>
+    	<module>jiumao-saas-dto-sso</module>
+    </modules>
+</project>  

@@ -5,8 +5,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.zhongshi</groupId>
-	<artifactId>zhongshi-etc-parent</artifactId>
+	<groupId>com.jiumao</groupId>
+	<artifactId>jiumao-saas-parent</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
@@ -27,7 +27,7 @@
 		<spring-boot.version>2.4.2</spring-boot.version>
 		<spring-cloud.version>2020.0.1</spring-cloud.version>
 		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-		<spring-boot-admin-starter.version>2.5.4</spring-boot-admin-starter.version>
+		<spring-boot-admin-starter.version>2.6.7</spring-boot-admin-starter.version>
 		<spring-cloud-starter-oauth2.version>2.2.4.RELEASE</spring-cloud-starter-oauth2.version>
 		<!-- Spring Component End -->
 
@@ -38,65 +38,77 @@
 		<dubbo.version>2.7.8</dubbo.version>
 		<apollo.version>1.8.0</apollo.version>
 		<sentry.version>3.1.1</sentry.version>
-		<json-lib.version>2.4</json-lib.version>
 		<easypoi.version>4.3.0</easypoi.version>
 		<skywalking.version>8.4.0</skywalking.version>
-		<hutool-all.version>5.6.5</hutool-all.version> 
-		<mybatis-plus.version>3.4.3</mybatis-plus.version>
+		<hutool-all.version>5.6.5</hutool-all.version>
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
-		<mybatis-plus-join.version>1.2.1</mybatis-plus-join.version>
+		<mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+		<mybatis-plus-join.version>1.2.4</mybatis-plus-join.version>
+		<mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
 		<knife4j-spring-boot-starter.version>2.0.9</knife4j-spring-boot-starter.version>
 		<mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
 		<sharding-jdbc-self-id-generator.version>1.4.2</sharding-jdbc-self-id-generator.version>
+		<getui-push-restful-sdk.version>1.0.0.7</getui-push-restful-sdk.version>
 		<!-- Other Component End -->
 
 
 
 
 		<!-- Project Begin -->
-		<application-run>com.zhongshi.Application</application-run>
+		<application-run>com.jiumao.Application</application-run>
 
-		<zhongshi-etc-do.version>1.5.0-SNAPSHOT</zhongshi-etc-do.version>
-		<zhongshi-etc-vo.version>1.5.0-SNAPSHOT</zhongshi-etc-vo.version>
-		<zhongshi-etc-dto.version>1.5.0-SNAPSHOT</zhongshi-etc-dto.version>
-
-
-		<zhongshi-etc-base-do.version>1.5.0-SNAPSHOT</zhongshi-etc-base-do.version>
-		<zhongshi-etc-base-vo.version>1.5.0-SNAPSHOT</zhongshi-etc-base-vo.version>
-		<zhongshi-etc-base-dto.version>1.5.0-SNAPSHOT</zhongshi-etc-base-dto.version>
-
-		<zhongshi-etc-result.version>1.5.0-SNAPSHOT</zhongshi-etc-result.version>
-
-		<zhongshi-etc-config-db.version>1.5.0-SNAPSHOT</zhongshi-etc-config-db.version>
-		<zhongshi-etc-config-sso.version>1.5.0-SNAPSHOT</zhongshi-etc-config-sso.version>
-		<zhongshi-etc-config-job.version>1.5.0-SNAPSHOT</zhongshi-etc-config-job.version>
-		<zhongshi-etc-config-log.version>1.5.0-SNAPSHOT</zhongshi-etc-config-log.version>
-		<zhongshi-etc-config-mvc.version>1.5.0-SNAPSHOT</zhongshi-etc-config-mvc.version>
-		<zhongshi-etc-config-redis.version>1.5.0-SNAPSHOT</zhongshi-etc-config-redis.version>
-		<zhongshi-etc-config-dubbo.version>1.5.0-SNAPSHOT</zhongshi-etc-config-dubbo.version>
-		<zhongshi-etc-config-feign.version>1.5.0-SNAPSHOT</zhongshi-etc-config-feign.version>
-		<zhongshi-etc-config-seata.version>1.5.0-SNAPSHOT</zhongshi-etc-config-seata.version>
-		<zhongshi-etc-config-sentry.version>1.5.0-SNAPSHOT</zhongshi-etc-config-sentry.version>
-		<zhongshi-etc-config-apollo.version>1.5.0-SNAPSHOT</zhongshi-etc-config-apollo.version>
-		<zhongshi-etc-config-stream.version>1.5.0-SNAPSHOT</zhongshi-etc-config-stream.version>
-		<zhongshi-etc-config-swagger.version>1.5.0-SNAPSHOT</zhongshi-etc-config-swagger.version>
-		<zhongshi-etc-config-sentinel.version>1.5.0-SNAPSHOT</zhongshi-etc-config-sentinel.version>
-		<zhongshi-etc-config-bootadmin.version>1.5.0-SNAPSHOT</zhongshi-etc-config-bootadmin.version>
-		<zhongshi-etc-config-discovery.version>1.5.0-SNAPSHOT</zhongshi-etc-config-discovery.version>
+		<jiumao-saas-do.version>1.5.0-SNAPSHOT</jiumao-saas-do.version>
+		<jiumao-saas-vo.version>1.5.0-SNAPSHOT</jiumao-saas-vo.version>
+		<jiumao-saas-dto.version>1.5.0-SNAPSHOT</jiumao-saas-dto.version>
+		<jiumao-saas-enum.version>1.5.0-SNAPSHOT</jiumao-saas-enum.version>
 
 
-		<zhongshi-etc-common-tool.version>1.5.0-SNAPSHOT</zhongshi-etc-common-tool.version>
+		<jiumao-saas-base-do.version>1.5.0-SNAPSHOT</jiumao-saas-base-do.version>
+		<jiumao-saas-base-vo.version>1.5.0-SNAPSHOT</jiumao-saas-base-vo.version>
+		<jiumao-saas-base-dto.version>1.5.0-SNAPSHOT</jiumao-saas-base-dto.version>
+		<jiumao-saas-base-enum.version>1.5.0-SNAPSHOT</jiumao-saas-base-enum.version>
+
+		<jiumao-saas-result.version>1.5.0-SNAPSHOT</jiumao-saas-result.version>
+
+		<jiumao-saas-config-db.version>1.5.0-SNAPSHOT</jiumao-saas-config-db.version>
+		<jiumao-saas-config-sso.version>1.5.0-SNAPSHOT</jiumao-saas-config-sso.version>
+		<jiumao-saas-config-job.version>1.5.0-SNAPSHOT</jiumao-saas-config-job.version>
+		<jiumao-saas-config-log.version>1.5.0-SNAPSHOT</jiumao-saas-config-log.version>
+		<jiumao-saas-config-mvc.version>1.5.0-SNAPSHOT</jiumao-saas-config-mvc.version>
+		<jiumao-saas-config-redis.version>1.5.0-SNAPSHOT</jiumao-saas-config-redis.version>
+		<jiumao-saas-config-dubbo.version>1.5.0-SNAPSHOT</jiumao-saas-config-dubbo.version>
+		<jiumao-saas-config-feign.version>1.5.0-SNAPSHOT</jiumao-saas-config-feign.version>
+		<jiumao-saas-config-seata.version>1.5.0-SNAPSHOT</jiumao-saas-config-seata.version>
+		<jiumao-saas-config-sentry.version>1.5.0-SNAPSHOT</jiumao-saas-config-sentry.version>
+		<jiumao-saas-config-apollo.version>1.5.0-SNAPSHOT</jiumao-saas-config-apollo.version>
+		<jiumao-saas-config-stream.version>1.5.0-SNAPSHOT</jiumao-saas-config-stream.version>
+		<jiumao-saas-config-swagger.version>1.5.0-SNAPSHOT</jiumao-saas-config-swagger.version>
+		<jiumao-saas-config-sentinel.version>1.5.0-SNAPSHOT</jiumao-saas-config-sentinel.version>
+		<jiumao-saas-config-bootadmin.version>1.5.0-SNAPSHOT</jiumao-saas-config-bootadmin.version>
+		<jiumao-saas-config-discovery.version>1.5.0-SNAPSHOT</jiumao-saas-config-discovery.version>
+		<jiumao-saas-config-push.version>1.5.0-SNAPSHOT</jiumao-saas-config-push.version>
 
 
-		<zhongshi-etc-service-mq.version>1.5.0-SNAPSHOT</zhongshi-etc-service-mq.version>
-		<zhongshi-etc-service-impl.version>1.5.0-SNAPSHOT</zhongshi-etc-service-impl.version>
-		<zhongshi-etc-service-base-api.version>1.5.0-SNAPSHOT</zhongshi-etc-service-base-api.version>
-		<zhongshi-etc-service-base-run.version>1.5.0-SNAPSHOT</zhongshi-etc-service-base-run.version>
-		<zhongshi-etc-service-base-impl.version>1.5.0-SNAPSHOT</zhongshi-etc-service-base-impl.version>
+		<jiumao-saas-common-tool.version>1.5.0-SNAPSHOT</jiumao-saas-common-tool.version>
 
 
-		<zhongshi-etc-dto-sso.version>1.5.0-SNAPSHOT</zhongshi-etc-dto-sso.version>
-		<zhongshi-etc-service-rpc-api-sso.version>1.5.0-SNAPSHOT</zhongshi-etc-service-rpc-api-sso.version>
+		<jiumao-saas-service-mq.version>1.5.0-SNAPSHOT</jiumao-saas-service-mq.version>
+		<jiumao-saas-service-job.version>1.5.0-SNAPSHOT</jiumao-saas-service-job.version>
+		<jiumao-saas-service-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-impl.version>
+		<jiumao-saas-service-rpc-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rpc-api.version>
+		<jiumao-saas-service-rest-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rest-api.version>
+		<jiumao-saas-service-base-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-api.version>
+		<jiumao-saas-service-base-run.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-run.version>
+		<jiumao-saas-service-base-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-impl.version>
+
+
+		<jiumao-saas-service-bd.version>1.5.0-SNAPSHOT</jiumao-saas-service-bd.version>
+		<jiumao-saas-service-ss.version>1.5.0-SNAPSHOT</jiumao-saas-service-ss.version>
+		<jiumao-saas-service-qny.version>1.5.0-SNAPSHOT</jiumao-saas-service-qny.version>
+
+
+		<jiumao-saas-dto-sso.version>1.5.0-SNAPSHOT</jiumao-saas-dto-sso.version>
+		<jiumao-saas-service-rpc-api-sso-token.version>1.5.0-SNAPSHOT</jiumao-saas-service-rpc-api-sso-token.version>
 		<!-- Project End -->
 
 
@@ -105,18 +117,18 @@
 
 
 
-	<!-- <distributionManagement>
+	<distributionManagement>
 		<repository>
 			<id>maven-releases</id>
 			<name>Nexus Release Repository</name>
-			<url>http://{ip}/repository/maven-releases/</url>
+			<url>http://175.178.52.106:8081/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>maven-snapshots</id>
 			<name>Nexus Snapshot Repository</name>
-			<url>http://{ip}/repository/maven-snapshots/</url>
+			<url>http://175.178.52.106:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
-	</distributionManagement> -->
+	</distributionManagement>
 
 
 
@@ -300,6 +312,35 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 			</plugin>
+<!-- 			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>4.0.0</version>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>initialize</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+					<includeOnlyProperties>
+						<includeOnlyProperty>^git.tags$</includeOnlyProperty>
+						<includeOnlyProperty>^git.branch$</includeOnlyProperty>
+						<includeOnlyProperty>^git.remote.origin.url$</includeOnlyProperty>
+						<includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
+						<includeOnlyProperty>^git.build.user.(name|email)$</includeOnlyProperty>
+					</includeOnlyProperties>
+					<commitIdGenerationMode>full</commitIdGenerationMode>
+				</configuration>
+			</plugin> -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -370,17 +411,17 @@
 		</resources>
 	</build>
 	<repositories>
-		<!-- <repository>
+		<repository>
 			<id>maven-public</id>
 			<name>Nexus Repository</name>
-			<url>http://8.129.174.183:8081/repository/maven-public/</url>
+			<url>http://175.178.52.106:8081/repository/maven-public/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</repository> --> 
+		</repository>
 		<repository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
@@ -438,17 +479,17 @@
 	</repositories>
 
 	<pluginRepositories>
-		<!-- <pluginRepository>
+		<pluginRepository>
 			<id>maven-public</id>
 			<name>Nexus Plugin Repository</name>
-			<url>http://{ip}/repository/maven-public/</url>
+			<url>http://175.178.52.106:8081/repository/maven-public/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</pluginRepository> -->
+		</pluginRepository>
 		<pluginRepository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
@@ -468,11 +509,11 @@
 
 
 	<modules>
-		<module>zhongshi-etc-api-entity</module>
-		<module>zhongshi-etc-common</module>
-		<module>zhongshi-etc-service</module>
-		<module>zhongshi-etc-config</module>
-		<module>zhongshi-etc-test</module>
+		<module>jiumao-saas-api-entity</module>
+		<module>jiumao-saas-common</module>
+		<module>jiumao-saas-service</module>
+		<module>jiumao-saas-config</module>
+		<module>jiumao-saas-test</module>
 	</modules>
 
 
