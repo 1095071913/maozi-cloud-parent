@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-entity</artifactId>
+        <version>1.5.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>maozi-cloud-base-entity</artifactId>
+    <packaging>pom</packaging>
+
+
+    <dependencies>
+        <!-- Project Begin -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-common-tool</artifactId>
+            <version>${maozi-cloud-common-tool.version}</version>
+        </dependency>
+        <!-- Project End -->
+    </dependencies>
+
+    <modules>
+        <module>maozi-cloud-base-do</module>
+        <module>maozi-cloud-base-vo</module>
+        <module>maozi-cloud-base-dto</module>
+        <module>maozi-cloud-base-enum</module>
+    </modules>
+
+
+</project>

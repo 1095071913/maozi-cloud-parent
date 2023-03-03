@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-parent</artifactId>
+        <version>1.5.0-SNAPSHOT</version>
+    </parent> 
+    <artifactId>maozi-cloud-config</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>maozi-cloud-config-feign</module>
+        <module>maozi-cloud-config-bootadmin</module>
+        <module>maozi-cloud-config-sentinel</module>
+        <module>maozi-cloud-config-db</module>
+        <module>maozi-cloud-config-log</module>
+        <module>maozi-cloud-config-sso</module>
+        <module>maozi-cloud-config-mvc</module>
+        <module>maozi-cloud-config-seata</module>
+        <module>maozi-cloud-config-job</module>
+        <module>maozi-cloud-config-dubbo</module>
+        <module>maozi-cloud-config-redis</module>
+        <module>maozi-cloud-config-discovery</module>
+        <module>maozi-cloud-config-stream</module>
+        <module>maozi-cloud-config-apollo</module>
+        <module>maozi-cloud-config-swagger</module>
+        <module>maozi-cloud-config-sentry</module>
+        <module>maozi-cloud-config-arthas</module>
+    </modules>
+</project>

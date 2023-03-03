@@ -5,8 +5,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.jiumao</groupId>
-	<artifactId>jiumao-saas-parent</artifactId>
+	<groupId>com.maozi</groupId>
+	<artifactId>maozi-cloud-parent</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
@@ -15,7 +15,7 @@
 	<properties>
 
 		<!-- Java Begin -->
-		<java.version>8</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,10 +24,10 @@
 
 
 		<!-- Spring Component Begin -->
-		<spring-boot.version>2.4.2</spring-boot.version>
-		<spring-cloud.version>2020.0.1</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-		<spring-boot-admin-starter.version>2.6.7</spring-boot-admin-starter.version>
+		<spring-boot.version>2.6.11</spring-boot.version>
+		<spring-cloud.version>2021.0.4</spring-cloud.version>
+		<spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+		<spring-boot-admin-starter.version>2.6.9</spring-boot-admin-starter.version>
 		<spring-cloud-starter-oauth2.version>2.2.4.RELEASE</spring-cloud-starter-oauth2.version>
 		<!-- Spring Component End -->
 
@@ -35,7 +35,8 @@
 
 		<!-- Other Component Begin -->
 		<cglib.version>3.3.0</cglib.version>
-		<dubbo.version>2.7.8</dubbo.version>
+		<dubbo.version>3.0.8</dubbo.version>
+		<arthas.version>3.6.7</arthas.version>
 		<apollo.version>1.8.0</apollo.version>
 		<sentry.version>3.1.1</sentry.version>
 		<easypoi.version>4.3.0</easypoi.version>
@@ -45,70 +46,74 @@
 		<mybatis-plus.version>3.4.3.4</mybatis-plus.version>
 		<mybatis-plus-join.version>1.2.4</mybatis-plus-join.version>
 		<mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-		<knife4j-spring-boot-starter.version>2.0.9</knife4j-spring-boot-starter.version>
+		<knife4j-spring-boot-starter.version>3.0.3</knife4j-spring-boot-starter.version>
 		<mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
+		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
 		<sharding-jdbc-self-id-generator.version>1.4.2</sharding-jdbc-self-id-generator.version>
-		<getui-push-restful-sdk.version>1.0.0.7</getui-push-restful-sdk.version>
 		<!-- Other Component End -->
 
 
 
 
 		<!-- Project Begin -->
-		<application-run>com.jiumao.Application</application-run>
+		<application-run>com.maozi.Application</application-run>
 
-		<jiumao-saas-do.version>1.5.0-SNAPSHOT</jiumao-saas-do.version>
-		<jiumao-saas-vo.version>1.5.0-SNAPSHOT</jiumao-saas-vo.version>
-		<jiumao-saas-dto.version>1.5.0-SNAPSHOT</jiumao-saas-dto.version>
-		<jiumao-saas-enum.version>1.5.0-SNAPSHOT</jiumao-saas-enum.version>
-
-
-		<jiumao-saas-base-do.version>1.5.0-SNAPSHOT</jiumao-saas-base-do.version>
-		<jiumao-saas-base-vo.version>1.5.0-SNAPSHOT</jiumao-saas-base-vo.version>
-		<jiumao-saas-base-dto.version>1.5.0-SNAPSHOT</jiumao-saas-base-dto.version>
-		<jiumao-saas-base-enum.version>1.5.0-SNAPSHOT</jiumao-saas-base-enum.version>
-
-		<jiumao-saas-result.version>1.5.0-SNAPSHOT</jiumao-saas-result.version>
-
-		<jiumao-saas-config-db.version>1.5.0-SNAPSHOT</jiumao-saas-config-db.version>
-		<jiumao-saas-config-sso.version>1.5.0-SNAPSHOT</jiumao-saas-config-sso.version>
-		<jiumao-saas-config-job.version>1.5.0-SNAPSHOT</jiumao-saas-config-job.version>
-		<jiumao-saas-config-log.version>1.5.0-SNAPSHOT</jiumao-saas-config-log.version>
-		<jiumao-saas-config-mvc.version>1.5.0-SNAPSHOT</jiumao-saas-config-mvc.version>
-		<jiumao-saas-config-redis.version>1.5.0-SNAPSHOT</jiumao-saas-config-redis.version>
-		<jiumao-saas-config-dubbo.version>1.5.0-SNAPSHOT</jiumao-saas-config-dubbo.version>
-		<jiumao-saas-config-feign.version>1.5.0-SNAPSHOT</jiumao-saas-config-feign.version>
-		<jiumao-saas-config-seata.version>1.5.0-SNAPSHOT</jiumao-saas-config-seata.version>
-		<jiumao-saas-config-sentry.version>1.5.0-SNAPSHOT</jiumao-saas-config-sentry.version>
-		<jiumao-saas-config-apollo.version>1.5.0-SNAPSHOT</jiumao-saas-config-apollo.version>
-		<jiumao-saas-config-stream.version>1.5.0-SNAPSHOT</jiumao-saas-config-stream.version>
-		<jiumao-saas-config-swagger.version>1.5.0-SNAPSHOT</jiumao-saas-config-swagger.version>
-		<jiumao-saas-config-sentinel.version>1.5.0-SNAPSHOT</jiumao-saas-config-sentinel.version>
-		<jiumao-saas-config-bootadmin.version>1.5.0-SNAPSHOT</jiumao-saas-config-bootadmin.version>
-		<jiumao-saas-config-discovery.version>1.5.0-SNAPSHOT</jiumao-saas-config-discovery.version>
-		<jiumao-saas-config-push.version>1.5.0-SNAPSHOT</jiumao-saas-config-push.version>
+		<maozi-cloud-do.version>1.5.0-SNAPSHOT</maozi-cloud-do.version>
+		<maozi-cloud-vo.version>1.5.0-SNAPSHOT</maozi-cloud-vo.version>
+		<maozi-cloud-dto.version>1.5.0-SNAPSHOT</maozi-cloud-dto.version>
+		<maozi-cloud-enum.version>1.5.0-SNAPSHOT</maozi-cloud-enum.version>
+		<maozi-cloud-seata-do.version>1.5.0-SNAPSHOT</maozi-cloud-seata-do.version>
 
 
-		<jiumao-saas-common-tool.version>1.5.0-SNAPSHOT</jiumao-saas-common-tool.version>
+		<maozi-cloud-base-do.version>1.5.0-SNAPSHOT</maozi-cloud-base-do.version>
+		<maozi-cloud-base-vo.version>1.5.0-SNAPSHOT</maozi-cloud-base-vo.version>
+		<maozi-cloud-base-dto.version>1.5.0-SNAPSHOT</maozi-cloud-base-dto.version>
+		<maozi-cloud-base-enum.version>1.5.0-SNAPSHOT</maozi-cloud-base-enum.version>
+
+		<maozi-cloud-result.version>1.5.0-SNAPSHOT</maozi-cloud-result.version>
+
+		<maozi-cloud-config-db.version>1.5.0-SNAPSHOT</maozi-cloud-config-db.version>
+		<maozi-cloud-config-sso.version>1.5.0-SNAPSHOT</maozi-cloud-config-sso.version>
+		<maozi-cloud-config-job.version>1.5.0-SNAPSHOT</maozi-cloud-config-job.version>
+		<maozi-cloud-config-log.version>1.5.0-SNAPSHOT</maozi-cloud-config-log.version>
+		<maozi-cloud-config-mvc.version>1.5.0-SNAPSHOT</maozi-cloud-config-mvc.version>
+		<maozi-cloud-config-redis.version>1.5.0-SNAPSHOT</maozi-cloud-config-redis.version>
+		<maozi-cloud-config-dubbo.version>1.5.0-SNAPSHOT</maozi-cloud-config-dubbo.version> 
+		<maozi-cloud-config-feign.version>1.5.0-SNAPSHOT</maozi-cloud-config-feign.version>
+		<maozi-cloud-config-seata.version>1.5.0-SNAPSHOT</maozi-cloud-config-seata.version>
+		<maozi-cloud-config-arthas.version>1.5.0-SNAPSHOT</maozi-cloud-config-arthas.version>
+		<maozi-cloud-config-sentry.version>1.5.0-SNAPSHOT</maozi-cloud-config-sentry.version>
+		<maozi-cloud-config-apollo.version>1.5.0-SNAPSHOT</maozi-cloud-config-apollo.version>
+		<maozi-cloud-config-stream.version>1.5.0-SNAPSHOT</maozi-cloud-config-stream.version>
+		<maozi-cloud-config-swagger.version>1.5.0-SNAPSHOT</maozi-cloud-config-swagger.version>
+		<maozi-cloud-config-sentinel.version>1.5.0-SNAPSHOT</maozi-cloud-config-sentinel.version>
+		<maozi-cloud-config-bootadmin.version>1.5.0-SNAPSHOT</maozi-cloud-config-bootadmin.version>
+		<maozi-cloud-config-discovery.version>1.5.0-SNAPSHOT</maozi-cloud-config-discovery.version>
 
 
-		<jiumao-saas-service-mq.version>1.5.0-SNAPSHOT</jiumao-saas-service-mq.version>
-		<jiumao-saas-service-job.version>1.5.0-SNAPSHOT</jiumao-saas-service-job.version>
-		<jiumao-saas-service-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-impl.version>
-		<jiumao-saas-service-rpc-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rpc-api.version>
-		<jiumao-saas-service-rest-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-rest-api.version>
-		<jiumao-saas-service-base-api.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-api.version>
-		<jiumao-saas-service-base-run.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-run.version>
-		<jiumao-saas-service-base-impl.version>1.5.0-SNAPSHOT</jiumao-saas-service-base-impl.version>
+		<maozi-cloud-common-tool.version>1.5.0-SNAPSHOT</maozi-cloud-common-tool.version>
 
 
-		<jiumao-saas-service-bd.version>1.5.0-SNAPSHOT</jiumao-saas-service-bd.version>
-		<jiumao-saas-service-ss.version>1.5.0-SNAPSHOT</jiumao-saas-service-ss.version>
-		<jiumao-saas-service-qny.version>1.5.0-SNAPSHOT</jiumao-saas-service-qny.version>
+		<maozi-cloud-service-mq.version>1.5.0-SNAPSHOT</maozi-cloud-service-mq.version>
+		<maozi-cloud-service-job.version>1.5.0-SNAPSHOT</maozi-cloud-service-job.version>
+		<maozi-cloud-service-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-impl.version>
+		<maozi-cloud-service-db-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-db-impl.version>
+		<maozi-cloud-service-rpc-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-rpc-api.version>
+		<maozi-cloud-service-rest-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-rest-api.version>
+		<maozi-cloud-service-base-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-api.version>
+		<maozi-cloud-service-base-run.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-run.version>
+		<maozi-cloud-service-base-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-impl.version>
 
 
-		<jiumao-saas-dto-sso.version>1.5.0-SNAPSHOT</jiumao-saas-dto-sso.version>
-		<jiumao-saas-service-rpc-api-sso-token.version>1.5.0-SNAPSHOT</jiumao-saas-service-rpc-api-sso-token.version>
+		<maozi-cloud-service-bd.version>1.5.0-SNAPSHOT</maozi-cloud-service-bd.version>
+		<maozi-cloud-service-ss.version>1.5.0-SNAPSHOT</maozi-cloud-service-ss.version>
+		<maozi-cloud-service-qny.version>1.5.0-SNAPSHOT</maozi-cloud-service-qny.version>
+		<maozi-cloud-service-company-wechat.version>1.5.0-SNAPSHOT</maozi-cloud-service-company-wechat.version>
+
+
+		<maozi-cloud-oauth-dto.version>1.5.0-SNAPSHOT</maozi-cloud-oauth-dto.version>
+		<maozi-cloud-service-rpc-api-sso-token.version>1.5.0-SNAPSHOT</maozi-cloud-service-rpc-api-sso-token.version>
+		<maozi-cloud-service-rest-api-sso-token.version>1.5.0-SNAPSHOT</maozi-cloud-service-rest-api-sso-token.version>
 		<!-- Project End -->
 
 
@@ -119,14 +124,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>maven-releases</id>
+			<id>nexus-releases</id>
 			<name>Nexus Release Repository</name>
-			<url>http://175.178.52.106:8081/repository/maven-releases/</url>
+			<url>http://localhost:8081/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>maven-snapshots</id>
+			<id>nexus-snapshots</id>
 			<name>Nexus Snapshot Repository</name>
-			<url>http://175.178.52.106:8081/repository/maven-snapshots/</url>
+			<url>http://localhost:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -179,6 +184,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
+		
+		<dependency>
+       		<groupId>javax.annotation</groupId>
+       		<artifactId>jsr250-api</artifactId>
+       		<version>1.0</version>
+ 		</dependency> 
 		<!-- JAVA EE End -->
 
 
@@ -201,57 +212,6 @@
 
 
 
-	<profiles>
-		<profile>
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<spring-javaformat.version>0.0.12</spring-javaformat.version>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>io.spring.javaformat</groupId>
-						<artifactId>spring-javaformat-maven-plugin</artifactId>
-						<version>${spring-javaformat.version}</version>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>3.0.0-M3</version>
-						<configuration>
-							<skip>true</skip>
-							<includes>
-								<include>**/*Tests.java</include>
-							</includes>
-							<excludes>
-								<exclude>**/Abstract*.java</exclude>
-							</excludes>
-							<systemPropertyVariables>
-								<java.security.egd>file:/dev/./urandom</java.security.egd>
-								<java.awt.headless>true</java.awt.headless>
-							</systemPropertyVariables>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.2.0</version>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-						<inherited>true</inherited>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -345,18 +305,6 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
 					<groupId>net.alchim31.maven</groupId>
 					<artifactId>yuicompressor-maven-plugin</artifactId>
 					<version>1.5.1</version>
@@ -411,17 +359,6 @@
 		</resources>
 	</build>
 	<repositories>
-		<repository>
-			<id>maven-public</id>
-			<name>Nexus Repository</name>
-			<url>http://175.178.52.106:8081/repository/maven-public/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 		<repository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
@@ -480,17 +417,6 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>maven-public</id>
-			<name>Nexus Plugin Repository</name>
-			<url>http://175.178.52.106:8081/repository/maven-public/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-		<pluginRepository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
@@ -509,11 +435,10 @@
 
 
 	<modules>
-		<module>jiumao-saas-api-entity</module>
-		<module>jiumao-saas-common</module>
-		<module>jiumao-saas-service</module>
-		<module>jiumao-saas-config</module>
-		<module>jiumao-saas-test</module>
+		<module>maozi-cloud-entity</module>
+		<module>maozi-cloud-common</module>
+		<module>maozi-cloud-service</module>
+		<module>maozi-cloud-config</module>
 	</modules>
 
 
