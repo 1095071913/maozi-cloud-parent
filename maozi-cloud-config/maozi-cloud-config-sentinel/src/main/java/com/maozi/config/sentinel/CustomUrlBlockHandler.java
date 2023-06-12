@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 import com.maozi.tool.MapperUtils;
 
 
-public class CustomUrlBlockHandler extends BaseResultFactory implements BlockExceptionHandler {
+public class CustomUrlBlockHandler extends BaseCommon implements BlockExceptionHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {

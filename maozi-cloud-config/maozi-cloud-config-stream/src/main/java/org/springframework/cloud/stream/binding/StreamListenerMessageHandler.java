@@ -28,7 +28,7 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,7 +81,7 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 		} catch (Exception e) {
 			
 			
-			functionError(BaseResultFactory.getStackTrace(e));
+			functionError(BaseCommon.getStackTrace(e));
 			
 			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
             
@@ -98,18 +98,18 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 		}finally {
 			
 			
-			StringBuilder respSql = BaseResultFactory.sql.get();
-    		if(BaseResultFactory.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
+			StringBuilder respSql = BaseCommon.sql.get();
+    		if(BaseCommon.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
     		
 			logs.put("respTime",System.currentTimeMillis()-beginTime+"");
 			
 			if(isError) {
-				log.error(BaseResultFactory.appendLog(logs).toString());
+				log.error(BaseCommon.appendLog(logs).toString());
 			}else {
-				log.info(BaseResultFactory.appendLog(logs).toString());
+				log.info(BaseCommon.appendLog(logs).toString());
 			}  
 			
-			BaseResultFactory.clean();
+			BaseCommon.clear();
 		}
 	}
 

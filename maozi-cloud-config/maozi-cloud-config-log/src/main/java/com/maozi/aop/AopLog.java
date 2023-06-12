@@ -35,12 +35,11 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.node.Node;
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.factory.result.AbstractBaseResult;
-import com.maozi.factory.result.error.ErrorResult;
-import com.maozi.factory.result.error.exception.BusinessResultException;
+import com.maozi.common.BaseCommon;
+import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.error.ErrorResult;
+import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.log.LogUtils;
-import com.maozi.sso.OauthUserDetails;
 
 /**
  * 功能说明：日志收集
@@ -57,19 +56,19 @@ import com.maozi.sso.OauthUserDetails;
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE+1)
-public class AopLog extends BaseResultFactory {
+public class AopLog extends BaseCommon {
 	
 	@Resource
 	private LogUtils logUtils;
 
-	private final static String LogPonit = "execution(com.maozi.factory.result.AbstractBaseResult com.maozi.*.*.api.impl..*Rpc*.*(..)) || execution(com.maozi.factory.result.AbstractBaseResult com.maozi.*.*.api.impl..*Rest*.*(..))";
+	private final static String LogPonit = "execution(com.maozi.common.result.AbstractBaseResult com.maozi.*.*.api.impl..*Rpc*.*(..)) || execution(com.maozi.common.result.AbstractBaseResult com.maozi.*.*.api.impl..*Rest*.*(..)) || execution(com.maozi.common.result.AbstractBaseResult com.maozi.base.api.impl.BaseServiceImpl.*(..))";
 
     @Around(LogPonit) 
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable { 
     	
     	Long startTime = System.currentTimeMillis();
     	
-    	String tid = BaseResultFactory.getTraceId();
+    	String tid = BaseCommon.getTraceId();
     	
     	HttpServletRequest request = getRequest();
     	
@@ -77,9 +76,7 @@ public class AopLog extends BaseResultFactory {
     	
     	String rpcUrl = rpcContext.getRemoteHost();
     	
-    	String arg = Arrays.toString(proceedingJoinPoint.getArgs()); 
-    	
-    	OauthUserDetails oauthUserDetails = getOauthUserDetails();
+    	String arg = Arrays.toString(proceedingJoinPoint.getArgs());
     	
     	Node curNode = ContextUtil.getContext().getCurNode();
         
@@ -121,7 +118,7 @@ public class AopLog extends BaseResultFactory {
             
             logs.put("errorParam", arg);
             
-            logs.put("errorUser",(isNull(oauthUserDetails) ? "游客":oauthUserDetails.getUserInfos().toString()));
+            logs.put("errorUser",getCurrentUserName());
             
             logs.put("errorDesc", e.getLocalizedMessage());
             
@@ -149,13 +146,13 @@ public class AopLog extends BaseResultFactory {
                 	
                 	ErrorResult errorResult=resultData.getResult();
                 	
-                	if(errorResult.autoIdentifyHttpCode().ifBusinessError()) {log.warn(appendLog(logs).toString());}
+                	if(errorResult.autoIdentifyHttpCode().isBusinessError()) {log.warn(appendLog(logs).toString());}
                 	
                 	else {log.error(appendLog(logs).toString());}
                 	
                 	if(resultData.getCode()==500 && logs.containsKey("errorDesc")) {logUtils.errorLogAlarm(proceedingJoinPoint,arg,tid,logs);}
                 	
-                	if(isNull(request)) {clean();}
+                	if(isNull(request)) {clear();}
                 	
                 	return resultData;
                 
@@ -171,7 +168,7 @@ public class AopLog extends BaseResultFactory {
         	   
         }
         
-        if(isNull(request)) {clean();}
+        if(isNull(request)) {clear();}
         
         return resultData;
     

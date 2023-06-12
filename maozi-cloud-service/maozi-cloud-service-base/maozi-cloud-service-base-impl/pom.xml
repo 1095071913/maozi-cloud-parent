@@ -5,98 +5,15 @@
     <parent>
         <groupId>com.maozi</groupId>
         <artifactId>maozi-cloud-service-base</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>${parent.revision}</version>
     </parent>
     <artifactId>maozi-cloud-service-base-impl</artifactId>
     
     <dependencies>
-		
-        <!-- Project Begin -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-base-run</artifactId>
-			<version>${maozi-cloud-service-base-run.version}</version>
-		</dependency>
-        
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-tool</artifactId>
-			<version>${maozi-cloud-common-tool.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-log</artifactId>
-			<version>${maozi-cloud-config-log.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sentinel</artifactId>
-			<version>${maozi-cloud-config-sentinel.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-bootadmin</artifactId>
-			<version>${maozi-cloud-config-bootadmin.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sso</artifactId>
-			<version>${maozi-cloud-config-sso.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-mvc</artifactId>
-			<version>${maozi-cloud-config-mvc.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-swagger</artifactId>
-			<version>${maozi-cloud-config-swagger.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-dubbo</artifactId>
-			<version>${maozi-cloud-config-dubbo.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-feign</artifactId>
-			<version>${maozi-cloud-config-feign.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-discovery</artifactId>
-			<version>${maozi-cloud-config-discovery.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-arthas</artifactId>
-			<version>${maozi-cloud-config-arthas.version}</version>
-		</dependency>
-		<!-- Project End --> 
-
-
-
-
-		<!-- SpringCloud Begin -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
-		<!-- SpringCloud End -->
-		
-		
-		
-	</dependencies>    
+	</dependencies>
 	
 </project>

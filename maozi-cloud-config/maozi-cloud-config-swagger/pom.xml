@@ -5,16 +5,21 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-swagger</artifactId>
 
 	<dependencies>
+		
+		<dependency>
+      		<groupId>org.springframework.boot</groupId>
+      		<artifactId>spring-boot-starter-actuator</artifactId>
+   	 	</dependency>
 
 		<dependency>
-			<groupId>com.github.xiaoymin</groupId>
-			<artifactId>knife4j-spring-boot-starter</artifactId>
-			<version>${knife4j-spring-boot-starter.version}</version>
+    		<groupId>com.github.xiaoymin</groupId> 
+   	 		<artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+    		<version>${knife4j-openapi2-spring-boot-starter.version}</version>
 		</dependency>
 
 		<dependency>

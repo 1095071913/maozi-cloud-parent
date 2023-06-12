@@ -15,7 +15,7 @@ import org.springframework.util.ReflectionUtils;
 import com.fasterxml.classmate.ResolvedType;
 import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
 import com.google.common.base.Joiner;
-import com.maozi.enums.config.annotation.SwaggerDisplayEnum;
+import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
 
 import springfox.documentation.builders.OperationBuilder;
 import springfox.documentation.builders.ParameterBuilder;

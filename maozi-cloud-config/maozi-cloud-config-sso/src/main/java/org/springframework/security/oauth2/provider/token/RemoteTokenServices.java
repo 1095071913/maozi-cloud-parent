@@ -28,9 +28,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.factory.result.AbstractBaseResult;
-import com.maozi.factory.result.error.ErrorResult;
+import com.maozi.common.BaseCommon;
+import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.error.ErrorResult;
 import com.maozi.resource.config.OauthTokenServiceConfig;
 import com.maozi.tool.SpringUtil;
 
@@ -62,9 +62,9 @@ public class RemoteTokenServices implements ResourceServerTokenServices {
 
 	public RemoteTokenServices() {
 		
-		oauthTokenServiceConfig=SpringUtil.getBean("oauthTokenServiceConfig");
-		
 		restTemplate = SpringUtil.getBean("restTemplate");
+		
+		oauthTokenServiceConfig = SpringUtil.getBean("oauthTokenServiceConfig");
 		
 	}
 
@@ -98,9 +98,9 @@ public class RemoteTokenServices implements ResourceServerTokenServices {
     	AbstractBaseResult<Map> checkTokenResult = null;
     		
     	if(checkTokenEndpointUrl.equals("http")) {
-    		checkTokenResult = oauthTokenServiceConfig.oauthTokenServiceRest.checkToken(accessToken);
+    		checkTokenResult = oauthTokenServiceConfig.restOauthTokenService.restCheck(accessToken);
     	}else {
-    	    checkTokenResult = oauthTokenServiceConfig.oauthTokenServiceRpc.checkToken(accessToken);
+    	    checkTokenResult = oauthTokenServiceConfig.rpcOauthTokenService.rpcCheck(accessToken);
     	}
     	
     	if(!checkTokenResult.isSuccess()) {
@@ -141,7 +141,7 @@ public class RemoteTokenServices implements ResourceServerTokenServices {
 
 		ResponseEntity<Map> exchange = restTemplate.exchange(path, HttpMethod.POST,new HttpEntity<MultiValueMap<String, String>>(formData, headers), Map.class);
 		
-		if(BaseResultFactory.isNull(exchange)) {
+		if(BaseCommon.isNull(exchange)) {
 			return null;  
 		}
 		

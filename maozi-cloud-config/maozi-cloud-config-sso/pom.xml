@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-sso</artifactId>
  
@@ -32,14 +32,14 @@
 		
 		<dependency>
 			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-service-rpc-api-sso-token</artifactId> 
-			<version>${maozi-cloud-service-rpc-api-sso-token.version}</version>  
+			<artifactId>maozi-cloud-service-rpc-api-sso-oauth</artifactId> 
+			<version>${maozi-cloud-service-rpc-api-sso-oauth.version}</version>  
 		</dependency>
 		
 		<dependency>
 			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-service-rest-api-sso-token</artifactId>  
-			<version>${maozi-cloud-service-rest-api-sso-token.version}</version>  
+			<artifactId>maozi-cloud-service-rest-api-sso-oauth</artifactId>  
+			<version>${maozi-cloud-service-rest-api-sso-oauth.version}</version>  
 		</dependency>
 		<!-- Project End -->
 

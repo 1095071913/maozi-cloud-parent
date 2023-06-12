@@ -13,9 +13,10 @@ import org.springframework.util.ReflectionUtils;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
 import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
-import com.maozi.enums.config.annotation.SwaggerDisplayEnum;
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
+import com.maozi.common.BaseCommon;
 
+import io.swagger.annotations.ApiModelProperty;
 import springfox.documentation.builders.ModelPropertyBuilder;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.schema.ModelPropertyBuilderPlugin;
@@ -36,7 +37,7 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
         
         AnnotatedField field = beanPropertyDefinition.getField();
         
-        if(BaseResultFactory.isNotNull(field)) {
+        if(BaseCommon.isNotNull(field)) {
         	addDescForEnum(context, field.getRawType());
         }
         
@@ -48,28 +49,36 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
     }
 	
     private void addDescForEnum(ModelPropertyContext context, Class<?> fieldType) {
+    	
         if (Enum.class.isAssignableFrom(fieldType)) {
+        	
             SwaggerDisplayEnum annotation = AnnotationUtils.findAnnotation(fieldType, SwaggerDisplayEnum.class).get();
+            
             if (annotation != null) {
+            	
                 String index = annotation.index();
+                
                 String name = annotation.name();
                 
                 Object[] enumConstants = fieldType.getEnumConstants();
 
-                List<String> displayValues =
-                        Arrays.stream(enumConstants)
-                                .filter(Objects::nonNull)
-                                .map(item -> {
+                List<String> displayValues = Arrays.stream(enumConstants).filter(Objects::nonNull).map(item -> {
+                                	
                                     Class<?> currentClass = item.getClass();
 
                                     Field indexField = ReflectionUtils.findField(currentClass, index);
+                                    
                                     ReflectionUtils.makeAccessible(indexField);
+                                    
                                     Object value = ReflectionUtils.getField(indexField, item);
 
                                     Field descField = ReflectionUtils.findField(currentClass, name);
+                                    
                                     ReflectionUtils.makeAccessible(descField);
+                                    
                                     Object desc = ReflectionUtils.getField(descField, item);
-                                    return value + ":" + desc;
+                                    
+                                    return value + ". " + desc;
 
                                 }).collect(Collectors.toList());
 
@@ -77,10 +86,19 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
                 ModelPropertyBuilder builder = context.getBuilder();
                 Field descField = ReflectionUtils.findField(builder.getClass(), "description");
                 ReflectionUtils.makeAccessible(descField);
-                String joinText = ReflectionUtils.getField(descField, builder)
-                        + " (" + String.join("; ", displayValues) + ")";
+                Object param = ReflectionUtils.getField(descField, builder);
+                String joinText = (BaseCommon.isNull(param)?"":param) + " ( " + String.join(" , ", displayValues) + " )";
 
-                builder.description(joinText).type(context.getResolver().resolve(Integer.class));
+                ApiModelProperty swaggerAnnotation = context.getBeanPropertyDefinition().get().getField().getAnnotation(ApiModelProperty.class);
+                
+                if(BaseCommon.isNotNull(swaggerAnnotation) && BaseCommon.isNotEmpty(swaggerAnnotation.dataType())) {
+                	builder.qualifiedType(swaggerAnnotation.dataType());
+                }else {
+                	builder.type(context.getResolver().resolve(Integer.class));
+                }
+                
+                builder.description(joinText);
+                
             }
         }
 

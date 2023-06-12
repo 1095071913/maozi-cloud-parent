@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 
 import org.springframework.stereotype.Component;
 
-import com.maozi.factory.result.error.exception.BusinessResultException;
+import com.maozi.common.result.error.exception.BusinessResultException;
 
 import feign.Response;
 import feign.Util;

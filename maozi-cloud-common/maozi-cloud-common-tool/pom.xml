@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-common</artifactId>
-		<version>1.5.0-SNAPSHOT</version> 
+		<version>${parent.revision}</version> 
 	</parent>
 	<artifactId>maozi-cloud-common-tool</artifactId>
 
@@ -31,20 +31,20 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>cn.afterturn</groupId>
 			<artifactId>easypoi-spring-boot-starter</artifactId>
 			<version>${easypoi.version}</version> 
-		</dependency> 
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.cloud</groupId> 

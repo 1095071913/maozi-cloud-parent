@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.maozi</groupId>
+		<artifactId>maozi-cloud-business-entity</artifactId>
+		<version>${parent.revision}</version>
+	</parent>
+	<artifactId>maozi-cloud-result</artifactId>
+
+
+	<dependencies>
+
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.70</version>
+		</dependency>
+
+ 
+		<!-- Project Begin -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-base-enum</artifactId>
+			<version>${maozi-cloud-base-enum.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-sso-oauth-dto</artifactId>
+			<version>${maozi-cloud-sso-oauth-dto.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-common-tool</artifactId>
+			<version>${maozi-cloud-common-tool.version}</version>
+		</dependency>
+		<!-- Project End -->
+
+
+
+		<!-- SkyWalking Begin -->
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-trace</artifactId>
+			<version>${skywalking.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-logback-1.x</artifactId>
+			<version>${skywalking.version}</version>
+		</dependency>
+		<!-- SkyWalking End -->
+
+
+
+		<!-- SpringCloud Begin -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<!-- SpringCloud End -->
+
+
+	</dependencies>
+
+
+
+</project>

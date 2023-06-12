@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.maozi</groupId>
+    <artifactId>maozi-cloud-service</artifactId>
+    <version>${parent.revision}</version>
+  </parent>
+  <artifactId>maozi-cloud-service-plugin</artifactId>
+  <packaging>pom</packaging>
+  
+  <dependencies>
+	  
+	  	<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-impl</artifactId>
+			<version>${maozi-cloud-service-impl.version}</version>
+			<type>pom</type> 
+		</dependency>
+	  
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-do</artifactId>
+			<version>${maozi-cloud-do.version}</version>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-vo</artifactId>
+			<version>${maozi-cloud-vo.version}</version>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			 <groupId>com.maozi</groupId>
+			 <artifactId>maozi-cloud-service-base-rpc-api</artifactId>
+			 <version>${maozi-cloud-service-base-rpc-api.version}</version>
+		</dependency>
+	
+  </dependencies>
+  
+  <modules>
+	<module>maozi-cloud-service-db-impl</module>
+  </modules>
+  
+</project>

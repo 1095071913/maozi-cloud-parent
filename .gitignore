@@ -36,3 +36,5 @@ target
 
 # Spring Tool Suits project environment #
 .sts4-cache
+
+.flattened-pom.xml

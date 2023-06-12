@@ -18,11 +18,14 @@
 package com.maozi.generate.code;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.util.StringUtils;
 
 import com.maozi.generate.code.entity.DataSourceConfig;
 import com.maozi.generate.code.entity.EntityData;
@@ -59,27 +62,41 @@ import com.maozi.generate.code.tool.SQLType;
 
 public class GenerateCodeRun {
 	
+	public static BufferedReader  bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+	
+	public static String userReaderNullDefault(String defaultStr) throws IOException {
+		
+		String userRead = bufferedReader.readLine();
+		
+		return StringUtils.isEmpty(userRead) ? defaultStr:userRead;
+	}
+	
 	public static void main(String[] args) throws Exception {
-
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		
-		System.out.print("请输入数据库地址如 （localhost:3306/maozi-cloud-test-db）：");
-		DataSourceConfig.JDBCURL = bufferedReader.readLine();
-		
-		System.out.print("请输入数据库用户名：");
-		DataSourceConfig.USER = bufferedReader.readLine();
-		
-		System.out.print("请输入数据库密码：");
-		DataSourceConfig.PASSWORD = bufferedReader.readLine();
-		
-		System.out.print("请输入模块名字（userss）：");
-		String mobule = bufferedReader.readLine();
-		
-		System.out.print("请输入包名（com.maozi）：");
-		String packageName = bufferedReader.readLine();
+		System.out.print("请输入模块名字（users）：");
+		String mobule = userReaderNullDefault("test");
 		
 		System.out.print("请输入生成地址（D:\\project\\maozi-cloud-parent\\maozi-cloud-common）：");
-		String pash = bufferedReader.readLine();
+		String pash = userReaderNullDefault("D:\\project\\maozi-cloud-parent\\maozi-cloud-common");
+		
+		System.out.print("请输入是否依赖数据库（yes/no）：");
+		Boolean db = userReaderNullDefault("no").equals("yes");
+		
+		if(db) {
+			
+			System.out.print("请输入数据库地址如 （默认 localhost:3306）：");
+			DataSourceConfig.JDBCURL = userReaderNullDefault("localhost:3306")+"/";
+			
+			System.out.print("请输入数据库用户名（默认 root）：");
+			DataSourceConfig.USER = userReaderNullDefault("root");
+			
+			System.out.print("请输入数据库密码（默认 password）：");
+			DataSourceConfig.PASSWORD = userReaderNullDefault("password");
+			
+			System.out.print("请输入数据库名（默认 maozi-cloud-"+mobule+"-localhost-db）：");
+			DataSourceConfig.JDBCURL += userReaderNullDefault("maozi-cloud-"+mobule+"-localhost-db");
+			
+		}
 		
 		Map<String,List<TableData>> moduleTableNameMap = new HashMap<String, List<TableData>>(){{
 		
@@ -93,18 +110,22 @@ public class GenerateCodeRun {
 				
 				put(childModule, new ArrayList<TableData>() {{
 					
-					for(;;) {
+					if(db) {
 						
-						System.out.print("请输入表名（输入break结束）：");
-						String tableName = bufferedReader.readLine();
-						if(tableName.equals("break")) {
-							break;
+						for(;;) {
+							
+							System.out.print("请输入表名（输入break结束）：");
+							String tableName = bufferedReader.readLine();
+							if(tableName.equals("break")) {
+								break;
+							}
+							
+							System.out.print("请输入表名实体映射过滤前缀：");
+							String prefixFilter = bufferedReader.readLine();
+							
+							add(new TableData(tableName,prefixFilter));
+							
 						}
-						
-						System.out.print("请输入表名实体映射过滤前缀：");
-						String prefixFilter = bufferedReader.readLine();
-						
-						add(new TableData(tableName,prefixFilter));
 						
 					}
 					
@@ -114,7 +135,7 @@ public class GenerateCodeRun {
 			
 		}};
 		
-		generateCode(mobule,moduleTableNameMap,packageName,pash);
+		generateCode(mobule,moduleTableNameMap,"com.maozi",pash,db);
 		
 	}
 
@@ -122,7 +143,7 @@ public class GenerateCodeRun {
 	
 	
 	
-	private static void generateCode(String module,Map<String,List<TableData>> moduleTableNameMap,String packageName,String pash) throws Exception {
+	private static void generateCode(String module,Map<String,List<TableData>> moduleTableNameMap,String packageName,String pash,Boolean db) throws Exception {
 		
 		System.out.println("正在生成中   。。。。。。");
 		
@@ -141,26 +162,44 @@ public class GenerateCodeRun {
 		GenerateEnumPom.generate(module, enumPash);
 		GenerateRpcPom.generate(module, rpcPash);
 		GenerateRestPom.generate(module, restPash);
-		GenerateServicePom.generate(module, servicePash);
-		
-		
-		List<EntityData> entityData = GenerateEntity.generate(module,moduleTableNameMap, packageName, servicePash+ "\\src\\main\\java");
-		GenerateRun.generate(module,packageName, servicePash+ "\\src\\main\\java");
-		GenerateProperties.generate(module, servicePash+ "\\src\\main\\resources");
-		GenerateMapper.generate(module,entityData, servicePash+ "\\src\\main\\java");
-		GenerateMapperXML.generate(module,entityData, servicePash+ "\\src\\main\\resources");
-		GenerateService.generate(module,entityData, servicePash+ "\\src\\main\\java");
-		GenerateServiceImpl.generate(module,entityData, servicePash+ "\\src\\main\\java");
+		GenerateServicePom.generate(module, servicePash,db);
 		
 		
 		
-		System.out.println(pash);
+		GenerateRun.generate(module,packageName, servicePash+ "\\src\\main\\java",db);
+		GenerateProperties.generate(module, servicePash+ "\\src\\main\\resources",db);
+		
+		if(db) {
+			
+			List<EntityData> entityData = GenerateEntity.generate(module,moduleTableNameMap, packageName, servicePash+ "\\src\\main\\java");
+			GenerateMapper.generate(module,entityData, servicePash+ "\\src\\main\\java");
+			GenerateMapperXML.generate(module,entityData, servicePash+ "\\src\\main\\resources");
+			GenerateService.generate(module,entityData, servicePash+ "\\src\\main\\java");
+			GenerateServiceImpl.generate(module,entityData, servicePash+ "\\src\\main\\java");
+			
+		}else {
+			List<EntityData> entityData = new ArrayList<EntityData>();
+			for(String childModule:moduleTableNameMap.keySet()) {
+				entityData.add(new EntityData(childModule, null, null, childModule, packageName));
+			}
+			GenerateService.generate(module,entityData, servicePash+ "\\src\\main\\java");
+			GenerateServiceImpl.generate(module,entityData, servicePash+ "\\src\\main\\java");
+			
+		}
+		
+		
 		
 		for(String childModule : moduleTableNameMap.keySet()) {
 			
-			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\tool", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\utils", null,null);
 			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\config", null,null);
 			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\properties", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rpc\\v1", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rpc\\v2", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rest\\v1\\app", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rest\\v1\\pc", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rest\\v2\\app", null,null);
+			SQLType.fileCreate(servicePash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\impl\\rest\\v2\\pc", null,null);
 			
 			
 			SQLType.fileCreate(restPash+"\\src\\main\\java\\com\\maozi\\"+module+"\\"+childModule+"\\api\\rest\\v1\\app", null,null);

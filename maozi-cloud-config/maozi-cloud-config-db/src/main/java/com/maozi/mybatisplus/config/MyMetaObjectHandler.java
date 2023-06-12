@@ -17,15 +17,13 @@
 
 package com.maozi.mybatisplus.config;
 
-import java.util.Map;
-
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.sso.OauthUserDetails;
+import com.maozi.base.enums.Deleted;
+import com.maozi.base.enums.Status;
+import com.maozi.common.BaseCommon;
 
 /**
  * 
@@ -40,32 +38,30 @@ import com.maozi.sso.OauthUserDetails;
  * 协议说明：Apache2.0（ 文件顶端 ）
  *
  */
-
-public class MyMetaObjectHandler extends BaseResultFactory implements MetaObjectHandler {
+@Configuration
+public class MyMetaObjectHandler extends BaseCommon implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
 
 		this.strictInsertFill(metaObject, "createTime", Long.class, System.currentTimeMillis());
 		this.strictInsertFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
-		this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
+		this.strictInsertFill(metaObject, "status", Status.class, Status.enable);
+		this.strictInsertFill(metaObject, "deleted", Deleted.class, Deleted.none);
 		this.strictInsertFill(metaObject, "version", Integer.class, 0);
 
-		OauthUserDetails oauthUserDetails = getOauthUserDetails();
-		if (isNotNull(oauthUserDetails)) {
-
-			Map<String,Map<String,Object>> userInfos = oauthUserDetails.getUserInfos();
-			
-			Long userId = Long.parseLong(userInfos.get("com.maozi.sso.info.SystemUser").get("id").toString());
-			
-			this.strictInsertFill(metaObject, "createBy", Long.class, userId);
-			
-		}
+		String currentUserName = getCurrentUserName();
+		this.strictInsertFill(metaObject, "createUsername", String.class, currentUserName);
+		this.strictInsertFill(metaObject, "updateUsername", String.class, currentUserName);
 		
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
+		
+		this.strictInsertFill(metaObject, "updateUsername", String.class, getCurrentUserName());
+		
 		this.strictUpdateFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
+		
 	}
 }

@@ -30,7 +30,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 import com.maozi.tool.ApplicationEnvironmentConfig;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@DependsOn({"applicationEnvironmentConfig"})
+@DependsOn({"applicationEnvironmentConfig","springUtil"})
 public class BaseApplication {
 
 	protected static void ApplicationRun() {
@@ -72,27 +72,27 @@ public class BaseApplication {
 			
 			applicationName = applicationName.replace("service-", "");
 			
-			applicationNacosConfig = "cloud-default.yml,cloud-nacos.yml,cloud-dubbo.yml,boot-admin.yml,api-whitelist.yml,cloud-security.yml,boot-redis.yml,boot-swagger.yml,boot-arthas.yml";
+			applicationNacosConfig = "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-admin.yml,api-whitelist.yml,cloud-security.yml,boot-redis.yml,boot-swagger.yml,boot-arthas.yml,boot-flyway.yml,cloud-default.yml";
 		
 		}else {
 			
 			applicationName = applicationName.replace("basics-", "");
 			
-			applicationNacosConfig = "cloud-default.yml,cloud-nacos.yml,boot-admin.yml,boot-arthas.yml";
+			applicationNacosConfig = "cloud-nacos.yml,boot-admin.yml,boot-arthas.yml,cloud-default.yml";
 			
 		}
+		
 		
 		properties.put("application-project-abbreviation", applicationName.replace("maozi-cloud-", ""));
 		properties.put("spring.application.name", applicationName);
 		properties.put("application-nacos-config", applicationNacosConfig);
+		properties.put("spring.main.allow-circular-references",true);
 		properties.put("spring.cloud.nacos.config.file-extension", "yml");
 		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:localhost:8848}");
 	
 			
 		properties.put("logging.level.root", "ERROR");
 		properties.put("logging.level.com.maozi", "INFO");
-		properties.put("logging.file.name", "log/log.log");
-		properties.put("logging.config", "classpath:log.xml");
 		
 		System.setProperties(properties);
 
@@ -115,7 +115,7 @@ public class BaseApplication {
 		}
 		catch (Exception e) {
 
-			log.error(BaseResultFactory.getStackTrace(e));
+			log.error(BaseCommon.getStackTrace(e));
 
 			errorBoo = true;
 			StackTraceElement stackTraceElement = e.getStackTrace()[0];
@@ -128,12 +128,14 @@ public class BaseApplication {
 		finally {
 
 			if (errorBoo) {
-				log.error(BaseResultFactory.appendLog(logs).toString());
+				log.error(BaseCommon.appendLog(logs).toString());
 				System.exit(0);
 			}
 			else {
-				log.info(BaseResultFactory.appendLog(logs).toString());
+				log.info(BaseCommon.appendLog(logs).toString());
 			}
+			
+			BaseCommon.clear();
 
 		}
 

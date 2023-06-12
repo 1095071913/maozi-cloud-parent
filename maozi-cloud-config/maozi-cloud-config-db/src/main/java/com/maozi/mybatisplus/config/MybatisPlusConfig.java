@@ -18,20 +18,20 @@
 package com.maozi.mybatisplus.config;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.maozi.sso.OauthUserDetails;
+import com.maozi.common.BaseCommon;
 
-import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 
 /**
@@ -60,17 +60,10 @@ public class MybatisPlusConfig {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
+        	
             @Override
-            public Expression getTenantId() {
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            	if(authentication != null && authentication.getPrincipal() != null) {
-            		OauthUserDetails oauthUserDetails = (OauthUserDetails)authentication.getPrincipal();
-            		if(authentication.getDetails()==null) {
-            			return null;
-            		}
-            		return new LongValue(authentication.getDetails().toString());
-        		}
-            	return null;
+            public LongValue getTenantId() {
+            	return new LongValue(BaseCommon.getCurrentClientId());
             }
 
             @Override
@@ -88,9 +81,16 @@ public class MybatisPlusConfig {
             
         }));
         
+//        if(!BaseCommon.isEnvironment(EnvironmentType.production)) {
+//        	interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
+//        }
+        
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        
         return interceptor;
+        
     }
 
 }

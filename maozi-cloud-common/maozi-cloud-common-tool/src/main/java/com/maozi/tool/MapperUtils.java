@@ -234,9 +234,8 @@ public class MapperUtils {
 		return objectMapper.convertValue(map, constructType);
 	}
 
-	public static Map<String, Object> pojo2Map(Object pojo) {
-		return objectMapper.convertValue(pojo, new TypeReference<Map<String, Object>>() {
-		});
+	public static Map<String, String> pojo2Map(Object pojo) {
+		return objectMapper.convertValue(pojo, new TypeReference<Map<String, String>>() {});
 	}
 
 	/**

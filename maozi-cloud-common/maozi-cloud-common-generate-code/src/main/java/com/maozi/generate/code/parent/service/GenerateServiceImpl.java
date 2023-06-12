@@ -51,8 +51,12 @@ public class GenerateServiceImpl {
 			entityImport(serviceImpl,entityData.getClassName(),module,entityData.getModuleName());
 			/* 导包 Begin */
 			
-			serviceImpl.append("public class "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"ServiceImpl extends MPJBaseServiceImpl<"+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Mapper, "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Do> implements "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Service {\r\n");
+			serviceImpl.append("public class "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"ServiceImpl"+(entityData.getClassName()==null?"":" extends BaseServiceImpl<"+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Mapper, "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Do,Void>")+" implements "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Service {\r\n\r\n");
 			
+			serviceImpl.append("	@Override\r\n"
+					+ "	protected String getAbbreviationModelName() {\r\n"
+					+ "		return null;\r\n"
+					+ "	}\r\n");
 			
 			serviceImpl.append("\r\n}");
 			
@@ -66,12 +70,19 @@ public class GenerateServiceImpl {
 	
 	
 	private static void entityImport(StringBuilder entity, String entityClass,String module,String childModule) {
-		String entityName = entityClass.substring(entityClass.lastIndexOf("."), entityClass.length());
+		
 		entity.append("\r\n");
-		entity.append("import "+entityClass+";\r\n");
-		entity.append("import com.maozi"+"."+module+"."+childModule+".mapper"+entityName.replace("Do", "Mapper")+";\r\n");
-		entity.append("import com.maozi"+"."+module+"."+childModule+".api"+entityName.replace("Do", "Service")+";\r\n");
-		entity.append("import com.github.yulichang.base.MPJBaseServiceImpl;\r\n");
+		
+		if(entityClass != null) {
+			String entityName = entityClass.substring(entityClass.lastIndexOf("."), entityClass.length());
+			entity.append("import "+entityClass+";\r\n");
+			entity.append("import com.maozi"+"."+module+"."+childModule+".mapper"+entityName.replace("Do", "Mapper")+";\r\n");
+			entity.append("import com.maozi"+"."+module+"."+childModule+".api"+entityName.replace("Do", "Service")+";\r\n");
+			entity.append("import com.maozi.base.api.impl.BaseServiceImpl;\r\n");
+		}else {
+			entity.append("import com.maozi"+"."+module+"."+childModule+".api."+SQLType.initial(childModule)+"Service"+";\r\n");
+		}
+		
 		entity.append("\r\n");
 	}
 	

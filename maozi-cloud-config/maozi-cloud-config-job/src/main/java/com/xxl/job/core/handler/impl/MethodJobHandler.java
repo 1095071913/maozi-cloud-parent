@@ -8,7 +8,7 @@ import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
 import org.apache.skywalking.apm.toolkit.trace.Trace;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.IJobHandler;
 
@@ -57,7 +57,7 @@ public class MethodJobHandler extends IJobHandler {
     		
     		isError=true;
     		
-    		String stackTrace = BaseResultFactory.getStackTrace(e);
+    		String stackTrace = BaseCommon.getStackTrace(e);
     		
     		log.error(stackTrace);
     		
@@ -72,12 +72,12 @@ public class MethodJobHandler extends IJobHandler {
     		
 		}finally {
 			
-			StringBuilder respSql = BaseResultFactory.sql.get();
-    		if(BaseResultFactory.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
+			StringBuilder respSql = BaseCommon.sql.get();
+    		if(BaseCommon.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
 			
 			logs.put("respTime",System.currentTimeMillis()-beginTime + " ms");
 			
-			StringBuilder appendLog = BaseResultFactory.appendLog(logs);
+			StringBuilder appendLog = BaseCommon.appendLog(logs);
 			
 			if(isError) {
 				log.error(appendLog.toString());
@@ -85,7 +85,7 @@ public class MethodJobHandler extends IJobHandler {
 				log.info(appendLog.toString()); 
 			}  
 			
-			BaseResultFactory.clean();
+			BaseCommon.clear();
 			
 		}
     }

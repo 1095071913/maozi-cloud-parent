@@ -26,6 +26,10 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
+import com.gitee.sunchenbin.mybatis.actable.annotation.Index;
+import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
+import com.maozi.base.enums.Deleted;
+import com.maozi.base.enums.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,17 +56,31 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseDomain implements Serializable {
 
+	@Column(comment = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
+	
+	@Index
+	@Column(comment = "名称")
+	@TableField(value = "name")
+	private String name;
 
-	@TableField(value = "create_by" , fill = FieldFill.INSERT)
 	@Column(comment = "创建人")
-	private Long createBy;
+	@TableField(value = "create_username" , fill = FieldFill.INSERT)
+	private String createUsername;
+	
+	@Column(comment = "更新人")
+	@TableField(value = "update_username" , fill = FieldFill.INSERT_UPDATE)
+	private String updateUsername;
 
 	@TableLogic
-	@Column(defaultValue = "0",comment = "逻辑删除键")
+	@Column(defaultValue = "0",type = MySqlTypeConstant.BIGINT,comment = "逻辑删除")
 	@TableField(value = "deleted" , fill = FieldFill.INSERT)
-	private Integer deleted;
+	private Deleted deleted;
+	
+	@Column(defaultValue = "1",type = MySqlTypeConstant.BIGINT,comment = "状态")
+	@TableField(value = "status" , fill = FieldFill.INSERT)
+	private Status status;
 
 	@Version
 	@Column(defaultValue = "0",comment = "版本号")

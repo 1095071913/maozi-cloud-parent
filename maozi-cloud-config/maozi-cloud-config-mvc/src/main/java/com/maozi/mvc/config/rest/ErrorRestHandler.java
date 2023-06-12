@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.WebUtils;
 
 import com.google.common.collect.Maps;
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.factory.result.code.CodeAttribute;
+import com.maozi.common.BaseCommon;
+import com.maozi.common.result.code.CodeAttribute;
 import com.maozi.mvc.config.error.ErrorParamTranslation;
 
 @ControllerAdvice
@@ -36,8 +36,7 @@ public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 //		return handleExceptionInternal(ex,BaseResultFactory.error(BaseResultFactory.code(400)) , headers, status, request);
 //	}
 	
-	protected ResponseEntity<Object> handleExceptionInternal(
-			Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
@@ -51,7 +50,7 @@ public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 			
 			methodArgumentNotValidException.getBindingResult().getFieldErrors().stream().forEach(fieldError -> errorMessages.put(fieldError.getField(), fieldError.getDefaultMessage()));
 			
-			return new ResponseEntity<>(BaseResultFactory.error(new CodeAttribute<Map<String,String>>(400,"参数错误",errorMessages),status.value()), headers, status);
+			return new ResponseEntity<>(BaseCommon.error(new CodeAttribute<Map<String,String>>(400,"参数错误",errorMessages),status.value()), headers, status);
 		
 		}else if (ex instanceof MissingServletRequestParameterException) {
 			
@@ -59,17 +58,17 @@ public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 			
 			String paramErrorMessage = ErrorParamTranslation.errorParams.get(missingServletRequestParameterException.getParameterName());
 			
-			if(BaseResultFactory.isNull(paramErrorMessage)) {
+			if(BaseCommon.isNull(paramErrorMessage)) {
 				paramErrorMessage=missingServletRequestParameterException.getParameterName();
 			}
 			
-			return new ResponseEntity<>(BaseResultFactory.error(new CodeAttribute(400,paramErrorMessage+"不能为空"),status.value()), headers, status);
+			return new ResponseEntity<>(BaseCommon.error(new CodeAttribute(400,missingServletRequestParameterException.getParameterName()+"不能为空"),status.value()), headers, status);
 			
 		}else {
-			BaseResultFactory.error(ex.getLocalizedMessage()); 
+			BaseCommon.error(ex.getLocalizedMessage()); 
 		}
 		
-		return new ResponseEntity<>(BaseResultFactory.error(BaseResultFactory.baseCode(status.value()),status.value()), headers, status);
+		return new ResponseEntity<>(BaseCommon.error(BaseCommon.baseCode(status.value()),status.value()), headers, status);
 	}
 
 }

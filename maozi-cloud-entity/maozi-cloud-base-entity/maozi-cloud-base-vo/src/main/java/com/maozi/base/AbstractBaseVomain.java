@@ -18,6 +18,12 @@ package com.maozi.base;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 /**
  *
  * 功能说明：领域模型Vo
@@ -32,5 +38,8 @@ import java.io.Serializable;
  *
  */
 
-
+@Data
+@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseVomain implements Serializable {}

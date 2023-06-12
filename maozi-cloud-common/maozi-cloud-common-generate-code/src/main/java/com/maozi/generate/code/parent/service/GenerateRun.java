@@ -36,13 +36,13 @@ import com.maozi.generate.code.tool.SQLType;
 
 public class GenerateRun {
 
-	public static void generate(String module,String packageName, String pash) throws Exception {
+	public static void generate(String module,String packageName, String pash,Boolean db) throws Exception {
 
 			StringBuilder service = new StringBuilder();
 			
 			service.append("package " + packageName + ";\r\n\r\n");
 
-			service.append("public class " + SQLType.initial(module) + "Application extends BaseApplicationDB {\r\n\r\n");
+			service.append("public class " + SQLType.initial(module) + "Application extends BaseApplication"+(db?"DB":"")+" {\r\n\r\n");
 			
 			service.append("	public static void main(String[] args) {\r\n");
 			service.append("		ApplicationRun();\r\n");

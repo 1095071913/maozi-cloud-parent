@@ -37,19 +37,15 @@ import com.maozi.generate.code.tool.SQLType;
 
 public class GenerateProperties {
 
-	public static void generate(String mobule,String pash) throws Exception {
+	public static void generate(String mobule,String pash,Boolean db) throws Exception {
 
 			StringBuilder properties = new StringBuilder();
 			
-			properties.append("spring.application.name=maozi-cloud-"+mobule+"\r\n");
-			properties.append("spring.cloud.nacos.config.file-extension=yml\r\n");
-			properties.append("spring.cloud.nacos.config.server-addr=${NACOS_CONFIG_SERVER:localhost:8848}\r\n");
-			properties.append("spring.cloud.nacos.config.shared-dataids=cloud-default.yml,cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,cloud-security.yml,boot-redis.yml,boot-admin.yml,boot-datasource.yml,boot-mybatisplus.yml,boot-swagger.yml\r\n");
-			properties.append("#spring.cloud.nacos.config.refreshable-dataids    ${nacos.config.server-addr}\r\n\r\n");
-			properties.append("logging.level.root=ERROR\r\n");
-			properties.append("logging.level.com.maozi=INFO\r\n");
-			properties.append("logging.file.name=log/log.log\r\n");
-			properties.append("logging.config=classpath:log.xml");
+			if(db) {
+				properties.append("spring.cloud.nacos.config.shared-dataids=${application-nacos-config},boot-datasource.yml,boot-mybatisplus.yml\r\n");
+			}else {
+				properties.append("spring.cloud.nacos.config.shared-dataids=${application-nacos-config}\r\n");
+			}
 
 			/* 创建文件 Begin */
 			SQLType.fileCreate(pash, "bootstrap", properties,"properties");

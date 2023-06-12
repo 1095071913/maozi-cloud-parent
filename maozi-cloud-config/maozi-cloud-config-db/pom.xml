@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-db</artifactId>
 
@@ -15,6 +15,12 @@
 
 
 		<!-- ORM Begin -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-base-run</artifactId>
+			<version>${maozi-cloud-service-base-run.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
@@ -38,10 +44,21 @@
 			</exclusions>
 		</dependency>
 		
-        <dependency>
+		<dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
+        
+        <dependency>
+    		<groupId>org.flywaydb</groupId>
+    		<artifactId>flyway-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.yulichang</groupId>
+			<artifactId>mybatis-plus-join</artifactId>
+			<version>${mybatis-plus-join.version}</version>
+		</dependency>
 		<!-- ORM End -->
 
 
@@ -49,15 +66,15 @@
 
 		<!-- Project Begin -->
 		<dependency>
+			<groupId>com.maozi</groupId> 
+			<artifactId>maozi-cloud-base-enum</artifactId>
+			<version>${maozi-cloud-base-enum.version}</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-redis</artifactId>
 			<version>${maozi-cloud-config-redis.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.yulichang</groupId>
-			<artifactId>mybatis-plus-join</artifactId>
-			<version>${mybatis-plus-join.version}</version>
 		</dependency>
 		<!-- Project End --> 
 

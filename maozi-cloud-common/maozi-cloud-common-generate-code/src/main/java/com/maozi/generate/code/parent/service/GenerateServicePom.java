@@ -35,7 +35,7 @@ import com.maozi.generate.code.tool.SQLType;
 
 public class GenerateServicePom {
 	
-	public static void generate(String module,String pash) throws Exception {
+	public static void generate(String module,String pash,Boolean db) throws Exception {
 		
 		String context = "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n" + 
 				"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n" + 
@@ -73,26 +73,19 @@ public class GenerateServicePom {
 				" 		\r\n" + 
 				"\r\n" + 
 				"		<!-- maozi-cloud-cloud Begin -->\r\n" + 
+				(db ?
 				"		<dependency>\r\n" + 
-				"			<groupId>com.maozi</groupId>\r\n" + 
-				"			<artifactId>maozi-cloud-do</artifactId>\r\n" + 
-				"			<version>${maozi-cloud-do.version}</version>\r\n" + 
-				"			<type>pom</type>\r\n" + 
-				"		</dependency>\r\n" + 
-				"\r\n" + 
+			    "			<groupId>com.maozi</groupId>\r\n" + 
+			    "			<artifactId>maozi-cloud-service-db-impl</artifactId>\r\n" + 
+				"			<version>${maozi-cloud-service-db-impl.version}</version>\r\n" + 
+				"		</dependency>\r\n"+
+				"		<!-- maozi-cloud-cloud End -->\r\n" :
 				"		<dependency>\r\n" + 
-				"			<groupId>com.maozi</groupId>\r\n" + 
-				"			<artifactId>maozi-cloud-service-impl</artifactId>\r\n" + 
-				"			<version>${maozi-cloud-service-impl.version}</version>\r\n" + 
-				"			<type>pom</type>\r\n" + 
-				"		</dependency>\r\n" + 
-				"\r\n" + 
-				"		<dependency>\r\n" + 
-				"			<groupId>com.maozi</groupId>\r\n" + 
+			    "			<groupId>com.maozi</groupId>\r\n" + 
 				"			<artifactId>maozi-cloud-service-base-impl</artifactId>\r\n" + 
 				"			<version>${maozi-cloud-service-base-impl.version}</version>\r\n" + 
 				"		</dependency>\r\n"+
-				"		<!-- maozi-cloud-cloud End -->\r\n" + 
+				"		<!-- maozi-cloud-cloud End -->\r\n") + 
 				"\r\n" + 
 				"\r\n" + 
 				"	</dependencies>\r\n" + 

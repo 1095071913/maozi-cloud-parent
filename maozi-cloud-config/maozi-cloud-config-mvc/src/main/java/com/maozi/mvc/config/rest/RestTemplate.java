@@ -26,8 +26,7 @@ import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.sso.OauthUserDetails;
+import com.maozi.common.BaseCommon;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,8 +40,6 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
 		Boolean isError=false; 
 		
 		ClientHttpResponse response = null;
-		
-		OauthUserDetails oauthUserDetails = BaseResultFactory.getOauthUserDetails();
 		
 		Map<String,String> logs = new LinkedHashMap<String, String>();
 		
@@ -100,13 +97,13 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
 			
 			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
 			
-			String stackTrace = BaseResultFactory.getStackTrace(e);
+			String stackTrace = BaseCommon.getStackTrace(e);
 			
 			log.error(stackTrace);
 			
 			functionError(stackTrace);
             
-            logs.put("errorUser",(BaseResultFactory.isNull(oauthUserDetails) ? "游客":oauthUserDetails.getUserInfos().toString()));
+            logs.put("errorUser",BaseCommon.getCurrentUserName());
             logs.put("errorDesc", e.getLocalizedMessage());
             logs.put("errorLine", stackTraceElement.toString());
             
@@ -119,9 +116,9 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
 			}
             
             if(isError) {
-            	log.error(BaseResultFactory.appendLog(logs).toString());
+            	log.error(BaseCommon.appendLog(logs).toString());
             }else { 
-            	log.info(BaseResultFactory.appendLog(logs).toString());
+            	log.info(BaseCommon.appendLog(logs).toString());
             }
 			
 		}

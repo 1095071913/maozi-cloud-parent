@@ -1,5 +1,4 @@
-﻿
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -7,12 +6,14 @@
 
 	<groupId>com.maozi</groupId>
 	<artifactId>maozi-cloud-parent</artifactId>
-	<version>1.5.0-SNAPSHOT</version>
+	<version>${parent.revision}</version>
 
 	<packaging>pom</packaging>
 
 
 	<properties>
+
+		<parent.revision>1.0.0-SNAPSHOT</parent.revision>
 
 		<!-- Java Begin -->
 		<java.version>17</java.version>
@@ -32,7 +33,6 @@
 		<!-- Spring Component End -->
 
 
-
 		<!-- Other Component Begin -->
 		<cglib.version>3.3.0</cglib.version>
 		<dubbo.version>3.0.8</dubbo.version>
@@ -40,86 +40,85 @@
 		<apollo.version>1.8.0</apollo.version>
 		<sentry.version>3.1.1</sentry.version>
 		<easypoi.version>4.3.0</easypoi.version>
+		<mybatis.version>3.5.10</mybatis.version>
 		<skywalking.version>8.4.0</skywalking.version>
 		<hutool-all.version>5.6.5</hutool-all.version>
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
-		<mybatis-plus.version>3.4.3.4</mybatis-plus.version>
-		<mybatis-plus-join.version>1.2.4</mybatis-plus-join.version>
-		<mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-		<knife4j-spring-boot-starter.version>3.0.3</knife4j-spring-boot-starter.version>
+		<mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+		<mybatis-plus-join.version>1.4.5</mybatis-plus-join.version>
+		<knife4j-annotations.version>3.0.3</knife4j-annotations.version>
 		<mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
-		<sharding-jdbc-self-id-generator.version>1.4.2</sharding-jdbc-self-id-generator.version>
+		<knife4j-openapi2-spring-boot-starter.version>4.0.0</knife4j-openapi2-spring-boot-starter.version>
 		<!-- Other Component End -->
-
-
 
 
 		<!-- Project Begin -->
 		<application-run>com.maozi.Application</application-run>
 
-		<maozi-cloud-do.version>1.5.0-SNAPSHOT</maozi-cloud-do.version>
-		<maozi-cloud-vo.version>1.5.0-SNAPSHOT</maozi-cloud-vo.version>
-		<maozi-cloud-dto.version>1.5.0-SNAPSHOT</maozi-cloud-dto.version>
-		<maozi-cloud-enum.version>1.5.0-SNAPSHOT</maozi-cloud-enum.version>
-		<maozi-cloud-seata-do.version>1.5.0-SNAPSHOT</maozi-cloud-seata-do.version>
+		<maozi-cloud-do.version>${parent.revision}</maozi-cloud-do.version>
+		<maozi-cloud-vo.version>${parent.revision}</maozi-cloud-vo.version>
+		<maozi-cloud-dto.version>${parent.revision}</maozi-cloud-dto.version>
+		<maozi-cloud-enum.version>${parent.revision}</maozi-cloud-enum.version>
+		<maozi-cloud-seata-do.version>${parent.revision}</maozi-cloud-seata-do.version>
 
 
-		<maozi-cloud-base-do.version>1.5.0-SNAPSHOT</maozi-cloud-base-do.version>
-		<maozi-cloud-base-vo.version>1.5.0-SNAPSHOT</maozi-cloud-base-vo.version>
-		<maozi-cloud-base-dto.version>1.5.0-SNAPSHOT</maozi-cloud-base-dto.version>
-		<maozi-cloud-base-enum.version>1.5.0-SNAPSHOT</maozi-cloud-base-enum.version>
+		<maozi-cloud-base-do.version>${parent.revision}</maozi-cloud-base-do.version>
+		<maozi-cloud-base-vo.version>${parent.revision}</maozi-cloud-base-vo.version>
+		<maozi-cloud-base-dto.version>${parent.revision}</maozi-cloud-base-dto.version>
+		<maozi-cloud-base-enum.version>${parent.revision}</maozi-cloud-base-enum.version>
 
-		<maozi-cloud-result.version>1.5.0-SNAPSHOT</maozi-cloud-result.version>
+		<maozi-cloud-result.version>${parent.revision}</maozi-cloud-result.version>
 
-		<maozi-cloud-config-db.version>1.5.0-SNAPSHOT</maozi-cloud-config-db.version>
-		<maozi-cloud-config-sso.version>1.5.0-SNAPSHOT</maozi-cloud-config-sso.version>
-		<maozi-cloud-config-job.version>1.5.0-SNAPSHOT</maozi-cloud-config-job.version>
-		<maozi-cloud-config-log.version>1.5.0-SNAPSHOT</maozi-cloud-config-log.version>
-		<maozi-cloud-config-mvc.version>1.5.0-SNAPSHOT</maozi-cloud-config-mvc.version>
-		<maozi-cloud-config-redis.version>1.5.0-SNAPSHOT</maozi-cloud-config-redis.version>
-		<maozi-cloud-config-dubbo.version>1.5.0-SNAPSHOT</maozi-cloud-config-dubbo.version> 
-		<maozi-cloud-config-feign.version>1.5.0-SNAPSHOT</maozi-cloud-config-feign.version>
-		<maozi-cloud-config-seata.version>1.5.0-SNAPSHOT</maozi-cloud-config-seata.version>
-		<maozi-cloud-config-arthas.version>1.5.0-SNAPSHOT</maozi-cloud-config-arthas.version>
-		<maozi-cloud-config-sentry.version>1.5.0-SNAPSHOT</maozi-cloud-config-sentry.version>
-		<maozi-cloud-config-apollo.version>1.5.0-SNAPSHOT</maozi-cloud-config-apollo.version>
-		<maozi-cloud-config-stream.version>1.5.0-SNAPSHOT</maozi-cloud-config-stream.version>
-		<maozi-cloud-config-swagger.version>1.5.0-SNAPSHOT</maozi-cloud-config-swagger.version>
-		<maozi-cloud-config-sentinel.version>1.5.0-SNAPSHOT</maozi-cloud-config-sentinel.version>
-		<maozi-cloud-config-bootadmin.version>1.5.0-SNAPSHOT</maozi-cloud-config-bootadmin.version>
-		<maozi-cloud-config-discovery.version>1.5.0-SNAPSHOT</maozi-cloud-config-discovery.version>
-
-
-		<maozi-cloud-common-tool.version>1.5.0-SNAPSHOT</maozi-cloud-common-tool.version>
+		<maozi-cloud-config-db.version>${parent.revision}</maozi-cloud-config-db.version>
+		<maozi-cloud-config-sso.version>${parent.revision}</maozi-cloud-config-sso.version>
+		<maozi-cloud-config-job.version>${parent.revision}</maozi-cloud-config-job.version>
+		<maozi-cloud-config-log.version>${parent.revision}</maozi-cloud-config-log.version>
+		<maozi-cloud-config-mvc.version>${parent.revision}</maozi-cloud-config-mvc.version>
+		<maozi-cloud-config-redis.version>${parent.revision}</maozi-cloud-config-redis.version>
+		<maozi-cloud-config-dubbo.version>${parent.revision}</maozi-cloud-config-dubbo.version>
+		<maozi-cloud-config-feign.version>${parent.revision}</maozi-cloud-config-feign.version>
+		<maozi-cloud-config-seata.version>${parent.revision}</maozi-cloud-config-seata.version>
+		<maozi-cloud-config-arthas.version>${parent.revision}</maozi-cloud-config-arthas.version>
+		<maozi-cloud-config-sentry.version>${parent.revision}</maozi-cloud-config-sentry.version>
+		<maozi-cloud-config-apollo.version>${parent.revision}</maozi-cloud-config-apollo.version>
+		<maozi-cloud-config-stream.version>${parent.revision}</maozi-cloud-config-stream.version>
+		<maozi-cloud-config-swagger.version>${parent.revision}</maozi-cloud-config-swagger.version>
+		<maozi-cloud-config-sentinel.version>${parent.revision}</maozi-cloud-config-sentinel.version>
+		<maozi-cloud-config-bootadmin.version>${parent.revision}</maozi-cloud-config-bootadmin.version>
+		<maozi-cloud-config-discovery.version>${parent.revision}</maozi-cloud-config-discovery.version>
 
 
-		<maozi-cloud-service-mq.version>1.5.0-SNAPSHOT</maozi-cloud-service-mq.version>
-		<maozi-cloud-service-job.version>1.5.0-SNAPSHOT</maozi-cloud-service-job.version>
-		<maozi-cloud-service-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-impl.version>
-		<maozi-cloud-service-db-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-db-impl.version>
-		<maozi-cloud-service-rpc-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-rpc-api.version>
-		<maozi-cloud-service-rest-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-rest-api.version>
-		<maozi-cloud-service-base-api.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-api.version>
-		<maozi-cloud-service-base-run.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-run.version>
-		<maozi-cloud-service-base-impl.version>1.5.0-SNAPSHOT</maozi-cloud-service-base-impl.version>
+		<maozi-cloud-common-tool.version>${parent.revision}</maozi-cloud-common-tool.version>
 
 
-		<maozi-cloud-service-bd.version>1.5.0-SNAPSHOT</maozi-cloud-service-bd.version>
-		<maozi-cloud-service-ss.version>1.5.0-SNAPSHOT</maozi-cloud-service-ss.version>
-		<maozi-cloud-service-qny.version>1.5.0-SNAPSHOT</maozi-cloud-service-qny.version>
-		<maozi-cloud-service-company-wechat.version>1.5.0-SNAPSHOT</maozi-cloud-service-company-wechat.version>
+		<maozi-cloud-service-mq.version>${parent.revision}</maozi-cloud-service-mq.version>
+		<maozi-cloud-service-job.version>${parent.revision}</maozi-cloud-service-job.version>
+		<maozi-cloud-service-impl.version>${parent.revision}</maozi-cloud-service-impl.version>
+		<maozi-cloud-service-db-impl.version>${parent.revision}</maozi-cloud-service-db-impl.version>
+		<maozi-cloud-service-rpc-api.version>${parent.revision}</maozi-cloud-service-rpc-api.version>
+		<maozi-cloud-service-rest-api.version>${parent.revision}</maozi-cloud-service-rest-api.version>
+		<maozi-cloud-service-base-run.version>${parent.revision}</maozi-cloud-service-base-run.version>
+		<maozi-cloud-service-base-impl.version>${parent.revision}</maozi-cloud-service-base-impl.version>
+		<maozi-cloud-service-base-rpc-api.version>${parent.revision}</maozi-cloud-service-base-rpc-api.version>
 
 
-		<maozi-cloud-oauth-dto.version>1.5.0-SNAPSHOT</maozi-cloud-oauth-dto.version>
-		<maozi-cloud-service-rpc-api-sso-token.version>1.5.0-SNAPSHOT</maozi-cloud-service-rpc-api-sso-token.version>
-		<maozi-cloud-service-rest-api-sso-token.version>1.5.0-SNAPSHOT</maozi-cloud-service-rest-api-sso-token.version>
+		<maozi-cloud-service-bd.version>${parent.revision}</maozi-cloud-service-bd.version>
+		<maozi-cloud-service-ss.version>${parent.revision}</maozi-cloud-service-ss.version>
+		<maozi-cloud-service-qny.version>${parent.revision}</maozi-cloud-service-qny.version>
+		<maozi-cloud-service-company-wechat.version>${parent.revision}</maozi-cloud-service-company-wechat.version>
+
+
+		<maozi-cloud-sso-oauth-dto.version>${parent.revision}</maozi-cloud-sso-oauth-dto.version>
+		<maozi-cloud-system-user-dto.version>${parent.revision}</maozi-cloud-system-user-dto.version>
+		<maozi-cloud-service-rpc-api-sso-oauth.version>${parent.revision}</maozi-cloud-service-rpc-api-sso-oauth.version>
+		<maozi-cloud-service-rest-api-sso-oauth.version>${parent.revision}</maozi-cloud-service-rest-api-sso-oauth.version>
+		<maozi-cloud-service-rpc-api-system-config.version>${parent.revision}</maozi-cloud-service-rpc-api-system-config.version>
+		<maozi-cloud-service-rpc-api-system-user-info.version>${parent.revision}</maozi-cloud-service-rpc-api-system-user-info.version>
 		<!-- Project End -->
 
 
-
 	</properties>
-
 
 
 	<distributionManagement>
@@ -134,7 +133,6 @@
 			<url>http://localhost:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
 
 
 	<dependencyManagement>
@@ -170,13 +168,7 @@
 	</dependencyManagement>
 
 
-
-
-
-
 	<dependencies>
-
-
 
 
 		<!-- JAVA EE Begin -->
@@ -184,14 +176,13 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
-		
-		<dependency>
-       		<groupId>javax.annotation</groupId>
-       		<artifactId>jsr250-api</artifactId>
-       		<version>1.0</version>
- 		</dependency> 
-		<!-- JAVA EE End -->
 
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- JAVA EE End -->
 
 
 		<!-- Other Component Begin -->
@@ -202,18 +193,36 @@
 		<!-- Other Component End -->
 
 
-
-
 	</dependencies>
-
-
-
-
-
 
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.5.0</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -287,7 +296,8 @@
 				</executions>
 				<configuration>
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
-					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+					<generateGitPropertiesFilename>
+						${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
 					<includeOnlyProperties>
 						<includeOnlyProperty>^git.tags$</includeOnlyProperty>
 						<includeOnlyProperty>^git.branch$</includeOnlyProperty>
@@ -430,21 +440,12 @@
 	</pluginRepositories>
 
 
-
-
-
-
 	<modules>
 		<module>maozi-cloud-entity</module>
 		<module>maozi-cloud-common</module>
 		<module>maozi-cloud-service</module>
 		<module>maozi-cloud-config</module>
 	</modules>
-
-
-
-
-
 
 
 </project>

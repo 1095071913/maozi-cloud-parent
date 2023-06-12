@@ -50,7 +50,7 @@ public class GenerateService {
 			/* 导包 Begin */
 			entityImport(service,entityData.getClassName());
 			
-			service.append("public interface "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Service extends MPJBaseService<"+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Do> {\r\n");
+			service.append("public interface "+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Service"+(entityData.getClassName()==null?"":" extends MPJBaseService<"+SQLType.initial(SQLType.underlineToCapital(entityData.getTableName()))+"Do> ")+"{\r\n");
 			service.append("\r\n}");
 			
 			/* 创建文件 Begin */
@@ -63,10 +63,16 @@ public class GenerateService {
 	}
 	
 	private static void entityImport(StringBuilder entity, String entityClass) {
+		
 		entity.append("\r\n");
-		entity.append("import com.github.yulichang.base.MPJBaseService;\r\n");
-		entity.append("import "+entityClass+";\r\n");
+		
+		if(entityClass != null) {
+			entity.append("import com.github.yulichang.base.MPJBaseService;\r\n");
+			entity.append("import "+entityClass+";\r\n");
+		}
+		
 		entity.append("\r\n");
+		
 	}
 
 }

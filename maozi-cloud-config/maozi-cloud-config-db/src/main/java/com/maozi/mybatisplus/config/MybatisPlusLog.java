@@ -2,7 +2,7 @@ package com.maozi.mybatisplus.config;
 
 import org.apache.ibatis.logging.Log;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,26 +21,51 @@ public class MybatisPlusLog implements Log {
  
 	public void debug(String s) {
 		
-		StringBuilder sql = BaseResultFactory.sql.get();
+		StringBuilder sql = BaseCommon.sql.get();
 		
-		if(BaseResultFactory.isNull(sql)) {
+		if(BaseCommon.isNull(sql)) {
 			
 			sql = new StringBuilder();
 			
-			BaseResultFactory.sql.set(sql);
+			BaseCommon.sql.set(sql);
 			
 		}
 		
 		if(s.contains("==>  Preparing: ")) {
+			
 			s=s.replace("==>  Preparing: ",""); 
-			s+="(";
-			sql.append(s);
+			
+			sql.append(s); 
+			
 		}
 		
 		if(s.contains("==> Parameters: ")) {
+			
 			s=s.replace("==> Parameters: ","");
-			s+=")";
-			sql.append(s+",         ");    
+				
+			if(BaseCommon.isNotEmpty(s)) {
+				
+				String [] params = s.split("\\),");
+				
+				for(Integer i = 0 ; i < params.length ; i++) {
+					
+					String param = params[i];
+					
+					param = "'"+param.substring(0,param.indexOf("("))+"'";
+					
+					int index = sql.indexOf("?");
+					 
+					if(index != -1) {
+						sql.replace(index, index+1, param);
+						
+					}
+					
+				}
+				
+			}
+			
+			sql.append(";");
+			
 		}   
 
 	} 
@@ -48,6 +73,5 @@ public class MybatisPlusLog implements Log {
 	public void trace(String s) {}
 
 	public void warn(String s) {}
-
 	
 }

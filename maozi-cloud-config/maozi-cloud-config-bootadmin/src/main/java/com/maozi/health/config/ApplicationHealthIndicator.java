@@ -21,12 +21,13 @@ package com.maozi.health.config;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Health.Builder;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 
 /**
  *
@@ -48,12 +49,12 @@ public class ApplicationHealthIndicator implements HealthIndicator {
 	@Override
 	public Health health() {
 
-		Set<Entry<String, Map<String, String>>> errorResult = BaseResultFactory.adminHealthError.entrySet();
+		Set<Entry<String, Map<String, String>>> errorResult = BaseCommon.adminHealthError.entrySet();
 
 		if (errorResult.size() != 0) {
 			Builder down = Health.down();
 			String keyPrefix = "";
-			for (String key : BaseResultFactory.adminHealthError.keySet()) {
+			for (String key : BaseCommon.adminHealthError.keySet()) {
 
 				down.withDetail(keyPrefix, "　⁣⁣⁣⁣　⁣⁣⁣⁣　　⁣⁣⁣⁣　⁣⁣⁣⁣　");
 				keyPrefix += " ";
@@ -67,10 +68,10 @@ public class ApplicationHealthIndicator implements HealthIndicator {
 				down.withDetail(keyPrefix, "　⁣⁣⁣⁣　⁣⁣⁣⁣　　⁣⁣⁣⁣　⁣⁣⁣⁣　");
 				keyPrefix += " ";
 
-				Map<String, String> errorLogDetaileds = BaseResultFactory.adminHealthError.get(key);
+				Map<String, String> errorLogDetaileds = BaseCommon.adminHealthError.get(key);
 				for (String errorLogDetailedKey : errorLogDetaileds.keySet()) {
 					String errorDetailed = errorLogDetaileds.get(errorLogDetailedKey);
-					if (!BaseResultFactory.isNull(errorDetailed)) {
+					if (!BaseCommon.isNull(errorDetailed)) {
 						down.withDetail(errorLogDetailedKey, errorDetailed);
 						keyPrefix += " ";
 					}

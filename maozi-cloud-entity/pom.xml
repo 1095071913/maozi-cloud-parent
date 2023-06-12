@@ -4,24 +4,14 @@
     <parent>
         <groupId>com.maozi</groupId>
         <artifactId>maozi-cloud-parent</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>${parent.revision}</version>
     </parent>
     <artifactId>maozi-cloud-entity</artifactId>  
     <packaging>pom</packaging>
 
-
-
-
-
     <modules>
         <module>maozi-cloud-base-entity</module>
-        <module>maozi-cloud-do</module>
-        <module>maozi-cloud-vo</module>
-        <module>maozi-cloud-dto</module>
-        <module>maozi-cloud-enum</module>
-        <module>maozi-cloud-result</module>
+        <module>maozi-cloud-business-entity</module>
     </modules>
-
-
 
 </project>

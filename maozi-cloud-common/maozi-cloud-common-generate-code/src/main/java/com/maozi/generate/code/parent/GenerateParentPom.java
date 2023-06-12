@@ -58,7 +58,6 @@ public class GenerateParentPom {
 				"\r\n" + 
 				"		<!-- "+SQLType.initial(module)+" Begin -->\r\n" + 
 				"		<maozi-cloud-"+module+"-vo.version>1.0.0-SNAPSHOT</maozi-cloud-"+module+"-vo.version>\r\n" + 
-				"		<maozi-cloud-"+module+"-do.version>1.0.0-SNAPSHOT</maozi-cloud-"+module+"-do.version>\r\n" + 
 				"		<maozi-cloud-"+module+"-dto.version>1.0.0-SNAPSHOT</maozi-cloud-"+module+"-dto.version>\r\n" + 
 				"		<maozi-cloud-"+module+"-enum.version>1.0.0-SNAPSHOT</maozi-cloud-"+module+"-enum.version>\r\n" + 
 				"		<maozi-cloud-service-rpc-api-"+module+".version>1.0.0-SNAPSHOT</maozi-cloud-service-rpc-api-"+module+".version>\r\n" + 
@@ -69,48 +68,7 @@ public class GenerateParentPom {
 				"		<maozi-cloud-sso-user.version>1.0.0-SNAPSHOT</maozi-cloud-sso-user.version>\r\n" + 
 				"\r\n" + 
 				"\r\n" + 
-				"	</properties>\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"	<distributionManagement>\r\n" + 
-				"		<repository>\r\n" + 
-				"			<id>maven-releases</id>\r\n" + 
-				"			<name>Nexus Release Repository</name>\r\n" + 
-				"			<url>http://175.178.52.106:8081/repository/maven-releases/</url>\r\n" + 
-				"		</repository>\r\n" + 
-				"		<snapshotRepository>\r\n" + 
-				"			<id>maven-snapshots</id>\r\n" + 
-				"			<name>Nexus Snapshot Repository</name>\r\n" + 
-				"			<url>http://175.178.52.106:8081/repository/maven-snapshots/</url>\r\n" + 
-				"		</snapshotRepository>\r\n" + 
-				"	</distributionManagement>\r\n" + 
-				"	<repositories>\r\n" + 
-				"		<repository>\r\n" + 
-				"			<id>maven-public</id>\r\n" + 
-				"			<name>Nexus Repository</name>\r\n" + 
-				"			<url>http://175.178.52.106:8081/repository/maven-public/</url>\r\n" + 
-				"			<snapshots>\r\n" + 
-				"				<enabled>true</enabled>\r\n" + 
-				"			</snapshots>\r\n" + 
-				"			<releases>\r\n" + 
-				"				<enabled>true</enabled>\r\n" + 
-				"			</releases>\r\n" + 
-				"		</repository>\r\n" + 
-				"	</repositories>\r\n" + 
-				"	<pluginRepositories>\r\n" + 
-				"		<pluginRepository>\r\n" + 
-				"			<id>maven-public</id>\r\n" + 
-				"			<name>Nexus Plugin Repository</name>\r\n" + 
-				"			<url>http://175.178.52.106:8081/repository/maven-public/</url>\r\n" + 
-				"			<snapshots>\r\n" + 
-				"				<enabled>true</enabled>\r\n" + 
-				"			</snapshots>\r\n" + 
-				"			<releases>\r\n" + 
-				"				<enabled>true</enabled>\r\n" + 
-				"			</releases>\r\n" + 
-				"		</pluginRepository>\r\n" + 
-				"	</pluginRepositories>\r\n" + 
+				"	</properties>\r\n" +
 				"\r\n" + 
 				"\r\n" + 
 				"\r\n" + 

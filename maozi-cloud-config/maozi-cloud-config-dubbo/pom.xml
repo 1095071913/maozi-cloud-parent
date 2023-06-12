@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-dubbo</artifactId>
 
@@ -20,9 +20,25 @@
 		</dependency>
 		
 		<dependency>
+        	<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-spring-boot-actuator</artifactId>
+			<version>${dubbo.version}</version> 
+		</dependency>
+		
+		<dependency>
 			<groupId>org.apache.dubbo</groupId>
 			<artifactId>dubbo-rpc-dubbo</artifactId>
 			<version>${dubbo.version}</version>
+			<exclusions>
+                <exclusion>
+                    <groupId>org.apache.dubbo</groupId>
+                    <artifactId>dubbo-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.dubbo</groupId>
+                    <artifactId>dubbo-remoting-api</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		
 		<dependency>
@@ -35,6 +51,12 @@
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-registry-nacos</artifactId>
             <version>${dubbo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.dubbo</groupId>
+                    <artifactId>dubbo-common</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 		<!-- Dubbo Begin -->
 

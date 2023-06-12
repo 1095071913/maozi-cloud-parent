@@ -18,6 +18,7 @@
 package com.maozi.resource.config;
 
 import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,9 +52,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resource) throws Exception {
+		
 		resource.resourceId("backend-resources");
-		resource.authenticationEntryPoint(new AuthExceptionEntryPoint());
-		resource.accessDeniedHandler(new CustomAccessDeniedHandler());
+		
+		resource.accessDeniedHandler(new IAccessDeniedHandler());
+		
+		resource.authenticationEntryPoint(new IAuthenticationEntryPoint());
+		
 	}
 
     @Override

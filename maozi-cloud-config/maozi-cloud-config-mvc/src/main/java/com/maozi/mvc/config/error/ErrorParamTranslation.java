@@ -20,10 +20,11 @@ package com.maozi.mvc.config.error;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+import org.springframework.context.annotation.Configuration;
+
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
-import com.maozi.factory.BaseResultFactory;
 import com.maozi.tool.ApplicationEnvironmentConfig;
 import com.maozi.tool.MapperUtils;
 
@@ -40,8 +41,8 @@ import com.maozi.tool.MapperUtils;
  *  Agreement That：Apache 2.0
  * 
  */
-
-public class ErrorParamTranslation extends BaseResultFactory{
+@Configuration
+public class ErrorParamTranslation {
 	
 	public static Map<String, String> errorParams;
 	

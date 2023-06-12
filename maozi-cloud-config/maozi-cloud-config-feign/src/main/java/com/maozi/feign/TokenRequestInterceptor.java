@@ -1,6 +1,6 @@
 package com.maozi.feign;
 
-import static com.maozi.factory.BaseResultFactory.getRequest;
+import static com.maozi.common.BaseCommon.getRequest;
 
 import java.util.Enumeration;
 

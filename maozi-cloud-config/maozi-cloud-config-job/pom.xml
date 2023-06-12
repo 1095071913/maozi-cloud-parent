@@ -5,12 +5,13 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-job</artifactId>
 
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>com.xuxueli</groupId> 
 			<artifactId>xxl-job-core</artifactId>
@@ -22,6 +23,7 @@
 			<artifactId>maozi-cloud-result</artifactId>
 			<version>${maozi-cloud-result.version}</version>
 		</dependency>
+		
 	</dependencies>
 
 

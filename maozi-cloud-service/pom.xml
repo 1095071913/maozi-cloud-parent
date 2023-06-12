@@ -5,15 +5,13 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-parent</artifactId>
-		<version>1.5.0-SNAPSHOT</version>
+		<version>${parent.revision}</version>
 	</parent> 
 	<artifactId>maozi-cloud-service</artifactId>
 	<packaging>pom</packaging>
 
 
 	<dependencies>
-
-
 
 		<!-- Project Begin -->
 		<dependency>
@@ -23,20 +21,15 @@
 		</dependency>
 		<!-- Project End -->
 
-
-
-
 	</dependencies> 
 
 
 
 
 	<modules>
-		<module>maozi-cloud-service-rest-api</module>
-		<module>maozi-cloud-service-impl</module>
 		<module>maozi-cloud-service-base</module>
-		<module>maozi-cloud-service-rpc-api</module>
-		<module>maozi-cloud-service-db-impl</module>
+		<module>maozi-cloud-service-business</module>
+		<module>maozi-cloud-service-plugin</module>
 	</modules>
 
 

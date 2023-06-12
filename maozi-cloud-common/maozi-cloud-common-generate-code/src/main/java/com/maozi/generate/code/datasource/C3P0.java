@@ -46,7 +46,7 @@ public class C3P0 {
 		try { 
 			c = new ComboPooledDataSource();
 			c.setDriverClass("com.mysql.cj.jdbc.Driver");//FinancingProduct
-			c.setJdbcUrl("jdbc:mysql://"+DataSourceConfig.JDBCURL+"?useSSL=false&serverTimezone=UTC&characterEncoding=utf8");
+			c.setJdbcUrl("jdbc:mysql://"+DataSourceConfig.JDBCURL+"?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true");
 			c.setUser(DataSourceConfig.USER);
 			c.setPassword(DataSourceConfig.PASSWORD); 
 			c.setMaxPoolSize(1);  

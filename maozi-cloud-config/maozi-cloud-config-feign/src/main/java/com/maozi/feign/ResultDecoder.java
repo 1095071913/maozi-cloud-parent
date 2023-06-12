@@ -18,8 +18,8 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 
-import com.maozi.factory.result.AbstractBaseResult;
-import com.maozi.factory.result.success.SuccessResult;
+import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.success.SuccessResult;
 import com.maozi.tool.MapperUtils;
 
 import feign.FeignException;

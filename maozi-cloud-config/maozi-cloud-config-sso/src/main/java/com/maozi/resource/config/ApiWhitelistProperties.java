@@ -28,7 +28,7 @@ public class ApiWhitelistProperties {
     		add("/application/**");
     		
 			add("/doc.html");
-			add("/v3/api-docs/**");
+			add("/v2/api-docs/**");
 			add("/swagger-ui.html/**");
 			add("/swagger-ui.html");
 			add("/swagger-resources/**");

@@ -22,7 +22,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  *
@@ -56,8 +55,8 @@ public class AsyncConfig {
 	private static final String THREAD_NAME_PREFIX = "Async-Service-"; // 线程池名前缀
 
 	@Bean("applicationTaskExecutor")
-	public ThreadPoolTaskExecutor AsyncTaskExecutor() {
-		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+	public IThreadPoolTaskExecutor AsyncTaskExecutor() {
+		IThreadPoolTaskExecutor taskExecutor = new IThreadPoolTaskExecutor();
 		taskExecutor.setCorePoolSize(CORE_POOL_SIZE);
 		taskExecutor.setMaxPoolSize(MAX_POOL_SIZE);
 		taskExecutor.setKeepAliveSeconds(KEEP_ALIVE_TIME);

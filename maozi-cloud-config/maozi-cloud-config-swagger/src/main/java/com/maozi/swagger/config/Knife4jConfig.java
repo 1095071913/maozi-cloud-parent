@@ -38,6 +38,7 @@ import com.maozi.tool.ApplicationEnvironmentConfig;
 import cn.hutool.core.collection.CollectionUtil;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -46,16 +47,17 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration 
-@EnableSwagger2
+@EnableSwagger2WebMvc
 @Import(BeanValidatorPluginsConfiguration.class)
 public class Knife4jConfig {
 
@@ -67,6 +69,7 @@ public class Knife4jConfig {
 
     @Bean(value = "defaultApi1")
     public Docket defaultApi1() {
+    	
         List<SecurityScheme> securitySchemes=Arrays.asList(new ApiKey("Authorization", "Authorization", "header"));
 
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
@@ -75,12 +78,10 @@ public class Knife4jConfig {
 
         List<SecurityContext> securityContexts=Arrays.asList(SecurityContext.builder()
                 .securityReferences(CollectionUtil.newArrayList(new SecurityReference("Authorization", authorizationScopes)))
-                .forPaths(PathSelectors.regex("/.*"))
                 .build());
 
-        Docket docket=new Docket(DocumentationType.OAS_30)
+        Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .groupName(ApplicationEnvironmentConfig.applicationName)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.maozi"))
                 .paths(PathSelectors.any())
@@ -104,6 +105,15 @@ public class Knife4jConfig {
         docket.globalResponseMessage(RequestMethod.POST, responseMessageList);
         docket.globalResponseMessage(RequestMethod.PUT, responseMessageList);
         docket.globalResponseMessage(RequestMethod.DELETE, responseMessageList);
+
+    	
+    	ParameterBuilder parameterBuilder = new ParameterBuilder();
+        List<Parameter> parameterList = new ArrayList<Parameter>();
+        parameterBuilder.name("Authorization").description("通行令牌").modelRef(new ModelRef("String")).parameterType("header").required(false).build();
+        parameterList.add(parameterBuilder.build());
+        docket.globalOperationParameters(parameterList);
+        
+        docket.directModelSubstitute(Long.class, String.class);
         
         return docket;
         
@@ -141,8 +151,8 @@ public class Knife4jConfig {
         return new ApiInfoBuilder()
                 .title(ApplicationEnvironmentConfig.applicationName)
                 .description(ApplicationEnvironmentConfig.applicationName+"接口文档")
-                .termsOfServiceUrl("https://www.gdzskj.tech")
-                .contact(new Contact("龙宝","https://www.gdzskj.tech","maozi@maozi.info"))
+                .termsOfServiceUrl("https://www.maozi.tech")
+                .contact(new Contact("龙宝","https://www.maozi.tech","1095071913@qq.com"))
                 .version("1.0")
                 .build();
     }

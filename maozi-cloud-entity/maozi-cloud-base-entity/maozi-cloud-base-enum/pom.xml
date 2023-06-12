@@ -3,7 +3,24 @@
   <parent>
     <groupId>com.maozi</groupId>
     <artifactId>maozi-cloud-base-entity</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>${parent.revision}</version>
   </parent>
   <artifactId>maozi-cloud-base-enum</artifactId>
+  
+  <dependencies>
+	  
+  		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-annotation</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-annotations</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+		
+  </dependencies>
+  
 </project>

@@ -9,10 +9,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.maozi.factory.BaseResultFactory;
+import com.maozi.common.BaseCommon;
 
 @Component
-public class LogUtils extends BaseResultFactory{
+public class LogUtils extends BaseCommon{
 
 	public Map<String, String> logRequest(ProceedingJoinPoint proceedingJoinPoint,HttpServletRequest request,String rpcUrl) {
     	

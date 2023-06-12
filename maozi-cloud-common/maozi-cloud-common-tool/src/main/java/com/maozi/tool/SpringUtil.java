@@ -1,16 +1,17 @@
 package com.maozi.tool;
 
-import cn.hutool.core.lang.TypeReference;
-import cn.hutool.core.util.ArrayUtil;
+import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
+import java.util.Map;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
-import java.util.Map;
+import cn.hutool.core.lang.TypeReference;
+import cn.hutool.core.util.ArrayUtil;
 
 /**
  * Spring(Spring boot)宸ュ叿灏佽锛屽寘鎷細

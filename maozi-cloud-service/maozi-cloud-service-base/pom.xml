@@ -4,13 +4,13 @@
     <parent>
         <groupId>com.maozi</groupId>
         <artifactId>maozi-cloud-service</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>${parent.revision}</version>
     </parent>
     <artifactId>maozi-cloud-service-base</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>maozi-cloud-service-base-api</module>
+        <module>maozi-cloud-service-base-rpc-api</module>
         <module>maozi-cloud-service-base-impl</module>
         <module>maozi-cloud-service-base-run</module>
     </modules>

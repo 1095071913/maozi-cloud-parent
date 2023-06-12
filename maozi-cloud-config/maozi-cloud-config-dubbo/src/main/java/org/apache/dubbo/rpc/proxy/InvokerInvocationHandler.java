@@ -32,8 +32,8 @@ import org.apache.dubbo.rpc.RpcInvocation;
 import org.apache.dubbo.rpc.model.ConsumerModel;
 import org.apache.dubbo.rpc.model.ServiceModel;
 
-import com.maozi.factory.BaseResultFactory;
-import com.maozi.factory.result.code.CodeAttribute;
+import com.maozi.common.BaseCommon;
+import com.maozi.common.result.code.CodeAttribute;
 
 /**
  * InvokerHandler
@@ -105,11 +105,11 @@ public class InvokerInvocationHandler implements InvocationHandler {
 					logs.put("errorDesc", rpcError.getLocalizedMessage());
 					logs.put("errorLine", rpcError.getStackTrace()[0].toString());
 
-					BaseResultFactory.log.error(BaseResultFactory.getStackTrace(rpcError));
+					BaseCommon.log.error(BaseCommon.getStackTrace(rpcError));
 
-					BaseResultFactory.log.error(BaseResultFactory.appendLog(logs).toString());
+					BaseCommon.log.error(BaseCommon.appendLog(logs).toString());
 				}
-				return BaseResultFactory.error(new CodeAttribute(6,"服务错误" + "(" + applicationName + ")"),500);
+				return BaseCommon.error(new CodeAttribute(6,"服务错误" + "(" + applicationName + ")"),500);
 			}
 
 			throw rpcError;

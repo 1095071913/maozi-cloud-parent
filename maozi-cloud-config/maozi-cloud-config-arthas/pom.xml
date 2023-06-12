@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.maozi</groupId>
     <artifactId>maozi-cloud-config</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>${parent.revision}</version>
   </parent>
   <artifactId>maozi-cloud-config-arthas</artifactId>
   
