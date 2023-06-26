@@ -2,6 +2,7 @@ package com.maozi.base.api.rpc;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.maozi.base.AbstractBaseDtomain;
 import com.maozi.base.param.SaveUpdateBatch;
@@ -10,9 +11,13 @@ import com.maozi.common.result.AbstractBaseResult;
 
 public interface BaseServiceResult<D> {
 	
-	AbstractBaseResult<D> getByIdResult(Long id,String ... colums);
+	AbstractBaseResult<D> getByIdResult(Long id,String ... columns);
 
-	AbstractBaseResult<List<D>> listByIdsResult(List<Long> ids,String ... colums);
+	AbstractBaseResult<Map<Long,D>> listByIdsResult(Collection<Long> ids,String ... columns);	
+	
+	AbstractBaseResult<List<D>> listByRelationIdResult(Long id,String relationField,String ... columns);
+	
+	AbstractBaseResult<Map<Long,List<D>>> listByRelationIdsResult(Collection<Long> ids,String relationField,String ... columns);
 
 	AbstractBaseResult<Long> getCountByParamResult(D dto);
 

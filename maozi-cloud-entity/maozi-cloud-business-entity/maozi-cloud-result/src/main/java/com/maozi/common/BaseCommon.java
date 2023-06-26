@@ -54,7 +54,6 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -566,7 +565,15 @@ public class BaseCommon implements Serializable{
 		
 		error(sw.toString());
 		
-		throw new BusinessResultException(500,message,200);
+		throw new BusinessResultException(500,"内部服务错误",200);
+		
+	}
+	
+	public static void throwSystemError(String message) {
+		
+		error(message);
+		
+		throw new BusinessResultException(500,"内部服务错误",200);
 		
 	}
 
