@@ -2,7 +2,6 @@ package com.maozi.base.enums;
 
 import com.maozi.base.IEnum;
 import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
-
 import lombok.Getter;
 import lombok.Setter;
 

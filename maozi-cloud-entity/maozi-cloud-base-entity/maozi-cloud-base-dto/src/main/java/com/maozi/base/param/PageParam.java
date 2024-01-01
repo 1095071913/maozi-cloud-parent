@@ -1,10 +1,8 @@
 package com.maozi.base.param;
 
-import javax.validation.Valid;
-
 import com.maozi.base.AbstractBaseDtomain;
-
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

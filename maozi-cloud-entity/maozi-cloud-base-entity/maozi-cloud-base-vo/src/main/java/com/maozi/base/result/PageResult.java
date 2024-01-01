@@ -1,17 +1,14 @@
 package com.maozi.base.result;
 
-import java.util.List;
-import java.util.function.Supplier;
-
-import javax.validation.Valid;
-
+import cn.hutool.extra.cglib.CglibUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.maozi.base.AbstractBaseVomain;
 import com.maozi.base.param.PageParam;
-
-import cn.hutool.extra.cglib.CglibUtil;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.List;
+import java.util.function.Supplier;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

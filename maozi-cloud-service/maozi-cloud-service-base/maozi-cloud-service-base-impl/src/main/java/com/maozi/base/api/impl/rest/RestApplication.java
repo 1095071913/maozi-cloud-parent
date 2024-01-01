@@ -1,13 +1,6 @@
 package com.maozi.base.api.impl.rest;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import cn.hutool.core.util.ClassUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
@@ -19,12 +12,16 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.code.CodeAttribute;
 import com.maozi.common.result.code.CodeHashMap;
 import com.maozi.common.result.error.ErrorResult;
-import com.maozi.tool.ApplicationEnvironmentConfig;
-import com.maozi.tool.MapperUtils;
-
-import cn.hutool.core.util.ClassUtil;
+import com.maozi.utils.MapperUtils;
+import com.maozi.utils.context.ApplicationEnvironmentContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestService
@@ -59,7 +56,7 @@ public class RestApplication extends BaseCommon {
 			}
 		);
 		
-		ClassUtil.scanPackage("com.maozi."+ApplicationEnvironmentConfig.applicationProjectAbbreviation).stream()
+		ClassUtil.scanPackage("com.maozi."+ ApplicationEnvironmentContext.applicationProjectAbbreviation).stream()
 		
 				.forEach(item -> {
 					
@@ -77,7 +74,7 @@ public class RestApplication extends BaseCommon {
 				}
 		);
 		
-		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentConfig.nacosAddr);
+		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentContext.nacosAddr);
 		
 		setCode(configService.getConfig(dataId, group, 5000));
 		
@@ -107,14 +104,14 @@ public class RestApplication extends BaseCommon {
 				
 				String serviceCodeName=serviceCodeNameObject.toString();
 				
-				if(serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName) && serviceCodeName.contains("enums")) {
+				if(serviceCodeName.contains(ApplicationEnvironmentContext.applicationName) && serviceCodeName.contains("enums")) {
 					
 					JSONObject serviceEnums = codeMaps.getJSONObject(serviceCodeName);
 					for(Object serviceEnumKey:serviceEnums.keySet()) {
 						enums.put(serviceEnumKey.toString(), serviceEnums.get(serviceEnumKey.toString()));
 					}
 					
-				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(ApplicationEnvironmentConfig.applicationName) ||  serviceCodeName.contains("maozi-cloud-gateway")){
+				}else if(serviceCodeName.equals(BasicCode) || serviceCodeName.contains(ApplicationEnvironmentContext.applicationName) ||  serviceCodeName.contains("maozi-cloud-gateway")){
 					
 					CodeHashMap codeHashMap = new CodeHashMap();
 					JSONObject serviceCodes = codeMaps.getJSONObject(serviceCodeName);

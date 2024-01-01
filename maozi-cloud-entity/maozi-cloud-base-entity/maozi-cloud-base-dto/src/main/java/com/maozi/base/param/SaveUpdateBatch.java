@@ -1,7 +1,6 @@
 package com.maozi.base.param;
 
 import com.maozi.base.AbstractBaseDtomain;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

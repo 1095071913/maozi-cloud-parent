@@ -20,10 +20,8 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.time.Duration;
 import java.util.concurrent.Callable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.boot.system.ApplicationPid;
 import org.springframework.context.ApplicationContext;

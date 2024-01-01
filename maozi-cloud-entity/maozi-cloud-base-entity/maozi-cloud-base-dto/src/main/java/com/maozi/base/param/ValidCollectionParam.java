@@ -1,9 +1,7 @@
 package com.maozi.base.param;
 
 import java.util.Collection;
-
 import javax.validation.Valid;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

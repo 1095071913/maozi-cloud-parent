@@ -19,13 +19,13 @@
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-result</artifactId>
-			<version>${maozi-cloud-result.version}</version>
+			<artifactId>maozi-cloud-common-result</artifactId>
+			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
-		
+
 		<dependency>
-   			<groupId>org.springframework.cloud</groupId>
-   			<artifactId>spring-cloud-loadbalancer</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
 		
 	</dependencies>

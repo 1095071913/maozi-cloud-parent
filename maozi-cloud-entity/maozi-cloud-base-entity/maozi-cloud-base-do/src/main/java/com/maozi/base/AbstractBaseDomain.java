@@ -16,8 +16,6 @@
 
 package com.maozi.base;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -26,11 +24,10 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
-import com.gitee.sunchenbin.mybatis.actable.annotation.Index;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
-
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -59,11 +56,6 @@ public abstract class AbstractBaseDomain implements Serializable {
 	@Column(comment = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private Long id;
-	
-	@Index
-	@Column(comment = "名称")
-	@TableField(value = "name")
-	private String name;
 
 	@Column(comment = "创建人")
 	@TableField(value = "create_username" , fill = FieldFill.INSERT)

@@ -18,8 +18,8 @@
 	</dependencies>
  	
  	<modules>
- 		<module>maozi-cloud-service-rpc-api-sso-oauth</module>
- 		<module>maozi-cloud-service-rpc-api-system-user-info</module>
+ 		<module>maozi-cloud-service-rpc-api-oauth-token</module>
+ 		<module>maozi-cloud-service-rpc-api-system-user</module>
  		<module>maozi-cloud-service-rpc-api-system-config</module>
  	</modules>
  	

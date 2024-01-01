@@ -19,7 +19,7 @@
 	</dependencies>
 
  	<modules>
- 		<module>maozi-cloud-service-rest-api-sso-oauth</module>
+ 		<module>maozi-cloud-service-rest-api-oauth-token</module>
  	</modules>
  	
 </project>

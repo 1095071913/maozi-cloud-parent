@@ -1,10 +1,8 @@
 package com.maozi.mybatisplus.config;
 
-import org.apache.ibatis.logging.Log;
-
 import com.maozi.common.BaseCommon;
-
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.logging.Log;
 
 @Slf4j
 public class MybatisPlusLog implements Log {

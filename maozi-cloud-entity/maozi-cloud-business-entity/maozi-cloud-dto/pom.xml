@@ -22,7 +22,7 @@
 
 
     <modules>
-    	<module>maozi-cloud-sso-oauth-dto</module>
+    	<module>maozi-cloud-oauth-token-dto</module>
     	<module>maozi-cloud-system-user-dto</module>
     </modules>
     

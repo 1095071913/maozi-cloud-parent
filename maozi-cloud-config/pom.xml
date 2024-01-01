@@ -9,21 +9,19 @@
     <packaging>pom</packaging>
     <modules>
         <module>maozi-cloud-config-feign</module>
-        <module>maozi-cloud-config-bootadmin</module>
+        <module>maozi-cloud-config-monitor</module>
         <module>maozi-cloud-config-sentinel</module>
         <module>maozi-cloud-config-db</module>
         <module>maozi-cloud-config-log</module>
-        <module>maozi-cloud-config-sso</module>
-        <module>maozi-cloud-config-mvc</module>
+        <module>maozi-cloud-config-oauth</module>
+        <module>maozi-cloud-config-web</module>
         <module>maozi-cloud-config-seata</module>
         <module>maozi-cloud-config-job</module>
         <module>maozi-cloud-config-dubbo</module>
         <module>maozi-cloud-config-redis</module>
         <module>maozi-cloud-config-discovery</module>
         <module>maozi-cloud-config-stream</module>
-        <module>maozi-cloud-config-apollo</module>
         <module>maozi-cloud-config-swagger</module>
-        <module>maozi-cloud-config-sentry</module>
-        <module>maozi-cloud-config-arthas</module>
+      <module>maozi-cloud-config-lock</module>
     </modules>
 </project>

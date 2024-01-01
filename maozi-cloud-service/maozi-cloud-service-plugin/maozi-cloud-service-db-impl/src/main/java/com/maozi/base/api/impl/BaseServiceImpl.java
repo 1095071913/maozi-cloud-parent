@@ -1,22 +1,7 @@
 package com.maozi.base.api.impl;
 
-import java.lang.invoke.SerializedLambda;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
-import org.apache.commons.compress.utils.Lists;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -26,27 +11,45 @@ import com.github.yulichang.base.MPJBaseService;
 import com.github.yulichang.base.MPJBaseServiceImpl;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.google.common.collect.Lists;
 import com.maozi.base.AbstractBaseDomain;
 import com.maozi.base.AbstractBaseDtomain;
+import com.maozi.base.AbstractBaseNameDomain;
 import com.maozi.base.api.IBaseMapper;
 import com.maozi.base.api.rpc.BaseServiceResult;
 import com.maozi.base.enums.Status;
+import com.maozi.base.enums.StoreClassType;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.param.plugin.OrderParam;
 import com.maozi.base.param.plugin.TimeParam;
-import com.maozi.base.plugin.QueryBaseType;
-import com.maozi.base.plugin.QueryPlugin;
-import com.maozi.base.plugin.QueryRelation;
+import com.maozi.base.plugin.StoreClass;
+import com.maozi.base.plugin.join.JoinBaseType;
+import com.maozi.base.plugin.join.JoinPlugins;
+import com.maozi.base.plugin.mapping.QueryMapping;
+import com.maozi.base.plugin.query.QueryBaseType;
+import com.maozi.base.plugin.query.QueryPlugin;
+import com.maozi.base.plugin.type.JoinType;
 import com.maozi.base.plugin.type.QueryType;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.tool.SpringUtil;
-
-import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
+import com.maozi.utils.SpringUtil;
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D> extends MPJBaseServiceImpl<M, T> implements MPJBaseService<T>,BaseServiceResult<D> {
 
@@ -93,8 +96,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     
     }
     
-    protected com.baomidou.mybatisplus.extension.plugins.pagination.Page<T> convertPage(PageParam pageParam){
-    	return new com.baomidou.mybatisplus.extension.plugins.pagination.Page<T>(pageParam.getCurrent(),pageParam.getSize());
+    protected <D> com.baomidou.mybatisplus.extension.plugins.pagination.Page<D> convertPage(PageParam pageParam){
+    	return new com.baomidou.mybatisplus.extension.plugins.pagination.Page<D>(pageParam.getCurrent(),pageParam.getSize());
     }
     
     protected <D> PageResult convertPageResult(Page<T> page,Supplier<D> target) {
@@ -103,6 +106,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     
     protected <D> PageResult convertPageResult(IPage page,List<D> responseDatas) {
 		return new PageResult<D>(page.getCurrent(),page.getSize(),page.getTotal(),responseDatas);
+	}
+
+	protected <D> PageResult convertPageResult(Page<D> page) {
+		return new PageResult<D>(page.getCurrent(),page.getSize(),page.getTotal(),page.getRecords());
 	}
     
     protected <D> Map<Long,D> toMapByIds(List<D> datas,Function<D, Long> function) {
@@ -150,26 +157,38 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	return columns;
     	
 	}
-    
-    protected <D> String[] getColumns(Class clazz) {
-    	
-    	List<String> columns = Lists.newArrayList();
-    	
-    	Field [] fields = clazz.getDeclaredFields();
-    	
-    	for(Field field : fields) {
-    		
-    		QueryRelation annotation = field.getAnnotation(QueryRelation.class);
-    		
-    		if(isNull(annotation)) {
-    			columns.add(StrUtil.toUnderlineCase(field.getName()));
-    		}
-    		
-    	}
-    	
-    	return columns.toArray(new String[columns.size()]);
-    	
-    }
+
+	protected <D> String[] getColumns(Class clazz) {
+
+		List<String> columns = Lists.newArrayList();
+
+		for(;!Object.class.getName().equals(clazz.getName());clazz = clazz.getSuperclass()){
+
+			Field [] fields = clazz.getDeclaredFields();
+
+			for(Field field : fields) {
+
+				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
+
+				if(isNull(annotation)) {
+					columns.add("t."+StrUtil.toUnderlineCase(field.getName()));
+				}else if(annotation.ignore() && ( isNotEmpty(annotation.field()) || isNotEmpty(annotation.tableName()))){
+
+					String tableName = isNotEmpty(annotation.field()) ? annotation.field() : "t";
+
+					String fieldName = isNotEmpty(annotation.tableName()) ? annotation.tableName() : StrUtil.toUnderlineCase(field.getName());
+
+					columns.add(fieldName+"."+tableName);
+
+				}
+
+			}
+
+		}
+
+		return columns.toArray(new String[columns.size()]);
+
+	}
     
     protected T getById(Long id,String ... columns){
     	
@@ -297,7 +316,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
-    	wrapper.select(getColumns(AbstractBaseDomain::getId,AbstractBaseDomain::getName));
+    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getId), id);
     	
@@ -313,7 +332,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
-    	wrapper.select(getColumns(AbstractBaseDomain::getId,AbstractBaseDomain::getName));
+    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getStatus), Status.enable);
     	
@@ -339,6 +358,20 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	return domain;
     	
+	}
+
+	protected T getByIdThrowError(Long id,MPJLambdaWrapper<T> wrapper){
+
+		isNullThrowError(id, getAbbreviationModelName());
+
+		wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
+
+		T domain = getOne(wrapper);
+
+		isNullThrowError(domain,getAbbreviationModelName());
+
+		return domain;
+
 	}
     
     protected <D> D getByParamThrowError(Wrapper<T> wrapper,Class<D> clazz) {
@@ -374,8 +407,12 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected <V,D> V getByIdThrowErrorRelation(Long id,Class<V> clazz) {
-    	
-    	V response = copy(getByIdThrowError(id,getColumns(clazz)), clazz);
+
+		MPJLambdaWrapper<T> wrapper = MPJWrappers.<T>lambdaJoin();
+
+		setQueryMappingWrapper(clazz,wrapper);
+
+		V response = copy(getByIdThrowError(id,wrapper), clazz);
     	
     	setRelationData(response, clazz);
     	
@@ -430,10 +467,12 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected <V> PageResult<V> list(PageParam pageParam,Supplier<V> target) {
+
+		Class clazz = target.get().getClass();
 		
-    	Page<T> page = page(convertPage(pageParam),buildQueryWrapper(pageParam.getData(),target.get().getClass()));
+    	Page<V> page = selectJoinListPage(convertPage(pageParam),clazz,buildQueryWrapper(pageParam.getData(),clazz));
     	
-    	return convertPageResult(page, target);
+    	return convertPageResult(page);
     	
 	}
     
@@ -499,28 +538,24 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     public void saveUpdateBatch(List<T> domains) {
     	
     	collectionIsEmptyThrowError(domains,getAbbreviationModelName()+"列表");
+
+		Consumer<T> consumer = wrapConsumer((domain)->{
+
+			if(isNotNull(domain.getId())) {
+
+				MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
+
+				wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
+
+				checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName()+"不存在");
+
+			}
+
+			super.saveOrUpdate(domain);
+
+		});
     	
-    	SecurityContext securityContext = SecurityContextHolder.getContext();
-    	
-    	domains.parallelStream().forEach((domain)->{
-    		
-    		SecurityContextHolder.setContext(securityContext);
-    		
-    		if(isNotNull(domain.getId())) {
-        		
-    			MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-        		
-        		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
-        		
-        		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName()+"不存在");
-        		
-        	}
-        	
-    		super.saveOrUpdate(domain);
-    		
-    		clear();
-    		
-    	});
+    	domains.parallelStream().forEach(consumer);
     	
     }
     
@@ -706,7 +741,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
-    	wrapper.select(getColumns(AbstractBaseDomain::getId,AbstractBaseDomain::getName));
+    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.in(getColumn(AbstractBaseDomain::getId), ids);
     	
@@ -730,8 +765,36 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 	}
 	
-	private void paramFieldSetWrapper(Object param,MPJLambdaWrapper<T> wrapper) {
-		
+	private void paramFieldSetWrapper(String tableName,Object param,MPJLambdaWrapper<T> wrapper) {
+
+		Class<?> paramClass = param.getClass();
+
+		if (paramClass.isAnnotationPresent(JoinPlugins.class)) {
+
+			JoinPlugins annotations = paramClass.getAnnotation(JoinPlugins.class);
+
+			if(isNotNull(annotations.value())){
+
+				Arrays.asList(annotations.value()).stream().forEach(annotation -> {
+
+					JoinBaseType value = annotation.value();
+
+					isNullThrowError(value, getAbbreviationModelName()+"连接类型");
+
+					isNullThrowError(value.getType(), getAbbreviationModelName()+"连接类型");
+
+					JoinType joinType = JoinType.get(value.getType());
+
+					isNullThrowError(joinType, getAbbreviationModelName()+"连接类型");
+
+					joinType.getJoinPlugin().apply(getAbbreviationModelName(),wrapper,annotation);
+
+				});
+
+			}
+
+		}
+
 		Field [] fields = ReflectUtil.getFields(param.getClass());
 		
 		for(Field field : fields) {
@@ -739,14 +802,16 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			Object data = ReflectUtil.invoke(param, "get"+StrUtil.upperFirst(field.getName()));
 			
 			if(isNull(data)) {continue;}
-			
+
 			QueryPlugin annotation = field.getAnnotation(QueryPlugin.class);
+
+			String fieldName = isNotNull(annotation) && isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
 			
 			if(isNotNull(annotation)) {
 				
 				if(annotation.nest()) {
 					
-					paramFieldSetWrapper(field,wrapper);
+					paramFieldSetWrapper(annotation.tableName(),field,wrapper);
 					
 					continue;
 					
@@ -754,21 +819,27 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				
 				QueryBaseType value = annotation.value();
 				
-				isNullThrowError(value, getAbbreviationModelName()+"判断类型");
+				isNullThrowError(value, getAbbreviationModelName()+"查询类型");
 				
-				isNullThrowError(value.getType(), getAbbreviationModelName()+"判断类型");
+				isNullThrowError(value.getType(), getAbbreviationModelName()+"查询类型");
 				
 				QueryType queryType = QueryType.get(value.getType());
 				
-				isNullThrowError(queryType, getAbbreviationModelName()+"判断类型");
+				isNullThrowError(queryType, getAbbreviationModelName()+"查询类型");
+
+                if(isNotEmpty(annotation.tableName())){
+                    tableName = annotation.tableName();
+                }
+
+				if(isNotEmpty(tableName)){
+					fieldName = tableName+"."+fieldName;
+				}
 				
-				queryType.getQueryPlugin().apply(wrapper, isNotEmpty(annotation.field()) ? annotation.field() : field.getName(), data);
+				queryType.getQueryPlugin().apply(wrapper, fieldName , data);
 				
 			}
 			
 			if(data instanceof TimeParam timeParam) {
-				
-				String fieldName = isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
 				
 				if(isNotNull(timeParam.getStartTime())) {
 					QueryType.ge.getQueryPlugin().apply(wrapper,fieldName,timeParam.getStartTime());
@@ -784,6 +855,54 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		}
 		
 	}
+
+	protected void setQueryMappingWrapper(Class clazz,MPJLambdaWrapper<T> wrapper){
+
+		for(;!Object.class.getName().equals(clazz.getName());clazz = clazz.getSuperclass()){
+
+			Field [] fields = clazz.getDeclaredFields();
+
+			for(Field field : fields) {
+
+				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
+
+				if(isNotNull(annotation) && !annotation.ignore() && !annotation.isService()) {
+
+					Class<?> type = field.getType();
+
+					String tableName = annotation.tableName();
+
+					isEmptyThrowError(tableName,getAbbreviationModelName()+"映射关系名称");
+
+					String fieldName = isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
+
+					Class<?> relationClazz = StoreClass.storeClassMap.get(StoreClassType.db).get(tableName);
+
+					isNullThrowError(relationClazz,"映射关系");
+
+					checkBoolThrowError(!type.isPrimitive(),getAbbreviationModelName()+"映射关系类型错误");
+
+					if(type.equals(List.class)){
+
+						wrapper.selectCollection(relationClazz,(response) -> {
+							return ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(field.getName()));
+						});
+
+					}else{
+
+						wrapper.selectAssociation(relationClazz,(response) -> {
+							return ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(field.getName()));
+						});
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
 	
 	public MPJLambdaWrapper<T> buildQueryWrapper(Object param,Class fieldsClass) {
 		
@@ -796,10 +915,14 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
 		
 		if(isNotNull(fieldsClass)) {
+
 			wrapper.select(getColumns(fieldsClass));
+
+//			setQueryMappingWrapper(fieldsClass,wrapper);
+
 		}
 		
-		paramFieldSetWrapper(param,wrapper);
+		paramFieldSetWrapper(null,param,wrapper);
 		
 		if(param instanceof OrderParam orderParam) {
 			
@@ -837,7 +960,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				
 				for(Field field : fields) {
 					
-					QueryRelation annotation = field.getAnnotation(QueryRelation.class);
+					QueryMapping annotation = field.getAnnotation(QueryMapping.class);
 					
 					if(isNull(annotation) || annotation.ignore()) {
 						continue;
@@ -987,7 +1110,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			
 			for(Field field : fields) {
 				
-				QueryRelation annotation = field.getAnnotation(QueryRelation.class);
+				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
 				
 				if(isNull(annotation) || annotation.ignore()) {
 					continue;

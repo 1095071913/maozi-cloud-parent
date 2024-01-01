@@ -15,12 +15,11 @@
  */
 package com.alibaba.csp.sentinel.log;
 
+import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
 
 import java.io.File;
 import java.util.Properties;
 import java.util.logging.Level;
-
-import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
 
 /**
  * <p>The base config class for logging.</p>

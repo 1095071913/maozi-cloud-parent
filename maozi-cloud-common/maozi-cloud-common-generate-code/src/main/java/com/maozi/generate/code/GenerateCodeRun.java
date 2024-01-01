@@ -17,16 +17,6 @@
 
 package com.maozi.generate.code;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.util.StringUtils;
-
 import com.maozi.generate.code.entity.DataSourceConfig;
 import com.maozi.generate.code.entity.EntityData;
 import com.maozi.generate.code.entity.TableData;
@@ -45,6 +35,14 @@ import com.maozi.generate.code.parent.service.GenerateServiceImpl;
 import com.maozi.generate.code.parent.service.GenerateServicePom;
 import com.maozi.generate.code.parent.vo.GenerateVoPom;
 import com.maozi.generate.code.tool.SQLType;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.springframework.util.StringUtils;
 
 /**	
  * 
@@ -80,7 +78,7 @@ public class GenerateCodeRun {
 		String pash = userReaderNullDefault("D:\\project\\maozi-cloud-parent\\maozi-cloud-common");
 		
 		System.out.print("请输入是否依赖数据库（yes/no）：");
-		Boolean db = userReaderNullDefault("no").equals("yes");
+		Boolean db = "yes".equals(userReaderNullDefault("no"));
 		
 		if(db) {
 			
@@ -104,7 +102,7 @@ public class GenerateCodeRun {
 				
 				System.out.print("请输入子模块名（输入break结束）：");
 				String childModule = bufferedReader.readLine();
-				if(childModule.equals("break")) {
+				if("break".equals(childModule)) {
 					break;
 				}
 				
@@ -116,7 +114,7 @@ public class GenerateCodeRun {
 							
 							System.out.print("请输入表名（输入break结束）：");
 							String tableName = bufferedReader.readLine();
-							if(tableName.equals("break")) {
+							if("break".equals(tableName)) {
 								break;
 							}
 							

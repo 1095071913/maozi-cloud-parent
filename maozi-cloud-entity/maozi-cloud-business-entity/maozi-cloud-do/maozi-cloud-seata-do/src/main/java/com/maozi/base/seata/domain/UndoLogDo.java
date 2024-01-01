@@ -15,16 +15,14 @@
  */
 package com.maozi.base.seata.domain;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.TableComment;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
-
+import java.io.Serializable;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

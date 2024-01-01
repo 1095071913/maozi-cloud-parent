@@ -7,11 +7,14 @@
 
 package com.maozi.swagger.config;
 
+import cn.hutool.core.collection.CollectionUtil;
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+import com.google.common.collect.Lists;
+import com.maozi.utils.context.ApplicationEnvironmentContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -30,12 +33,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
-import com.google.common.collect.Lists;
-import com.maozi.tool.ApplicationEnvironmentConfig;
-
-import cn.hutool.core.collection.CollectionUtil;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -149,11 +146,13 @@ public class Knife4jConfig {
    
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title(ApplicationEnvironmentConfig.applicationName)
-                .description(ApplicationEnvironmentConfig.applicationName+"接口文档")
-                .termsOfServiceUrl("https://www.maozi.tech")
-                .contact(new Contact("龙宝","https://www.maozi.tech","1095071913@qq.com"))
-                .version("1.0")
+                    .title(ApplicationEnvironmentContext.title)
+                    .description(ApplicationEnvironmentContext.details)
+                    .version(ApplicationEnvironmentContext.version)
+                    .termsOfServiceUrl("http://maozi.com")
+                    .license("Apache 2.0")
+                    .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
+                    .contact(new Contact("maozi","http://maozi.com","1095071913@qq.com"))
                 .build();
     }
 

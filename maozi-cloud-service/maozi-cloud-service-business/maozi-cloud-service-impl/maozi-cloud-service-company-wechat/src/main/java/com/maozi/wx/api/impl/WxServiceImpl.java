@@ -17,19 +17,6 @@
 
 package com.maozi.wx.api.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 import com.alibaba.fastjson.JSONObject;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.code.CodeAttribute;
@@ -37,6 +24,16 @@ import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
 import com.maozi.wx.api.WxService;
 import com.maozi.wx.properties.WxProperties;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**	
  * 

@@ -10,11 +10,6 @@
 	<artifactId>maozi-cloud-config-swagger</artifactId>
 
 	<dependencies>
-		
-		<dependency>
-      		<groupId>org.springframework.boot</groupId>
-      		<artifactId>spring-boot-starter-actuator</artifactId>
-   	 	</dependency>
 
 		<dependency>
     		<groupId>com.github.xiaoymin</groupId> 
@@ -24,8 +19,8 @@
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-result</artifactId>
-			<version>${maozi-cloud-result.version}</version>
+			<artifactId>maozi-cloud-common-result</artifactId>
+			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
 
 		<dependency>

@@ -1,15 +1,13 @@
 package com.gitee.sunchenbin.mybatis.actable.dao.system;
 
+import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
+import com.gitee.sunchenbin.mybatis.actable.command.SysMysqlColumns;
+import com.gitee.sunchenbin.mybatis.actable.command.SysMysqlTable;
+import com.gitee.sunchenbin.mybatis.actable.command.TableConfig;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
-import com.gitee.sunchenbin.mybatis.actable.command.SysMysqlTable;
-import com.gitee.sunchenbin.mybatis.actable.command.TableConfig;
 import org.apache.ibatis.annotations.Param;
-
-import com.gitee.sunchenbin.mybatis.actable.command.SysMysqlColumns;
 
 
 /**

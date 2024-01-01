@@ -17,6 +17,11 @@
 
 package com.maozi.generate.code.parent.service;
 
+import com.maozi.base.AbstractBaseDomain;
+import com.maozi.generate.code.datasource.C3P0;
+import com.maozi.generate.code.entity.EntityData;
+import com.maozi.generate.code.entity.TableData;
+import com.maozi.generate.code.tool.SQLType;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,13 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.maozi.generate.code.datasource.C3P0;
-import com.maozi.generate.code.entity.EntityData;
-import com.maozi.generate.code.entity.TableData;
-import com.maozi.generate.code.tool.SQLType;
-import com.maozi.base.AbstractBaseDomain;
-
 import lombok.Data;
 
 

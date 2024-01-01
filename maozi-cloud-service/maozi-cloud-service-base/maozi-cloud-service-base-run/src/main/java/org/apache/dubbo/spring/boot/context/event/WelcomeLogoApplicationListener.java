@@ -16,11 +16,11 @@
  */
 package org.apache.dubbo.spring.boot.context.event;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Dubbo Welcome Logo {@link ApplicationListener}

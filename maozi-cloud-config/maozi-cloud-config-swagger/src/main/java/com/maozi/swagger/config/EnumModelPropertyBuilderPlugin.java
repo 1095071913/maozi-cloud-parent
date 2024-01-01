@@ -1,22 +1,19 @@
 package com.maozi.swagger.config;
 
+import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
+import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
+import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
+import com.maozi.common.BaseCommon;
+import io.swagger.annotations.ApiModelProperty;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-
-import com.fasterxml.jackson.databind.introspect.AnnotatedField;
-import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
-import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
-import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
-import com.maozi.common.BaseCommon;
-
-import io.swagger.annotations.ApiModelProperty;
 import springfox.documentation.builders.ModelPropertyBuilder;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.schema.ModelPropertyBuilderPlugin;

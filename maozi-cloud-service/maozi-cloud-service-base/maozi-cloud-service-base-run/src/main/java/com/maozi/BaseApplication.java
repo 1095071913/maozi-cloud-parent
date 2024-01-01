@@ -16,10 +16,12 @@
 
 package com.maozi;
 
+import com.maozi.common.BaseCommon;
+import com.maozi.utils.context.ApplicationEnvironmentContext;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,11 +31,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import com.maozi.common.BaseCommon;
-import com.maozi.tool.ApplicationEnvironmentConfig;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 功能说明：领域模型服务（无DB）启动
@@ -54,45 +51,23 @@ import lombok.extern.slf4j.Slf4j;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@DependsOn({"applicationEnvironmentConfig","springUtil"})
+@DependsOn({"applicationEnvironmentContext","springUtil"})
 public class BaseApplication {
 
 	protected static void ApplicationRun() {
 		
 		Properties properties = System.getProperties();
-		
-		String filePath = System.getProperty("user.dir");
-		
-		String[] filePaths = filePath.split("\\\\");
-		
-		String applicationNacosConfig = null;
-		String applicationName = filePaths[filePaths.length-1];
-		
-		if(filePath.indexOf("service") != -1) {
-			
-			applicationName = applicationName.replace("service-", "");
-			
-			applicationNacosConfig = "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-admin.yml,api-whitelist.yml,cloud-security.yml,boot-redis.yml,boot-swagger.yml,boot-arthas.yml,boot-flyway.yml,cloud-default.yml";
-		
-		}else {
-			
-			applicationName = applicationName.replace("basics-", "");
-			
-			applicationNacosConfig = "cloud-nacos.yml,boot-admin.yml,boot-arthas.yml,cloud-default.yml";
-			
-		}
-		
-		
-		properties.put("application-project-abbreviation", applicationName.replace("maozi-cloud-", ""));
-		properties.put("spring.application.name", applicationName);
-		properties.put("application-nacos-config", applicationNacosConfig);
+
 		properties.put("spring.main.allow-circular-references",true);
+		properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
 		properties.put("spring.cloud.nacos.config.file-extension", "yml");
-		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:localhost:8848}");
-	
-			
+		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
+		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
+		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,boot-flyway.yml,cloud-default.yml");
+
 		properties.put("logging.level.root", "ERROR");
 		properties.put("logging.level.com.maozi", "INFO");
+		properties.put("logging.file.name","log/log.log");
 		
 		System.setProperties(properties);
 
@@ -107,10 +82,9 @@ public class BaseApplication {
 		try {
 
 			builder.bannerMode(Mode.OFF).run(new String[] {});
-			logs.put("uptime", (System.currentTimeMillis() - begin) + " ms");
-			logs.put("config", ApplicationEnvironmentConfig.loadConfig);
-			logs.put("nacosAddr", ApplicationEnvironmentConfig.nacosAddr + " net");
-			logs.put("subscribe", ApplicationEnvironmentConfig.rpcServerNames);
+			logs.put("InitTime", (System.currentTimeMillis() - begin) + " ms");
+			logs.put("Nacos", ApplicationEnvironmentContext.nacosAddr);
+			logs.put("Config", ApplicationEnvironmentContext.loadConfig);
 
 		}
 		catch (Exception e) {
@@ -119,10 +93,10 @@ public class BaseApplication {
 
 			errorBoo = true;
 			StackTraceElement stackTraceElement = e.getStackTrace()[0];
-			logs.put("config", ApplicationEnvironmentConfig.loadConfig);
-			logs.put("nacosAddr", ApplicationEnvironmentConfig.nacosAddr + " net");
-			logs.put("errorDesc", e.getLocalizedMessage());
-			logs.put("errorLine", stackTraceElement.toString());
+			logs.put("Nacos", ApplicationEnvironmentContext.nacosAddr);
+			logs.put("Config", ApplicationEnvironmentContext.loadConfig);
+			logs.put("ErrorDesc", e.getLocalizedMessage());
+			logs.put("ErrorLine", stackTraceElement.toString());
 
 		}
 		finally {
@@ -135,7 +109,7 @@ public class BaseApplication {
 				log.info(BaseCommon.appendLog(logs).toString());
 			}
 			
-			BaseCommon.clear();
+			BaseCommon.clearContext();
 
 		}
 

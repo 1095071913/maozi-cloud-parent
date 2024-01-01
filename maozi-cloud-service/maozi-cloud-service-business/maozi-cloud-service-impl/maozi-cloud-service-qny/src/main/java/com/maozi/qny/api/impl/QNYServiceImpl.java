@@ -17,31 +17,28 @@
 
 package com.maozi.qny.api.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-
+import cn.hutool.core.io.FileUtil;
 import com.google.common.collect.Lists;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.qny.api.QNYService;
 import com.maozi.qny.properties.QNYProperties;
-import com.maozi.tool.MapperUtils;
+import com.maozi.utils.MapperUtils;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-
-import cn.hutool.core.io.FileUtil;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 /**	
  * 

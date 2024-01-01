@@ -20,8 +20,9 @@
 	</dependencies>
 
 	<modules>
+		<module>maozi-cloud-common-utils</module>
+		<module>maozi-cloud-common-result</module>
 		<module>maozi-cloud-common-generate-code</module>
-		<module>maozi-cloud-common-tool</module>
 	</modules>
 
 

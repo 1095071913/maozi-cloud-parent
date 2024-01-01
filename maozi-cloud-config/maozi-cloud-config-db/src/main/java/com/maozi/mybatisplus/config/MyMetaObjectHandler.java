@@ -17,13 +17,12 @@
 
 package com.maozi.mybatisplus.config;
 
-import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.context.annotation.Configuration;
-
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
 import com.maozi.common.BaseCommon;
+import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 

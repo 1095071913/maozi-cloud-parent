@@ -16,9 +16,10 @@
 
 package org.springframework.cloud.stream.binding;
 
+import com.maozi.common.BaseCommon;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
 import org.apache.skywalking.apm.toolkit.trace.Trace;
@@ -27,10 +28,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
-
-import com.maozi.common.BaseCommon;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class StreamListenerMessageHandler extends AbstractReplyProducingMessageHandler {
@@ -70,10 +67,10 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 		
 		Long beginTime = System.currentTimeMillis();
 		
-		logs.put("reqType", "rocket");
-    	logs.put("reqIp", headerMessage.get("rocketmq_BORN_HOST")+" net");
-    	logs.put("reqMessageId",headerMessage.get("rocketmq_MESSAGE_ID").toString());
-    	logs.put("reqMessageTopic",headerMessage.get("rocketmq_TOPIC").toString());
+		logs.put("Type", "Rocket");
+    	logs.put("IP", headerMessage.get("rocketmq_BORN_HOST").toString());
+    	logs.put("MessageId",headerMessage.get("rocketmq_MESSAGE_ID").toString());
+    	logs.put("MessageTopic",headerMessage.get("rocketmq_TOPIC").toString());
     	 
     	
 		try { 
@@ -85,8 +82,8 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 			
 			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
             
-            logs.put("errorDesc", e.getLocalizedMessage());
-            logs.put("errorLine", stackTraceElement.toString());
+            logs.put("ErrorDesc", e.getLocalizedMessage());
+            logs.put("ErrorLine", stackTraceElement.toString());
             
             isError=true;
            
@@ -97,11 +94,10 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 			}
 		}finally {
 			
-			
-			StringBuilder respSql = BaseCommon.sql.get();
-    		if(BaseCommon.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
+			StringBuilder sql = BaseCommon.sql.get();
+    		if(BaseCommon.isNotNull(sql)) { logs.put("SQL", sql.toString());}
     		
-			logs.put("respTime",System.currentTimeMillis()-beginTime+"");
+			logs.put("RT",System.currentTimeMillis()-beginTime+"");
 			
 			if(isError) {
 				log.error(BaseCommon.appendLog(logs).toString());
@@ -109,7 +105,7 @@ public class StreamListenerMessageHandler extends AbstractReplyProducingMessageH
 				log.info(BaseCommon.appendLog(logs).toString());
 			}  
 			
-			BaseCommon.clear();
+			BaseCommon.clearContext();
 		}
 	}
 

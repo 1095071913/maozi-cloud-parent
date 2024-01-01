@@ -17,10 +17,9 @@
 
 package com.maozi.generate.code.parent.service;
 
-import java.util.List;
-
 import com.maozi.generate.code.entity.EntityData;
 import com.maozi.generate.code.tool.SQLType;
+import java.util.List;
 
 
 /**

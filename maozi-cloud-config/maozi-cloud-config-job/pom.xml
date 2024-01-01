@@ -20,8 +20,8 @@
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-result</artifactId>
-			<version>${maozi-cloud-result.version}</version>
+			<artifactId>maozi-cloud-common-result</artifactId>
+			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
 		
 	</dependencies>

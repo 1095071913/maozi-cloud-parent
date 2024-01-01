@@ -1,14 +1,13 @@
 package com.maozi.base.plugin.type;
 
 import com.maozi.base.plugin.QueryBasePlugin;
-import com.maozi.base.plugin.QueryBaseType;
-import com.maozi.base.plugin.impl.QueryEqPlugin;
-import com.maozi.base.plugin.impl.QueryGePlugin;
-import com.maozi.base.plugin.impl.QueryInPlugin;
-import com.maozi.base.plugin.impl.QueryLePlugin;
-import com.maozi.base.plugin.impl.QueryLikePlugin;
-import com.maozi.base.plugin.impl.QueryNePlugin;
-
+import com.maozi.base.plugin.impl.query.QueryEqPlugin;
+import com.maozi.base.plugin.impl.query.QueryGePlugin;
+import com.maozi.base.plugin.impl.query.QueryInPlugin;
+import com.maozi.base.plugin.impl.query.QueryLePlugin;
+import com.maozi.base.plugin.impl.query.QueryLikePlugin;
+import com.maozi.base.plugin.impl.query.QueryNePlugin;
+import com.maozi.base.plugin.query.QueryBaseType;
 import lombok.Getter;
 
 /**  
@@ -35,7 +34,7 @@ public enum QueryType {
 		
 	}
 	
-	private com.maozi.base.plugin.QueryBaseType type;
+	private QueryBaseType type;
 	
 	private QueryBasePlugin queryPlugin;
 	

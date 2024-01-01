@@ -17,9 +17,8 @@
 
 package com.maozi.ss.api;
 
-import java.util.Map;
-
 import com.alibaba.fastjson.JSONObject;
+import java.util.Map;
 
 /**	
  * 

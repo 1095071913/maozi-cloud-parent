@@ -1,0 +1,2 @@
+applicationLinkContextSetFilter=com.maozi.dubbo.filter.ApplicationLinkContextSetFilter
+applicationLinkContextTransmitFilter=com.maozi.dubbo.filter.ApplicationLinkContextTransmitFilter

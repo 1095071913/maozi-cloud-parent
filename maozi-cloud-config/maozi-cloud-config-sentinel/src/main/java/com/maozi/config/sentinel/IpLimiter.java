@@ -1,8 +1,8 @@
 package com.maozi.config.sentinel;
 
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
 
 @Component
 public class IpLimiter implements RequestOriginParser {

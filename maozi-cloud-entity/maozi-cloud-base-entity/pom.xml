@@ -15,8 +15,8 @@
         <!-- Project Begin -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-common-tool</artifactId>
-            <version>${maozi-cloud-common-tool.version}</version>
+            <artifactId>maozi-cloud-common-utils</artifactId>
+            <version>${maozi-cloud-common-utils.version}</version>
         </dependency>
         <!-- Project End -->
     </dependencies>

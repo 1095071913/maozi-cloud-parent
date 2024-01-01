@@ -1,18 +1,15 @@
 package com.xxl.job.core.handler.impl;
 
-import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.skywalking.apm.toolkit.trace.Tag;
-import org.apache.skywalking.apm.toolkit.trace.Tags;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
-
 import com.maozi.common.BaseCommon;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.IJobHandler;
-
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 
 @Slf4j
 public class MethodJobHandler extends IJobHandler {
@@ -32,18 +29,18 @@ public class MethodJobHandler extends IJobHandler {
 
     @Override
     public void execute() throws Exception {
+
+        Boolean isError = false;
         
     	Long beginTime = System.currentTimeMillis();
-    	
-    	Boolean isError=false; 
     	
     	functionParam(new String(XxlJobHelper.getJobParam()));
     	
     	Map<String, String> logs = new LinkedHashMap<String, String>();
     	
-    	logs.put("reqType", "job"); 
+    	logs.put("Type", "Job");
     	 
-    	logs.put("reqFunc", method.getDeclaringClass().getName()+":"+method.getName()); 
+    	logs.put("Function", method.getDeclaringClass().getName()+":"+method.getName());
     	
     	Class<?>[] paramTypes = method.getParameterTypes();
     	 
@@ -65,17 +62,17 @@ public class MethodJobHandler extends IJobHandler {
 			
 			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
             
-            logs.put("errorDesc", e.getLocalizedMessage());
-            logs.put("errorLine", stackTraceElement.toString());
+            logs.put("ErrorDesc", e.getLocalizedMessage());
+            logs.put("ErrorLine", stackTraceElement.toString());
     		
     		throw e;
     		
 		}finally {
 			
-			StringBuilder respSql = BaseCommon.sql.get();
-    		if(BaseCommon.isNotNull(respSql)) { logs.put("respSql", respSql.toString());}
+			StringBuilder sql = BaseCommon.sql.get();
+    		if(BaseCommon.isNotNull(sql)) { logs.put("SQL", sql.toString());}
 			
-			logs.put("respTime",System.currentTimeMillis()-beginTime + " ms");
+			logs.put("RT",System.currentTimeMillis()-beginTime + " ms");
 			
 			StringBuilder appendLog = BaseCommon.appendLog(logs);
 			
@@ -85,7 +82,7 @@ public class MethodJobHandler extends IJobHandler {
 				log.info(appendLog.toString()); 
 			}  
 			
-			BaseCommon.clear();
+			BaseCommon.clearContext();
 			
 		}
     }

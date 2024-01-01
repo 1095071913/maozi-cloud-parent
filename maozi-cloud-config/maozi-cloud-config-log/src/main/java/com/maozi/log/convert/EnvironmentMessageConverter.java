@@ -1,13 +1,12 @@
 package com.maozi.log.convert;
 
-import com.maozi.tool.ApplicationEnvironmentConfig;
-
 import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import com.maozi.utils.context.ApplicationEnvironmentContext;
  
 public class EnvironmentMessageConverter extends MessageConverter {
     @Override
     public String convert(ILoggingEvent event) {
-        return ApplicationEnvironmentConfig.environment; 
+        return ApplicationEnvironmentContext.environment;
     }
 }

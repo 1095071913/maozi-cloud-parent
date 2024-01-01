@@ -64,14 +64,14 @@
 		<!-- Project Begin -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-result</artifactId>
-			<version>${maozi-cloud-result.version}</version>
+			<artifactId>maozi-cloud-common-result</artifactId>
+			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-bootadmin</artifactId>
-			<version>${maozi-cloud-config-bootadmin.version}</version>
+			<artifactId>maozi-cloud-config-monitor</artifactId>
+			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
 		<!-- Project End -->
 

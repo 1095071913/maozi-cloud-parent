@@ -12,10 +12,16 @@
     <dependencies>
 
        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-annotations</artifactId>
-            <version>${knife4j-annotations.version}</version>
+         <groupId>com.github.xiaoymin</groupId>
+         <artifactId>knife4j-annotations</artifactId>
+         <version>${knife4j-annotations.version}</version>
         </dependency>
+
+      <dependency>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-base-enum</artifactId>
+        <version>${maozi-cloud-base-enum.version}</version>
+      </dependency>
 
     </dependencies>
 

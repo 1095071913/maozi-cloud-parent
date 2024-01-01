@@ -16,14 +16,14 @@
 		<!-- Project Begin -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-result</artifactId>
-			<version>${maozi-cloud-result.version}</version>
+			<artifactId>maozi-cloud-common-result</artifactId>
+			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sso</artifactId>
-			<version>${maozi-cloud-config-sso.version}</version>
+			<artifactId>maozi-cloud-config-oauth</artifactId>
+			<version>${maozi-cloud-config-oauth.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -35,12 +35,6 @@
 		<dependency> 
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-
-		<dependency> 
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sentry</artifactId>
-			<version>${maozi-cloud-config-sentry.version}</version>
 		</dependency>
 		
 		<dependency>

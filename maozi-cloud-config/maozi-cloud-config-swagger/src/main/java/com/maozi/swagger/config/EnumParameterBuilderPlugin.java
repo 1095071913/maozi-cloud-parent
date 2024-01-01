@@ -1,5 +1,9 @@
 package com.maozi.swagger.config;
 
+import com.fasterxml.classmate.ResolvedType;
+import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
+import com.google.common.base.Joiner;
+import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,16 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-
-import com.fasterxml.classmate.ResolvedType;
-import com.github.xiaoymin.knife4j.core.util.AnnotationUtils;
-import com.google.common.base.Joiner;
-import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
-
 import springfox.documentation.builders.OperationBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.service.AllowableListValues;

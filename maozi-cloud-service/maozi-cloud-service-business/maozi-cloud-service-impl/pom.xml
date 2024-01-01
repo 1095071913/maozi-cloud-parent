@@ -29,8 +29,8 @@
         
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-tool</artifactId>
-			<version>${maozi-cloud-common-tool.version}</version>
+			<artifactId>maozi-cloud-common-utils</artifactId>
+			<version>${maozi-cloud-common-utils.version}</version>
 		</dependency>
 
 		<dependency>
@@ -47,20 +47,20 @@
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-bootadmin</artifactId>
-			<version>${maozi-cloud-config-bootadmin.version}</version>
+			<artifactId>maozi-cloud-config-monitor</artifactId>
+			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sso</artifactId>
-			<version>${maozi-cloud-config-sso.version}</version>
+			<artifactId>maozi-cloud-config-oauth</artifactId>
+			<version>${maozi-cloud-config-oauth.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-mvc</artifactId>
-			<version>${maozi-cloud-config-mvc.version}</version>
+			<artifactId>maozi-cloud-config-web</artifactId>
+			<version>${maozi-cloud-config-web.version}</version>
 		</dependency>
 
 		<dependency>
@@ -89,14 +89,14 @@
 		
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-arthas</artifactId>
-			<version>${maozi-cloud-config-arthas.version}</version>
+			<artifactId>maozi-cloud-service-rpc-api-system-user</artifactId>
+			<version>${maozi-cloud-service-rpc-api-system-user.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-rpc-api-system-user-info</artifactId>
-			<version>${maozi-cloud-service-rpc-api-system-user-info.version}</version>
+			<artifactId>maozi-cloud-config-lock</artifactId>
+			<version>${maozi-cloud-config-lock.version}</version>
 		</dependency>
 		<!-- Project End --> 
 

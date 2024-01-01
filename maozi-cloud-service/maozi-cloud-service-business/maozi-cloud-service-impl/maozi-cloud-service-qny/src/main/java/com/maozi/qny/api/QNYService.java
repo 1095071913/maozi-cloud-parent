@@ -18,9 +18,7 @@
 package com.maozi.qny.api;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 

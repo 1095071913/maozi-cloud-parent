@@ -13,7 +13,6 @@
 	<module>maozi-cloud-vo</module>
 	<module>maozi-cloud-dto</module>
 	<module>maozi-cloud-enum</module>
-	<module>maozi-cloud-result</module>
   </modules>
   
 </project>
