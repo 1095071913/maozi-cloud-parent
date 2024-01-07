@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -63,13 +64,14 @@ public class BaseApplication {
 		properties.put("spring.cloud.nacos.config.file-extension", "yml");
 		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
 		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
-		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,boot-flyway.yml,cloud-default.yml");
+
+		String serviceConfig = properties.get("application-nacos-config-service").toString();
+
+		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml"+(StringUtils.isNotEmpty(serviceConfig) ? serviceConfig : ""));
 
 		properties.put("logging.level.root", "ERROR");
 		properties.put("logging.level.com.maozi", "INFO");
 		properties.put("logging.file.name","log/log.log");
-		
-		System.setProperties(properties);
 
 		Long begin = System.currentTimeMillis();
 

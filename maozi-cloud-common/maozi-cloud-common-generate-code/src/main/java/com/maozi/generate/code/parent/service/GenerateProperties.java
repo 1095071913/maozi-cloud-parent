@@ -42,7 +42,7 @@ public class GenerateProperties {
 			StringBuilder properties = new StringBuilder();
 			
 			if(db) {
-				properties.append("spring.cloud.nacos.config.shared-dataids=${application-nacos-config},boot-datasource.yml,boot-mybatisplus.yml\r\n");
+				properties.append("spring.cloud.nacos.config.shared-dataids=${application-nacos-config},boot-datasource.yml,boot-db.yml\r\n");
 			}else {
 				properties.append("spring.cloud.nacos.config.shared-dataids=${application-nacos-config}\r\n");
 			}

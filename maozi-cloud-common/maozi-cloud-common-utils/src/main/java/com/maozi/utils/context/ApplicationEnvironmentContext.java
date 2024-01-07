@@ -50,7 +50,7 @@ public class ApplicationEnvironmentContext {
 	}
 
 	public static String version;
-	@Value("${project.version:null}")
+	@Value("${project.version:main}")
 	public void setVersion(String version) {
 		ApplicationEnvironmentContext.version = version;
 	}
@@ -59,12 +59,6 @@ public class ApplicationEnvironmentContext {
 	@Value("${project.details}")
 	public void setDetails(String details) {
 		ApplicationEnvironmentContext.details = details;
-	}
-	
-	public static String dingdingToken;
-	@Value("${project.dingdingToken:f4152fa1590798ccbc7b927a30473ea34274dc904fb31b771f5d63b4f20e56f1}")
-	public void setDingdingToken(String dingdingToken) {
-		ApplicationEnvironmentContext.dingdingToken = dingdingToken;
 	}
 	
 	public static Environment environmentConfig;
