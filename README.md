@@ -172,107 +172,106 @@ maozi-cloud-service
 <br/>
 
 1. Windows安装Docker-desktop
-  1. 使用win+R快捷键 , 输入optionalfeatures，然后会打开windows功能窗口
-  2. 勾选两项（适用于Linux的windows子系统）与（虚拟机平台）
-  3. 重启电脑
-  4. 使用CMD指令设置WSL版本
-   ```
-   wsl --set-default-version 2
-   
-   wsl update
-   ```
-  5. 游览器下载[Docker-desktop安装包](https://docs.docker.com/desktop/release-notes)
-  6. 安装完后打开 Docker-desktop 面板点击登录旁边的setting设置，点击Docker Engine 输入
-   ```
-   {
-     "builder": {
-       "gc": {
-         "defaultKeepStorage": "20GB",
-         "enabled": true
-       }
-     },
-     "experimental": false,
-     "features": {
-       "buildkit": true
-     },
-     "registry-mirrors": [
-       "https://pn1nqbsb.mirror.aliyuncs.com",
-       "https://docker.mirrors.ustc.edu.cn",
-       "https://kubernetes.github.io"
-     ]
-   }
-   ```
+   1. 使用win+R快捷键 , 输入optionalfeatures，然后会打开windows功能窗口
+   2. 勾选两项（适用于Linux的windows子系统）与（虚拟机平台）
+   3. 重启电脑
+   4. 使用CMD指令设置WSL版本
+      ```
+      wsl --set-default-version 2
+     
+      wsl update
+      ```
+   5. 游览器下载[Docker-desktop安装包](https://docs.docker.com/desktop/release-notes)
+   6. 安装完后打开 Docker-desktop 面板点击登录旁边的setting设置，点击Docker Engine 输入
+      ```
+      {
+        "builder": {
+          "gc": {
+            "defaultKeepStorage": "20GB",
+            "enabled": true
+          }
+        },
+        "experimental": false,
+        "features": {
+          "buildkit": true
+        },
+        "registry-mirrors": [
+          "https://pn1nqbsb.mirror.aliyuncs.com",
+          "https://docker.mirrors.ustc.edu.cn",
+          "https://kubernetes.github.io"
+        ]
+      }
+      ```
 
 <br/>
 
 2. Docker-desktop运行所有所需 【中间件】
-  1. Git拉取对应Parent[脚本](https://github.com/1095071913/maozi-cloud-script/tree/release)仓库
-  2. 进入maozi-cloud-docker/maozi-cloud-basics-docker目录，启动mysql，执行
-     ```
-     docker-compose up -d maozi-cloud-mysql
-     ```
-  3. 创建nacos-test-db数据库，将Nacos数据库脚本 maozi-cloud-docker/maozi-cloud-basics-docker/maozi-cloud-nacos 导入
-  4. 回到maozi-cloud-docker/maozi-cloud-basics-docker目录，启动剩余中间件，执行
-     ```
-     docker-compose up -d maozi-cloud-redis maozi-cloud-nacos
-     ```
+   1. Git拉取对应Parent[脚本](https://github.com/1095071913/maozi-cloud-script/tree/release)仓库
+   2. 进入maozi-cloud-docker/maozi-cloud-basics-docker目录，启动mysql，执行
+      ```
+      docker-compose up -d maozi-cloud-mysql
+      ```
+   3. 创建nacos-test-db数据库，将Nacos数据库脚本 maozi-cloud-docker/maozi-cloud-basics-docker/maozi-cloud-nacos 导入
+   4. 回到maozi-cloud-docker/maozi-cloud-basics-docker目录，启动剩余中间件，执行
+      ```
+      docker-compose up -d maozi-cloud-redis maozi-cloud-nacos
+      ```
 
 <br/>
 
 3. Docker-desktop运行所有所需 【业务服务】
-  1. 拉取所有 中间件服务代码（[Gateway](https://github.com/1095071913/maozi-cloud-basics-gateway)、[Monitor](https://github.com/1095071913/maozi-cloud-basics-monitor)）以及 业务服务代码（[System](https://github.com/1095071913/maozi-cloud-system)、[Oauth](https://github.com/1095071913/maozi-cloud-oauth)）
-  2. 将以上服务纳入同一个Maven进行管理，结构为：
-     ```
-     maozi-cloud-basics
-       maozi-cloud-basics-gateway
-       maozi-cloud-basics-monitor
-       pom.xml
+   1. 拉取所有 中间件服务代码（[Gateway](https://github.com/1095071913/maozi-cloud-basics-gateway)、[Monitor](https://github.com/1095071913/maozi-cloud-basics-monitor)）以及 业务服务代码（[System](https://github.com/1095071913/maozi-cloud-system)、[Oauth](https://github.com/1095071913/maozi-cloud-oauth)）
+   2. 将以上服务纳入同一个Maven进行管理，结构为：
+      ```
+      maozi-cloud-basics
+        maozi-cloud-basics-gateway
+        maozi-cloud-basics-monitor
+        pom.xml
       
-     maozi-cloud-services
-       maozi-cloud-system
-       maozi-cloud-oauth
-       pom.xml
-     
-     ```
-
-     ！！有的人可能会问 为什么要纳入同一个Maven管理，这里做一个回答：
-
-     当 system 与 oauth 有依赖相互引用时，无论是同步构建 还是并行构建都会出问题，只能交由Maven自行管理分析解析依赖关系
+      maozi-cloud-services
+        maozi-cloud-system
+        maozi-cloud-oauth
+        pom.xml
+      ```
+      ！！有的人可能会问 为什么要纳入同一个Maven管理，这里做一个回答：
+   
+      当 system 与 oauth 有依赖相互引用时，无论是同步构建 还是并行构建都会出问题，只能交由Maven自行管理分析解析依赖关系
+      
+      <br/>
+      <br/>
+   
+   3. 将 maozi-cloud-parent 、maozi-cloud-basics 、maozi-cloud-services 三大模块的本地路径填写到对应的文件
+      ```
+      # maozi-cloud-parent
+      maozi-cloud-build/maozi-cloud-parent-build/maozi-cloud-parent-directory
+        
+      # maozi-cloud-basics
+      maozi-cloud-build/maozi-cloud-basics-build/maozi-cloud-basics-directory
+        
+      # maozi-cloud-serivces
+      maozi-cloud-build/maozi-cloud-services-build/maozi-cloud-services-directory
+      ```
+   4. 进入maozi-cloud-build目录，启动所有业务服务，执行
+      ```
+      .\maozi-cloud-build-all.bat
+      ```
+      ！！注意：在当前Git下，分支与SHA没有变化的情况下是不会重启任何服务的，要想重启，需要删除脚本执行后生成出来的**env文件**
 
      <br/>
-  3. 将 maozi-cloud-parent 、maozi-cloud-basics 、maozi-cloud-services 三大模块的本地路径填写到对应的文件
-     ```
-     # maozi-cloud-parent
-     maozi-cloud-build/maozi-cloud-parent-build/maozi-cloud-parent-directory
-        
-     # maozi-cloud-basics
-     maozi-cloud-build/maozi-cloud-basics-build/maozi-cloud-basics-directory
-        
-     # maozi-cloud-serivces
-     maozi-cloud-build/maozi-cloud-services-build/maozi-cloud-services-directory
-     ```
-  4. 进入maozi-cloud-build目录，启动所有业务服务，执行
-     ```
-     .\maozi-cloud-build-all.bat
-     ```
-
-     ！！注意：在当前Git下，分支与SHA没有变化的情况下是不会重启任何服务的，要想重启，需要删除脚本执行后生成出来的**env文件**
-
-   <br/>
 4. 设置 本地开发工具 按需启动的服务配置，并启动服务
-  1. 设置本地Hosts文件
-     ```
-     # maozi-cloud
-     127.0.0.1 maozi-cloud-nacos
-          
-     127.0.0.1 maozi-cloud-redis
-          
-     127.0.0.1 maozi-cloud-mysql
-     ```
-  2. 设置 JVM 启动服务参数
-     ```
-     -Xms512m -Xmx512m -Xmn256m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -Dproject.version=maozi -Dapplication-dev-port=0 -Dapplication-dev-dubbo-port=-1
-     ```
+   1. 设置本地Hosts文件
+      ```
+      # maozi-cloud
+      127.0.0.1 maozi-cloud-nacos
+           
+      127.0.0.1 maozi-cloud-redis
+           
+      127.0.0.1 maozi-cloud-mysql
+      ```
+   2. 设置 JVM 启动服务参数
+      ```
+      -Xms512m -Xmx512m -Xmn256m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -Dproject.version=maozi -Dapplication-dev-port=0 -Dapplication-dev-dubbo-port=-1
+      ```
 
 <br/>
 
