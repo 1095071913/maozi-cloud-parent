@@ -203,9 +203,10 @@ maozi-cloud-service
      }
      ```
 
-   <br/>
+<br/>
+
 2. Docker-desktop运行所有所需 【中间件】
-  1. Git拉取对应Parent[脚本](https://github.com/1095071913/maozi-cloud-script/tree/release)仓库，
+  1. Git拉取对应Parent[脚本](https://github.com/1095071913/maozi-cloud-script/tree/release)仓库
   2. 进入maozi-cloud-docker/maozi-cloud-basics-docker目录，启动mysql，执行
      ```
      docker-compose up -d maozi-cloud-mysql
