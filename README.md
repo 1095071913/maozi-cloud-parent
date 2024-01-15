@@ -238,7 +238,6 @@ maozi-cloud-service
       当 system 与 oauth 有依赖相互引用时，无论是同步构建 还是并行构建都会出问题，只能交由Maven自行管理分析解析依赖关系
       
       <br/>
-      <br/>
    
    3. 将 maozi-cloud-parent 、maozi-cloud-basics 、maozi-cloud-services 三大模块的本地路径填写到对应的文件
       ```
@@ -274,5 +273,6 @@ maozi-cloud-service
       ```
 
 <br/>
-
 5. 启动完成后 可以通过 Apifox 进行全流程用例测试
+<br/>
+<br/>
