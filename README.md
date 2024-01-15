@@ -176,32 +176,32 @@ maozi-cloud-service
   2. 勾选两项（适用于Linux的windows子系统）与（虚拟机平台）
   3. 重启电脑
   4. 使用CMD指令设置WSL版本
-     ```
-     wsl --set-default-version 2
-     
-     wsl update
-     ```
+   ```
+   wsl --set-default-version 2
+   
+   wsl update
+   ```
   5. 游览器下载[Docker-desktop安装包](https://docs.docker.com/desktop/release-notes)
   6. 安装完后打开 Docker-desktop 面板点击登录旁边的setting设置，点击Docker Engine 输入
-     ```
-     {
-       "builder": {
-         "gc": {
-           "defaultKeepStorage": "20GB",
-           "enabled": true
-         }
-       },
-       "experimental": false,
-       "features": {
-         "buildkit": true
-       },
-       "registry-mirrors": [
-         "https://pn1nqbsb.mirror.aliyuncs.com",
-         "https://docker.mirrors.ustc.edu.cn",
-         "https://kubernetes.github.io"
-       ]
-     }
-     ```
+   ```
+   {
+     "builder": {
+       "gc": {
+         "defaultKeepStorage": "20GB",
+         "enabled": true
+       }
+     },
+     "experimental": false,
+     "features": {
+       "buildkit": true
+     },
+     "registry-mirrors": [
+       "https://pn1nqbsb.mirror.aliyuncs.com",
+       "https://docker.mirrors.ustc.edu.cn",
+       "https://kubernetes.github.io"
+     ]
+   }
+   ```
 
 <br/>
 
@@ -227,7 +227,7 @@ maozi-cloud-service
        maozi-cloud-basics-gateway
        maozi-cloud-basics-monitor
        pom.xml
-       
+      
      maozi-cloud-services
        maozi-cloud-system
        maozi-cloud-oauth
@@ -235,9 +235,7 @@ maozi-cloud-service
      
      ```
 
-     <br/>
-
-     ！！！有的人可能会问 为什么要纳入同一个Maven管理，这里做一个回答：
+     ！！有的人可能会问 为什么要纳入同一个Maven管理，这里做一个回答：
 
      当 system 与 oauth 有依赖相互引用时，无论是同步构建 还是并行构建都会出问题，只能交由Maven自行管理分析解析依赖关系
 
@@ -246,10 +244,10 @@ maozi-cloud-service
      ```
      # maozi-cloud-parent
      maozi-cloud-build/maozi-cloud-parent-build/maozi-cloud-parent-directory
-     
+        
      # maozi-cloud-basics
      maozi-cloud-build/maozi-cloud-basics-build/maozi-cloud-basics-directory
-     
+        
      # maozi-cloud-serivces
      maozi-cloud-build/maozi-cloud-services-build/maozi-cloud-services-directory
      ```
@@ -258,20 +256,17 @@ maozi-cloud-service
      .\maozi-cloud-build-all.bat
      ```
 
-     <br/>
+     ！！注意：在当前Git下，分支与SHA没有变化的情况下是不会重启任何服务的，要想重启，需要删除脚本执行后生成出来的**env文件**
 
-     ！！！注意：在当前Git下，分支与SHA没有变化的情况下是不会重启任何服务的，要想重启服务，需要删除脚本执行后生成出来的 **env文件
-
-<br/>
-
+   <br/>
 4. 设置 本地开发工具 按需启动的服务配置，并启动服务
   1. 设置本地Hosts文件
      ```
      # maozi-cloud
      127.0.0.1 maozi-cloud-nacos
-     
+          
      127.0.0.1 maozi-cloud-redis
-     
+          
      127.0.0.1 maozi-cloud-mysql
      ```
   2. 设置 JVM 启动服务参数
