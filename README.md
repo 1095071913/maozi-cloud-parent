@@ -6,8 +6,6 @@
 
 已有16家企业在用的基础脚手架，每次更新发版都会经过Devops压测保证框架基本可用，放心使用
 
-有问题请咨询QQ1095071913
-
 <br/>
 
 <br/>
@@ -24,69 +22,73 @@
 
 <br/>
 
-# 目录说明
+# 目录结构
 
 ```text
 
 maozi-cloud-common
-  maozi-cloud-common-result               (结果集)
-  maozi-cloud-common-utils                 (工具)
-  maozi-cloud-common-generate-code        (代码生成工具)
+  maozi-cloud-common-result                     (结果集)
+  maozi-cloud-common-utils                      (工具)
+  maozi-cloud-common-generate-code              (代码生成工具)
   
   
   
 maozi-cloud-config
-  maozi-cloud-config-arthas               (Arthas配置)
-  maozi-cloud-config-monitor              (监控配置)
-  maozi-cloud-config-db                   (数据库配置)
-  maozi-cloud-config-discovery            (注册中心配置)
-  maozi-cloud-config-dubbo                (Dubbo配置)
-  maozi-cloud-config-feign                (Feign配置)
-  maozi-cloud-config-job                  (定时任务配置)
-  maozi-cloud-config-log                  (日志配置)
-  maozi-cloud-config-web                  (web配置)
-  maozi-cloud-config-redis                (Redis配置)
-  maozi-cloud-config-seata                (Seata配置)
-  maozi-cloud-config-sentinel             (Sentinel配置)
-  maozi-cloud-config-oauth                (认证授权配置)
-  maozi-cloud-config-stream               (MQ配置)
-  maozi-cloud-config-swagger              (接口文档配置)
+  maozi-cloud-config-arthas                     (Arthas配置)
+  maozi-cloud-config-monitor                    (监控配置)
+  maozi-cloud-config-db                         (数据库配置)
+  maozi-cloud-config-discovery                  (注册中心配置)
+  maozi-cloud-config-dubbo                      (Dubbo配置)
+  maozi-cloud-config-feign                      (Feign配置)
+  maozi-cloud-config-job                        (定时任务配置)
+  maozi-cloud-config-log                        (日志配置)
+  maozi-cloud-config-lock                       (分布式锁配置)
+  maozi-cloud-config-web                        (web配置)
+  maozi-cloud-config-redis                      (Redis配置)
+  maozi-cloud-config-seata                      (Seata配置)
+  maozi-cloud-config-sentinel                   (Sentinel配置)
+  maozi-cloud-config-oauth                      (认证授权配置)
+  maozi-cloud-config-stream                     (消息中间件流配置)
+  maozi-cloud-config-swagger                    (接口文档配置)
   
   
   
 maozi-cloud-entity
   maozi-cloud-base-entity
-    maozi-cloud-base-do                   (Domain Object 基层)
-    maozi-cloud-base-dto                  (Data Transfer Object 基层)
-    maozi-cloud-base-enum                 (枚举 基层)
-    maozi-cloud-base-vo                   (View Object 基层)
+    maozi-cloud-base-do                         (Domain Object 基层)
+    maozi-cloud-base-dto                        (Data Transfer Object 基层)
+    maozi-cloud-base-enum                       (枚举 基层)
+    maozi-cloud-base-vo                         (View Object 基层)
   maozi-cloud-business-entity             
-    maozi-cloud-do                        (Domain Object 聚合依赖)
-      maozi-cloud-seata-do                (服务通用 Seata Domain)  
-    maozi-cloud-dto                       (Data Transfer Object 聚合依赖)
-      maozi-cloud-oauth-token-dto           (授权服务 Data Transfer Object)
-      maozi-cloud-system-user-dto         (系统用户服务 Data Transfer Object)
-    maozi-cloud-enum                      (枚举 聚合依赖)
-    maozi-cloud-vo                        (View Object 聚合依赖)
+    maozi-cloud-do                              (Domain Object 聚合依赖)
+      maozi-cloud-seata-do                      (服务通用 Seata Domain)  
+    maozi-cloud-dto                             (Data Transfer Object 聚合依赖)
+      maozi-cloud-oauth-token-dto               (授权服务 Data Transfer Object)
+      maozi-cloud-system-user-dto               (系统用户服务 Data Transfer Object)
+    maozi-cloud-enum                            (枚举 聚合依赖)
+    maozi-cloud-vo                              (View Object 聚合依赖)
   
   
   
 maozi-cloud-service
   maozi-cloud-service-base
-    maozi-cloud-service-base-api          (服务接口 基层)
-    maozi-cloud-service-base-impl         (服务接口实现 基层)
-    maozi-cloud-service-base-run          (启动服务 基层)
-  maozi-cloud-service-db-impl             (服务聚合依赖 数据库基层版)
+    maozi-cloud-service-base-api                (服务接口 基层)
+    maozi-cloud-service-base-impl               (服务接口实现 基层)
+    maozi-cloud-service-base-run                (启动服务 基层)
   maozi-cloud-service-business
-    maozi-cloud-service-impl              (服务聚合依赖 基层)
-      maozi-cloud-service-bd              (百度地图服务接口实现)
-      maozi-cloud-service-qny             (七牛云服务接口实现)
-      maozi-cloud-service-ss              (闪送服务接口实现)
-      maozi-cloud-service-company-wechat  (企业微信服务接口实现)
-    maozi-cloud-service-rest-api          (服务HTTP接口聚合依赖 基层)
-    maozi-cloud-service-rpc-api           (服务RPC接口聚合依赖 基层)
+    maozi-cloud-service-impl                    (服务聚合依赖 基层)
+      maozi-cloud-service-bd                    (百度地图服务接口实现)
+      maozi-cloud-service-qny                   (七牛云服务接口实现)
+      maozi-cloud-service-ss                    (闪送服务接口实现)
+      maozi-cloud-service-company-wechat        (企业微信服务接口实现)
+    maozi-cloud-service-rest-api                (服务HTTP接口聚合依赖 基层)
+      maozi-cloud-service-rest-api-oauth-token
+    maozi-cloud-service-rpc-api                 (服务RPC接口聚合依赖 基层)
+      maozi-cloud-service-rpc-api-oauth-token
+      maozi-cloud-service-rpc-api-system-config
+      maozi-cloud-service-rpc-api-system-user
   maozi-cloud-service-plugin
-    maozi-cloud-service-db-impl           (数据库服务实现 插件基层)
+    maozi-cloud-service-db-impl                 (数据库服务实现 插件基层)
   
   
   
@@ -98,7 +100,7 @@ maozi-cloud-service
 
 <br/>
 
-# 集成框架版本说明
+# 集成框架版本
 
 |框架|版本|说明|
 |:--:|:--:|:--:|
@@ -106,10 +108,10 @@ maozi-cloud-service
 |Spring Boot|2.6.11|基于Spring框架的快速开发应用程序框架|
 |Spring Cloud|2021.0.4|Netfix推出微服务一站式服务框架|
 |Spring Cloud Alibaba|2021.0.4.0|阿里巴巴推出微服务一站式服务框架|
-|Spring Cloud Alibaba Dubbo|3.0.8|基于Triple Stream协议 对内 服务与服务之间RPC通信框架|
+|Dubbo|3.0.8|基于Triple Stream协议 对内 服务与服务之间RPC通信框架|
 |Spring Cloud Feign|跟随SC版本|基于HTTP协议 对外 服务与第三方之间RPC通信框架|
 |Spring Cloud Alibaba Gateway|跟随SCA版本|黑白名单，鉴权，流量分发 流式处理网关框架|
-|Spring Cloud Alibaba Stream Rocketmq|跟随SCA版本|异步消峰消息框架|
+|Spring Cloud Alibaba Stream|跟随SCA版本|异步消峰消息框架|
 |Spring Cloud Alibaba Seata|跟随SCA版本|分布式事务框架|
 |Spring Cloud Alibaba Sentinel|跟随SCA版本|监控流量 限流 框架，个人二开支持数据持久化，限流规则持久化Nacos|
 |Spring Cloud Alibaba Nacos|跟随SCA版本|分布式服务治理 配置中心 框架|
@@ -122,6 +124,7 @@ maozi-cloud-service
 |Spring Flyway|跟随SB版本|初始化数据库数据|
 |Knife4j|4.0.0|基于Swagger二开 接口文档可视化框架 个人二开新增枚举解析|
 |XXL Job|2.3.0|定时任务框架|
+|Transmittable|2.14.4|ThreadLocal上下文切换传值问题|
 
 <br/>
 
@@ -129,122 +132,34 @@ maozi-cloud-service
 
 <br/>
 
-# 编译前准备
+# 最佳实践
 
 <br/>
 
-<br/>
-
-## 一. 编译前说明
+为了能让大家【快速体验/快速开发】，则准备了一套本地开发环境的【最佳实践流程】
 
 <br/>
 
-==项目不要缺少.git文件 ，不然会编译不过==
+个人开发模式（ **只支持Windows系统** ）：
 
-编译前要准备Nexus，既然是微服务那就要做远程仓库方便后续打包上线，如果只是想本地测试没有Nexus的话就不要走Maven Deploy编译
-
-我们将会基于Docker来去安装中间件，本地测试的可以考虑安装一个Docker Desktop来进行测试使用，将开始逐步安装
-
-Docker Desktop自带Docker Compose，安装K8s也非常方便简单
-
-<br/>
+1. 采用 Docker-desktop 部署 【整套中间件】 以及 【整套业务服务 （实例为稳定版本的实例）】
+2. Idea开发软件 根据业务变化 【按需启动业务变更服务（实例为灰度版本）】
+3. Docker-desktop部署的整套业务服务，需要通过【[bat脚本](https://github.com/1095071913/maozi-cloud-script/blob/release/maozi-cloud-build/maozi-cloud-build-all.bat)】自动化按需更新部署服务
+4. 该脚本的原理是  扫描Git变更文件，然后进行变更文件的打包部署
 
 <br/>
 
-## 二. Windows11安装Docker Desktop
+团队开发模式：
+
+1. 采用一台内网机器安装 WSL2 ，部署 【整套中间件】 以及 【整套业务服务 （实例为稳定版本的实例）】
+2. 将WSL2的端口映射到宿主机，然后放行防火墙端口，这时候团队内的开发者就可以连接到 【WSL2】 的 【中间件】 以及 【业务服务】
+3. 团队内的开发者使用Idea开发，根据业务变化 【按需启动业务变更服务（实例为灰度版本）】
+4. WSL2内部署的整套业务服务，需要通过 GitLab-Runner 自动化按需更新部署服务
+5. 在此脚本就不提供给大家了，大家自行根据企业开发团队内规范进行编写自动化脚本吧
 
 <br/>
 
-### 1. 启动windows10子系统
-
-- 使用win+R快捷键 , 输入optionalfeatures，然后会打开windows功能窗口
-- 勾选两项（适用于Linux的windows子系统）与（虚拟机平台）
-- 重启电脑
-- 使用CMD指令设置WSL版本
-  ```
-  wsl --set-default-version 2
-  ```
-
-<br/>
-
-### 2. 安装Docker Desktop
-
-游览器下载安装包 https://docs.docker.com/desktop/release-notes/#4163
-
-<br/>
-
-### 3. 设置加速镜像仓库
-
-安装完后打开面板点击登录旁边的setting设置，点击Docker Engine 输入
-
-```json
-{
-  "builder": {
-    "gc": {
-      "defaultKeepStorage": "20GB",
-      "enabled": true
-    }
-  },
-  "experimental": false,
-  "features": {
-    "buildkit": true
-  },
-  "registry-mirrors": [
-    "https://pn1nqbsb.mirror.aliyuncs.com",
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://kubernetes.github.io"
-  ]
-}
-```
-
-<br/>
-
-<br/>
-
-## 三. 非必要 Docker Compose安装Nexus
-
-<br/>
-
-### 1. 下载[docker-compose.yml](https://gitee.com/xmaozi/maozi-cloud-parent-script/blob/release/nexus/docker-compose.yml)文件
-
-<br/>
-
-### 2. 执行
-
-```sh
-docker-compose up -d
-```
-
-<br/>
-
-### 3. 设置Maven Setting.xml文件
-
-下载[MavenSetting](https://gitee.com/xmaozi/maozi-cloud-parent-script/blob/release/nexus/maven-config-setting.xml)与你本地文件合并到一起，将文件中的  ==账号、密码、Nexus地址== 修改好
-
-<br/>
-
-### 4. 若你的Nexus地址不是localhost:8081
-
-打开项目Parent的Pom.xml文件，找到distributionManagement标签
-
-```xml
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Nexus Release Repository</name>
-            <url>http://修改Nexus地址/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://修改Nexus地址/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-```
-
-<br/>
-
-### 5.完成以上步骤即可编译 mvn clean deploy
+那么接下来的部署方式将会采用 【个人开发模式】进行引导开发者【快速体验/快速开发】
 
 <br/>
 
@@ -252,235 +167,117 @@ docker-compose up -d
 
 <br/>
 
-# 测试脚手架前准备
+# 快速入门（个人开发模式）
 
 <br/>
 
-<br/>
+1. Windows安装Docker-desktop
+  1. 使用win+R快捷键 , 输入optionalfeatures，然后会打开windows功能窗口
+  2. 勾选两项（适用于Linux的windows子系统）与（虚拟机平台）
+  3. 重启电脑
+  4. 使用CMD指令设置WSL版本
+     ```
+     wsl --set-default-version 2
+     
+     wsl update
+     ```
+  5. 游览器下载[Docker-desktop安装包](https://docs.docker.com/desktop/release-notes)
+  6. 安装完后打开 Docker-desktop 面板点击登录旁边的setting设置，点击Docker Engine 输入
+     ```
+     {
+       "builder": {
+         "gc": {
+           "defaultKeepStorage": "20GB",
+           "enabled": true
+         }
+       },
+       "experimental": false,
+       "features": {
+         "buildkit": true
+       },
+       "registry-mirrors": [
+         "https://pn1nqbsb.mirror.aliyuncs.com",
+         "https://docker.mirrors.ustc.edu.cn",
+         "https://kubernetes.github.io"
+       ]
+     }
+     ```
 
-## 一. 编译后说明
-
-==Nacos版本固定2.0.4==
-
-该阶段围绕着安装Nacos、添加基础配置进行讲解，目前安装走的Docker Compose进行安装，没有docker的可以拉取Nacos官方代码进行启动，本文档跳过以下安装步骤，导入[Nacos配置文件](https://gitee.com/xmaozi/maozi-cloud-parent-nacos-config)即可
-
-<br/>
-
-<br/>
-
-## 二. Docker Compose安装Nacos
-
-<br/>
-
-### 1. 下载[Nacos Docker](https://gitee.com/xmaozi/maozi-cloud-parent-script/tree/release/nacos/nacos-docker-2.0.4)安装目录
-
-<br/>
-
-### 2. 导入[SQL脚本](https://gitee.com/xmaozi/maozi-cloud-parent-script/blob/release/nacos/nacos-config-mysql.sql)
-
-<br/>
-
-### 3. 在下载的GitHub项目上做修改
-
-在env目录上修改nacos-standlone-mysql.env文件
-
-```properties
-PREFER_HOST_MODE=hostname
-MODE=standalone
-SPRING_DATASOURCE_PLATFORM=mysql
-MYSQL_SERVICE_HOST=Mysql IP
-MYSQL_SERVICE_DB_NAME=Nacos数据库名字
-MYSQL_SERVICE_PORT=Mysql端口
-MYSQL_SERVICE_USER=Mysql用户名 
-MYSQL_SERVICE_PASSWORD=Mysql密码
-MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
-```
-
-<br/>
-
-### 4. 在example目录上修改
-
-<br/>
-
-==mysql8修改：==standalone-mysql-8.yaml
-
-```yaml
-version: "2"
-services:
-  nacos:
-    image: nacos/nacos-server:${NACOS_VERSION}
-    container_name: nacos-standalone-mysql
-    env_file:
-      - ../env/nacos-standlone-mysql.env
-    volumes:
-      - ./standalone-logs/:/home/nacos/logs
-      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9555:9555"
-    restart: always
-```
+   <br/>
+2. Docker-desktop运行所有所需 【中间件】
+  1. Git拉取对应Parent[脚本](https://github.com/1095071913/maozi-cloud-script/tree/release)仓库，
+  2. 进入maozi-cloud-docker/maozi-cloud-basics-docker目录，启动mysql，执行
+     ```
+     docker-compose up -d maozi-cloud-mysql
+     ```
+  3. 创建nacos-test-db数据库，将Nacos数据库脚本 maozi-cloud-docker/maozi-cloud-basics-docker/maozi-cloud-nacos 导入
+  4. 回到maozi-cloud-docker/maozi-cloud-basics-docker目录，启动剩余中间件，执行
+     ```
+     docker-compose up -d maozi-cloud-redis maozi-cloud-nacos
+     ```
 
 <br/>
 
-==mysql5.7修改：==standalone-mysql-5.7.yaml
+3. Docker-desktop运行所有所需 【业务服务】
+  1. 拉取所有 中间件服务代码（[Gateway](https://github.com/1095071913/maozi-cloud-basics-gateway)、[Monitor](https://github.com/1095071913/maozi-cloud-basics-monitor)）以及 业务服务代码（[System](https://github.com/1095071913/maozi-cloud-system)、[Oauth](https://github.com/1095071913/maozi-cloud-oauth)）
+  2. 将以上服务纳入同一个Maven进行管理，结构为：
+     ```
+     maozi-cloud-basics
+       maozi-cloud-basics-gateway
+       maozi-cloud-basics-monitor
+       pom.xml
+       
+     maozi-cloud-services
+       maozi-cloud-system
+       maozi-cloud-oauth
+       pom.xml
+     
+     ```
 
-```yaml
-version: "2"
-services:
-  nacos:
-    image: nacos/nacos-server:${NACOS_VERSION}
-    container_name: nacos-standalone-mysql
-    env_file:
-      - ../env/nacos-standlone-mysql.env
-    volumes:
-      - ./standalone-logs/:/home/nacos/logs
-      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
-    ports:
-      - "8848:8848"
-      - "9848:9848"
-      - "9555:9555"
-    restart: always
-```
+     <br/>
 
-<br/>
+     ！！！有的人可能会问 为什么要纳入同一个Maven管理，这里做一个回答：
 
-### 5. 启动Nacos
+     当 system 与 oauth 有依赖相互引用时，无论是同步构建 还是并行构建都会出问题，只能交由Maven自行管理分析解析依赖关系
 
-执行
+     <br/>
+  3. 将 maozi-cloud-parent 、maozi-cloud-basics 、maozi-cloud-services 三大模块的本地路径填写到对应的文件
+     ```
+     # maozi-cloud-parent
+     maozi-cloud-build/maozi-cloud-parent-build/maozi-cloud-parent-directory
+     
+     # maozi-cloud-basics
+     maozi-cloud-build/maozi-cloud-basics-build/maozi-cloud-basics-directory
+     
+     # maozi-cloud-serivces
+     maozi-cloud-build/maozi-cloud-services-build/maozi-cloud-services-directory
+     ```
+  4. 进入maozi-cloud-build目录，启动所有业务服务，执行
+     ```
+     .\maozi-cloud-build-all.bat
+     ```
 
-```powershell
-docker-compose -f example/standalone-mysql-8.yaml up -d
-```
+     <br/>
 
-<br/>
-
-### 6. 修改Nacos配置文件
-
-==若Nacos地址是localhost:8848即可忽然步骤==
-
-<br/>
-
-在Nacos配置中搜索
-
-==cloud-dubbo.yml==
-
-==cloud-nacos.yml==
-
-将127.0.0.1:8848修改成Nacos地址
+     ！！！注意：在当前Git下，分支与SHA没有变化的情况下是不会重启任何服务的，要想重启服务，需要删除脚本执行后生成出来的 **env文件
 
 <br/>
 
-<br/>
+4. 设置 本地开发工具 按需启动的服务配置，并启动服务
+  1. 设置本地Hosts文件
+     ```
+     # maozi-cloud
+     127.0.0.1 maozi-cloud-nacos
+     
+     127.0.0.1 maozi-cloud-redis
+     
+     127.0.0.1 maozi-cloud-mysql
+     ```
+  2. 设置 JVM 启动服务参数
+     ```
+     -Xms512m -Xmx512m -Xmn256m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=256m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -Dproject.version=maozi -Dapplication-dev-port=0 -Dapplication-dev-dubbo-port=-1
+     ```
 
 <br/>
 
-# 测试脚手架
-
-==测试项目可以用代码生成项目 或 从作者的仓库里找两个已经创建好的项目进行启动测试==
-
-<br/>
-
-业务项目：[系统服务](https://gitee.com/xmaozi/maozi-cloud-system) 、[授权服务](https://gitee.com/xmaozi/maozi-cloud-sso)
-
-中间件项目：[网关服务](https://gitee.com/xmaozi/maozi-cloud-basics-gateway) 、 [监控服务](https://gitee.com/xmaozi/maozi-cloud-basics-monitor) 、 [流控服务](https://gitee.com/xmaozi/maozi-cloud-basics-sentinel)
-
-拉取代码后即可编译或启动项目 ，==记住不要少了.git文件 不然会编译失败==
-
-<br/>
-
-<br/>
-
-<br/>
-
-# 创建新业务项目
-
-<br/>
-
-<br/>
-
-## 1. 生成代码
-
-打开 ==maozi-cloud-common\maozi-cloud-common-generate-code\src\main\java\com\maozi\generate\code\GenerateCodeRun.java== 执行
-
-```text
-请输入模块名字（users）：users
-请输入生成地址（D:\project\maozi-cloud-parent\maozi-cloud-common）：D:\project\maozi-cloud-parent\maozi-cloud-common
-请输入是否依赖数据库（yes/no）：yes
-请输入数据库地址如 （默认 localhost:3306）：
-请输入数据库用户名（默认 root）：
-请输入数据库密码（默认 password）：
-请输入数据库名（默认 maozi-cloud-users-localhost-db）：maozi-cloud-users-localhost-db
-请输入子模块名（输入break结束）：user
-请输入表名（输入break结束）：sys_user
-请输入表名实体映射过滤前缀：sys
-请输入表名（输入break结束）：break
-请输入子模块名（输入break结束）：break
-正在生成中   。。。。。。
-代码生成完成   。。。。。
-```
-
-<br/>
-
-<br/>
-
-## 2. 创建Nacos配置文件
-
-==文件名为：{项目名字}.yml==
-
-如：maozi-cloud-user.yml
-
-```properties
-#端口
-application-port: 2000
-
-# 设置数据库参数 以下值都是默认值 , 无变化可注释掉
-application-datasource-jdbc-url: localhost:3306
-application-datasource-jdbc-username: root
-application-datasource-jdbc-password: password
-application-datasource-db-name: maozi-cloud-user-localhost-db
-
-#白名单
-application-project-whitelist: /user/pc/v1/login
-```
-
-<br/>
-
-==Nacos地址默认为localhost:8081，若不是则添加环境变量NACOS_CONFIG_SERVER==
-
-或找到 ==maozi-cloud-service-sso/src/main/resources/bootstrap.properties== 添加
-
-```
-spring.cloud.nacos.config.server-addr={Nacos地址}
-```
-
-<br/>
-
-<br/>
-
-## 3. 设置Jvm VM参数
-
-==因为用的是JDK17 所以要设置以下VM参数==
-
-```text
---add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED
-```
-
-<br/>
-
-<br/>
-
-## 4. 启动服务
-
-启动成功 ，访问 ==localhost:{端口}/doc.html==
-
-<br/>
-
-<br/>
-
-<br/>
-
-# 新服务包说明
-
-可看[MarkDown](https://gitee.com/xmaozi/maozi-cloud-system)文档，里面有说明包作用
+5. 启动完成后 可以通过 Apifox 进行全流程用例测试

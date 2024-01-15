@@ -20,6 +20,7 @@ import com.maozi.common.BaseCommon;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -65,9 +66,9 @@ public class BaseApplication {
 		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
 		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
 
-		String serviceConfig = properties.get("application-nacos-config-service").toString();
+		Object serviceConfig = properties.get("application-nacos-config-service");
 
-		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml"+(StringUtils.isNotEmpty(serviceConfig) ? serviceConfig : ""));
+		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml"+(Objects.nonNull(serviceConfig) ? serviceConfig.toString() : ""));
 
 		properties.put("logging.level.root", "ERROR");
 		properties.put("logging.level.com.maozi", "INFO");

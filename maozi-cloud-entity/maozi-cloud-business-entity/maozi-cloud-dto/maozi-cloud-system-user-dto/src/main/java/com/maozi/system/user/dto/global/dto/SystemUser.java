@@ -1,4 +1,4 @@
-package com.maozi.user;
+package com.maozi.system.user.dto.global.dto;
 
 import com.maozi.base.AbstractBaseDtomain;
 import io.swagger.annotations.ApiModelProperty;
