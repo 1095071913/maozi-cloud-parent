@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent.revision}</version>
+		<version>${parent-revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-config-discovery</artifactId>
 

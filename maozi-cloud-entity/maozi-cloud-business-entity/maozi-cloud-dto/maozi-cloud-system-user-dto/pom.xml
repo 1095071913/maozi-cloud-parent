@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.maozi</groupId>
     <artifactId>maozi-cloud-dto</artifactId>
-    <version>${parent.revision}</version>
+    <version>${parent-revision}</version>
   </parent>
   <artifactId>maozi-cloud-system-user-dto</artifactId>
 </project>

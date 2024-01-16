@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-parent</artifactId>
-		<version>${parent.revision}</version>
+		<version>${parent-revision}</version>
 	</parent>
 	<artifactId>maozi-cloud-common</artifactId>
 	<packaging>pom</packaging>

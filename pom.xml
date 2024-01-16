@@ -6,14 +6,14 @@
 
 	<groupId>com.maozi</groupId>
 	<artifactId>maozi-cloud-parent</artifactId>
-	<version>${parent.revision}</version>
+	<version>${parent-revision}</version>
 
 	<packaging>pom</packaging>
 
 
 	<properties>
 
-		<parent.revision>1.0.2-SNAPSHOT</parent.revision>
+		<parent-revision>1.0.2-SNAPSHOT</parent-revision>
 
 		<!-- Java Begin -->
 		<java.version>17</java.version>
@@ -56,63 +56,63 @@
 		<!-- Project Begin -->
 		<application-run>com.maozi.Application</application-run>
 
-		<maozi-cloud-do.version>${parent.revision}</maozi-cloud-do.version>
-		<maozi-cloud-vo.version>${parent.revision}</maozi-cloud-vo.version>
-		<maozi-cloud-dto.version>${parent.revision}</maozi-cloud-dto.version>
-		<maozi-cloud-enum.version>${parent.revision}</maozi-cloud-enum.version>
-		<maozi-cloud-seata-do.version>${parent.revision}</maozi-cloud-seata-do.version>
+		<maozi-cloud-do.version>${parent-revision}</maozi-cloud-do.version>
+		<maozi-cloud-vo.version>${parent-revision}</maozi-cloud-vo.version>
+		<maozi-cloud-dto.version>${parent-revision}</maozi-cloud-dto.version>
+		<maozi-cloud-enum.version>${parent-revision}</maozi-cloud-enum.version>
+		<maozi-cloud-seata-do.version>${parent-revision}</maozi-cloud-seata-do.version>
 
 
-		<maozi-cloud-base-do.version>${parent.revision}</maozi-cloud-base-do.version>
-		<maozi-cloud-base-vo.version>${parent.revision}</maozi-cloud-base-vo.version>
-		<maozi-cloud-base-dto.version>${parent.revision}</maozi-cloud-base-dto.version>
-		<maozi-cloud-base-enum.version>${parent.revision}</maozi-cloud-base-enum.version>
+		<maozi-cloud-base-do.version>${parent-revision}</maozi-cloud-base-do.version>
+		<maozi-cloud-base-vo.version>${parent-revision}</maozi-cloud-base-vo.version>
+		<maozi-cloud-base-dto.version>${parent-revision}</maozi-cloud-base-dto.version>
+		<maozi-cloud-base-enum.version>${parent-revision}</maozi-cloud-base-enum.version>
 
-		<maozi-cloud-common-result.version>${parent.revision}</maozi-cloud-common-result.version>
+		<maozi-cloud-common-result.version>${parent-revision}</maozi-cloud-common-result.version>
 
-		<maozi-cloud-config-db.version>${parent.revision}</maozi-cloud-config-db.version>
-		<maozi-cloud-config-job.version>${parent.revision}</maozi-cloud-config-job.version>
-		<maozi-cloud-config-log.version>${parent.revision}</maozi-cloud-config-log.version>
-		<maozi-cloud-config-web.version>${parent.revision}</maozi-cloud-config-web.version>
-		<maozi-cloud-config-lock.version>${parent.revision}</maozi-cloud-config-lock.version>
-		<maozi-cloud-config-oauth.version>${parent.revision}</maozi-cloud-config-oauth.version>
-		<maozi-cloud-config-redis.version>${parent.revision}</maozi-cloud-config-redis.version>
-		<maozi-cloud-config-dubbo.version>${parent.revision}</maozi-cloud-config-dubbo.version>
-		<maozi-cloud-config-feign.version>${parent.revision}</maozi-cloud-config-feign.version>
-		<maozi-cloud-config-seata.version>${parent.revision}</maozi-cloud-config-seata.version>
-		<maozi-cloud-config-stream.version>${parent.revision}</maozi-cloud-config-stream.version>
-		<maozi-cloud-config-swagger.version>${parent.revision}</maozi-cloud-config-swagger.version>
-		<maozi-cloud-config-sentinel.version>${parent.revision}</maozi-cloud-config-sentinel.version>
-		<maozi-cloud-config-monitor.version>${parent.revision}</maozi-cloud-config-monitor.version>
-		<maozi-cloud-config-discovery.version>${parent.revision}</maozi-cloud-config-discovery.version>
-
-
-		<maozi-cloud-common-utils.version>${parent.revision}</maozi-cloud-common-utils.version>
+		<maozi-cloud-config-db.version>${parent-revision}</maozi-cloud-config-db.version>
+		<maozi-cloud-config-job.version>${parent-revision}</maozi-cloud-config-job.version>
+		<maozi-cloud-config-log.version>${parent-revision}</maozi-cloud-config-log.version>
+		<maozi-cloud-config-web.version>${parent-revision}</maozi-cloud-config-web.version>
+		<maozi-cloud-config-lock.version>${parent-revision}</maozi-cloud-config-lock.version>
+		<maozi-cloud-config-oauth.version>${parent-revision}</maozi-cloud-config-oauth.version>
+		<maozi-cloud-config-redis.version>${parent-revision}</maozi-cloud-config-redis.version>
+		<maozi-cloud-config-dubbo.version>${parent-revision}</maozi-cloud-config-dubbo.version>
+		<maozi-cloud-config-feign.version>${parent-revision}</maozi-cloud-config-feign.version>
+		<maozi-cloud-config-seata.version>${parent-revision}</maozi-cloud-config-seata.version>
+		<maozi-cloud-config-stream.version>${parent-revision}</maozi-cloud-config-stream.version>
+		<maozi-cloud-config-swagger.version>${parent-revision}</maozi-cloud-config-swagger.version>
+		<maozi-cloud-config-sentinel.version>${parent-revision}</maozi-cloud-config-sentinel.version>
+		<maozi-cloud-config-monitor.version>${parent-revision}</maozi-cloud-config-monitor.version>
+		<maozi-cloud-config-discovery.version>${parent-revision}</maozi-cloud-config-discovery.version>
 
 
-		<maozi-cloud-service-mq.version>${parent.revision}</maozi-cloud-service-mq.version>
-		<maozi-cloud-service-job.version>${parent.revision}</maozi-cloud-service-job.version>
-		<maozi-cloud-service-impl.version>${parent.revision}</maozi-cloud-service-impl.version>
-		<maozi-cloud-service-db-impl.version>${parent.revision}</maozi-cloud-service-db-impl.version>
-		<maozi-cloud-service-rpc-api.version>${parent.revision}</maozi-cloud-service-rpc-api.version>
-		<maozi-cloud-service-rest-api.version>${parent.revision}</maozi-cloud-service-rest-api.version>
-		<maozi-cloud-service-base-run.version>${parent.revision}</maozi-cloud-service-base-run.version>
-		<maozi-cloud-service-base-impl.version>${parent.revision}</maozi-cloud-service-base-impl.version>
-		<maozi-cloud-service-base-rpc-api.version>${parent.revision}</maozi-cloud-service-base-rpc-api.version>
+		<maozi-cloud-common-utils.version>${parent-revision}</maozi-cloud-common-utils.version>
 
 
-		<maozi-cloud-service-bd.version>${parent.revision}</maozi-cloud-service-bd.version>
-		<maozi-cloud-service-ss.version>${parent.revision}</maozi-cloud-service-ss.version>
-		<maozi-cloud-service-qny.version>${parent.revision}</maozi-cloud-service-qny.version>
-		<maozi-cloud-service-company-wechat.version>${parent.revision}</maozi-cloud-service-company-wechat.version>
+		<maozi-cloud-service-mq.version>${parent-revision}</maozi-cloud-service-mq.version>
+		<maozi-cloud-service-job.version>${parent-revision}</maozi-cloud-service-job.version>
+		<maozi-cloud-service-impl.version>${parent-revision}</maozi-cloud-service-impl.version>
+		<maozi-cloud-service-db-impl.version>${parent-revision}</maozi-cloud-service-db-impl.version>
+		<maozi-cloud-service-rpc-api.version>${parent-revision}</maozi-cloud-service-rpc-api.version>
+		<maozi-cloud-service-rest-api.version>${parent-revision}</maozi-cloud-service-rest-api.version>
+		<maozi-cloud-service-base-run.version>${parent-revision}</maozi-cloud-service-base-run.version>
+		<maozi-cloud-service-base-impl.version>${parent-revision}</maozi-cloud-service-base-impl.version>
+		<maozi-cloud-service-base-rpc-api.version>${parent-revision}</maozi-cloud-service-base-rpc-api.version>
 
 
-		<maozi-cloud-oauth-token-dto.version>${parent.revision}</maozi-cloud-oauth-token-dto.version>
-		<maozi-cloud-system-user-dto.version>${parent.revision}</maozi-cloud-system-user-dto.version>
-		<maozi-cloud-service-rpc-api-oauth-token.version>${parent.revision}</maozi-cloud-service-rpc-api-oauth-token.version>
-		<maozi-cloud-service-rest-api-oauth-token.version>${parent.revision}</maozi-cloud-service-rest-api-oauth-token.version>
-		<maozi-cloud-service-rpc-api-system-config.version>${parent.revision}</maozi-cloud-service-rpc-api-system-config.version>
-		<maozi-cloud-service-rpc-api-system-user.version>${parent.revision}</maozi-cloud-service-rpc-api-system-user.version>
+		<maozi-cloud-service-bd.version>${parent-revision}</maozi-cloud-service-bd.version>
+		<maozi-cloud-service-ss.version>${parent-revision}</maozi-cloud-service-ss.version>
+		<maozi-cloud-service-qny.version>${parent-revision}</maozi-cloud-service-qny.version>
+		<maozi-cloud-service-company-wechat.version>${parent-revision}</maozi-cloud-service-company-wechat.version>
+
+
+		<maozi-cloud-oauth-token-dto.version>${parent-revision}</maozi-cloud-oauth-token-dto.version>
+		<maozi-cloud-system-user-dto.version>${parent-revision}</maozi-cloud-system-user-dto.version>
+		<maozi-cloud-service-rpc-api-oauth-token.version>${parent-revision}</maozi-cloud-service-rpc-api-oauth-token.version>
+		<maozi-cloud-service-rest-api-oauth-token.version>${parent-revision}</maozi-cloud-service-rest-api-oauth-token.version>
+		<maozi-cloud-service-rpc-api-system-config.version>${parent-revision}</maozi-cloud-service-rpc-api-system-config.version>
+		<maozi-cloud-service-rpc-api-system-user.version>${parent-revision}</maozi-cloud-service-rpc-api-system-user.version>
 		<!-- Project End -->
 
 
