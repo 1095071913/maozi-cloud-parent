@@ -13,7 +13,7 @@
 
 	<properties>
 
-		<parent-revision>1.0.2</parent-revision>
+		<parent-revision>1.1.0-SNAPSHOT</parent-revision>
 
 		<!-- Java Begin -->
 		<java.version>17</java.version>
