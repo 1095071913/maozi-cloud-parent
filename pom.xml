@@ -38,6 +38,7 @@
 		<dubbo.version>3.0.8</dubbo.version>
 		<arthas.version>3.6.7</arthas.version>
 		<easypoi.version>4.3.0</easypoi.version>
+		<swagger.version>2.2.9</swagger.version>
 		<mybatis.version>3.5.10</mybatis.version>
 		<redisson.version>3.18.0</redisson.version>
 		<skywalking.version>8.4.0</skywalking.version>
@@ -46,10 +47,9 @@
 		<mybatis-plus.version>3.5.3.1</mybatis-plus.version>
 		<transmittable.version>2.14.4</transmittable.version>
 		<mybatis-plus-join.version>1.4.5</mybatis-plus-join.version>
-		<knife4j-annotations.version>3.0.3</knife4j-annotations.version>
 		<mybatis-enhance-actable.version>1.5.0.RELEASE</mybatis-enhance-actable.version>
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
-		<knife4j-openapi2-spring-boot-starter.version>4.0.0</knife4j-openapi2-spring-boot-starter.version>
+		<knife4j-openapi3-spring-boot-starter.version>4.5.0</knife4j-openapi3-spring-boot-starter.version>
 		<!-- Other Component End -->
 
 
@@ -99,6 +99,7 @@
 		<maozi-cloud-service-base-run.version>${parent-revision}</maozi-cloud-service-base-run.version>
 		<maozi-cloud-service-base-impl.version>${parent-revision}</maozi-cloud-service-base-impl.version>
 		<maozi-cloud-service-base-rpc-api.version>${parent-revision}</maozi-cloud-service-base-rpc-api.version>
+		<maozi-cloud-service-base-rest-api.version>${parent-revision}</maozi-cloud-service-base-rest-api.version>
 
 
 		<maozi-cloud-service-bd.version>${parent-revision}</maozi-cloud-service-bd.version>
@@ -411,7 +412,7 @@
 		<module>maozi-cloud-common</module>
 		<module>maozi-cloud-service</module>
 		<module>maozi-cloud-config</module>
-	</modules>
+  </modules>
 
 
 </project>

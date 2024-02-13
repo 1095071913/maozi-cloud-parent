@@ -1,7 +1,7 @@
 package com.maozi.base.result;
 
 import com.maozi.base.AbstractBaseDtomain;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "EnumResult")
 public class EnumResult extends AbstractBaseDtomain {
 	
-	@ApiModelProperty(value = "枚举编码")
+	@Schema(description = "枚举编码")
 	private Integer value;
 	
-	@ApiModelProperty(value = "描述")
+	@Schema(description = "描述")
 	private String desc;
 
 }

@@ -21,20 +21,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import lombok.Data;
 
-/**
- *
- * 功能说明：装载Code信息码HashMap
- *
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- * 创建日期：2019-08-01 03:56:00
- *
- * 版权归属：蓝河团队
- *
- * 协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
 @Data
 public class CodeHashMap extends HashMap<Object, CodeAttribute> implements Serializable {
 

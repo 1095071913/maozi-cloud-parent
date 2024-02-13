@@ -33,19 +33,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-/**
- * 功能说明：领域模型Do
- * <p>
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * <p>
- * 创建日期：2019-08-03 ：1:32:00
- * <p>
- * 版权归属：蓝河团队
- * <p>
- * 协议说明：Apache2.0（ 文件顶端 ）	
- *
- */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

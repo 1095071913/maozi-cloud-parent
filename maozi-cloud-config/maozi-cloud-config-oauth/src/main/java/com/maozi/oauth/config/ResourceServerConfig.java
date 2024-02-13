@@ -28,21 +28,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
-/**
- * 
- * 	功能说明：SSO认证配置
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-10-25 : 17:59:00
- *
- *	版权归属：蓝河团队
- *   
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
-
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)

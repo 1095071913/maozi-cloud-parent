@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.maozi.base.AbstractBaseVomain;
 import com.maozi.base.param.PageParam;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import java.util.function.Supplier;
 import javax.validation.Valid;
@@ -19,13 +19,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PageResult<D> extends AbstractBaseVomain {
 	
-	@ApiModelProperty(value = "页数",example = "1")
+	@Schema(description = "页数",example = "1")
 	private Long current;
 	
-	@ApiModelProperty(value = "每页数量",example = "10")
+	@Schema(description = "每页数量",example = "10")
 	private Long size;
 
-	@ApiModelProperty(value = "数据总数",hidden = true)
+	@Schema(description = "数据总数",hidden = true)
 	private Long total;
 	
 	@Valid

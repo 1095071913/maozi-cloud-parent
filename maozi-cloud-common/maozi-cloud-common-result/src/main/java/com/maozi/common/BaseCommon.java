@@ -417,6 +417,10 @@ public class BaseCommon implements Serializable{
 		return ! type.getDesc().equals(ApplicationEnvironmentContext.environment);
 	}
 
+	public static String getVersionDefault(Object version){
+		return isNotNull(version) && isNotEmpty(version.toString()) ? version.toString() : "main";
+	}
+
 	public static String getStackTrace(Throwable t) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
@@ -458,6 +462,28 @@ public class BaseCommon implements Serializable{
 		
 		throw new BusinessResultException(500,"内部服务错误",200);
 		
+	}
+
+	public static void log(Boolean error,String message){
+
+		if(!error){
+			info(message);
+		}else{
+			error(message);
+		}
+
+	}
+
+	public static void log(Boolean error,Map<String, String> logs){
+
+		String message = appendLog(logs).toString();
+
+		if(!error){
+			info(message);
+		}else{
+			error(message);
+		}
+
 	}
 
 	public static void debug(String message) {

@@ -1,4 +1,4 @@
-package com.maozi.feign;
+package com.maozi.feign.config;
 
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.success.SuccessResult;

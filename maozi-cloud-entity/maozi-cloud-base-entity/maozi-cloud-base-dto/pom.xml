@@ -11,11 +11,11 @@
 
     <dependencies>
 
-       <dependency>
-         <groupId>com.github.xiaoymin</groupId>
-         <artifactId>knife4j-annotations</artifactId>
-         <version>${knife4j-annotations.version}</version>
-        </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.maozi</groupId>

@@ -24,4 +24,9 @@ public enum StoreClassType implements IEnum {
     @Setter
     private String desc;
 
+    @Override
+    public String toString() {
+        return value+"."+desc;
+    }
+
 }

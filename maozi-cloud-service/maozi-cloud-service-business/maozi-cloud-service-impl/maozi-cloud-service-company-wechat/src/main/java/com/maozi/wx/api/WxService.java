@@ -22,20 +22,6 @@ import java.util.Map;
 import org.springframework.http.HttpMethod;
 import org.w3c.dom.Document;
 
-/**
- * 
- * 	功能说明：User私有函数
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-09-02 : 1:36:00
- *
- *	版权归属：蓝河团队
- *
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
 public interface WxService {
 
 	String getDocumentData(Document document, String tag);

@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -33,18 +32,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-/**
- * 功能说明：领域模型服务（无DB）启动
- * <p>
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * <p>
- * 创建日期：2019-08-03 ：1:32:00
- * <p>
- * 版权归属：蓝河团队
- * <p>
- * 协议说明：Apache2.0（ 文件顶端 ）
- */
 
 @Slf4j
 @EnableAsync

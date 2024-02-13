@@ -1,7 +1,6 @@
 package com.maozi.base.enums;
 
 import com.maozi.base.IEnum;
-import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,6 @@ import lombok.Setter;
  * 
  */
 
-@SwaggerDisplayEnum
 public enum EnvironmentType implements IEnum {
 	
 	localhost(0,"localhost"),test(1,"test"),production(2,"production");
@@ -39,5 +37,10 @@ public enum EnvironmentType implements IEnum {
 	@Getter
 	@Setter 
 	private String desc;
+
+	@Override
+	public String toString() {
+		return value+"."+desc;
+	}
 
 }

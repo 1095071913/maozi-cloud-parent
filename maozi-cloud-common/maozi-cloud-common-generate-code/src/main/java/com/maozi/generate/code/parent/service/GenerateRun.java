@@ -19,21 +19,6 @@ package com.maozi.generate.code.parent.service;
 
 import com.maozi.generate.code.tool.SQLType;
 
-/**
- * 
- * 	功能说明：生成服务启动入口
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-10-24 : 0:24:00
- *
- *	版权归属：蓝河团队
- *
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
-
 public class GenerateRun {
 
 	public static void generate(String module,String packageName, String pash,Boolean db) throws Exception {

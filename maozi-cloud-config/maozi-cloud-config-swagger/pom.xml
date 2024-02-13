@@ -12,9 +12,9 @@
 	<dependencies>
 
 		<dependency>
-    		<groupId>com.github.xiaoymin</groupId> 
-   	 		<artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
-    		<version>${knife4j-openapi2-spring-boot-starter.version}</version>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+    		<version>${knife4j-openapi3-spring-boot-starter.version}</version>
 		</dependency>
 
 		<dependency>
@@ -29,6 +29,12 @@
 			<version>${maozi-cloud-base-enum.version}</version>
 		</dependency>
 
-	</dependencies>
+    <dependency>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-config-oauth</artifactId>
+      <version>${maozi-cloud-config-oauth.version}</version>
+    </dependency>
+
+  </dependencies>
 
 </project>

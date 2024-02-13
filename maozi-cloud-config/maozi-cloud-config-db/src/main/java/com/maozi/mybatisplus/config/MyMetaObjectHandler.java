@@ -24,19 +24,6 @@ import com.maozi.common.BaseCommon;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * 
- * 功能说明：Mybatis修改拦截设置
- * 
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- * 创建日期：2019-09-03 ：3:44:00
- *
- * 版权归属：蓝河团队
- *
- * 协议说明：Apache2.0（ 文件顶端 ）
- *
- */
 @Configuration
 public class MyMetaObjectHandler extends BaseCommon implements MetaObjectHandler {
 

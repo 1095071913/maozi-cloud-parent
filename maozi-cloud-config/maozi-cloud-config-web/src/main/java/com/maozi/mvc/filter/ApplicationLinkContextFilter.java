@@ -20,7 +20,9 @@ public class ApplicationLinkContextFilter implements HandlerInterceptor {
 
 		String username = (BaseCommon.isNull(authentication) || !authentication.isAuthenticated()) ? "anonymousUser" : authentication.getName();
 
-		ApplicationLinkContext.set(request.getHeader("Version"),username);
+		String version = BaseCommon.getVersionDefault(request.getHeader("Version"));
+
+		ApplicationLinkContext.set(version,username);
 
 		return true;
 

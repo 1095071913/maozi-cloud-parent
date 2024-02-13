@@ -1,7 +1,6 @@
 package com.maozi.base.enums;
 
 import com.maozi.base.IEnum;
-import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,6 @@ import lombok.Setter;
  * @Date: 2023-03-22 11:21:04
  *
  */
-@SwaggerDisplayEnum
 public enum Status implements IEnum {
 	
 	disable(0,"禁用"),enable(1,"启用");
@@ -35,5 +33,10 @@ public enum Status implements IEnum {
 	@Getter
 	@Setter 
 	private String desc;
+
+	@Override
+	public String toString() {
+		return value+"."+desc;
+	}
 
 }

@@ -1,4 +1,4 @@
-package com.maozi.config.sentinel;
+package com.maozi.monitor.config.sentinel;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;

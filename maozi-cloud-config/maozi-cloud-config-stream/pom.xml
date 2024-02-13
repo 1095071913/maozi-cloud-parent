@@ -10,14 +10,17 @@
 	<artifactId>maozi-cloud-config-stream</artifactId>
 
  
-	<dependencies> 
-	
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 	
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
 		</dependency>
-		
 		
 		<!-- Project Begin -->
 		<dependency>
@@ -25,8 +28,7 @@
 			<artifactId>maozi-cloud-common-result</artifactId>
 			<version>${maozi-cloud-common-result.version}</version>
 		</dependency> 
-		<!-- Project End --> 
-		
+		<!-- Project End -->
 
 	</dependencies>
 

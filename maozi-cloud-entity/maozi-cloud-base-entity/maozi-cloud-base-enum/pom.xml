@@ -9,17 +9,17 @@
   
   <dependencies>
 	  
-  		<dependency>
+    <dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-annotation</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
-		
-		<dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-annotations</artifactId>
-            <version>3.0.3</version>
-        </dependency>
+
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger.version}</version>
+    </dependency>
 		
   </dependencies>
   

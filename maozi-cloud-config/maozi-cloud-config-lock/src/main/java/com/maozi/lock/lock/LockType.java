@@ -9,6 +9,7 @@ import com.maozi.lock.lock.impl.ReentrantLock;
 import com.maozi.lock.lock.impl.WriteLock;
 import com.maozi.utils.SpringUtil;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
+import java.util.function.Supplier;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,10 +35,63 @@ public enum LockType implements IEnum {
     @Setter
     private String desc;
 
+    @Override
+    public String toString() {
+        return value+"."+desc;
+    }
+
     private Class< ? extends Lock > lockClass;
 
     public Lock getLock(){
         return SpringUtil.getBean(lockClass);
+    }
+
+    public <T> T lock(String key, Supplier<T> supplier) throws Exception {
+
+        lock(key,60L,60L,LockTimeoutStrategy.KEEP_ACQUIRE);
+
+        T t = supplier.get();
+
+        unlock(key);
+
+        return t;
+
+    }
+
+    public <T> T lock(String key, LockTimeoutStrategy strategy, Supplier<T> supplier) throws Exception {
+
+        lock(key,60L,60L,strategy);
+
+        T t = supplier.get();
+
+        unlock(key);
+
+        return t;
+
+    }
+
+    public <T> T lock(String key, LockTimeoutStrategy lockTimeoutStrategy,UnLockTimeoutStrategy unLockTimeoutStrategy, Supplier<T> supplier) throws Exception {
+
+        lock(key,60L,60L,lockTimeoutStrategy);
+
+        T t = supplier.get();
+
+        unlock(key,unLockTimeoutStrategy);
+
+        return t;
+
+    }
+
+    public <T> T lock(String key, Long waitTime,Long leaseTime, Supplier<T> supplier) throws Exception {
+
+        lock(key,waitTime,leaseTime,LockTimeoutStrategy.KEEP_ACQUIRE);
+
+        T t = supplier.get();
+
+        unlock(key,UnLockTimeoutStrategy.NO_OPERATION);
+
+        return t;
+
     }
 
     public void lock(String key) throws Exception {

@@ -37,7 +37,7 @@ public class RestEntranceLogUtils extends BaseCommon {
     @Async("applicationTaskExecutor")
     public void errorLogAlarm(ProceedingJoinPoint proceedingJoinPoint,String arg,String tid,Map<String,String> logs) {
     	
-    	String errorUrl=logs.get("errorLine");
+    	String errorUrl=logs.get("ErrorLine");
     	
     	String key=proceedingJoinPoint.getSignature().getDeclaringTypeName()+proceedingJoinPoint.getSignature().getName()+errorUrl;
     	

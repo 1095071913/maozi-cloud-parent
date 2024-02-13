@@ -23,37 +23,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-/**
- * 功能说明：抽象结果集
- * 
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * 
- * 创建日期：2019-08-01 ：4:07:00
- * 
- * 版权归属：蓝河团队
- * 
- * 协议说明：Apache2.0（ 文件顶端 ）
- */
-
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@ApiModel("接口结果集")
+@Schema(description = "接口结果集")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseResult<D> implements Serializable {
 	
-	@ApiModelProperty("数据")
+	@Schema(description = "数据")
 	public abstract D getData();
 	
-	@ApiModelProperty("业务内码")
+	@Schema(description = "业务内码")
 	public abstract Integer getCode();
 	
 	@JsonIgnore

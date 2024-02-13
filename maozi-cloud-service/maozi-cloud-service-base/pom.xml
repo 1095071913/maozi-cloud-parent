@@ -13,6 +13,7 @@
         <module>maozi-cloud-service-base-rpc-api</module>
         <module>maozi-cloud-service-base-impl</module>
         <module>maozi-cloud-service-base-run</module>
+        <module>maozi-cloud-service-base-rest-api</module>
     </modules>
 
 

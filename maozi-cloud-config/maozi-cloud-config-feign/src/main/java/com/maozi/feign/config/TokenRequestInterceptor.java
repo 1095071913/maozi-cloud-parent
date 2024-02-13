@@ -1,4 +1,4 @@
-package com.maozi.feign;
+package com.maozi.feign.config;
 
 import static com.maozi.common.BaseCommon.getRequest;
 

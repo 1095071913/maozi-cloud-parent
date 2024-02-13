@@ -1,7 +1,6 @@
 package com.maozi.base.enums;
 
 import com.maozi.base.IEnum;
-import com.maozi.base.enums.config.annotation.SwaggerDisplayEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,6 @@ import lombok.Setter;
  * @Date: 2023-03-22 11:21:04
  *
  */
-@SwaggerDisplayEnum
 public enum Deleted implements IEnum {
 	
 	none(0,"未删除"),del(1,"已删除");
@@ -35,5 +33,10 @@ public enum Deleted implements IEnum {
 	@Getter
 	@Setter
 	private String desc;
+
+	@Override
+	public String toString() {
+		return value+"."+desc;
+	}
 
 }

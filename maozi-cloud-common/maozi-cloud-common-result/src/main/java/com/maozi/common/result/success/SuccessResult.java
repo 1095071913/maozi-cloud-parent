@@ -18,30 +18,18 @@
 package com.maozi.common.result.success;
 
 import com.maozi.common.result.AbstractBaseResult;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-/**
- * 功能说明：结果集成功信息
- * 
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * 
- * 创建日期：2019-08-01 ：4:06:00
- * 
- * 版权归属：蓝河团队
- * 
- * 协议说明：Apache2.0（ 文件顶端 ）
- */
-
 @Data
 @NoArgsConstructor
-@ApiModel("接口成功结果集")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=true)
+@Schema(description = "接口成功结果集")
 public class SuccessResult<D> extends AbstractBaseResult<D> implements Serializable {
 	
 	private D data;

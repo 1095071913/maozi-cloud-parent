@@ -22,22 +22,6 @@ import com.maozi.generate.code.entity.EntityData;
 import com.maozi.generate.code.tool.SQLType;
 import java.util.List;
 
-
-/**
- * 
- * 	功能说明：生成Mapper
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-10-20 ：10:31:00
- *
- *	版权归属：蓝河团队
- *
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
-
 public class GenerateMapper {
 
 	public static void generate(String module,List<EntityData> entityDatas, String pash) throws Exception {

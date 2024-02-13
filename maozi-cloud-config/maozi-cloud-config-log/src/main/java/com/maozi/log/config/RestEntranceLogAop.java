@@ -39,18 +39,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
-/**
- * 功能说明：日志收集
- * <p>
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- * <p>
- * 创建日期：2019-08-03 ：1:32:00
- * <p>
- * 版权归属：蓝河团队
- * <p>
- * 协议说明：Apache2.0（ 文件顶端 ）
- */ 
-
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
@@ -85,7 +73,6 @@ public class RestEntranceLogAop extends BaseCommon {
 		if(notEnvironment(EnvironmentType.production)){
 			logs.put("Param", arg);
 		}
-
 
         Object resultData = null;
 
@@ -164,6 +151,5 @@ public class RestEntranceLogAop extends BaseCommon {
         return resultData;
     
     }
-    
 
 }

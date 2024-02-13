@@ -1,4 +1,4 @@
-package com.maozi.feign;
+package com.maozi.feign.config;
 
 import com.maozi.common.result.error.exception.BusinessResultException;
 import feign.Response;

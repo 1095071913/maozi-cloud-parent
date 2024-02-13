@@ -15,6 +15,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-openfeign-core</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-base-rest-api</artifactId>
+			<version>${maozi-cloud-service-base-rest-api.version}</version>
+		</dependency>
 		 
 	</dependencies>
 

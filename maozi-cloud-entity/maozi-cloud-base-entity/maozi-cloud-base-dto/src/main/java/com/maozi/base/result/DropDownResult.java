@@ -18,7 +18,7 @@
 package com.maozi.base.result;
 
 import com.maozi.base.AbstractBaseDtomain;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,7 +45,7 @@ public class DropDownResult extends AbstractBaseDtomain{
 
 	private Long id;
 	
-	@ApiModelProperty(value = "名称")
+	@Schema(description = "名称")
 	private String name;
 	
 }

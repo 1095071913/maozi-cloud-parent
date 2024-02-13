@@ -18,27 +18,11 @@
 package com.maozi;
 
 import com.maozi.base.enums.EnvironmentType;
-import com.maozi.common.BaseCommon;
 import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-
-/**
- * 
- * 功能说明：领域模型服务（DB）启动
- * 
- * 功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- * 创建日期：2019-08-03 ：1:32:00
- *
- * 版权归属：蓝河团队
- *
- * 协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.gitee.sunchenbin.mybatis.actable.manager.*")

@@ -31,22 +31,6 @@ import java.util.List;
 import java.util.Map;
 import lombok.Data;
 
-
-/**
- * 
- * 	功能说明：生成Do
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-10-20 ：10:22:00
- *
- *	版权归属：蓝河团队
- *
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
-
 @Data
 public class GenerateEntity {
 

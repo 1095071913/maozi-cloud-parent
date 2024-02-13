@@ -12,20 +12,20 @@
 	<dependencies>
 
 
-		<!-- Project Begin -->  
+		<!-- Project Begin -->
 		<dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-annotations</artifactId>
-            <version>${knife4j-annotations.version}</version>
-        </dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
         
-        <dependency>
+		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-extension</artifactId>
-        	<version>${mybatis-plus.version}</version>
-    	</dependency>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
     	
-    	<dependency>
+		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-base-dto</artifactId>
 			<version>${maozi-cloud-base-dto.version}</version>

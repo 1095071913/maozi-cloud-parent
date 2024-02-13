@@ -23,22 +23,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
-/**
- * 
- * 	功能说明：C3P0 DataSource
- * 
- *	功能作者：彭晋龙 ( 联系方式QQ/微信：1095071913 )
- *
- *	创建日期：2019-10-20 : 12:09:00
- *
- *	版权归属：蓝河团队
- *
- *	协议说明：Apache2.0（ 文件顶端 ）
- *
- */
-
-
 public class C3P0 {
 	ComboPooledDataSource c = null;
 	private C3P0() {

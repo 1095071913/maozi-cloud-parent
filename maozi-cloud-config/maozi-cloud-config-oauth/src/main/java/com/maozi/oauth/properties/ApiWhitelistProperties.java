@@ -20,17 +20,12 @@ public class ApiWhitelistProperties {
 		{
     		add("/oauth/check_token");
     		add("/webjars/**");
-    		add("/actuator");
     		
     		add("/actuator/**");
     		add("/application/**");
     		
 			add("/doc.html");
-			add("/v2/api-docs/**");
-			add("/swagger-ui.html/**");
-			add("/swagger-ui.html");
-			add("/swagger-resources/**");
-			add("/favicon.ico");
+			add("/v3/api-docs/**");
 			
     	}
 

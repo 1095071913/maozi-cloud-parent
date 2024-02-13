@@ -26,25 +26,25 @@ import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
-public class RestTemplate extends org.springframework.web.client.RestTemplate{
+public class RestTemplate extends org.springframework.web.client.RestTemplate {
 	
 	@Nullable
 	@Override
 	protected <T> T doExecute(URI url, @Nullable HttpMethod method, @Nullable RequestCallback requestCallback,@Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
 
-		Boolean isError=false; 
+		Boolean error = false;
+
+		Long startTime = System.currentTimeMillis();
+
+		Map<String,String> logs = new LinkedHashMap<String, String>();
 		
 		ClientHttpResponse response = null;
-		
-		Map<String,String> logs = new LinkedHashMap<String, String>();
 		
 		try {
 			
 			Assert.notNull(url, "URI is required");
 			
 			Assert.notNull(method, "HttpMethod is required");
-			
-			Long startTime = System.currentTimeMillis();
 			
 			ClientHttpRequest request = createRequest(url, method);
 	        
@@ -58,7 +58,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
 				requestCallback.doWithRequest(request);
 			}
 			
-			InputStream paramData=parse(request.getBody());
+			InputStream paramData = parse(request.getBody());
 			
 			String requestParam = new String(readStream(paramData));
 			
@@ -81,14 +81,14 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
 			return t;
 		} 
 		catch (Exception e) {
+
+			error = true;
 			
 			String resource = url.toString();
 			
 			String query = url.getRawQuery();
 			
 			resource = (query != null ? resource.substring(0, resource.indexOf('?')) : resource);
-			
-			isError=true;
 			
 			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
 			
@@ -103,20 +103,26 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate{
             logs.put("ErrorLine", stackTraceElement.toString());
             
 			return null;
-		}
-		finally {
+
+		}finally {
 			
 			if (response != null) {
 				response.close();
 			}
-            
-            if(isError) {
-				BaseCommon.log.error(BaseCommon.appendLog(logs).toString());
-            }else {
-				BaseCommon.log.info(BaseCommon.appendLog(logs).toString());
-            }
+
+			StringBuilder respSql = BaseCommon.sql.get();
+			if (BaseCommon.isNotNull(respSql)) {
+				logs.put("SQL", respSql.toString());
+			}
+
+			logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
+
+			BaseCommon.log(error,logs);
+
+			BaseCommon.clearContext();
 			
 		}
+
 	}
 	
 	

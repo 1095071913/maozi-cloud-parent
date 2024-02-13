@@ -17,17 +17,15 @@
 
 package com.maozi.qny.api.impl.rest;
 
+import com.maozi.base.annotation.Get;
+import com.maozi.base.annotation.RestService;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.qny.properties.QNYProperties;
 import com.qiniu.util.Auth;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**	
  * 
@@ -43,16 +41,16 @@ import org.springframework.web.bind.annotation.RestController;
  * 
  */
 
-@RestController
-@RequestMapping("/oss")	
-@Api(tags = "【全局 】图片管理")
-public class OssServiceRestImpl extends BaseCommon{
+@RestService
+@Tag(name = "【全局】图片管理")
+public class OssServiceRestImpl extends BaseCommon {
+
+	private static final String PATH = "/oss";
 	
 	@Resource
 	private QNYProperties qnyProperties;
 
-	@ApiOperation(value = "获取七牛云图片访问token")
-	@GetMapping(value = "/getToken")
+	@Get(value = PATH + "/getToken",description = "获取七牛云图片访问令牌")
 	public AbstractBaseResult<String> getToken(@RequestParam String url) throws Exception{
 		
 		Auth auth = Auth.create(qnyProperties.getAccessKey(), qnyProperties.getSecretKey());
