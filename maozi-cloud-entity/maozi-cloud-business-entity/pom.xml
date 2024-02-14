@@ -9,10 +9,10 @@
   <packaging>pom</packaging>
   
   <modules>
-	<module>maozi-cloud-do</module>
-	<module>maozi-cloud-vo</module>
-	<module>maozi-cloud-dto</module>
-	<module>maozi-cloud-enum</module>
+	  <module>maozi-cloud-do</module>
+	  <module>maozi-cloud-vo</module>
+	  <module>maozi-cloud-dto</module>
+	  <module>maozi-cloud-enum</module>
   </modules>
   
 </project>

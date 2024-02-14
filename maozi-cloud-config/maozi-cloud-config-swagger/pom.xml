@@ -12,9 +12,9 @@
 	<dependencies>
 
 		<dependency>
-				<groupId>com.github.xiaoymin</groupId>
-				<artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
-    		<version>${knife4j-openapi3-spring-boot-starter.version}</version>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+			<version>${knife4j-openapi3-spring-boot-starter.version}</version>
 		</dependency>
 
 		<dependency>

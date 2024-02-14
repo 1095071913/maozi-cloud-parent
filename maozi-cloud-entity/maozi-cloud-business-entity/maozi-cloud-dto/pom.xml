@@ -2,22 +2,20 @@
     
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.maozi</groupId>
-        <artifactId>maozi-cloud-business-entity</artifactId>
-        <version>${parent-revision}</version>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-business-entity</artifactId>
+      <version>${parent-revision}</version>
     </parent>  
     <artifactId>maozi-cloud-dto</artifactId>
     <packaging>pom</packaging>
      
     
     <dependencies>
-		
     	<dependency>
-			<groupId>com.maozi</groupId>  
-			<artifactId>maozi-cloud-base-dto</artifactId>
-			<version>${maozi-cloud-base-dto.version}</version>
-		</dependency>
-		
+			  <groupId>com.maozi</groupId>
+			  <artifactId>maozi-cloud-base-dto</artifactId>
+			  <version>${maozi-cloud-base-dto.version}</version>
+		  </dependency>
     </dependencies>
 
 

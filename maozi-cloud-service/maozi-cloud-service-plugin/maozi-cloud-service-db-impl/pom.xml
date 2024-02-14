@@ -9,13 +9,13 @@
   
   
   <dependencies>
-	  
+
 	    <!-- Project Begin -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-db</artifactId>
-            <version>${maozi-cloud-config-db.version}</version> 
-        </dependency>
+    <dependency>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-config-db</artifactId>
+      <version>${maozi-cloud-config-db.version}</version>
+    </dependency>
         <!-- Project End -->
 	  
   </dependencies>  

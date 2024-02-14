@@ -2,18 +2,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.maozi</groupId>
-        <artifactId>maozi-cloud-service</artifactId>
-        <version>${parent-revision}</version>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-service</artifactId>
+      <version>${parent-revision}</version>
     </parent>
     <artifactId>maozi-cloud-service-base</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>maozi-cloud-service-base-rpc-api</module>
-        <module>maozi-cloud-service-base-impl</module>
-        <module>maozi-cloud-service-base-run</module>
-        <module>maozi-cloud-service-base-rest-api</module>
+      <module>maozi-cloud-service-base-rpc-api</module>
+      <module>maozi-cloud-service-base-impl</module>
+      <module>maozi-cloud-service-base-run</module>
+      <module>maozi-cloud-service-base-rest-api</module>
     </modules>
 
 

@@ -9,9 +9,9 @@
   <packaging>pom</packaging>
   
   <modules>
-	<module>maozi-cloud-service-impl</module>
-	<module>maozi-cloud-service-rpc-api</module>
-	<module>maozi-cloud-service-rest-api</module>
+	  <module>maozi-cloud-service-impl</module>
+	  <module>maozi-cloud-service-rpc-api</module>
+	  <module>maozi-cloud-service-rest-api</module>
   </modules>
   
 </project>

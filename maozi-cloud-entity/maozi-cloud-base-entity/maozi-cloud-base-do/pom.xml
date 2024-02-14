@@ -23,12 +23,12 @@
 		</dependency>
 		
 		<dependency>
-      		<groupId>org.mybatis</groupId>
-      		<artifactId>mybatis</artifactId>
-      		<version>${mybatis.version}</version>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
     	</dependency>
     	
-    	<dependency>
+		<dependency>
 			<groupId>com.gitee.sunchenbin.mybatis.actable</groupId>
 			<artifactId>mybatis-enhance-actable</artifactId>
 			<version>${mybatis-enhance-actable.version}</version>

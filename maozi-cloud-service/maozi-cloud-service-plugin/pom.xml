@@ -10,7 +10,7 @@
   
   <dependencies>
 	  
-	  	<dependency>
+		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-service-impl</artifactId>
 			<version>${maozi-cloud-service-impl.version}</version>
@@ -32,15 +32,15 @@
 		</dependency>
 		
 		<dependency>
-			 <groupId>com.maozi</groupId>
-			 <artifactId>maozi-cloud-service-base-rpc-api</artifactId>
-			 <version>${maozi-cloud-service-base-rpc-api.version}</version>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-base-rpc-api</artifactId>
+			<version>${maozi-cloud-service-base-rpc-api.version}</version>
 		</dependency>
 	
   </dependencies>
   
   <modules>
-	<module>maozi-cloud-service-db-impl</module>
+		<module>maozi-cloud-service-db-impl</module>
   </modules>
   
 </project>

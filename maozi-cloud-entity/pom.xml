@@ -2,16 +2,16 @@
     
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.maozi</groupId>
-        <artifactId>maozi-cloud-parent</artifactId>
-        <version>${parent-revision}</version>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-parent</artifactId>
+      <version>${parent-revision}</version>
     </parent>
     <artifactId>maozi-cloud-entity</artifactId>  
     <packaging>pom</packaging>
 
     <modules>
-        <module>maozi-cloud-base-entity</module>
-        <module>maozi-cloud-business-entity</module>
+      <module>maozi-cloud-base-entity</module>
+      <module>maozi-cloud-business-entity</module>
     </modules>
 
 </project>
