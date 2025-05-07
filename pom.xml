@@ -37,7 +37,7 @@
 		<cglib.version>3.3.0</cglib.version>
 		<dubbo.version>3.0.8</dubbo.version>
 		<arthas.version>3.6.7</arthas.version>
-		<hutool.version>5.8.28</hutool.version>
+		<hutool.version>5.8.37</hutool.version>
 		<easypoi.version>4.3.0</easypoi.version>
 		<swagger.version>2.2.9</swagger.version>
 		<mybatis.version>3.5.10</mybatis.version>
