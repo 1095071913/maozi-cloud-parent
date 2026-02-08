@@ -53,6 +53,8 @@ import java.util.stream.Collectors;
 
 public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D extends AbstractBaseDtomain, E extends AbstractBaseCode> extends MPJBaseServiceImpl<M, T ,E> implements MPJBaseService<T>,BaseServiceResult<D> {
 
+	private final String SERIAL_VERSION_UID = "serialVersionUID";
+
 	protected Class<T> doClass;
 	
 	protected Class<D> dtoClass;
@@ -167,6 +169,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			Field [] fields = clazz.getDeclaredFields();
 
 			for(Field field : fields) {
+
+				if(SERIAL_VERSION_UID.equals(field.getName())){
+					continue;
+				}
 
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
 
@@ -836,6 +842,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		Field [] fields = ReflectUtil.getFields(param.getClass());
 		
 		for(Field field : fields) {
+
+			if(SERIAL_VERSION_UID.equals(field.getName())){
+				continue;
+			}
 			
 			Object data = ReflectUtil.invoke(param, "get"+StrUtil.upperFirst(field.getName()));
 			

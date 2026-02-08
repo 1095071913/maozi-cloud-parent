@@ -47,7 +47,7 @@
 		<mybatis-plus.version>3.5.3.1</mybatis-plus.version>
 		<transmittable.version>2.14.5</transmittable.version>
 		<springdoc-openapi.version>1.7.0</springdoc-openapi.version>
-		<mybatis-plus-join.version>1.4.8</mybatis-plus-join.version>
+		<mybatis-plus-join.version>1.4.5</mybatis-plus-join.version>
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
 		<!-- Other Component End -->
 
