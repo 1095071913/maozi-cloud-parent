@@ -1,46 +1,42 @@
 package com.maozi.log.utils;
 
-import com.maozi.base.error.code.SystemErrorCode;
+import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.BaseCommon;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import com.maozi.utils.constant.LogTag;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Component
-public class RestEntranceLogUtils extends BaseCommon<SystemErrorCode> {
+public class RestEntranceLogUtils extends BaseCommon {
 
 	public Map<String, String> logRequest(ProceedingJoinPoint proceedingJoinPoint,HttpServletRequest request,String rpcUrl) {
     	
-		Map<String, String> logs = new LinkedHashMap();
+		Map<String, String> logs = new LinkedHashMap<>();
 
-        if (!isNull(request)) {
+		boolean isHttp = isNotNull(request);
+		logs.put(LogTag.TYPE, isHttp ? LogCommonType.WEB.getDesc() : LogCommonType.RPC.getDesc());
+		logs.put(LogTag.IP, isHttp ? getIpAddr(request) : rpcUrl);
+		if(isHttp){
+			logs.put(LogTag.URL, request.getRequestURL().toString());
+		}
+		logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
-        	logs.put("Type", "Undertow");
-        	logs.put("IP", getIpAddr(request));
-            logs.put("URI", request.getRequestURL().toString());
-            logs.put("Function", proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
-
-        } else {
-            
-        	logs.put("Type", "Dubbo");
-        	logs.put("IP", rpcUrl);
-        	logs.put("Function", proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
-
-        }
-        
         return logs;
+
     }
     
     
     @Async("applicationTaskExecutor")
     public void errorLogAlarm(ProceedingJoinPoint proceedingJoinPoint,String arg,String tid,Map<String,String> logs) {
     	
-    	String errorUrl=logs.get("ErrorLine");
+    	String errorLine = logs.get(LogTag.ERROR_LINE);
     	
-    	String key=proceedingJoinPoint.getSignature().getDeclaringTypeName()+proceedingJoinPoint.getSignature().getName()+errorUrl;
+    	String key = proceedingJoinPoint.getSignature().getDeclaringTypeName() + proceedingJoinPoint.getSignature().getName() + errorLine;
     	
     	if(!adminHealthError.containsKey(key)) { 
     		errorAlarm(key, logs);
@@ -52,19 +48,19 @@ public class RestEntranceLogUtils extends BaseCommon<SystemErrorCode> {
     	
     	String ip = request.getHeader("x-forwarded-for");
 		
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_CLIENT_IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
 		if ("0:0:0:0:0:0:0:1".equals(ip)) {

@@ -2,11 +2,12 @@ package com.maozi.base.result;
 
 import com.maozi.base.AbstractBaseVomain;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.List;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
 @Data

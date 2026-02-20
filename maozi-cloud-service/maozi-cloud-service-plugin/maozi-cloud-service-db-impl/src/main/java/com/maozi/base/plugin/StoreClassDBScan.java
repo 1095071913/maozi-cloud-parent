@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.collect.Maps;
 import com.maozi.base.enums.StoreClassType;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
-import java.util.HashMap;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
 
 @Component
 public class StoreClassDBScan implements ApplicationRunner {
@@ -30,7 +31,7 @@ public class StoreClassDBScan implements ApplicationRunner {
 
         });
 
-        StoreClass.storeClassMap.put(StoreClassType.db,storeClassDBMap);
+        StoreClass.storeClassMap.put(StoreClassType.DB,storeClassDBMap);
 
     }
 

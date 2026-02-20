@@ -6,7 +6,11 @@ import lombok.Setter;
 
 public enum Status implements BaseEnum {
 	
-	disable(0,"禁用"),enable(1,"启用");
+	DISABLE(0,"禁用"),
+
+	ENABLE(1,"启用"),
+
+	;
 	
 	Status(Integer value,String desc) {
 		

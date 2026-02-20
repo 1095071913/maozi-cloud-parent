@@ -1,14 +1,6 @@
 package com.maozi.mvc.config.rest;
 
 import com.maozi.common.BaseCommon;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
 import org.apache.skywalking.apm.toolkit.trace.Trace;
@@ -25,6 +17,15 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class RestTemplate extends org.springframework.web.client.RestTemplate {
 	

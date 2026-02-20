@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
-import java.util.List;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
  
 @Configuration
 public class EasySqlInjector extends DefaultSqlInjector {

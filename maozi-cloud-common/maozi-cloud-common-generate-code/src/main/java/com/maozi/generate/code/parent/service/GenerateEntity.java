@@ -22,6 +22,8 @@ import com.maozi.generate.code.datasource.C3P0;
 import com.maozi.generate.code.entity.EntityData;
 import com.maozi.generate.code.entity.TableData;
 import com.maozi.generate.code.tool.SQLType;
+import lombok.Data;
+
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 
 @Data
 public class GenerateEntity {

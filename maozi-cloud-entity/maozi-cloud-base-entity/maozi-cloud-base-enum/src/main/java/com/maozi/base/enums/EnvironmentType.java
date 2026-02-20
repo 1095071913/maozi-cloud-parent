@@ -2,13 +2,18 @@ package com.maozi.base.enums;
 
 import com.maozi.base.BaseEnum;
 import lombok.Getter;
-import lombok.Setter;
 
 
 
 public enum EnvironmentType implements BaseEnum {
 	
-	localhost(0,"localhost"),test(1,"test"),production(2,"production");
+	LOCAL(0,"local"),
+
+	TEST(1,"test"),
+
+	PROD(2,"prod"),
+
+	;
 	
 	EnvironmentType(Integer value,String desc) {
 		
@@ -19,12 +24,10 @@ public enum EnvironmentType implements BaseEnum {
 	}
 	
 	@Getter
-	@Setter
-	private Integer value;
+	private final Integer value;
 	
 	@Getter
-	@Setter 
-	private String desc;
+	private final String desc;
 
 	@Override
 	public String toString() {

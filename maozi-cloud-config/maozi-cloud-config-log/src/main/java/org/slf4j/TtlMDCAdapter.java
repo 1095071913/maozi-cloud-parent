@@ -1,13 +1,14 @@
 package org.slf4j;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.slf4j.spi.MDCAdapter;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.slf4j.spi.MDCAdapter;
 
 @Data
 @NoArgsConstructor

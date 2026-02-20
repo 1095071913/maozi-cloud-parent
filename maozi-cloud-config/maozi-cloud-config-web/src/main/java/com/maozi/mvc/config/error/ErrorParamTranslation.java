@@ -23,9 +23,10 @@ import com.alibaba.nacos.api.config.listener.Listener;
 import com.maozi.common.BaseCommon;
 import com.maozi.utils.MapperUtils;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
+import org.springframework.context.annotation.Configuration;
+
 import java.util.Map;
 import java.util.concurrent.Executor;
-import org.springframework.context.annotation.Configuration;
 
 
 @Configuration

@@ -3,13 +3,14 @@ package com.maozi.dubbo.router;
 import com.google.common.collect.Lists;
 import com.maozi.common.BaseCommon;
 import com.maozi.utils.context.ApplicationLinkContext;
-import java.util.List;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.RpcException;
 import org.apache.dubbo.rpc.cluster.router.AbstractRouter;
 import org.apache.dubbo.rpc.cluster.router.RouterResult;
+
+import java.util.List;
 
 public class GrayRouter extends AbstractRouter {
 
@@ -22,7 +23,7 @@ public class GrayRouter extends AbstractRouter {
 
         List<Invoker<T>> grayApplicationClients = Lists.newArrayList();
 
-        invokers.stream().forEach(invoker ->{
+        invokers.forEach(invoker ->{
 
             String clientApplicationVersion = invoker.getUrl().getParameter("application.version");
 
@@ -30,7 +31,7 @@ public class GrayRouter extends AbstractRouter {
                 grayApplicationClients.add(invoker);
             }
 
-            if("main".equals(clientApplicationVersion)){
+            if(ApplicationLinkContext.APPLICATION_DEFAULT_VERSION.equals(clientApplicationVersion)){
                 mainApplicationClients.add(invoker);
             }
 

@@ -35,6 +35,8 @@ import com.maozi.generate.code.parent.service.GenerateServiceImpl;
 import com.maozi.generate.code.parent.service.GenerateServicePom;
 import com.maozi.generate.code.parent.vo.GenerateVoPom;
 import com.maozi.generate.code.tool.SQLType;
+import org.springframework.util.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.util.StringUtils;
 
 
 

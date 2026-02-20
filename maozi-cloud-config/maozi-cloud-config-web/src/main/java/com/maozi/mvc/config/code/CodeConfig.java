@@ -5,17 +5,18 @@ import com.maozi.base.CodeData;
 import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.utils.SpringUtil;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
 @Component
 public class CodeConfig {
 
-    public static Map<Integer, CodeData> codes = new HashMap<Integer, CodeData>();
+    public static Map<Integer, CodeData<Void>> codes = new HashMap<>();
 
     public CodeConfig(){
         initCode();
@@ -33,7 +34,7 @@ public class CodeConfig {
 
                     field.setAccessible(true);
 
-                    if(field.get(codeBean) instanceof CodeData<?> codeData){
+                    if(field.get(codeBean) instanceof CodeData codeData){
                         codes.put(codeData.getCode(),codeData);
                     }
 
@@ -47,9 +48,9 @@ public class CodeConfig {
 
     }
 
-    public static CodeData getCode(Integer code) {
+    public static CodeData<Void> getCode(Integer code) {
 
-        CodeData codeData = codes.get(code);
+        CodeData<Void> codeData = codes.get(code);
 
         return BaseCommon.isNull(codeData) ? SystemErrorCode.NOT_EXIST_CODE_ERROR : codeData;
 

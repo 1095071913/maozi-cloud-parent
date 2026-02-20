@@ -1,74 +1,79 @@
 package com.maozi.common.result.error.exception;
 
-import static com.maozi.common.BaseCommon.error;
-
 import com.maozi.base.CodeData;
 import com.maozi.common.result.error.ErrorResult;
 import lombok.Data;
 
+import java.io.Serial;
+
+import static com.maozi.common.BaseCommon.error;
+
 @Data
 public class BusinessResultException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 3034121940056795549L;
     
-    private ErrorResult errorResult;
+    private ErrorResult<?> errorResult;
     
     public BusinessResultException(String message) {
         super(message);
-        this.errorResult = error(new CodeData(message));
+        this.errorResult = error(new CodeData<>(message));
     }
     
-    public BusinessResultException(String message,Integer httpCode) {
+    public <T> BusinessResultException(String message,Integer httpCode) {
         super(message);
-        this.errorResult = error(new CodeData(message),httpCode);
+        this.errorResult = error(new CodeData<T>(message),httpCode);
     }
     
-    public BusinessResultException(Integer code,String message) {
+    public <T> BusinessResultException(Integer code,String message) {
         super(message);
-        this.errorResult = error(new CodeData(code,message),code);
+        this.errorResult = error(new CodeData<T>(code,message),code);
     }
     
-    public BusinessResultException(Integer code,String message,Integer httpCode) {
+    public <T> BusinessResultException(Integer code,String message,Integer httpCode) {
         super(message);
-        this.errorResult = error(new CodeData(code,message),httpCode);
+        this.errorResult = error(new CodeData<T>(code,message),httpCode);
     }
 
-    public BusinessResultException(CodeData codeData) {
+    public <T> BusinessResultException(CodeData<T> codeData) {
         super(codeData.getMessage());
         this.errorResult = error(codeData);
     }
 
-    public BusinessResultException(String serviceName,CodeData codeData) {
+    public <T> BusinessResultException(String serviceName,CodeData<T> codeData) {
         super(serviceName + codeData.getMessage());
         this.errorResult = error(serviceName,codeData);
     }
 
-    public BusinessResultException(String serviceName,CodeData codeData,Integer httpCode) {
+    public <T> BusinessResultException(String serviceName,CodeData<T> codeData,Integer httpCode) {
         super(serviceName + codeData.getMessage());
         this.errorResult = error(serviceName,codeData);
     }
     
-    public BusinessResultException(CodeData codeData,Integer httpCode) {
+    public <T> BusinessResultException(CodeData<T> codeData,Integer httpCode) {
         super(codeData.getMessage());
         this.errorResult = error(codeData,httpCode);
     }
 
-    public <D> BusinessResultException(CodeData codeData,D errorData) {
+    public <D,T> BusinessResultException(CodeData<T> codeData,D errorData) {
         super(codeData.getMessage());
-        this.errorResult = error(codeData,errorData);
+        CodeData<D> newCodedata = new CodeData<>(codeData.getCode(), codeData.getMessage(), errorData);
+        this.errorResult = error(newCodedata);
     }
 
-    public <D> BusinessResultException(CodeData codeData,D errorData,Integer httpCode) {
+    public <D,T> BusinessResultException(CodeData<T> codeData,D errorData,Integer httpCode) {
         super(codeData.getMessage());
-        this.errorResult = error(codeData,errorData,httpCode);
+        CodeData<D> newCodedata = new CodeData<>(codeData.getCode(), codeData.getMessage(), errorData);
+        this.errorResult = error(newCodedata,httpCode);
     }
     
-    public BusinessResultException(ErrorResult errorResult) {
+    public <T> BusinessResultException(ErrorResult<T> errorResult) {
         super(errorResult.getMessage());
         this.errorResult = errorResult;
     }
     
-    public BusinessResultException(ErrorResult errorResult,Integer httpCode) {
+    public <T> BusinessResultException(ErrorResult<T> errorResult,Integer httpCode) {
         super(errorResult.getMessage());
         this.errorResult = errorResult;
     }

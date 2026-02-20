@@ -5,7 +5,19 @@ import lombok.Getter;
 @Getter
 public enum QueryBaseType {
 
-	eq("eq","等于"),like("like","模糊查询"),in("in","范围等值查询"),ne("ne","不等于"),ge("ge","大于等于"),le("le","小于等于");
+	EQ("eq","等于"),
+
+	LIKE("like","模糊查询"),
+
+	IN("in","范围等值查询"),
+
+	NE("ne","不等于"),
+
+	GE("ge","大于等于"),
+
+	LE("le","小于等于"),
+
+	;
 	
 	QueryBaseType(String type,String name) {
 		
@@ -15,8 +27,8 @@ public enum QueryBaseType {
 		
 	}
 	
-	private String type;
+	private final String type;
 	
-	private String name;
+	private final String name;
 	
 }

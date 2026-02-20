@@ -11,7 +11,6 @@ import com.github.yulichang.base.MPJBaseServiceImpl;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
-import com.maozi.base.AbstractBaseCode;
 import com.maozi.base.AbstractBaseDomain;
 import com.maozi.base.AbstractBaseDtomain;
 import com.maozi.base.AbstractBaseNameDomain;
@@ -19,6 +18,7 @@ import com.maozi.base.api.IBaseMapper;
 import com.maozi.base.api.rpc.BaseServiceResult;
 import com.maozi.base.enums.Status;
 import com.maozi.base.enums.StoreClassType;
+import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.param.plugin.OrderParam;
@@ -36,6 +36,7 @@ import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.utils.SpringUtil;
+
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -51,13 +52,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D extends AbstractBaseDtomain, E extends AbstractBaseCode> extends MPJBaseServiceImpl<M, T ,E> implements MPJBaseService<T>,BaseServiceResult<D> {
-
-	private final String SERIAL_VERSION_UID = "serialVersionUID";
+public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D extends AbstractBaseDtomain> extends MPJBaseServiceImpl<M, T> implements MPJBaseService<T>,BaseServiceResult<D> {
 
 	protected Class<T> doClass;
 	
 	protected Class<D> dtoClass;
+
+	private final String SERIAL_VERSION_UID = "serialVersionUID";
 	
 	protected abstract String getAbbreviationModelName();
 	
@@ -89,10 +90,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     }
     
     public Class<D> getDtoClass(){
-    
-    	if(dtoClass.getName().equals(Void.class.getName())) {
-    		throw new BusinessResultException(getBaseCodes().NOT_SET_RESPONSE_ERROR,500);
-    	}
+
+		if(dtoClass.getName().equals(Void.class.getName())) {
+			throw new BusinessResultException(SystemErrorCode.NOT_SET_RESPONSE_ERROR,500);
+		}
     	
     	return dtoClass;
     
@@ -241,8 +242,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	T domain = getOne(wrapper);
     	
     	isNullThrowError(domain, getAbbreviationModelName());
-    	
-    	checkBoolThrowError(domain.getStatus() == Status.enable,getAbbreviationModelName(),getBaseCodes().FORBIDDEN_ERROR);
+
+		checkBoolThrowError(domain.getStatus() == Status.ENABLE,getAbbreviationModelName(), SystemErrorCode.FORBIDDEN_ERROR);
     	
 	}
     
@@ -260,8 +261,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	domains.parallelStream().forEach((domain)->{
     		
-    		if(domain.getStatus() == Status.disable) {
-        		throw new BusinessResultException(getAbbreviationModelName(),getBaseCodes().FORBIDDEN_ERROR,200);
+    		if(domain.getStatus() == Status.DISABLE) {
+        		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
         	}
     		
     	});
@@ -284,8 +285,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	isNullThrowError(domain, getAbbreviationModelName());
     	
-    	if(domain.getStatus() == Status.disable) {
-    		throw new BusinessResultException(getAbbreviationModelName(),getBaseCodes().FORBIDDEN_ERROR,200);
+    	if(domain.getStatus() == Status.DISABLE) {
+    		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
     	}
     	
     	return domain;
@@ -300,8 +301,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	isNullThrowError(domain, getAbbreviationModelName());
     	
-    	if(domain.getStatus() == Status.disable) {
-    		throw new BusinessResultException(getAbbreviationModelName(),getBaseCodes().FORBIDDEN_ERROR,200);
+    	if(domain.getStatus() == Status.DISABLE) {
+    		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
     	}
     	
     	return domain;
@@ -309,11 +310,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected void checkHas(Wrapper<T> wrapper) {
-    	checkBoolThrowError(count(wrapper) > 0, getAbbreviationModelName(),getBaseCodes().DATA_NOT_EXIST_ERROR);
+    	checkBoolThrowError(count(wrapper) > 0, getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
 	}
     
     protected void checkNotHas(Wrapper<T> wrapper) {
-    	checkBoolThrowError(count(wrapper) < 1, getAbbreviationModelName(),getBaseCodes().DATA_EXIST_ERROR);
+    	checkBoolThrowError(count(wrapper) < 1, getAbbreviationModelName(),SystemErrorCode.DATA_EXIST_ERROR);
 	}
     
     protected DropDownResult dropDown(Long id){
@@ -340,7 +341,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
-    	wrapper.eq(getColumn(AbstractBaseDomain::getStatus), Status.enable);
+    	wrapper.eq(getColumn(AbstractBaseDomain::getStatus), Status.ENABLE);
     	
     	return copyList(list(wrapper), DropDownResult::new);
     	
@@ -552,7 +553,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     		
     		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
     		
-    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),getBaseCodes().DATA_NOT_EXIST_ERROR);
+    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
     		
     	}
     	
@@ -575,7 +576,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     		
     		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
     		
-    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),getBaseCodes().DATA_NOT_EXIST_ERROR);
+    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
     		
     	}else {
     		validate(param);
@@ -599,7 +600,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 				wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
 
-				checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),getBaseCodes().DATA_NOT_EXIST_ERROR);
+				checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
 
 			}
 
@@ -718,7 +719,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 		saveUpdateBatch(dos);
 		
-		return success(null);
+		return success();
 		
 	}
 	
@@ -727,7 +728,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 		removeById(id);
 		
-		return success(null);
+		return success();
 		
 	}
 
@@ -740,7 +741,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			removeById(id);
 		});
 		
-		return success(null);
+		return success();
 		
 	}
 	
@@ -749,7 +750,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 		checkAvailable(id);
 		
-		return success(null);
+		return success();
 		
 	}
 	
@@ -758,7 +759,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 		checkAvailable(ids);
 		
-		return success(null);
+		return success();
 		
 	}
 	
@@ -801,11 +802,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		T domain = getByIdThrowError(id,getColumns(AbstractBaseDomain::getStatus));
 		
 		domain.setId(id);
-		domain.setStatus(domain.getStatus() == Status.enable ? Status.disable : Status.enable);
+		domain.setStatus(domain.getStatus() == Status.ENABLE ? Status.DISABLE : Status.ENABLE);
 		
 		updateById(domain);
 		
-		return success(null);
+		return success();
 		
 	}
 	
@@ -890,11 +891,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			if(data instanceof TimeParam timeParam) {
 				
 				if(isNotNull(timeParam.getStartTime())) {
-					QueryType.ge.getQueryPlugin().apply(wrapper,fieldName,timeParam.getStartTime());
+					QueryType.GE.getQueryPlugin().apply(wrapper,fieldName,timeParam.getStartTime());
 				}
 				
 				if(isNotNull(timeParam.getEndTime())) {
-					QueryType.le.getQueryPlugin().apply(wrapper,fieldName,timeParam.getEndTime());
+					QueryType.LE.getQueryPlugin().apply(wrapper,fieldName,timeParam.getEndTime());
 				}
 				
 			}
@@ -924,7 +925,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 					String fieldName = isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
 
-					Class<?> relationClazz = StoreClass.storeClassMap.get(StoreClassType.db).get(tableName);
+					Class<?> relationClazz = StoreClass.storeClassMap.get(StoreClassType.DB).get(tableName);
 
 					throwSystemError(isNotNull(relationClazz),getAbbreviationModelName()+"映射关系");
 

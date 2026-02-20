@@ -19,7 +19,6 @@ package com.maozi.qny.api.impl;
 
 import cn.hutool.core.io.FileUtil;
 import com.google.common.collect.Lists;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.qny.api.QNYService;
@@ -31,9 +30,6 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -41,9 +37,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.List;
 
 
-public class QNYServiceImpl extends BaseCommon<SystemErrorCode> implements QNYService{
+
+public class QNYServiceImpl extends BaseCommon implements QNYService{
 	
 	protected Auth auth;
 	

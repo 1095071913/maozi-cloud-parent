@@ -16,9 +16,9 @@ public class ApplicationLinkContextTransmitFilter implements Filter {
 
         RpcContextAttachment clientAttachment = RpcContext.getClientAttachment();
 
-        clientAttachment.setAttachment("revision",ApplicationLinkContext.VERSIONS.get());
+        clientAttachment.setAttachment(ApplicationLinkContext.VERSION,ApplicationLinkContext.VERSIONS.get());
 
-        clientAttachment.setAttachment("username", ApplicationLinkContext.USERNAMES.get());
+        clientAttachment.setAttachment(ApplicationLinkContext.USERNAME, ApplicationLinkContext.USERNAMES.get());
 
         return invoker.invoke(invocation);
 

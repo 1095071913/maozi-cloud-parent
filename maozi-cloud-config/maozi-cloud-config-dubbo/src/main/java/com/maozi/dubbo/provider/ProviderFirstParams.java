@@ -16,20 +16,21 @@
  */
 package com.maozi.dubbo.provider;
 
+import org.apache.dubbo.registry.support.DefaultProviderFirstParams;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.apache.dubbo.common.constants.CommonConstants.DUBBO_VERSION_KEY;
 import static org.apache.dubbo.common.constants.CommonConstants.METHODS_KEY;
 import static org.apache.dubbo.common.constants.CommonConstants.RELEASE_KEY;
 import static org.apache.dubbo.common.constants.CommonConstants.TAG_KEY;
 import static org.apache.dubbo.common.constants.CommonConstants.TIMESTAMP_KEY;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import org.apache.dubbo.registry.support.DefaultProviderFirstParams;
-
 public class ProviderFirstParams extends DefaultProviderFirstParams {
-    private final static Set<String> PARAMS = Collections.unmodifiableSet(new HashSet<String>() {{
+    private final static Set<String> PARAMS = Collections.unmodifiableSet(new HashSet<>() {{
         addAll(Arrays.asList(RELEASE_KEY, DUBBO_VERSION_KEY, METHODS_KEY, TIMESTAMP_KEY, TAG_KEY,"application.version"));
     }});
 

@@ -1,7 +1,6 @@
 package com.maozi.mvc.config.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.lang.reflect.Type;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +8,8 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerMapping;
+
+import java.lang.reflect.Type;
 
 public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2HttpMessageConverter {
 

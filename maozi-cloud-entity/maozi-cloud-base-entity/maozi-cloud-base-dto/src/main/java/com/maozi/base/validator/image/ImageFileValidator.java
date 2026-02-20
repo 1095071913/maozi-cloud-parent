@@ -1,10 +1,11 @@
 package com.maozi.base.validator.image;
 
-import java.util.Objects;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class ImageFileValidator implements ConstraintValidator<ImageFile, MultipartFile> {
 

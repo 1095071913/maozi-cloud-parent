@@ -1,13 +1,14 @@
 package com.maozi.feign.config;
 
-import static com.maozi.common.BaseCommon.getRequest;
-
 import com.maozi.utils.context.ApplicationLinkContext;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import java.util.Enumeration;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+
+import static com.maozi.common.BaseCommon.getRequest;
 
 @Component
 public class TokenRequestInterceptor implements RequestInterceptor {
@@ -31,7 +32,7 @@ public class TokenRequestInterceptor implements RequestInterceptor {
 				
 			}
 
-			requestTemplate.header("Version", ApplicationLinkContext.VERSIONS.get());
+			requestTemplate.header(ApplicationLinkContext.VERSION, ApplicationLinkContext.VERSIONS.get());
 
 		}
 		

@@ -19,12 +19,10 @@
 package com.maozi.stream.config;
 
 import com.maozi.base.enums.EnvironmentType;
-import com.maozi.base.error.code.SystemErrorCode;
+import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.BaseCommon;
+import com.maozi.utils.constant.LogTag;
 import com.maozi.utils.context.ApplicationLinkContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -34,10 +32,14 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
-public class StreamEntranceLogAop extends BaseCommon<SystemErrorCode> {
+public class StreamEntranceLogAop extends BaseCommon {
 
 	private final String POINT = "execution(java.util.function.Consumer com.maozi.*.*.stream..*(..))";
 
@@ -48,9 +50,9 @@ public class StreamEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
         return (message) -> {
 
-            Boolean error = false;
+            boolean error = false;
 
-            Long beginTime = System.currentTimeMillis();
+            long beginTime = System.currentTimeMillis();
 
             Object messageData = message.getPayload();
 
@@ -58,18 +60,19 @@ public class StreamEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
             MessageHeaders headers = message.getHeaders();
 
-            Map<String, String> logs = new LinkedHashMap<String, String>();
+            Map<String, String> logs = new LinkedHashMap<>();
 
-            logs.put("Type", "Rocket");
+            logs.put(LogTag.TYPE, LogCommonType.MQ.getDesc()) ;
             logs.put("MessageId",headers.get("ROCKET_MQ_MESSAGE_ID").toString());
             logs.put("Topic",headers.get("ROCKET_MQ_TOPIC").toString());
-            logs.put("Function", proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
+            logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
-            if(notEnvironment(EnvironmentType.production)){
-                logs.put("Param", messageData.toString());
+            Boolean isNotProd = notEnvironment(EnvironmentType.PROD);
+            if(isNotProd){
+                logs.put(LogTag.PARAM, messageData.toString());
             }
 
-            ApplicationLinkContext.VERSIONS.set(getVersionDefault(headers.get("Version")));
+            ApplicationLinkContext.VERSIONS.set(getVersionDefault(headers.get(ApplicationLinkContext.VERSION)));
 
             try{resultData.accept(message);}catch (Exception e){
 
@@ -77,11 +80,13 @@ public class StreamEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
                 functionError(getStackTrace(e));
 
-                StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
+                StackTraceElement stackTraceElement = e.getStackTrace()[0];
 
-                logs.put("ErrorParam", messageData.toString());
-                logs.put("ErrorDesc", e.getLocalizedMessage());
-                logs.put("ErrorLine", stackTraceElement.toString());
+                if(!isNotProd){
+                    logs.put(LogTag.PARAM, messageData.toString());
+                }
+                logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+                logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
 
                 throw e;
 
@@ -89,10 +94,10 @@ public class StreamEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
                 StringBuilder sql = BaseCommon.sql.get();
                 if(isNotNull(sql)) {
-                    logs.put("SQL", sql.toString());
+                    logs.put(LogTag.SQL, sql.toString());
                 }
 
-                logs.put("RT",System.currentTimeMillis()-beginTime+"");
+                logs.put(LogTag.RT,System.currentTimeMillis() - beginTime+"");
 
                 log(error,logs);
 

@@ -2,11 +2,10 @@ package com.maozi.base.enums;
 
 import com.maozi.base.BaseEnum;
 import lombok.Getter;
-import lombok.Setter;
 
 public enum StoreClassType implements BaseEnum {
 
-    db(0,"数据库");
+    DB(0,"数据库");
 
     StoreClassType(Integer value,String desc) {
 
@@ -17,12 +16,10 @@ public enum StoreClassType implements BaseEnum {
     }
 
     @Getter
-    @Setter
-    private Integer value;
+    private final Integer value;
 
     @Getter
-    @Setter
-    private String desc;
+    private final String desc;
 
     @Override
     public String toString() {

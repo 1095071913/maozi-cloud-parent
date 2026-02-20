@@ -1,8 +1,9 @@
 package com.maozi.base.validator.excel;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import org.springframework.web.multipart.MultipartFile;
 
 public class ExcelFileValidator implements ConstraintValidator<ExcelFile, MultipartFile> {
 

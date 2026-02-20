@@ -20,6 +20,7 @@ package com.maozi.generate.code.parent.service;
 
 import com.maozi.generate.code.entity.EntityData;
 import com.maozi.generate.code.tool.SQLType;
+
 import java.util.List;
 
 public class GenerateMapper {

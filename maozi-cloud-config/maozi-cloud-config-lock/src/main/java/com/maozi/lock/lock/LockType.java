@@ -9,13 +9,21 @@ import com.maozi.lock.lock.impl.ReentrantLock;
 import com.maozi.lock.lock.impl.WriteLock;
 import com.maozi.utils.SpringUtil;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
-import java.util.function.Supplier;
 import lombok.Getter;
-import lombok.Setter;
+
+import java.util.function.Supplier;
 
 public enum LockType implements BaseEnum {
 
-    Reentrant(0,"可重入锁",ReentrantLock.class),Fair(1,"公平锁", FairLock.class),Read(2,"读锁", ReadLock.class),Write(3,"写锁", WriteLock.class);
+    REENTRANT(0,"可重入锁",ReentrantLock.class),
+
+    FAIR(1,"公平锁", FairLock.class),
+
+    READ(2,"读锁", ReadLock.class),
+
+    WRITE(3,"写锁", WriteLock.class),
+
+    ;
 
     LockType(Integer value,String desc, Class< ? extends Lock> lockClass) {
 
@@ -28,19 +36,17 @@ public enum LockType implements BaseEnum {
     }
 
     @Getter
-    @Setter
-    private Integer value;
+    private final Integer value;
 
     @Getter
-    @Setter
-    private String desc;
+    private final String desc;
 
     @Override
     public String toString() {
         return value+"."+desc;
     }
 
-    private Class< ? extends Lock > lockClass;
+    private final Class< ? extends Lock > lockClass;
 
     public Lock getLock(){
         return SpringUtil.getBean(lockClass);
@@ -106,7 +112,7 @@ public enum LockType implements BaseEnum {
 
         Lock lock = getLock();
 
-        key = ApplicationEnvironmentContext.APPLICATION_NAME +":lock:" + key;
+        key = ApplicationEnvironmentContext.SERVICE_NAME +":lock:" + key;
 
         if(!lock.lock(key,waitTime,leaseTime)) {
             strategy.handle(key,waitTime,leaseTime, lock);
@@ -122,7 +128,7 @@ public enum LockType implements BaseEnum {
 
         Lock lock = getLock();
 
-        key = ApplicationEnvironmentContext.APPLICATION_NAME +":lock:" + key;
+        key = ApplicationEnvironmentContext.SERVICE_NAME +":lock:" + key;
 
         if (!lock.unLock(key)) {
             strategy.handle();

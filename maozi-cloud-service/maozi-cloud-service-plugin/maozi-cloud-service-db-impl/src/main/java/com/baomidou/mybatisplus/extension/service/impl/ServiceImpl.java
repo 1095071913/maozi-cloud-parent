@@ -28,16 +28,8 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-import com.maozi.base.AbstractBaseCode;
 import com.maozi.base.AbstractBaseDomain;
 import com.maozi.common.BaseCommon;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -46,6 +38,14 @@ import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 /**
  * IService 实现类（ 泛型：M 是 mapper 对象，T 是实体 ）
  *
@@ -53,7 +53,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2018-06-23
  */
 @SuppressWarnings("unchecked")
-public class ServiceImpl<M extends BaseMapper<T>, T extends AbstractBaseDomain, E extends AbstractBaseCode> extends BaseCommon<E> implements IService<T> {
+public class ServiceImpl<M extends BaseMapper<T>, T extends AbstractBaseDomain> extends BaseCommon implements IService<T> {
 
     private Log mybatisLog = LogFactory.getLog(getClass());
 

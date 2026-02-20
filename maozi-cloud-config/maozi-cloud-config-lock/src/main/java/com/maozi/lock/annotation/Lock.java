@@ -3,6 +3,7 @@ package com.maozi.lock.annotation;
 import com.maozi.lock.error.strategy.impl.LockTimeoutStrategy;
 import com.maozi.lock.error.strategy.impl.UnLockTimeoutStrategy;
 import com.maozi.lock.lock.LockType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,7 +24,7 @@ public @interface Lock {
      * 锁类型，默认可重入锁
      * @return lockType
      */
-    LockType type() default LockType.Reentrant;
+    LockType type() default LockType.REENTRANT;
 
     /**
      * 尝试加锁，最多等待时间

@@ -6,10 +6,6 @@ import com.maozi.lock.annotation.LockKey;
 import com.maozi.lock.lock.LockType;
 import com.maozi.lock.properties.LockProperties;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.List;
-import javax.annotation.Resource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,6 +23,11 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.List;
 
 @Aspect
 @Component
@@ -51,7 +52,7 @@ public class LockAop {
 
         String lockName = BaseCommon.isNotEmpty(annotation.name()) ? annotation.name() : signature.getDeclaringTypeName()+ "." +signature.getMethod().getName();
 
-        lockName = ApplicationEnvironmentContext.APPLICATION_NAME + ":lock:" + lockName + businessKeyName;
+        lockName = ApplicationEnvironmentContext.SERVICE_NAME + ":lock:" + lockName + businessKeyName;
 
         long waitTime = annotation.waitTime() == Long.MIN_VALUE ? properties.getWaitTime() : annotation.waitTime();
 

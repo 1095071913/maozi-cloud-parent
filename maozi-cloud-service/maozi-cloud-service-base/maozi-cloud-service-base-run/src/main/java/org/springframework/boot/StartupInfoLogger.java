@@ -16,10 +16,6 @@
 
 package org.springframework.boot;
 
-import java.lang.management.ManagementFactory;
-import java.net.InetAddress;
-import java.time.Duration;
-import java.util.concurrent.Callable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.system.ApplicationHome;
@@ -29,6 +25,11 @@ import org.springframework.core.log.LogMessage;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
+
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.time.Duration;
+import java.util.concurrent.Callable;
 
 /**
  * Logs application information on startup.

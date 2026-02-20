@@ -4,8 +4,6 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.oauth.token.api.rest.v1.RestOauthTokenServiceV1;
 import com.maozi.oauth.token.api.rpc.v1.RpcOauthTokenServiceV1;
-import java.util.Map;
-import javax.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +14,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+
+import javax.annotation.Resource;
+import java.util.Map;
 
 @Configuration
 public class IRemoteTokenServices implements ResourceServerTokenServices {
@@ -34,13 +35,13 @@ public class IRemoteTokenServices implements ResourceServerTokenServices {
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
 
-        AbstractBaseResult<Map> checkTokenResult = "HTTP".equals(type) ? restOauthTokenService.restCheck(accessToken) : rpcOauthTokenService.rpcCheck(accessToken);
+        AbstractBaseResult<Map<String, ?>> checkTokenResult = "HTTP".equals(type) ? restOauthTokenService.restCheck(accessToken) : rpcOauthTokenService.rpcCheck(accessToken);
 
         if(!checkTokenResult.isSuccess()) {
             throw new InvalidTokenException(((ErrorResult)checkTokenResult).getMessage());
         }
 
-        Map<String,Object> checkUserResult = checkTokenResult.getData();
+        Map<String,?> checkUserResult = checkTokenResult.getData();
 
         if (checkUserResult.containsKey("error") || !Boolean.TRUE.equals(checkUserResult.get("active"))) {
             throw new InvalidTokenException("Token错误");

@@ -4,11 +4,12 @@ import cn.hutool.core.util.ClassUtil;
 import com.google.common.collect.Lists;
 import com.maozi.base.BaseEnum;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
 @Component

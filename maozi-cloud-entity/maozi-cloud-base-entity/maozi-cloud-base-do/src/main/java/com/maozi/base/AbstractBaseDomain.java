@@ -25,12 +25,13 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
-import java.io.Serial;
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

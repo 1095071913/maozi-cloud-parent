@@ -6,10 +6,8 @@
 package com.github.yulichang.base;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.maozi.base.AbstractBaseCode;
 import com.maozi.base.AbstractBaseDomain;
 
-public class MPJBaseServiceImpl<M extends MPJBaseMapper<T>, T extends AbstractBaseDomain, E extends AbstractBaseCode> extends ServiceImpl<M, T, E> implements MPJBaseService<T> {
-    public MPJBaseServiceImpl() {
-    }
+public class MPJBaseServiceImpl<M extends MPJBaseMapper<T>, T extends AbstractBaseDomain> extends ServiceImpl<M, T> implements MPJBaseService<T> {
+    public MPJBaseServiceImpl() {}
 }

@@ -24,12 +24,12 @@ import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 @Data
 @SuperBuilder
@@ -38,9 +38,6 @@ import lombok.experimental.SuperBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseResult<D> implements Serializable {
-
-	@Schema(description = "服务名称")
-	private String applicationName = ApplicationEnvironmentContext.APPLICATION_NAME;
 	
 	@Schema(description = "数据")
 	public abstract D getData();
@@ -57,6 +54,8 @@ public abstract class AbstractBaseResult<D> implements Serializable {
 	public <Result> Result getResult() {
 		return (Result) this;
 	}
+
+
 	
 	@JsonIgnore
 	public D getResultDataThrowError() {

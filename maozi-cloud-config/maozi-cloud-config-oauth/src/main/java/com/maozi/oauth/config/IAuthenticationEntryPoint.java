@@ -18,38 +18,29 @@
 package com.maozi.oauth.config;
 
 import com.maozi.base.CodeData;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.utils.MapperUtils;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-public class IAuthenticationEntryPoint extends BaseCommon<SystemErrorCode> implements AuthenticationEntryPoint {
-	
-	private Integer errorCode = 401;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class IAuthenticationEntryPoint extends BaseCommon implements AuthenticationEntryPoint {
+
+	private static final int NO_AUTHENTICATION_CODE = 401;
+
+	private static final String NO_AUTHENTICATION_DEFAULT_MESSAGE = "Full authentication is required to access this resource";
 	
 	@Override
-	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) throws ServletException {
-		
-		try {  
+	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-			String errorMessage = "Full authentication is required to access this resource".equals(authException.getMessage()) ? "未携带Token" : authException.getMessage();
+		String errorMessage = NO_AUTHENTICATION_DEFAULT_MESSAGE.equals(authException.getMessage()) ? "未认证授权" : authException.getMessage();
 
-			AbstractBaseResult error = error(new CodeData(errorCode,errorMessage),errorCode).autoIdentifyHttpCode();
+		AbstractBaseResult<Void> error = error(new CodeData<Void>(NO_AUTHENTICATION_CODE,errorMessage),NO_AUTHENTICATION_CODE).autoIdentifyHttpCode();
 			
-			MapperUtils.setResponseBody(response,error);
-			
-		} catch (Exception e) {
-
-			BaseCommon.error(e);
-
-			throw new ServletException();
-
-		}
+		MapperUtils.setResponseBody(response,error);
 		
 	}
 	

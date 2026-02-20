@@ -5,6 +5,7 @@ import com.maozi.oauth.token.dto.platform.dto.OauthToken;
 import com.maozi.oauth.token.dto.platform.param.ClientParam;
 import com.maozi.oauth.token.dto.platform.param.ClientUserParam;
 import com.maozi.oauth.token.dto.platform.param.TokenInfoParam;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public interface RpcOauthTokenServiceV1 {
 	
 	AbstractBaseResult<OauthToken> rpcRefresh(String token,ClientParam param) throws Exception;
  
-	AbstractBaseResult<Map> rpcCheck(String token);
+	AbstractBaseResult<Map<String,?>> rpcCheck(String token);
 	
 	AbstractBaseResult<Void> rpcDestroy(String token);
 	

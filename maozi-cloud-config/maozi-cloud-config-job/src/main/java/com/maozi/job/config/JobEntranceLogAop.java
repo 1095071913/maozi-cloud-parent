@@ -1,13 +1,12 @@
 package com.maozi.job.config;
 
 import com.maozi.base.enums.EnvironmentType;
-import com.maozi.base.error.code.SystemErrorCode;
+import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.BaseCommon;
+import com.maozi.utils.constant.LogTag;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
 import com.maozi.utils.context.ApplicationLinkContext;
 import com.xxl.job.core.context.XxlJobHelper;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,17 +14,22 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
-public class JobEntranceLogAop extends BaseCommon<SystemErrorCode> {
+public class JobEntranceLogAop extends BaseCommon {
 
-    @Around("@annotation(com.xxl.job.core.handler.annotation.XxlJob)")
+    private final String POINT = "@annotation(com.xxl.job.core.handler.annotation.XxlJob)";
+
+    @Around(POINT)
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-        Boolean error = false;
+        boolean error = false;
 
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
         String arg = XxlJobHelper.getJobParam();
 
@@ -33,13 +37,14 @@ public class JobEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
         ApplicationLinkContext.VERSIONS.set(ApplicationEnvironmentContext.VERSION);
 
-        Map<String, String> logs = new LinkedHashMap<String, String>();
+        Map<String, String> logs = new LinkedHashMap<>();
 
-        logs.put("Type", "Job");
-        logs.put("Function", proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
+        logs.put(LogTag.TYPE, LogCommonType.JOB.getDesc());
+        logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
-        if(notEnvironment(EnvironmentType.production)){
-            logs.put("Param", arg);
+        Boolean isNotProd = notEnvironment(EnvironmentType.PROD);
+        if(isNotProd){
+            logs.put(LogTag.PARAM, arg);
         }
 
         try {proceedingJoinPoint.proceed();}catch (Exception e){
@@ -52,23 +57,25 @@ public class JobEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
             log.error(stackTrace);
 
-            logs.put("ErrorParam", arg);
+            if(!isNotProd){
+                logs.put(LogTag.PARAM, arg);
+            }
 
-            logs.put("ErrorDesc", e.getLocalizedMessage());
+            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
 
             StackTraceElement[] errorLines = e.getStackTrace();
             if(errorLines.length > 0) {
-                logs.put("ErrorLine", errorLines[0].toString());
+                logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
             }
 
         }finally {
 
             StringBuilder respSql = sql.get();
             if (isNotNull(respSql)) {
-                logs.put("SQL", respSql.toString());
+                logs.put(LogTag.SQL, respSql.toString());
             }
 
-            logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
+            logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
             log(error,logs);
 

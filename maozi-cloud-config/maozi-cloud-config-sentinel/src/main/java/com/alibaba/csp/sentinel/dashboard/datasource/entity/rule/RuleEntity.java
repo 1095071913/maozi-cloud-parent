@@ -16,6 +16,7 @@
 package com.alibaba.csp.sentinel.dashboard.datasource.entity.rule;
 
 import com.alibaba.csp.sentinel.slots.block.Rule;
+
 import java.util.Date;
 
 /**

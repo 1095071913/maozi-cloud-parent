@@ -20,21 +20,20 @@ package com.maozi.db.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CustomMetaObjectHandler extends BaseCommon<SystemErrorCode> implements MetaObjectHandler {
+public class CustomMetaObjectHandler extends BaseCommon implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
 
 		this.strictInsertFill(metaObject, "createTime", Long.class, System.currentTimeMillis());
 		this.strictInsertFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
-		this.strictInsertFill(metaObject, "status", Status.class, Status.enable);
-		this.strictInsertFill(metaObject, "deleted", Deleted.class, Deleted.none);
+		this.strictInsertFill(metaObject, "status", Status.class, Status.ENABLE);
+		this.strictInsertFill(metaObject, "deleted", Deleted.class, Deleted.NONE);
 		this.strictInsertFill(metaObject, "version", Integer.class, 0);
 
 		String currentUserName = getCurrentUserName();

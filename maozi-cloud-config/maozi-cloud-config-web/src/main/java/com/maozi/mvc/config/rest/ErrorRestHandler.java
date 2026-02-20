@@ -5,19 +5,20 @@ import com.maozi.base.CodeData;
 import com.maozi.common.BaseCommon;
 import com.maozi.mvc.config.code.CodeConfig;
 import com.maozi.mvc.config.error.ErrorParamTranslation;
-import java.util.Map;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
 
-@ControllerAdvice
+import java.util.Map;
+
+@RestControllerAdvice
 public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 
 //	@Override
@@ -40,33 +41,33 @@ public class ErrorRestHandler extends ResponseEntityExceptionHandler {
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
 		}
-		
+
 		if(ex instanceof MethodArgumentNotValidException) {
-			
+
 			MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException) ex;
-			
+
 			Map<String,String> errorMessages = Maps.newHashMap();
-			
+
 			methodArgumentNotValidException.getBindingResult().getFieldErrors().stream().forEach(fieldError -> errorMessages.put(fieldError.getField(), fieldError.getDefaultMessage()));
-			
-			return new ResponseEntity<>(BaseCommon.error(new CodeData<Map<String,String>>(400,"参数错误",errorMessages),status.value()), headers, status);
-		
+
+			return new ResponseEntity<>(BaseCommon.error(new CodeData<Map<String,String>>(400, "参数错误", errorMessages),status.value()), headers, status);
+
 		}else if (ex instanceof MissingServletRequestParameterException) {
-			
+
 			MissingServletRequestParameterException missingServletRequestParameterException = (MissingServletRequestParameterException) ex;
-			
+
 			String paramErrorMessage = ErrorParamTranslation.errorParams.get(missingServletRequestParameterException.getParameterName());
-			
+
 			if(BaseCommon.isNull(paramErrorMessage)) {
-				paramErrorMessage=missingServletRequestParameterException.getParameterName();
+				paramErrorMessage = missingServletRequestParameterException.getParameterName();
 			}
-			
-			return new ResponseEntity<>(BaseCommon.error(new CodeData(400,missingServletRequestParameterException.getParameterName()+"不能为空"),status.value()), headers, status);
-			
+
+			return new ResponseEntity<>(BaseCommon.error(new CodeData<Void>(400,missingServletRequestParameterException.getParameterName()+"不能为空"),status.value()), headers, status);
+
 		}else {
-			BaseCommon.error(ex.getLocalizedMessage()); 
+			BaseCommon.error(ex.getLocalizedMessage());
 		}
-		
+
 		return new ResponseEntity<>(BaseCommon.error(CodeConfig.getCode(status.value()),status.value()), headers, status);
 
 	}

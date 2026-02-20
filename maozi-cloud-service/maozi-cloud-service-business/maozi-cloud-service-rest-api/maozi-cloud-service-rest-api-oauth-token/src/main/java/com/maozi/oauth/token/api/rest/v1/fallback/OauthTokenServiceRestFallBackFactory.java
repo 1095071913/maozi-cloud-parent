@@ -1,6 +1,5 @@
 package com.maozi.oauth.token.api.rest.v1.fallback;
 
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
@@ -10,12 +9,13 @@ import com.maozi.oauth.token.dto.platform.dto.OauthToken;
 import com.maozi.oauth.token.dto.platform.param.ClientParam;
 import com.maozi.oauth.token.dto.platform.param.TokenInfoParam;
 import com.maozi.utils.MapperUtils;
-import java.util.Map;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
-public class OauthTokenServiceRestFallBackFactory extends BaseCommon<SystemErrorCode> implements FallbackFactory<RestOauthTokenServiceV1>{
+public class OauthTokenServiceRestFallBackFactory extends BaseCommon implements FallbackFactory<RestOauthTokenServiceV1>{
 
 	@Override
 	public RestOauthTokenServiceV1 create(Throwable e) {
@@ -32,7 +32,7 @@ public class OauthTokenServiceRestFallBackFactory extends BaseCommon<SystemError
 			}
 
 			@Override
-			public AbstractBaseResult<Map> restCheck(String token) {
+			public AbstractBaseResult<Map<String,?>> restCheck(String token) {
 				return result;
 			}
 

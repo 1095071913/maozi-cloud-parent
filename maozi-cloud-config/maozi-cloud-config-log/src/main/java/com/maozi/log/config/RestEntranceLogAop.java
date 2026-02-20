@@ -27,10 +27,7 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.log.utils.RestEntranceLogUtils;
-import java.util.Arrays;
-import java.util.Map;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.maozi.utils.constant.LogTag;
 import org.apache.dubbo.rpc.RpcContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -40,10 +37,15 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Map;
+
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
-public class RestEntranceLogAop extends BaseCommon<SystemErrorCode> {
+public class RestEntranceLogAop extends BaseCommon {
 	
 	@Resource
 	private RestEntranceLogUtils restEntranceLogUtils;
@@ -51,71 +53,63 @@ public class RestEntranceLogAop extends BaseCommon<SystemErrorCode> {
 	private final String POINT = "execution(* com.maozi.*.*.api.impl.rpc..*(..)) || execution(* com.maozi.*.*.api.impl.rest..*(..)) || execution(com.maozi.common.result.AbstractBaseResult com.maozi.base.api.impl.BaseServiceImpl.*(..))";
 
     @Around(POINT)
-    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint){
 
-    	Long startTime = System.currentTimeMillis();
+    	long startTime = System.currentTimeMillis();
     	
     	String tid = BaseCommon.getTraceId();
     	
     	HttpServletRequest request = getRequest();
     	
-    	RpcContext rpcContext = RpcContext.getContext(); 
+    	RpcContext rpcContext = RpcContext.getServiceContext();
     	
     	String rpcUrl = rpcContext.getRemoteHost();
     	
-    	String arg = Arrays.toString(proceedingJoinPoint.getArgs());
+    	String param = Arrays.toString(proceedingJoinPoint.getArgs());
     	
     	Node curNode = ContextUtil.getContext().getCurNode();
         
     	Map<String, String> logs = restEntranceLogUtils.logRequest(proceedingJoinPoint, request, rpcUrl);
     	
-        functionParam(arg);
+        functionParam(param);
         
-		if(notEnvironment(EnvironmentType.production)){
-			logs.put("Param", arg);
+		if(notEnvironment(EnvironmentType.PROD)){
+			logs.put(LogTag.PARAM, param);
 		}
 
         Object resultData = null;
 
         try {
-        	
-        	resultData = proceedingJoinPoint.proceed();
-        	
-        }catch (AccessDeniedException e) {
-        
+			resultData = proceedingJoinPoint.proceed();
+		}catch (AccessDeniedException e) {
         	throw e;
-        	
         }catch (BusinessResultException businessResultException) {
-        	
         	resultData = businessResultException.getErrorResult();
-        	
     	}catch (Throwable e) {
 
         	String stackTrace = getStackTrace(e);
         	
-            resultData = error(getCodes().SYSTEM_ERROR,500);
+            resultData = error(SystemErrorCode.SYSTEM_ERROR,500);
             
             functionError(stackTrace);
             
             log.error(stackTrace);
             
-            logs.put("ErrorParam", arg);
-            
-            logs.put("ErrorUser",getCurrentUserName());
-            
-            logs.put("ErrorDesc", e.getLocalizedMessage());
+            logs.put(LogTag.PARAM, param);
+            logs.put(LogTag.ERROR_USER,getCurrentUserName());
+            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
             
             StackTraceElement[] errorLines = e.getStackTrace();
             if(errorLines.length > 0) {
-            	logs.put("ErrorLine", errorLines[0].toString());
+            	logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
             }
             
         } finally {
 
 			StringBuilder respSql = sql.get();
-			if(isNotNull(respSql)) {logs.put("SQL", respSql.toString());}
+			if(isNotNull(respSql)) {logs.put(LogTag.SQL, respSql.toString());}
 
-			logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
+			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
         	
         	if(isNotNull(resultData)) {
                 
@@ -127,13 +121,13 @@ public class RestEntranceLogAop extends BaseCommon<SystemErrorCode> {
 
 						curNode.increaseBlockQps(1);
 
-						ErrorResult errorResult = result.getResult();
+						ErrorResult<?> errorResult = result.getResult();
 
 						if(errorResult.autoIdentifyHttpCode().isBusinessError()) {log.warn(appendLog(logs).toString());}
 
 						else {error(logs);}
 
-						if(result.getCode() == 500 && logs.containsKey("ErrorDesc")) {restEntranceLogUtils.errorLogAlarm(proceedingJoinPoint,arg,tid,logs);}
+						if(result.getCode() == 500 && logs.containsKey(LogTag.ERROR_DESC)) {restEntranceLogUtils.errorLogAlarm(proceedingJoinPoint,param,tid,logs);}
 
 						return result;
 

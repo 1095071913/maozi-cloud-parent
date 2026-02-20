@@ -13,7 +13,19 @@ import lombok.Getter;
 @Getter
 public enum QueryType {
 
-	eq(QueryBaseType.eq,new QueryEqPlugin()),like(QueryBaseType.like,new QueryLikePlugin()),in(QueryBaseType.in,new QueryInPlugin()),ne(QueryBaseType.ne,new QueryNePlugin()),ge(QueryBaseType.ge,new QueryGePlugin()),le(QueryBaseType.le,new QueryLePlugin());
+	EQ(QueryBaseType.EQ,new QueryEqPlugin()),
+
+	LIKE(QueryBaseType.LIKE,new QueryLikePlugin()),
+
+	IN(QueryBaseType.IN,new QueryInPlugin()),
+
+	NE(QueryBaseType.NE,new QueryNePlugin()),
+
+	GE(QueryBaseType.GE,new QueryGePlugin()),
+
+	LE(QueryBaseType.LE,new QueryLePlugin()),
+
+	;
 	
 	QueryType(QueryBaseType type,QueryBasePlugin queryPlugin) {
 		
@@ -23,9 +35,9 @@ public enum QueryType {
 		
 	}
 	
-	private QueryBaseType type;
+	private final QueryBaseType type;
 	
-	private QueryBasePlugin queryPlugin;
+	private final QueryBasePlugin queryPlugin;
 	
 	
 	public static QueryType get(String type) {

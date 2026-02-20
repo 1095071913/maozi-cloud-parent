@@ -17,20 +17,21 @@
 
 package com.maozi.common.result.error;
 
-import static com.maozi.common.BaseCommon.getRequest;
-import static com.maozi.common.BaseCommon.isNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.maozi.base.CodeData;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.AbstractBaseResult;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.io.Serializable;
+
+import static com.maozi.common.BaseCommon.getRequest;
+import static com.maozi.common.BaseCommon.isNull;
 
 @Data
 @NoArgsConstructor
@@ -128,7 +129,7 @@ public class ErrorResult<D> extends AbstractBaseResult<D> implements Serializabl
 	}
 	
 	public ErrorResult<D> autoIdentifyHttpCode() {
-		
+
 		if(!isNull(getRequest())) {
 			BaseCommon.getResponse().setStatus(httpCode);
 		}

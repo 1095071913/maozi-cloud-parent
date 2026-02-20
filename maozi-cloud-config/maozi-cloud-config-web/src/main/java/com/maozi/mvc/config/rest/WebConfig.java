@@ -3,14 +3,15 @@ package com.maozi.mvc.config.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maozi.mvc.config.json.ReadOnlyMultipartFormDataEndpointConverter;
 import com.maozi.mvc.filter.ApplicationLinkContextFilter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

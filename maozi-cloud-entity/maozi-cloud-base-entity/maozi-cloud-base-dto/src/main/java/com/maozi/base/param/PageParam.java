@@ -2,10 +2,11 @@ package com.maozi.base.param;
 
 import com.maozi.base.AbstractBaseDtomain;
 import io.swagger.v3.oas.annotations.media.Schema;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.Valid;
 
 @Data
 @NoArgsConstructor

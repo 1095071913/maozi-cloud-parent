@@ -17,9 +17,13 @@ public class ApplicationLinkContextSetFilter implements Filter {
 
         RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
 
-        ApplicationLinkContext.set(serverAttachment.getAttachment("revision"),serverAttachment.getAttachment("username"));
+        String version = serverAttachment.getAttachment(ApplicationLinkContext.VERSION);
+        ApplicationLinkContext.VERSIONS.set(version);
 
-        try{ return invoker.invoke(invocation); }catch (Throwable e){ throw e; }finally{
+        String username = serverAttachment.getAttachment(ApplicationLinkContext.USERNAME);
+        ApplicationLinkContext.USERNAMES.set(username);
+
+        try{return invoker.invoke(invocation);} finally{
             BaseCommon.clearContext();
         }
 

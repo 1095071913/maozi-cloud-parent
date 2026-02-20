@@ -3,9 +3,10 @@ package com.maozi.feign.config;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import feign.Response;
 import feign.Util;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ErrorDecoder implements feign.codec.ErrorDecoder {

@@ -8,11 +8,12 @@ import com.maozi.oauth.token.dto.platform.dto.OauthToken;
 import com.maozi.oauth.token.dto.platform.param.ClientParam;
 import com.maozi.oauth.token.dto.platform.param.TokenInfoParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.Map;
-import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 @Tag(name = "【三方】授权令牌")
 @FeignClient(value = "maozi-cloud-oauth",fallbackFactory = OauthTokenServiceRestFallBackFactory.class)
@@ -27,7 +28,7 @@ public interface RestOauthTokenServiceV1 {
 	AbstractBaseResult<OauthToken> restRefresh(@PathVariable("token") String refreshToken,@RequestBody @Valid ClientParam param) throws Exception;
 
 	@Get(value = PATH + "/{token}/check",description = "检查令牌")
-	AbstractBaseResult<Map> restCheck(@PathVariable("token") String token);
+	AbstractBaseResult<Map<String, ?>> restCheck(@PathVariable("token") String token);
 
 	@Get(value = PATH + "/{token}/destroy",description = "删除令牌")
 	AbstractBaseResult<Void> restDestroy(@PathVariable("token") String token);

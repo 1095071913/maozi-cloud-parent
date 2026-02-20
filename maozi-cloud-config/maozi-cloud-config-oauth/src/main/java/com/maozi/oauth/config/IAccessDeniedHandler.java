@@ -17,22 +17,22 @@
 
 package com.maozi.oauth.config;
 
+import com.maozi.base.CodeData;
 import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.utils.MapperUtils;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-public class IAccessDeniedHandler extends BaseCommon<SystemErrorCode> implements AccessDeniedHandler {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-	//权限错误显示
-	private Integer errorCode = 403;
+public class IAccessDeniedHandler extends BaseCommon implements AccessDeniedHandler {
 	
     @Override 
     public void handle(HttpServletRequest request, HttpServletResponse response,AccessDeniedException accessDeniedException){
-		MapperUtils.setResponseBody(response, error(getCodes().PERMISSION_ERROR,errorCode).autoIdentifyHttpCode());
+        CodeData<Void> errorCode = SystemErrorCode.PERMISSION_ERROR;
+		MapperUtils.setResponseBody(response, error(errorCode,errorCode.getCode()).autoIdentifyHttpCode());
     }
 
 }

@@ -18,9 +18,10 @@
 package com.maozi.wx.api;
 
 import com.alibaba.fastjson.JSONObject;
-import java.util.Map;
 import org.springframework.http.HttpMethod;
 import org.w3c.dom.Document;
+
+import java.util.Map;
 
 public interface WxService {
 

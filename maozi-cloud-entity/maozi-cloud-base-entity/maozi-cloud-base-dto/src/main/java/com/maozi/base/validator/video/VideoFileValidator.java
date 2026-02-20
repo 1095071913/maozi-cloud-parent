@@ -1,10 +1,11 @@
 package com.maozi.base.validator.video;
 
-import java.util.Objects;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class VideoFileValidator implements ConstraintValidator<VideoFile, MultipartFile> {
 

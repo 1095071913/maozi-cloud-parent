@@ -5,7 +5,13 @@ import lombok.Getter;
 @Getter
 public enum JoinBaseType {
 
-	innerJoin("innerJoin","内连接"),leftJoin("leftJoin","左连接"),rightJoin("rightJoin","右连接");
+	INNER_JOIN("innerJoin","内连接"),
+
+	LEFT_JOIN("leftJoin","左连接"),
+
+	RIGHT_JOIN("rightJoin","右连接"),
+
+	;
 
 	JoinBaseType(String type,String name) {
 		
@@ -14,9 +20,11 @@ public enum JoinBaseType {
 		this.name = name;
 		
 	}
-	
-	private String type;
-	
-	private String name;
+
+	@Getter
+	private final String type;
+
+	@Getter
+	private final String name;
 	
 }

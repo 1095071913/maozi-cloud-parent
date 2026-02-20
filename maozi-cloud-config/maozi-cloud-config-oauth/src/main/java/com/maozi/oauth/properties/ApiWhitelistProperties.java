@@ -1,11 +1,12 @@
 package com.maozi.oauth.properties;
 
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -15,7 +16,7 @@ public class ApiWhitelistProperties {
     @Value("${application-project-whitelist:#{null}}")
     private List<String> whitelist = Lists.newArrayList();
     
-    private List<String> defaultWitelist = new ArrayList<String>(){
+    private List<String> defaultWitelist = new ArrayList<>(){
 
 		{
     		add("/oauth/check_token");

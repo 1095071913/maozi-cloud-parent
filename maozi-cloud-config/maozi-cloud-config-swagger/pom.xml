@@ -29,11 +29,11 @@
 			<version>${maozi-cloud-base-enum.version}</version>
 		</dependency>
 
-    <dependency>
-      <groupId>com.maozi</groupId>
-      <artifactId>maozi-cloud-config-oauth</artifactId>
-      <version>${maozi-cloud-config-oauth.version}</version>
-    </dependency>
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-oauth</artifactId>
+			<version>${maozi-cloud-config-oauth.version}</version>
+		</dependency>
 
 	</dependencies>
 

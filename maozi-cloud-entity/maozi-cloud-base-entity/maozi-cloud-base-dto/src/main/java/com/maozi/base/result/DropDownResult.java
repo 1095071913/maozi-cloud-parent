@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DropDownResult extends AbstractBaseDtomain{
 
+	@Schema(description = "ID")
 	private Long id;
 	
 	@Schema(description = "名称")

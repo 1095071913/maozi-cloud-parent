@@ -1,6 +1,5 @@
 package com.maozi.utils.context;
 
-import javax.annotation.Resource;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -8,23 +7,31 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Data
 @Component
 @RefreshScope(proxyMode = ScopedProxyMode.NO)
 public class ApplicationEnvironmentContext {
 
-	public static Boolean IS_RUNNING = false;
+	public static boolean IS_RUNNING = false;
 
 	public static String applicationProjectAbbreviation;
 	@Value("${application-project-abbreviation}")
 	public void setApplicationProjectAbbreviation(String applicationProjectAbbreviation) {
-		ApplicationEnvironmentContext.applicationProjectAbbreviation=applicationProjectAbbreviation;
+		ApplicationEnvironmentContext.applicationProjectAbbreviation = applicationProjectAbbreviation;
 	}
 
-	public static String APPLICATION_NAME;
+	public static String SERVICE_NAME;
 	@Value("${spring.application.name}")
-	public void setApplicationName(String applicationName) {
-		ApplicationEnvironmentContext.APPLICATION_NAME = applicationName;
+	public void setServiceName(String serviceName) {
+		ApplicationEnvironmentContext.SERVICE_NAME = serviceName;
+	}
+
+	public static String SERVICE_PORT;
+	@Value("${server.port}")
+	public void setServicePort(String servicePort) {
+		ApplicationEnvironmentContext.SERVICE_PORT = servicePort;
 	}
 	
 	public static String LOAD_CONFIG;

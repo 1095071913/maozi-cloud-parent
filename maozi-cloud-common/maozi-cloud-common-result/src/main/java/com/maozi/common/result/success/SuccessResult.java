@@ -19,11 +19,12 @@ package com.maozi.common.result.success;
 
 import com.maozi.common.result.AbstractBaseResult;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor

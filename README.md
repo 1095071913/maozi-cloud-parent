@@ -10,6 +10,10 @@
 
 <br/>
 
+未开发组件: WebSocket（认证授权、ACK重试发送、兼容多实例）、方法失败重试、升级最新SCA、Oauth2替换最新SAS认证授权、ARM架构的本地灰度开发、AI规则训练开发
+
+<br/>
+
 [快速开始](https://www.yuque.com/pengjinlong/maozi-cloud-parent)
 [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)
 

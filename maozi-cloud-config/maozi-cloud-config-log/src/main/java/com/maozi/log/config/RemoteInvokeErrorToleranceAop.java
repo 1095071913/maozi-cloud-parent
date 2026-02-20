@@ -19,19 +19,22 @@
 package com.maozi.log.config;
 
 import cn.hutool.core.util.StrUtil;
+import com.maozi.base.enums.LogCommonType;
 import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.maozi.utils.constant.LogTag;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Aspect
 @Component
-public class RemoteInvokeErrorToleranceAop extends BaseCommon<SystemErrorCode> {
+public class RemoteInvokeErrorToleranceAop extends BaseCommon {
 
 	private final String POINT = "execution(com.maozi.common.result.AbstractBaseResult com.maozi.*.*.api.rpc..*.*(..)) || execution(com.maozi.common.result.AbstractBaseResult com.maozi.*.*.api.rest..*.*(..))";
 
@@ -44,22 +47,22 @@ public class RemoteInvokeErrorToleranceAop extends BaseCommon<SystemErrorCode> {
 
 			if(!"impl".equals(remoteInvokeClassSplit[5])){
 
-				String applicationName = remoteInvokeClassSplit[2];
+				String serviceName = remoteInvokeClassSplit[2];
 
-				Map<String, String> logs = new LinkedHashMap<String, String>();
+				Map<String, String> logs = new LinkedHashMap<>();
 
-				logs.put("Type", "RemoteInvoke");
-				logs.put("Name", applicationName);
-				logs.put("Function", proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
-				logs.put("ErrorParam", Arrays.toString(proceedingJoinPoint.getArgs()));
-				logs.put("ErrorDesc", e.getLocalizedMessage());
-				logs.put("ErrorLine", e.getStackTrace()[0].toString());
+				logs.put(LogTag.TYPE, LogCommonType.RPC.getDesc());
+				logs.put(LogTag.SERVICE_NAME, serviceName);
+				logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
+				logs.put(LogTag.PARAM, Arrays.toString(proceedingJoinPoint.getArgs()));
+				logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+				logs.put(LogTag.ERROR_LINE, e.getStackTrace()[0].toString());
 
 				error(e);
 
 				error(logs);
 
-				return error(StrUtil.upperFirst(applicationName),SystemErrorCode.SERVICE_RPC_ERROR,500);
+				return error(StrUtil.upperFirst(serviceName),SystemErrorCode.SERVICE_RPC_ERROR,500);
 
 			}
 

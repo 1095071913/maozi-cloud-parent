@@ -1,7 +1,8 @@
 package com.maozi.base.result;
 
-import java.util.ArrayList;
 import lombok.Data;
+
+import java.util.ArrayList;
 
 @Data
 public class ListStringResult extends ArrayList<String> {}

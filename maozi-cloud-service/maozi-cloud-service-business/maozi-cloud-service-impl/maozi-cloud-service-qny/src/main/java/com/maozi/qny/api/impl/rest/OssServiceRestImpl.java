@@ -19,20 +19,20 @@ package com.maozi.qny.api.impl.rest;
 
 import com.maozi.base.annotation.Get;
 import com.maozi.base.annotation.RestService;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.qny.properties.QNYProperties;
 import com.qiniu.util.Auth;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
 
 
 
 @RestService
 @Tag(name = "【全局】图片管理")
-public class OssServiceRestImpl extends BaseCommon<SystemErrorCode> {
+public class OssServiceRestImpl extends BaseCommon {
 
 	private static final String PATH = "/oss";
 	

@@ -20,22 +20,22 @@ package com.maozi.bd.api.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.maozi.base.CodeData;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.bd.api.BDService;
 import com.maozi.bd.properties.BDProperties;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
-import java.util.Map;
-import javax.annotation.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
+import javax.annotation.Resource;
+import java.util.Map;
 
 
-public class BDServiceImpl extends BaseCommon<SystemErrorCode> implements BDService{
+
+public class BDServiceImpl extends BaseCommon implements BDService{
 
 	@Resource
 	protected BDProperties bdProperties;

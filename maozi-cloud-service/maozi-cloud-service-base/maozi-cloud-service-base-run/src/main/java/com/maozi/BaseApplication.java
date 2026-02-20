@@ -17,11 +17,8 @@
 package com.maozi;
 
 import com.maozi.common.BaseCommon;
+import com.maozi.utils.constant.LogTag;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,6 +30,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+
 @Slf4j
 @EnableAsync
 @EnableCaching
@@ -43,7 +45,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @DependsOn({"applicationEnvironmentContext","springUtil"})
 public class BaseApplication {
 
-	protected static void ApplicationRun() {
+	protected static void ApplicationRun(String[] args) {
 		
 		Properties properties = System.getProperties();
 
@@ -53,55 +55,46 @@ public class BaseApplication {
 		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
 		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
 
-		Object serviceConfig = properties.get("application-nacos-config-service");
-
-		properties.put("application-nacos-config-service","cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml"+(Objects.nonNull(serviceConfig) ? serviceConfig.toString() : ""));
-
 		properties.put("logging.level.root", "ERROR");
 		properties.put("logging.level.com.maozi", "INFO");
 		properties.put("logging.file.name","log/log.log");
 
-		Long begin = System.currentTimeMillis();
+        properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (Objects.nonNull(serviceConfig) ? serviceConfig.toString() : ""));
+
+		long begin = System.currentTimeMillis();
 
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(BaseApplication.class);
 
-		Map<String, String> logs = new LinkedHashMap<String, String>();
-
-		Boolean errorBoo = false;
+		Map<String, String> logs = new LinkedHashMap<>();
 
 		try {
 
-			builder.bannerMode(Mode.OFF).run(new String[] {});
-			logs.put("InitTime", (System.currentTimeMillis() - begin) + " ms");
-			logs.put("Nacos", ApplicationEnvironmentContext.CONFIG_ADDR);
-			logs.put("Config", ApplicationEnvironmentContext.LOAD_CONFIG);
+			builder.bannerMode(Mode.OFF).run(args);
+			logs.put(LogTag.INIT_TIME, (System.currentTimeMillis() - begin) + " ms");
 
-		}
-		catch (Exception e) {
+			logs.put(LogTag.SERVICE_PORT, ApplicationEnvironmentContext.SERVICE_PORT);
+			logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
+			logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
+
+			BaseCommon.info(logs);
+
+		} catch (Exception e) {
 
 			log.error(BaseCommon.getStackTrace(e));
 
-			errorBoo = true;
 			StackTraceElement stackTraceElement = e.getStackTrace()[0];
-			logs.put("Nacos", ApplicationEnvironmentContext.CONFIG_ADDR);
-			logs.put("Config", ApplicationEnvironmentContext.LOAD_CONFIG);
-			logs.put("ErrorDesc", e.getLocalizedMessage());
-			logs.put("ErrorLine", stackTraceElement.toString());
+
+			logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
+			logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
+			logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+			logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
+
+			BaseCommon.error(logs);
+			System.exit(0);
 
 		}
-		finally {
 
-			if (errorBoo) {
-				BaseCommon.error(logs);
-				System.exit(0);
-			}
-			else {
-				BaseCommon.info(logs);
-			}
-
-			ApplicationEnvironmentContext.IS_RUNNING = true;
-
-		}
+		ApplicationEnvironmentContext.IS_RUNNING = true;
 
 	}
 

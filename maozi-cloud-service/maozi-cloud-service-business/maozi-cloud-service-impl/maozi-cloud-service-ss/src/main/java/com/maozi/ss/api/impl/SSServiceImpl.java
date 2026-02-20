@@ -19,7 +19,6 @@ package com.maozi.ss.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.maozi.base.CodeData;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
@@ -27,9 +26,6 @@ import com.maozi.ss.api.SSService;
 import com.maozi.ss.config.SSConfig;
 import com.maozi.ss.properties.SSProperties;
 import com.maozi.utils.MapperUtils;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -37,9 +33,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class SSServiceImpl extends BaseCommon<SystemErrorCode> implements SSService{
+
+public class SSServiceImpl extends BaseCommon implements SSService{
 	
 	@Resource
 	private RestTemplate restClient;

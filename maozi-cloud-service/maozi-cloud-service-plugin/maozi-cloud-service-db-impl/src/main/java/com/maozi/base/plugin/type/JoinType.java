@@ -10,7 +10,13 @@ import lombok.Getter;
 @Getter
 public enum JoinType {
 
-	innerJoin(JoinBaseType.innerJoin,new QueryInnerJoinPlugin()),leftJoin(JoinBaseType.leftJoin,new QueryLeftJoinPlugin()),rightJoin(JoinBaseType.rightJoin,new QueryRightJoinPlugin());
+	INNER_JOIN(JoinBaseType.INNER_JOIN,new QueryInnerJoinPlugin()),
+
+	LEFT_JOIN(JoinBaseType.LEFT_JOIN,new QueryLeftJoinPlugin()),
+
+	RIGHT_JOIN(JoinBaseType.RIGHT_JOIN,new QueryRightJoinPlugin()),
+
+	;
 
 	JoinType(JoinBaseType type, JoinBasePlugin joinPlugin) {
 		
@@ -20,9 +26,9 @@ public enum JoinType {
 		
 	}
 	
-	private JoinBaseType type;
+	private final JoinBaseType type;
 	
-	private JoinBasePlugin joinPlugin;
+	private final JoinBasePlugin joinPlugin;
 	
 	
 	public static JoinType get(String type) {

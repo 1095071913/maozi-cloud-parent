@@ -3,6 +3,7 @@ package com.maozi.db.handler;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.maozi.utils.MapperUtils;
+
 import java.io.IOException;
 
 public class CustomJsonTypeHandler extends JacksonTypeHandler {

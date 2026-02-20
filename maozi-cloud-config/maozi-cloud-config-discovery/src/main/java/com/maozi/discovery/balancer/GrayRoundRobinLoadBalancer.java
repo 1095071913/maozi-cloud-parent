@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.common.BaseCommon;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.maozi.utils.context.ApplicationLinkContext;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultRequestContext;
@@ -19,6 +17,10 @@ import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBal
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
@@ -59,15 +61,15 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
             throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR,404);
         }
 
-        String version = headers.getFirst("Version");
+        String version = headers.getFirst(ApplicationLinkContext.VERSION);
 
         List<ServiceInstance> mainApplicationClients = Lists.newArrayList();
 
         List<ServiceInstance> grayApplicationClients = Lists.newArrayList();
 
-        instances.stream().forEach(instance -> {
+        instances.forEach(instance -> {
 
-            String [] clientApplicationVersionSplit = instance.getMetadata().get("version").split("-");
+            String [] clientApplicationVersionSplit = instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION).split("-");
 
             String clientApplicationVersion = clientApplicationVersionSplit[clientApplicationVersionSplit.length - 1];
 
@@ -75,15 +77,14 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
                 grayApplicationClients.add(instance);
             }
 
-            if("main".equals(clientApplicationVersion)){
+            if(ApplicationLinkContext.APPLICATION_DEFAULT_VERSION.equals(clientApplicationVersion)){
                 mainApplicationClients.add(instance);
             }
 
         });
 
         List<ServiceInstance> applicationClients = BaseCommon.collectionIsNotEmpty(grayApplicationClients) ? grayApplicationClients : mainApplicationClients;
-
-        if(applicationClients.size() == 0){
+        if(applicationClients.isEmpty()){
             throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR,404);
         }
 

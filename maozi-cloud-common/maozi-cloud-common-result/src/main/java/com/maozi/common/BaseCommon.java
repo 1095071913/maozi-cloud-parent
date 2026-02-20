@@ -24,7 +24,6 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.TtlWrappers;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.maozi.base.AbstractBaseCode;
 import com.maozi.base.BaseEnum;
 import com.maozi.base.CodeData;
 import com.maozi.base.enums.EnvironmentType;
@@ -35,6 +34,28 @@ import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.common.result.success.SuccessResult;
 import com.maozi.utils.context.ApplicationEnvironmentContext;
 import com.maozi.utils.context.ApplicationLinkContext;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.skywalking.apm.toolkit.trace.ActiveSpan;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Tags;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -47,39 +68,12 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.skywalking.apm.toolkit.trace.ActiveSpan;
-import org.apache.skywalking.apm.toolkit.trace.Tag;
-import org.apache.skywalking.apm.toolkit.trace.Tags;
-import org.apache.skywalking.apm.toolkit.trace.Trace;
-import org.apache.skywalking.apm.toolkit.trace.TraceContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 @Data
-public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
+public class BaseCommon implements Serializable {
 
-	@Autowired
-	private E codes;
-
-	@Resource
-	private SystemErrorCode baseCodes;
+	private final static String DEFAULT_TID = "Ignored_Trace";
 
 	public static final Logger log = LoggerFactory.getLogger(BaseCommon.class);
 
@@ -156,8 +150,8 @@ public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
 		return datas;
 	}
 
-	public static <T extends Collection<?>> Collection listNullAssignment(T datas) {
-		return isNull(datas) ? Lists.newArrayList() : datas;
+	public static <T> Collection<T> listNullAssignment(Collection<T> data) {
+		return isNull(data) ? Lists.newArrayList() : data;
 	}
 
 	public static void validate(@Valid Object obj){
@@ -234,7 +228,7 @@ public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
 
 	}
 
-	public static <T extends BaseEnum> T getEnumNullThread(Integer value,Class<T> clazz,String serviceName) {
+	public static <T extends BaseEnum> T getEnumNullThrow(Integer value,Class<T> clazz,String serviceName) {
 
 		T[] values = clazz.getEnumConstants();
 
@@ -273,39 +267,44 @@ public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
 		return servletRequestAttributes.getResponse();
 	}
 
-	public static <T> ErrorResult<T> error(CodeData codeData) {
+	public static <T> ErrorResult<T> error(CodeData<T> codeData) {
 		initResponse();
-		return new ErrorResult<T>(codeData);
+		return new ErrorResult<>(codeData);
 	}
 
-	public static <T> ErrorResult<T> error(String serviceName,CodeData codeData) {
+	public static <T> ErrorResult<T> error(String serviceName,CodeData<T> codeData) {
 		initResponse();
-		return new ErrorResult<T>(serviceName,codeData);
+		return new ErrorResult<>(serviceName,codeData);
 	}
 
-	public static <T> ErrorResult<T> error(String serviceName,CodeData codeData, Integer httpCode) {
+	public static <T> ErrorResult<T> error(String serviceName,CodeData<T> codeData, Integer httpCode) {
 		initResponse();
-		return new ErrorResult<T>(serviceName,codeData,httpCode);
+		return new ErrorResult<>(serviceName,codeData,httpCode);
 	}
 
-	public static <T> ErrorResult<T> error(CodeData codeData, Integer httpCode) {
+	public static <T> ErrorResult<T> error(CodeData<T> codeData, Integer httpCode) {
 		initResponse();
-		return new ErrorResult<T>(httpCode,codeData);
+		return new ErrorResult<>(httpCode,codeData);
 	}
 
-	public static <T> ErrorResult<T> error(CodeData codeData,T errorData) {
+	public static <T> ErrorResult<T> error(CodeData<T> codeData,T errorData) {
 		initResponse();
-		return new ErrorResult<T>(codeData,errorData);
+		return new ErrorResult<>(codeData,errorData);
 	}
 
-	public static <T> ErrorResult<T> error(CodeData codeData,T errorData,Integer httpCode) {
+	public static <T> ErrorResult<T> error(CodeData<T> codeData,T errorData,Integer httpCode) {
 		initResponse();
-		return new ErrorResult<T>(codeData,errorData);
+		return new ErrorResult<>(codeData,errorData);
+	}
+
+	public static <T> SuccessResult<T> success() {
+		initResponse();
+		return new SuccessResult<>();
 	}
 
 	public static <T> SuccessResult<T> success(T attributes) {
 		initResponse();
-		return new SuccessResult<T>(attributes);
+		return new SuccessResult<>(attributes);
 	}
 
 	public static String getCurrentUserName() {
@@ -384,7 +383,7 @@ public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
 	}
 
 	public static String getVersionDefault(Object version){
-		return isNotNull(version) && isNotEmpty(version.toString()) ? version.toString() : "main";
+		return isNotNull(version) && isNotEmpty(version.toString()) ? version.toString() : ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
 	}
 
 	public static String getStackTrace(Throwable t) {
@@ -502,7 +501,7 @@ public class BaseCommon<E extends AbstractBaseCode> implements Serializable {
 			return null;
 		}
 
-		if ("Ignored_Trace".equals(traceId)) {
+		if (DEFAULT_TID.equals(traceId)) {
 			return null;
 		}
 
