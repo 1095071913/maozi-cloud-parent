@@ -20,9 +20,12 @@ package com.maozi.stream.config;
 
 import com.maozi.base.enums.EnvironmentType;
 import com.maozi.base.enums.LogCommonType;
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.constant.LogTag;
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.base.utils.EnvironmentUtil;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationLinkContext;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -36,10 +39,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Slf4j
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
-public class StreamEntranceLogAop extends BaseCommon {
+public class StreamEntranceLogAop {
 
 	private final String POINT = "execution(java.util.function.Consumer com.maozi.*.*.stream..*(..))";
 
@@ -56,8 +60,6 @@ public class StreamEntranceLogAop extends BaseCommon {
 
             Object messageData = message.getPayload();
 
-            functionParam(messageData);
-
             MessageHeaders headers = message.getHeaders();
 
             Map<String, String> logs = new LinkedHashMap<>();
@@ -67,18 +69,16 @@ public class StreamEntranceLogAop extends BaseCommon {
             logs.put("Topic",headers.get("ROCKET_MQ_TOPIC").toString());
             logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
-            Boolean isNotProd = notEnvironment(EnvironmentType.PROD);
+            Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
             if(isNotProd){
                 logs.put(LogTag.PARAM, messageData.toString());
             }
 
-            ApplicationLinkContext.VERSIONS.set(getVersionDefault(headers.get(ApplicationLinkContext.VERSION)));
+            ApplicationLinkContext.VERSIONS.set(ApplicationLinkContext.getVersionDefault(headers.get(ApplicationLinkContext.VERSION)));
 
             try{resultData.accept(message);}catch (Exception e){
 
                 error = true;
-
-                functionError(getStackTrace(e));
 
                 StackTraceElement stackTraceElement = e.getStackTrace()[0];
 
@@ -92,16 +92,16 @@ public class StreamEntranceLogAop extends BaseCommon {
 
             }finally {
 
-                StringBuilder sql = BaseCommon.sql.get();
-                if(isNotNull(sql)) {
-                    logs.put(LogTag.SQL, sql.toString());
+                StringBuilder sqlLog = LogUtil.sqlLog.get();
+                if(ObjectUtil.isNotNullEmpty(sqlLog)) {
+                    logs.put(LogTag.SQL, sqlLog.toString());
                 }
 
-                logs.put(LogTag.RT,System.currentTimeMillis() - beginTime+"");
+                logs.put(LogTag.RT, String.valueOf(System.currentTimeMillis() - beginTime));
 
-                log(error,logs);
+                LogUtil.log(log,error,logs);
 
-                clearContext();
+                ApplicationLinkContext.clearContext();
 
             }
 

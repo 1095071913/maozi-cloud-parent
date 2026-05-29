@@ -12,17 +12,6 @@
 
 	<dependencies>
 
-
-		<!-- Project Begin -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-		<!-- Project End -->
-
-
-
 		<!-- Spring Boot Begin -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
@@ -39,11 +28,6 @@
 			<groupId>com.taobao.arthas</groupId>
 			<artifactId>arthas-spring-boot-starter</artifactId>
 			<version>${arthas.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jolokia</groupId>
-			<artifactId>jolokia-core</artifactId>
 		</dependency>
 
     <dependency>

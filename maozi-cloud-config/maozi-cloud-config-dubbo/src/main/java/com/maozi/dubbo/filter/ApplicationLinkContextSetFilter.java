@@ -1,7 +1,6 @@
 package com.maozi.dubbo.filter;
 
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.common.context.ApplicationLinkContext;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -24,7 +23,7 @@ public class ApplicationLinkContextSetFilter implements Filter {
         ApplicationLinkContext.USERNAMES.set(username);
 
         try{return invoker.invoke(invocation);} finally{
-            BaseCommon.clearContext();
+            ApplicationLinkContext.clearContext();
         }
 
     }

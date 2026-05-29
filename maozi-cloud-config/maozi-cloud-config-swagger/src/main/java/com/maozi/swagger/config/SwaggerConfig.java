@@ -8,9 +8,9 @@
 package com.maozi.swagger.config;
 
 import cn.hutool.core.collection.CollUtil;
-import com.google.common.collect.Lists;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.oauth.properties.ApiWhitelistProperties;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
@@ -18,54 +18,55 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.HeaderParameter;
 import io.swagger.v3.oas.models.parameters.Parameter;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import jakarta.annotation.Resource;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Configuration
 public class SwaggerConfig {
 
-    private final String LICENSE_NAME = "Apache 2.0";
+    private final static String LICENSE_NAME = "Apache 2.0";
 
-    private final String AUTHORIZATION = "Authorization";
+    private final static String AUTHORIZATION = "Authorization";
 
-    private final String AUTHORIZATION_VALUE = "{{token}}";
+    private final static String AUTHORIZATION_VALUE = "{{token}}";
 
-    private final String OFFICIAL_URL= "https://github.com/1095071913";
+    private final static String OFFICIAL_URL = "https://github.com/1095071913";
 
     @Resource
     private ApiWhitelistProperties apiWhitelist;
 
     @Bean
     public OpenAPI openApi() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title(ApplicationEnvironmentContext.TITLE)
-                        .version(ApplicationEnvironmentContext.VERSION)
-                        .description(ApplicationEnvironmentContext.DETAILS)
-                        .termsOfService(OFFICIAL_URL)
-                        .license(new License().name(LICENSE_NAME).url(OFFICIAL_URL))
-                );
+        return new OpenAPI().info(
+            new Info()
+                .title(ApplicationEnvironmentContext.TITLE)
+                .version(ApplicationEnvironmentContext.VERSION)
+                .description(ApplicationEnvironmentContext.DETAILS)
+                .termsOfService(OFFICIAL_URL)
+                .license(new License().name(LICENSE_NAME).url(OFFICIAL_URL))
+        );
     }
 
     @Bean
     public OperationCustomizer globalHeaderOperation() {
 
-        List<String> apiWhitelistAll = Lists.newArrayList();
-        apiWhitelistAll.addAll(apiWhitelist.getWhitelist());
-        apiWhitelistAll.addAll(apiWhitelist.getDefaultWitelist());
+        List<String> whitelist = CollectionUtil.newArrayList();
+        whitelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
+        whitelist.addAll(apiWhitelist.getConfigWhitelist());
 
         return (Operation operation, HandlerMethod handlerMethod) -> {
 
-            String url = handlerMethod.getMethodAnnotation(RequestMapping.class).value()[0];
-            if (apiWhitelistAll.contains(url)) {
+            String url = Objects.requireNonNull(handlerMethod.getMethodAnnotation(RequestMapping.class)).value()[0];
+            if (whitelist.contains(url)) {
                 return operation;
             }
 
@@ -84,9 +85,13 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public OpenApiCustomiser longToStringResult() {
+    public OpenApiCustomizer longToStringResult() {
 
         return openApi -> {
+
+            if (openApi.getComponents() == null || openApi.getComponents().getSchemas() == null) {
+                return;
+            }
 
             Map<String, Schema> schemas = openApi.getComponents().getSchemas();
             if (CollUtil.isEmpty(schemas)) {
@@ -94,7 +99,6 @@ public class SwaggerConfig {
             }
 
             for (Schema schema : schemas.values()) {
-
                 if (schema.getProperties() == null) {
                     continue;
                 }
@@ -106,11 +110,9 @@ public class SwaggerConfig {
                         fieldSchema.setFormat(null);
                     }
                 });
-
             }
 
         };
-
     }
 
 }

@@ -1,13 +1,13 @@
 package com.maozi.mvc.config.enums;
 
 import cn.hutool.core.util.ClassUtil;
-import com.google.common.collect.Lists;
+import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.maozi.base.BaseEnum;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,25 +15,23 @@ import java.util.Map;
 @Component
 public class EnumConfig {
 
-    public static Map<String, List<BaseEnum>> enums = new HashMap<String, List<BaseEnum>>();
+    public final static Map<String, List<BaseEnum>> enums = CollectionUtil.newHashMap();
 
     public EnumConfig(){
 
-        initEnum("com.maozi.base.enums");
+        initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.enums");
 
-        initEnum("com.maozi."+ ApplicationEnvironmentContext.applicationProjectAbbreviation);
+        initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION);
 
     }
 
     private void initEnum(String packageName){
 
-        ClassUtil.scanPackage(packageName).stream()
+        ClassUtil.scanPackage(packageName)
 
             .forEach(item -> {
 
-                if (item.isEnum()) {
-
-                    BaseEnum[] enumConstants = (BaseEnum[]) item.getEnumConstants();
+                if (item.isEnum() && item.getEnumConstants() instanceof BaseEnum[] enumConstants) {
 
                     char[] charArray = item.getSimpleName().toCharArray();
 

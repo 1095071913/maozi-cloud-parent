@@ -13,17 +13,17 @@ import lombok.Getter;
 @Getter
 public enum QueryType {
 
-	EQ(QueryBaseType.EQ,new QueryEqPlugin()),
+	EQ(QueryBaseType.EQ, new QueryEqPlugin()),
 
-	LIKE(QueryBaseType.LIKE,new QueryLikePlugin()),
+	LIKE(QueryBaseType.LIKE, new QueryLikePlugin()),
 
-	IN(QueryBaseType.IN,new QueryInPlugin()),
+	IN(QueryBaseType.IN, new QueryInPlugin()),
 
-	NE(QueryBaseType.NE,new QueryNePlugin()),
+	NE(QueryBaseType.NE, new QueryNePlugin()),
 
-	GE(QueryBaseType.GE,new QueryGePlugin()),
+	GE(QueryBaseType.GE, new QueryGePlugin()),
 
-	LE(QueryBaseType.LE,new QueryLePlugin()),
+	LE(QueryBaseType.LE, new QueryLePlugin()),
 
 	;
 	

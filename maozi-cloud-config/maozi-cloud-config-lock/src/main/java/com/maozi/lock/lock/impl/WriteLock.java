@@ -1,11 +1,11 @@
 package com.maozi.lock.lock.impl;
 
 import com.maozi.lock.lock.Lock;
+import jakarta.annotation.Resource;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Component

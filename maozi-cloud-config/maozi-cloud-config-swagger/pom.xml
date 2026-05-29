@@ -13,14 +13,8 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
 			<version>${springdoc-openapi.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
 		</dependency>
 
 		<dependency>

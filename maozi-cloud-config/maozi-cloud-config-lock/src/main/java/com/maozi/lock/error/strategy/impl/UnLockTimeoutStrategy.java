@@ -1,6 +1,7 @@
 package com.maozi.lock.error.strategy.impl;
 
-import com.maozi.base.error.code.SystemErrorCode;
+import com.maozi.common.result.error.code.ErrorCode;
+import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.lock.error.strategy.UnLockTimeoutHandler;
 
@@ -17,7 +18,8 @@ public enum UnLockTimeoutStrategy implements UnLockTimeoutHandler {
 
         @Override
         public void handle() {
-            throw new BusinessResultException(SystemErrorCode.CURRENT_LIMITING_ERROR,429);
+            ErrorCode errorCode = SystemErrorCode.CURRENT_LIMITING_ERROR;
+            throw new BusinessResultException(errorCode).setHttpCode(errorCode.getCode());
         }
 
     }

@@ -1,10 +1,11 @@
 package com.maozi.discovery.balancer;
 
-import com.google.common.collect.Lists;
-import com.maozi.base.error.code.SystemErrorCode;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.utils.context.ApplicationLinkContext;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultRequestContext;
@@ -57,15 +58,15 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
 
-        if(BaseCommon.collectionIsEmpty(instances)){
-            throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR,404);
+        if(ObjectUtil.isNullEmpty(instances)){
+            throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
         }
 
         String version = headers.getFirst(ApplicationLinkContext.VERSION);
 
-        List<ServiceInstance> mainApplicationClients = Lists.newArrayList();
+        List<ServiceInstance> mainApplicationClients = CollectionUtil.newArrayList();
 
-        List<ServiceInstance> grayApplicationClients = Lists.newArrayList();
+        List<ServiceInstance> grayApplicationClients = CollectionUtil.newArrayList();
 
         instances.forEach(instance -> {
 
@@ -73,7 +74,7 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
             String clientApplicationVersion = clientApplicationVersionSplit[clientApplicationVersionSplit.length - 1];
 
-            if(BaseCommon.isNotEmpty(version) && version.equals(clientApplicationVersion)){
+            if(StringUtils.isNotBlank(version) && version.equals(clientApplicationVersion)){
                 grayApplicationClients.add(instance);
             }
 
@@ -83,9 +84,9 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
         });
 
-        List<ServiceInstance> applicationClients = BaseCommon.collectionIsNotEmpty(grayApplicationClients) ? grayApplicationClients : mainApplicationClients;
-        if(applicationClients.isEmpty()){
-            throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR,404);
+        List<ServiceInstance> applicationClients = ObjectUtil.isNotNullEmpty(grayApplicationClients) ? grayApplicationClients : mainApplicationClients;
+        if(ObjectUtil.isNullEmpty(applicationClients)){
+            throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
         }
 
         int pos = this.position.incrementAndGet() & Integer.MAX_VALUE;

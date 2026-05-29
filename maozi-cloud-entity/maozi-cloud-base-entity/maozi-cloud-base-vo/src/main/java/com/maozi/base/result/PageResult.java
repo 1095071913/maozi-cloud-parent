@@ -1,19 +1,23 @@
 package com.maozi.base.result;
 
-import com.maozi.base.AbstractBaseVomain;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageResult<D> extends AbstractBaseVomain {
+public class PageResult<D> implements Serializable {
+	
+	@Serial
+    private static final long serialVersionUID = 1L;
 	
 	@Schema(description = "页数")
 	private Long current;

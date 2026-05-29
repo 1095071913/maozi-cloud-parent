@@ -14,7 +14,7 @@ public class ErrorDecoder implements feign.codec.ErrorDecoder {
         @Override
         public Exception decode(String methodKey, Response response) {
         	
-            try {return new BusinessResultException(response.status(),Util.toString(response.body().asReader(Charset.defaultCharset())),response.status());} catch (IOException e) {
+            try {return new BusinessResultException(response.status(),Util.toString(response.body().asReader(Charset.defaultCharset()))).setHttpCode(response.status());} catch (IOException e) {
                 return e;
             }
             

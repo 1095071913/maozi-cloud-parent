@@ -23,7 +23,7 @@ public enum StoreClassType implements BaseEnum {
 
     @Override
     public String toString() {
-        return value+"."+desc;
+        return value + "." + desc;
     }
 
 }

@@ -24,39 +24,11 @@
 			<artifactId>dubbo-spring-boot-actuator</artifactId>
 			<version>${dubbo.version}</version> 
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-rpc-dubbo</artifactId>
+			<artifactId>dubbo-nacos-spring-boot-starter</artifactId>
 			<version>${dubbo.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.dubbo</groupId>
-					<artifactId>dubbo-common</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.dubbo</groupId>
-					<artifactId>dubbo-remoting-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-rpc-triple</artifactId>
-			<version>${dubbo.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-registry-nacos</artifactId>
-			<version>${dubbo.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.dubbo</groupId>
-					<artifactId>dubbo-common</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- Dubbo Begin -->
 
@@ -64,16 +36,16 @@
 		<!-- Project Begin -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-monitor</artifactId>
 			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
-		<!-- Project End -->
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+        </dependency>
+        <!-- Project End -->
 
 
 

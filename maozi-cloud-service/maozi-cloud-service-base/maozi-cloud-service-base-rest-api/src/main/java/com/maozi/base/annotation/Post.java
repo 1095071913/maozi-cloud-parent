@@ -12,10 +12,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
+@Operation
 @Documented
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Operation
 @RequestMapping(method = {RequestMethod.POST})
 public @interface Post {
 

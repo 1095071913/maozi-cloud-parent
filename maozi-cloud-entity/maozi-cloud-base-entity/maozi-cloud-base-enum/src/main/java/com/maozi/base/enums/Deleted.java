@@ -27,7 +27,7 @@ public enum Deleted implements BaseEnum {
 
 	@Override
 	public String toString() {
-		return value+"."+desc;
+		return value + "." + desc;
 	}
 
 

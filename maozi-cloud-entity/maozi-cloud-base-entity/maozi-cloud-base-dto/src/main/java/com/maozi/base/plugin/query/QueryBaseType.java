@@ -5,15 +5,15 @@ import lombok.Getter;
 @Getter
 public enum QueryBaseType {
 
-	EQ("eq","等于"),
+	EQ("eq", "等于"),
 
-	LIKE("like","模糊查询"),
+	LIKE("like", "模糊查询"),
 
-	IN("in","范围等值查询"),
+	IN("in", "范围等值查询"),
 
-	NE("ne","不等于"),
+	NE("ne", "不等于"),
 
-	GE("ge","大于等于"),
+	GE("ge", "大于等于"),
 
 	LE("le","小于等于"),
 

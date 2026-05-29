@@ -1,11 +1,11 @@
 package com.maozi.lock.config;
 
-import com.google.common.collect.Lists;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.lock.annotation.LockKey;
 import com.maozi.lock.lock.LockType;
 import com.maozi.lock.properties.LockProperties;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import jakarta.annotation.Resource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
@@ -34,9 +33,9 @@ import java.util.List;
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 2 )
 public class LockAop {
 
-    private ExpressionParser parser = new SpelExpressionParser();
+    private final ExpressionParser parser = new SpelExpressionParser();
 
-    private ParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
+    private final ParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
 
     @Resource
     private LockProperties properties;
@@ -50,7 +49,7 @@ public class LockAop {
 
         String businessKeyName = getKeyName(joinPoint,annotation);
 
-        String lockName = BaseCommon.isNotEmpty(annotation.name()) ? annotation.name() : signature.getDeclaringTypeName()+ "." +signature.getMethod().getName();
+        String lockName = org.apache.commons.lang3.StringUtils.isNotBlank(annotation.name()) ? annotation.name() : signature.getDeclaringTypeName()+ "." +signature.getMethod().getName();
 
         lockName = ApplicationEnvironmentContext.SERVICE_NAME + ":lock:" + lockName + businessKeyName;
 
@@ -74,7 +73,7 @@ public class LockAop {
 
         method = method.getDeclaringClass().isInterface() ? signature.getMethod() : joinPoint.getTarget().getClass().getDeclaredMethod(signature.getName(),method.getParameterTypes());
 
-        List<String> keyList = Lists.newArrayList();
+        List<String> keyList = CollectionUtil.newArrayList();
 
         keyList.addAll( getSpelDefinitionKey(lock.keys(), method, joinPoint.getArgs()) );
 
@@ -86,7 +85,7 @@ public class LockAop {
 
     private List<String> getSpelDefinitionKey(String[] definitionKeys, Method method, Object[] parameterValues) {
 
-        List<String> definitionKeyList = Lists.newArrayList();
+        List<String> definitionKeyList = CollectionUtil.newArrayList();
 
         for (String definitionKey : definitionKeys) {
 
@@ -108,7 +107,7 @@ public class LockAop {
 
     private List<String> getParameterKey(Parameter[] parameters, Object[] parameterValues) {
 
-        List<String> parameterKey = Lists.newArrayList();
+        List<String> parameterKey = CollectionUtil.newArrayList();
 
         for (int i = 0; i < parameters.length; i++) {
 

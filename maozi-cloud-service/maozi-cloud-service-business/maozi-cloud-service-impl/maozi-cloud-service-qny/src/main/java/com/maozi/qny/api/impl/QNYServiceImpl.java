@@ -12,24 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.qny.api.impl;
 
 import cn.hutool.core.io.FileUtil;
-import com.google.common.collect.Lists;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.JacksonUtil;
+import com.maozi.common.LogUtil;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.qny.api.QNYService;
 import com.maozi.qny.properties.QNYProperties;
-import com.maozi.utils.MapperUtils;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -42,29 +43,29 @@ import java.io.File;
 import java.util.List;
 
 
+@Slf4j
+public class QNYServiceImpl implements QNYService{
 
-public class QNYServiceImpl extends BaseCommon implements QNYService{
-	
 	protected Auth auth;
-	
+
 	protected UploadManager uploadManager;
-	
+
 	protected QNYProperties qnyProperties;
-	
+
 	@Autowired
 	public QNYServiceImpl(QNYProperties qnyProperties) {
-	
+
 		this.qnyProperties=qnyProperties;
-		this.uploadManager = new UploadManager(new Configuration(Region.region2())); 
+		this.uploadManager = new UploadManager(new Configuration(Region.region2()));
 		this.auth = Auth.create(qnyProperties.getAccessKey(), qnyProperties.getSecretKey());
-	
+
 	}
 
 
 	@Override
 	public List<String> uploadImages(MultipartRequest files){
-		if (files.getMultiFileMap().size() > 0){
-			MultipartFile[] multipartFiles = files.getMultiFileMap().values().toArray(new MultipartFile[files.getMultiFileMap().values().size()]);
+		if (!files.getMultiFileMap().isEmpty()){
+			MultipartFile[] multipartFiles = files.getMultiFileMap().values().toArray(new MultipartFile[0]);
 			try {
 				List<String> images = uploadImages(multipartFiles);
 				if (multipartFiles.length != images.size()){
@@ -80,18 +81,18 @@ public class QNYServiceImpl extends BaseCommon implements QNYService{
 
 	@Override
 	public List<String> uploadImages(MultipartFile [] files) throws Exception{
-		
+
 		String upToken = auth.uploadToken(qnyProperties.getBucket());
-		
-		List<String> images = Lists.newArrayList();
-		
-		Lists.newArrayList(files).stream().forEach(file ->{
+
+		List<String> images = CollectionUtil.newArrayList();
+
+		CollectionUtil.newArrayList(files).stream().forEach(file ->{
 			try {images.add(uploadImage(file,upToken));} catch (Exception e) {
-				e.printStackTrace();
+				LogUtil.error(log,e);
 			}
 		});
 		return images;
-		
+
 	}
 
 	@Override
@@ -111,7 +112,7 @@ public class QNYServiceImpl extends BaseCommon implements QNYService{
 		//下载
 		OkHttpClient client = new OkHttpClient();
 		Request req = new Request.Builder().url(downloadUrl).build();
- 		okhttp3.Response resp = null;
+		okhttp3.Response resp = null;
 		try{
 			resp = client.newCall(req).execute();
 			if (resp.isSuccessful()) {
@@ -132,19 +133,19 @@ public class QNYServiceImpl extends BaseCommon implements QNYService{
 	public String uploadImage(byte[] bytes,String upToken) throws Exception {
 		Response response = uploadManager.put(new ByteArrayInputStream(bytes),null,upToken,null, null);
 
-		DefaultPutRet putRet = MapperUtils.jsonToPojo(response.bodyString(), DefaultPutRet.class);
+		DefaultPutRet putRet = JacksonUtil.jsonToObject(response.bodyString(), DefaultPutRet.class);
 
 		return qnyProperties.getUrl()+putRet.key;
 	}
 
 	public String uploadImage(MultipartFile file,String upToken) throws Exception {
-		
+
 		byte[] bytes = file.getBytes();
-		
+
 		Response response = uploadManager.put(new ByteArrayInputStream(bytes),null,upToken,null, null);
-		
-		DefaultPutRet putRet = MapperUtils.jsonToPojo(response.bodyString(), DefaultPutRet.class);
-		
+
+		DefaultPutRet putRet = JacksonUtil.jsonToObject(response.bodyString(), DefaultPutRet.class);
+
 		return qnyProperties.getUrl()+putRet.key;
 	}
 

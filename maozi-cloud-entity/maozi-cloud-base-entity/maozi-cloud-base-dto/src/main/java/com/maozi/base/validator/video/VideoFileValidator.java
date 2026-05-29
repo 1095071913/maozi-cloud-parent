@@ -1,11 +1,10 @@
 package com.maozi.base.validator.video;
 
+import com.maozi.common.ObjectUtil;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.util.Objects;
 
 public class VideoFileValidator implements ConstraintValidator<VideoFile, MultipartFile> {
 
@@ -15,7 +14,7 @@ public class VideoFileValidator implements ConstraintValidator<VideoFile, Multip
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
 
-        if(Objects.isNull(file) || file.isEmpty()) {
+        if(ObjectUtil.isNullEmpty(file) || file.isEmpty()) {
             return true;
         }
 

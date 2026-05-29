@@ -17,20 +17,21 @@
 
 package com.maozi;
 
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Properties;
 
 @SpringBootApplication
-@MapperScan("com.maozi.${application-project-abbreviation}.*.mapper")
+@MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".${application-project-abbreviation}.*.mapper")
 public class BaseApplicationDB {
 
 	protected static void ApplicationRun(String[] args) {
 
 		Properties properties = System.getProperties();
 
-		properties.put("application-nacos-config-service",",boot-datasource.yml,boot-db.yml");
+		properties.put("application-nacos-config-service","boot-datasource.yml,boot-db.yml");
 
 		BaseApplication.ApplicationRun(args);
 

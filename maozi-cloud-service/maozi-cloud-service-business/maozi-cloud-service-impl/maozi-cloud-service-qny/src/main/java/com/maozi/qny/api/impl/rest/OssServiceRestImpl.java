@@ -19,20 +19,18 @@ package com.maozi.qny.api.impl.rest;
 
 import com.maozi.base.annotation.Get;
 import com.maozi.base.annotation.RestService;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.qny.properties.QNYProperties;
 import com.qiniu.util.Auth;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.annotation.Resource;
-
 
 
 @RestService
-@Tag(name = "【全局】图片管理")
-public class OssServiceRestImpl extends BaseCommon {
+@Tag(name = "【全局】/【对象存储】")
+public class OssServiceRestImpl {
 
 	private static final String PATH = "/oss";
 	
@@ -40,11 +38,11 @@ public class OssServiceRestImpl extends BaseCommon {
 	private QNYProperties qnyProperties;
 
 	@Get(value = PATH + "/getToken",description = "获取七牛云图片访问令牌")
-	public AbstractBaseResult<String> getToken(@RequestParam String url) throws Exception{
+	public AbstractBaseResult<String> getToken(@RequestParam String url){
 		
 		Auth auth = Auth.create(qnyProperties.getAccessKey(), qnyProperties.getSecretKey());
 		
-		return success(auth.privateDownloadUrl(url, 86400));
+		return ResultUtil.success(auth.privateDownloadUrl(url, 86400));
 		
 	}
 	

@@ -2,7 +2,6 @@ package com.maozi.base.enums;
 
 import com.maozi.base.BaseEnum;
 import lombok.Getter;
-import lombok.Setter;
 
 public enum Status implements BaseEnum {
 	
@@ -21,16 +20,14 @@ public enum Status implements BaseEnum {
 	}
 	
 	@Getter
-	@Setter
-	private Integer value;
+	private final Integer value;
 	
 	@Getter
-	@Setter 
-	private String desc;
+	private final String desc;
 
 	@Override
 	public String toString() {
-		return value+"."+desc;
+		return value + "." + desc;
 	}
 
 }

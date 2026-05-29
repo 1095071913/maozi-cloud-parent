@@ -1,16 +1,15 @@
 package com.maozi.mvc.filter;
 
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.context.ApplicationLinkContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class ApplicationLinkContextFilter implements HandlerInterceptor {
@@ -20,10 +19,10 @@ public class ApplicationLinkContextFilter implements HandlerInterceptor {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		String username = (BaseCommon.isNull(authentication) || !authentication.isAuthenticated()) ? null : authentication.getName();
+		String username = (ObjectUtil.isNullEmpty(authentication) || !authentication.isAuthenticated()) ? null : authentication.getName();
 		ApplicationLinkContext.USERNAMES.set(username);
 
-		String version = BaseCommon.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION));
+		String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION));
 		ApplicationLinkContext.VERSIONS.set(version);
 
 		return true;
@@ -32,7 +31,7 @@ public class ApplicationLinkContextFilter implements HandlerInterceptor {
 
 	@Override
 	public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, @Nullable Exception ex) {
-		BaseCommon.clearContext();
+		ApplicationLinkContext.clearContext();
 	}
 
 }

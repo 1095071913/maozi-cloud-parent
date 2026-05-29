@@ -16,9 +16,11 @@
 
 package com.maozi;
 
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.constant.LogTag;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import cn.hutool.extra.spring.SpringUtil;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,12 +29,12 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
 @Slf4j
@@ -42,24 +44,13 @@ import java.util.Properties;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-@DependsOn({"applicationEnvironmentContext","springUtil"})
+@Import({SpringUtil.class})
+@DependsOn({"applicationEnvironmentContext"})
 public class BaseApplication {
 
 	protected static void ApplicationRun(String[] args) {
-		
-		Properties properties = System.getProperties();
 
-		properties.put("spring.main.allow-circular-references",true);
-		properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
-		properties.put("spring.cloud.nacos.config.file-extension", "yml");
-		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
-		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
-
-		properties.put("logging.level.root", "ERROR");
-		properties.put("logging.level.com.maozi", "INFO");
-		properties.put("logging.file.name","log/log.log");
-
-        properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (Objects.nonNull(serviceConfig) ? serviceConfig.toString() : ""));
+		initProperties();
 
 		long begin = System.currentTimeMillis();
 
@@ -76,11 +67,11 @@ public class BaseApplication {
 			logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
 			logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
 
-			BaseCommon.info(logs);
+			LogUtil.info(log,logs);
 
 		} catch (Exception e) {
 
-			log.error(BaseCommon.getStackTrace(e));
+			LogUtil.error(log,e);
 
 			StackTraceElement stackTraceElement = e.getStackTrace()[0];
 
@@ -89,12 +80,31 @@ public class BaseApplication {
 			logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
 			logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
 
-			BaseCommon.error(logs);
+			LogUtil.error(log,logs);
 			System.exit(0);
 
 		}
 
 		ApplicationEnvironmentContext.IS_RUNNING = true;
+
+	}
+
+	private static void initProperties() {
+
+		Properties properties = System.getProperties();
+
+		properties.put("spring.main.log-startup-info",false);
+		properties.put("spring.main.allow-circular-references",true);
+		properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
+		properties.put("spring.cloud.nacos.config.file-extension", "yml");
+		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
+		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
+
+		properties.put("logging.level.root", "ERROR");
+		properties.put("logging.level.com.maozi", "INFO");
+		properties.put("logging.file.name","log/log.log");
+
+		properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (ObjectUtil.isNotNullEmpty(serviceConfig) ? "," + serviceConfig : ""));
 
 	}
 

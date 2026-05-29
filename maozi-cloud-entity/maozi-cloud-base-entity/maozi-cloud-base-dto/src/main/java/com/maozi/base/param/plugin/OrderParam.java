@@ -2,14 +2,13 @@ package com.maozi.base.param.plugin;
 
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public interface OrderParam {
 	
@@ -34,17 +33,17 @@ public interface OrderParam {
 		
 		Map<String, Map<String, Boolean>> orderMainFieldsMap = getOrderMainFieldsMap();
 		
-		Map<String,List<String>> orderAscFieldsMap = Maps.newHashMap();
+		Map<String,List<String>> orderAscFieldsMap = CollectionUtil.newHashMap();
 		
-		Map<String,List<String>> orderDescFieldsMap = Maps.newHashMap();
+		Map<String,List<String>> orderDescFieldsMap = CollectionUtil.newHashMap();
 		
 		for(String key : orderMainFieldsMap.keySet()) {
 			
 			Map<String,Boolean> orderMainFields = orderMainFieldsMap.get(key);
 			
-			List<String> orderAesFields = Lists.newArrayList();
+			List<String> orderAesFields = CollectionUtil.newArrayList();
 			
-			List<String> orderDescFields = Lists.newArrayList();
+			List<String> orderDescFields = CollectionUtil.newArrayList();
 			
 			for(String orderMainField : orderMainFields.keySet()) {	
 				
@@ -52,11 +51,11 @@ public interface OrderParam {
 				
 				Boolean orderMainFieldValue = orderFieldMap.containsKey(orderMainField) ? orderFieldMap.get(orderMainField) : orderMainFields.get(orderMainField);
 				
-				if(Objects.nonNull(orderMainFieldValue)) {
+				if(ObjectUtil.isNotNullEmpty(orderMainFieldValue)) {
 					
 					String underlineCase = StrUtil.toUnderlineCase(key);
 					
-					String field = StringUtils.isEmpty(key) ? underlineCase : underlineCase+"."+StrUtil.toUnderlineCase(orderMainField);
+					String field = StringUtils.isEmpty(key) ? underlineCase : underlineCase + "." + StrUtil.toUnderlineCase(orderMainField);
 					
 					if(orderMainFieldValue) {
 						orderDescFields.add(field);

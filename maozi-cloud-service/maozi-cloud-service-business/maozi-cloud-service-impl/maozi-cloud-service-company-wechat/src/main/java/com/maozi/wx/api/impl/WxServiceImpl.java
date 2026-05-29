@@ -18,12 +18,13 @@
 package com.maozi.wx.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.maozi.base.CodeData;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
 import com.maozi.wx.api.WxService;
 import com.maozi.wx.properties.WxProperties;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,13 +33,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 
-
-public class WxServiceImpl extends BaseCommon implements WxService{
+public class WxServiceImpl implements WxService{
 	
 	@Resource
 	protected RestTemplate restClient;
@@ -62,12 +61,12 @@ public class WxServiceImpl extends BaseCommon implements WxService{
 			
 		}
 		
-		if(isNull(vxResult)) {
-			throw new BusinessResultException(new CodeData(500,"企业微信服务不可用",500));
+		if(ObjectUtil.isNullEmpty(vxResult)) {
+			throw new BusinessResultException(new ErrorCode(500,"企业微信服务不可用"));
 		}
 		
-		if(isNull(vxResult) || vxResult.getStatusCodeValue() != 200 || vxResult.getBody().getInteger("errcode")!=0) {
-			throw new BusinessResultException(new CodeData(vxResult.getBody().getInteger("errcode"),vxResult.getBody().getString("errmsg")),vxResult.getStatusCodeValue());
+		if(ObjectUtil.isNullEmpty(vxResult) || vxResult.getStatusCodeValue() != 200 || vxResult.getBody().getInteger("errcode")!=0) {
+			throw new BusinessResultException(new ErrorCode(vxResult.getBody().getInteger("errcode"),vxResult.getBody().getString("errmsg")));
 		}
 		
 		return vxResult.getBody();
@@ -77,7 +76,7 @@ public class WxServiceImpl extends BaseCommon implements WxService{
 	@Override
 	public String getVxAccessToken() {
 		
-		Map<String, Object> getTokenBody = new HashMap<String, Object>(){
+		Map<String, Object> getTokenBody = new HashMap<>(){
 			{
 				put("corpid", wxProperties.getCorpid());
 				put("corpsecret",wxProperties.getContactsCorpsecret());

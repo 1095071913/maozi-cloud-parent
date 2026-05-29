@@ -1,70 +1,92 @@
-/*
- * Copyright 2012-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- */
-
 package com.maozi.oauth.config;
 
+import com.maozi.common.CollectionUtil;
 import com.maozi.oauth.properties.ApiWhitelistProperties;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationManagerResolver;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.server.resource.authentication.OpaqueTokenAuthenticationProvider;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+import org.springframework.security.web.SecurityFilterChain;
 
-import javax.annotation.Resource;
+import java.util.List;
 
-@Configuration
-@EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+/**
+ * 资源服务器配置
+ *
+ * @author vains
+ */
+@RequiredArgsConstructor
+@Configuration(proxyBeanMethods = false)
+public class ResourceServerConfig {
 
-	@Resource
-	public ApiWhitelistProperties apiWhitelistProperties;
+    @Resource
+    public ApiWhitelistProperties apiWhitelistProperties;
 
-	@Resource
-	public ResourceServerTokenServices remoteTokenServices;
+    @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-	@Override
-	public void configure(ResourceServerSecurityConfigurer resource) throws Exception {
+        List<String> witelist = CollectionUtil.newArrayList();
+        witelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
+        witelist.addAll(apiWhitelistProperties.getConfigWhitelist());
 
-		resource.resourceId("backend-resources");
-		
-		resource.accessDeniedHandler(new IAccessDeniedHandler());
-		
-		resource.authenticationEntryPoint(new IAuthenticationEntryPoint());
+        String[] requestMatchers = witelist.toArray(new String[0]);
+        http.authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers(requestMatchers).permitAll()
+                .anyRequest().authenticated());
 
-		resource.tokenServices(remoteTokenServices);
-		
-	}
+        // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务，解析请求头中的token
+        http.oauth2ResourceServer((resourceServer) -> resourceServer
+                .opaqueToken(Customizer.withDefaults())
+                .accessDeniedHandler(new IAccessDeniedHandler())
+                .authenticationEntryPoint(new IAuthenticationEntryPoint())
+        );
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-    	
-    	 apiWhitelistProperties.getDefaultWitelist().addAll(apiWhitelistProperties.getWhitelist());
-    	
-    	 http.exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    	 
-    	 .and().authorizeRequests().antMatchers(apiWhitelistProperties.getDefaultWitelist().toArray(new String[apiWhitelistProperties.getDefaultWitelist().size()])).permitAll()
-    	 
-    	 .and().authorizeRequests().anyRequest().authenticated();
-    	
+        return http.build();
+
     }
-    
+
+//    /**
+//     * 根据jwtDecoder和令牌自省生成{@link AuthenticationManagerResolver }，在AuthenticationManagerResolver中根据当前请求决定使用jwt解析器还是去token自省端点获取当前token信息
+//     *
+//     * @param jwtDecoder              jwt解析器
+//     * @param opaqueTokenIntrospector token自省
+//     * @return 返回 {@link AuthenticationManagerResolver }
+//     */
+//    @Bean
+//    AuthenticationManagerResolver<HttpServletRequest> tokenAuthenticationManagerResolver
+//    (JwtDecoder jwtDecoder, OpaqueTokenIntrospector opaqueTokenIntrospector) {
+//        AuthenticationManager jwt = new ProviderManager(new JwtAuthenticationProvider(jwtDecoder));
+//        AuthenticationManager opaqueToken = new ProviderManager(
+//                new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector));
+//        return (request) -> useJwt(request) ? jwt : opaqueToken;
+//    }
+//
+//    /**
+//     * 判断请求头是否有key ： token-type，有值不是jwt
+//     * 这里根据自己业务实现，可以获取token后再判断token是jwt还是匿名token
+//     *
+//     * @param request 请求对象
+//     * @return 是否使用jwt token
+//     */
+//    private boolean useJwt(HttpServletRequest request) {
+//        return ObjectUtils.isEmpty(request.getHeader("token-type"));
+//    }
+
+    @Bean
+    public AuthenticationManagerResolver<HttpServletRequest> tokenAuthenticationManagerResolver(OpaqueTokenIntrospector opaqueTokenIntrospector) {
+        AuthenticationManager opaqueToken = new ProviderManager(new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector));
+        return (request) -> opaqueToken;
+    }
+
+
+
 
 }

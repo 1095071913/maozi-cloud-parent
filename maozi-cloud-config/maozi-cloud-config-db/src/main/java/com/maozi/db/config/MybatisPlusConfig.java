@@ -24,7 +24,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.maozi.common.BaseCommon;
 import net.sf.jsqlparser.expression.LongValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +46,7 @@ public class MybatisPlusConfig {
         	
             @Override
             public LongValue getTenantId() {
-            	return new LongValue(BaseCommon.getCurrentClientId());
+            	return new LongValue("");
             }
 
             @Override

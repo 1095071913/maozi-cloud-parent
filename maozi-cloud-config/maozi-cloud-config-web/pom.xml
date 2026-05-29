@@ -12,7 +12,26 @@
 
 	<dependencies>
 
+		<!-- SkyWalking Begin -->
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-trace</artifactId>
+			<version>${skywalking.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.skywalking</groupId>
+			<artifactId>apm-toolkit-logback-1.x</artifactId>
+			<version>${skywalking.version}</version>
+		</dependency>
+		<!-- SkyWalking End -->
+
 		<!-- Spring Boot Begin -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -33,12 +52,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
-		 
+
 		<dependency>
-			<groupId>com.github.ben-manes.caffeine</groupId>  
+			<groupId>com.github.ben-manes.caffeine</groupId>
 			<artifactId>caffeine</artifactId>
-		</dependency> 
-		
+		</dependency>
+
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
@@ -47,12 +66,12 @@
 
 
 		<!-- Project Begin -->
-		<dependency>
-			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-		<!-- Project End --> 
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-base-enum</artifactId>
+			<version>${maozi-cloud-base-enum.version}</version>
+        </dependency>
+        <!-- Project End -->
 
 
 	</dependencies>

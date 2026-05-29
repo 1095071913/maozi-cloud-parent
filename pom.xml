@@ -13,29 +13,30 @@
 
 	<properties>
 
-		<parent-revision>1.1.2</parent-revision>
+		<parent-revision>2.0.0</parent-revision>
 
 		<!-- Java Begin -->
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<project.encoding>UTF-8</project.encoding>
+		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 		<!-- Java End -->
 
 
 		<!-- Spring Component Begin -->
-		<spring-boot.version>2.6.13</spring-boot.version>
-		<spring-cloud.version>2021.0.5</spring-cloud.version>
-		<spring-cloud-alibaba.version>2021.0.6.0</spring-cloud-alibaba.version>
-		<spring-boot-admin-starter.version>2.6.11</spring-boot-admin-starter.version>
-		<spring-cloud-starter-oauth2.version>2.2.4.RELEASE</spring-cloud-starter-oauth2.version>
+		<spring-boot.version>3.2.6</spring-boot.version>
+		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<spring-boot-admin-starter.version>3.2.3</spring-boot-admin-starter.version>
 		<!-- Spring Component End -->
 
 
 		<!-- Other Component Begin -->
 		<cglib.version>3.3.0</cglib.version>
-		<dubbo.version>3.0.8</dubbo.version>
+		<dubbo.version>3.2.6</dubbo.version>
 		<arthas.version>3.6.7</arthas.version>
 		<hutool.version>5.8.28</hutool.version>
 		<easypoi.version>4.3.0</easypoi.version>
@@ -44,10 +45,10 @@
 		<redisson.version>3.18.0</redisson.version>
 		<skywalking.version>8.4.0</skywalking.version>
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
-		<mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+		<mybatis-plus.version>3.5.6</mybatis-plus.version>
 		<transmittable.version>2.14.5</transmittable.version>
-		<springdoc-openapi.version>1.7.0</springdoc-openapi.version>
 		<mybatis-plus-join.version>1.4.5</mybatis-plus-join.version>
+		<springdoc-openapi.version>2.8.17</springdoc-openapi.version>
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
 		<!-- Other Component End -->
 
@@ -67,8 +68,6 @@
 		<maozi-cloud-base-dto.version>${parent-revision}</maozi-cloud-base-dto.version>
 		<maozi-cloud-base-enum.version>${parent-revision}</maozi-cloud-base-enum.version>
 
-		<maozi-cloud-common-result.version>${parent-revision}</maozi-cloud-common-result.version>
-
 		<maozi-cloud-config-db.version>${parent-revision}</maozi-cloud-config-db.version>
 		<maozi-cloud-config-job.version>${parent-revision}</maozi-cloud-config-job.version>
 		<maozi-cloud-config-log.version>${parent-revision}</maozi-cloud-config-log.version>
@@ -86,7 +85,7 @@
 		<maozi-cloud-config-discovery.version>${parent-revision}</maozi-cloud-config-discovery.version>
 
 
-		<maozi-cloud-common-utils.version>${parent-revision}</maozi-cloud-common-utils.version>
+		<maozi-cloud-utils.version>${parent-revision}</maozi-cloud-utils.version>
 
 
 		<maozi-cloud-service-mq.version>${parent-revision}</maozi-cloud-service-mq.version>
@@ -169,16 +168,10 @@
 	<dependencies>
 
 		<!-- JAVA EE Begin -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>jsr250-api</artifactId>
-      <version>1.0</version>
-    </dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+		</dependency>
 		<!-- JAVA EE End -->
 
 
@@ -406,10 +399,10 @@
 
 	<modules>
 		<module>maozi-cloud-entity</module>
-		<module>maozi-cloud-common</module>
+		<module>maozi-cloud-utils</module>
 		<module>maozi-cloud-service</module>
 		<module>maozi-cloud-config</module>
-  </modules>
+  	</modules>
 
 
 </project>

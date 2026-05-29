@@ -1,6 +1,5 @@
 package com.maozi.base.api.rpc;
 
-import com.maozi.base.AbstractBaseDtomain;
 import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.common.result.AbstractBaseResult;
@@ -21,9 +20,9 @@ public interface BaseServiceResult<D> {
 
 	AbstractBaseResult<Long> getCountByParamResult(D dto);
 
-	<D extends AbstractBaseDtomain> AbstractBaseResult<Long> saveUpdateResult(Long id,D param);
+	<P> AbstractBaseResult<Long> saveUpdateResult(Long id,P param);
 
-	AbstractBaseResult<Void> saveUpdateBatchResult(List<SaveUpdateBatch> dtos);
+	AbstractBaseResult<Void> saveUpdateBatchResult(List<SaveUpdateBatch> params);
 
 	AbstractBaseResult<Void> removeByIdResult(Long id);
 	

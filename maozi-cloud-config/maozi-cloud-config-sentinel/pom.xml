@@ -21,16 +21,16 @@
 
 		<!-- <dependency> <groupId>com.alibaba.csp</groupId> <artifactId>sentinel-reactor-adapter</artifactId> 
 			</dependency> -->
-			
-		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-apache-dubbo-adapter</artifactId>
-			<version>${sentinel-apache-dubbo-adapter.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId> 
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.csp</groupId>
+			<artifactId>sentinel-apache-dubbo-adapter</artifactId>
+			<version>${sentinel-apache-dubbo-adapter.version}</version>
 		</dependency>
  
 		<dependency>
@@ -40,8 +40,8 @@
 		
 		<dependency>
 			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
 		</dependency> 
 		
 		<dependency>

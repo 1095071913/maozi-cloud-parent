@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum JoinBaseType {
 
-	INNER_JOIN("innerJoin","内连接"),
+	INNER_JOIN("innerJoin", "内连接"),
 
-	LEFT_JOIN("leftJoin","左连接"),
+	LEFT_JOIN("leftJoin", "左连接"),
 
-	RIGHT_JOIN("rightJoin","右连接"),
+	RIGHT_JOIN("rightJoin", "右连接"),
 
 	;
 

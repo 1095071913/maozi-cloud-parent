@@ -1,8 +1,8 @@
 package com.maozi.feign.config;
 
+import com.maozi.common.JacksonUtil;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.success.SuccessResult;
-import com.maozi.utils.MapperUtils;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.Decoder;
@@ -39,11 +39,9 @@ public class ResultDecoder implements Decoder {
     	
     	LinkedHashMap<String, Object> extractData = (LinkedHashMap<String, Object>) extractor.extractData(new FeignResponseAdapter(response));
 
-		return type.getTypeName().contains(AbstractBaseResult.class.getName()) ? MapperUtils.mapToPojo(extractData, SuccessResult.class) : MapperUtils.mapToPojo(extractData, dataType);
+		return type.getTypeName().contains(AbstractBaseResult.class.getName()) ? JacksonUtil.mapToObject(extractData, SuccessResult.class) : JacksonUtil.mapToObject(extractData, dataType);
     	
     }
-    
-    
     
     public final class FeignResponseAdapter implements ClientHttpResponse {
 

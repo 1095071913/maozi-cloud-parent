@@ -19,17 +19,17 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		
-	</dependencies>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-base-enum</artifactId>
+            <version>${maozi-cloud-base-enum.version}</version>
+        </dependency>
+
+    </dependencies>
 
 
 

@@ -20,15 +20,16 @@ package com.maozi.mvc.config.error;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.MapperUtils;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import com.maozi.common.JacksonUtil;
+import com.maozi.common.LogUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-
+@Slf4j
 @Configuration
 public class ErrorParamTranslation {
 	
@@ -58,8 +59,8 @@ public class ErrorParamTranslation {
 	
 	public void errorParamTranslation(String json) {
 		
-		try {errorParams = MapperUtils.jsonToMap(json,String.class);}catch (Exception e) {
-			BaseCommon.error(e);
+		try {errorParams = JacksonUtil.jsonToMap(json);}catch (Exception e) {
+			LogUtil.error(log,e);
 		}
 
 	}

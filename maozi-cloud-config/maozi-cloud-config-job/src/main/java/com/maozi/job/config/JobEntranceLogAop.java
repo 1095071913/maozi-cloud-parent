@@ -2,11 +2,14 @@ package com.maozi.job.config;
 
 import com.maozi.base.enums.EnvironmentType;
 import com.maozi.base.enums.LogCommonType;
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.constant.LogTag;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.base.utils.EnvironmentUtil;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.context.ApplicationLinkContext;
 import com.xxl.job.core.context.XxlJobHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,10 +20,11 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
-public class JobEntranceLogAop extends BaseCommon {
+public class JobEntranceLogAop {
 
     private final String POINT = "@annotation(com.xxl.job.core.handler.annotation.XxlJob)";
 
@@ -33,8 +37,6 @@ public class JobEntranceLogAop extends BaseCommon {
 
         String arg = XxlJobHelper.getJobParam();
 
-        functionParam(arg);
-
         ApplicationLinkContext.VERSIONS.set(ApplicationEnvironmentContext.VERSION);
 
         Map<String, String> logs = new LinkedHashMap<>();
@@ -42,7 +44,7 @@ public class JobEntranceLogAop extends BaseCommon {
         logs.put(LogTag.TYPE, LogCommonType.JOB.getDesc());
         logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
-        Boolean isNotProd = notEnvironment(EnvironmentType.PROD);
+        Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
         if(isNotProd){
             logs.put(LogTag.PARAM, arg);
         }
@@ -51,11 +53,7 @@ public class JobEntranceLogAop extends BaseCommon {
 
             error = true;
 
-            String stackTrace = getStackTrace(e);
-
-            functionError(stackTrace);
-
-            log.error(stackTrace);
+            LogUtil.error(log,e);
 
             if(!isNotProd){
                 logs.put(LogTag.PARAM, arg);
@@ -70,16 +68,16 @@ public class JobEntranceLogAop extends BaseCommon {
 
         }finally {
 
-            StringBuilder respSql = sql.get();
-            if (isNotNull(respSql)) {
-                logs.put(LogTag.SQL, respSql.toString());
+            StringBuilder sqlLog = LogUtil.sqlLog.get();
+            if (ObjectUtil.isNotNullEmpty(sqlLog)) {
+                logs.put(LogTag.SQL, sqlLog.toString());
             }
 
             logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
-            log(error,logs);
+            LogUtil.log(log,error,logs);
 
-            BaseCommon.clearContext();
+            ApplicationLinkContext.clearContext();
 
         }
 

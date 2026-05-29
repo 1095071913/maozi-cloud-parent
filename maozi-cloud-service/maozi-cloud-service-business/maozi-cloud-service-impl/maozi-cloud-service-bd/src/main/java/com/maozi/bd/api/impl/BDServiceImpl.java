@@ -18,24 +18,23 @@
 package com.maozi.bd.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Maps;
-import com.maozi.base.CodeData;
 import com.maozi.bd.api.BDService;
 import com.maozi.bd.properties.BDProperties;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 
-
-public class BDServiceImpl extends BaseCommon implements BDService{
+public class BDServiceImpl implements BDService{
 
 	@Resource
 	protected BDProperties bdProperties;
@@ -46,8 +45,8 @@ public class BDServiceImpl extends BaseCommon implements BDService{
 	@Override
 	public JSONObject bdRest(String uri,Map<String,Object> privateParam,HttpMethod method) {
 		
-		if(isNull(privateParam)) {
-			privateParam = Maps.newHashMap();
+		if(ObjectUtil.isNullEmpty(privateParam)) {
+			privateParam = CollectionUtil.newHashMap();
 		}
 		
 		privateParam.put("ak", bdProperties.getAk());
@@ -59,19 +58,19 @@ public class BDServiceImpl extends BaseCommon implements BDService{
 			
 		}else {
 			
-			HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<Map<String, Object>>(privateParam, new HttpHeaders());
+			HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(privateParam, new HttpHeaders());
 			bdResult = restClient.postForEntity(bdProperties.getUrl()+uri,requestEntity,String.class);
 			
 		}
 		
 		JSONObject response = JSONObject.parseObject(bdResult.getBody());
-		
-		if(isNull(bdResult)) {
-			throw new BusinessResultException(new CodeData(500,"百度服务不可用",500));
+
+		if(ObjectUtil.isNullEmpty(bdResult)) {
+			throw new BusinessResultException(new ErrorCode(500,"百度服务不可用"));
 		}
-		
-		if(isNull(bdResult) || bdResult.getStatusCodeValue() != 200 || response.getInteger("status")!=0) { 
-			throw new BusinessResultException(new CodeData(response.getInteger("status"),response.getString("message")),bdResult.getStatusCodeValue());
+
+		if(ObjectUtil.isNullEmpty(bdResult) || bdResult.getStatusCodeValue() != 200 || response.getInteger("status")!=0) {
+			throw new BusinessResultException(new ErrorCode(response.getInteger("status"),response.getString("message")));
 		}
 		
 		return response; 

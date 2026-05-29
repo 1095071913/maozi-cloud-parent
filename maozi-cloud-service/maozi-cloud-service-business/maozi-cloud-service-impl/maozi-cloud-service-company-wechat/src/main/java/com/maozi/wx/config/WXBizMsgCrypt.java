@@ -20,6 +20,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -213,7 +214,7 @@ public class WXBizMsgCrypt {
 		String encrypt = encrypt(getRandomStr(), replyMsg);
 
 		// 生成安全签名
-		if (timeStamp == "") {
+		if (Objects.equals(timeStamp, "")) {
 			timeStamp = Long.toString(System.currentTimeMillis());
 		}
 

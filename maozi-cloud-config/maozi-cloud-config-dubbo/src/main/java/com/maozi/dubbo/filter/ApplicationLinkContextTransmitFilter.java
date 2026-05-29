@@ -1,6 +1,6 @@
 package com.maozi.dubbo.filter;
 
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.common.context.ApplicationLinkContext;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -22,7 +22,7 @@ public class ApplicationLinkContextTransmitFilter implements Filter {
 
         return invoker.invoke(invocation);
 
-//        return new AsyncRpcResult(CompletableFuture.completedFuture(new AppResponse(BaseCommon.error(new CodeData(6,"服务错误" + "(" + applicationName + ")"),500))), invocation);
+//        return new AsyncRpcResult(CompletableFuture.completedFuture(new AppResponse(BaseCommon.error(new ErrorCode(6,"服务错误" + "(" + applicationName + ")"),500))), invocation);
 
     }
 

@@ -1,8 +1,10 @@
 package com.maozi.db.config;
 
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.logging.Log;
 
 @Slf4j
@@ -24,21 +26,21 @@ public class MybatisPlusLog implements Log {
 			return;
 		}
 		
-		StringBuilder sql = BaseCommon.sql.get();
+		StringBuilder sqlLog = LogUtil.sqlLog.get();
 		
-		if(BaseCommon.isNull(sql)) {
-			
-			sql = new StringBuilder();
-			
-			BaseCommon.sql.set(sql);
+		if(ObjectUtil.isNullEmpty(sqlLog)) {
+
+			sqlLog = new StringBuilder();
+
+			LogUtil.sqlLog.set(sqlLog);
 			
 		}
 		
 		if(s.contains("==>  Preparing: ")) {
 			
-			s=s.replace("==>  Preparing: ",""); 
-			
-			sql.append(s); 
+			s=s.replace("==>  Preparing: ","");
+
+			sqlLog.append(s);
 			
 		}
 		
@@ -46,28 +48,26 @@ public class MybatisPlusLog implements Log {
 			
 			s=s.replace("==> Parameters: ","");
 				
-			if(BaseCommon.isNotEmpty(s)) {
+			if(StringUtils.isNotBlank(s)) {
 				
 				String [] params = s.split("\\),");
-				
-				for(Integer i = 0 ; i < params.length ; i++) {
-					
-					String param = params[i];
-					
-					param = "'"+param.substring(0,param.indexOf("("))+"'";
-					
-					int index = sql.indexOf("?");
-					 
-					if(index != -1) {
-						sql.replace(index, index+1, param);
-						
-					}
-					
-				}
+
+                for (String param : params) {
+
+                    param = "'" + param.substring(0, param.indexOf("(")) + "'";
+
+                    int index = sqlLog.indexOf("?");
+
+                    if (index != -1) {
+                        sqlLog.replace(index, index + 1, param);
+
+                    }
+
+                }
 				
 			}
-			
-			sql.append(";");
+
+			sqlLog.append(";");
 			
 		}   
 

@@ -10,11 +10,11 @@ import lombok.Getter;
 @Getter
 public enum JoinType {
 
-	INNER_JOIN(JoinBaseType.INNER_JOIN,new QueryInnerJoinPlugin()),
+	INNER_JOIN(JoinBaseType.INNER_JOIN, new QueryInnerJoinPlugin()),
 
-	LEFT_JOIN(JoinBaseType.LEFT_JOIN,new QueryLeftJoinPlugin()),
+	LEFT_JOIN(JoinBaseType.LEFT_JOIN, new QueryLeftJoinPlugin()),
 
-	RIGHT_JOIN(JoinBaseType.RIGHT_JOIN,new QueryRightJoinPlugin()),
+	RIGHT_JOIN(JoinBaseType.RIGHT_JOIN, new QueryRightJoinPlugin()),
 
 	;
 

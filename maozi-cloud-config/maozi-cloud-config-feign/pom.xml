@@ -24,17 +24,17 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-		
-		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
 			<version>2.1</version>
 		</dependency>
-		<!-- Spring Cloud End -->
+        <!-- Spring Cloud End -->
+
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
 		
 	</dependencies>
 

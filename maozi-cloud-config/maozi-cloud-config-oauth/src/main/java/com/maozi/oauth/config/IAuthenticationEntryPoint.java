@@ -17,30 +17,33 @@
 
 package com.maozi.oauth.config;
 
-import com.maozi.base.CodeData;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.ResultUtil;
+import com.maozi.common.WebUtil;
 import com.maozi.common.result.AbstractBaseResult;
-import com.maozi.utils.MapperUtils;
+import com.maozi.common.result.error.code.ErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class IAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-public class IAuthenticationEntryPoint extends BaseCommon implements AuthenticationEntryPoint {
-
-	private static final int NO_AUTHENTICATION_CODE = 401;
+	private static final int AUTHENTICATION_ERROR_CODE = 401;
 
 	private static final String NO_AUTHENTICATION_DEFAULT_MESSAGE = "Full authentication is required to access this resource";
-	
+
+	private static final ErrorCode NO_AUTHENTICATION_CODE_DATA = new ErrorCode(AUTHENTICATION_ERROR_CODE,"用户未认证授权");
+
+	private static final ErrorCode ERROR_AUTHENTICATION_CODE_DATA = new ErrorCode(AUTHENTICATION_ERROR_CODE,"用户认证授权失败");
+
 	@Override
 	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-		String errorMessage = NO_AUTHENTICATION_DEFAULT_MESSAGE.equals(authException.getMessage()) ? "未认证授权" : authException.getMessage();
+		ErrorCode errorCode = NO_AUTHENTICATION_DEFAULT_MESSAGE.equals(authException.getMessage()) ? NO_AUTHENTICATION_CODE_DATA : ERROR_AUTHENTICATION_CODE_DATA;
 
-		AbstractBaseResult<Void> error = error(new CodeData<Void>(NO_AUTHENTICATION_CODE,errorMessage),NO_AUTHENTICATION_CODE).autoIdentifyHttpCode();
+		AbstractBaseResult<Object> error = ResultUtil.error(errorCode).autoIdentifyHttpCode(AUTHENTICATION_ERROR_CODE);
 			
-		MapperUtils.setResponseBody(response,error);
+		WebUtil.writeResponseBody(response,error);
 		
 	}
 	

@@ -41,7 +41,7 @@ import java.io.Serializable;
 public abstract class AbstractBaseDomain implements Serializable {
 
 	@Serial
-    protected static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键

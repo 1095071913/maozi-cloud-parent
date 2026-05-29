@@ -1,6 +1,9 @@
 package com.maozi.mvc.config.rest;
 
-import com.maozi.common.BaseCommon;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.context.ApplicationLinkContext;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.toolkit.trace.Tag;
 import org.apache.skywalking.apm.toolkit.trace.Tags;
 import org.apache.skywalking.apm.toolkit.trace.Trace;
@@ -27,17 +30,18 @@ import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 public class RestTemplate extends org.springframework.web.client.RestTemplate {
 	
 	@Nullable
 	@Override
 	protected <T> T doExecute(URI url, @Nullable HttpMethod method, @Nullable RequestCallback requestCallback,@Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
 
-		Boolean error = false;
+		boolean error = false;
 
-		Long startTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 
-		Map<String,String> logs = new LinkedHashMap<String, String>();
+		Map<String,String> logs = new LinkedHashMap<>();
 		
 		ClientHttpResponse response = null;
 		
@@ -73,7 +77,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			
 			T t=(responseExtractor != null ? responseExtractor.extractData(response) : null);
 			
-			logs.put("Code", response.getRawStatusCode()+"");
+			logs.put("Code", response.getStatusCode().value()+"");
 			
         	logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
         	
@@ -91,17 +95,13 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			
 			resource = (query != null ? resource.substring(0, resource.indexOf('?')) : resource);
 			
-			StackTraceElement stackTraceElement = stackTraceElement = e.getStackTrace()[0];
+			log.error("",e);
 			
-			String stackTrace = BaseCommon.getStackTrace(e);
-			
-			BaseCommon.log.error(stackTrace);
-			
-			functionError(stackTrace);
-            
-            logs.put("ErrorUser",BaseCommon.getCurrentUserName());
+			functionError(LogUtil.getStackTraceLog(e));
+
+            logs.put("ErrorUser", ApplicationLinkContext.USERNAMES.get());
             logs.put("ErrorDesc", e.getLocalizedMessage());
-            logs.put("ErrorLine", stackTraceElement.toString());
+            logs.put("ErrorLine", e.getStackTrace()[0].toString());
             
 			return null;
 
@@ -111,14 +111,14 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 				response.close();
 			}
 
-			StringBuilder respSql = BaseCommon.sql.get();
-			if (BaseCommon.isNotNull(respSql)) {
-				logs.put("SQL", respSql.toString());
+			StringBuilder sqlLog = LogUtil.sqlLog.get();
+			if (ObjectUtil.isNotNullEmpty(sqlLog)) {
+				logs.put("SQL", sqlLog.toString());
 			}
 
 			logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
 
-			BaseCommon.log(error,logs);
+			LogUtil.log(log,error,logs);
 			
 		}
 

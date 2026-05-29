@@ -28,6 +28,12 @@
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-base-dto</artifactId>
+      <version>${maozi-cloud-base-dto.version}</version>
+    </dependency>
+
   </dependencies>
 	
 </project>

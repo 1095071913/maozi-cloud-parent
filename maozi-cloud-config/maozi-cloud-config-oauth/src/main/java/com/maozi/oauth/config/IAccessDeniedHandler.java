@@ -17,22 +17,21 @@
 
 package com.maozi.oauth.config;
 
-import com.maozi.base.CodeData;
-import com.maozi.base.error.code.SystemErrorCode;
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.MapperUtils;
+import com.maozi.common.ResultUtil;
+import com.maozi.common.WebUtil;
+import com.maozi.common.result.error.code.ErrorCode;
+import com.maozi.common.result.error.code.SystemErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class IAccessDeniedHandler extends BaseCommon implements AccessDeniedHandler {
+public class IAccessDeniedHandler implements AccessDeniedHandler {
 	
-    @Override 
+    @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,AccessDeniedException accessDeniedException){
-        CodeData<Void> errorCode = SystemErrorCode.PERMISSION_ERROR;
-		MapperUtils.setResponseBody(response, error(errorCode,errorCode.getCode()).autoIdentifyHttpCode());
+        ErrorCode errorCode = SystemErrorCode.PERMISSION_ERROR;
+        WebUtil.writeResponseBody(response, ResultUtil.error(errorCode).autoIdentifyHttpCode(errorCode.getCode()));
     }
 
 }

@@ -16,12 +16,6 @@
 		<!-- Project Begin -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-result</artifactId>
-			<version>${maozi-cloud-common-result.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-oauth</artifactId>
 			<version>${maozi-cloud-config-oauth.version}</version>
 		</dependency>

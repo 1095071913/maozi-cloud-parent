@@ -1,34 +1,32 @@
 package com.maozi.oauth.properties;
 
-import com.google.common.collect.Lists;
+import com.maozi.common.CollectionUtil;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
 @Component
 public class ApiWhitelistProperties {
-	
+
+	public final static List<String> DEFAULT_WITE_LIST;
+
     @Value("${application-project-whitelist:#{null}}")
-    private List<String> whitelist = Lists.newArrayList();
-    
-    private List<String> defaultWitelist = new ArrayList<>(){
+    private List<String> configWhitelist;
 
-		{
-    		add("/oauth/check_token");
-    		add("/webjars/**");
-    		
-    		add("/actuator/**");
-    		add("/application/**");
+	static {
 
-			add("/v3/api-docs/**");
-			
-    	}
+		DEFAULT_WITE_LIST = CollectionUtil.newArrayList();
 
-    };
+		DEFAULT_WITE_LIST.add("/oauth2/introspect");
+		DEFAULT_WITE_LIST.add("/webjars/**");
+		DEFAULT_WITE_LIST.add("/actuator/**");
+		DEFAULT_WITE_LIST.add("/application/**");
+		DEFAULT_WITE_LIST.add("/v3/api-docs/**");
+
+	}
     
 }

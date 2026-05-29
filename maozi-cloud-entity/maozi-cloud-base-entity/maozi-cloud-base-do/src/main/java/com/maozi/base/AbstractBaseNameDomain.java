@@ -19,15 +19,22 @@ package com.maozi.base;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.io.Serial;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseNameDomain extends AbstractBaseDomain {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 名称

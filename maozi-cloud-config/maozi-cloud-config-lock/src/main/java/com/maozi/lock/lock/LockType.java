@@ -1,27 +1,27 @@
 package com.maozi.lock.lock;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.maozi.base.BaseEnum;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.lock.error.strategy.impl.LockTimeoutStrategy;
 import com.maozi.lock.error.strategy.impl.UnLockTimeoutStrategy;
 import com.maozi.lock.lock.impl.FairLock;
 import com.maozi.lock.lock.impl.ReadLock;
 import com.maozi.lock.lock.impl.ReentrantLock;
 import com.maozi.lock.lock.impl.WriteLock;
-import com.maozi.utils.SpringUtil;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
 import lombok.Getter;
 
 import java.util.function.Supplier;
 
 public enum LockType implements BaseEnum {
 
-    REENTRANT(0,"可重入锁",ReentrantLock.class),
+    REENTRANT(0, "可重入锁", ReentrantLock.class),
 
-    FAIR(1,"公平锁", FairLock.class),
+    FAIR(1, "公平锁", FairLock.class),
 
-    READ(2,"读锁", ReadLock.class),
+    READ(2, "读锁", ReadLock.class),
 
-    WRITE(3,"写锁", WriteLock.class),
+    WRITE(3, "写锁", WriteLock.class),
 
     ;
 
@@ -43,7 +43,7 @@ public enum LockType implements BaseEnum {
 
     @Override
     public String toString() {
-        return value+"."+desc;
+        return value + "." + desc;
     }
 
     private final Class< ? extends Lock > lockClass;

@@ -29,8 +29,8 @@
         
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-common-utils</artifactId>
-			<version>${maozi-cloud-common-utils.version}</version>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
 		</dependency>
 
 		<dependency>

@@ -2,14 +2,14 @@ package com.maozi.base.plugin;
 
 import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.google.common.collect.Maps;
 import com.maozi.base.enums.StoreClassType;
-import com.maozi.utils.context.ApplicationEnvironmentContext;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.context.ApplicationEnvironmentContext;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class StoreClassDBScan implements ApplicationRunner {
@@ -17,9 +17,9 @@ public class StoreClassDBScan implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        HashMap<String, Class<?>> storeClassDBMap = Maps.newHashMap();
+        Map<String, Class<?>> storeClassDBMap = CollectionUtil.newHashMap();
 
-        ClassUtil.scanPackage("com.maozi."+ ApplicationEnvironmentContext.applicationProjectAbbreviation).stream().forEach(clazz ->{
+        ClassUtil.scanPackage(ApplicationEnvironmentContext.PACKAGE_PREFIX + "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION).forEach(clazz ->{
 
             if(clazz.isAnnotationPresent(TableName.class)){
 

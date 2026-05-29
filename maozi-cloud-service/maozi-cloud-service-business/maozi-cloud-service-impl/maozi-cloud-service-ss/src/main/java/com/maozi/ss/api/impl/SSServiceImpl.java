@@ -18,14 +18,15 @@
 package com.maozi.ss.api.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.maozi.base.CodeData;
-import com.maozi.common.BaseCommon;
+import com.maozi.common.JacksonUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.mvc.config.rest.RestTemplate;
 import com.maozi.ss.api.SSService;
 import com.maozi.ss.config.SSConfig;
 import com.maozi.ss.properties.SSProperties;
-import com.maozi.utils.MapperUtils;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -33,13 +34,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
 
-
-public class SSServiceImpl extends BaseCommon implements SSService{
+public class SSServiceImpl implements SSService{
 	
 	@Resource
 	private RestTemplate restClient;
@@ -65,13 +64,13 @@ public class SSServiceImpl extends BaseCommon implements SSService{
 	@Override
 	public JSONObject ssRest(String uri, Map<String, Object> privateParam, String accessToken) {
 		
-		String privateParamJson = MapperUtils.mapToJson(privateParam);
+		String privateParamJson = JacksonUtil.objectToJson(privateParam);
 		
 		Long currentTimeMillis = System.currentTimeMillis();
 		
 		StringBuffer sb = new StringBuffer(ssProperties.getAppSecret());
 		
-		if(isNotNull(accessToken)) {
+		if(ObjectUtil.isNotNullEmpty(accessToken)) {
 			sb.append("accessToken").append(accessToken);
 		}
         		
@@ -81,7 +80,7 @@ public class SSServiceImpl extends BaseCommon implements SSService{
 		
         MultiValueMap<String, Object> publicParam = new LinkedMultiValueMap<String, Object>(){{
         	
-        	if(isNotNull(accessToken)) {
+        	if(ObjectUtil.isNotNullEmpty(accessToken)) {
         		add("accessToken", accessToken);
         	}
 			add("clientId", ssProperties.getClientId());
@@ -95,14 +94,13 @@ public class SSServiceImpl extends BaseCommon implements SSService{
 		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(publicParam, headers); 
 		 
 		ResponseEntity<JSONObject> ssResult = restClient.postForEntity(ssProperties.getUrl()+uri,request,JSONObject.class);
-			
-		
-		if(isNull(ssResult)) {
-			throw new BusinessResultException(new CodeData(500,"闪送服务不可用",500));
+
+		if(ObjectUtil.isNullEmpty(ssResult)) {
+			throw new BusinessResultException(new ErrorCode(500,"闪送服务不可用"));
 		}
 		
 		if(ssResult.getStatusCodeValue() != 200 || ssResult.getBody().getInteger("status")!=200) {
-			throw new BusinessResultException(new CodeData(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")),400);
+			throw new BusinessResultException(new ErrorCode(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")));
 		}
 		
 		return ssResult.getBody();
@@ -125,12 +123,12 @@ public class SSServiceImpl extends BaseCommon implements SSService{
 		ResponseEntity<JSONObject> ssResult = restClient.postForEntity(ssProperties.getUrl()+"/openapi/oauth/token",request,JSONObject.class);
 			
 		
-		if(isNull(ssResult)) {
-			throw new BusinessResultException(new CodeData(500,"闪送服务不可用",500));
+		if(ObjectUtil.isNullEmpty(ssResult)) {
+			throw new BusinessResultException(new ErrorCode(500,"闪送服务不可用"));
 		}
 		
 		if(ssResult.getStatusCodeValue() != 200 || ssResult.getBody().getInteger("status")!=200) {
-			throw new BusinessResultException(new CodeData(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")),400);
+			throw new BusinessResultException(new ErrorCode(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")));
 		}
 		
 		return ssResult.getBody().getJSONObject("data");

@@ -12,16 +12,13 @@
 
 	<dependencies>
 
-
 		<!-- SpringCloud Begin -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-oauth2</artifactId>
-			<version>${spring-cloud-starter-oauth2.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 		<!-- SpringCloud End -->   
-		
-		
+
 		
 		<!-- Project Begin --> 
 		<dependency>     

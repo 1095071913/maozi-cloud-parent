@@ -1,24 +1,25 @@
 package com.maozi.base.api.impl;
 
-import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.nacos.shaded.com.google.common.collect.Sets;
+import cn.hutool.extra.cglib.CglibUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.base.MPJBaseService;
-import com.github.yulichang.base.MPJBaseServiceImpl;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.google.common.collect.Lists;
 import com.maozi.base.AbstractBaseDomain;
-import com.maozi.base.AbstractBaseDtomain;
 import com.maozi.base.AbstractBaseNameDomain;
 import com.maozi.base.api.IBaseMapper;
 import com.maozi.base.api.rpc.BaseServiceResult;
+import com.maozi.base.constant.ResultFunName;
 import com.maozi.base.enums.Status;
 import com.maozi.base.enums.StoreClassType;
-import com.maozi.base.error.code.SystemErrorCode;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.param.plugin.OrderParam;
@@ -33,9 +34,19 @@ import com.maozi.base.plugin.type.JoinType;
 import com.maozi.base.plugin.type.QueryType;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.base.result.PageResult;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.ReflectUtil;
+import com.maozi.common.ResultUtil;
+import com.maozi.common.SerializeUtil;
+import com.maozi.common.ValidatorUtil;
+import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.error.code.ErrorCode;
+import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.utils.SpringUtil;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Field;
@@ -46,42 +57,40 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D extends AbstractBaseDtomain> extends MPJBaseServiceImpl<M, T> implements MPJBaseService<T>,BaseServiceResult<D> {
+public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends AbstractBaseDomain,D> extends ServiceImpl<M, T> implements MPJBaseService<T>,BaseServiceResult<D> {
 
-	protected Class<T> doClass;
+	protected Class<T> domainClass;
 	
-	protected Class<D> dtoClass;
+	protected Class<D> resultClass;
+	
+	protected abstract String getResourceName();
 
-	private final String SERIAL_VERSION_UID = "serialVersionUID";
-	
-	protected abstract String getAbbreviationModelName();
-	
+	@SuppressWarnings("unchecked")
 	public BaseServiceImpl() {
-		
-		for(Class<?> superClass = this.getClass();;superClass = superClass.getSuperclass()) {
-		
-		Type genericSuperclass = superClass.getGenericSuperclass();
-		
-			if(genericSuperclass instanceof ParameterizedType) {
-			
-				ParameterizedType type = (ParameterizedType) genericSuperclass;
 
-				doClass = (Class<T>) type.getActualTypeArguments()[1];
-			
-				dtoClass = (Class<D>) type.getActualTypeArguments()[2];
-				
-				break ;
-			
+		for(Class<?> superClass = this.getClass() ;; superClass = superClass.getSuperclass()) {
+
+		Type genericSuperclass = superClass.getGenericSuperclass();
+
+			if(genericSuperclass instanceof ParameterizedType type) {
+
+				domainClass = (Class<T>) type.getActualTypeArguments()[1];
+
+				resultClass = (Class<D>) type.getActualTypeArguments()[2];
+
+				break;
+
 			}
-		
+
 		}
-		
+
 	}
 
     @Override
@@ -89,103 +98,111 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
         return super.currentModelClass();
     }
     
-    public Class<D> getDtoClass(){
+    public Class<D> getResultClass(){
 
-		if(dtoClass.getName().equals(Void.class.getName())) {
-			throw new BusinessResultException(SystemErrorCode.NOT_SET_RESPONSE_ERROR,500);
+		if(resultClass.getName().equals(Void.class.getName())) {
+			throw new BusinessResultException(SystemErrorCode.NOT_SET_RESPONSE_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
 		}
     	
-    	return dtoClass;
+    	return resultClass;
     
     }
     
-    protected <D> com.baomidou.mybatisplus.extension.plugins.pagination.Page<D> convertPage(PageParam pageParam){
-    	return new com.baomidou.mybatisplus.extension.plugins.pagination.Page<D>(pageParam.getCurrent(),pageParam.getSize());
+    protected <R> com.baomidou.mybatisplus.extension.plugins.pagination.Page<R> convertPage(PageParam<?> pageParam){
+    	return new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageParam.getCurrent(),pageParam.getSize());
     }
     
-    protected <D> PageResult convertPageResult(Page<T> page,Supplier<D> target) {
-		return new PageResult<D>(page.getCurrent(),page.getSize(),page.getTotal(),copyList(page.getRecords(),target));
+    protected <R> PageResult<R> convertPageResult(Page<T> page,Supplier<R> target) {
+		return new PageResult<>(page.getCurrent(),page.getSize(),page.getTotal(),CglibUtil.copyList(page.getRecords(),target));
 	}
     
-    protected <D> PageResult convertPageResult(Page<T> page,List<D> responseDatas) {
-		return new PageResult<D>(page.getCurrent(),page.getSize(),page.getTotal(),responseDatas);
+    protected <R> PageResult<R> convertPageResult(Page<T> page,List<R> responseData) {
+		return new PageResult<>(page.getCurrent(),page.getSize(),page.getTotal(),responseData);
 	}
 
-	protected <D> PageResult convertPageResult(Page<D> page) {
-		return new PageResult<D>(page.getCurrent(),page.getSize(),page.getTotal(),page.getRecords());
-	}
-    
-    protected <D> Map<Long,D> toMapByIds(List<D> datas,Function<D, Long> function) {
-    	return datas.stream().collect(Collectors.toMap(function, Function.identity()));
+	protected <R> PageResult<R> convertPageResult(Page<R> page) {
+		return new PageResult<>(page.getCurrent(),page.getSize(),page.getTotal(),page.getRecords());
 	}
     
-    protected <D> String getColumn(SFunction<D, ?> sfunction) {
+    protected <R> Map<Long,R> toMapByIds(List<R> collection,Function<R, Long> function) {
+    	return collection.stream().collect(Collectors.toMap(function, Function.identity()));
+	}
 
-    	try {
+	@SneakyThrows
+    protected <O> String getColumn(SFunction<O, ?> sfunction) {
 
-    		Method method = sfunction.getClass().getDeclaredMethod("writeReplace");
+		Method method = sfunction.getClass().getDeclaredMethod(SerializeUtil.WRITE_REPLACE_FIELD_NAME);
 
-            method.setAccessible(true);
+		method.setAccessible(true);
 
-            SerializedLambda serializedLambda = (SerializedLambda) method.invoke(sfunction);
+		SerializedLambda serializedLambda = (SerializedLambda) method.invoke(sfunction);
 
-            String fieldWithGet = serializedLambda.getImplMethodName();
+		String fieldWithGet = serializedLambda.getImplMethodName();
 
-            return StrUtil.toUnderlineCase(fieldWithGet.substring(3));
+		String propertyName = StrUtil.toUnderlineCase(fieldWithGet.substring(3));
 
-    	}catch (Exception e) {
+		TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
+		ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(tableInfo),"领域模型映射关系不存在");
 
-			throwSystemError(e);
-
-			return null;
-
+		if (tableInfo.getKeyProperty().equals(propertyName)) {
+			return tableInfo.getKeyColumn();
 		}
 
+		for (TableFieldInfo fieldInfo : tableInfo.getFieldList()) {
+			if (fieldInfo.getProperty().equals(propertyName)) {
+				return fieldInfo.getColumn();
+			}
+		}
+
+		return propertyName;
+
 	}
-    
-    protected <D> String[] getColumns(SFunction<D, ?> ... sfunctions) {
-    	
-    	int i = 0;
-    	
-    	String [] columns = new String[sfunctions.length];
-    	
-    	for(SFunction<D, ?> sfunction : sfunctions) {
-	        
-	        columns[i] = getColumn(sfunction);
-	        
+
+
+    @SafeVarargs
+    protected final <O> String[] getColumns(SFunction<O, ?>... functions) {
+
+    	String [] columns = new String[functions.length];
+
+		int i = 0;
+    	for(SFunction<?, ?> sfunction : functions) {
+
+			columns[i] = getColumn(sfunction);
+
 	        ++i;
-	        
+
 		}
-    	
+
     	return columns;
-    	
+
 	}
 
-	protected <D> String[] getColumns(Class clazz) {
+	protected String[] getColumns(Class<?> clazz) {
 
-		List<String> columns = Lists.newArrayList();
+		List<String> columns = CollectionUtil.newArrayList();
 
-		for(;!Object.class.getName().equals(clazz.getName());clazz = clazz.getSuperclass()){
+		for( ; !Object.class.getName().equals(clazz.getName()); clazz = clazz.getSuperclass()){
 
 			Field [] fields = clazz.getDeclaredFields();
-
 			for(Field field : fields) {
 
-				if(SERIAL_VERSION_UID.equals(field.getName())){
+				if(SerializeUtil.SERIAL_VERSION_UID_FIELD_NAME.equals(field.getName())){
 					continue;
 				}
 
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
+				if(ObjectUtil.isNullEmpty(annotation)) {
+					columns.add("t." + StrUtil.toUnderlineCase(field.getName()));
+				}else if(annotation.ignore() && (StringUtils.isNotBlank(annotation.field()) || StringUtils.isNotBlank(annotation.tableName()))){
 
-				if(isNull(annotation)) {
-					columns.add("t."+StrUtil.toUnderlineCase(field.getName()));
-				}else if(annotation.ignore() && ( isNotEmpty(annotation.field()) || isNotEmpty(annotation.tableName()))){
+					String tableName = StringUtils.isNotBlank(annotation.field()) ? annotation.field() : "t";
 
-					String tableName = isNotEmpty(annotation.field()) ? annotation.field() : "t";
+					String fieldName = StringUtils.isNotBlank(annotation.tableName()) ?
+							annotation.tableName()
+							:
+							StrUtil.toUnderlineCase(field.getName());
 
-					String fieldName = isNotEmpty(annotation.tableName()) ? annotation.tableName() : StrUtil.toUnderlineCase(field.getName());
-
-					columns.add(fieldName+"."+tableName);
+					columns.add(fieldName + "." + tableName);
 
 				}
 
@@ -193,13 +210,13 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		}
 
-		return columns.toArray(new String[columns.size()]);
+		return columns.toArray(new String[0]);
 
 	}
     
     protected T getById(Long id,String ... columns){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -213,9 +230,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
 	}
     
-    protected T getById(Long id,SFunction<T, ?> ... columns){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+    @SafeVarargs
+    protected final T getById(Long id, SFunction<T, ?>... columns){
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -230,8 +248,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected void checkAvailable(Long id){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -240,16 +258,19 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
     	
     	T domain = getOne(wrapper);
-    	
-    	isNullThrowError(domain, getAbbreviationModelName());
 
-		checkBoolThrowError(domain.getStatus() == Status.ENABLE,getAbbreviationModelName(), SystemErrorCode.FORBIDDEN_ERROR);
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
+
+		if(domain.getStatus() == Status.DISABLE) {
+			throw new BusinessResultException(SystemErrorCode.FORBIDDEN_ERROR)
+					.setResource(getResourceName());
+		}
     	
 	}
     
     protected void checkAvailable(List<Long> ids){
     	
-    	collectionIsEmptyThrowError(ids,getAbbreviationModelName()+"列表");
+    	CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin(); 
     	
@@ -258,11 +279,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.in(getColumn(AbstractBaseDomain::getId),ids);
     	
     	List<T> domains = list(wrapper);
-    	
     	domains.parallelStream().forEach((domain)->{
     		
     		if(domain.getStatus() == Status.DISABLE) {
-        		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
+				throw new BusinessResultException(SystemErrorCode.FORBIDDEN_ERROR)
+						.setResource(getResourceName());
         	}
     		
     	});
@@ -270,8 +291,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected T getAvailableById(Long id,String ... columns){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -282,11 +303,12 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
     	
     	T domain = getOne(wrapper);
-    	
-    	isNullThrowError(domain, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
     	
     	if(domain.getStatus() == Status.DISABLE) {
-    		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
+			throw new BusinessResultException(SystemErrorCode.FORBIDDEN_ERROR)
+						.setResource(getResourceName());
     	}
     	
     	return domain;
@@ -298,11 +320,12 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.select(getColumn(AbstractBaseDomain::getStatus));
     	
     	T domain = getOne(wrapper);
-    	
-    	isNullThrowError(domain, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
     	
     	if(domain.getStatus() == Status.DISABLE) {
-    		throw new BusinessResultException(getAbbreviationModelName(),SystemErrorCode.FORBIDDEN_ERROR,200);
+			throw new BusinessResultException(SystemErrorCode.FORBIDDEN_ERROR)
+					.setResource(getResourceName());
     	}
     	
     	return domain;
@@ -310,16 +333,18 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected void checkHas(Wrapper<T> wrapper) {
-    	checkBoolThrowError(count(wrapper) > 0, getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
+		ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
+		ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
 	}
     
     protected void checkNotHas(Wrapper<T> wrapper) {
-    	checkBoolThrowError(count(wrapper) < 1, getAbbreviationModelName(),SystemErrorCode.DATA_EXIST_ERROR);
+		ErrorCode errorCode = SystemErrorCode.DATA_EXIST_ERROR;
+		ObjectUtil.checkConditionThrowError(count(wrapper) < 1, errorCode, getResourceName() + errorCode.getMessage());
 	}
     
     protected DropDownResult dropDown(Long id){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -328,10 +353,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.eq(getColumn(AbstractBaseDomain::getId), id);
     	
     	T domain = getOne(wrapper);
+
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
     	
-    	isNullThrowError(domain, getAbbreviationModelName());
-    	
-    	return copy(domain, DropDownResult.class);
+    	return CglibUtil.copy(domain, DropDownResult.class);
     	
 	}
     
@@ -343,13 +368,13 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getStatus), Status.ENABLE);
     	
-    	return copyList(list(wrapper), DropDownResult::new);
+    	return CglibUtil.copyList(list(wrapper), DropDownResult::new);
     	
 	}
     
     protected T getByIdThrowError(Long id,String ... columns){
-    	
-    	isNullThrowError(id, getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -360,8 +385,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
     	
     	T domain = getOne(wrapper);
-    	
-    	isNullThrowError(domain,getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(domain,getResourceName());
     	
     	return domain;
     	
@@ -369,35 +394,35 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 	protected T getByIdThrowError(Long id,MPJLambdaWrapper<T> wrapper){
 
-		isNullThrowError(id, getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
 
 		wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
 
 		T domain = getOne(wrapper);
 
-		isNullThrowError(domain,getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(domain,getResourceName());
 
 		return domain;
 
 	}
     
-    protected <D> D getByParamThrowError(Wrapper<T> wrapper,Class<D> clazz) {
+    protected <R> R getByParamThrowError(Wrapper<T> wrapper,Class<R> clazz) {
 		
     	T domain = getOne(wrapper);
+
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
 		
-		isNullThrowError(domain, getAbbreviationModelName());
-		
-		return copy(domain, clazz);
+		return CglibUtil.copy(domain, clazz);
     	
 	}
     
-    protected <D> D getByParamThrowErrorRelation(Wrapper<T> wrapper,Class<D> clazz) {
+    protected <R> R getByParamThrowErrorRelation(Wrapper<T> wrapper,Class<R> clazz) {
 		
     	T domain = getOne(wrapper);
+
+		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
 		
-		isNullThrowError(domain, getAbbreviationModelName());
-		
-		D response = copy(domain, clazz);
+		R response = CglibUtil.copy(domain, clazz);
 		
 		setRelationData(response, clazz);
 		
@@ -405,17 +430,19 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
 	}
     
-    protected <D> T getByIdThrowError(Long id,SFunction<D, ?> ... columns) {
+    @SafeVarargs
+    protected final <R> T getByIdThrowError(Long id, SFunction<R, ?> ... columns) {
     	return getByIdThrowError(id,getColumns(columns));
 	}
     
-    protected <V,D> V getByIdThrowError(Long id,Class<V> clazz,SFunction<D, ?> ... columns){
-    	return copy(getByIdThrowError(id,columns), clazz);
+    @SafeVarargs
+    protected final <V,R> V getByIdThrowError(Long id, Class<V> clazz, SFunction<R, ?> ... columns){
+    	return CglibUtil.copy(getByIdThrowError(id,columns), clazz);
 	}
     
     protected <V> V getByIdThrowErrorRelation(Long id,Class<V> clazz) {
 
-		V response = copy(getByIdThrowError(id,getColumns(clazz)), clazz);
+		V response = CglibUtil.copy(getByIdThrowError(id,getColumns(clazz)), clazz);
     	
     	setRelationData(response, clazz);
     	
@@ -423,17 +450,17 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
 	}
 
-	protected <V,D> V getByParamThrowErrorRelation(D dto,Class<V> clazz) {
+	protected <V,R> V getByParamThrowErrorRelation(R dto,Class<V> clazz) {
 
-		isNullThrowError(dto, getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(dto, getResourceName());
 
 		MPJLambdaWrapper<T> wrapper = buildQueryWrapper(dto,clazz);
 
 		wrapper.select(getColumns(clazz));
 
-		V response = copy(getOne(wrapper), clazz);
+		V response = CglibUtil.copy(getOne(wrapper), clazz);
 
-		isNullThrowError(response, getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(response, getResourceName());
 
 		setRelationData(response, clazz);
 
@@ -442,8 +469,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected List<T> listByIds(Collection<?> ids,String ... columns) {
-    	
-    	collectionIsEmptyThrowError(ids,getAbbreviationModelName()+"列表");
+
+		CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -457,7 +484,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
 	}
     
-    protected <D,V> List<V> list(Supplier<V> target,SFunction<D, ?> ... columns) {
+    @SafeVarargs
+    protected final <R,V> List<V> list(Supplier<V> target, SFunction<R, ?>... columns) {
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -467,33 +495,33 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
     	List<T> list = list(wrapper);
     	
-    	return copyList(list, target);
+    	return CglibUtil.copyList(list, target);
     	
 	}
     
-    protected <D> List<D> list(Wrapper<T> wrapper,Supplier<D> target) {
+    protected <R> List<R> list(Wrapper<T> wrapper,Supplier<R> target) {
 		
     	List<T> list = list(wrapper);
     	
-    	return copyList(list, target);
+    	return CglibUtil.copyList(list, target);
     	
 	}
 
 	protected <V> List<V> list(D dto,Supplier<V> target) {
 
-		isNullThrowError(dto, getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(dto, getResourceName());
 
 		V vo = target.get();
 
 		List<T> list = list(buildQueryWrapper(dto, vo.getClass()));
 
-		return copyList(list, () -> vo);
+		return CglibUtil.copyList(list, () -> vo);
 
 	}
 
 	protected <V> List<V> listRelation(D dto,Supplier<V> target) {
 
-		isNullThrowError(dto, getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(dto, getResourceName());
 
 		V vo = target.get();
 
@@ -501,11 +529,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		setRelationData(dto,vo.getClass());
 
-		return copyList(list, () -> vo);
+		return CglibUtil.copyList(list, () -> vo);
 
 	}
     
-    protected <V> PageResult<V> list(PageParam pageParam,Wrapper<T> wrapper,Supplier<V> target) {
+    protected <V> PageResult<V> list(PageParam<?> pageParam,Wrapper<T> wrapper,Supplier<V> target) {
 		
     	Page<T> page = page(convertPage(pageParam),wrapper);
     	
@@ -513,19 +541,19 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
 	}
     
-    protected <V> PageResult<V> list(PageParam pageParam,Class<V> clazz) {
-		
-    	Page<V> page = selectJoinListPage(convertPage(pageParam),clazz,buildQueryWrapper(pageParam.getData(),clazz));
+    protected <V> PageResult<V> list(PageParam<?> pageParam,Class<V> clazz) {
+
+		Page<V> page = selectJoinListPage(convertPage(pageParam),clazz,buildQueryWrapper(pageParam.getData(),clazz));
     	
     	return convertPageResult(page);
     	
 	}
     
-    protected Page<T> list(PageParam pageParam,Wrapper<T> wrapper) {
-    	return page(convertPage(pageParam),wrapper);
+    protected Page<T> list(PageParam<?> pageParam,Wrapper<T> wrapper) {
+		return page(convertPage(pageParam),wrapper);
 	}
     
-    protected <V> PageResult<V> listRelation(PageParam pageParam,Class<V> clazz) {
+    protected <V> PageResult<V> listRelation(PageParam<?> pageParam,Class<V> clazz) {
     	
     	PageResult<V> page = list(pageParam,clazz);
 		
@@ -535,51 +563,51 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		
 	}
 
-	protected <D> Long getCountByParam(D dto){
+	protected <P> Long getCountByParam(P param){
 
-		isNullThrowError(dto,getAbbreviationModelName());
+		ObjectUtil.isNullEmptyThrowError(param,getResourceName());
 
-		return count(buildQueryWrapper(dto));
+		return count(buildQueryWrapper(param));
 
 	}
     
     public boolean saveUpdate(T domain) {
+
+		ObjectUtil.isNullEmptyThrowError(domain,getResourceName());
     	
-    	isNullThrowError(domain,getAbbreviationModelName());
-    	
-    	if(isNotNull(domain.getId())) {
+    	if(ObjectUtil.isNotNullEmpty(domain.getId())) {
     		
     		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     		
     		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
-    		
-    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
-    		
+
+			ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
+			ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
+
     	}
     	
 		return super.saveOrUpdate(domain);
 		
 	}
     
-    
-	public Long saveUpdate(Long id,AbstractBaseDtomain param) {
-	    	
-    	isNullThrowError(param,getAbbreviationModelName());
+	public Long saveUpdate(Long id,Object param) {
+
+		ObjectUtil.isNullEmptyThrowError(param,getResourceName());
     	
-    	T domain = copy(param, doClass);
+    	T domain = CglibUtil.copy(param, domainClass);
     	
-    	if(isNotNull(id)) {
+    	if(ObjectUtil.isNotNullEmpty(id)) {
     		
     		domain.setId(id);
     		
     		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    		
     		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
-    		
-    		checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
-    		
+
+			ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
+			ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
+
     	}else {
-    		validate(param);
+    		ValidatorUtil.validate(param);
     	}
     	
     	super.saveOrUpdate(domain);
@@ -589,27 +617,27 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
 	
     public void saveUpdateBatch(List<T> domains) {
-    	
-    	collectionIsEmptyThrowError(domains,getAbbreviationModelName()+"列表");
 
-		Consumer<T> consumer = wrapConsumer((domain)->{
+		CollectionUtil.collectionIsEmptyThrowError(domains,getResourceName() + "列表");
 
-			if(isNotNull(domain.getId())) {
+		Consumer<T> consumer = ApplicationLinkContext.wrapConsumer((domain)->{
+
+			if(ObjectUtil.isNotNullEmpty(domain.getId())) {
 
 				MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-
 				wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
 
-				checkBoolThrowError(count(wrapper) > 0,getAbbreviationModelName(),SystemErrorCode.DATA_NOT_EXIST_ERROR);
+				ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
+				ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
 
 			}
 
 			super.saveOrUpdate(domain);
 
 		});
-    	
-    	domains.parallelStream().forEach(consumer);
-    	
+
+		domains.parallelStream().forEach(Objects.requireNonNull(consumer));
+
     }
     
     protected void checkBind(Long id) {};
@@ -617,8 +645,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected void unbind(Long id) {};
     
     public void removeById(Long id) {
-    	
-    	isNullThrowError(id,getAbbreviationModelName());
+
+		ObjectUtil.isNullEmptyThrowError(id,getResourceName());
 		
 		checkBind(id);
 		
@@ -627,60 +655,102 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		super.removeById(id);
     	
     }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	========================== 结果集封装 ==========================
+
     @Override
-    public AbstractBaseResult<D> getByIdResult(Long id,String ... colums) {
-		return success(copy(getById(id, colums), getDtoClass()));
+    public AbstractBaseResult<D> getByIdResult(Long id,String ... columns) {
+		T domain = getById(id, columns);
+		return ResultUtil.success(CglibUtil.copy(domain, getResultClass()));
 	}
 
     @Override
 	public AbstractBaseResult<Map<Long,D>> listByIdsResult(Collection<Long> ids,String ... columns) {
 
-		return success(copyList(listByIds(ids,columns), () -> {
-			
-			return ReflectUtil.newInstance(getDtoClass());
+		List<T> domains = listByIds(ids, columns);
 
-		}).stream().collect(Collectors.toMap((rpcResultData)->{
-			
-			return ReflectUtil.invoke(rpcResultData, "getId");
-			
-		},Function.identity())));
+		List<D> responseItems = CglibUtil.copyList(domains, () -> ReflectUtil.newInstance(getResultClass()));
+
+		return ResultUtil.success(
+
+			responseItems.stream().collect(
+
+				Collectors.toMap(
+					ReflectUtil::invokeFunGetId
+					,
+					Function.identity()
+				)
+
+			)
+		);
 
 	}
     
     @Override
 	public AbstractBaseResult<Map<Long,List<D>>> listByRelationIdsResult(Collection<Long> ids,String relationField,String ... columns) {
-    	
-    	collectionIsEmptyThrowError(ids,getAbbreviationModelName()+"列表");
-    	
-    	isNullThrowError(relationField, getAbbreviationModelName()+"分组");
+
+		CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
+
+		ObjectUtil.isNullEmptyThrowError(relationField, getResourceName() + "分组");
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
     	if(columns.length > 0) {
     		wrapper.select(columns);
     	}
-    	
     	wrapper.in(relationField,ids);
 
-		return success(copyList(list(wrapper), () -> {
-			
-			return ReflectUtil.newInstance(getDtoClass());
+		List<T> domains = list(wrapper);
+		if(ObjectUtil.isNullEmpty(domains)) {
+			return ResultUtil.success(CollectionUtil.newHashMap());
+		}
 
-		}).stream().collect(Collectors.groupingBy((rpcResultData)->{
-			
-			return ReflectUtil.invoke(rpcResultData, "get"+StrUtil.upperFirst(relationField));
-			
-		},Collectors.toList())));
+		List<D> responseItems = CglibUtil.copyList(domains, () -> ReflectUtil.newInstance(getResultClass()));
+		return ResultUtil.success(
+
+			responseItems.stream().collect(
+				Collectors.groupingBy((resultData) ->
+					ReflectUtil.invokeGet(resultData, relationField), Collectors.toList()
+				)
+			)
+
+		);
 
 	}
     
     @Override
 	public AbstractBaseResult<List<D>> listByRelationIdResult(Long id,String relationField,String ... columns) {
-    	
-    	isNullThrowError(id,getAbbreviationModelName());
-    	
-    	isNullThrowError(relationField, getAbbreviationModelName()+"分组");
+
+		ObjectUtil.isNullEmptyThrowError(id,getResourceName());
+
+		ObjectUtil.isNullEmptyThrowError(relationField, getResourceName() + "分组");
     	
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
     	
@@ -690,77 +760,59 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	wrapper.eq(relationField,id);
 
-		return success(copyList(list(wrapper), () -> {
-			
-			return ReflectUtil.newInstance(getDtoClass());
-
-		}));
+		return ResultUtil.success(CglibUtil.copyList(list(wrapper), () -> ReflectUtil.newInstance(getResultClass())));
 
 	}
 	
     @Override
 	public AbstractBaseResult<Long> getCountByParamResult(D dto){
-		return success(getCountByParam(dto));
+		return ResultUtil.success(getCountByParam(dto));
 	}
 	
 	@Override
-	public <D extends AbstractBaseDtomain> AbstractBaseResult<Long> saveUpdateResult(Long id,D param){
-		return success(saveUpdate(id,param));
+	public <P> AbstractBaseResult<Long> saveUpdateResult(Long id, P param){
+		return ResultUtil.success(saveUpdate(id,param));
 	}
 	
 	@Override
-	public AbstractBaseResult<Void> saveUpdateBatchResult(List<SaveUpdateBatch> dtos){
-		
-		List<T> dos = copyList(collectionIsEmptyThrowError(dtos, getAbbreviationModelName()+"列表"), ()->{
-			
-			return ReflectUtil.newInstance(doClass);
-			
-		});
-		
-		saveUpdateBatch(dos);
-		
-		return success();
+	public AbstractBaseResult<Void> saveUpdateBatchResult(List<SaveUpdateBatch> collection){
+
+		CollectionUtil.collectionIsEmptyThrowError(collection, getResourceName() + "列表");
+
+		List<T> domains = CglibUtil.copyList(collection, ()-> ReflectUtil.newInstance(domainClass));
+		saveUpdateBatch(domains);
+
+		return ResultUtil.success();
 		
 	}
 	
 	@Override
 	public AbstractBaseResult<Void> removeByIdResult(Long id) {
-		
 		removeById(id);
-		
-		return success();
-		
+		return ResultUtil.success();
 	}
 
 	@Override
 	public AbstractBaseResult<Void> removeByIdBatchResult(List<Long> ids) {
 		
-		collectionIsEmptyThrowError(ids, getAbbreviationModelName()+"列表");
+		CollectionUtil.collectionIsEmptyThrowError(ids, getResourceName() + "列表");
 		
-		ids.parallelStream().forEach((id)->{
-			removeById(id);
-		});
+		ids.parallelStream().forEach(this::removeById);
 		
-		return success();
+		return ResultUtil.success();
 		
 	}
 	
 	@Override
 	public AbstractBaseResult<Void> checkAvailableResult(Long id){
-		
 		checkAvailable(id);
-		
-		return success();
-		
+		return ResultUtil.success();
 	}
 	
 	@Override
 	public AbstractBaseResult<Void> checkAvailableResult(List<Long> ids){
-		
 		checkAvailable(ids);
-		
-		return success();
-		
+		return ResultUtil.success();
 	}
 	
 	@Override
@@ -768,17 +820,17 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	T domain = getAvailableById(id, columns);
     	
-    	return success(copy(domain, dtoClass));
+    	return ResultUtil.success(CglibUtil.copy(domain, getResultClass()));
     	
 	}
 	
 	@Override
 	public AbstractBaseResult<DropDownResult> dropDownResult(Long id){
-		return success(dropDown(id));
+		return ResultUtil.success(dropDown(id));
 	}
 	
 	public AbstractBaseResult<List<DropDownResult>> dropDownListResult(){
-		return success(dropDownList());
+		return ResultUtil.success(dropDownList());
 	}
 	
 	@Override
@@ -790,27 +842,40 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	
     	wrapper.in(getColumn(AbstractBaseDomain::getId), ids);
     	
-    	return success(copyList(list(wrapper), DropDownResult::new));
+    	return ResultUtil.success(CglibUtil.copyList(list(wrapper), DropDownResult::new));
 		
 	}
-	
-	
-	public AbstractBaseResult<Void> updateStatus(Long id){
+
+	@SneakyThrows
+	public AbstractBaseResult<Void> updateStatus(Long id, Status status){
+
+		ObjectUtil.isNotNullEmptyThrowError(status,SystemErrorCode.PARAM_ERROR,"状态");
 		
 		checkBind(id);
-		
-		T domain = getByIdThrowError(id,getColumns(AbstractBaseDomain::getStatus));
-		
+
+		T domain = domainClass.getDeclaredConstructor().newInstance();
+
 		domain.setId(id);
-		domain.setStatus(domain.getStatus() == Status.ENABLE ? Status.DISABLE : Status.ENABLE);
+		domain.setStatus(status);
 		
 		updateById(domain);
-		
-		return success();
+
+		return ResultUtil.success();
 		
 	}
-	
-	private void paramFieldSetWrapper(String tableName,Object param,MPJLambdaWrapper<T> wrapper) {
+
+
+
+
+
+
+
+
+
+
+//	====================== 工具方法 ======================
+
+	private void paramFieldSetWrapper(String tableName, Object param, MPJLambdaWrapper<T> wrapper) {
 
 		Class<?> paramClass = param.getClass();
 
@@ -818,21 +883,21 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			JoinPlugins annotations = paramClass.getAnnotation(JoinPlugins.class);
 
-			if(isNotNull(annotations.value())){
+			if(ObjectUtil.isNotNullEmpty(annotations.value())){
 
-				Arrays.asList(annotations.value()).stream().forEach(annotation -> {
+				Arrays.stream(annotations.value()).forEach(annotation -> {
 
 					JoinBaseType value = annotation.value();
 
-					isNullThrowError(value, getAbbreviationModelName()+"连接类型");
+					ObjectUtil.isNullEmptyThrowError(value, getResourceName() + "连接类型");
 
-					isNullThrowError(value.getType(), getAbbreviationModelName()+"连接类型");
+					ObjectUtil.isNullEmptyThrowError(value.getType(), getResourceName() + "连接类型");
 
 					JoinType joinType = JoinType.get(value.getType());
 
-					isNullThrowError(joinType, getAbbreviationModelName()+"连接类型");
+					ObjectUtil.isNullEmptyThrowError(joinType, getResourceName() + "连接类型");
 
-					joinType.getJoinPlugin().apply(getAbbreviationModelName(),wrapper,annotation);
+					Objects.requireNonNull(joinType).getJoinPlugin().apply(getResourceName(), wrapper, annotation);
 
 				});
 
@@ -841,71 +906,73 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		}
 
 		Field [] fields = ReflectUtil.getFields(param.getClass());
-		
+
 		for(Field field : fields) {
 
-			if(SERIAL_VERSION_UID.equals(field.getName())){
+			if(SerializeUtil.SERIAL_VERSION_UID_FIELD_NAME.equals(field.getName())){
 				continue;
 			}
-			
-			Object data = ReflectUtil.invoke(param, "get"+StrUtil.upperFirst(field.getName()));
-			
-			if(isNull(data)) {continue;}
+
+			Object data = ReflectUtil.invokeGet(param, field.getName());
+			if(ObjectUtil.isNullEmpty(data)) {continue;}
 
 			QueryPlugin annotation = field.getAnnotation(QueryPlugin.class);
 
-			String fieldName = isNotNull(annotation) && isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
-			
-			if(isNotNull(annotation)) {
-				
-				if(annotation.nest()) {
-					
-					paramFieldSetWrapper(annotation.tableName(),field,wrapper);
-					
-					continue;
-					
-				}
-				
-				QueryBaseType value = annotation.value();
-				
-				isNullThrowError(value, getAbbreviationModelName()+"查询类型");
-				
-				isNullThrowError(value.getType(), getAbbreviationModelName()+"查询类型");
-				
-				QueryType queryType = QueryType.get(value.getType());
-				
-				isNullThrowError(queryType, getAbbreviationModelName()+"查询类型");
+			String fieldName = ObjectUtil.isNotNullEmpty(annotation) && StringUtils.isNotBlank(annotation.field()) ?
+					annotation.field()
+					:
+					field.getName();
 
-                if(isNotEmpty(annotation.tableName())){
+			if(ObjectUtil.isNotNullEmpty(annotation)) {
+
+				if(annotation.nest()) {
+
+					paramFieldSetWrapper(annotation.tableName(),field,wrapper);
+
+					continue;
+
+				}
+
+				QueryBaseType value = annotation.value();
+
+				ObjectUtil.isNullEmptyThrowError(value, getResourceName() + "查询类型");
+
+				ObjectUtil.isNullEmptyThrowError(value.getType(), getResourceName() + "查询类型");
+
+				QueryType queryType = QueryType.get(value.getType());
+
+				ObjectUtil.isNullEmptyThrowError(queryType, getResourceName() + "查询类型");
+
+                if(StringUtils.isNotBlank(annotation.tableName())){
                     tableName = annotation.tableName();
                 }
 
-				if(isNotEmpty(tableName)){
-					fieldName = tableName+"."+fieldName;
+				if(StringUtils.isNotBlank(tableName)){
+					fieldName = tableName + "." + fieldName;
 				}
-				
-				queryType.getQueryPlugin().apply(wrapper, fieldName , data);
-				
+
+				Objects.requireNonNull(queryType).getQueryPlugin().apply(wrapper, fieldName, data);
+
 			}
-			
+
 			if(data instanceof TimeParam timeParam) {
-				
-				if(isNotNull(timeParam.getStartTime())) {
-					QueryType.GE.getQueryPlugin().apply(wrapper,fieldName,timeParam.getStartTime());
+
+				if(ObjectUtil.isNotNullEmpty(timeParam.getStartTime())) {
+					QueryType.GE.getQueryPlugin().apply(wrapper, fieldName, timeParam.getStartTime());
 				}
-				
-				if(isNotNull(timeParam.getEndTime())) {
-					QueryType.LE.getQueryPlugin().apply(wrapper,fieldName,timeParam.getEndTime());
+
+				if(ObjectUtil.isNotNullEmpty(timeParam.getEndTime())) {
+					QueryType.LE.getQueryPlugin().apply(wrapper, fieldName, timeParam.getEndTime());
 				}
-				
+
 			}
-			
-			
+
+
 		}
-		
+
 	}
 
-	protected void setQueryMappingWrapper(Class clazz,MPJLambdaWrapper<T> wrapper){
+	protected void setQueryMappingWrapper(Class<?> clazz, MPJLambdaWrapper<T> wrapper){
 
 		for(;!Object.class.getName().equals(clazz.getName());clazz = clazz.getSuperclass()){
 
@@ -914,35 +981,22 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			for(Field field : fields) {
 
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
-
-				if(isNotNull(annotation) && !annotation.ignore() && !annotation.isService()) {
+				if(ObjectUtil.isNotNullEmpty(annotation) && !annotation.ignore() && !annotation.isService()) {
 
 					Class<?> type = field.getType();
 
 					String tableName = annotation.tableName();
-
-					throwSystemError(isNotEmpty(tableName),getAbbreviationModelName()+"映射关系名称");
-
-					String fieldName = isNotEmpty(annotation.field()) ? annotation.field() : field.getName();
+					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(tableName),getResourceName() + "映射关系名称");
 
 					Class<?> relationClazz = StoreClass.storeClassMap.get(StoreClassType.DB).get(tableName);
+					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(relationClazz),getResourceName() + "映射关系不存在");
 
-					throwSystemError(isNotNull(relationClazz),getAbbreviationModelName()+"映射关系");
-
-					throwSystemError(!type.isPrimitive(),getAbbreviationModelName()+"映射关系类型错误");
+					ObjectUtil.checkConditionThrowError(!type.isPrimitive(),getResourceName() + "映射关系类型错误");
 
 					if(type.equals(List.class)){
-
-						wrapper.selectCollection(relationClazz,(response) -> {
-							return ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(field.getName()));
-						});
-
+						wrapper.selectCollection(relationClazz,(response) -> ReflectUtil.invokeGet(response, field.getName()));
 					}else{
-
-						wrapper.selectAssociation(relationClazz,(response) -> {
-							return ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(field.getName()));
-						});
-
+						wrapper.selectAssociation(relationClazz,(response) -> ReflectUtil.invokeGet(response, field.getName()));
 					}
 
 				}
@@ -952,307 +1006,268 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		}
 
 	}
-	
-	public MPJLambdaWrapper<T> buildQueryWrapper(Object param,Class fieldsClass) {
-		
-		if(param instanceof PageParam pageParam) {
+
+	public MPJLambdaWrapper<T> buildQueryWrapper(Object param,Class<?> fieldsClass) {
+
+		if(param instanceof PageParam<?> pageParam) {
 			param = pageParam.getData();
 		}
-		
-		isNullThrowError(param, getAbbreviationModelName()+"参数");
-		
+
+		ObjectUtil.isNullEmptyThrowError(param, getResourceName() + "参数");
+
 		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-		
-		if(isNotNull(fieldsClass)) {
+
+		if(ObjectUtil.isNotNullEmpty(fieldsClass)) {
 
 			wrapper.select(getColumns(fieldsClass));
 
 //			setQueryMappingWrapper(fieldsClass,wrapper);
 
 		}
-		
+
 		paramFieldSetWrapper(null,param,wrapper);
-		
+
 		if(param instanceof OrderParam orderParam) {
-			
+
 			orderParam.initOrderParam();
-			
+
 			List<String> asc = orderParam.getOrderAscFieldsMap().get("t");
-			
+
 			List<String> desc = orderParam.getOrderDescFieldsMap().get("t");
-			
-			wrapper.orderByAscStr(asc.size() > 0,asc);
-			
-			wrapper.orderByDescStr(desc.size() > 0,desc);
-			
+
+			wrapper.orderByAscStr(ObjectUtil.isNotNullEmpty(asc),asc);
+
+			wrapper.orderByDescStr(ObjectUtil.isNotNullEmpty(desc),desc);
+
 		}
-		
+
 		return wrapper;
-		
+
 	}
-	
+
 	public MPJLambdaWrapper<T> buildQueryWrapper(Object param) {
 		return buildQueryWrapper(param,null);
 	}
-	
-	public void setRelationData(Object data,Class clazz){
-		
+
+	public void setRelationData(Object data,Class<?> clazz){
+
 		if(data instanceof PageResult<?> pageResult) {
 			data = pageResult.getData();
 		}
-		
-		if(data instanceof List responses) {
-			
-			if(collectionIsNotEmpty(responses)) {
-				
+
+		if(data instanceof List<?> responses) {
+
+			if(ObjectUtil.isNotNullEmpty(responses)) {
+
 				Field [] fields = ReflectUtil.getFields(clazz);
-				
 				for(Field field : fields) {
-					
+
 					QueryMapping annotation = field.getAnnotation(QueryMapping.class);
-					
-					if(isNull(annotation) || annotation.ignore()) {
+					if(ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
 						continue;
 					}
-					
+
 					String functionName = annotation.functionName();
-					
 					String relationFieldName = annotation.relationField();
-					
-					if(isEmpty(relationFieldName) && isEmpty(functionName)) {
-						throwSystemError(getAbbreviationModelName()+"关系字段未设置");
-					}
-					
+					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName),getResourceName() + "关系字段未设置");
+
 					if(annotation.isService()) {
-						
+
 						Object service = SpringUtil.getBean(annotation.serviceName());
-						
-						if(isNull(service)) {
-							throwSystemError(getAbbreviationModelName()+"服务不存在");
-						}
-						
+						ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(service),getResourceName() + "服务不存在");
+
 						Class<?> type = field.getType();
-						
-						if(isNotEmpty(functionName)) {
-							
-							Set param = Sets.newHashSet();
-							
+						if(StringUtils.isNotBlank(functionName)) {
+
+							Set<Object> param = CollectionUtil.newHashSet();
 							for(Object response : responses) {
-								param.add(ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName)));
+								param.add(ReflectUtil.invokeGet(response,relationFieldName));
 							}
-							
-							if(collectionIsNotEmpty(param)) {
-								
+
+							if(ObjectUtil.isNotNullEmpty(param)) {
+
 								Map<Long,Object> result = ReflectUtil.invoke(service,functionName,param,relationFieldName);
-								
 								for(Object response : responses) {
-									
-									Long id = ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName));
-									
+
+									Long id = ReflectUtil.invokeGet(response,relationFieldName);
+
 									Object object = result.get(id);
-									
-									if(isNotNull(object)) {
-										ReflectUtil.invoke(response, "set"+StrUtil.upperFirst(field.getName()),object);
+									if(ObjectUtil.isNotNullEmpty(object)) {
+										ReflectUtil.invokeSet(response,field.getName(),object);
 									}
-									
+
 								}
-								
+
 							}
-						
+
 						}else if(type.equals(List.class)) {
-							
-							Set<Long> relationIds = Sets.newHashSet();
-							
+
+							Set<Long> relationIds = CollectionUtil.newHashSet();
 							for(Object response : responses) {
-								relationIds.add(ReflectUtil.invoke(response, "getId"));
+								relationIds.add(ReflectUtil.invokeFunGetId(response));
 							}
-							
-							if(collectionIsNotEmpty(relationIds)) {
-								
-								AbstractBaseResult<Map<Long,List>> rpcResult = ReflectUtil.invoke(service,"listByRelationIdsResult",relationIds,relationFieldName,getColumns(field.getClass()));
-								
-								Map<Long,List> rpcResultDatas = rpcResult.getResultDataThrowError();
-								
+
+							if(ObjectUtil.isNotNullEmpty(relationIds)) {
+
+								AbstractBaseResult<Map<Long,List<?>>> rpcResult = ReflectUtil.invoke(service, ResultFunName.LIST_BY_RELATION_IDS_RESULT, relationIds, relationFieldName,getColumns(field.getClass()));
+
+								Map<Long,List<?>> resultData = rpcResult.getResultDataThrowError();
 								for(Object response : responses) {
-									
-									Long id = ReflectUtil.invoke(response, "getId");
-									
-									List list = rpcResultDatas.get(id);
-									
-									if(collectionIsNotEmpty(list)) {
-										ReflectUtil.invoke(response, "set"+StrUtil.upperFirst(field.getName()),list);
+
+									Long id = ReflectUtil.invokeFunGetId(response);
+
+									List<?> list = resultData.get(id);
+									if(ObjectUtil.isNotNullEmpty(list)) {
+										ReflectUtil.invokeSet(response,field.getName(),list);
 									}
-									
+
 								}
-								
+
 							}
-							
+
 						}else if(type.equals(DropDownResult.class)) {
-							
-							Set<Long> relationIds = Sets.newHashSet();
-							
+
+							Set<Long> relationIds = CollectionUtil.newHashSet();
 							for(Object response : responses) {
-								relationIds.add(ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName)));
+								relationIds.add(ReflectUtil.invokeGet(response,relationFieldName));
 							}
-							
-							if(collectionIsNotEmpty(relationIds)) {
-								
-								AbstractBaseResult<List<DropDownResult>> rpcResult = ReflectUtil.invoke(service,"dropDownListResult",relationIds);
-								
-								List<DropDownResult> rpcResultDatas = rpcResult.getResultDataThrowError();
-								
-								Map<Long, DropDownResult> relationsMap = toMapByIds(rpcResultDatas,DropDownResult::getId);
-								
+
+							if(ObjectUtil.isNotNullEmpty(relationIds)) {
+
+								AbstractBaseResult<List<DropDownResult>> rpcResult = ReflectUtil.invoke(service, ResultFunName.DROP_DOWN_LIST_RESULT,relationIds);
+
+								List<DropDownResult> resultData = rpcResult.getResultDataThrowError();
+
+								Map<Long, DropDownResult> relationsMap = toMapByIds(resultData,DropDownResult::getId);
 								for(Object response : responses) {
-									
-									Long id = ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName));
-									
+
+									Long id = ReflectUtil.invokeGet(response,relationFieldName);;
+
 									DropDownResult relation = relationsMap.get(id);
-									
-									if(isNotNull(relation)) {
-										ReflectUtil.invoke(response, "set"+StrUtil.upperFirst(field.getName()),relation);
+									if(ObjectUtil.isNotNullEmpty(relation)) {
+										ReflectUtil.invokeSet(response,field.getName(),relation);
 									}
-									
+
 								}
-								
+
 							}
-							
+
 						}else {
-							
-							Set<Long> relationIds = Sets.newHashSet();
-							
+
+							Set<Long> relationIds = CollectionUtil.newHashSet();
 							for(Object response : responses) {
-								relationIds.add(ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName)));
+								ReflectUtil.invokeGet(response,relationFieldName);
 							}
-							
-							if(collectionIsNotEmpty(relationIds)) {
-								
-								AbstractBaseResult<Map<Long,Object>> rpcResult = ReflectUtil.invoke(service,"listByIdsResult",relationIds,getColumns(field.getClass()));
-								
-								Map<Long,Object> rpcResultDatas = rpcResult.getResultDataThrowError();
-								
+
+							if(ObjectUtil.isNotNullEmpty(relationIds)) {
+
+								AbstractBaseResult<Map<Long,Object>> rpcResult = ReflectUtil.invoke(service,ResultFunName.LIST_BY_IDS_RESULT,relationIds,getColumns(field.getClass()));
+
+								Map<Long,Object> resultData = rpcResult.getResultDataThrowError();
 								for(Object response : responses) {
-									
-									Long id = ReflectUtil.invoke(response, "get"+StrUtil.upperFirst(relationFieldName));
-									
-									Object relation =  rpcResultDatas.get(id);
-									
-									if(isNotNull(relation)) {
-										ReflectUtil.invoke(response, "set"+StrUtil.upperFirst(field.getName()),relation);
+
+									Long id = ReflectUtil.invokeGet(response,relationFieldName);
+
+									Object relation =  resultData.get(id);
+									if(ObjectUtil.isNotNullEmpty(relation)) {
+										ReflectUtil.invokeSet(response,field.getName(),relation);
 									}
-									
+
 								}
-								
+
 							}
-							
+
 						}
-						
+
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}else {
-			
+
 			Field [] fields = ReflectUtil.getFields(clazz);
-			
 			for(Field field : fields) {
-				
+
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
-				
-				if(isNull(annotation) || annotation.ignore()) {
+				if(ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
 					continue;
 				}
-				
-				String relationFieldName = annotation.relationField();
-				
+
 				String functionName = annotation.functionName();
-				
-				if(isEmpty(relationFieldName) && isEmpty(functionName)) {
-					throwSystemError(getAbbreviationModelName()+"关系字段未设置");
-				}
-				
+				String relationFieldName = annotation.relationField();
+				ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName), getResourceName() + "关系字段未设置");
+
 				if(annotation.isService()) {
-					
+
 					Object service = SpringUtil.getBean(annotation.serviceName());
-					
-					if(isNull(service)) {
-						throwSystemError(getAbbreviationModelName()+"服务不存在");
-					}
-					
+					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(service), getResourceName() + "服务不存在");
+
 					Class<?> type = field.getType();
-					
-					if(isNotEmpty(functionName)) {
-						
+					if(StringUtils.isNotBlank(functionName)) {
+
 						Object result = null;
-						
-						if(isNotEmpty(relationFieldName)) {
-							
-							var param = ReflectUtil.invoke(data, "get"+StrUtil.upperFirst(relationFieldName));
-							
+						if(StringUtils.isNotBlank(relationFieldName)) {
+
+							var param = ReflectUtil.invokeGet(data, relationFieldName);
+
 							result = ReflectUtil.invoke(service,functionName,param);
-							
+
 						}else{
 							result = ReflectUtil.invoke(service,functionName);
 						}
-						
-						if(isNotNull(result)) {
-							ReflectUtil.invoke(data, "set"+StrUtil.upperFirst(field.getName()),result);
+
+						if(ObjectUtil.isNotNullEmpty(result)) {
+							ReflectUtil.invokeSet(data, field.getName(),result);
 						}
-					
+
 					}else if(type.equals(List.class)) {
-						
-						Long id = ReflectUtil.invoke(data, "getId");
-							
-						AbstractBaseResult<List> rpcResult = ReflectUtil.invoke(service,"listByRelationIdResult",id,relationFieldName,getColumns(field.getClass()));
-							
-						List rpcResultDatas = rpcResult.getResultDataThrowError();
-								
-						if(collectionIsNotEmpty(rpcResultDatas)) {
-							ReflectUtil.invoke(data, "set"+StrUtil.upperFirst(field.getName()),rpcResultDatas);
+
+						Long id = ReflectUtil.invokeFunGetId(data);
+						AbstractBaseResult<List<?>> rpcResult = ReflectUtil.invoke(service, ResultFunName.LIST_BY_RELATION_ID_RESULT,id,relationFieldName,getColumns(field.getClass()));
+
+						List<?> resultData = rpcResult.getResultDataThrowError();
+						if(ObjectUtil.isNotNullEmpty(resultData)) {
+							ReflectUtil.invokeSet(data, field.getName(),resultData);
 						}
-						
+
 					}else if(type.equals(DropDownResult.class)) {
-						
-						Long relationId = ReflectUtil.invoke(data, "get"+StrUtil.upperFirst(relationFieldName));
-						
-						if(isNotNull(relationId)) {
-							
-							AbstractBaseResult<DropDownResult> rpcResult = ReflectUtil.invoke(service,"dropDownResult",relationId);
-							
-							DropDownResult rpcResultData = rpcResult.getResultDataThrowError();
-								
-							if(isNotNull(rpcResultData)) {
-								ReflectUtil.invoke(data, "set"+StrUtil.upperFirst(field.getName()),rpcResultData);
+
+						Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
+						if(ObjectUtil.isNotNullEmpty(relationId)) {
+
+							AbstractBaseResult<DropDownResult> rpcResult = ReflectUtil.invoke(service, ResultFunName.DROP_DOWN_RESULT,relationId);
+
+							DropDownResult resultData = rpcResult.getResultDataThrowError();
+							if(ObjectUtil.isNotNullEmpty(resultData)) {
+								ReflectUtil.invokeSet(data, field.getName(),resultData);
 							}
-							
+
 						}
-						
+
 					}else {
-						
-						Long relationId = ReflectUtil.invoke(data, "get"+StrUtil.upperFirst(relationFieldName));
-						
-						if(isNotNull(relationId)) {
-							
-							AbstractBaseResult<Object> rpcResult = ReflectUtil.invoke(service,"getByIdResult",relationId,getColumns(field.getClass()));
-							
-							Object rpcResultDatas = rpcResult.getResultDataThrowError();
-							
-							if(isNotNull(rpcResultDatas)) {
-								ReflectUtil.invoke(data, "set"+StrUtil.upperFirst(field.getName()),rpcResultDatas);
+
+						Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
+						if(ObjectUtil.isNotNullEmpty(relationId)) {
+
+							AbstractBaseResult<Object> rpcResult = ReflectUtil.invoke(service,ResultFunName.GET_BY_ID_RESULT, relationId,getColumns(field.getClass()));
+
+							Object resultData = rpcResult.getResultDataThrowError();
+							if(ObjectUtil.isNotNullEmpty(resultData)) {
+								ReflectUtil.invokeSet(data, field.getName(),resultData);
 							}
-							
+
 						}
-						
+
 					}
-					
+
 				}
-				
+
 			}
-			
+
 		}
-		
+
 	}
 	
 }

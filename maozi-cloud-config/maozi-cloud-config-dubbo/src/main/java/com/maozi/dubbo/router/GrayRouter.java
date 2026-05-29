@@ -1,8 +1,9 @@
 package com.maozi.dubbo.router;
 
-import com.google.common.collect.Lists;
-import com.maozi.common.BaseCommon;
-import com.maozi.utils.context.ApplicationLinkContext;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.context.ApplicationLinkContext;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -19,15 +20,15 @@ public class GrayRouter extends AbstractRouter {
 
         String version = ApplicationLinkContext.VERSIONS.get();
 
-        List<Invoker<T>> mainApplicationClients = Lists.newArrayList();
+        List<Invoker<T>> mainApplicationClients = CollectionUtil.newArrayList();
 
-        List<Invoker<T>> grayApplicationClients = Lists.newArrayList();
+        List<Invoker<T>> grayApplicationClients = CollectionUtil.newArrayList();
 
         invokers.forEach(invoker ->{
 
             String clientApplicationVersion = invoker.getUrl().getParameter("application.version");
 
-            if(BaseCommon.isNotEmpty(version) && version.equals(clientApplicationVersion)){
+            if(StringUtils.isNotBlank(version) && version.equals(clientApplicationVersion)){
                 grayApplicationClients.add(invoker);
             }
 
@@ -37,7 +38,7 @@ public class GrayRouter extends AbstractRouter {
 
         });
 
-        return new RouterResult<>(BaseCommon.collectionIsNotEmpty(grayApplicationClients) ? grayApplicationClients : mainApplicationClients);
+        return new RouterResult<>(ObjectUtil.isNotNullEmpty(grayApplicationClients) ? grayApplicationClients : mainApplicationClients);
 
     }
 
