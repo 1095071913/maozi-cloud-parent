@@ -1,2 +1,0 @@
-org.springframework.boot.env.EnvironmentPostProcessor=\
-com.maozi.db.config.DatabaseInitEnvironmentPostProcessor
