@@ -70,19 +70,19 @@ public class RequestEntranceLogAop {
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint){
 
     	long startTime = System.currentTimeMillis();
-    	
+
     	HttpServletRequest request = WebUtil.getRequest();
-    	
+
     	RpcContext rpcContext = RpcContext.getServiceContext();
-    	
+
     	String rpcUrl = rpcContext.getLocalHost();
-    	
+
     	String param = Arrays.toString(proceedingJoinPoint.getArgs());
-    	
+
     	Node curNode = ContextUtil.getContext().getCurNode();
-        
+
     	Map<String, String> logs = restEntranceLogUtils.requestLog(proceedingJoinPoint, request, rpcUrl);
-        
+
 		if(EnvironmentUtil.notEnvironment(EnvironmentType.PROD)){
 			logs.put(LogTag.PARAM, param);
 		}
@@ -96,27 +96,27 @@ public class RequestEntranceLogAop {
         }catch (BusinessResultException businessResultException) {
         	resultData = businessResultException.getErrorResult();
     	}catch (Throwable e) {
-        	
+
             resultData = ResultUtil.error(SystemErrorCode.SYSTEM_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
-            
+
             LogUtil.error(log,e);
-            
+
             logs.put(LogTag.PARAM, param);
             logs.put(LogTag.ERROR_USER,ApplicationLinkContext.USERNAMES.get());
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
-            
+
             StackTraceElement[] errorLines = e.getStackTrace();
             if(errorLines.length > 0) {
             	logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
             }
-            
+
         } finally {
 
 			StringBuilder sqlLog = LogUtil.sqlLog.get();
 			if(ObjectUtil.isNotNullEmpty(sqlLog)) {logs.put(LogTag.SQL, sqlLog.toString());}
 
 			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
-        	
+
         	if(ObjectUtil.isNotNullEmpty(resultData)) {
 
 				if(resultData instanceof AbstractBaseResult<?> result){
@@ -136,7 +136,7 @@ public class RequestEntranceLogAop {
 					}
 
 				}
-        		
+
         	}
 
 			curNode.addPassRequest(1);
@@ -146,9 +146,9 @@ public class RequestEntranceLogAop {
 		}
 
 		if(ObjectUtil.isNullEmpty(request)) {ApplicationLinkContext.clearContext();}
-        
+
         return resultData;
-    
+
     }
 
 }

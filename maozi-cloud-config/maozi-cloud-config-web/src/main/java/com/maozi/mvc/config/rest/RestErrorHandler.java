@@ -8,6 +8,7 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.mvc.config.error.ErrorParamTranslation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -53,6 +54,14 @@ public class RestErrorHandler {
 		String errorMsg = ObjectUtil.isNotNullEmpty(ErrorParamTranslation.errorParams.get(paramName)) ? ErrorParamTranslation.errorParams.get(paramName) : paramName + "不能为空";
 
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR).setMessage(errorMsg);
+	}
+
+	/**
+	 * 权限异常交还SpringSecurity处理
+	 */
+	@ExceptionHandler(AccessDeniedException.class)
+	public Object handleAccessDeniedException(AccessDeniedException e) {
+		throw e;
 	}
 
 	/**

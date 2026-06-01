@@ -849,7 +849,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	@SneakyThrows
 	public AbstractBaseResult<Void> updateStatus(Long id, Status status){
 
-		ObjectUtil.isNotNullEmptyThrowError(status,SystemErrorCode.PARAM_ERROR,"状态");
+		ObjectUtil.isNullEmptyThrowError(status,SystemErrorCode.PARAM_ERROR,"状态");
 		
 		checkBind(id);
 

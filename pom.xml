@@ -218,13 +218,8 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
+					<encoding>${project.encoding}</encoding>
+					<parameters>true</parameters>
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>

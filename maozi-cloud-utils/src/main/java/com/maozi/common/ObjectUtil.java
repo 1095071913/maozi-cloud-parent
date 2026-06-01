@@ -5,7 +5,7 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,11 +29,11 @@ public class ObjectUtil {
             return true;
         }
 
-        if(data instanceof String string && StringUtils.isBlank(string)){
+        if(data instanceof String str && StringUtils.isBlank(str)){
             return true;
         }
 
-        if(data instanceof List<?> collection && CollectionUtil.isEmpty(collection)){
+        if(data instanceof Collection<?> collection && CollectionUtil.isEmpty(collection)){
             return true;
         }
 
