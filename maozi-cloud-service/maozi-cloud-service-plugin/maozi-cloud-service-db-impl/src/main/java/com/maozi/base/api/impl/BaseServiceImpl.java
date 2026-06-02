@@ -375,9 +375,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected T getByIdThrowError(Long id,String ... columns){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
+
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
+		wrapper.selectAsClass(domainClass,domainClass);
+
     	if(columns.length > 0) {
     		wrapper.select(columns);
     	}
@@ -1016,6 +1017,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		ObjectUtil.isNullEmptyThrowError(param, getResourceName() + "参数");
 
 		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
+		wrapper.selectAsClass(domainClass, fieldsClass);
 
 		if(ObjectUtil.isNotNullEmpty(fieldsClass)) {
 

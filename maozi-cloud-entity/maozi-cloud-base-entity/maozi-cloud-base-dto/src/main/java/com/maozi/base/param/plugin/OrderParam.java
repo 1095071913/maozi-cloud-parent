@@ -29,7 +29,7 @@ public interface OrderParam {
 	void setOrderDescFieldsMap(Map<String,List<String>> orderDescFieldsMap);
 	
 	
-	public default void initOrderParam() {
+	default void initOrderParam() {
 		
 		Map<String, Map<String, Boolean>> orderMainFieldsMap = getOrderMainFieldsMap();
 		
@@ -48,6 +48,10 @@ public interface OrderParam {
 			for(String orderMainField : orderMainFields.keySet()) {	
 				
 				Map<String, Boolean> orderFieldMap = getOrderFieldMap();
+
+				if(ObjectUtil.isNullEmpty(orderFieldMap)){
+					orderFieldMap = CollectionUtil.newHashMap();
+				}
 				
 				Boolean orderMainFieldValue = orderFieldMap.containsKey(orderMainField) ? orderFieldMap.get(orderMainField) : orderMainFields.get(orderMainField);
 				
