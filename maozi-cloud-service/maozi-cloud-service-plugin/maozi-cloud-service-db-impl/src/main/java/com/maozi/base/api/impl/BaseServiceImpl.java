@@ -4,9 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.cglib.CglibUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -217,10 +220,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected T getById(Long id,String ... columns){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	if(columns.length > 0) {
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
     	
@@ -234,14 +236,13 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected final T getById(Long id, SFunction<T, ?>... columns){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	if(columns.length > 0) {
+
+		LambdaQueryWrapper<T> wrapper = Wrappers.lambdaQuery();
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
     	
-    	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
+    	wrapper.eq(AbstractBaseDomain::getId,id);
     	
     	return getOne(wrapper);
     	
@@ -250,10 +251,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected void checkAvailable(Long id){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	wrapper.select(getColumn(AbstractBaseDomain::getStatus));
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		wrapper.select(getColumn(AbstractBaseDomain::getStatus));
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
     	
@@ -271,10 +272,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected void checkAvailable(List<Long> ids){
     	
     	CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin(); 
-    	
-    	wrapper.select(getColumn(AbstractBaseDomain::getStatus));
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		wrapper.select(getColumn(AbstractBaseDomain::getStatus));
     	
     	wrapper.in(getColumn(AbstractBaseDomain::getId),ids);
     	
@@ -293,12 +294,13 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected T getAvailableById(Long id,String ... columns){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	wrapper.select(getColumn(AbstractBaseDomain::getStatus));
-    	
-    	wrapper.select(columns);
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		String[] newColumns = new String[columns.length + 1];
+		System.arraycopy(columns, 0, newColumns, 0, columns.length);
+		newColumns[columns.length] = getColumn(AbstractBaseDomain::getStatus);
+    	wrapper.select(newColumns);
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getId),id);
     	
@@ -316,7 +318,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected T getAvailableByParam(MPJLambdaWrapper<T> wrapper){
-    	
+
+		wrapper.selectAsClass(domainClass,domainClass);
     	wrapper.select(getColumn(AbstractBaseDomain::getStatus));
     	
     	T domain = getOne(wrapper);
@@ -345,10 +348,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected DropDownResult dropDown(Long id){
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getId), id);
     	
@@ -361,10 +364,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     protected List<DropDownResult> dropDownList(){
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.eq(getColumn(AbstractBaseDomain::getStatus), Status.ENABLE);
     	
@@ -376,10 +379,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		ObjectUtil.isNullEmptyThrowError(id, getResourceName());
 
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-		wrapper.selectAsClass(domainClass,domainClass);
+		QueryWrapper<T> wrapper = Wrappers.query();
 
-    	if(columns.length > 0) {
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
     	
@@ -472,10 +474,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     protected List<T> listByIds(Collection<?> ids,String ... columns) {
 
 		CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	if(columns.length > 0) {
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
     	
@@ -486,17 +487,16 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	}
     
     @SafeVarargs
-    protected final <R,V> List<V> list(Supplier<V> target, SFunction<R, ?>... columns) {
-    	
+    protected final <R,V> List<V> list(Class<V> voClass, SFunction<R, ?>... columns) {
+
     	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	if(columns.length > 0) {
+		wrapper.selectAsClass(domainClass,voClass);
+
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
-		
-    	List<T> list = list(wrapper);
-    	
-    	return CglibUtil.copyList(list, target);
+
+		return selectJoinList(voClass, wrapper);
     	
 	}
     
@@ -577,10 +577,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		ObjectUtil.isNullEmptyThrowError(domain,getResourceName());
     	
     	if(ObjectUtil.isNotNullEmpty(domain.getId())) {
-    		
-    		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    		
-    		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
+
+			QueryWrapper<T> wrapper = Wrappers.query();
+
+			wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
 
 			ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
 			ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
@@ -600,9 +600,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     	if(ObjectUtil.isNotNullEmpty(id)) {
     		
     		domain.setId(id);
-    		
-    		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    		wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
+
+			QueryWrapper<T> wrapper = Wrappers.query();
+			wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
 
 			ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
 			ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
@@ -625,7 +625,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			if(ObjectUtil.isNotNullEmpty(domain.getId())) {
 
-				MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
+				QueryWrapper<T> wrapper = Wrappers.query();
 				wrapper.eq(getColumn(AbstractBaseDomain::getId), domain.getId());
 
 				ErrorCode errorCode = SystemErrorCode.DATA_NOT_EXIST_ERROR;
@@ -721,9 +721,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		CollectionUtil.collectionIsEmptyThrowError(ids,getResourceName() + "列表");
 
 		ObjectUtil.isNullEmptyThrowError(relationField, getResourceName() + "分组");
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	if(columns.length > 0) {
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
     	wrapper.in(relationField,ids);
@@ -752,13 +752,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		ObjectUtil.isNullEmptyThrowError(id,getResourceName());
 
 		ObjectUtil.isNullEmptyThrowError(relationField, getResourceName() + "分组");
-    	
-    	MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	if(columns.length > 0) {
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+		if(columns.length > 0) {
     		wrapper.select(columns);
     	}
-    	
     	wrapper.eq(relationField,id);
 
 		return ResultUtil.success(CglibUtil.copyList(list(wrapper), () -> ReflectUtil.newInstance(getResultClass())));
@@ -836,10 +834,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	
 	@Override
 	public AbstractBaseResult<List<DropDownResult>> dropDownListResult(Collection<Long> ids){
-		
-		MPJLambdaWrapper<T> wrapper = MPJWrappers.lambdaJoin();
-    	
-    	wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
+
+		QueryWrapper<T> wrapper = Wrappers.query();
+
+		wrapper.select(getColumns(AbstractBaseNameDomain::getId,AbstractBaseNameDomain::getName));
     	
     	wrapper.in(getColumn(AbstractBaseDomain::getId), ids);
     	

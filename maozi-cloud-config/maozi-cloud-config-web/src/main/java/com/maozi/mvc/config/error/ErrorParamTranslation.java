@@ -35,7 +35,7 @@ public class ErrorParamTranslation {
 	
 	public static Map<String, String> errorParams;
 	
-	public ErrorParamTranslation() throws Exception{
+	public ErrorParamTranslation() throws Exception {
 
 		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentContext.CONFIG_ADDR);
 

@@ -8,6 +8,7 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.mvc.config.error.ErrorParamTranslation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -51,9 +52,17 @@ public class RestErrorHandler {
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public Object handleMissingParam(MissingServletRequestParameterException e) {
 		String paramName = e.getParameterName();
-		String errorMsg = ObjectUtil.isNotNullEmpty(ErrorParamTranslation.errorParams.get(paramName)) ? ErrorParamTranslation.errorParams.get(paramName) : paramName + "不能为空";
+		String errorMsg = ObjectUtil.isNotNullEmpty(ErrorParamTranslation.errorParams.get(paramName)) ? ErrorParamTranslation.errorParams.get(paramName) + "不能为空" : paramName + "不能为空";
 
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR).setMessage(errorMsg);
+	}
+
+	/**
+	 * 请求体为空异常
+	 */
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public Object handleAccessDeniedException(HttpMessageNotReadableException e) {
+		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 
 	/**
