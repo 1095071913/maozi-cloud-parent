@@ -21,6 +21,7 @@ import com.maozi.common.ResultUtil;
 import com.maozi.common.WebUtil;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.code.ErrorCode;
+import com.maozi.common.result.error.code.SystemErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
@@ -28,20 +29,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 public class IAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-	private static final int AUTHENTICATION_ERROR_CODE = 401;
-
-	private static final String NO_AUTHENTICATION_DEFAULT_MESSAGE = "Full authentication is required to access this resource";
-
-	private static final ErrorCode NO_AUTHENTICATION_CODE_DATA = new ErrorCode(AUTHENTICATION_ERROR_CODE,"用户未认证授权");
-
-	private static final ErrorCode ERROR_AUTHENTICATION_CODE_DATA = new ErrorCode(AUTHENTICATION_ERROR_CODE,"用户认证授权失败");
-
 	@Override
 	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-		ErrorCode errorCode = NO_AUTHENTICATION_DEFAULT_MESSAGE.equals(authException.getMessage()) ? NO_AUTHENTICATION_CODE_DATA : ERROR_AUTHENTICATION_CODE_DATA;
+		ErrorCode errorCode = SystemErrorCode.SYSTEM_ERROR;
 
-		AbstractBaseResult<Object> error = ResultUtil.error(errorCode).autoIdentifyHttpCode(AUTHENTICATION_ERROR_CODE);
+		AbstractBaseResult<Object> error = ResultUtil.error(errorCode).autoIdentifyHttpCode(errorCode.getCode());
 			
 		WebUtil.writeResponseBody(response,error);
 		

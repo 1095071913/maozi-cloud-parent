@@ -13,9 +13,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class CustomOpaqueTokenIntrospector extends SpringOpaqueTokenIntrospector {
+public class OpaqueTokenIntrospector extends SpringOpaqueTokenIntrospector {
 
-    public CustomOpaqueTokenIntrospector(
+    public OpaqueTokenIntrospector(
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}") String introspectionUri,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id}") String clientId,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}") String clientSecret) {
@@ -24,6 +24,7 @@ public class CustomOpaqueTokenIntrospector extends SpringOpaqueTokenIntrospector
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
+
         OAuth2AuthenticatedPrincipal principal = super.introspect(token);
 
         // 从 introspection 响应中提取 authorities 字段，转为 GrantedAuthority
