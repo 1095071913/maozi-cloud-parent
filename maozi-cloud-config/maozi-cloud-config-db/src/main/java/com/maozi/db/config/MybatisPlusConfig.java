@@ -20,8 +20,6 @@ package com.maozi.db.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import net.sf.jsqlparser.expression.LongValue;
@@ -67,10 +65,13 @@ public class MybatisPlusConfig {
 //        if(!BaseCommon.isEnvironment(EnvironmentType.PROD)) {
 //        	interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
 //        }
-        
+
+        // 分页
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+//        // 防止全表更新删除
+//        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+//        // 乐观锁
+//        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         
         return interceptor;
         

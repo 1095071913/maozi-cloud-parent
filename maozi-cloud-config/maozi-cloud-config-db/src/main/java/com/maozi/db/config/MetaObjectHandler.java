@@ -19,37 +19,27 @@ package com.maozi.db.config;
 
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
-import com.maozi.common.context.ApplicationLinkContext;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.LocalDateTime;
 
 @Configuration
 public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers.MetaObjectHandler {
 
+	private final static String STATUS = "status";
+
+	private final static String DELETED = "deleted";
+
+	private final static String CREATE_TIME = "createTime";
+
 	@Override
 	public void insertFill(MetaObject metaObject) {
-
-		long currentTime = System.currentTimeMillis();
-
-		this.strictInsertFill(metaObject, "createTime", Long.class, currentTime);
-		this.strictInsertFill(metaObject, "updateTime", Long.class, currentTime);
-		this.strictInsertFill(metaObject, "status", Status.class, Status.ENABLE);
-		this.strictInsertFill(metaObject, "deleted", Deleted.class, Deleted.NONE);
-		this.strictInsertFill(metaObject, "version", Integer.class, 0);
-
-		String currentUserName = ApplicationLinkContext.USERNAMES.get();
-		this.strictInsertFill(metaObject, "createUsername", String.class, currentUserName);
-		this.strictInsertFill(metaObject, "updateUsername", String.class, currentUserName);
-		
+		this.strictInsertFill(metaObject, STATUS, Status.class, Status.ENABLE);
+		this.strictInsertFill(metaObject, DELETED, Deleted.class, Deleted.NONE);
+		this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
 	}
 
 	@Override
-	public void updateFill(MetaObject metaObject) {
-
-		this.strictUpdateFill(metaObject, "updateTime", Long.class, System.currentTimeMillis());
-
-		String currentUserName = ApplicationLinkContext.USERNAMES.get();
-		this.strictInsertFill(metaObject, "updateUsername", String.class, currentUserName);
-		
-	}
+	public void updateFill(MetaObject metaObject) {}
 }

@@ -17,27 +17,29 @@
 
 package com.maozi.oauth.config;
 
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.WebUtil;
 import com.maozi.common.result.AbstractBaseResult;
-import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.code.SystemErrorCode;
+import com.maozi.common.result.error.exception.BusinessResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
 
-public class IAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
 
 	@Override
 	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-		ErrorCode errorCode = SystemErrorCode.SYSTEM_ERROR;
+		Throwable causeException = authException.getCause();
+		AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && causeException.getCause() instanceof BusinessResultException businessResultException ?
+				businessResultException.getErrorResult()
+				:
+				ResultUtil.error(SystemErrorCode.USER_AUTH_ERROR).autoIdentifyHttpCode(SystemErrorCode.USER_AUTH_ERROR_DEFAULT_CODE);
 
-		AbstractBaseResult<Object> error = ResultUtil.error(errorCode).autoIdentifyHttpCode(errorCode.getCode());
-			
-		WebUtil.writeResponseBody(response,error);
-		
+		WebUtil.writeResponseBody(response,errorResult);
+
 	}
 	
 }

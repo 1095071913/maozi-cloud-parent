@@ -37,7 +37,7 @@ public class SwaggerConfig {
 
     private final static String AUTHORIZATION = "Authorization";
 
-    private final static String AUTHORIZATION_VALUE = "{{token}}";
+    private final static String AUTHORIZATION_VALUE = "{{oauth_access_token}}";
 
     private final static String OFFICIAL_URL = "https://github.com/1095071913";
 

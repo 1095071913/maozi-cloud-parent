@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.maozi.base.enums.Deleted;
 import com.maozi.base.enums.Status;
@@ -32,6 +31,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -50,18 +50,6 @@ public abstract class AbstractBaseDomain implements Serializable {
 	private Long id;
 
 	/**
-	 * 创建人
-	 */
-	@TableField(fill = FieldFill.INSERT)
-	private String createUsername;
-
-	/**
-	 * 更新人
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private String updateUsername;
-
-	/**
 	 * 逻辑删除
 	 */
 	@TableLogic
@@ -75,22 +63,9 @@ public abstract class AbstractBaseDomain implements Serializable {
 	private Status status;
 
 	/**
-	 * 版本号
-	 */
-	@Version
-	@TableField(fill = FieldFill.INSERT)
-	private Integer version;
-
-	/**
 	 * 创建时间
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private Long createTime;
-
-	/**
-	 * 更新时间
-	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long updateTime;
+	private LocalDateTime createTime;
 
 }

@@ -8,6 +8,9 @@ public class SystemErrorCode extends AbstractBaseErrorCode{
     //系统异常默认码
     public static final Integer SYSTEM_ERROR_DEFAULT_CODE = 500;
 
+    //用户认证授权异常默认码
+    public static final Integer USER_AUTH_ERROR_DEFAULT_CODE = 401;
+
     //限流异常默认码
     public static final Integer CURRENT_LIMITING_ERROR_DEFAULT_CODE = 429;
 
@@ -28,7 +31,7 @@ public class SystemErrorCode extends AbstractBaseErrorCode{
 
     public final static ErrorCode PARAM_ERROR = new ErrorCode(BUSINESS_ERROR_DEFAULT_CODE,"参数错误");
 
-    public final static ErrorCode USER_AUTH_ERROR = new ErrorCode(401,"用户认证授权失败");
+    public final static ErrorCode USER_AUTH_ERROR = new ErrorCode(USER_AUTH_ERROR_DEFAULT_CODE,"用户认证授权失败");
 
     public final static ErrorCode MALICE_REQUEST_ERROR = new ErrorCode(402,"恶意请求");
 

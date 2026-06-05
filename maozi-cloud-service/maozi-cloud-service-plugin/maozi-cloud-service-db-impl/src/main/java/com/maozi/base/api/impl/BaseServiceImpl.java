@@ -28,6 +28,7 @@ import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.param.plugin.OrderParam;
 import com.maozi.base.param.plugin.TimeParam;
 import com.maozi.base.plugin.StoreClass;
+import com.maozi.base.plugin.context.QueryEnvironmentContext;
 import com.maozi.base.plugin.join.JoinBaseType;
 import com.maozi.base.plugin.join.JoinPlugins;
 import com.maozi.base.plugin.mapping.QueryMapping;
@@ -195,10 +196,10 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
 				if(ObjectUtil.isNullEmpty(annotation)) {
-					columns.add("t." + StrUtil.toUnderlineCase(field.getName()));
+					columns.add(QueryEnvironmentContext.DEFAULT_ORDER_KEY + "." + StrUtil.toUnderlineCase(field.getName()));
 				}else if(annotation.ignore() && (StringUtils.isNotBlank(annotation.field()) || StringUtils.isNotBlank(annotation.tableName()))){
 
-					String tableName = StringUtils.isNotBlank(annotation.field()) ? annotation.field() : "t";
+					String tableName = StringUtils.isNotBlank(annotation.field()) ? annotation.field() : QueryEnvironmentContext.DEFAULT_ORDER_KEY;
 
 					String fieldName = StringUtils.isNotBlank(annotation.tableName()) ?
 							annotation.tableName()
@@ -289,6 +290,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     		
     	});
     	
+	}
+
+	@SafeVarargs
+    protected final T getAvailableById(Long id, SFunction<T, ?>... columns){
+		return getAvailableById(id,getColumns(columns));
 	}
     
     protected T getAvailableById(Long id,String ... columns){
@@ -1031,9 +1037,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			orderParam.initOrderParam();
 
-			List<String> asc = orderParam.getOrderAscFieldsMap().get("t");
+			List<String> asc = orderParam.getOrderAscFieldsMap().get(QueryEnvironmentContext.DEFAULT_ORDER_KEY);
 
-			List<String> desc = orderParam.getOrderDescFieldsMap().get("t");
+			List<String> desc = orderParam.getOrderDescFieldsMap().get(QueryEnvironmentContext.DEFAULT_ORDER_KEY);
 
 			wrapper.orderByAscStr(ObjectUtil.isNotNullEmpty(asc),asc);
 

@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 @RestService
-@Tag(name = "【全局】/【枚举常量】")
+@Tag(name = "公用模块/枚举常量")
 public class RestApplicationCode {
 
 	private static final String PATH = "/application/enum";
