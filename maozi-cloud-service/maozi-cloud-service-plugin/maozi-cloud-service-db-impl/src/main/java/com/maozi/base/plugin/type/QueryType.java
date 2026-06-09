@@ -10,50 +10,79 @@ import com.maozi.base.plugin.impl.query.QueryNePlugin;
 import com.maozi.base.plugin.query.QueryBaseType;
 import lombok.Getter;
 
+/**
+ * 查询类型枚举
+ * <p>
+ * 定义支持的查询条件类型及其对应的插件实现。
+ * 包括：等于（EQ）、模糊匹配（LIKE）、IN 查询、不等于（NE）、
+ * 大于等于（GE）、小于等于（LE）六种查询类型。
+ * </p>
+ *
+ * @author maozi
+ */
 @Getter
 public enum QueryType {
 
-	EQ(QueryBaseType.EQ, new QueryEqPlugin()),
+    /** 等于 */
+    EQ(QueryBaseType.EQ, new QueryEqPlugin()),
 
-	LIKE(QueryBaseType.LIKE, new QueryLikePlugin()),
+    /** 模糊匹配（右模糊） */
+    LIKE(QueryBaseType.LIKE, new QueryLikePlugin()),
 
-	IN(QueryBaseType.IN, new QueryInPlugin()),
+    /** IN 查询 */
+    IN(QueryBaseType.IN, new QueryInPlugin()),
 
-	NE(QueryBaseType.NE, new QueryNePlugin()),
+    /** 不等于 */
+    NE(QueryBaseType.NE, new QueryNePlugin()),
 
-	GE(QueryBaseType.GE, new QueryGePlugin()),
+    /** 大于等于 */
+    GE(QueryBaseType.GE, new QueryGePlugin()),
 
-	LE(QueryBaseType.LE, new QueryLePlugin()),
+    /** 小于等于 */
+    LE(QueryBaseType.LE, new QueryLePlugin()),
 
-	;
-	
-	QueryType(QueryBaseType type,QueryBasePlugin queryPlugin) {
-		
-		this.type = type;
-		
-		this.queryPlugin = queryPlugin;
-		
-	}
-	
-	private final QueryBaseType type;
-	
-	private final QueryBasePlugin queryPlugin;
-	
-	
-	public static QueryType get(String type) {
-		
-		QueryType[] queryTypes = QueryType.values();
-		
-		for(QueryType queryType : queryTypes) {
-			
-			if(queryType.getType().getType().equals(type)) {
-				return queryType;
-			}
-			
-		}
-		
-		return null;
-		
-	}
-	
+    ;
+
+    /** 查询基础类型 */
+    private final QueryBaseType type;
+
+    /** 查询插件实例 */
+    private final QueryBasePlugin queryPlugin;
+
+    /**
+     * 构造方法
+     *
+     * @param type 查询基础类型
+     * @param queryPlugin 查询插件实例
+     */
+    QueryType(QueryBaseType type,QueryBasePlugin queryPlugin) {
+
+        this.type = type;
+
+        this.queryPlugin = queryPlugin;
+
+    }
+
+    /**
+     * 根据类型字符串获取查询类型枚举
+     *
+     * @param type 类型字符串
+     * @return 对应的查询类型枚举，未匹配时返回 null
+     */
+    public static QueryType get(String type) {
+
+        QueryType[] queryTypes = QueryType.values();
+
+        for(QueryType queryType : queryTypes) {
+
+            if(queryType.getType().getType().equals(type)) {
+                return queryType;
+            }
+
+        }
+
+        return null;
+
+    }
+
 }

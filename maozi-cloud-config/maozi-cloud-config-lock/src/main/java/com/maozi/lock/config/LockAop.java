@@ -28,18 +28,39 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.List;
 
+/**
+ * 分布式锁切面处理器
+ * <p>
+ * 拦截带有 {@link com.maozi.lock.annotation.Lock} 注解的方法，
+ * 根据注解配置自动获取和释放分布式锁。支持 SpEL 表达式解析锁键、
+ * 多种锁类型（可重入锁、公平锁、读写锁）和超时策略。
+ * </p>
+ *
+ * @author maozi
+ */
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 2 )
 public class LockAop {
 
+    /** SpEL 表达式解析器 */
     private final ExpressionParser parser = new SpelExpressionParser();
 
+    /** 参数名发现器 */
     private final ParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
 
+    /** 锁配置属性 */
     @Resource
     private LockProperties properties;
 
+    /**
+     * 环绕通知，执行加锁、业务逻辑和释放锁
+     *
+     * @param joinPoint AOP 连接点
+     * @param annotation 锁注解实例
+     * @return 业务方法执行结果
+     * @throws Throwable 业务方法或锁操作抛出的异常
+     */
     @Around("@annotation(annotation)")
     public Object around(ProceedingJoinPoint joinPoint, com.maozi.lock.annotation.Lock annotation) throws Throwable {
 
@@ -65,6 +86,14 @@ public class LockAop {
 
     }
 
+    /**
+     * 获取完整的锁键名称
+     *
+     * @param joinPoint AOP 连接点
+     * @param lock 锁注解实例
+     * @return 拼接后的锁键名称
+     * @throws Exception 反射操作异常
+     */
     public String getKeyName(JoinPoint joinPoint, com.maozi.lock.annotation.Lock lock) throws Exception {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -83,6 +112,14 @@ public class LockAop {
 
     }
 
+    /**
+     * 解析 SpEL 表达式定义的锁键
+     *
+     * @param definitionKeys SpEL 表达式数组
+     * @param method 目标方法
+     * @param parameterValues 方法参数值
+     * @return 解析后的锁键列表
+     */
     private List<String> getSpelDefinitionKey(String[] definitionKeys, Method method, Object[] parameterValues) {
 
         List<String> definitionKeyList = CollectionUtil.newArrayList();
@@ -105,6 +142,13 @@ public class LockAop {
 
     }
 
+    /**
+     * 获取带有 {@link LockKey} 注解的参数值作为锁键
+     *
+     * @param parameters 方法参数数组
+     * @param parameterValues 参数值数组
+     * @return 锁键列表
+     */
     private List<String> getParameterKey(Parameter[] parameters, Object[] parameterValues) {
 
         List<String> parameterKey = CollectionUtil.newArrayList();

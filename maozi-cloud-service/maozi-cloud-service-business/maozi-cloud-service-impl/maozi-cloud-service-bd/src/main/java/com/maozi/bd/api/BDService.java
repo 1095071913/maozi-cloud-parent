@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.bd.api;
@@ -22,8 +22,24 @@ import org.springframework.http.HttpMethod;
 
 import java.util.Map;
 
+/**
+ * 百度地图服务接口
+ * <p>
+ * 定义百度地图 API 的 REST 调用方法。
+ * </p>
+ *
+ * @author maozi
+ */
 public interface BDService {
-	
+
+    /**
+     * 调用百度地图 REST API
+     *
+     * @param uri 请求路径
+     * @param privateParam 私有参数
+     * @param method HTTP 方法
+     * @return 百度 API 响应结果
+     */
 	JSONObject bdRest(String uri,Map<String,Object> privateParam,HttpMethod method);
 
 }

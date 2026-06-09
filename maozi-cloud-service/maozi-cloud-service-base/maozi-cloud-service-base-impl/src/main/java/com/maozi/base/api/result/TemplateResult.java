@@ -10,18 +10,32 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * 模版结果对象
+ * <p>
+ * 用于展示接口返回结构的标准模版，包含常用的返回类型示例：
+ * 错误结果、字符串列表、整数列表和枚举结果。
+ * </p>
+ *
+ * @author maozi
+ */
 @Data
 public class TemplateResult implements Serializable {
 
+    /** 序列化版本 ID */
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /** 错误结果示例 */
     private final ErrorResult errorResult;
 
+    /** 字符串列表示例 */
     private final StringArrayList stringArrayList;
 
+    /** 整数列表示例 */
     private final IntegerArrayList integerArrayList;
 
+    /** 枚举结果示例 */
     private final AbstractBaseResult<EnumResult> baseResultEnumResult;
 
 }

@@ -24,31 +24,59 @@ import lombok.Getter;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * 错误码基类
+ * <p>
+ * 定义错误码、错误信息和异常信息三个维度，用于统一描述业务和系统错误。
+ * </p>
+ *
+ * @author maozi
+ */
 @Getter
 @AllArgsConstructor
 public class ErrorCode implements Serializable {
 
+	/** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 
+	/** 错误内码 */
 	private final Integer code;
 
+	/** 错误信息 */
 	private final String message;
 
+	/** 异常错误信息 */
 	private final String exceptionMessage;
-	
+
+	/**
+	 * 仅指定错误信息的构造方法（默认编码 400）
+	 *
+	 * @param message 错误信息
+	 */
 	public ErrorCode(String message) {
 		this.code = 400;
 		this.message = message;
 		this.exceptionMessage = message;
-	} 
+	}
 
+	/**
+	 * 指定编码和错误信息的构造方法
+	 *
+	 * @param code 错误编码
+	 * @param message 错误信息
+	 */
 	public ErrorCode(Integer code, String message) {
 		this.code = code;
 		this.message = message;
 		this.exceptionMessage = message;
 	}
 
+	/**
+	 * 获取异常信息，为空时返回错误信息
+	 *
+	 * @return 异常信息
+	 */
 	public String getExceptionMessage() {
 		return ObjectUtil.isNotNullEmpty(this.exceptionMessage) ? this.exceptionMessage : this.message;
 	}

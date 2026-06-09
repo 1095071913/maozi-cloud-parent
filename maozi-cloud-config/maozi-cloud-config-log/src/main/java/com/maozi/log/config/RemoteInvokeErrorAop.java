@@ -1,21 +1,3 @@
-
-/*
- * Copyright 2012-2018 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.maozi.log.config;
 
 import cn.hutool.core.util.StrUtil;
@@ -36,53 +18,74 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * 远程调用异常处理切面
+ * <p>
+ * 拦截所有 RPC 和 REST 远程调用实现方法，当调用抛出异常时，
+ * 记录错误日志并返回统一的错误结果，避免异常向上层传播。
+ * 仅拦截接口层（非 impl 层）的调用。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @Aspect
 @Component
 public class RemoteInvokeErrorAop {
 
-	private static final String IMPL = "impl";
+    /** impl 包名标识，用于区分接口调用和实现调用 */
+    private static final String IMPL = "impl";
 
-	private final String RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.rpc..*.*(..)";
+    /** RPC 接口切点表达式 */
+    private final String RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.rpc..*.*(..)";
 
-	private final String REST_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.rest..*.*(..)";
+    /** REST 接口切点表达式 */
+    private final String REST_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.rest..*.*(..)";
 
-	private final String POINT = "execution(" + RPC_POINT + ") || execution(" + REST_POINT + ")";
+    /** 组合切点表达式 */
+    private final String POINT = "execution(" + RPC_POINT + ") || execution(" + REST_POINT + ")";
 
-	@Around(POINT)
-	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    /**
+     * 环绕通知，捕获远程调用异常
+     *
+     * @param proceedingJoinPoint AOP 连接点
+     * @return 调用结果，异常时返回错误结果
+     * @throws Throwable 非接口层调用时向上抛出原始异常
+     */
+    @Around(POINT)
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-		try {return proceedingJoinPoint.proceed();} catch (Throwable e) {
+        try {return proceedingJoinPoint.proceed();} catch (Throwable e) {
 
-			String [] remoteInvokeClassSplit = proceedingJoinPoint.getSignature().getDeclaringTypeName().split("\\.");
+            String [] remoteInvokeClassSplit = proceedingJoinPoint.getSignature().getDeclaringTypeName().split("\\.");
 
-			if(!IMPL.equals(remoteInvokeClassSplit[5])){
+            if(!IMPL.equals(remoteInvokeClassSplit[5])){
 
-				String serviceName = remoteInvokeClassSplit[2];
+                String serviceName = remoteInvokeClassSplit[2];
 
-				Map<String, String> logs = new LinkedHashMap<>();
+                Map<String, String> logs = new LinkedHashMap<>();
 
-				logs.put(LogTag.TYPE, LogCommonType.RPC.getDesc());
-				logs.put(LogTag.SERVICE_NAME, serviceName);
-				logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
-				logs.put(LogTag.PARAM, Arrays.toString(proceedingJoinPoint.getArgs()));
-				logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
-				logs.put(LogTag.ERROR_LINE, e.getStackTrace()[0].toString());
+                logs.put(LogTag.TYPE, LogCommonType.RPC.getDesc());
+                logs.put(LogTag.SERVICE_NAME, serviceName);
+                logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
+                logs.put(LogTag.PARAM, Arrays.toString(proceedingJoinPoint.getArgs()));
+                logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+                logs.put(LogTag.ERROR_LINE, e.getStackTrace()[0].toString());
 
-				LogUtil.error(log,e);
+                LogUtil.error(log,e);
 
-				LogUtil.error(log,logs);
+                LogUtil.error(log,logs);
 
-				ErrorCode errorCode = SystemErrorCode.SERVICE_RPC_ERROR;
-				return ResultUtil.error(errorCode)
-						.setExceptionMessage(StrUtil.upperFirst(serviceName) + errorCode.getExceptionMessage())
-						.setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
+                ErrorCode errorCode = SystemErrorCode.SERVICE_RPC_ERROR;
+                return ResultUtil.error(errorCode)
+                        .setExceptionMessage(StrUtil.upperFirst(serviceName) + errorCode.getExceptionMessage())
+                        .setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
 
-			}
+            }
 
-			throw e;
+            throw e;
 
-		}
+        }
 
     }
 

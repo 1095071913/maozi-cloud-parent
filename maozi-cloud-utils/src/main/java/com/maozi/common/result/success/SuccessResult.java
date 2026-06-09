@@ -26,27 +26,48 @@ import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * 接口成功结果集
+ * <p>
+ * 表示 API 调用成功的响应结果，固定业务码为 200。
+ * </p>
+ *
+ * @param <D> 响应数据类型
+ * @author maozi
+ */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=true)
 @Schema(description = "接口成功结果集")
 public class SuccessResult<D> extends AbstractBaseResult<D> implements Serializable {
 
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	//结果集成功默认码
+	/** 结果集成功默认码 */
 	public final static Integer RESULT_SUCCESS_DEFAULT_CODE = 200;
 
+	/**
+	 * 获取业务内码
+	 *
+	 * @return 固定返回 200
+	 */
 	@Override
 	public Integer getCode() {
 		return RESULT_SUCCESS_DEFAULT_CODE;
 	}
 
+	/** 响应数据 */
 	@Getter
 	private final D data;
-	
+
+	/**
+	 * 构造成功结果
+	 *
+	 * @param data 响应数据
+	 */
 	public SuccessResult(D data) {
 		this.data = data;
 	}
-	
+
 }

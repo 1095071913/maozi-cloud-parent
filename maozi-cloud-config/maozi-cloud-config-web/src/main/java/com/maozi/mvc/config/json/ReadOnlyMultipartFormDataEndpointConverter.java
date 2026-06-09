@@ -11,12 +11,44 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import java.lang.reflect.Type;
 
+/**
+ * 只读 Multipart 表单数据转换器
+ * <p>
+ * 扩展 {@link MappingJackson2HttpMessageConverter}，仅当控制器方法
+ * 的 {@code @RequestMapping} 注解明确声明消费 {@code multipart/form-data} 时，
+ * 才使用 Jackson 将请求体反序列化为对象。仅支持读取，不支持写入。
+ * </p>
+ *
+ * @author maozi
+ */
 public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2HttpMessageConverter {
 
+    /**
+     * 构造方法
+     *
+     * @param objectMapper Jackson ObjectMapper 实例
+     */
     public ReadOnlyMultipartFormDataEndpointConverter(ObjectMapper objectMapper) {
         super(objectMapper);
     }
 
+    /**
+     * 判断是否可以读取指定的媒体类型
+     * <p>
+     * 仅在以下条件全部满足时返回 true：
+     * <ol>
+     *   <li>当前存在 HTTP 请求上下文</li>
+     *   <li>能获取到处理方法信息</li>
+     *   <li>处理方法标注了 {@code @RequestMapping} 注解</li>
+     *   <li>{@code @RequestMapping} 的 consumes 仅声明了 multipart/form-data</li>
+     * </ol>
+     * </p>
+     *
+     * @param type 目标类型
+     * @param contextClass 上下文类
+     * @param mediaType 媒体类型
+     * @return 是否可以读取
+     */
     @Override
     public boolean canRead(Type type, Class<?> contextClass, MediaType mediaType) {
         // When a rest client(e.g. RestTemplate#getForObject) reads a request, 'RequestAttributes' can be null.
@@ -39,17 +71,9 @@ public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2H
         return super.canRead(type, contextClass, mediaType);
     }
 
-//      If you want to decide whether this converter can reads data depending on end point classes (i.e. classes with '@RestController'/'@Controller'),
-//      you have to compare 'contextClass' to the type(s) of your end point class(es).
-//      Use this 'canRead' method instead.
-//      @Override
-//      public boolean canRead(Type type, Class<?> contextClass, MediaType mediaType) {
-//          return YourEndpointController.class == contextClass && super.canRead(type, contextClass, mediaType);
-//      }
-
     @Override
     protected boolean canWrite(MediaType mediaType) {
-        // This converter is only be used for requests.
+        // 此转换器仅用于请求读取，不支持写入响应
         return false;
     }
 }

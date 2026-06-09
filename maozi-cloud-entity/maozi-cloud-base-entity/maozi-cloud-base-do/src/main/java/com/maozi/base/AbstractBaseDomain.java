@@ -33,6 +33,15 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * 基础领域对象抽象类
+ * <p>
+ * 所有数据库实体对象的公共父类，定义了主键、逻辑删除标志、状态和创建时间等通用字段。
+ * 结合 MyBatis-Plus 的自动填充和逻辑删除功能使用。
+ * </p>
+ *
+ * @author maozi
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,6 +49,7 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseDomain implements Serializable {
 
+	/** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

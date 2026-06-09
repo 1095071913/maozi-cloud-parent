@@ -23,16 +23,42 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 灰度轮询负载均衡器
+ * <p>
+ * 实现 Spring Cloud 的 {@link ReactorServiceInstanceLoadBalancer} 接口，
+ * 基于请求头中的版本号进行灰度流量路由。将服务实例分为灰度节点和主版本节点两组，
+ * 优先路由到匹配版本的灰度节点，否则路由到主版本节点，在匹配的实例组内使用轮询策略。
+ * </p>
+ *
+ * @author maozi
+ */
 public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
+    /** 服务实例列表提供者 */
     private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 
+    /** 轮询位置计数器 */
     private final AtomicInteger position = new AtomicInteger(new Random().nextInt(1000));
 
+    /**
+     * 构造方法
+     *
+     * @param serviceInstanceListSupplierProvider 服务实例列表提供者
+     */
     public GrayRoundRobinLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
     }
 
+    /**
+     * 选择服务实例
+     * <p>
+     * 从请求上下文中提取请求头，传递给灰度路由逻辑。
+     * </p>
+     *
+     * @param request 负载均衡请求
+     * @return 包含选中服务实例的 Mono
+     */
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
 
@@ -56,6 +82,18 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
     }
 
+    /**
+     * 根据版本号进行灰度路由并轮询选择实例
+     * <p>
+     * 从请求头中获取版本号，将服务实例分为灰度节点和主版本节点两组。
+     * 优先使用灰度节点，若无匹配的灰度节点则使用主版本节点。
+     * 在选中的实例组内使用轮询策略选择具体实例。
+     * </p>
+     *
+     * @param instances 可用的服务实例列表
+     * @param headers HTTP 请求头
+     * @return 包含选中服务实例的响应
+     */
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> instances, HttpHeaders headers) {
 
         if(ObjectUtil.isNullEmpty(instances)){

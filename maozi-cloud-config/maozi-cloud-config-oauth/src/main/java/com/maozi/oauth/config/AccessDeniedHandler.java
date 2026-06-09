@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.oauth.config;
@@ -25,8 +25,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 
+/**
+ * 访问拒绝处理器
+ * <p>
+ * 当已认证用户尝试访问其没有权限的资源时，返回权限不足的统一错误响应。
+ * 使用 {@link SystemErrorCode#PERMISSION_ERROR} 作为错误码。
+ * </p>
+ *
+ * @author maozi
+ */
 public class AccessDeniedHandler implements org.springframework.security.web.access.AccessDeniedHandler {
-	
+
+    /**
+     * 处理访问拒绝异常，返回权限错误响应
+     *
+     * @param request HTTP 请求
+     * @param response HTTP 响应
+     * @param accessDeniedException 访问拒绝异常
+     */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,AccessDeniedException accessDeniedException){
         ErrorCode errorCode = SystemErrorCode.PERMISSION_ERROR;

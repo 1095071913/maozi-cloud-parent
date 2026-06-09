@@ -7,44 +7,69 @@ import com.maozi.base.plugin.impl.join.QueryRightJoinPlugin;
 import com.maozi.base.plugin.join.JoinBaseType;
 import lombok.Getter;
 
+/**
+ * 关联类型枚举
+ * <p>
+ * 定义支持的关联查询类型及其对应的插件实现。
+ * 包括：内连接（INNER JOIN）、左连接（LEFT JOIN）、右连接（RIGHT JOIN）三种关联类型。
+ * </p>
+ *
+ * @author maozi
+ */
 @Getter
 public enum JoinType {
 
-	INNER_JOIN(JoinBaseType.INNER_JOIN, new QueryInnerJoinPlugin()),
+    /** 内连接 */
+    INNER_JOIN(JoinBaseType.INNER_JOIN, new QueryInnerJoinPlugin()),
 
-	LEFT_JOIN(JoinBaseType.LEFT_JOIN, new QueryLeftJoinPlugin()),
+    /** 左连接 */
+    LEFT_JOIN(JoinBaseType.LEFT_JOIN, new QueryLeftJoinPlugin()),
 
-	RIGHT_JOIN(JoinBaseType.RIGHT_JOIN, new QueryRightJoinPlugin()),
+    /** 右连接 */
+    RIGHT_JOIN(JoinBaseType.RIGHT_JOIN, new QueryRightJoinPlugin()),
 
-	;
+    ;
 
-	JoinType(JoinBaseType type, JoinBasePlugin joinPlugin) {
-		
-		this.type = type;
-		
-		this.joinPlugin = joinPlugin;
-		
-	}
-	
-	private final JoinBaseType type;
-	
-	private final JoinBasePlugin joinPlugin;
-	
-	
-	public static JoinType get(String type) {
+    /** 关联基础类型 */
+    private final JoinBaseType type;
 
-		JoinType[] joinTypes = JoinType.values();
-		
-		for(JoinType joinType : joinTypes) {
-			
-			if(joinType.getType().getType().equals(type)) {
-				return joinType;
-			}
-			
-		}
-		
-		return null;
-		
-	}
-	
+    /** 关联插件实例 */
+    private final JoinBasePlugin joinPlugin;
+
+    /**
+     * 构造方法
+     *
+     * @param type 关联基础类型
+     * @param joinPlugin 关联插件实例
+     */
+    JoinType(JoinBaseType type, JoinBasePlugin joinPlugin) {
+
+        this.type = type;
+
+        this.joinPlugin = joinPlugin;
+
+    }
+
+    /**
+     * 根据类型字符串获取关联类型枚举
+     *
+     * @param type 类型字符串
+     * @return 对应的关联类型枚举，未匹配时返回 null
+     */
+    public static JoinType get(String type) {
+
+        JoinType[] joinTypes = JoinType.values();
+
+        for(JoinType joinType : joinTypes) {
+
+            if(joinType.getType().getType().equals(type)) {
+                return joinType;
+            }
+
+        }
+
+        return null;
+
+    }
+
 }

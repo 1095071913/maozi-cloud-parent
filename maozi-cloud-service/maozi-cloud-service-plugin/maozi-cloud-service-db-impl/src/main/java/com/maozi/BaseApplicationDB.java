@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi;
@@ -23,18 +23,35 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Properties;
 
+/**
+ * 数据库应用启动基类
+ * <p>
+ * 继承 {@link BaseApplication}，在基础启动配置上增加数据库相关配置。
+ * 自动扫描项目 Mapper 接口，并追加数据源和数据库配置文件。
+ * </p>
+ *
+ * @author maozi
+ */
 @SpringBootApplication
 @MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".${application-project-abbreviation}.*.mapper")
 public class BaseApplicationDB {
 
-	protected static void ApplicationRun(String[] args) {
+    /**
+     * 应用启动入口方法
+     * <p>
+     * 追加数据库相关的 Nacos 配置文件后调用父类启动方法。
+     * </p>
+     *
+     * @param args 命令行参数
+     */
+    protected static void ApplicationRun(String[] args) {
 
-		Properties properties = System.getProperties();
+        Properties properties = System.getProperties();
 
-		properties.put("application-nacos-config-service","boot-datasource.yml,boot-db.yml");
+        properties.put("application-nacos-config-service","boot-datasource.yml,boot-db.yml");
 
-		BaseApplication.ApplicationRun(args);
+        BaseApplication.ApplicationRun(args);
 
-	}
+    }
 
 }

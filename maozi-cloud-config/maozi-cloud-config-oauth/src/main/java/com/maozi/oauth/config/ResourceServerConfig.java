@@ -19,14 +19,36 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.List;
 
+/**
+ * 资源服务器安全配置
+ * <p>
+ * 配置 OAuth2 资源服务器的安全策略，包括 API 白名单放行、
+ * 不透明令牌（Opaque Token）认证、自定义访问拒绝和认证入口处理器。
+ * 启用方法级安全注解（JSR-250 和 Secured）支持。
+ * </p>
+ *
+ * @author maozi
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 public class ResourceServerConfig {
 
+    /** API 白名单配置 */
     @Resource
     public ApiWhitelistProperties apiWhitelistProperties;
 
+    /**
+     * 创建默认安全过滤器链
+     * <p>
+     * 配置白名单路径放行、其余请求需要认证，以及 OAuth2 资源服务器的
+     * 不透明令牌认证和自定义异常处理器。
+     * </p>
+     *
+     * @param http HTTP 安全构建器
+     * @return 安全过滤器链
+     * @throws Exception 安全配置异常
+     */
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
@@ -39,7 +61,7 @@ public class ResourceServerConfig {
                 .requestMatchers(requestMatchers).permitAll()
                 .anyRequest().authenticated());
 
-        // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务，解析请求头中的token
+        // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务器，解析请求头中的token
         http.oauth2ResourceServer((resourceServer) -> resourceServer
                 .opaqueToken(Customizer.withDefaults())
                 .accessDeniedHandler(new AccessDeniedHandler())
@@ -50,40 +72,19 @@ public class ResourceServerConfig {
 
     }
 
-//    /**
-//     * 根据jwtDecoder和令牌自省生成{@link AuthenticationManagerResolver }，在AuthenticationManagerResolver中根据当前请求决定使用jwt解析器还是去token自省端点获取当前token信息
-//     *
-//     * @param jwtDecoder              jwt解析器
-//     * @param opaqueTokenIntrospector token自省
-//     * @return 返回 {@link AuthenticationManagerResolver }
-//     */
-//    @Bean
-//    AuthenticationManagerResolver<HttpServletRequest> tokenAuthenticationManagerResolver
-//    (JwtDecoder jwtDecoder, OpaqueTokenIntrospector opaqueTokenIntrospector) {
-//        AuthenticationManager jwt = new ProviderManager(new JwtAuthenticationProvider(jwtDecoder));
-//        AuthenticationManager opaqueToken = new ProviderManager(
-//                new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector));
-//        return (request) -> useJwt(request) ? jwt : opaqueToken;
-//    }
-//
-//    /**
-//     * 判断请求头是否有key ： token-type，有值不是jwt
-//     * 这里根据自己业务实现，可以获取token后再判断token是jwt还是匿名token
-//     *
-//     * @param request 请求对象
-//     * @return 是否使用jwt token
-//     */
-//    private boolean useJwt(HttpServletRequest request) {
-//        return ObjectUtils.isEmpty(request.getHeader("token-type"));
-//    }
-
+    /**
+     * 创建令牌认证管理器解析器
+     * <p>
+     * 配置不透明令牌认证提供者，所有请求统一使用不透明令牌认证方式。
+     * </p>
+     *
+     * @param opaqueTokenIntrospector 不透明令牌内省器
+     * @return 认证管理器解析器
+     */
     @Bean
     public AuthenticationManagerResolver<HttpServletRequest> tokenAuthenticationManagerResolver(OpaqueTokenIntrospector opaqueTokenIntrospector) {
         AuthenticationManager opaqueToken = new ProviderManager(new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector));
         return (request) -> opaqueToken;
     }
-
-
-
 
 }

@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.bd.properties;
@@ -21,15 +21,23 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-
-
+/**
+ * 百度地图配置属性
+ * <p>
+ * 从 {@code bd.config} 前缀下读取百度地图 API 的连接配置。
+ * </p>
+ *
+ * @author maozi
+ */
 @Data
 @Configuration
 @ConfigurationProperties("bd.config")
 public class BDProperties {
-	
+
+    /** 百度地图 API 地址 */
 	private String url;
-	
+
+    /** 百度地图 API 密钥 */
 	private String ak;
 
 }

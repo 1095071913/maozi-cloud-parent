@@ -13,33 +13,62 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Web MVC 配置
+ * <p>
+ * 注册应用链路上下文拦截器和自定义消息转换器。
+ * 配置 {@link ApplicationLinkContextFilter} 拦截所有请求路径，
+ * 并添加 {@link ReadOnlyMultipartFormDataEndpointConverter} 支持 multipart/form-data 请求体读取。
+ * </p>
+ *
+ * @author maozi
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	@Resource
-	private ObjectMapper objectMapper;
+    /** Jackson ObjectMapper 实例 */
+    @Resource
+    private ObjectMapper objectMapper;
 
-	@Resource
-	private ApplicationLinkContextFilter applicationLinkContextFilter;
+    /** 应用链路上下文过滤器 */
+    @Resource
+    private ApplicationLinkContextFilter applicationLinkContextFilter;
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(applicationLinkContextFilter).addPathPatterns("/**").order(Integer.MIN_VALUE);
-	}
+    /**
+     * 注册拦截器
+     * <p>
+     * 添加应用链路上下文过滤器，拦截所有路径，优先级设为最高。
+     * </p>
+     *
+     * @param registry 拦截器注册表
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(applicationLinkContextFilter).addPathPatterns("/**").order(Integer.MIN_VALUE);
+    }
 
-	@Override
-	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    /**
+     * 扩展消息转换器列表
+     * <p>
+     * 添加支持 {@code multipart/form-data} 和 {@code application/octet-stream} 的
+     * 只读 Jackson 消息转换器。
+     * </p>
+     *
+     * @param converters 消息转换器列表
+     */
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 
-		ReadOnlyMultipartFormDataEndpointConverter converter = new ReadOnlyMultipartFormDataEndpointConverter(objectMapper);
+        ReadOnlyMultipartFormDataEndpointConverter converter = new ReadOnlyMultipartFormDataEndpointConverter(objectMapper);
 
         List<MediaType> supportedMediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
 
-		supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
+        supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
 
-		converter.setSupportedMediaTypes(supportedMediaTypes);
+        converter.setSupportedMediaTypes(supportedMediaTypes);
 
-		converters.add(converter);
+        converters.add(converter);
 
-	}
+    }
 
 }

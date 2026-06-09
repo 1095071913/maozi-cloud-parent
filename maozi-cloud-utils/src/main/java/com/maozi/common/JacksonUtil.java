@@ -28,9 +28,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+/**
+ * Jackson JSON 工具类
+ * <p>
+ * 封装 Jackson {@link ObjectMapper} 的常用操作，包括 JSON 序列化/反序列化、
+ * 对象与 Map 的互转等。全局配置了 Long 转字符串（防止前端精度丢失）、
+ * 空字符串转 null、Java 8 日期时间支持等特性。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 public class JacksonUtil {
 
+	/** 全局 ObjectMapper 实例 */
 	@Getter
     private static final ObjectMapper objectMapper;
 
@@ -38,10 +49,25 @@ public class JacksonUtil {
 		objectMapper = initObjectMapperConfig();
 	}
 
+	/**
+	 * 使用默认 ObjectMapper 初始化配置
+	 *
+	 * @return 配置好的 ObjectMapper
+	 */
 	public static ObjectMapper initObjectMapperConfig(){
 		return initObjectMapperConfig(new ObjectMapper());
 	}
 
+	/**
+	 * 初始化 ObjectMapper 配置
+	 * <p>
+	 * 配置包括：非空序列化、东八区时区、日期格式、Long 转字符串、
+	 * 空字符串转 null、Java 8 日期时间支持等。
+	 * </p>
+	 *
+	 * @param objectMapper 待配置的 ObjectMapper 实例
+	 * @return 配置好的 ObjectMapper，传入为空时返回 null
+	 */
 	public static ObjectMapper initObjectMapperConfig(ObjectMapper objectMapper){
 
 		if(ObjectUtil.isNullEmpty(objectMapper)){
@@ -87,6 +113,12 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将对象序列化为 JSON 字符串
+	 *
+	 * @param data Java 对象
+	 * @return JSON 字符串，异常时返回 null
+	 */
     public static String objectToJson(Object data){
 
 		try {return objectMapper.writeValueAsString(data);} catch (JsonProcessingException e) {
@@ -95,7 +127,15 @@ public class JacksonUtil {
 		}
 
 	}
-	
+
+	/**
+	 * 将 JSON 字符串反序列化为 Java 对象
+	 *
+	 * @param jsonString JSON 字符串
+	 * @param type 目标类型
+	 * @param <T> 目标类型泛型
+	 * @return Java 对象，异常时返回 null
+	 */
 	public static <T> T jsonToObject(String jsonString, Class<T> type){
 
 		try {return objectMapper.readValue(jsonString, type);} catch (JsonProcessingException e) {
@@ -105,6 +145,13 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 JSON 字符串反序列化为 List
+	 *
+	 * @param json JSON 字符串
+	 * @param <T> 列表元素类型
+	 * @return List 对象，异常时返回 null
+	 */
 	public static <T> List<T> jsonToList(String json) {
 
 		TypeReference<List<T>> typeReference = new TypeReference<>() {};
@@ -116,6 +163,13 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 JSON 字符串反序列化为 Map
+	 *
+	 * @param json JSON 字符串
+	 * @param <T> Map 值类型
+	 * @return Map 对象，异常时返回 null
+	 */
 	public static <T> Map<String, T> jsonToMap(String json) {
 
 		TypeReference<Map<String, T>> typeReference = new TypeReference<>() {};
@@ -127,6 +181,13 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 Java 对象转换为 Map
+	 *
+	 * @param data Java 对象
+	 * @param <T> Map 值类型
+	 * @return Map 对象，异常时返回 null
+	 */
 	public static <T> Map<String, T> objectToMap(Object data) {
 
 		TypeReference<Map<String, T>> typeReference = new TypeReference<>() {};
@@ -138,6 +199,14 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 Map 转换为 Java 对象
+	 *
+	 * @param data Map 数据
+	 * @param type 目标类型
+	 * @param <T> 目标类型泛型
+	 * @return Java 对象，异常时返回 null
+	 */
 	public static <T> T mapToObject(Map<String, ?> data, Class<T> type) {
 
 		try {return objectMapper.convertValue(data,type);} catch (Exception e) {
@@ -147,6 +216,14 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 Map 转换为 Java 对象（支持泛型类型）
+	 *
+	 * @param data Map 数据
+	 * @param type 目标类型（含泛型信息）
+	 * @param <T> 目标类型泛型
+	 * @return Java 对象，异常时返回 null
+	 */
 	public static <T> T mapToObject(Map<String, ?> data, Type type) {
 
 		JavaType constructType = TypeFactory.defaultInstance().constructType(type);
@@ -158,6 +235,13 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将 Map 列表转换为对象列表
+	 *
+	 * @param data Map 列表
+	 * @param <T> 目标类型泛型
+	 * @return 对象列表，异常时返回 null
+	 */
 	public static <T> List<T> mapListToListObject(List<Map<String,Object>> data) {
 
 		TypeReference<List<T>> typeReference = new TypeReference<>() {};
@@ -169,6 +253,12 @@ public class JacksonUtil {
 
 	}
 
+	/**
+	 * 将对象列表转换为 Map 列表
+	 *
+	 * @param data 对象列表
+	 * @return Map 列表，异常时返回 null
+	 */
 	public static <T> List<Map<String,Object>> listObjectToMapList(List<?> data) {
 
 		TypeReference<List<Map<String,Object>>> typeReference = new TypeReference<>() {};
@@ -179,5 +269,5 @@ public class JacksonUtil {
 		}
 
 	}
-	
+
 }

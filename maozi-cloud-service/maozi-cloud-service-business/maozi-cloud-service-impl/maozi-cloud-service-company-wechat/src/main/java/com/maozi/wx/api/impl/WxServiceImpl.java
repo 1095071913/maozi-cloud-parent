@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.wx.api.impl;
@@ -36,46 +36,69 @@ import org.w3c.dom.NodeList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * 企业微信服务实现
+ * <p>
+ * 封装企业微信 API 的 HTTP 调用逻辑，包括 Access Token 获取、
+ * REST API 调用和 XML 数据解析。自动处理错误响应。
+ * </p>
+ *
+ * @author maozi
+ */
 public class WxServiceImpl implements WxService{
-	
+
+    /** REST 客户端 */
 	@Resource
 	protected RestTemplate restClient;
-	
+
+    /** 企业微信配置属性 */
 	@Resource
 	protected WxProperties wxProperties;
-	
+
+    /**
+     * 调用企业微信 REST API
+     *
+     * @param url 请求 URL
+     * @param body 请求参数
+     * @param method HTTP 方法
+     * @return API 响应结果
+     */
 	@Override
 	public JSONObject vxRest(String url,Map<String, Object> body,HttpMethod method) {
-		
+
 		ResponseEntity<JSONObject> vxResult = null;
-		
+
 		if(HttpMethod.GET.equals(method)) {
-			
+
 			vxResult = restClient.getForEntity(url, JSONObject.class,body);
-			
+
 		}else {
-			
+
 			HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<Map<String, Object>>(body, new HttpHeaders());
 			vxResult = restClient.postForEntity(url,requestEntity,JSONObject.class);
-			
+
 		}
-		
+
 		if(ObjectUtil.isNullEmpty(vxResult)) {
 			throw new BusinessResultException(new ErrorCode(500,"企业微信服务不可用"));
 		}
-		
+
 		if(ObjectUtil.isNullEmpty(vxResult) || vxResult.getStatusCodeValue() != 200 || vxResult.getBody().getInteger("errcode")!=0) {
 			throw new BusinessResultException(new ErrorCode(vxResult.getBody().getInteger("errcode"),vxResult.getBody().getString("errmsg")));
 		}
-		
+
 		return vxResult.getBody();
-		
+
 	}
-	
+
+    /**
+     * 获取企业微信 Access Token
+     *
+     * @return Access Token 字符串
+     */
 	@Override
 	public String getVxAccessToken() {
-		
+
 		Map<String, Object> getTokenBody = new HashMap<>(){
 			{
 				put("corpid", wxProperties.getCorpid());
@@ -83,19 +106,26 @@ public class WxServiceImpl implements WxService{
 			}
 		};
 		JSONObject vxGetTokenResultData = vxRest("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}",getTokenBody,HttpMethod.GET);
-		
+
 		return vxGetTokenResultData.getString("access_token");
 	}
 
+    /**
+     * 从 XML 文档中提取指定标签的值
+     *
+     * @param document XML 文档
+     * @param tag 标签名
+     * @return 标签值
+     */
 	@Override
 	public String getDocumentData(Document document,String tag) {
-		
-		Element root = document.getDocumentElement();   
-		
+
+		Element root = document.getDocumentElement();
+
 		NodeList nodelist1 = root.getElementsByTagName(tag);
-		
-		return nodelist1.item(0).getTextContent(); 
-		
+
+		return nodelist1.item(0).getTextContent();
+
 	}
-	
+
 }

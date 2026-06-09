@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.db.config;
@@ -24,22 +24,43 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 
+/**
+ * MyBatis-Plus 字段自动填充处理器
+ * <p>
+ * 在执行插入操作时自动填充状态（默认启用）、逻辑删除（默认未删除）和创建时间字段。
+ * </p>
+ *
+ * @author maozi
+ */
 @Configuration
 public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers.MetaObjectHandler {
 
-	private final static String STATUS = "status";
+    /** 状态字段名 */
+    private final static String STATUS = "status";
 
-	private final static String DELETED = "deleted";
+    /** 逻辑删除字段名 */
+    private final static String DELETED = "deleted";
 
-	private final static String CREATE_TIME = "createTime";
+    /** 创建时间字段名 */
+    private final static String CREATE_TIME = "createTime";
 
-	@Override
-	public void insertFill(MetaObject metaObject) {
-		this.strictInsertFill(metaObject, STATUS, Status.class, Status.ENABLE);
-		this.strictInsertFill(metaObject, DELETED, Deleted.class, Deleted.NONE);
-		this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
-	}
+    /**
+     * 插入时自动填充字段
+     *
+     * @param metaObject 元对象
+     */
+    @Override
+    public void insertFill(MetaObject metaObject) {
+        this.strictInsertFill(metaObject, STATUS, Status.class, Status.ENABLE);
+        this.strictInsertFill(metaObject, DELETED, Deleted.class, Deleted.NONE);
+        this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
+    }
 
-	@Override
-	public void updateFill(MetaObject metaObject) {}
+    /**
+     * 更新时自动填充字段（暂无实现）
+     *
+     * @param metaObject 元对象
+     */
+    @Override
+    public void updateFill(MetaObject metaObject) {}
 }

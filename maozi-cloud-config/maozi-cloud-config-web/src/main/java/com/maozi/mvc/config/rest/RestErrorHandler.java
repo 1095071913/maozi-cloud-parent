@@ -15,6 +15,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Map;
@@ -40,7 +41,7 @@ public class RestErrorHandler {
 	public Object handleValidException(MethodArgumentNotValidException e) {
 		Map<String, String> errorMap = CollectionUtil.newHashMap();
 		e.getFieldErrors().forEach(error ->
-				errorMap.put(error.getField(), error.getDefaultMessage())
+			errorMap.put(error.getField(), error.getDefaultMessage())
 		);
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR, errorMap);
 	}
@@ -62,6 +63,14 @@ public class RestErrorHandler {
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public Object handleAccessDeniedException(HttpMessageNotReadableException e) {
+		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
+	}
+
+	/**
+	 * 入参类型转换失败
+	 */
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public Object handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 

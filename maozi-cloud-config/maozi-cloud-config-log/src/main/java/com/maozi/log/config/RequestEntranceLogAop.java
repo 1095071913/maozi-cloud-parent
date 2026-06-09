@@ -49,40 +49,79 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * 请求入口日志切面
+ * <p>
+ * 拦截 REST 接口、RPC 接口和基础服务实现类的请求入口，记录请求日志、
+ * 响应日志和异常日志。集成 Sentinel 进行流量统计（通过 QPS 和阻塞 QPS），
+ * 并在非生产环境下记录请求参数。异常发生时根据错误类型自动分类记录
+ * （业务错误 warn 级别、系统错误 error 级别）。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
 public class RequestEntranceLogAop {
 
+	/** RPC 接口切点表达式 */
 	private final String RPC_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rpc..*(..)";
 
+	/** REST 接口切点表达式 */
 	private final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
 
+	/** 基础服务实现类切点表达式 */
 	private final String BASE_RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.api.impl.BaseServiceImpl.*(..)";
 
+	/** 组合切点表达式 */
 	private final String POINT = "execution(" + RPC_POINT + ") || execution(" + REST_POINT + ") || execution( " + BASE_RPC_POINT + " )";
 
+	/** REST 入口日志工具 */
 	@Resource
 	private RestEntranceLogUtils restEntranceLogUtils;
 
+	/**
+	 * 环绕通知，记录请求日志、执行业务逻辑并记录响应日志
+	 * <p>
+	 * 执行流程：
+	 * <ol>
+	 *   <li>记录请求开始时间和基本信息</li>
+	 *   <li>执行业务方法</li>
+	 *   <li>捕获异常并转换为统一错误结果</li>
+	 *   <li>在 finally 块中记录 SQL 日志、响应时间和 Sentinel 统计</li>
+	 * </ol>
+	 * </p>
+	 *
+	 * @param proceedingJoinPoint AOP 连接点
+	 * @return 业务方法执行结果
+	 */
     @Around(POINT)
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint){
 
+    	/** 请求开始时间戳 */
     	long startTime = System.currentTimeMillis();
 
+    	/** 当前 HTTP 请求 */
     	HttpServletRequest request = WebUtil.getRequest();
 
+    	/** Dubbo RPC 上下文 */
     	RpcContext rpcContext = RpcContext.getServiceContext();
 
+    	/** RPC 服务地址 */
     	String rpcUrl = rpcContext.getLocalHost();
 
+    	/** 方法参数字符串 */
     	String param = Arrays.toString(proceedingJoinPoint.getArgs());
 
+    	/** Sentinel 当前节点 */
     	Node curNode = ContextUtil.getContext().getCurNode();
 
+    	/** 日志信息集合 */
     	Map<String, String> logs = restEntranceLogUtils.requestLog(proceedingJoinPoint, request, rpcUrl);
 
+    	// 非生产环境记录请求参数
 		if(EnvironmentUtil.notEnvironment(EnvironmentType.PROD)){
 			logs.put(LogTag.PARAM, param);
 		}
@@ -112,9 +151,11 @@ public class RequestEntranceLogAop {
 
         } finally {
 
+        	// 记录 SQL 执行日志
 			StringBuilder sqlLog = LogUtil.sqlLog.get();
 			if(ObjectUtil.isNotNullEmpty(sqlLog)) {logs.put(LogTag.SQL, sqlLog.toString());}
 
+			// 记录响应时间
 			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
         	if(ObjectUtil.isNotNullEmpty(resultData)) {
@@ -123,10 +164,12 @@ public class RequestEntranceLogAop {
 
 					if(!result.isSuccess()) {
 
+						// 统计 Sentinel 阻塞 QPS
 						curNode.increaseBlockQps(1);
 
 						ErrorResult<?> errorResult = result.getErrorResult();
 
+						// 业务错误使用 warn 级别，系统错误使用 error 级别
 						if(errorResult.autoIdentifyHttpCode().isBusinessError()) {log.warn(LogUtil.convertLog(logs));}
 
 						else {LogUtil.error(log,logs);}
@@ -139,12 +182,14 @@ public class RequestEntranceLogAop {
 
         	}
 
+			// 统计 Sentinel 通过 QPS
 			curNode.addPassRequest(1);
 
 			LogUtil.info(log,logs);
 
 		}
 
+		// 非 HTTP 请求时（RPC 调用）清理上下文
 		if(ObjectUtil.isNullEmpty(request)) {ApplicationLinkContext.clearContext();}
 
         return resultData;

@@ -20,14 +20,31 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * 定时任务入口日志切面
+ * <p>
+ * 拦截标注了 {@code @XxlJob} 注解的定时任务方法，记录任务执行日志，
+ * 包括任务参数、执行时间、SQL 日志和异常信息。自动设置版本号到链路上下文，
+ * 执行完成后清理上下文。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
 public class JobEntranceLogAop {
 
+    /** XxlJob 注解切点表达式 */
     private final String POINT = "@annotation(com.xxl.job.core.handler.annotation.XxlJob)";
 
+    /**
+     * 环绕通知，记录定时任务执行日志
+     *
+     * @param proceedingJoinPoint AOP 连接点
+     * @throws Throwable 任务执行异常
+     */
     @Around(POINT)
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 

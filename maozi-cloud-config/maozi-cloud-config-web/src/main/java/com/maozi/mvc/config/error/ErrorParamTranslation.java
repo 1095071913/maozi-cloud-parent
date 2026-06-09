@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.mvc.config.error;
@@ -29,12 +29,27 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+/**
+ * 错误参数翻译配置
+ * <p>
+ * 从 Nacos 配置中心加载参数校验错误信息的翻译映射表（saas-param-error.json），
+ * 并监听配置变更实时更新。用于将参数校验错误码转换为用户友好的中文提示信息。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @Configuration
 public class ErrorParamTranslation {
-	
+
+	/** 错误参数翻译映射表 */
 	public static Map<String, String> errorParams;
-	
+
+	/**
+	 * 构造方法，从 Nacos 加载配置并注册变更监听器
+	 *
+	 * @throws Exception Nacos 连接或配置加载异常
+	 */
 	public ErrorParamTranslation() throws Exception {
 
 		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentContext.CONFIG_ADDR);
@@ -56,9 +71,14 @@ public class ErrorParamTranslation {
 		});
 
 	}
-	
+
+	/**
+	 * 解析 JSON 配置并更新错误参数映射表
+	 *
+	 * @param json 错误参数翻译配置的 JSON 字符串
+	 */
 	public void errorParamTranslation(String json) {
-		
+
 		try {errorParams = JacksonUtil.jsonToMap(json);}catch (Exception e) {
 			LogUtil.error(log,e);
 		}

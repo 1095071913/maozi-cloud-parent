@@ -13,18 +13,39 @@ import lombok.Getter;
 
 import java.util.function.Supplier;
 
+/**
+ * 锁类型枚举
+ * <p>
+ * 定义支持的分布式锁类型，包括可重入锁、公平锁、读锁和写锁。
+ * 每种锁类型对应一个具体的锁实现类，通过枚举方法提供统一的加锁和解锁操作。
+ * 支持编程式加锁（Supplier 回调）和声明式加锁（AOP 注解）两种使用方式。
+ * </p>
+ *
+ * @author maozi
+ */
 public enum LockType implements BaseEnum {
 
+    /** 可重入锁：允许同一线程多次获取同一把锁 */
     REENTRANT(0, "可重入锁", ReentrantLock.class),
 
+    /** 公平锁：按请求顺序依次获取锁，避免线程饥饿 */
     FAIR(1, "公平锁", FairLock.class),
 
+    /** 读锁：允许多线程并发读取，阻塞写操作 */
     READ(2, "读锁", ReadLock.class),
 
+    /** 写锁：独占锁，阻塞所有读写操作 */
     WRITE(3, "写锁", WriteLock.class),
 
     ;
 
+    /**
+     * 构造方法
+     *
+     * @param value 枚举值
+     * @param desc 枚举描述
+     * @param lockClass 锁实现类
+     */
     LockType(Integer value,String desc, Class< ? extends Lock> lockClass) {
 
         this.value = value;
@@ -35,9 +56,11 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /** 枚举值 */
     @Getter
     private final Integer value;
 
+    /** 枚举描述 */
     @Getter
     private final String desc;
 
@@ -46,12 +69,27 @@ public enum LockType implements BaseEnum {
         return value + "." + desc;
     }
 
+    /** 锁实现类 */
     private final Class< ? extends Lock > lockClass;
 
+    /**
+     * 从 Spring 容器中获取锁实现类实例
+     *
+     * @return 锁实现类实例
+     */
     public Lock getLock(){
         return SpringUtil.getBean(lockClass);
     }
 
+    /**
+     * 编程式加锁并执行回调（默认超时策略：持续获取）
+     *
+     * @param key 锁键名
+     * @param supplier 业务逻辑回调
+     * @param <T> 返回值类型
+     * @return 业务逻辑执行结果
+     * @throws Exception 锁操作异常
+     */
     public <T> T lock(String key, Supplier<T> supplier) throws Exception {
 
         lock(key,60L,60L,LockTimeoutStrategy.KEEP_ACQUIRE);
@@ -64,6 +102,16 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 编程式加锁并执行回调（自定义加锁超时策略）
+     *
+     * @param key 锁键名
+     * @param strategy 加锁超时策略
+     * @param supplier 业务逻辑回调
+     * @param <T> 返回值类型
+     * @return 业务逻辑执行结果
+     * @throws Exception 锁操作异常
+     */
     public <T> T lock(String key, LockTimeoutStrategy strategy, Supplier<T> supplier) throws Exception {
 
         lock(key,60L,60L,strategy);
@@ -76,6 +124,17 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 编程式加锁并执行回调（自定义加锁和解锁超时策略）
+     *
+     * @param key 锁键名
+     * @param lockTimeoutStrategy 加锁超时策略
+     * @param unLockTimeoutStrategy 解锁超时策略
+     * @param supplier 业务逻辑回调
+     * @param <T> 返回值类型
+     * @return 业务逻辑执行结果
+     * @throws Exception 锁操作异常
+     */
     public <T> T lock(String key, LockTimeoutStrategy lockTimeoutStrategy,UnLockTimeoutStrategy unLockTimeoutStrategy, Supplier<T> supplier) throws Exception {
 
         lock(key,60L,60L,lockTimeoutStrategy);
@@ -88,6 +147,17 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 编程式加锁并执行回调（自定义等待时间和持有时间）
+     *
+     * @param key 锁键名
+     * @param waitTime 等待获取锁的最大时间（秒）
+     * @param leaseTime 锁的持有时间（秒）
+     * @param supplier 业务逻辑回调
+     * @param <T> 返回值类型
+     * @return 业务逻辑执行结果
+     * @throws Exception 锁操作异常
+     */
     public <T> T lock(String key, Long waitTime,Long leaseTime, Supplier<T> supplier) throws Exception {
 
         lock(key,waitTime,leaseTime,LockTimeoutStrategy.KEEP_ACQUIRE);
@@ -100,14 +170,40 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 获取锁（使用默认超时参数，持续获取策略）
+     *
+     * @param key 锁键名
+     * @throws Exception 锁操作异常
+     */
     public void lock(String key) throws Exception {
         lock(key,60L,60L,LockTimeoutStrategy.KEEP_ACQUIRE);
     }
 
+    /**
+     * 获取锁（自定义加锁超时策略）
+     *
+     * @param key 锁键名
+     * @param strategy 加锁超时策略
+     * @throws Exception 锁操作异常
+     */
     public void lock(String key, LockTimeoutStrategy strategy) throws Exception {
         lock(key,60L,60L,strategy);
     }
 
+    /**
+     * 获取锁的核心方法
+     * <p>
+     * 通过 Spring 容器获取对应的锁实现类，在键名前添加服务名前缀以保证全局唯一性，
+     * 若获取锁失败则交由超时策略处理。
+     * </p>
+     *
+     * @param key 锁键名
+     * @param waitTime 等待获取锁的最大时间（秒）
+     * @param leaseTime 锁的持有时间（秒）
+     * @param strategy 加锁超时策略
+     * @throws Exception 锁操作异常
+     */
     public void lock(String key,Long waitTime,Long leaseTime, LockTimeoutStrategy strategy) throws Exception {
 
         Lock lock = getLock();
@@ -120,10 +216,27 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 释放锁（使用无操作解锁超时策略）
+     *
+     * @param key 锁键名
+     * @throws Exception 解锁操作异常
+     */
     public void unlock(String key) throws Exception {
         unlock(key,UnLockTimeoutStrategy.NO_OPERATION);
     }
 
+    /**
+     * 释放锁的核心方法
+     * <p>
+     * 在键名前添加服务名前缀以匹配加锁时的键名，
+     * 若释放锁失败则交由解锁超时策略处理。
+     * </p>
+     *
+     * @param key 锁键名
+     * @param strategy 解锁超时策略
+     * @throws Exception 解锁操作异常
+     */
     public void unlock(String key, UnLockTimeoutStrategy strategy) throws Exception {
 
         Lock lock = getLock();

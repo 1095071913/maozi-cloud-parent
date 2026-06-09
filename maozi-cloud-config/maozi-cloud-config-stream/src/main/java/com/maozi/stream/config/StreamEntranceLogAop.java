@@ -39,14 +39,33 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Stream 消息入口日志切面
+ * <p>
+ * 拦截 Spring Cloud Stream 消费者方法，在消息处理前后记录日志信息，
+ * 包括消息 ID、Topic、处理函数名、消息参数、SQL 日志和响应时间。
+ * 从消息头中提取版本号设置到链路上下文，支持灰度环境标识。
+ * 异常时记录错误信息和堆栈行号。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @Aspect
 @Component
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
 public class StreamEntranceLogAop {
 
-	private final String POINT = "execution(java.util.function.Consumer com.maozi.*.*.stream..*(..))";
+    /** Stream 消费者方法切点表达式 */
+    private final String POINT = "execution(java.util.function.Consumer com.maozi.*.*.stream..*(..))";
 
+    /**
+     * 环绕通知，包装消息消费者并记录处理日志
+     *
+     * @param proceedingJoinPoint AOP 连接点
+     * @return 包装后的消息消费者
+     * @throws Throwable 切面或业务异常
+     */
     @Around(POINT)
     public Consumer<Message<Object>> doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
@@ -74,6 +93,7 @@ public class StreamEntranceLogAop {
                 logs.put(LogTag.PARAM, messageData.toString());
             }
 
+            // 从消息头中提取版本号设置到链路上下文
             ApplicationLinkContext.VERSIONS.set(ApplicationLinkContext.getVersionDefault(headers.get(ApplicationLinkContext.VERSION)));
 
             try{resultData.accept(message);}catch (Exception e){
@@ -106,7 +126,7 @@ public class StreamEntranceLogAop {
             }
 
         };
-    
+
     }
 
 }

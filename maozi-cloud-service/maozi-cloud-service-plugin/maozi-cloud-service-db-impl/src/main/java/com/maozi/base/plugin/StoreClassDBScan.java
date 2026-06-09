@@ -11,9 +11,25 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * 数据库存储类扫描器
+ * <p>
+ * 应用启动时扫描项目包下所有标注了 {@link TableName} 注解的类，
+ * 将表名到类类型的映射注册到 {@link StoreClass} 中，
+ * 供运行时动态映射使用。
+ * </p>
+ *
+ * @author maozi
+ */
 @Component
 public class StoreClassDBScan implements ApplicationRunner {
 
+    /**
+     * 应用启动时执行数据库实体类扫描
+     *
+     * @param args 应用启动参数
+     * @throws Exception 扫描异常
+     */
     @Override
     public void run(ApplicationArguments args) throws Exception {
 

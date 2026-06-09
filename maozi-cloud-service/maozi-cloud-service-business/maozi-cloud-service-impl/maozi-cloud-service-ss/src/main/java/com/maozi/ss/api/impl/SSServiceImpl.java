@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.ss.api.impl;
@@ -37,100 +37,132 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * 闪送服务实现
+ * <p>
+ * 封装闪送开放平台 API 的 HTTP 调用逻辑，自动计算请求签名，
+ * 支持 Token 刷新和授权码换取令牌。使用表单方式提交请求。
+ * </p>
+ *
+ * @author maozi
+ */
 public class SSServiceImpl implements SSService{
-	
+
+    /** REST 客户端 */
 	@Resource
 	private RestTemplate restClient;
-	
+
+    /** 闪送配置属性 */
 	@Resource
 	private SSProperties ssProperties;
-	
+
+    /**
+     * 调用闪送 REST API（带 Token 刷新）
+     *
+     * @param uri 请求路径
+     * @param privateParam 私有参数
+     * @param refreshToken 刷新令牌
+     * @return API 响应结果
+     */
 	@Override
 	public JSONObject ssRefreshRest(String uri,Map<String, Object> privateParam,String refreshToken) {
-		
+
 		Map<String,Object> refreshTokenParam = new HashMap<String, Object>(){{
 			put("refreshToken", refreshToken);
 		}};
-		
+
 		JSONObject ssRest = ssRest("/openapi/oauth/refresh_token",refreshTokenParam,null);
-		
+
 		String accessToken = ssRest.getJSONObject("data").getString("access_token");
-		
+
 		return ssRest(uri,privateParam,accessToken);
-		
+
 	}
 
+    /**
+     * 调用闪送 REST API
+     *
+     * @param uri 请求路径
+     * @param privateParam 私有参数
+     * @param accessToken 访问令牌
+     * @return API 响应结果
+     */
 	@Override
 	public JSONObject ssRest(String uri, Map<String, Object> privateParam, String accessToken) {
-		
+
 		String privateParamJson = JacksonUtil.objectToJson(privateParam);
-		
+
 		Long currentTimeMillis = System.currentTimeMillis();
-		
+
 		StringBuffer sb = new StringBuffer(ssProperties.getAppSecret());
-		
+
 		if(ObjectUtil.isNotNullEmpty(accessToken)) {
 			sb.append("accessToken").append(accessToken);
 		}
-        		
+
         sb.append("clientId").append(ssProperties.getClientId())
-          .append("data").append(privateParamJson) 
+          .append("data").append(privateParamJson)
           .append("timestamp").append(currentTimeMillis);
-		
+
         MultiValueMap<String, Object> publicParam = new LinkedMultiValueMap<String, Object>(){{
-        	
+
         	if(ObjectUtil.isNotNullEmpty(accessToken)) {
         		add("accessToken", accessToken);
         	}
 			add("clientId", ssProperties.getClientId());
-			add("data", privateParamJson);  
+			add("data", privateParamJson);
 			add("timestamp", currentTimeMillis);
 			add("sign",SSConfig.bytesToMD5(sb.toString().getBytes()));
-		}}; 
-		     
-		HttpHeaders headers = new HttpHeaders();       
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);        
-		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(publicParam, headers); 
-		 
+		}};
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(publicParam, headers);
+
 		ResponseEntity<JSONObject> ssResult = restClient.postForEntity(ssProperties.getUrl()+uri,request,JSONObject.class);
 
 		if(ObjectUtil.isNullEmpty(ssResult)) {
 			throw new BusinessResultException(new ErrorCode(500,"闪送服务不可用"));
 		}
-		
+
 		if(ssResult.getStatusCodeValue() != 200 || ssResult.getBody().getInteger("status")!=200) {
 			throw new BusinessResultException(new ErrorCode(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")));
 		}
-		
+
 		return ssResult.getBody();
 	}
 
+    /**
+     * 通过授权码获取访问令牌
+     *
+     * @param code 授权码
+     * @return 令牌信息
+     */
 	@Override
 	public JSONObject ssRestGetToken(String code) {
-		
+
 		MultiValueMap<String, Object> publicParam = new LinkedMultiValueMap<String, Object>(){{
-        	
+
 			add("clientId", ssProperties.getClientId());
 			add("code", code);
-        	
-		}}; 
-		     
-		HttpHeaders headers = new HttpHeaders();       
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);        
-		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(publicParam, headers); 
-		 
+
+		}};
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(publicParam, headers);
+
 		ResponseEntity<JSONObject> ssResult = restClient.postForEntity(ssProperties.getUrl()+"/openapi/oauth/token",request,JSONObject.class);
-			
-		
+
+
 		if(ObjectUtil.isNullEmpty(ssResult)) {
 			throw new BusinessResultException(new ErrorCode(500,"闪送服务不可用"));
 		}
-		
+
 		if(ssResult.getStatusCodeValue() != 200 || ssResult.getBody().getInteger("status")!=200) {
 			throw new BusinessResultException(new ErrorCode(ssResult.getBody().getInteger("status"),ssResult.getBody().getString("msg")));
 		}
-		
+
 		return ssResult.getBody().getJSONObject("data");
 	}
 

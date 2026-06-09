@@ -6,8 +6,24 @@ import com.maozi.base.plugin.join.JoinPlugin;
 import com.maozi.common.ObjectUtil;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * 内连接（INNER JOIN）插件
+ * <p>
+ * 实现内连接的 SQL 拼接逻辑，校验关联表名和连接条件不能为空，
+ * 支持表别名设置。
+ * </p>
+ *
+ * @author maozi
+ */
 public class QueryInnerJoinPlugin extends JoinBasePlugin {
 
+    /**
+     * 应用内连接条件
+     *
+     * @param abbreviationModelName 模型简称
+     * @param wrapper MyBatis-Plus-Join Lambda 包装器
+     * @param joinPlugin 关联注解实例
+     */
     @Override
     public void apply(String abbreviationModelName,MPJLambdaWrapper<?> wrapper, JoinPlugin joinPlugin) {
 

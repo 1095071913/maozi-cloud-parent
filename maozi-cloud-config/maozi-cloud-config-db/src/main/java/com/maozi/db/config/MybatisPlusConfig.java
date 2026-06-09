@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.db.config;
@@ -29,52 +29,79 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+/**
+ * MyBatis-Plus 配置类
+ * <p>
+ * 配置 MyBatis-Plus 的拦截器插件，包括多租户拦截器和分页插件。
+ * 多租户通过 client_id 字段实现数据隔离，仅对配置中指定的表启用。
+ * 分页插件适配 MySQL 方言。
+ * </p>
+ *
+ * @author maozi
+ */
 @Configuration
 public class MybatisPlusConfig {
 
-	@Value("${mybatis-plus.configuration.tenantTables.split(','):#{null}}")
-	private List<String> tenantTables;
-	
-	@Bean
+    /** 需要启用多租户的表名列表 */
+    @Value("${mybatis-plus.configuration.tenantTables.split(','):#{null}}")
+    private List<String> tenantTables;
+
+    /**
+     * 创建 MyBatis-Plus 拦截器
+     * <p>
+     * 注册多租户拦截器和分页拦截器。
+     * </p>
+     *
+     * @return MybatisPlusInterceptor 实例
+     */
+    @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
-		
+
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        
+
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
-        	
+
+            /**
+             * 获取租户 ID
+             *
+             * @return 租户 ID 值
+             */
             @Override
             public LongValue getTenantId() {
-            	return new LongValue("");
+                return new LongValue("");
             }
 
+            /**
+             * 判断是否忽略该表的多租户处理
+             *
+             * @param tableName 表名
+             * @return 忽略返回 true
+             */
             @Override
             public boolean ignoreTable(String tableName) {
-            	if (tenantTables == null) {
-            		return true;
-            	}
+                if (tenantTables == null) {
+                    return true;
+                }
                 return !tenantTables.contains(tableName);
             }
-            
+
+            /**
+             * 获取租户 ID 字段名
+             *
+             * @return 字段名 client_id
+             */
             @Override
             public String getTenantIdColumn() {
-            	return "client_id";
+                return "client_id";
             }
-            
+
         }));
-        
-//        if(!BaseCommon.isEnvironment(EnvironmentType.PROD)) {
-//        	interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
-//        }
 
         // 分页
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-//        // 防止全表更新删除
-//        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-//        // 乐观锁
-//        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-        
+
         return interceptor;
-        
+
     }
 
 }

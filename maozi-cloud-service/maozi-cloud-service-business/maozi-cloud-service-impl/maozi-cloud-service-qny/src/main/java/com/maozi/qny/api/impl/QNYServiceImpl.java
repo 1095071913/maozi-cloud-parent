@@ -42,16 +42,32 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.List;
 
-
+/**
+ * 七牛云对象存储服务实现
+ * <p>
+ * 基于七牛云 Java SDK 实现图片和文件的上传、下载功能。
+ * 自动管理上传凭证（Token），支持多种上传方式。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 public class QNYServiceImpl implements QNYService{
 
+    /** 七牛云认证对象 */
 	protected Auth auth;
 
+    /** 七牛云上传管理器 */
 	protected UploadManager uploadManager;
 
+    /** 七牛云配置属性 */
 	protected QNYProperties qnyProperties;
 
+    /**
+     * 构造方法，初始化七牛云客户端
+     *
+     * @param qnyProperties 七牛云配置属性
+     */
 	@Autowired
 	public QNYServiceImpl(QNYProperties qnyProperties) {
 
@@ -61,7 +77,12 @@ public class QNYServiceImpl implements QNYService{
 
 	}
 
-
+    /**
+     * 批量上传图片（MultipartRequest 方式）
+     *
+     * @param files Multipart 请求
+     * @return 上传后的文件路径列表
+     */
 	@Override
 	public List<String> uploadImages(MultipartRequest files){
 		if (!files.getMultiFileMap().isEmpty()){
@@ -79,6 +100,13 @@ public class QNYServiceImpl implements QNYService{
 		return null;
 	}
 
+    /**
+     * 批量上传图片
+     *
+     * @param files 图片文件数组
+     * @return 上传后的文件路径列表
+     * @throws Exception 上传异常
+     */
 	@Override
 	public List<String> uploadImages(MultipartFile [] files) throws Exception{
 
@@ -95,21 +123,39 @@ public class QNYServiceImpl implements QNYService{
 
 	}
 
+    /**
+     * 上传单张图片
+     *
+     * @param file 图片文件
+     * @return 上传后的文件路径
+     * @throws Exception 上传异常
+     */
 	@Override
 	public String uploadImage(MultipartFile file) throws Exception {
 		return uploadImage(file,auth.uploadToken(qnyProperties.getBucket()));
 	}
 
+    /**
+     * 上传文件（字节数组方式）
+     *
+     * @param bytes 文件字节数组
+     * @return 上传后的文件路径
+     * @throws Exception 上传异常
+     */
 	@Override
 	public String uploadImage(byte[] bytes) throws Exception {
 		return uploadImage(bytes,auth.uploadToken(qnyProperties.getBucket()));
 	}
 
+    /**
+     * 根据 URL 下载图片
+     *
+     * @param url 图片 URL
+     * @return 下载后的临时文件
+     */
 	@Override
 	public File download(String url) {
-		// 获取下载签名
 		String downloadUrl = auth.privateDownloadUrl(url, 30000);
-		//下载
 		OkHttpClient client = new OkHttpClient();
 		Request req = new Request.Builder().url(downloadUrl).build();
 		okhttp3.Response resp = null;
@@ -130,6 +176,14 @@ public class QNYServiceImpl implements QNYService{
 		return null;
 	}
 
+    /**
+     * 上传文件（字节数组方式，指定 Token）
+     *
+     * @param bytes 文件字节数组
+     * @param upToken 上传凭证
+     * @return 上传后的文件路径
+     * @throws Exception 上传异常
+     */
 	public String uploadImage(byte[] bytes,String upToken) throws Exception {
 		Response response = uploadManager.put(new ByteArrayInputStream(bytes),null,upToken,null, null);
 
@@ -138,6 +192,14 @@ public class QNYServiceImpl implements QNYService{
 		return qnyProperties.getUrl()+putRet.key;
 	}
 
+    /**
+     * 上传图片（MultipartFile 方式，指定 Token）
+     *
+     * @param file 图片文件
+     * @param upToken 上传凭证
+     * @return 上传后的文件路径
+     * @throws Exception 上传异常
+     */
 	public String uploadImage(MultipartFile file,String upToken) throws Exception {
 
 		byte[] bytes = file.getBytes();

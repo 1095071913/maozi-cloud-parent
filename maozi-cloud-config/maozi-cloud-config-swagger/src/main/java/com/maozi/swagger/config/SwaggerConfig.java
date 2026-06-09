@@ -29,21 +29,42 @@ import org.springframework.web.method.HandlerMethod;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
+/**
+ * Swagger/OpenAPI 文档配置
+ * <p>
+ * 配置 OpenAPI 文档的基本信息、全局 Authorization 请求头和
+ * Long 类型字段转 String 的 Schema 自定义。
+ * 白名单接口自动跳过 Authorization 头注入。
+ * </p>
+ *
+ * @author maozi
+ */
 @Configuration
 public class SwaggerConfig {
 
+    /** 许可证名称 */
     private final static String LICENSE_NAME = "Apache 2.0";
 
+    /** 授权请求头名称 */
     private final static String AUTHORIZATION = "Authorization";
 
+    /** 授权令牌示例值 */
     private final static String AUTHORIZATION_VALUE = "{{oauth_access_token}}";
 
+    /** 项目主页 URL */
     private final static String OFFICIAL_URL = "https://github.com/1095071913";
 
+    /** API 白名单配置 */
     @Resource
     private ApiWhitelistProperties apiWhitelist;
 
+    /**
+     * 创建 OpenAPI 文档配置
+     *
+     * @return OpenAPI 文档实例
+     */
     @Bean
     public OpenAPI openApi() {
         return new OpenAPI().info(
@@ -56,6 +77,15 @@ public class SwaggerConfig {
         );
     }
 
+    /**
+     * 创建全局 Authorization 请求头操作定制器
+     * <p>
+     * 为所有非白名单接口自动添加 Authorization 请求头参数，
+     * 方便在 Swagger UI 中进行需要认证的接口测试。
+     * </p>
+     *
+     * @return 操作定制器
+     */
     @Bean
     public OperationCustomizer globalHeaderOperation() {
 
@@ -84,6 +114,15 @@ public class SwaggerConfig {
 
     }
 
+    /**
+     * 创建 Long 转 String 的 Schema 定制器
+     * <p>
+     * 遍历 OpenAPI Schema 中的所有字段，将 int64 格式的字段类型转为 string，
+     * 避免前端 JavaScript 中 Long 类型精度丢失问题。
+     * </p>
+     *
+     * @return OpenAPI 定制器
+     */
     @Bean
     public OpenApiCustomizer longToStringResult() {
 
@@ -105,8 +144,10 @@ public class SwaggerConfig {
 
                 Map<String, Schema> properties = schema.getProperties();
                 properties.forEach((fieldName, fieldSchema) -> {
-                    if ("integer".equals(fieldSchema.getType()) && "int64".equals(fieldSchema.getFormat())) {
-                        fieldSchema.setType("string");
+                    if ("int64".equals(fieldSchema.getFormat())) {
+                        Set<String> types = CollectionUtil.newHashSet();
+                        types.add("string");
+                        fieldSchema.setTypes(types);
                         fieldSchema.setFormat(null);
                     }
                 });

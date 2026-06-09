@@ -9,17 +9,34 @@ import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+/**
+ * 灰度负载均衡客户端配置
+ * <p>
+ * 继承 Spring Cloud 的 {@link LoadBalancerClientConfiguration}，
+ * 将默认的负载均衡器替换为 {@link GrayRoundRobinLoadBalancer}，
+ * 实现基于版本号的灰度流量路由。
+ * </p>
+ *
+ * @author maozi
+ */
 public class GrayLoadBalancerClientConfiguration extends LoadBalancerClientConfiguration {
 
-	@Bean
-	@Override
-	@ConditionalOnMissingBean
-	public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,LoadBalancerClientFactory loadBalancerClientFactory) {
+    /**
+     * 创建灰度轮询负载均衡器
+     *
+     * @param environment Spring 环境变量
+     * @param loadBalancerClientFactory 负载均衡客户端工厂
+     * @return 灰度轮询负载均衡器实例
+     */
+    @Bean
+    @Override
+    @ConditionalOnMissingBean
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,LoadBalancerClientFactory loadBalancerClientFactory) {
 
-		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 
-		return new GrayRoundRobinLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class));
+        return new GrayRoundRobinLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class));
 
-	}
+    }
 
 }

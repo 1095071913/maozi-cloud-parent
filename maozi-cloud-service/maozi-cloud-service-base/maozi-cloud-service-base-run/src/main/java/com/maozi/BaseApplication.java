@@ -37,6 +37,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 应用启动基类
+ * <p>
+ * 所有微服务应用的启动入口均需继承此类。统一配置 Spring Boot 应用启动参数，
+ * 包括 Nacos 配置中心连接、日志级别、异步任务、缓存、定时任务、
+ * 服务发现和 Feign 客户端等功能的自动开启。
+ * </p>
+ *
+ * @author maozi
+ */
 @Slf4j
 @EnableAsync
 @EnableCaching
@@ -48,64 +58,81 @@ import java.util.Properties;
 @DependsOn({"applicationEnvironmentContext"})
 public class BaseApplication {
 
-	protected static void ApplicationRun(String[] args) {
+    /**
+     * 应用启动入口方法
+     * <p>
+     * 初始化系统属性、启动 Spring Boot 应用，记录启动日志（包括初始化时间、
+     * 服务端口、Nacos 地址和加载的配置文件）。启动失败时记录错误日志并退出。
+     * </p>
+     *
+     * @param args 命令行参数
+     */
+    protected static void ApplicationRun(String[] args) {
 
-		initProperties();
+        initProperties();
 
-		long begin = System.currentTimeMillis();
+        long begin = System.currentTimeMillis();
 
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(BaseApplication.class);
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(BaseApplication.class);
 
-		Map<String, String> logs = new LinkedHashMap<>();
+        Map<String, String> logs = new LinkedHashMap<>();
 
-		try {
+        try {
 
-			builder.bannerMode(Mode.OFF).run(args);
-			logs.put(LogTag.INIT_TIME, (System.currentTimeMillis() - begin) + " ms");
+            builder.bannerMode(Mode.OFF).run(args);
+            logs.put(LogTag.INIT_TIME, (System.currentTimeMillis() - begin) + " ms");
 
-			logs.put(LogTag.SERVICE_PORT, ApplicationEnvironmentContext.SERVICE_PORT);
-			logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
-			logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
+            logs.put(LogTag.SERVICE_PORT, ApplicationEnvironmentContext.SERVICE_PORT);
+            logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
+            logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
 
-			LogUtil.info(log,logs);
+            LogUtil.info(log,logs);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			LogUtil.error(log,e);
+            LogUtil.error(log,e);
 
-			StackTraceElement stackTraceElement = e.getStackTrace()[0];
+            StackTraceElement stackTraceElement = e.getStackTrace()[0];
 
-			logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
-			logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
-			logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
-			logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
+            logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
+            logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
+            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+            logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
 
-			LogUtil.error(log,logs);
-			System.exit(0);
+            LogUtil.error(log,logs);
+            System.exit(0);
 
-		}
+        }
 
-		ApplicationEnvironmentContext.IS_RUNNING = true;
+        ApplicationEnvironmentContext.IS_RUNNING = true;
 
-	}
+    }
 
-	private static void initProperties() {
+    /**
+     * 初始化系统属性
+     * <p>
+     * 设置 Spring Boot 启动参数，包括：应用名称、Nacos 配置中心地址、
+     * 基础配置文件列表、日志级别和输出路径等。服务级别的额外配置文件
+     * 通过 {@code application-nacos-config-service} 系统属性追加。
+     * </p>
+     */
+    private static void initProperties() {
 
-		Properties properties = System.getProperties();
+        Properties properties = System.getProperties();
 
-		properties.put("spring.main.log-startup-info",false);
-		properties.put("spring.main.allow-circular-references",true);
-		properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
-		properties.put("spring.cloud.nacos.config.file-extension", "yml");
-		properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
-		properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
+        properties.put("spring.main.log-startup-info",false);
+        properties.put("spring.main.allow-circular-references",true);
+        properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
+        properties.put("spring.cloud.nacos.config.file-extension", "yml");
+        properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
+        properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
 
-		properties.put("logging.level.root", "ERROR");
-		properties.put("logging.level.com.maozi", "INFO");
-		properties.put("logging.file.name","log/log.log");
+        properties.put("logging.level.root", "ERROR");
+        properties.put("logging.level.com.maozi", "INFO");
+        properties.put("logging.file.name","log/log.log");
 
-		properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (ObjectUtil.isNotNullEmpty(serviceConfig) ? "," + serviceConfig : ""));
+        properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (ObjectUtil.isNotNullEmpty(serviceConfig) ? "," + serviceConfig : ""));
 
-	}
+    }
 
 }

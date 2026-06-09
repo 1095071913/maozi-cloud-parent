@@ -10,10 +10,20 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author pengjinlong
- * @date 2026/4/24 14:11
+ * @since 2026/4/24 14:11
  */
 @Slf4j
 public class WebUtil {
+
+    /**
+     * 本地IP地址
+     */
+    public final static String LOCAL_IP = "127.0.0.1";
+
+    /**
+     * 本地回环IP地址
+     */
+    public final static String LOCAL_LOOPBACK_IP = "0:0:0:0:0:0:0:1";
 
     /**
      * 获取当前请求
@@ -59,6 +69,7 @@ public class WebUtil {
      * 获取请求真实地址
      */
     public static String getRequestHost(HttpServletRequest request) {
+
         // 优先从反向代理header中获取
         String ip = request.getHeader("x-forwarded-for");
 
@@ -75,6 +86,7 @@ public class WebUtil {
         if (isBlankOrUnknown(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
+
         // 兜底：直接获取远程地址
         if (isBlankOrUnknown(ip)) {
             ip = request.getRemoteAddr();
@@ -87,8 +99,8 @@ public class WebUtil {
         }
 
         // 处理 IPv6 本地回环地址
-        if ("0:0:0:0:0:0:0:1".equals(ip)) {
-            ip = "127.0.0.1";
+        if (LOCAL_LOOPBACK_IP.equals(ip)) {
+            ip = LOCAL_IP;
         }
 
         return ip;

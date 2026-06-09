@@ -25,6 +25,15 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 
+/**
+ * 带名称的基础领域对象抽象类
+ * <p>
+ * 在 {@link AbstractBaseDomain} 基础上扩展名称字段，
+ * 适用于需要名称属性的实体对象。
+ * </p>
+ *
+ * @author maozi
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,6 +42,7 @@ import java.io.Serial;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class AbstractBaseNameDomain extends AbstractBaseDomain {
 
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

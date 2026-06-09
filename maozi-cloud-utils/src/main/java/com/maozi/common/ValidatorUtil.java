@@ -14,6 +14,12 @@ import java.util.Set;
 
 /**
  * 参数校验工具类
+ * <p>
+ * 封装 Jakarta Validation 的校验功能，支持单个对象和集合类型的参数校验。
+ * 集合类型会自动包装为 {@link ValidCollectionParam} 后再进行校验。
+ * </p>
+ *
+ * @author maozi
  */
 public class ValidatorUtil {
 
@@ -38,6 +44,9 @@ public class ValidatorUtil {
 
     /**
      * 统一校验方法：支持单个对象 / 集合自动包装校验
+     *
+     * @param data 待校验的数据，支持单个对象或集合
+     * @throws BusinessResultException 参数为空或校验不通过时抛出
      */
     public static void validate(Object data) {
 

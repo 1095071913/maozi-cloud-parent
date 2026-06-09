@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.oauth.config;
@@ -27,19 +27,36 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 
+/**
+ * 认证入口点处理器
+ * <p>
+ * 当未认证用户尝试访问受保护资源时，返回认证错误的统一响应。
+ * 优先从异常链中提取 {@link BusinessResultException} 携带的错误信息，
+ * 否则返回默认的用户认证错误。
+ * </p>
+ *
+ * @author maozi
+ */
 public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
 
-	@Override
-	public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
+    /**
+     * 处理认证异常，返回认证错误响应
+     *
+     * @param request HTTP 请求
+     * @param response HTTP 响应
+     * @param authException 认证异常
+     */
+    @Override
+    public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-		Throwable causeException = authException.getCause();
-		AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && causeException.getCause() instanceof BusinessResultException businessResultException ?
-				businessResultException.getErrorResult()
-				:
-				ResultUtil.error(SystemErrorCode.USER_AUTH_ERROR).autoIdentifyHttpCode(SystemErrorCode.USER_AUTH_ERROR_DEFAULT_CODE);
+        Throwable causeException = authException.getCause();
+        AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && causeException.getCause() instanceof BusinessResultException businessResultException ?
+                businessResultException.getErrorResult()
+                :
+                ResultUtil.error(SystemErrorCode.USER_AUTH_ERROR).autoIdentifyHttpCode(SystemErrorCode.USER_AUTH_ERROR_DEFAULT_CODE);
 
-		WebUtil.writeResponseBody(response,errorResult);
+        WebUtil.writeResponseBody(response,errorResult);
 
-	}
-	
+    }
+
 }

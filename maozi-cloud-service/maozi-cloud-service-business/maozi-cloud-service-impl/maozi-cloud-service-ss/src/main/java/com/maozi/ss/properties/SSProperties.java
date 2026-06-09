@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.maozi.ss.properties;
@@ -21,17 +21,26 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-
-
+/**
+ * 闪送配置属性
+ * <p>
+ * 从 {@code ss.config} 前缀下读取闪送开放平台的连接配置。
+ * </p>
+ *
+ * @author maozi
+ */
 @Data
 @Configuration
 @ConfigurationProperties("ss.config")
 public class SSProperties {
-	
+
+    /** 客户端 ID */
 	private String clientId;
-	
+
+    /** 应用密钥 */
 	private String appSecret;
-	
+
+    /** API 地址 */
 	private String url;
 
 }

@@ -9,8 +9,26 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcContextAttachment;
 import org.apache.dubbo.rpc.RpcException;
 
+/**
+ * Dubbo 服务端链路上下文设置过滤器
+ * <p>
+ * 在 Dubbo 服务提供者端接收请求时，从 RPC 附件中提取版本号和用户名，
+ * 设置到当前线程的 {@link ApplicationLinkContext} 中。
+ * 请求处理完成后自动清理上下文，防止线程池复用导致的数据泄漏。
+ * </p>
+ *
+ * @author maozi
+ */
 public class ApplicationLinkContextSetFilter implements Filter {
 
+    /**
+     * 拦截 Dubbo 调用，设置链路上下文并执行原始调用
+     *
+     * @param invoker Dubbo 调用器
+     * @param invocation 调用信息
+     * @return 调用结果
+     * @throws RpcException RPC 调用异常
+     */
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
