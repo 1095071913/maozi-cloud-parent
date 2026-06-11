@@ -1585,237 +1585,287 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 		return buildQueryWrapper(param,null);
 	}
 
-    /**
-     * 设置关联数据
-     * <p>
-     * 根据 VO 类中 QueryMapping 注解的配置，通过 RPC 或本地服务调用
-     * 自动填充关联数据。支持以下关联类型：
-     * <ul>
-     *   <li>通过 functionName 自定义方法调用</li>
-     *   <li>List 类型：一对多关联</li>
-     *   <li>DropDownResult 类型：下拉选项关联</li>
-     *   <li>其他类型：一对一关联</li>
-     * </ul>
-     * </p>
-     *
-     * @param data 响应数据对象（支持 PageResult、List 和单个对象）
-     * @param clazz VO 类型 Class 对象
-     */
-	public void setRelationData(Object data,Class<?> clazz){
+	/**
+	 * 设置关联数据
+	 * <p>
+	 * 根据 VO 类中 QueryMapping 注解的配置，通过 RPC 或本地服务调用
+	 * 自动填充关联数据。支持以下关联类型：
+	 * <ul>
+	 *   <li>通过 functionName 自定义方法调用</li>
+	 *   <li>List 类型：一对多关联</li>
+	 *   <li>DropDownResult 类型：下拉选项关联</li>
+	 *   <li>其他类型：一对一关联</li>
+	 * </ul>
+	 * </p>
+	 *
+	 * @param data 响应数据对象（支持 PageResult、List 和单个对象）
+	 * @param clazz VO 类型 Class 对象
+	 */
+	public void setRelationData(Object data, Class<?> clazz) {
 
-		if(data instanceof PageResult<?> pageResult) {
+		if (data instanceof PageResult<?> pageResult) {
 			data = pageResult.getData();
 		}
 
-		if(data instanceof List<?> responses) {
+		if (data instanceof List<?> responses) {
+			setBatchRelationData(responses, clazz);
+		} else {
+			setSingleRelationData(data, clazz);
+		}
 
-			if(ObjectUtil.isNotNullEmpty(responses)) {
+	}
 
-				Field [] fields = ReflectUtil.getFields(clazz);
-				for(Field field : fields) {
+	/**
+	 * 解析并校验服务 Bean
+	 *
+	 * @param annotation QueryMapping 注解
+	 * @return 服务 Bean 对象
+	 */
+	private Object resolveServiceBean(QueryMapping annotation) {
+		Object service = SpringUtil.getBean(annotation.serviceName());
+		ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(service), getResourceName() + "服务不存在");
+		return service;
+	}
 
-					QueryMapping annotation = field.getAnnotation(QueryMapping.class);
-					if(ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
-						continue;
-					}
+	/**
+	 * 批量设置关联数据
+	 * <p>
+	 * 遍历 VO 类中所有带 QueryMapping 注解的字段，批量收集 ID 后统一调用服务获取关联数据。
+	 * </p>
+	 *
+	 * @param responses 响应数据列表
+	 * @param clazz VO 类型 Class 对象
+	 */
+	private void setBatchRelationData(List<?> responses, Class<?> clazz) {
 
-					String functionName = annotation.functionName();
-					String relationFieldName = annotation.relationField();
-					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName),getResourceName() + "关系字段未设置");
+		if (ObjectUtil.isNullEmpty(responses)) {
+			return;
+		}
 
-					if(annotation.isService()) {
+		Field[] fields = ReflectUtil.getFields(clazz);
+		for (Field field : fields) {
 
-						Object service = SpringUtil.getBean(annotation.serviceName());
-						ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(service),getResourceName() + "服务不存在");
-
-						Class<?> type = field.getType();
-						if(StringUtils.isNotBlank(functionName)) {
-
-							Set<Object> param = CollectionUtil.newHashSet();
-							for(Object response : responses) {
-								param.add(ReflectUtil.invokeGet(response,relationFieldName));
-							}
-
-							if(ObjectUtil.isNotNullEmpty(param)) {
-
-								Map<Long,Object> result = ReflectUtil.invoke(service,functionName,param,relationFieldName);
-								for(Object response : responses) {
-
-									Long id = ReflectUtil.invokeGet(response,relationFieldName);
-
-									Object object = result.get(id);
-									if(ObjectUtil.isNotNullEmpty(object)) {
-										ReflectUtil.invokeSet(response,field.getName(),object);
-									}
-
-								}
-
-							}
-
-						}else if(type.equals(List.class)) {
-
-							Set<Long> relationIds = CollectionUtil.newHashSet();
-							for(Object response : responses) {
-								relationIds.add(ReflectUtil.invokeFunGetId(response));
-							}
-
-							if(ObjectUtil.isNotNullEmpty(relationIds)) {
-
-								AbstractBaseResult<Map<Long,List<?>>> rpcResult = ReflectUtil.invoke(service, ResultFunName.LIST_BY_RELATION_IDS_RESULT, relationIds, relationFieldName,getColumns(field.getClass()));
-
-								Map<Long,List<?>> resultData = rpcResult.getResultDataThrowError();
-								for(Object response : responses) {
-
-									Long id = ReflectUtil.invokeFunGetId(response);
-
-									List<?> list = resultData.get(id);
-									if(ObjectUtil.isNotNullEmpty(list)) {
-										ReflectUtil.invokeSet(response,field.getName(),list);
-									}
-
-								}
-
-							}
-
-						}else if(type.equals(DropDownResult.class)) {
-
-							Set<Long> relationIds = CollectionUtil.newHashSet();
-							for(Object response : responses) {
-								relationIds.add(ReflectUtil.invokeGet(response,relationFieldName));
-							}
-
-							if(ObjectUtil.isNotNullEmpty(relationIds)) {
-
-								AbstractBaseResult<List<DropDownResult>> rpcResult = ReflectUtil.invoke(service, ResultFunName.DROP_DOWN_LIST_RESULT,relationIds);
-
-								List<DropDownResult> resultData = rpcResult.getResultDataThrowError();
-
-								Map<Long, DropDownResult> relationsMap = toMapByIds(resultData,DropDownResult::getId);
-								for(Object response : responses) {
-
-									Long id = ReflectUtil.invokeGet(response,relationFieldName);;
-
-									DropDownResult relation = relationsMap.get(id);
-									if(ObjectUtil.isNotNullEmpty(relation)) {
-										ReflectUtil.invokeSet(response,field.getName(),relation);
-									}
-
-								}
-
-							}
-
-						}else {
-
-							Set<Long> relationIds = CollectionUtil.newHashSet();
-							for(Object response : responses) {
-								ReflectUtil.invokeGet(response,relationFieldName);
-							}
-
-							if(ObjectUtil.isNotNullEmpty(relationIds)) {
-
-								AbstractBaseResult<Map<Long,Object>> rpcResult = ReflectUtil.invoke(service,ResultFunName.LIST_BY_IDS_RESULT,relationIds,getColumns(field.getClass()));
-
-								Map<Long,Object> resultData = rpcResult.getResultDataThrowError();
-								for(Object response : responses) {
-
-									Long id = ReflectUtil.invokeGet(response,relationFieldName);
-
-									Object relation =  resultData.get(id);
-									if(ObjectUtil.isNotNullEmpty(relation)) {
-										ReflectUtil.invokeSet(response,field.getName(),relation);
-									}
-
-								}
-
-							}
-
-						}
-
-					}
-
-				}
-
+			QueryMapping annotation = field.getAnnotation(QueryMapping.class);
+			if (ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
+				continue;
 			}
 
-		}else {
+			String functionName = annotation.functionName();
+			String relationFieldName = annotation.relationField();
+			ObjectUtil.checkConditionThrowError(
+				ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName),
+				getResourceName() + "关系字段未设置"
+			);
 
-			Field [] fields = ReflectUtil.getFields(clazz);
-			for(Field field : fields) {
+			if (annotation.isService()) {
+				Object service = resolveServiceBean(annotation);
+				setBatchRelationField(responses, field, service, functionName, relationFieldName);
+			}
 
-				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
-				if(ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
-					continue;
-				}
+		}
 
-				String functionName = annotation.functionName();
-				String relationFieldName = annotation.relationField();
-				ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName), getResourceName() + "关系字段未设置");
+	}
 
-				if(annotation.isService()) {
+	/**
+	 * 单个对象设置关联数据
+	 * <p>
+	 * 遍历 VO 类中所有带 QueryMapping 注解的字段，逐个调用服务获取关联数据。
+	 * </p>
+	 *
+	 * @param data 响应数据对象
+	 * @param clazz VO 类型 Class 对象
+	 */
+	private void setSingleRelationData(Object data, Class<?> clazz) {
 
-					Object service = SpringUtil.getBean(annotation.serviceName());
-					ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(service), getResourceName() + "服务不存在");
+		Field[] fields = ReflectUtil.getFields(clazz);
+		for (Field field : fields) {
 
-					Class<?> type = field.getType();
-					if(StringUtils.isNotBlank(functionName)) {
+			QueryMapping annotation = field.getAnnotation(QueryMapping.class);
+			if (ObjectUtil.isNullEmpty(annotation) || annotation.ignore()) {
+				continue;
+			}
 
-						Object result = null;
-						if(StringUtils.isNotBlank(relationFieldName)) {
+			String functionName = annotation.functionName();
+			String relationFieldName = annotation.relationField();
+			ObjectUtil.checkConditionThrowError(
+				ObjectUtil.isNotNullEmpty(relationFieldName) || ObjectUtil.isNotNullEmpty(functionName),
+				getResourceName() + "关系字段未设置"
+			);
 
-							var param = ReflectUtil.invokeGet(data, relationFieldName);
+			if (annotation.isService()) {
+				Object service = resolveServiceBean(annotation);
+				setSingleRelationField(data, field, service, functionName, relationFieldName);
+			}
 
-							result = ReflectUtil.invoke(service,functionName,param);
+		}
 
-						}else{
-							result = ReflectUtil.invoke(service,functionName);
-						}
+	}
 
-						if(ObjectUtil.isNotNullEmpty(result)) {
-							ReflectUtil.invokeSet(data, field.getName(),result);
-						}
+	/**
+	 * 批量模式：设置单个字段的关联数据
+	 * <p>
+	 * 根据字段类型进行 4 路分发：functionName 自定义方法、List 一对多、DropDownResult 下拉、其他一对一。
+	 * 批量收集所有响应对象的关联 ID，统一调用服务后将结果分发回各对象。
+	 * </p>
+	 *
+	 * @param responses 响应数据列表
+	 * @param field 当前字段
+	 * @param service 服务 Bean
+	 * @param functionName 自定义方法名
+	 * @param relationFieldName 关联字段名
+	 */
+	private void setBatchRelationField(List<?> responses, Field field, Object service,
+			String functionName, String relationFieldName) {
 
-					}else if(type.equals(List.class)) {
+		Class<?> type = field.getType();
 
-						Long id = ReflectUtil.invokeFunGetId(data);
-						AbstractBaseResult<List<?>> rpcResult = ReflectUtil.invoke(service, ResultFunName.LIST_BY_RELATION_ID_RESULT,id,relationFieldName,getColumns(field.getClass()));
+		if (StringUtils.isNotBlank(functionName)) {
 
-						List<?> resultData = rpcResult.getResultDataThrowError();
-						if(ObjectUtil.isNotNullEmpty(resultData)) {
-							ReflectUtil.invokeSet(data, field.getName(),resultData);
-						}
+			Set<Object> param = CollectionUtil.newHashSet();
+			for (Object response : responses) {
+				param.add(ReflectUtil.invokeGet(response, relationFieldName));
+			}
 
-					}else if(type.equals(DropDownResult.class)) {
-
-						Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
-						if(ObjectUtil.isNotNullEmpty(relationId)) {
-
-							AbstractBaseResult<DropDownResult> rpcResult = ReflectUtil.invoke(service, ResultFunName.DROP_DOWN_RESULT,relationId);
-
-							DropDownResult resultData = rpcResult.getResultDataThrowError();
-							if(ObjectUtil.isNotNullEmpty(resultData)) {
-								ReflectUtil.invokeSet(data, field.getName(),resultData);
-							}
-
-						}
-
-					}else {
-
-						Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
-						if(ObjectUtil.isNotNullEmpty(relationId)) {
-
-							AbstractBaseResult<Object> rpcResult = ReflectUtil.invoke(service,ResultFunName.GET_BY_ID_RESULT, relationId,getColumns(field.getClass()));
-
-							Object resultData = rpcResult.getResultDataThrowError();
-							if(ObjectUtil.isNotNullEmpty(resultData)) {
-								ReflectUtil.invokeSet(data, field.getName(),resultData);
-							}
-
-						}
-
+			if (ObjectUtil.isNotNullEmpty(param)) {
+				Map<Long, Object> result = ReflectUtil.invoke(service, functionName, param, relationFieldName);
+				for (Object response : responses) {
+					Long id = ReflectUtil.invokeGet(response, relationFieldName);
+					Object object = result.get(id);
+					if (ObjectUtil.isNotNullEmpty(object)) {
+						ReflectUtil.invokeSet(response, field.getName(), object);
 					}
-
 				}
+			}
 
+		} else if (type.equals(List.class)) {
+
+			Set<Long> relationIds = CollectionUtil.newHashSet();
+			for (Object response : responses) {
+				relationIds.add(ReflectUtil.invokeFunGetId(response));
+			}
+
+			if (ObjectUtil.isNotNullEmpty(relationIds)) {
+				AbstractBaseResult<Map<Long, List<?>>> rpcResult = ReflectUtil.invoke(
+					service, ResultFunName.LIST_BY_RELATION_IDS_RESULT, relationIds, relationFieldName, getColumns(field.getClass()));
+				Map<Long, List<?>> resultData = rpcResult.getResultDataThrowError();
+				for (Object response : responses) {
+					Long id = ReflectUtil.invokeFunGetId(response);
+					List<?> list = resultData.get(id);
+					if (ObjectUtil.isNotNullEmpty(list)) {
+						ReflectUtil.invokeSet(response, field.getName(), list);
+					}
+				}
+			}
+
+		} else if (type.equals(DropDownResult.class)) {
+
+			Set<Long> relationIds = CollectionUtil.newHashSet();
+			for (Object response : responses) {
+				relationIds.add(ReflectUtil.invokeGet(response, relationFieldName));
+			}
+
+			if (ObjectUtil.isNotNullEmpty(relationIds)) {
+				AbstractBaseResult<List<DropDownResult>> rpcResult = ReflectUtil.invoke(
+					service, ResultFunName.DROP_DOWN_LIST_RESULT, relationIds);
+				List<DropDownResult> resultData = rpcResult.getResultDataThrowError();
+				Map<Long, DropDownResult> relationsMap = toMapByIds(resultData, DropDownResult::getId);
+				for (Object response : responses) {
+					Long id = ReflectUtil.invokeGet(response, relationFieldName);
+					DropDownResult relation = relationsMap.get(id);
+					if (ObjectUtil.isNotNullEmpty(relation)) {
+						ReflectUtil.invokeSet(response, field.getName(), relation);
+					}
+				}
+			}
+
+		} else {
+
+			Set<Long> relationIds = CollectionUtil.newHashSet();
+			for (Object response : responses) {
+				relationIds.add(ReflectUtil.invokeGet(response, relationFieldName));
+			}
+
+			if (ObjectUtil.isNotNullEmpty(relationIds)) {
+				AbstractBaseResult<Map<Long, Object>> rpcResult = ReflectUtil.invoke(
+					service, ResultFunName.LIST_BY_IDS_RESULT, relationIds, getColumns(field.getClass()));
+				Map<Long, Object> resultData = rpcResult.getResultDataThrowError();
+				for (Object response : responses) {
+					Long id = ReflectUtil.invokeGet(response, relationFieldName);
+					Object relation = resultData.get(id);
+					if (ObjectUtil.isNotNullEmpty(relation)) {
+						ReflectUtil.invokeSet(response, field.getName(), relation);
+					}
+				}
+			}
+
+		}
+
+	}
+
+	/**
+	 * 单对象模式：设置单个字段的关联数据
+	 * <p>
+	 * 根据字段类型进行 4 路分发：functionName 自定义方法、List 一对多、DropDownResult 下拉、其他一对一。
+	 * 针对单个对象调用服务获取关联数据。
+	 * </p>
+	 *
+	 * @param data 响应数据对象
+	 * @param field 当前字段
+	 * @param service 服务 Bean
+	 * @param functionName 自定义方法名
+	 * @param relationFieldName 关联字段名
+	 */
+	private void setSingleRelationField(Object data, Field field, Object service,
+			String functionName, String relationFieldName) {
+
+		Class<?> type = field.getType();
+
+		if (StringUtils.isNotBlank(functionName)) {
+
+			Object result = null;
+			if (StringUtils.isNotBlank(relationFieldName)) {
+				var param = ReflectUtil.invokeGet(data, relationFieldName);
+				result = ReflectUtil.invoke(service, functionName, param);
+			} else {
+				result = ReflectUtil.invoke(service, functionName);
+			}
+
+			if (ObjectUtil.isNotNullEmpty(result)) {
+				ReflectUtil.invokeSet(data, field.getName(), result);
+			}
+
+		} else if (type.equals(List.class)) {
+
+			Long id = ReflectUtil.invokeFunGetId(data);
+			AbstractBaseResult<List<?>> rpcResult = ReflectUtil.invoke(
+				service, ResultFunName.LIST_BY_RELATION_ID_RESULT, id, relationFieldName, getColumns(field.getClass()));
+			List<?> resultData = rpcResult.getResultDataThrowError();
+			if (ObjectUtil.isNotNullEmpty(resultData)) {
+				ReflectUtil.invokeSet(data, field.getName(), resultData);
+			}
+
+		} else if (type.equals(DropDownResult.class)) {
+
+			Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
+			if (ObjectUtil.isNotNullEmpty(relationId)) {
+				AbstractBaseResult<DropDownResult> rpcResult = ReflectUtil.invoke(
+					service, ResultFunName.DROP_DOWN_RESULT, relationId);
+				DropDownResult resultData = rpcResult.getResultDataThrowError();
+				if (ObjectUtil.isNotNullEmpty(resultData)) {
+					ReflectUtil.invokeSet(data, field.getName(), resultData);
+				}
+			}
+
+		} else {
+
+			Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
+			if (ObjectUtil.isNotNullEmpty(relationId)) {
+				AbstractBaseResult<Object> rpcResult = ReflectUtil.invoke(
+					service, ResultFunName.GET_BY_ID_RESULT, relationId, getColumns(field.getClass()));
+				Object resultData = rpcResult.getResultDataThrowError();
+				if (ObjectUtil.isNotNullEmpty(resultData)) {
+					ReflectUtil.invokeSet(data, field.getName(), resultData);
+				}
 			}
 
 		}
