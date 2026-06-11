@@ -60,6 +60,19 @@ public class CollectionUtil {
     }
 
     /**
+     * 创建 HashMap 初始化第一个元素
+     *
+     * @param <K> 键类型
+     * @param <V> 值类型
+     * @return 空的 HashMap
+     */
+    public static <K,V> Map<K,V> newHashMap(K key, V value) {
+        HashMap<K, V> map = new HashMap<>();
+        map.put(key, value);
+        return map;
+    }
+
+    /**
      * 创建空的 HashSet
      *
      * @param <T> 元素类型

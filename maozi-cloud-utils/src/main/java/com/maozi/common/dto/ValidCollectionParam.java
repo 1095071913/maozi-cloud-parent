@@ -1,5 +1,6 @@
 package com.maozi.common.dto;
 
+import com.maozi.common.ValidatorUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

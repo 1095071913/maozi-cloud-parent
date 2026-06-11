@@ -2,6 +2,7 @@ package com.maozi.oauth.config;
 
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
+import com.maozi.oauth.constants.OAuth2TokenClaimConstants;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,11 +64,8 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id:}") String clientId,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret:}") String clientSecret) {
         this.mode = mode;
-        if (MODE_RPC.equalsIgnoreCase(mode)) {
-            this.httpDelegate = null;
-        } else {
-            this.httpDelegate = new SpringOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
-        }
+        this.httpDelegate = MODE_RPC.equalsIgnoreCase(mode) ? null : new SpringOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
+
     }
 
     /**
@@ -109,21 +107,21 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     private OAuth2AuthenticatedPrincipal dubboIntrospect(String token) {
         Map<String, Object> claims = rpcOauthTokenService.rpcIntrospect(token).getResultDataThrowError();
 
-        Boolean active = (Boolean) claims.get("active");
+        Boolean active = (Boolean) claims.get(OAuth2TokenClaimConstants.ACTIVE);
         if (active == null || !active) {
             throw new BadOpaqueTokenException("Token is not active");
         }
 
         Set<GrantedAuthority> authorities = extractAuthorities(claims);
         return new DefaultOAuth2AuthenticatedPrincipal(
-                (String) claims.getOrDefault("sub", "unknown"), claims, authorities);
+                (String) claims.getOrDefault(OAuth2TokenClaimConstants.SUB, "unknown"), claims, authorities);
     }
 
     /**
      * 从HTTP内省响应的authorities属性中提取权限，构建带权限的认证主体
      */
     private OAuth2AuthenticatedPrincipal enrichWithAuthorities(OAuth2AuthenticatedPrincipal principal) {
-        Object authoritiesObj = principal.getAttribute("authorities");
+        Object authoritiesObj = principal.getAttribute(OAuth2TokenClaimConstants.AUTHORITIES);
         if (!(authoritiesObj instanceof List<?> list)) {
             return principal;
         }
@@ -139,7 +137,7 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
      * 从Dubbo RPC返回的claims中提取权限
      */
     private Set<GrantedAuthority> extractAuthorities(Map<String, Object> claims) {
-        Object authoritiesObj = claims.get("authorities");
+        Object authoritiesObj = claims.get(OAuth2TokenClaimConstants.AUTHORITIES);
         if (!(authoritiesObj instanceof List<?> list)) {
             return Collections.emptySet();
         }

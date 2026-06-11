@@ -27,4 +27,17 @@ public interface RpcOauthTokenService {
      */
     AbstractBaseResult<Map<String, Object>> rpcIntrospect(String token);
 
+    /**
+     * RPC方式注销用户令牌
+     * <p>
+     * 根据客户端ID和用户主体名称，移除该用户在该客户端下的所有OAuth2授权记录，
+     * 实现用户注销功能。删除用户或强制下线时调用此方法。
+     * </p>
+     *
+     * @param registeredClientId 已注册客户端ID（对应UserDo.clientId的字符串形式）
+     * @param principalName      用户主体名称（用户名）
+     * @return 操作结果
+     */
+    AbstractBaseResult<Void> rpcDestroyByPrincipal(String registeredClientId, String principalName);
+
 }
