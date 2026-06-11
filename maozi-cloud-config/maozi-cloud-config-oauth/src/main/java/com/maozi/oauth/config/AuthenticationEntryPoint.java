@@ -25,6 +25,7 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 
 /**
@@ -37,6 +38,7 @@ import org.springframework.security.core.AuthenticationException;
  *
  * @author maozi
  */
+@Slf4j
 public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
 
     /**
@@ -50,7 +52,8 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
     public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
         Throwable causeException = authException.getCause();
-        AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && causeException.getCause() instanceof BusinessResultException businessResultException ?
+
+        AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException.getCause()) && causeException.getCause() instanceof BusinessResultException businessResultException ?
                 businessResultException.getErrorResult()
                 :
                 ResultUtil.error(SystemErrorCode.USER_AUTH_ERROR).autoIdentifyHttpCode(SystemErrorCode.USER_AUTH_ERROR_DEFAULT_CODE);
