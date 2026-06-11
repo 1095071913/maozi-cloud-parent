@@ -96,15 +96,6 @@
 
 
 	</dependencies>
-	
-
-	<modules>
-		<module>maozi-cloud-service-qny</module>
-		<module>maozi-cloud-service-ss</module>
-		<module>maozi-cloud-service-bd</module>
-		<module>maozi-cloud-service-company-wechat</module>
-		
-	</modules>
 
 
 </project>
