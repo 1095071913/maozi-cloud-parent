@@ -51,8 +51,11 @@ public class MetaObjectHandler implements com.baomidou.mybatisplus.core.handlers
      */
     @Override
     public void insertFill(MetaObject metaObject) {
+        // 自动填充状态字段，默认值为启用（ENABLE）
         this.strictInsertFill(metaObject, STATUS, Status.class, Status.ENABLE);
+        // 自动填充逻辑删除字段，默认值为未删除（NONE）
         this.strictInsertFill(metaObject, DELETED, Deleted.class, Deleted.NONE);
+        // 自动填充创建时间字段，默认值为当前时间
         this.strictInsertFill(metaObject, CREATE_TIME, LocalDateTime.class, LocalDateTime.now());
     }
 

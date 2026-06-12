@@ -30,12 +30,18 @@ public class ApiWhitelistProperties {
 
     static {
 
+        // 初始化系统默认白名单路径列表
         DEFAULT_WITE_LIST = CollectionUtil.newArrayList();
 
+        // OAuth2 令牌内省端点，供资源服务器验证令牌有效性
         DEFAULT_WITE_LIST.add("/oauth2/introspect");
+        // Swagger UI 依赖的静态资源路径
         DEFAULT_WITE_LIST.add("/webjars/**");
+        // Spring Boot Actuator 监控端点，用于健康检查和运维监控
         DEFAULT_WITE_LIST.add("/actuator/**");
+        // 应用配置相关端点
         DEFAULT_WITE_LIST.add("/application/**");
+        // OpenAPI 3.0 API 文档端点
         DEFAULT_WITE_LIST.add("/v3/api-docs/**");
 
     }

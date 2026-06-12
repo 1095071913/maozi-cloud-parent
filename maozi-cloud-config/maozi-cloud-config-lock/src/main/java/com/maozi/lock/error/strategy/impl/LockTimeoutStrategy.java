@@ -51,17 +51,22 @@ public enum LockTimeoutStrategy implements LockTimeoutHandler {
         @Override
         public void handle(String key,Long waitTime,Long leaseTime,Lock lock) throws Exception {
 
+            // 初始重试间隔 100ms
             Long interval = DEFAULT_INTERVAL;
 
+            // 持续尝试获取锁，直到成功或超过最大重试时间
             while (!lock.lock(key,waitTime,leaseTime)) {
 
+                // 如果当前重试间隔超过最大重试时间（3分钟），则停止重试并抛出限流异常
                 if (interval > DEFAULT_MAX_INTERVAL) {
                     ErrorCode errorCode = SystemErrorCode.CURRENT_LIMITING_ERROR;
                     throw new BusinessResultException(errorCode).setHttpCode(errorCode.getCode());
                 }
 
+                // 按当前间隔休眠后重试
                 TimeUnit.MILLISECONDS.sleep(interval);
 
+                // 指数退避：每次重试间隔翻倍（100ms -> 200ms -> 400ms -> ...）
                 interval <<= 1;
 
             }

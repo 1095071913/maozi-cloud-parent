@@ -34,42 +34,89 @@ import static org.apache.dubbo.spring.boot.util.DubboUtils.DUBBO_MAILING_LIST;
 import static org.apache.dubbo.spring.boot.util.DubboUtils.LINE_SEPARATOR;
 
 /**
- * Dubbo Welcome Logo {@link ApplicationListener}
+ * Dubbo 欢迎日志监听器
+ * <p>
+ * 监听 Spring Boot 的 {@link ApplicationEnvironmentPreparedEvent} 事件，
+ * 在应用启动时打印 Dubbo 的版本信息和相关链接（GitHub 地址、邮件讨论组）。
+ * 通过 {@link AtomicBoolean} 保证 Banner 只输出一次，防止在层级 ApplicationContext 中重复执行。
+ * </p>
+ * <p>
+ * 执行顺序设置为 {@link Ordered#HIGHEST_PRECEDENCE} + 21，确保在
+ * {@link LoggingApplicationListener} 完成日志系统初始化之后执行，
+ * 以便能够正确获取 Logger 实例。
+ * </p>
  *
  * @see ApplicationListener
+ * @see ApplicationEnvironmentPreparedEvent
  * @since 2.7.0
  */
-@Order(Ordered.HIGHEST_PRECEDENCE + 20 + 1)  // After LoggingApplicationListener#DEFAULT_ORDER
+@Order(Ordered.HIGHEST_PRECEDENCE + 20 + 1)  // 在 LoggingApplicationListener#DEFAULT_ORDER 之后执行
 public class WelcomeLogoApplicationListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
+    /**
+     * 标识是否已经处理过 Banner 输出
+     * <p>
+     * 初始值为 true，表示尚未触发（需要配合 compareAndSet 使用）。
+     * 使用 AtomicBoolean 保证多线程环境下的原子性操作。
+     * </p>
+     */
     private static AtomicBoolean processed = new AtomicBoolean(true);
 
+    /**
+     * 处理应用环境准备完成事件
+     * <p>
+     * 当 Spring Boot 应用环境准备完成时触发此方法。主要逻辑：
+     * <ol>
+     *   <li>检查是否已经处理过，若已处理则直接跳过，防止重复输出</li>
+     *   <li>获取 Logger 实例（此时日志系统已初始化完毕）</li>
+     *   <li>构建并输出 Dubbo Banner 文本</li>
+     *   <li>标记为已处理状态</li>
+     * </ol>
+     * </p>
+     *
+     * @param event Spring Boot 应用环境准备完成事件
+     */
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
 
-        // Skip if processed before, prevent duplicated execution in Hierarchical ApplicationContext
+        // 如果已经处理过，直接跳过，防止在层级 ApplicationContext 中重复执行
         if (processed.get()) {
             return;
         }
 
         /**
-         * Gets Logger After LoggingSystem configuration ready
+         * 在日志系统配置就绪后获取 Logger
          * @see LoggingApplicationListener
          */
         final Logger logger = LoggerFactory.getLogger(getClass());
 
+        // 构建包含版本号和链接信息的 Banner 文本
         String bannerText = buildBannerText();
 
+        // 优先使用日志系统输出，若 info 级别未启用则降级到控制台输出
         if (logger.isInfoEnabled()) {
             logger.info(bannerText);
         } else {
             System.out.print(bannerText);
         }
 
-        // mark processed to be true
+        // 原子性地将 processed 从 false 设为 true，标记 Banner 已输出完毕
         processed.compareAndSet(false, true);
     }
 
+    /**
+     * 构建 Dubbo Banner 文本
+     * <p>
+     * 生成包含以下信息的 Banner 文本：
+     * <ul>
+     *   <li>Dubbo 框架版本号</li>
+     *   <li>Dubbo GitHub 项目地址</li>
+     *   <li>Dubbo 邮件讨论组地址</li>
+     * </ul>
+     * </p>
+     *
+     * @return 格式化后的 Banner 文本字符串
+     */
     String buildBannerText() {
 
         StringBuilder bannerTextBuilder = new StringBuilder();

@@ -33,8 +33,10 @@ public class EnumConfig {
      */
     public EnumConfig(){
 
+        // 先加载基础枚举包下的所有枚举类
         initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.enums");
 
+        // 再加载当前项目业务枚举包下的所有枚举类
         initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION);
 
     }
@@ -46,17 +48,20 @@ public class EnumConfig {
      */
     private void initEnum(String packageName){
 
+        // 扫描指定包下的所有类
         ClassUtil.scanPackage(packageName)
 
             .forEach(item -> {
 
+                // 仅处理枚举类且实现了 BaseEnum 接口的类
                 if (item.isEnum() && item.getEnumConstants() instanceof BaseEnum[] enumConstants) {
 
-                    // 将类名首字母转为小写作为映射键
+                    // 将类名首字母转为小写作为映射键（如 UserType -> userType）
                     char[] charArray = item.getSimpleName().toCharArray();
 
-                    charArray[0] += 32;
+                    charArray[0] += 32; // ASCII 码加 32，即大写字母转小写
 
+                    // 将枚举常量列表注册到全局映射表
                     enums.put(new String(charArray), Lists.newArrayList(enumConstants));
 
                 }

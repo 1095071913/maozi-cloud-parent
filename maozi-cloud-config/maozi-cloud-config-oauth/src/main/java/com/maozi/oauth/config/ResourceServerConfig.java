@@ -52,20 +52,24 @@ public class ResourceServerConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
+        // 合并系统默认白名单和项目自定义白名单
         List<String> witelist = CollectionUtil.newArrayList();
         witelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
         witelist.addAll(apiWhitelistProperties.getConfigWhitelist());
 
+        // 将白名单列表转换为数组，用于Spring Security路径匹配
         String[] requestMatchers = witelist.toArray(new String[0]);
+
+        // 配置请求授权规则：白名单路径放行，其余所有请求需要认证
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers(requestMatchers).permitAll()
                 .anyRequest().authenticated());
 
         // 添加BearerTokenAuthenticationFilter，将认证服务当做一个资源服务器，解析请求头中的token
         http.oauth2ResourceServer((resourceServer) -> resourceServer
-                .opaqueToken(Customizer.withDefaults())
-                .accessDeniedHandler(new AccessDeniedHandler())
-                .authenticationEntryPoint(new AuthenticationEntryPoint())
+                .opaqueToken(Customizer.withDefaults())  // 使用不透明令牌（Opaque Token）方式进行令牌校验
+                .accessDeniedHandler(new AccessDeniedHandler())  // 自定义权限不足时的响应处理
+                .authenticationEntryPoint(new AuthenticationEntryPoint())  // 自定义未认证时的响应处理
         );
 
         return http.build();
@@ -83,7 +87,9 @@ public class ResourceServerConfig {
      */
     @Bean
     public AuthenticationManagerResolver<HttpServletRequest> tokenAuthenticationManagerResolver(OpaqueTokenIntrospector opaqueTokenIntrospector) {
+        // 使用自定义的不透明令牌内省器创建认证提供者，并封装为ProviderManager
         AuthenticationManager opaqueToken = new ProviderManager(new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector));
+        // 所有请求统一返回同一个AuthenticationManager（不透明令牌认证管理器）
         return (request) -> opaqueToken;
     }
 

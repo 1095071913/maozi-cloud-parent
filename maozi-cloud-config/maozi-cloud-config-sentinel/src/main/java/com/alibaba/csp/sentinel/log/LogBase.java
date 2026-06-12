@@ -22,13 +22,14 @@ import java.util.logging.Level;
 import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
 
 /**
- * <p>The base config class for logging.</p>
- *
+ * Sentinel 日志基础配置类
  * <p>
- * The default log base directory is {@code ${user.home}/logs/csp/}. We can use the {@link #LOG_DIR}
- * property to override it. The default log file name dose not contain pid, but if multi-instances of the same service
- * are running in the same machine, we may want to distinguish the log file by process ID number.
- * In this case, {@link #LOG_NAME_USE_PID} property could be configured as "true" to turn on this switch.
+ * 该类是 Sentinel 日志模块的核心配置类，负责管理和初始化日志相关的所有配置项。
+ * </p>
+ * <p>
+ * 默认的日志根目录为 {@code ${user.home}/logs/csp/}，可通过 {@link #LOG_DIR} 属性覆盖。
+ * 默认日志文件名不包含进程 ID，但当同一台机器上运行同一服务的多个实例时，
+ * 可通过 {@link #LOG_NAME_USE_PID} 属性设置为 "true" 来启用进程 ID 区分日志文件。
  * </p>
  *
  * @author Carpenter Lee
@@ -36,33 +37,51 @@ import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
  */
 public class LogBase {
 
+    /** 日志目录的配置属性键，用于指定日志文件的存储目录 */
     public static final String LOG_DIR = "csp.sentinel.log.dir";
+    /** 日志文件名是否包含进程 ID 的配置属性键 */
     public static final String LOG_NAME_USE_PID = "csp.sentinel.log.use.pid";
+    /** 日志输出类型的配置属性键，可选值为 "file" 或 "console" */
     public static final String LOG_OUTPUT_TYPE = "csp.sentinel.log.output.type";
+    /** 日志字符集的配置属性键 */
     public static final String LOG_CHARSET = "csp.sentinel.log.charset";
+    /** 日志级别的配置属性键 */
     public static final String LOG_LEVEL = "csp.sentinel.log.level";
 
     /**
-     * Output biz log (e.g. RecordLog and CommandCenterLog) to file.
+     * 将业务日志（如 RecordLog 和 CommandCenterLog）输出到文件
      */
     public static final String LOG_OUTPUT_TYPE_FILE = "file";
     /**
-     * Output biz log (e.g. RecordLog and CommandCenterLog) to console.
+     * 将业务日志（如 RecordLog 和 CommandCenterLog）输出到控制台
      */
     public static final String LOG_OUTPUT_TYPE_CONSOLE = "console";
+    /** 默认日志字符集：UTF-8 */
     public static final String LOG_CHARSET_UTF8 = "utf-8";
 
+    /** 默认的日志子目录名称 */
     private static final String DIR_NAME = "logs" + File.separator + "csp";
+    /** 用户主目录的系统属性键 */
     private static final String USER_HOME = "user.home";
+    /** 默认日志级别：INFO */
     private static final Level LOG_DEFAULT_LEVEL = Level.INFO;
 
 
+    /** 是否在日志文件名中使用进程 ID */
     private static boolean logNameUsePid;
+    /** 日志输出类型（file 或 console） */
     private static String logOutputType;
+    /** 日志文件的基础目录路径 */
     private static String logBaseDir;
+    /** 日志字符集编码 */
     private static String logCharSet;
+    /** 日志级别 */
     private static Level logLevel;
 
+    /**
+     * 静态初始化块，在类加载时执行日志配置的初始化
+     * 先初始化默认值，再加载外部配置属性覆盖默认值
+     */
     static {
         try {
             initializeDefault();
@@ -73,6 +92,10 @@ public class LogBase {
         }
     }
 
+    /**
+     * 初始化日志配置的默认值
+     * 默认不使用进程 ID、输出到文件、目录为用户主目录下 logs/csp、字符集 UTF-8、日志级别 INFO
+     */
     private static void initializeDefault() {
         logNameUsePid = false;
         logOutputType = LOG_OUTPUT_TYPE_FILE;
@@ -81,19 +104,26 @@ public class LogBase {
         logLevel = LOG_DEFAULT_LEVEL;
     }
 
+    /**
+     * 从外部配置中加载日志属性并覆盖默认值
+     * 依次加载日志输出类型、字符集、目录、进程 ID 开关、日志级别
+     */
     private static void loadProperties() {
+        // 获取日志配置属性
         Properties properties = LogConfigLoader.getProperties();
 
+        // 加载日志输出类型，仅支持 "file" 和 "console"，其他值会被重置为 "file"
         logOutputType = properties.get(LOG_OUTPUT_TYPE) == null ? logOutputType : properties.getProperty(LOG_OUTPUT_TYPE);
         if (!LOG_OUTPUT_TYPE_FILE.equalsIgnoreCase(logOutputType) && !LOG_OUTPUT_TYPE_CONSOLE.equalsIgnoreCase(logOutputType)) {
             logOutputType = LOG_OUTPUT_TYPE_FILE;
         }
 //        System.out.println("INFO: Sentinel log output type is: " + logOutputType);
 
+        // 加载日志字符集
         logCharSet = properties.getProperty(LOG_CHARSET) == null ? logCharSet : properties.getProperty(LOG_CHARSET);
 //        System.out.println("INFO: Sentinel log charset is: " + logCharSet);
 
-
+        // 加载日志目录，如果目录不存在则自动创建
         logBaseDir = properties.getProperty(LOG_DIR) == null ? logBaseDir : properties.getProperty(LOG_DIR);
         logBaseDir = addSeparator(logBaseDir);
         File dir = new File(logBaseDir);
@@ -104,11 +134,12 @@ public class LogBase {
         }
 //        System.out.println("INFO: Sentinel log base directory is: " + logBaseDir);
 
+        // 加载是否在日志文件名中使用进程 ID 的开关
         String usePid = properties.getProperty(LOG_NAME_USE_PID);
         logNameUsePid = "true".equalsIgnoreCase(usePid);
 //        System.out.println("INFO: Sentinel log name use pid is: " + logNameUsePid);
 
-        // load log level
+        // 加载日志级别，如果配置的级别无效则保持默认值
         String logLevelString = properties.getProperty(LOG_LEVEL);
         if (logLevelString != null && (logLevelString = logLevelString.trim()).length() > 0) {
             try {
@@ -122,41 +153,47 @@ public class LogBase {
 
 
     /**
-     * Whether log file name should contain pid. This switch is configured by {@link #LOG_NAME_USE_PID} system property.
+     * 判断日志文件名是否应包含进程 ID
+     * 该开关通过 {@link #LOG_NAME_USE_PID} 系统属性进行配置
      *
-     * @return true if log file name should contain pid, return true, otherwise false
+     * @return 如果日志文件名应包含进程 ID 则返回 true，否则返回 false
      */
     public static boolean isLogNameUsePid() {
         return logNameUsePid;
     }
 
     /**
-     * Get the log file base directory path, which is guaranteed ended with {@link File#separator}.
+     * 获取日志文件的基础目录路径，保证路径以文件分隔符结尾
      *
-     * @return log file base directory path
+     * @return 日志文件的基础目录路径
      */
     public static String getLogBaseDir() {
         return logBaseDir;
     }
 
     /**
-     * Get the log file output type.
+     * 获取日志文件的输出类型
      *
-     * @return log output type, "file" by default
+     * @return 日志输出类型，默认为 "file"
      */
     public static String getLogOutputType() {
         return logOutputType;
     }
 
     /**
-     * Get the log file charset.
+     * 获取日志文件的字符集编码
      *
-     * @return the log file charset, "utf-8" by default
+     * @return 日志字符集，默认为 "utf-8"
      */
     public static String getLogCharset() {
         return logCharSet;
     }
 
+    /**
+     * 获取日志级别
+     *
+     * @return 日志级别，默认为 INFO
+     */
     public static Level getLogLevel() {
         return logLevel;
     }

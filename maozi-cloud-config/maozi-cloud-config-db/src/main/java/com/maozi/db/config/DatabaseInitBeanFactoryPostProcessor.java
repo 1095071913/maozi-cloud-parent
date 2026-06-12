@@ -41,13 +41,31 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
     /** JDBC MySQL 前缀 */
     private static final String JDBC_MYSQL_PREFIX = "jdbc:mysql://";
 
+    /** Spring 环境上下文，用于读取数据源配置 */
     private Environment environment;
 
+    /**
+     * 注入 Spring 环境上下文
+     *
+     * @param environment Spring 环境对象
+     */
     @Override
     public void setEnvironment(@NotNull Environment environment) {
         this.environment = environment;
     }
 
+    /**
+     * 在 Bean 工厂后处理阶段执行数据库初始化
+     * <p>
+     * 从环境配置中读取数据源连接信息，连接到 MySQL 服务器，
+     * 检查目标数据库是否存在，不存在则自动创建。
+     * 该方法在所有 Bean 定义加载完成后、Bean 实例化之前执行，
+     * 确保 DataSource 和 Flyway 等 Bean 创建时数据库已存在。
+     * </p>
+     *
+     * @param beanFactory Bean 工厂（未使用，由 Spring 框架传入）
+     * @throws BeansException Bean 异常
+     */
     @Override
     public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
         String url = environment.getProperty(DATASOURCE_URL);
@@ -66,13 +84,14 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
 
         String serverUrl = buildServerUrl(url);
 
+        // 连接到 MySQL 服务器（不指定具体数据库），用于检查和创建数据库
         try (Connection conn = DriverManager.getConnection(serverUrl, username, password);
              Statement stmt = conn.createStatement()) {
 
             // 检查数据库是否存在
             ResultSet rs = stmt.executeQuery("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'");
             if (!rs.next()) {
-                // 数据库不存在，创建
+                // 数据库不存在，使用 utf8mb4 字符集创建，支持完整的 Unicode 字符（包括 Emoji）
                 stmt.executeUpdate("CREATE DATABASE `" + dbName + "` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci");
             }
 

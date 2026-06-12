@@ -36,10 +36,12 @@ public class VideoFileValidator implements ConstraintValidator<VideoFile, Multip
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
 
+        // 文件为空时跳过校验，交给 @NotNull 等注解处理非空逻辑
         if(ObjectUtil.isNullEmpty(file) || file.isEmpty()) {
             return true;
         }
 
+        // 检查文件的 Content-Type 是否以 "video/" 开头，判断是否为视频格式
         String contentType = file.getContentType();
         return StringUtils.isNotEmpty(contentType) && contentType.startsWith("video/");
 

@@ -59,6 +59,7 @@ public class MybatisPlusConfig {
 
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
+        // 添加多租户拦截器，通过 client_id 字段实现数据隔离
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
 
             /**
@@ -79,9 +80,11 @@ public class MybatisPlusConfig {
              */
             @Override
             public boolean ignoreTable(String tableName) {
+                // 未配置租户表列表时，忽略所有表的多租户处理
                 if (tenantTables == null) {
                     return true;
                 }
+                // 只对配置中指定的表启用多租户，其余表忽略
                 return !tenantTables.contains(tableName);
             }
 
@@ -97,7 +100,7 @@ public class MybatisPlusConfig {
 
         }));
 
-        // 分页
+        // 添加分页插件，适配 MySQL 方言，自动处理分页 SQL 的拼接
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 
         return interceptor;

@@ -11,6 +11,15 @@ import java.lang.annotation.Target;
  * 标注在结果对象的字段上，声明查询结果的映射配置。
  * 支持远程服务调用映射、关联字段映射以及忽略映射等功能。
  * </p>
+ * <p>
+ * 使用场景：
+ * <ul>
+ *   <li>标记字段为远程服务数据来源（isService=true + serviceName）</li>
+ *   <li>标记字段来自关联表的某个字段（tableName + field）</li>
+ *   <li>标记字段需要通过自定义函数处理映射（functionName）</li>
+ *   <li>忽略某个字段的自动映射（ignore=true）</li>
+ * </ul>
+ * </p>
  *
  * @author maozi
  */

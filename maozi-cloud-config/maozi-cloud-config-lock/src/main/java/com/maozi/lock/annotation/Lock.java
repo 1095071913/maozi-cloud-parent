@@ -9,7 +9,25 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
+/**
+ * 分布式锁注解
+ * <p>
+ * 标注在方法上，声明该方法需要获取分布式锁后才能执行。
+ * 支持多种锁类型（可重入锁、公平锁、读写锁）、自定义超时时间和超时处理策略。
+ * 可通过 SpEL 表达式或 {@link LockKey} 注解指定锁的业务键。
+ * </p>
+ *
+ * <p>使用示例：
+ * <pre>
+ * &#64;Lock(name = "orderLock", keys = {"#orderId"}, type = LockType.REENTRANT)
+ * public void processOrder(String orderId) { ... }
+ * </pre>
+ * </p>
+ *
+ * @author maozi
+ * @see LockKey
+ * @see com.maozi.lock.lock.LockType
+ */
 @Target(value = {ElementType.METHOD})
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface Lock {

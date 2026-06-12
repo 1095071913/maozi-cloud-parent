@@ -44,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 注册链路上下文过滤器，拦截所有路径，并将优先级设为最高（确保最先执行）
         registry.addInterceptor(applicationLinkContextFilter).addPathPatterns("/**").order(Integer.MIN_VALUE);
     }
 
@@ -59,14 +60,17 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 
+        // 创建支持 multipart/form-data 的只读 Jackson 消息转换器
         ReadOnlyMultipartFormDataEndpointConverter converter = new ReadOnlyMultipartFormDataEndpointConverter(objectMapper);
 
+        // 在默认支持的媒体类型基础上，额外添加 application/octet-stream 支持
         List<MediaType> supportedMediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
 
         supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
 
         converter.setSupportedMediaTypes(supportedMediaTypes);
 
+        // 将自定义转换器添加到转换器列表中
         converters.add(converter);
 
     }

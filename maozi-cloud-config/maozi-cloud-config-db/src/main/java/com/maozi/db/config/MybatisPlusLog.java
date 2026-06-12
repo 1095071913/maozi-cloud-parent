@@ -67,12 +67,15 @@ public class MybatisPlusLog implements Log {
      */
     public void debug(String s) {
 
+        // 应用未完全启动时跳过日志收集，避免启动过程中的干扰日志
         if(!ApplicationEnvironmentContext.IS_RUNNING){
             return;
         }
 
+        // 从线程变量中获取 SQL 日志构建器
         StringBuilder sqlLog = LogUtil.sqlLog.get();
 
+        // 如果当前线程还没有初始化 SQL 日志构建器，则创建并设置到线程变量中
         if(ObjectUtil.isNullEmpty(sqlLog)) {
 
             sqlLog = new StringBuilder();
@@ -81,26 +84,33 @@ public class MybatisPlusLog implements Log {
 
         }
 
+        // 处理 SQL 准备语句：提取 SQL 模板（包含 ? 占位符）
         if(s.contains("==>  Preparing: ")) {
 
+            // 去掉前缀，仅保留纯 SQL 语句
             s=s.replace("==>  Preparing: ","");
 
             sqlLog.append(s);
 
         }
 
+        // 处理 SQL 参数：将参数值替换到 SQL 模板中的 ? 占位符位置
         if(s.contains("==> Parameters: ")) {
 
+            // 去掉前缀，仅保留参数列表
             s=s.replace("==> Parameters: ","");
 
             if(StringUtils.isNotBlank(s)) {
 
+                // 参数格式为 "value(Type),value(Type),..." 按 "), " 拆分
                 String [] params = s.split("\\),");
 
                 for (String param : params) {
 
+                    // 提取参数值部分（"(" 之前的字符串），并加上单引号包裹
                     param = "'" + param.substring(0, param.indexOf("(")) + "'";
 
+                    // 在 SQL 模板中找到第一个 "?" 占位符，用参数值替换
                     int index = sqlLog.indexOf("?");
 
                     if (index != -1) {
@@ -112,6 +122,7 @@ public class MybatisPlusLog implements Log {
 
             }
 
+            // 一条完整的 SQL 拼接完成后，追加分号分隔符
             sqlLog.append(";");
 
         }

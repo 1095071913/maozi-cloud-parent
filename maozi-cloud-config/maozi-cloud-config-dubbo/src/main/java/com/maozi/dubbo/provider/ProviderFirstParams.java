@@ -33,23 +33,49 @@ import static org.apache.dubbo.common.constants.CommonConstants.TIMESTAMP_KEY;
  * 服务提供者优先参数配置
  * <p>
  * 继承 Dubbo 的 {@link DefaultProviderFirstParams}，定义服务提供者端
- * 优先使用的参数集合。这些参数以服务提供者的值为准，不会被消费者覆盖。
- * 包括 Dubbo 版本、发布版本、方法列表、时间戳、标签和应用版本。
+ * 优先使用的参数集合。这些参数以服务提供者的值为准，不会被消费者端的值覆盖。
+ * </p>
+ * <p>
+ * 包含的参数说明：
+ * <ul>
+ *   <li>{@code release} - Dubbo 框架的发布版本号</li>
+ *   <li>{@code dubbo} - Dubbo 协议版本号</li>
+ *   <li>{@code methods} - 服务暴露的方法列表</li>
+ *   <li>{@code timestamp} - 服务注册时间戳</li>
+ *   <li>{@code tag} - 服务标签（可用于标签路由）</li>
+ *   <li>{@code application.version} - 自定义的应用版本号（用于灰度发布路由）</li>
+ * </ul>
+ * </p>
+ * <p>
+ * 该类通过 Dubbo SPI 机制加载，需在 resources/META-INF/dubbo 目录下配置。
  * </p>
  *
  * @author maozi
+ * @see DefaultProviderFirstParams
  */
 public class ProviderFirstParams extends DefaultProviderFirstParams {
 
-    /** 服务提供者优先参数集合 */
+    /**
+     * 服务提供者优先参数集合
+     * <p>
+     * 使用不可变集合（unmodifiableSet）包装，防止运行时被修改。
+     * 集合中的参数在服务注册时会以提供者端的值为准，
+     * 消费者即使传递了相同名称的参数也不会覆盖提供者的值。
+     * </p>
+     */
     private final static Set<String> PARAMS = Collections.unmodifiableSet(new HashSet<>() {{
+        // Dubbo 框架发布版本号
         addAll(Arrays.asList(RELEASE_KEY, DUBBO_VERSION_KEY, METHODS_KEY, TIMESTAMP_KEY, TAG_KEY,"application.version"));
     }});
 
     /**
      * 获取服务提供者优先参数集合
+     * <p>
+     * Dubbo 框架在服务注册和引用过程中会调用此方法，
+     * 获取需要以提供者端值为准的参数名称集合。
+     * </p>
      *
-     * @return 不可变的参数名集合
+     * @return 不可变的参数名集合，集合中的参数在提供者端和消费者端冲突时优先使用提供者的值
      */
     @Override
     public Set<String> params() {

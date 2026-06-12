@@ -35,10 +35,13 @@ public class ExcelFileValidator implements ConstraintValidator<ExcelFile, Multip
     @Override
     public boolean isValid(MultipartFile file, ConstraintValidatorContext context) {
 
+        // 文件为空时跳过校验，交给 @NotNull 等注解处理非空逻辑
         if(file == null || file.isEmpty()) {
             return true;
         }
 
+        // 检查文件的 Content-Type 是否为 Excel 格式
+        // 支持两种格式：xls（application/vnd.ms-excel）和 xlsx（application/vnd.openxmlformats-officedocument.spreadsheetml.sheet）
         String contentType = file.getContentType();
         return "application/vnd.ms-excel".equals(contentType) || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(contentType);
 

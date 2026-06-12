@@ -33,7 +33,12 @@ public enum QueryBaseType {
 
 	;
 
-	/** 构造方法 */
+	/**
+	 * 构造方法
+	 *
+	 * @param type 查询类型标识，用于 MyBatis-Plus 查询条件构建时的类型匹配
+	 * @param name 查询类型的中文名称描述
+	 */
 	QueryBaseType(String type,String name) {
 
 		this.type = type;

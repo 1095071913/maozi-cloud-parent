@@ -53,6 +53,7 @@ public class WriteLock implements Lock {
 
         RReadWriteLock lock = redissonClient.getReadWriteLock(key);
 
+        // 判断写锁是否由当前线程持有，如果是则异步强制释放写锁并等待结果，否则返回 false
         return lock.writeLock().isHeldByCurrentThread() ? lock.writeLock().forceUnlockAsync().get() : false;
 
     }

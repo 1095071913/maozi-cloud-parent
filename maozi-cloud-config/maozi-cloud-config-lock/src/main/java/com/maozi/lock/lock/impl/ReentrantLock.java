@@ -53,6 +53,7 @@ public class ReentrantLock implements Lock {
 
         RLock lock = redissonClient.getLock(key);
 
+        // 判断锁是否由当前线程持有，如果是则异步强制释放锁并等待结果，否则返回 false
         return lock.isHeldByCurrentThread() ? lock.forceUnlockAsync().get() : false;
 
     }

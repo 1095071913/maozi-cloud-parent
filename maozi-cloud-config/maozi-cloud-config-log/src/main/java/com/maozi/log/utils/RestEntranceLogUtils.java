@@ -33,14 +33,24 @@ public class RestEntranceLogUtils{
      */
     public Map<String, String> requestLog(ProceedingJoinPoint proceedingJoinPoint,HttpServletRequest request,String rpcUrl) {
 
+        // 使用 LinkedHashMap 保证日志字段的输出顺序与插入顺序一致
         Map<String, String> logs = new LinkedHashMap<>();
 
+        // 判断请求类型：HTTP 请求对象不为空则为 Web 请求，否则为 RPC 调用
         boolean isHttp = ObjectUtil.isNotNullEmpty(request);
+
+        // 记录请求类型标识（WEB 或 RPC）
         logs.put(LogTag.TYPE, isHttp ? LogCommonType.WEB.getDesc() : LogCommonType.RPC.getDesc());
+
+        // 记录来源地址：HTTP 请求取客户端 IP，RPC 调用取远程服务地址
         logs.put(LogTag.IP, isHttp ? WebUtil.getRequestHost(request) : rpcUrl);
+
+        // 仅 HTTP 请求记录完整的请求 URL
         if(isHttp){
             logs.put(LogTag.URL, request.getRequestURL().toString());
         }
+
+        // 记录被调用的方法全路径，格式为 "类全限定名:方法名"
         logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
 
         return logs;

@@ -24,7 +24,12 @@ public enum JoinBaseType {
 
 	;
 
-	/** 构造方法 */
+	/**
+	 * 构造方法
+	 *
+	 * @param type 关联类型标识，用于 SQL 构建时确定 JOIN 方式
+	 * @param name 关联类型的中文名称描述
+	 */
 	JoinBaseType(String type,String name) {
 
 		this.type = type;

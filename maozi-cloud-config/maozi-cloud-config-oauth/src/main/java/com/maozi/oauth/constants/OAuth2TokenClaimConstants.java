@@ -29,6 +29,12 @@ public final class OAuth2TokenClaimConstants {
 	/** 令牌授权范围 */
 	public static final String SCOPE = "scope";
 
+	/**
+	 * 私有构造方法，防止实例化
+	 * <p>
+	 * 该类仅提供静态常量，不应被实例化
+	 * </p>
+	 */
 	private OAuth2TokenClaimConstants() {
 	}
 

@@ -126,24 +126,36 @@ public class RequestEntranceLogAop {
 			logs.put(LogTag.PARAM, param);
 		}
 
+        // 方法返回结果，初始为 null
         Object resultData = null;
 
         try {
+        	// 执行目标业务方法
 			resultData = proceedingJoinPoint.proceed();
+
+		// 权限拒绝异常：不封装结果，直接向上抛出由 Spring Security 处理
 		}catch (AccessDeniedException e) {
 			throw e;
+
+		// 业务异常：封装为业务错误结果（已包含错误码和错误信息），不记录 error 日志
         }catch (BusinessResultException businessResultException) {
         	resultData = businessResultException.getErrorResult();
+
+    	// 未预期的系统异常：封装为统一的系统错误结果，并记录详细的错误日志
     	}catch (Throwable e) {
 
+    		// 构建系统级错误响应
             resultData = ResultUtil.error(SystemErrorCode.SYSTEM_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
 
+            // 记录异常堆栈日志，便于排查问题
             LogUtil.error(log,e);
 
-            logs.put(LogTag.PARAM, param);
-            logs.put(LogTag.ERROR_USER,ApplicationLinkContext.USERNAMES.get());
-            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+            // 收集系统错误相关的日志信息
+            logs.put(LogTag.PARAM, param);                                       // 记录请求参数（系统异常时无论环境均记录）
+            logs.put(LogTag.ERROR_USER,ApplicationLinkContext.USERNAMES.get());   // 记录当前操作用户
+            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());                 // 记录异常描述
 
+            // 记录异常发生的第一行代码位置
             StackTraceElement[] errorLines = e.getStackTrace();
             if(errorLines.length > 0) {
             	logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
@@ -151,7 +163,7 @@ public class RequestEntranceLogAop {
 
         } finally {
 
-        	// 记录 SQL 执行日志
+        	// 记录本次请求过程中执行的 SQL 日志（从 ThreadLocal 中获取）
 			StringBuilder sqlLog = LogUtil.sqlLog.get();
 			if(ObjectUtil.isNotNullEmpty(sqlLog)) {logs.put(LogTag.SQL, sqlLog.toString());}
 
@@ -160,13 +172,16 @@ public class RequestEntranceLogAop {
 
         	if(ObjectUtil.isNotNullEmpty(resultData)) {
 
+        		// 判断结果是否为框架统一响应类型
 				if(resultData instanceof AbstractBaseResult<?> result){
 
+					// 请求失败（业务或系统错误）
 					if(!result.isSuccess()) {
 
-						// 统计 Sentinel 阻塞 QPS
+						// 统计 Sentinel 阻塞 QPS（表示请求被限流或熔断）
 						curNode.increaseBlockQps(1);
 
+						// 获取错误详情，用于判断是业务错误还是系统错误
 						ErrorResult<?> errorResult = result.getErrorResult();
 
 						// 业务错误使用 warn 级别，系统错误使用 error 级别
@@ -182,9 +197,10 @@ public class RequestEntranceLogAop {
 
         	}
 
-			// 统计 Sentinel 通过 QPS
+			// 统计 Sentinel 通过 QPS（表示请求成功处理）
 			curNode.addPassRequest(1);
 
+			// 请求成功，记录 info 级别日志
 			LogUtil.info(log,logs);
 
 		}

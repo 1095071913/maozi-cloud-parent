@@ -43,11 +43,14 @@ public class RedissonConfig {
         Config config = new Config();
 
         if(ObjectUtil.isNotNullEmpty(properties.getNodeAddresses())){
+            // 集群模式：配置多个 Redis 节点地址和密码
             config.useClusterServers().setPassword(properties.getPassword()).addNodeAddress(properties.getNodeAddresses());
         }else {
+            // 单节点模式：配置单个 Redis 地址、数据库编号和密码
             config.useSingleServer().setAddress(properties.getAddress()).setDatabase(properties.getDatabase()).setPassword(properties.getPassword());
         }
 
+        // 使用 Netty NIO 事件循环组，提高 Redisson 与 Redis 之间的网络通信性能
         config.setEventLoopGroup(new NioEventLoopGroup());
 
         return Redisson.create(config);

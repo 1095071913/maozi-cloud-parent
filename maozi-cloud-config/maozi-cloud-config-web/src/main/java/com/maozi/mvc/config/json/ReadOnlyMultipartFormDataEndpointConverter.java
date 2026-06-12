@@ -51,20 +51,23 @@ public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2H
      */
     @Override
     public boolean canRead(Type type, Class<?> contextClass, MediaType mediaType) {
-        // When a rest client(e.g. RestTemplate#getForObject) reads a request, 'RequestAttributes' can be null.
+        // 当使用 REST 客户端（如 RestTemplate#getForObject）发请求时，RequestAttributes 可能为 null
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return false;
         }
+        // 从请求上下文中获取当前匹配的处理器方法
         HandlerMethod handlerMethod = (HandlerMethod) requestAttributes.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
         if (handlerMethod == null) {
             return false;
         }
+        // 获取处理器方法上的 @RequestMapping 注解
         RequestMapping requestMapping = handlerMethod.getMethodAnnotation(RequestMapping.class);
         if (requestMapping == null) {
             return false;
         }
-        // This converter reads data only when the mapped controller method consumes just 'MediaType.MULTIPART_FORM_DATA_VALUE'.
+        // 仅当 @RequestMapping 的 consumes 属性只声明了 multipart/form-data 时才启用此转换器，
+        // 避免对所有 multipart 请求都进行 JSON 反序列化
         if (requestMapping.consumes().length != 1|| !MediaType.MULTIPART_FORM_DATA_VALUE.equals(requestMapping.consumes()[0])) {
             return false;
         }

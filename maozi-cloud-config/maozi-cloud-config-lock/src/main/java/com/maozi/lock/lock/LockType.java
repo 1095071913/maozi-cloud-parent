@@ -64,6 +64,11 @@ public enum LockType implements BaseEnum {
     @Getter
     private final String desc;
 
+    /**
+     * 枚举的字符串表示，格式为 "值.描述"
+     *
+     * @return 格式化后的字符串
+     */
     @Override
     public String toString() {
         return value + "." + desc;
@@ -206,10 +211,13 @@ public enum LockType implements BaseEnum {
      */
     public void lock(String key,Long waitTime,Long leaseTime, LockTimeoutStrategy strategy) throws Exception {
 
+        // 从 Spring 容器中获取当前锁类型对应的锁实现类实例
         Lock lock = getLock();
 
+        // 在键名前添加服务名前缀，确保不同服务的锁不会冲突
         key = ApplicationEnvironmentContext.SERVICE_NAME +":lock:" + key;
 
+        // 尝试获取锁，如果获取失败则交由超时策略处理
         if(!lock.lock(key,waitTime,leaseTime)) {
             strategy.handle(key,waitTime,leaseTime, lock);
         }
@@ -239,10 +247,13 @@ public enum LockType implements BaseEnum {
      */
     public void unlock(String key, UnLockTimeoutStrategy strategy) throws Exception {
 
+        // 从 Spring 容器中获取当前锁类型对应的锁实现类实例
         Lock lock = getLock();
 
+        // 在键名前添加服务名前缀，与加锁时的键名保持一致
         key = ApplicationEnvironmentContext.SERVICE_NAME +":lock:" + key;
 
+        // 尝试释放锁，如果释放失败则交由解锁超时策略处理
         if (!lock.unLock(key)) {
             strategy.handle();
         }

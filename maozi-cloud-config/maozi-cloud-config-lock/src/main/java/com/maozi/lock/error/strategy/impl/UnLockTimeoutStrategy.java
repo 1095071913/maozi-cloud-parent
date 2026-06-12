@@ -22,6 +22,9 @@ public enum UnLockTimeoutStrategy implements UnLockTimeoutHandler {
     /** 不做任何处理 */
     NO_OPERATION() {
 
+        /**
+         * 解锁超时时不执行任何操作，仅记录日志或忽略
+         */
         @Override
         public void handle() {}
 

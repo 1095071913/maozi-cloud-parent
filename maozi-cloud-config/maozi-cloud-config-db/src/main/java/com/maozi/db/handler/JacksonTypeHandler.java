@@ -58,8 +58,10 @@ public class JacksonTypeHandler extends com.baomidou.mybatisplus.extension.handl
      */
     @Override
     public Object parse(String json) {
+        // 获取全局共享的 ObjectMapper 实例，保证序列化配置一致性
         ObjectMapper objectMapper = JacksonUtil.getObjectMapper();
         TypeFactory typeFactory = objectMapper.getTypeFactory();
+        // 通过 getFieldType() 获取字段的完整泛型类型（如 List<Long>），确保反序列化后类型精确匹配
         JavaType javaType = typeFactory.constructType(this.getFieldType());
 
         try {

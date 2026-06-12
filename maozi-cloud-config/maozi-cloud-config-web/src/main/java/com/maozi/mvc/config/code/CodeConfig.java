@@ -48,17 +48,21 @@ public class CodeConfig {
      */
     private void initErrorCode(){
 
+        // 从 Spring 容器中获取所有 AbstractBaseErrorCode 类型的 Bean
         Map<String, AbstractBaseErrorCode> codeBeans = SpringUtil.getBeansOfType(AbstractBaseErrorCode.class);
 
         for(AbstractBaseErrorCode errorCodeBean : codeBeans.values()){
 
             try {
 
+                // 通过反射遍历 Bean 的所有声明字段
                 for(Field field : errorCodeBean.getClass().getDeclaredFields()){
 
-                    field.setAccessible(true);
+                    field.setAccessible(true); // 设置可访问私有字段
 
+                    // 仅提取 ErrorCode 类型的字段值
                     if(field.get(errorCodeBean) instanceof ErrorCode errorCode){
+                        // 以错误码值为键注册到全局映射表
                         ERROR_CODES.put(errorCode.getCode(),errorCode);
                     }
 

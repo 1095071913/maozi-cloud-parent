@@ -52,19 +52,24 @@ public class ErrorParamTranslation {
 	 */
 	public ErrorParamTranslation() throws Exception {
 
+		// 创建 Nacos 配置服务客户端，使用应用环境中的配置中心地址
 		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentContext.CONFIG_ADDR);
 
+		// 首次加载：从 Nacos 获取 saas-param-error.json 配置内容，超时时间 5 秒
 		errorParamTranslation(configService.getConfig("saas-param-error.json", "DEFAULT_GROUP", 5000));
 
+		// 注册配置变更监听器，当 Nacos 上的配置发生变化时自动更新本地映射表
 		configService.addListener("saas-param-error.json", "DEFAULT_GROUP", new Listener() {
 
 			@Override
 			public void receiveConfigInfo(String codeJson) {
+				// 收到配置变更通知后重新解析并更新映射表
 				errorParamTranslation(codeJson);
 			}
 
 			@Override
 			public Executor getExecutor() {
+				// 返回 null 表示使用 Nacos 默认的回调线程池执行监听回调
 				return null;
 			}
 
@@ -79,7 +84,11 @@ public class ErrorParamTranslation {
 	 */
 	public void errorParamTranslation(String json) {
 
-		try {errorParams = JacksonUtil.jsonToMap(json);}catch (Exception e) {
+		try {
+			// 将 JSON 字符串解析为 Map<String, String> 映射表
+			errorParams = JacksonUtil.jsonToMap(json);
+		}catch (Exception e) {
+			// 配置解析失败时记录错误日志，不影响应用启动
 			LogUtil.error(log,e);
 		}
 
