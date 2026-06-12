@@ -35,9 +35,7 @@ public class JacksonConfig {
 		ObjectMapper objectMapper = builder.createXmlMapper(false).build();
 
 		// 初始化自定义的序列化/反序列化配置（如日期格式、空值处理等）
-		JacksonUtil.initObjectMapperConfig(objectMapper);
-
-		return objectMapper;
+		return JacksonUtil.initObjectMapperConfig(objectMapper);
 
 	}
 

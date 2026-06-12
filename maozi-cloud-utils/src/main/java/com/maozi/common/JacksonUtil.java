@@ -102,11 +102,14 @@ public class JacksonUtil {
 			}
 		});
 
-		// 注册 JavaTimeModule，支持 Java 8 日期时间类型序列化/反序列化
-		JavaTimeModule javaTimeModule = new JavaTimeModule();
-		javaTimeModule.addSerializer(LocalDateTime.class,new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-		javaTimeModule.addDeserializer(LocalDateTime.class,new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-		objectMapper.registerModule(javaTimeModule);
+		// LocalDateTime 自定义序列化/反序列化，格式为 yyyy-MM-dd HH:mm:ss（空格分隔，不带 T）
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+		module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+
+		// 注册 JavaTimeModule，支持 Java 8 日期时间类型
+		objectMapper.registerModule(new JavaTimeModule());
+		// 自定义 SimpleModule 最后注册，确保 LocalDateTime 使用自定义格式而非 ISO-8601（带 T）
 		objectMapper.registerModule(module);
 
 		return objectMapper;

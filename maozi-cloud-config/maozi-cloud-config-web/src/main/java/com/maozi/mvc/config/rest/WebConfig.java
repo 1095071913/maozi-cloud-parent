@@ -65,9 +65,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         // 在默认支持的媒体类型基础上，额外添加 application/octet-stream 支持
         List<MediaType> supportedMediaTypes = new ArrayList<>(converter.getSupportedMediaTypes());
-
         supportedMediaTypes.add(MediaType.APPLICATION_OCTET_STREAM);
-
         converter.setSupportedMediaTypes(supportedMediaTypes);
 
         // 将自定义转换器添加到转换器列表中
