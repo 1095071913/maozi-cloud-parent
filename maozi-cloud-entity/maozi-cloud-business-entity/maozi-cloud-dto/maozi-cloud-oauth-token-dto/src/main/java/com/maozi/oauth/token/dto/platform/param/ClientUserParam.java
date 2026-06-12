@@ -27,7 +27,7 @@ public class ClientUserParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 客户端 ID */
-	private Long clientId;
+	private String clientId;
 
     /** 用户名 */
 	private String username;

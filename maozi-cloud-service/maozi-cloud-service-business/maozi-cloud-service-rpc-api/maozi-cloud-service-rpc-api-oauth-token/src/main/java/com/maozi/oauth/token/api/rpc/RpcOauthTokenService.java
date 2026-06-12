@@ -1,7 +1,9 @@
 package com.maozi.oauth.token.api.rpc;
 
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.oauth.token.dto.platform.param.ClientUserParam;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,5 +41,17 @@ public interface RpcOauthTokenService {
      * @return 操作结果
      */
     AbstractBaseResult<Void> rpcDestroyByPrincipal(String registeredClientId, String principalName);
+
+    /**
+     * RPC方式批量注销用户令牌
+     * <p>
+     * 根据多个客户端ID和用户主体名称，批量移除对应用户的所有OAuth2授权记录，
+     * 减少多次单条RPC调用的网络开销。禁用角色等场景下需要对多个用户统一注销时使用。
+     * </p>
+     *
+     * @param clientUsers 客户端用户参数列表，每项包含clientId和username
+     * @return 操作结果
+     */
+    AbstractBaseResult<Void> rpcDestroyByPrincipals(List<ClientUserParam> clientUsers);
 
 }
