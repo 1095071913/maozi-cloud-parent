@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务实现基础模块，聚合所有核心配置依赖，为业务服务实现提供统一的基础环境 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承服务层父工程，统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-service</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- 服务实现基础模块构件名称 -->
+    <artifactId>maozi-cloud-service-impl</artifactId>
+
+    <dependencies>
+
+        <!-- Nacos 配置中心客户端，从 Nacos 拉取服务配置 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- Project Begin -->
+
+        <!-- DTO 数据传输对象依赖，服务实现层的请求与响应数据结构 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-domain-dto</artifactId>
+            <version>${maozi-cloud-domain-dto.version}</version>
+        </dependency>
+
+        <!-- 服务启动运行基础依赖，提供 BaseApplication 和通用启动逻辑 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-run</artifactId>
+            <version>${maozi-cloud-service-run.version}</version>
+        </dependency>
+
+        <!-- 通用工具类依赖，提供 JSON、字符串、反射等基础工具方法 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-utils</artifactId>
+            <version>${maozi-cloud-utils.version}</version>
+        </dependency>
+
+        <!-- Web 配置模块，提供 Spring MVC、全局异常处理等 Web 层配置 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-web</artifactId>
+            <version>${maozi-cloud-config-web.version}</version>
+        </dependency>
+
+        <!-- 日志配置模块，集成 Logback 日志输出与链路追踪日志格式 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-log</artifactId>
+            <version>${maozi-cloud-config-log.version}</version>
+        </dependency>
+
+        <!-- Sentinel 限流配置模块，集成熔断降级与流量控制规则 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-sentinel</artifactId>
+            <version>${maozi-cloud-config-sentinel.version}</version>
+        </dependency>
+
+        <!-- 监控配置模块，集成 Spring Boot Admin 服务监控与指标暴露 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-monitor</artifactId>
+            <version>${maozi-cloud-config-monitor.version}</version>
+        </dependency>
+
+        <!-- OAuth 安全配置模块，集成 OAuth2 认证授权体系 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-oauth</artifactId>
+            <version>${maozi-cloud-config-oauth.version}</version>
+        </dependency>
+
+        <!-- Swagger 配置模块，集成 OpenAPI 接口文档自动生成 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-swagger</artifactId>
+            <version>${maozi-cloud-config-swagger.version}</version>
+        </dependency>
+
+        <!-- Dubbo 配置模块，集成 Apache Dubbo RPC 远程调用框架 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-dubbo</artifactId>
+            <version>${maozi-cloud-config-dubbo.version}</version>
+        </dependency>
+
+        <!-- Feign 配置模块，集成 OpenFeign 声明式 HTTP 调用与拦截器 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-feign</artifactId>
+            <version>${maozi-cloud-config-feign.version}</version>
+        </dependency>
+
+        <!-- 服务发现配置模块，集成注册中心服务注册与灰度负载均衡 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-discovery</artifactId>
+            <version>${maozi-cloud-config-discovery.version}</version>
+        </dependency>
+
+        <!-- 服务 API 接口依赖，服务实现层需要实现对应的 API 接口 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-api</artifactId>
+            <version>${maozi-cloud-service-api.version}</version>
+        </dependency>
+
+        <!-- 分布式锁配置模块，集成 Redisson 等分布式锁实现 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-lock</artifactId>
+            <version>${maozi-cloud-config-lock.version}</version>
+        </dependency>
+        <!-- Project End -->
+
+    </dependencies>
+
+</project>

@@ -1,33 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Redis 缓存配置模块，集成 Spring Data Redis、连接池及 JSON 序列化等 Redis 客户端组件 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Redis 缓存配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-redis</artifactId>
 
 	<dependencies>
 
 		<!-- SpringBoot Begin -->
+		<!-- Apache Commons 连接池，用于 Redis Lettuce 连接池支持 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
 		</dependency>
 
+		<!-- 项目通用工具类库 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>
 			<version>${maozi-cloud-utils.version}</version>
 		</dependency>
 
+		<!-- Spring Boot Data Redis，提供 Redis 客户端自动配置 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
+		<!-- Spring Boot JSON 序列化支持，用于 Redis 值的 JSON 编解码 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-json</artifactId>

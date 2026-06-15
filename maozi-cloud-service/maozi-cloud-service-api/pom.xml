@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务 API 接口定义模块，声明各业务的 Feign 远程调用接口和 DTO 约定 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承服务层父工程，统一管理依赖版本 -->
+	<parent>
+		<groupId>com.maozi</groupId>
+		<artifactId>maozi-cloud-service</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<!-- 服务 API 接口模块构件名称 -->
+	<artifactId>maozi-cloud-service-api</artifactId>
+
+	<dependencies>
+
+		<!-- VO 视图对象依赖，接口入参和返回值引用 VO 定义 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-domain-vo</artifactId>
+			<version>${maozi-cloud-domain-vo.version}</version>
+		</dependency>
+
+		<!-- Swagger OpenAPI 注解，用于接口文档的接口描述与参数说明 -->
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations-jakarta</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+
+		<!-- Spring Security 安全核心，提供认证授权相关的核心接口与实现 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+
+		<!-- Spring Cloud OpenFeign 核心，用于声明式 HTTP 远程调用 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

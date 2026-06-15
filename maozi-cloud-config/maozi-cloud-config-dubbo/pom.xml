@@ -1,30 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Dubbo RPC 配置模块，集成 Apache Dubbo 及 Nacos 注册中心实现高性能远程调用 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Dubbo RPC 配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-dubbo</artifactId>
 
 	<dependencies>
 
 
 		<!-- Dubbo Begin -->
+		<!-- Dubbo Spring Boot 集成启动器，提供 Dubbo 自动配置能力 -->
 		<dependency>
 			<groupId>org.apache.dubbo</groupId>
 			<artifactId>dubbo-spring-boot-starter</artifactId>
 			<version>${dubbo.version}</version>
 		</dependency>
-		
+
+		<!-- Dubbo Spring Boot Actuator 监控，提供 Dubbo 运行时健康检查与指标 -->
 		<dependency>
         	<groupId>org.apache.dubbo</groupId>
 			<artifactId>dubbo-spring-boot-actuator</artifactId>
-			<version>${dubbo.version}</version> 
+			<version>${dubbo.version}</version>
 		</dependency>
 
+		<!-- Dubbo Nacos 注册中心适配，将 Nacos 作为服务注册发现组件 -->
 		<dependency>
 			<groupId>org.apache.dubbo</groupId>
 			<artifactId>dubbo-nacos-spring-boot-starter</artifactId>
@@ -34,12 +43,14 @@
 
 
 		<!-- Project Begin -->
+		<!-- 监控配置模块，集成 Spring Boot Admin 相关监控配置 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-monitor</artifactId>
 			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
 
+		<!-- 项目通用工具类库 -->
         <dependency>
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-utils</artifactId>

@@ -1,32 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 定时任务配置模块，集成 XXL-JOB 分布式任务调度框架及 AOP 切面支持 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 定时任务配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-job</artifactId>
 
 
 	<dependencies>
-		
+
+		<!-- XXL-JOB 分布式任务调度核心库，提供定时任务的注册与执行 -->
 		<dependency>
-			<groupId>com.xuxueli</groupId> 
+			<groupId>com.xuxueli</groupId>
 			<artifactId>xxl-job-core</artifactId>
 			<version>${xxl-job-core.version}</version>
 		</dependency>
 
+		<!-- Spring AOP 切面支持，用于任务执行的切面增强 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+		<!-- 基础枚举定义，提供任务相关枚举常量 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-base-enum</artifactId>
-            <version>${maozi-cloud-base-enum.version}</version>
+            <artifactId>maozi-cloud-domain-enum</artifactId>
+            <version>${maozi-cloud-domain-enum.version}</version>
         </dependency>
 
     </dependencies>

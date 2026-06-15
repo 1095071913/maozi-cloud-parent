@@ -100,25 +100,25 @@ public class RequestEntranceLogAop {
     @Around(POINT)
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint){
 
-    	/** 请求开始时间戳 */
+    	/* 请求开始时间戳 */
     	long startTime = System.currentTimeMillis();
 
-    	/** 当前 HTTP 请求 */
+    	/* 当前 HTTP 请求 */
     	HttpServletRequest request = WebUtil.getRequest();
 
-    	/** Dubbo RPC 上下文 */
+    	/* Dubbo RPC 上下文 */
     	RpcContext rpcContext = RpcContext.getServiceContext();
 
-    	/** RPC 服务地址 */
+    	/* RPC 服务地址 */
     	String rpcUrl = rpcContext.getLocalHost();
 
-    	/** 方法参数字符串 */
+    	/* 方法参数字符串 */
     	String param = Arrays.toString(proceedingJoinPoint.getArgs());
 
-    	/** Sentinel 当前节点 */
+    	/* Sentinel 当前节点 */
     	Node curNode = ContextUtil.getContext().getCurNode();
 
-    	/** 日志信息集合 */
+    	/* 日志信息集合 */
     	Map<String, String> logs = restEntranceLogUtils.requestLog(proceedingJoinPoint, request, rpcUrl);
 
     	// 非生产环境记录请求参数
@@ -161,6 +161,8 @@ public class RequestEntranceLogAop {
             	logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
             }
 
+			return resultData;
+
         } finally {
 
         	// 记录本次请求过程中执行的 SQL 日志（从 ThreadLocal 中获取）
@@ -170,43 +172,38 @@ public class RequestEntranceLogAop {
 			// 记录响应时间
 			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
-        	if(ObjectUtil.isNotNullEmpty(resultData)) {
+			// 判断结果是否为框架统一响应类型 && 请求失败（业务或系统错误）
+        	if(ObjectUtil.isNotNullEmpty(resultData) && resultData instanceof AbstractBaseResult<?> result && !result.isSuccess()) {
 
-        		// 判断结果是否为框架统一响应类型
-				if(resultData instanceof AbstractBaseResult<?> result){
+				// 统计 Sentinel 阻塞 QPS（表示请求被限流或熔断）
+				curNode.increaseBlockQps(1);
 
-					// 请求失败（业务或系统错误）
-					if(!result.isSuccess()) {
+				// 获取错误详情，用于判断是业务错误还是系统错误
+				ErrorResult<?> errorResult = result.getErrorResult();
 
-						// 统计 Sentinel 阻塞 QPS（表示请求被限流或熔断）
-						curNode.increaseBlockQps(1);
-
-						// 获取错误详情，用于判断是业务错误还是系统错误
-						ErrorResult<?> errorResult = result.getErrorResult();
-
-						// 业务错误使用 warn 级别，系统错误使用 error 级别
-						if(errorResult.autoIdentifyHttpCode().isBusinessError()) {log.warn(LogUtil.convertLog(logs));}
-
-						else {LogUtil.error(log,logs);}
-
-						return result;
-
-					}
-
+				// 业务错误使用 warn 级别，系统错误使用 error 级别
+				if(errorResult.autoIdentifyHttpCode().isBusinessError()) {
+					log.warn(LogUtil.convertLog(logs));
+				}else {
+					LogUtil.error(log,logs);
 				}
 
-        	}
+        	}else{
 
-			// 统计 Sentinel 通过 QPS（表示请求成功处理）
-			curNode.addPassRequest(1);
+				// 统计 Sentinel 通过 QPS（表示请求成功处理）
+				curNode.addPassRequest(1);
 
-			// 请求成功，记录 info 级别日志
-			LogUtil.info(log,logs);
+				// 请求成功，记录 info 级别日志
+				LogUtil.info(log,logs);
+
+			}
 
 		}
 
 		// 非 HTTP 请求时（RPC 调用）清理上下文
-		if(ObjectUtil.isNullEmpty(request)) {ApplicationLinkContext.clearContext();}
+		if(ObjectUtil.isNullEmpty(request)) {
+			ApplicationLinkContext.clearContext();
+		}
 
         return resultData;
 

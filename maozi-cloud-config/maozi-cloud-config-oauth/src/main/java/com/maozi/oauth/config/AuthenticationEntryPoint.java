@@ -57,7 +57,7 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
         // 尝试从异常链中提取BusinessResultException：
         // 如果根本原因是BusinessResultException，则使用其携带的错误信息（保留了原始的业务错误详情）
         // 否则使用默认的用户认证错误码返回
-        AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException.getCause()) && causeException.getCause() instanceof BusinessResultException businessResultException ?
+        AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && ObjectUtil.isNotNullEmpty(causeException.getCause()) && causeException.getCause() instanceof BusinessResultException businessResultException ?
                 businessResultException.getErrorResult()
                 :
                 ResultUtil.error(SystemErrorCode.USER_AUTH_ERROR).autoIdentifyHttpCode(SystemErrorCode.USER_AUTH_ERROR_DEFAULT_CODE);

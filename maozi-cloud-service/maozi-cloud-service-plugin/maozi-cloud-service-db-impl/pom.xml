@@ -1,23 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务数据库实现插件模块，集成数据库相关配置，为服务实现层提供数据持久化能力 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- 继承服务实现插件父工程，统一管理依赖版本 -->
   <parent>
     <groupId>com.maozi</groupId>
     <artifactId>maozi-cloud-service-plugin</artifactId>
-    <version>${parent-revision}</version>
+    <version>${revision}</version>
   </parent>
+
+  <!-- 服务数据库实现插件模块构件名称 -->
   <artifactId>maozi-cloud-service-db-impl</artifactId>
-  
-  
+
   <dependencies>
 
-	    <!-- Project Begin -->
-    <dependency>
-      <groupId>com.maozi</groupId>
-      <artifactId>maozi-cloud-config-db</artifactId>
-      <version>${maozi-cloud-config-db.version}</version>
-    </dependency>
-        <!-- Project End -->
-	  
-  </dependencies>  
-  
+	  <!-- Project Begin -->
+
+      <!-- 数据库配置模块，集成 MyBatis-Plus、数据源、连接池等数据库相关配置 -->
+      <dependency>
+          <groupId>com.maozi</groupId>
+          <artifactId>maozi-cloud-config-db</artifactId>
+          <version>${maozi-cloud-config-db.version}</version>
+      </dependency>
+      <!-- Project End -->
+
+  </dependencies>
+
 </project>

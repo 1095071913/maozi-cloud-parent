@@ -16,6 +16,7 @@
  */
 package org.apache.dubbo.spring.boot.context.event;
 
+import jakarta.annotation.Nonnull;
 import org.apache.dubbo.common.Version;
 
 
@@ -60,7 +61,7 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
      * 使用 AtomicBoolean 保证多线程环境下的原子性操作。
      * </p>
      */
-    private static AtomicBoolean processed = new AtomicBoolean(true);
+    private static final AtomicBoolean processed = new AtomicBoolean(true);
 
     /**
      * 处理应用环境准备完成事件
@@ -77,16 +78,16 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
      * @param event Spring Boot 应用环境准备完成事件
      */
     @Override
-    public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+    public void onApplicationEvent(@Nonnull ApplicationEnvironmentPreparedEvent event) {
 
         // 如果已经处理过，直接跳过，防止在层级 ApplicationContext 中重复执行
         if (processed.get()) {
             return;
         }
 
-        /**
-         * 在日志系统配置就绪后获取 Logger
-         * @see LoggingApplicationListener
+        /*
+          在日志系统配置就绪后获取 Logger
+          @see LoggingApplicationListener
          */
         final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -119,20 +120,14 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
      */
     String buildBannerText() {
 
-        StringBuilder bannerTextBuilder = new StringBuilder();
-
-        bannerTextBuilder
-                .append(LINE_SEPARATOR)
-                .append(LINE_SEPARATOR)
-                .append(" :: Dubbo (v").append(Version.getVersion()).append(") : ")
-                .append(DUBBO_GITHUB_URL)
-                .append(LINE_SEPARATOR)
-                .append(" :: Discuss group : ")
-                .append(DUBBO_MAILING_LIST)
-                .append(LINE_SEPARATOR)
-        ;
-
-        return bannerTextBuilder.toString();
+        return LINE_SEPARATOR +
+                LINE_SEPARATOR +
+                " :: Dubbo (v" + Version.getVersion() + ") : " +
+                DUBBO_GITHUB_URL +
+                LINE_SEPARATOR +
+                " :: Discuss group : " +
+                DUBBO_MAILING_LIST +
+                LINE_SEPARATOR;
 
     }
 

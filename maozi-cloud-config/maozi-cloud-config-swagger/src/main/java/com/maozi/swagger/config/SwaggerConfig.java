@@ -9,6 +9,7 @@ package com.maozi.swagger.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.maozi.common.CollectionUtil;
+import com.maozi.common.constant.AuthroizationConstant;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.oauth.properties.ApiWhitelistProperties;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -46,9 +47,6 @@ public class SwaggerConfig {
 
     /** 许可证名称 */
     private final static String LICENSE_NAME = "Apache 2.0";
-
-    /** 授权请求头名称 */
-    private final static String AUTHORIZATION = "Authorization";
 
     /** 授权令牌示例值 */
     private final static String AUTHORIZATION_VALUE = "{{oauth_access_token}}";
@@ -101,7 +99,7 @@ public class SwaggerConfig {
             }
 
             Parameter tokenHeader = new HeaderParameter()
-                    .name(AUTHORIZATION)
+                    .name(AuthroizationConstant.AUTHORIZATION_HEADER)
                     .example(AUTHORIZATION_VALUE)
                     .description("用户授权令牌")
                     .required(true)
@@ -137,7 +135,7 @@ public class SwaggerConfig {
                 return;
             }
 
-            for (Schema schema : schemas.values()) {
+            for (Schema<?> schema : schemas.values()) {
                 if (schema.getProperties() == null) {
                     continue;
                 }

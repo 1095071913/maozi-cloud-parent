@@ -1,6 +1,7 @@
 package com.maozi.feign.config;
 
 import com.maozi.common.WebUtil;
+import com.maozi.common.constant.AuthroizationConstant;
 import com.maozi.common.context.ApplicationLinkContext;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -38,7 +39,7 @@ public class TokenRequestInterceptor implements RequestInterceptor {
 
                 String name = headerNames.nextElement();
 
-                if("authorization".equals(name)) {
+                if(AuthroizationConstant.AUTHORIZATION_HEADER.equals(name)) {
                     requestTemplate.header(name, request.getHeader(name));
                 }
 

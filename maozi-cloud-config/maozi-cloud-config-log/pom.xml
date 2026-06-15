@@ -1,36 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志记录配置模块，集成 OAuth 认证、Sentinel 限流及 AOP 切面实现操作日志记录 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 日志记录配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-log</artifactId>
 
 
 	<dependencies>
-	
+
 
 		<!-- Project Begin -->
+		<!-- OAuth2 认证配置模块，提供用户身份信息 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-oauth</artifactId>
 			<version>${maozi-cloud-config-oauth.version}</version>
 		</dependency>
-		
+
+		<!-- Sentinel 限流配置模块，日志记录前进行限流判断 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-sentinel</artifactId>
 			<version>${maozi-cloud-config-sentinel.version}</version>
 		</dependency>
-		
-		<dependency> 
+
+		<!-- Spring AOP 切面支持，用于通过注解方式实现日志切面 -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		
+
+		<!-- Janino 运行时编译器，用于 Logback 日志条件判断 -->
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>

@@ -1,28 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Feign 远程调用配置模块，集成 OpenFeign 声明式 HTTP 客户端及 OkHttp 底层实现 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Feign 远程调用配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-feign</artifactId>
 
 
 	<dependencies>
-	
-		<!-- Spring Cloud Begin -->  
-		<dependency>  
+
+		<!-- Spring Cloud Begin -->
+		<!-- OpenFeign 声明式 HTTP 客户端，支持通过接口注解方式发起 HTTP 请求 -->
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency> 
- 
+		</dependency>
+
+		<!-- Feign OkHttp 底层实现，替代默认 HttpURLConnection 提升连接性能 -->
 		<dependency>
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-okhttp</artifactId>
 		</dependency>
-		
+
+		<!-- JAX-RS API 定义，提供 RESTful 规范接口注解 -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
@@ -30,13 +39,14 @@
 		</dependency>
         <!-- Spring Cloud End -->
 
+		<!-- 项目通用工具类库 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>
 			<version>${maozi-cloud-utils.version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
 
-</project> 
+</project>

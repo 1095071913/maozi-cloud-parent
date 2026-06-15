@@ -1,18 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Seata 分布式事务配置模块，集成阿里巴巴 Seata 实现跨服务数据一致性保障 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Seata 分布式事务配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-seata</artifactId>
 
 	<dependencies>
 
 
 		<!-- SpringBoot Begin -->
+		<!-- Spring Cloud Alibaba Seata，提供分布式事务 AT 模式支持 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
@@ -20,12 +27,7 @@
 		<!-- SpringBoot End -->
 
 		<!-- Project Begin -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-seata-do</artifactId>
-			<version>${maozi-cloud-seata-do.version}</version>
-		</dependency>
-		
+		<!-- 数据库访问配置模块，Seata 事务管理需要操作数据库 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-db</artifactId>

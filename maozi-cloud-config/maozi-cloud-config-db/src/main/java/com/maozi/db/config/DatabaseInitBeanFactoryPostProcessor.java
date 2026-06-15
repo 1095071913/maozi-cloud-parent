@@ -1,6 +1,6 @@
 package com.maozi.db.config;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -50,7 +50,7 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
      * @param environment Spring 环境对象
      */
     @Override
-    public void setEnvironment(@NotNull Environment environment) {
+    public void setEnvironment(@Nonnull Environment environment) {
         this.environment = environment;
     }
 
@@ -67,7 +67,7 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
      * @throws BeansException Bean 异常
      */
     @Override
-    public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(@Nonnull ConfigurableListableBeanFactory beanFactory) throws BeansException {
         String url = environment.getProperty(DATASOURCE_URL);
         String username = environment.getProperty(DATASOURCE_USERNAME);
         String password = environment.getProperty(DATASOURCE_PASSWORD, "");

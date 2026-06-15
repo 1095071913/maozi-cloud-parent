@@ -1,19 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务层聚合工程，聚合管理服务运行库、API 接口层、实现层及插件层子模块 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承猫子云统一父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-parent</artifactId>
-		<version>${parent-revision}</version>
-	</parent> 
-	<artifactId>maozi-cloud-service</artifactId>
-	<packaging>pom</packaging>
+		<version>${revision}</version>
+	</parent>
 
+	<!-- 服务层聚合工程构件名称 -->
+	<artifactId>maozi-cloud-service</artifactId>
+	<!-- 打包类型为 pom，表示这是一个聚合工程 -->
+	<packaging>pom</packaging>
 
 	<dependencies>
 
 		<!-- Project Begin -->
+		<!-- 通用工具类库，提供 JSON、对象操作等基础工具 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>
@@ -21,18 +28,18 @@
 		</dependency>
 		<!-- Project End -->
 
-	</dependencies> 
+	</dependencies>
 
-
-
-
+	<!-- 子模块列表 -->
 	<modules>
-		<module>maozi-cloud-service-base</module>
-		<module>maozi-cloud-service-business</module>
+		<!-- 服务基础运行库模块，提供 BaseApplication、通用启动逻辑 -->
+		<module>maozi-cloud-service-run</module>
+		<!-- 服务 API 接口层模块，定义对外暴露的服务接口 -->
+		<module>maozi-cloud-service-api</module>
+		<!-- 服务实现层模块，提供服务接口的通用实现 -->
+		<module>maozi-cloud-service-impl</module>
+		<!-- 服务插件聚合模块，聚合数据库实现等扩展能力 -->
 		<module>maozi-cloud-service-plugin</module>
 	</modules>
-
-
-
 
 </project>

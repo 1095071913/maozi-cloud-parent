@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云领域层聚合工程，聚合管理 DTO、Enum、VO 等领域模型子模块 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承猫子云统一父工程，统一管理依赖版本 -->
+    <parent>
+      <groupId>com.maozi</groupId>
+      <artifactId>maozi-cloud-parent</artifactId>
+      <version>${revision}</version>
+    </parent>
+
+    <!-- 领域层聚合工程构件名称 -->
+    <artifactId>maozi-cloud-domain</artifactId>
+    <!-- 打包类型为 pom，表示这是一个聚合工程 -->
+    <packaging>pom</packaging>
+
+
+    <dependencies>
+
+        <!-- Swagger OpenAPI 注解，用于标注接口文档元数据 -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <!-- Project Begin -->
+        <!-- 通用工具类库，提供 JSON、对象操作等基础工具 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-utils</artifactId>
+            <version>${maozi-cloud-utils.version}</version>
+        </dependency>
+        <!-- Project End -->
+
+    </dependencies>
+
+
+    <!-- 子模块列表 -->
+    <modules>
+        <!-- 数据传输对象模块 -->
+        <module>maozi-cloud-domain-dto</module>
+        <!-- 枚举定义模块 -->
+        <module>maozi-cloud-domain-enum</module>
+        <!-- 视图对象模块 -->
+        <module>maozi-cloud-domain-vo</module>
+    </modules>
+
+
+</project>

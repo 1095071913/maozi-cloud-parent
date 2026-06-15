@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务启动运行基础模块，提供 BaseApplication 基类和 Bootstrap 引导配置等启动核心能力 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承服务层父工程，统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-service</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- 服务启动运行基础模块构件名称 -->
+    <artifactId>maozi-cloud-service-run</artifactId>
+
+    <dependencies>
+
+        <!-- 通用工具类依赖，启动时提供基础工具方法支持 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-utils</artifactId>
+            <version>${maozi-cloud-utils.version}</version>
+        </dependency>
+
+        <!-- Spring Cloud Bootstrap 引导配置，用于加载 Nacos 等外部配置源 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud OpenFeign 核心，启动时扫描 @FeignClient 注解注册代理 Bean -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-openfeign-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

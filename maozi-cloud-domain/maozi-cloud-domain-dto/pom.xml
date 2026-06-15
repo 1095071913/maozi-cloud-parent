@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云数据传输对象(DTO)模块，定义服务间数据传输的 DTO 基础结构 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承领域模型父工程，统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-domain</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- DTO 模块构件名称 -->
+    <artifactId>maozi-cloud-domain-dto</artifactId>
+
+
+    <dependencies>
+
+        <!-- 基础枚举定义模块，DTO 中引用的枚举类型基础依赖 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-domain-enum</artifactId>
+            <version>${maozi-cloud-domain-enum.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

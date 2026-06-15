@@ -1,33 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 服务发现配置模块，集成 Nacos 服务注册与发现及 Spring Cloud 负载均衡器 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 服务发现配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-discovery</artifactId>
 
 
 	<dependencies>
-	
+
+		<!-- Nacos 服务发现客户端，将服务注册到 Nacos 并发现其他服务 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
 		</dependency>
 
+		<!-- Spring Cloud LoadBalancer 负载均衡器，支持灰度发布等自定义负载均衡策略 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
 
+		<!-- 项目通用工具类库 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>
 			<version>${maozi-cloud-utils.version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
 

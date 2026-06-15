@@ -16,8 +16,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.base.MPJBaseService;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.maozi.base.AbstractBaseDomain;
-import com.maozi.base.AbstractBaseNameDomain;
 import com.maozi.base.api.IBaseMapper;
 import com.maozi.base.api.rpc.BaseServiceResult;
 import com.maozi.base.constant.ResultFunName;
@@ -49,6 +47,8 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
+import com.maozi.db.domain.AbstractBaseDomain;
+import com.maozi.db.domain.AbstractBaseNameDomain;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 

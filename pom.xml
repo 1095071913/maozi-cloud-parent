@@ -1,129 +1,158 @@
-﻿<project xmlns="http://maven.apache.org/POM/4.0.0"
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云统一父工程，作为整个微服务体系的根 POM，统一管理依赖版本、构建配置和公共组件 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- 项目组织标识 -->
 	<groupId>com.maozi</groupId>
+	<!-- 统一父工程构件名称 -->
 	<artifactId>maozi-cloud-parent</artifactId>
-	<version>${parent-revision}</version>
+	<!-- 使用 ${revision} 占位符管理版本号，便于多模块统一升级 -->
+	<version>${revision}</version>
 
+	<!-- 打包类型为 pom，表示这是一个聚合工程 -->
 	<packaging>pom</packaging>
 
 
 	<properties>
 
-		<parent-revision>2.0.0</parent-revision>
+		<!-- 项目统一版本号 -->
+		<revision>2.0.0</revision>
 
 		<!-- Java Begin -->
+		<!-- Java 版本号 -->
 		<java.version>17</java.version>
+		<!-- Maven 编译源代码兼容版本 -->
 		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<!-- Maven 编译目标字节码版本 -->
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
+		<!-- 项目统一编码格式 -->
 		<project.encoding>UTF-8</project.encoding>
+		<!-- 构建源代码编码 -->
 		<project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+		<!-- 报告输出编码 -->
 		<project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 		<!-- Java End -->
 
 
 		<!-- Spring Component Begin -->
+		<!-- Spring Boot 版本 -->
 		<spring-boot.version>3.2.6</spring-boot.version>
+		<!-- Spring Cloud 版本 -->
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<!-- Spring Cloud Alibaba 版本 -->
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<!-- Spring Boot Admin 监控组件版本 -->
 		<spring-boot-admin-starter.version>3.2.3</spring-boot-admin-starter.version>
 		<!-- Spring Component End -->
 
 
 		<!-- Other Component Begin -->
+		<!-- CGLIB 动态代理版本 -->
 		<cglib.version>3.3.0</cglib.version>
+		<!-- Apache Dubbo RPC 通信框架版本 -->
 		<dubbo.version>3.2.6</dubbo.version>
+		<!-- Arthas Java 在线诊断工具版本 -->
 		<arthas.version>3.6.7</arthas.version>
+		<!-- Hutool Java 工具类库版本 -->
 		<hutool.version>5.8.28</hutool.version>
+		<!-- EasyPOI Excel 导入导出工具版本 -->
 		<easypoi.version>4.3.0</easypoi.version>
-		<swagger.version>2.2.9</swagger.version>
+		<!-- Swagger OpenAPI 注解版本 -->
+		<swagger.version>2.2.47</swagger.version>
+		<!-- MyBatis ORM 框架版本 -->
 		<mybatis.version>3.5.10</mybatis.version>
+		<!-- Redisson 分布式锁与缓存客户端版本 -->
 		<redisson.version>3.18.0</redisson.version>
+		<!-- SkyWalking 链路追踪工具版本 -->
 		<skywalking.version>8.4.0</skywalking.version>
+		<!-- XXL-JOB 分布式任务调度框架版本 -->
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
+		<!-- MyBatis-Plus 增强版 ORM 框架版本 -->
 		<mybatis-plus.version>3.5.6</mybatis-plus.version>
+		<!-- TransmittableThreadLocal 阿里线程上下文传递工具版本 -->
 		<transmittable.version>2.14.5</transmittable.version>
+		<!-- MyBatis-Plus-Join 多表连接查询插件版本 -->
 		<mybatis-plus-join.version>1.5.7</mybatis-plus-join.version>
+		<!-- SpringDoc OpenAPI 文档工具版本 -->
 		<springdoc-openapi.version>2.8.17</springdoc-openapi.version>
+		<!-- Sentinel Apache Dubbo 适配器版本 -->
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
 		<!-- Other Component End -->
 
 
 		<!-- Project Begin -->
+		<!-- 应用启动主类全限定名 -->
 		<application-run>com.maozi.Application</application-run>
 
-		<maozi-cloud-do.version>${parent-revision}</maozi-cloud-do.version>
-		<maozi-cloud-vo.version>${parent-revision}</maozi-cloud-vo.version>
-		<maozi-cloud-dto.version>${parent-revision}</maozi-cloud-dto.version>
-		<maozi-cloud-enum.version>${parent-revision}</maozi-cloud-enum.version>
-		<maozi-cloud-seata-do.version>${parent-revision}</maozi-cloud-seata-do.version>
+		<!-- 通用工具类库版本 -->
+		<maozi-cloud-utils.version>${revision}</maozi-cloud-utils.version>
 
+		<!-- 领域层 VO 视图对象模块版本 -->
+		<maozi-cloud-domain-vo.version>${revision}</maozi-cloud-domain-vo.version>
+		<!-- 领域层 DTO 数据传输对象模块版本 -->
+		<maozi-cloud-domain-dto.version>${revision}</maozi-cloud-domain-dto.version>
+		<!-- 领域层 Enum 枚举定义模块版本 -->
+		<maozi-cloud-domain-enum.version>${revision}</maozi-cloud-domain-enum.version>
 
-		<maozi-cloud-base-do.version>${parent-revision}</maozi-cloud-base-do.version>
-		<maozi-cloud-base-vo.version>${parent-revision}</maozi-cloud-base-vo.version>
-		<maozi-cloud-base-dto.version>${parent-revision}</maozi-cloud-base-dto.version>
-		<maozi-cloud-base-enum.version>${parent-revision}</maozi-cloud-base-enum.version>
+		<!-- 数据库配置模块版本 -->
+		<maozi-cloud-config-db.version>${revision}</maozi-cloud-config-db.version>
+		<!-- 定时任务配置模块版本 -->
+		<maozi-cloud-config-job.version>${revision}</maozi-cloud-config-job.version>
+		<!-- 日志配置模块版本 -->
+		<maozi-cloud-config-log.version>${revision}</maozi-cloud-config-log.version>
+		<!-- Web 层配置模块版本 -->
+		<maozi-cloud-config-web.version>${revision}</maozi-cloud-config-web.version>
+		<!-- 分布式锁配置模块版本 -->
+		<maozi-cloud-config-lock.version>${revision}</maozi-cloud-config-lock.version>
+		<!-- OAuth 安全认证配置模块版本 -->
+		<maozi-cloud-config-oauth.version>${revision}</maozi-cloud-config-oauth.version>
+		<!-- Redis 缓存配置模块版本 -->
+		<maozi-cloud-config-redis.version>${revision}</maozi-cloud-config-redis.version>
+		<!-- Dubbo RPC 配置模块版本 -->
+		<maozi-cloud-config-dubbo.version>${revision}</maozi-cloud-config-dubbo.version>
+		<!-- Feign 远程调用配置模块版本 -->
+		<maozi-cloud-config-feign.version>${revision}</maozi-cloud-config-feign.version>
+		<!-- Seata 分布式事务配置模块版本 -->
+		<maozi-cloud-config-seata.version>${revision}</maozi-cloud-config-seata.version>
+		<!-- Stream 消息流配置模块版本 -->
+		<maozi-cloud-config-stream.version>${revision}</maozi-cloud-config-stream.version>
+		<!-- Swagger API 文档配置模块版本 -->
+		<maozi-cloud-config-swagger.version>${revision}</maozi-cloud-config-swagger.version>
+		<!-- Sentinel 限流熔断配置模块版本 -->
+		<maozi-cloud-config-sentinel.version>${revision}</maozi-cloud-config-sentinel.version>
+		<!-- Spring Boot Admin 监控配置模块版本 -->
+		<maozi-cloud-config-monitor.version>${revision}</maozi-cloud-config-monitor.version>
+		<!-- 服务发现配置模块版本 -->
+		<maozi-cloud-config-discovery.version>${revision}</maozi-cloud-config-discovery.version>
 
-		<maozi-cloud-config-db.version>${parent-revision}</maozi-cloud-config-db.version>
-		<maozi-cloud-config-job.version>${parent-revision}</maozi-cloud-config-job.version>
-		<maozi-cloud-config-log.version>${parent-revision}</maozi-cloud-config-log.version>
-		<maozi-cloud-config-web.version>${parent-revision}</maozi-cloud-config-web.version>
-		<maozi-cloud-config-lock.version>${parent-revision}</maozi-cloud-config-lock.version>
-		<maozi-cloud-config-oauth.version>${parent-revision}</maozi-cloud-config-oauth.version>
-		<maozi-cloud-config-redis.version>${parent-revision}</maozi-cloud-config-redis.version>
-		<maozi-cloud-config-dubbo.version>${parent-revision}</maozi-cloud-config-dubbo.version>
-		<maozi-cloud-config-feign.version>${parent-revision}</maozi-cloud-config-feign.version>
-		<maozi-cloud-config-seata.version>${parent-revision}</maozi-cloud-config-seata.version>
-		<maozi-cloud-config-stream.version>${parent-revision}</maozi-cloud-config-stream.version>
-		<maozi-cloud-config-swagger.version>${parent-revision}</maozi-cloud-config-swagger.version>
-		<maozi-cloud-config-sentinel.version>${parent-revision}</maozi-cloud-config-sentinel.version>
-		<maozi-cloud-config-monitor.version>${parent-revision}</maozi-cloud-config-monitor.version>
-		<maozi-cloud-config-discovery.version>${parent-revision}</maozi-cloud-config-discovery.version>
-
-
-		<maozi-cloud-utils.version>${parent-revision}</maozi-cloud-utils.version>
-
-
-		<maozi-cloud-service-mq.version>${parent-revision}</maozi-cloud-service-mq.version>
-		<maozi-cloud-service-job.version>${parent-revision}</maozi-cloud-service-job.version>
-		<maozi-cloud-service-impl.version>${parent-revision}</maozi-cloud-service-impl.version>
-		<maozi-cloud-service-db-impl.version>${parent-revision}</maozi-cloud-service-db-impl.version>
-		<maozi-cloud-service-rpc-api.version>${parent-revision}</maozi-cloud-service-rpc-api.version>
-		<maozi-cloud-service-rest-api.version>${parent-revision}</maozi-cloud-service-rest-api.version>
-		<maozi-cloud-service-base-run.version>${parent-revision}</maozi-cloud-service-base-run.version>
-		<maozi-cloud-service-base-impl.version>${parent-revision}</maozi-cloud-service-base-impl.version>
-		<maozi-cloud-service-base-rpc-api.version>${parent-revision}</maozi-cloud-service-base-rpc-api.version>
-		<maozi-cloud-service-base-rest-api.version>${parent-revision}</maozi-cloud-service-base-rest-api.version>
-
-
-		<maozi-cloud-service-bd.version>${parent-revision}</maozi-cloud-service-bd.version>
-		<maozi-cloud-service-ss.version>${parent-revision}</maozi-cloud-service-ss.version>
-		<maozi-cloud-service-qny.version>${parent-revision}</maozi-cloud-service-qny.version>
-		<maozi-cloud-service-company-wechat.version>${parent-revision}</maozi-cloud-service-company-wechat.version>
-
-
-		<maozi-cloud-oauth-token-dto.version>${parent-revision}</maozi-cloud-oauth-token-dto.version>
-		<maozi-cloud-system-user-dto.version>${parent-revision}</maozi-cloud-system-user-dto.version>
-		<maozi-cloud-service-rpc-api-oauth-token.version>${parent-revision}</maozi-cloud-service-rpc-api-oauth-token.version>
-		<maozi-cloud-service-rest-api-oauth-token.version>${parent-revision}</maozi-cloud-service-rest-api-oauth-token.version>
-		<maozi-cloud-service-rpc-api-system-config.version>${parent-revision}</maozi-cloud-service-rpc-api-system-config.version>
-		<maozi-cloud-service-rpc-api-system-user.version>${parent-revision}</maozi-cloud-service-rpc-api-system-user.version>
+		<!-- 服务基础运行库版本 -->
+		<maozi-cloud-service-run.version>${revision}</maozi-cloud-service-run.version>
+		<!-- 服务 API 接口层版本 -->
+		<maozi-cloud-service-api.version>${revision}</maozi-cloud-service-api.version>
+		<!-- 服务实现层版本 -->
+		<maozi-cloud-service-impl.version>${revision}</maozi-cloud-service-impl.version>
+		<!-- 服务数据库实现层版本 -->
+		<maozi-cloud-service-db-impl.version>${revision}</maozi-cloud-service-db-impl.version>
 		<!-- Project End -->
 
 
 	</properties>
 
 
+	<!-- Nexus 私服部署配置，发布构件到私服仓库 -->
 	<distributionManagement>
+		<!-- Release 版本发布仓库 -->
 		<repository>
 			<id>nexus-releases</id>
 			<name>Nexus Release Repository</name>
 			<url>http://localhost:8081/repository/maven-releases/</url>
 		</repository>
+		<!-- Snapshot 快照版本发布仓库 -->
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>Nexus Snapshot Repository</name>
@@ -132,10 +161,11 @@
 	</distributionManagement>
 
 
+	<!-- 依赖版本统一管理，通过 BOM 导入方式管理各组件版本 -->
 	<dependencyManagement>
 		<dependencies>
 
-			<!-- Spring Cloud Begin -->
+			<!-- Spring Boot 官方 BOM，统一管理 Spring Boot 全家桶依赖版本 -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -144,6 +174,7 @@
 				<scope>import</scope>
 			</dependency>
 
+			<!-- Spring Cloud 官方 BOM，统一管理 Spring Cloud 生态依赖版本 -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -152,6 +183,7 @@
 				<scope>import</scope>
 			</dependency>
 
+			<!-- Spring Cloud Alibaba 官方 BOM，统一管理 Alibaba 微服务组件依赖版本 -->
 			<dependency>
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -159,15 +191,16 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- Spring Cloud End -->
 
 		</dependencies>
 	</dependencyManagement>
 
 
+	<!-- 全局公共依赖，所有子模块自动继承 -->
 	<dependencies>
 
 		<!-- JAVA EE Begin -->
+		<!-- Jakarta Servlet API，提供 Web 容器 Servlet 规范支持 -->
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
@@ -176,6 +209,7 @@
 
 
 		<!-- Other Component Begin -->
+		<!-- Lombok 代码生成工具，简化 POJO 模板代码 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -185,8 +219,10 @@
 	</dependencies>
 
 
+	<!-- 构建配置 Begin -->
 	<build>
 		<plugins>
+			<!-- Flatten 插件，生成扁平化 POM，解析 ${revision} 占位符，便于发布 -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>flatten-maven-plugin</artifactId>
@@ -212,6 +248,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- Maven 编译插件，指定 Java 版本和编码 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -223,6 +260,7 @@
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
+			<!-- JAR 打包插件，在 MANIFEST 中写入构建信息 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -245,26 +283,32 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 资源处理插件，处理配置文件中的占位符替换 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
+			<!-- Install 插件，将构件安装到本地仓库 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
 			</plugin>
+			<!-- Clean 插件，清理构建产物 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 			</plugin>
+			<!-- Antrun 插件，在构建过程中执行 Ant 任务 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
 			</plugin>
+			<!-- Dependency 插件，用于依赖分析和拷贝 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 			</plugin>
+			<!-- Git Commit ID 插件，在构建时生成 git.properties 文件，记录 Git 提交信息 -->
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
@@ -296,13 +340,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<!-- 资源文件配置 -->
 		<resources>
+			<!-- 将 Java 目录下的非 .java 文件作为资源打包 -->
 			<resource>
 				<directory>src/main/java</directory>
 				<excludes>
 					<exclude>**/*.java</exclude>
 				</excludes>
 			</resource>
+			<!-- 将 webapp 目录映射到 META-INF/resources 路径 -->
 			<resource>
 				<directory>src/main/webapp</directory>
 				<targetPath>META-INF/resources</targetPath>
@@ -310,6 +357,7 @@
 					<include>**/**</include>
 				</includes>
 			</resource>
+			<!-- 将 resources 目录下的配置文件打包，并启用占位符过滤 -->
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
@@ -320,7 +368,11 @@
 			</resource>
 		</resources>
 	</build>
+	<!-- 构建配置 End -->
+
+	<!-- 远程仓库配置 Begin -->
 	<repositories>
+		<!-- 阿里云 Maven 中央仓库镜像，加速国内依赖下载 -->
 		<repository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
@@ -332,6 +384,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<!-- Sonatype 公共仓库，提供开源组件 Release 版本 -->
 		<repository>
 			<id>sonatype-repos</id>
 			<name>Sonatype Repository</name>
@@ -343,6 +396,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<!-- Sonatype 快照仓库，提供开源组件 Snapshot 版本 -->
 		<repository>
 			<id>sonatype-repos-s</id>
 			<name>Sonatype Repository</name>
@@ -354,6 +408,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- Spring 官方快照仓库，提供 Spring 生态 Snapshot 版本 -->
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
@@ -362,6 +417,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- Spring 官方里程碑仓库，提供 Spring 生态里程碑版本 -->
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -370,14 +426,18 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<!-- JFrog JCenter 快照仓库 -->
 		<repository>
 			<id>jcenter-snapshots</id>
 			<name>jcenter</name>
 			<url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
 		</repository>
 	</repositories>
+	<!-- 远程仓库配置 End -->
 
+	<!-- 插件远程仓库配置 -->
 	<pluginRepositories>
+		<!-- 阿里云 Maven 插件镜像仓库 -->
 		<pluginRepository>
 			<id>aliyun-repos</id>
 			<name>Aliyun Repository</name>
@@ -392,11 +452,16 @@
 	</pluginRepositories>
 
 
+	<!-- 子模块列表 -->
 	<modules>
-		<module>maozi-cloud-entity</module>
+		<!-- 通用工具类库模块 -->
 		<module>maozi-cloud-utils</module>
-		<module>maozi-cloud-service</module>
+		<!-- 配置模块聚合工程 -->
 		<module>maozi-cloud-config</module>
+		<!-- 领域层聚合工程 -->
+		<module>maozi-cloud-domain</module>
+		<!-- 服务层聚合工程 -->
+		<module>maozi-cloud-service</module>
   	</modules>
 
 

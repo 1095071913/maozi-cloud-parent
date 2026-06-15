@@ -1,46 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云服务实现插件聚合模块，管理服务层的扩展插件（如数据库实现），聚合领域、API 和实现层依赖 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
+
+  <!-- 继承服务层父工程，统一管理依赖版本 -->
   <parent>
     <groupId>com.maozi</groupId>
     <artifactId>maozi-cloud-service</artifactId>
-    <version>${parent-revision}</version>
+    <version>${revision}</version>
   </parent>
+
+  <!-- 服务实现插件聚合模块构件名称 -->
   <artifactId>maozi-cloud-service-plugin</artifactId>
+  <!-- 打包类型为 pom，表示这是一个聚合工程 -->
   <packaging>pom</packaging>
-  
+
   <dependencies>
-	  
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-impl</artifactId>
-			<version>${maozi-cloud-service-impl.version}</version>
-			<type>pom</type> 
-		</dependency>
-	  
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-do</artifactId>
-			<version>${maozi-cloud-do.version}</version>
-			<type>pom</type>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-vo</artifactId>
-			<version>${maozi-cloud-vo.version}</version>
-			<type>pom</type>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-base-rpc-api</artifactId>
-			<version>${maozi-cloud-service-base-rpc-api.version}</version>
-		</dependency>
-	
+
+	  <!-- VO 视图对象依赖，插件层引用的视图数据结构 -->
+	  <dependency>
+		  <groupId>com.maozi</groupId>
+		  <artifactId>maozi-cloud-domain-vo</artifactId>
+		  <version>${maozi-cloud-domain-vo.version}</version>
+	  </dependency>
+
+	  <!-- 服务 API 接口依赖，插件层需要实现或引用服务接口定义 -->
+	  <dependency>
+		  <groupId>com.maozi</groupId>
+		  <artifactId>maozi-cloud-service-api</artifactId>
+		  <version>${maozi-cloud-service-api.version}</version>
+	  </dependency>
+
+	  <!-- 服务实现依赖，插件层扩展服务实现层的基础能力 -->
+	  <dependency>
+		  <groupId>com.maozi</groupId>
+		  <artifactId>maozi-cloud-service-impl</artifactId>
+		  <version>${maozi-cloud-service-impl.version}</version>
+	  </dependency>
+
   </dependencies>
-  
+
+  <!-- 子模块列表 -->
   <modules>
+		<!-- 服务数据库实现插件模块 -->
 		<module>maozi-cloud-service-db-impl</module>
   </modules>
-  
+
 </project>

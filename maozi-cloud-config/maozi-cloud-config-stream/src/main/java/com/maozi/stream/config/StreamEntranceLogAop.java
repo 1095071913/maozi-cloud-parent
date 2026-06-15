@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -69,7 +70,7 @@ public class StreamEntranceLogAop {
     @Around(POINT)
     public Consumer<Message<Object>> doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-        Consumer<Message<Object>> resultData = (Consumer<Message<Object>>) proceedingJoinPoint.proceed();
+        Consumer<Object> resultData = (Consumer<Object>) proceedingJoinPoint.proceed();
 
         return (message) -> {
 
@@ -84,9 +85,9 @@ public class StreamEntranceLogAop {
             Map<String, String> logs = new LinkedHashMap<>();
 
             logs.put(LogTag.TYPE, LogCommonType.MQ.getDesc()) ;
-            logs.put("MessageId",headers.get("ROCKET_MQ_MESSAGE_ID").toString());
-            logs.put("Topic",headers.get("ROCKET_MQ_TOPIC").toString());
-            logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
+            logs.put("MessageId", Objects.requireNonNull(headers.get("ROCKET_MQ_MESSAGE_ID")).toString());
+            logs.put("Topic", Objects.requireNonNull(headers.get("ROCKET_MQ_TOPIC")).toString());
+            logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
 
             Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
             if(isNotProd){

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云基础枚举定义模块，统一管理系统中的通用枚举类型，如状态、类型标识等 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承领域模型父工程，统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-domain</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- 基础枚举定义模块构件名称 -->
+    <artifactId>maozi-cloud-domain-enum</artifactId>
+
+    <dependencies>
+
+        <!-- MyBatis-Plus 注解，枚举类使用 @EnumValue、@TableField 等注解实现 ORM 映射 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

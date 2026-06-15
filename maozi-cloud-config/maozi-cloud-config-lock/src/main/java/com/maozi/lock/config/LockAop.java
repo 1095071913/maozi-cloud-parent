@@ -89,7 +89,7 @@ public class LockAop {
         type.lock(lockName,waitTime,leaseTime,annotation.lockTimeoutStrategy());
 
         // 执行目标业务方法，确保在 finally 块中释放锁
-        try {return joinPoint.proceed();} catch (Throwable e) {throw e;} finally {
+        try {return joinPoint.proceed();} finally {
             // 无论业务方法执行成功或失败，都执行解锁操作，并根据策略处理解锁超时
             type.unlock(lockName,annotation.releaseTimeoutStrategy());
         }
@@ -116,10 +116,10 @@ public class LockAop {
         List<String> keyList = CollectionUtil.newArrayList();
 
         // 收集通过 SpEL 表达式定义的锁键（来自 @Lock 注解的 keys 属性）
-        keyList.addAll( getSpelDefinitionKey(lock.keys(), method, joinPoint.getArgs()) );
+        keyList.addAll(getSpelDefinitionKey(joinPoint.getTarget(),lock.keys(), method, joinPoint.getArgs()) );
 
         // 收集通过 @LockKey 注解标记的参数值作为锁键
-        keyList.addAll( getParameterKey(method.getParameters(), joinPoint.getArgs()) );
+        keyList.addAll(getParameterKey(method.getParameters(), joinPoint.getArgs()) );
 
         // 将所有键用 "-" 连接，前后也加 "-" 分隔，形成完整的业务键名称
         return StringUtils.collectionToDelimitedString(keyList,"","-","");
@@ -134,7 +134,7 @@ public class LockAop {
      * @param parameterValues 方法参数值
      * @return 解析后的锁键列表
      */
-    private List<String> getSpelDefinitionKey(String[] definitionKeys, Method method, Object[] parameterValues) {
+    private List<String> getSpelDefinitionKey(Object rootObject, String[] definitionKeys, Method method, Object[] parameterValues) {
 
         List<String> definitionKeyList = CollectionUtil.newArrayList();
 
@@ -143,7 +143,7 @@ public class LockAop {
             if (!ObjectUtils.isEmpty(definitionKey)) {
 
                 // 创建基于方法的 SpEL 求值上下文，将方法参数绑定到上下文中以便 SpEL 表达式引用
-                EvaluationContext context = new MethodBasedEvaluationContext(null, method, parameterValues, nameDiscoverer);
+                EvaluationContext context = new MethodBasedEvaluationContext(rootObject, method, parameterValues, nameDiscoverer);
 
                 // 解析 SpEL 表达式并获取实际值，例如 "#orderId" 会被解析为实际的订单 ID
                 Object objKey = parser.parseExpression(definitionKey).getValue(context);

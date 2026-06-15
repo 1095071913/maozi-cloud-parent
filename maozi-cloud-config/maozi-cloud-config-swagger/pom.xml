@@ -1,28 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Swagger 接口文档配置模块，集成 SpringDoc OpenAPI 自动生成 API 文档及 OAuth2 授权支持 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Swagger 接口文档配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-swagger</artifactId>
 
 	<dependencies>
 
+		<!-- SpringDoc OpenAPI WebMvc 接口，用于自动生成 OpenAPI 3.0 规范的 API 文档 -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
 			<version>${springdoc-openapi.version}</version>
 		</dependency>
 
+		<!-- 基础枚举定义，提供接口文档相关枚举常量 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-base-enum</artifactId>
-			<version>${maozi-cloud-base-enum.version}</version>
+			<artifactId>maozi-cloud-domain-enum</artifactId>
+			<version>${maozi-cloud-domain-enum.version}</version>
 		</dependency>
 
+		<!-- OAuth2 认证配置模块，为 Swagger 文档提供 OAuth2 鉴权支持 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-oauth</artifactId>

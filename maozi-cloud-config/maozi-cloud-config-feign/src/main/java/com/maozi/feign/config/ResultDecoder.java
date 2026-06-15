@@ -6,6 +6,7 @@ import com.maozi.common.result.success.SuccessResult;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.Decoder;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -55,7 +56,7 @@ public class ResultDecoder implements Decoder {
 
         Type dataType = ((ParameterizedType)type).getActualTypeArguments()[0];
 
-        HttpMessageConverterExtractor<?> extractor = new HttpMessageConverterExtractor(dataType, this.messageConverters.getObject().getConverters());
+        HttpMessageConverterExtractor<?> extractor = new HttpMessageConverterExtractor<>(dataType, this.messageConverters.getObject().getConverters());
 
         LinkedHashMap<String, Object> extractData = (LinkedHashMap<String, Object>) extractor.extractData(new FeignResponseAdapter(response));
 
@@ -66,7 +67,7 @@ public class ResultDecoder implements Decoder {
     /**
      * Feign 响应到 Spring ClientHttpResponse 的适配器
      */
-    public final class FeignResponseAdapter implements ClientHttpResponse {
+    public static final class FeignResponseAdapter implements ClientHttpResponse {
 
         /** Feign 原始响应 */
         private final Response response;
@@ -83,22 +84,16 @@ public class ResultDecoder implements Decoder {
         /**
          * 获取 HTTP 状态码枚举
          */
+        @NotNull
         @Override
         public HttpStatus getStatusCode() throws IOException {
             return HttpStatus.valueOf(this.response.status());
         }
 
         /**
-         * 获取原始 HTTP 状态码
-         */
-        @Override
-        public int getRawStatusCode() throws IOException {
-            return this.response.status();
-        }
-
-        /**
          * 获取状态描述
          */
+        @NotNull
         @Override
         public String getStatusText() throws IOException {
             return this.response.reason();
@@ -120,6 +115,7 @@ public class ResultDecoder implements Decoder {
         /**
          * 获取响应体输入流
          */
+        @NotNull
         @Override
         public InputStream getBody() throws IOException {
             return this.response.body().asInputStream();
@@ -128,6 +124,7 @@ public class ResultDecoder implements Decoder {
         /**
          * 获取响应头
          */
+        @NotNull
         @Override
         public HttpHeaders getHeaders() {
             return getHttpHeaders(this.response.headers());

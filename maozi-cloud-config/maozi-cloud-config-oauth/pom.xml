@@ -1,45 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OAuth2 认证配置模块，集成 Spring Security OAuth2 资源服务器实现统一身份认证 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- OAuth2 认证配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-oauth</artifactId>
- 
+
 
 	<dependencies>
 
+		<!-- Project Begin -->
+		<!-- Dubbo RPC 配置模块，用于远程调用获取用户信息 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-dubbo</artifactId>
+			<version>${maozi-cloud-config-dubbo.version}</version>
+		</dependency>
+
+		<!-- 服务 API 接口定义，包含用户、权限等 RPC 接口 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-api</artifactId>
+			<version>${maozi-cloud-service-api.version}</version>
+		</dependency>
+		<!-- Project End -->
+
 		<!-- SpringCloud Begin -->
+		<!-- Spring Boot OAuth2 资源服务器，负责校验 Token 并提供身份认证 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
-		<!-- SpringCloud End -->   
-
-		
-		<!-- Project Begin --> 
-		<dependency>     
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-dubbo</artifactId>   
-			<version>${maozi-cloud-config-dubbo.version}</version> 
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-service-rpc-api-oauth-token</artifactId>
-			<version>${maozi-cloud-service-rpc-api-oauth-token.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-service-rest-api-oauth-token</artifactId>
-			<version>${maozi-cloud-service-rest-api-oauth-token.version}</version>
-		</dependency>
-		<!-- Project End -->
-
+		<!-- SpringCloud End -->
 
 	</dependencies>
 

@@ -1,37 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 消息流配置模块，集成 Spring Cloud Stream 及 RocketMQ 实现消息驱动的微服务通信 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 消息流配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-stream</artifactId>
 
- 
+
 	<dependencies>
 
+		<!-- Spring Cloud 通用组件，提供 Spring Cloud 基础上下文支持 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-commons</artifactId>
 		</dependency>
 
+		<!-- Spring AOP 切面支持，用于消息消费的切面增强 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-	
+
+		<!-- Spring Cloud Stream RocketMQ Binder，提供 RocketMQ 消息队列集成 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
 		</dependency>
-		
+
 		<!-- Project Begin -->
+		<!-- 基础枚举定义，提供消息相关枚举常量 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-base-enum</artifactId>
-			<version>${maozi-cloud-base-enum.version}</version>
+            <artifactId>maozi-cloud-domain-enum</artifactId>
+			<version>${maozi-cloud-domain-enum.version}</version>
         </dependency>
         <!-- Project End -->
 

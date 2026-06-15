@@ -1,56 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sentinel 限流熔断配置模块，集成阿里巴巴 Sentinel 实现服务限流、熔断及降级 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Sentinel 限流熔断配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-sentinel</artifactId>
 
 
 	<dependencies>
 
- 
-		<!-- Spring Cloud Begin --> 
+
+		<!-- Spring Cloud Begin -->
+		<!-- Sentinel 数据源 Nacos 扩展，将限流规则持久化到 Nacos 配置中心 -->
 		<dependency>
 			<groupId>com.alibaba.csp</groupId>
 			<artifactId>sentinel-datasource-nacos</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.alibaba.csp</groupId> <artifactId>sentinel-reactor-adapter</artifactId> 
+		<!-- <dependency> <groupId>com.alibaba.csp</groupId> <artifactId>sentinel-reactor-adapter</artifactId>
 			</dependency> -->
 
+		<!-- Spring Cloud Alibaba Sentinel 核心依赖，提供限流熔断能力 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId> 
+			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
 		</dependency>
 
+		<!-- Sentinel Apache Dubbo 适配器，为 Dubbo RPC 调用提供限流支持 -->
 		<dependency>
 			<groupId>com.alibaba.csp</groupId>
 			<artifactId>sentinel-apache-dubbo-adapter</artifactId>
 			<version>${sentinel-apache-dubbo-adapter.version}</version>
 		</dependency>
- 
+
+		<!-- Spring 上下文，用于获取 Bean 完成 Sentinel 规则加载 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
-		
+
+		<!-- 项目通用工具类库 -->
 		<dependency>
-			<groupId>com.maozi</groupId> 
+			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>
 			<version>${maozi-cloud-utils.version}</version>
-		</dependency> 
-		
+		</dependency>
+
+		<!-- Jackson XML 序列化，支持 Sentinel 规则的 XML 格式解析 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 		<!-- Spring Cloud End -->
-		
-		
+
+
 
 	</dependencies>
 

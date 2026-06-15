@@ -1,59 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云通用工具类模块，提供字节码增强、通用工具集、Swagger注解、线程上下文传递、JSON处理、参数校验等基础能力 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承猫子云统一父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-parent</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 通用工具类模块构件名称 -->
 	<artifactId>maozi-cloud-utils</artifactId>
 
 	<dependencies>
 
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>${hutool.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-annotations</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-
+		<!-- CGLIB 字节码增强库，用于动态代理和类生成 -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>${cglib.version}</version>
 		</dependency>
 
+		<!-- Hutool 通用工具集，提供字符串、日期、集合、加密等常用工具方法 -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool.version}</version>
 		</dependency>
 
+		<!-- Swagger OpenAPI 注解，用于接口文档自动生成 -->
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations-jakarta</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+
+		<!-- 阿里巴巴 TransmittableThreadLocal，解决线程池场景下线程上下文传递问题 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>transmittable-thread-local</artifactId>
 			<version>${transmittable.version}</version>
 		</dependency>
 
+		<!-- Apache Commons Lang3，提供字符串、数组、反射等通用工具方法 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<!-- Spring Cloud 上下文，提供应用上下文与配置管理能力 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-context</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-
+		<!-- Spring Boot JSON 处理 Starter，集成 Jackson 序列化/反序列化 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-json</artifactId>
+		</dependency>
+
+		<!-- Spring Boot 参数校验 Starter，基于 Hibernate Validator 实现 JSR-303 校验 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<!-- Other Component End -->
 

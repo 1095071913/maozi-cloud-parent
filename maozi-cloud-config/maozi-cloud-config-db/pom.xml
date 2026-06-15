@@ -1,71 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 数据库访问配置模块，集成 MyBatis-Plus、Flyway、MySQL 等数据库相关组件 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-config</artifactId>
-		<version>${parent-revision}</version>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- 数据库访问配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-db</artifactId>
 
 
 	<dependencies>
 
-		<!-- ORM Begin -->
+		<!-- Project Begin -->
+		<!-- 基础枚举定义，如日志类型枚举等 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-base-run</artifactId>
-			<version>${maozi-cloud-service-base-run.version}</version>
+			<artifactId>maozi-cloud-domain-enum</artifactId>
+			<version>${maozi-cloud-domain-enum.version}</version>
 		</dependency>
-		
+
+		<!-- Redis 缓存配置模块，提供缓存支持 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-redis</artifactId>
+			<version>${maozi-cloud-config-redis.version}</version>
+		</dependency>
+
+		<!-- 服务基础运行库，提供 BaseApplication、通用启动逻辑 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-run</artifactId>
+			<version>${maozi-cloud-service-run.version}</version>
+		</dependency>
+		<!-- Project End -->
+
+		<!-- ORM Begin -->
+		<!-- MySQL JDBC 驱动，用于连接 MySQL 数据库 -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+		</dependency>
+
+		<!-- Flyway 核心库，用于数据库版本迁移管理 -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<!-- Flyway MySQL 支持，提供 MySQL 方言的迁移能力 -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+
+		<!-- MyBatis-Plus Spring Boot 3 集成启动器，提供增强版 ORM 能力 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-stdlib-jdk8</artifactId>
-		</dependency>
-        
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-mysql</artifactId>
-		</dependency>
-
+		<!-- MyBatis-Plus Join 扩展，支持多表关联查询 -->
 		<dependency>
 			<groupId>com.github.yulichang</groupId>
 			<artifactId>mybatis-plus-join-boot-starter</artifactId>
 			<version>${mybatis-plus-join.version}</version>
 		</dependency>
 		<!-- ORM End -->
-
-
-		<!-- Project Begin -->
-		<dependency>
-			<groupId>com.maozi</groupId> 
-			<artifactId>maozi-cloud-base-enum</artifactId>
-			<version>${maozi-cloud-base-enum.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-redis</artifactId>
-			<version>${maozi-cloud-config-redis.version}</version>
-		</dependency>
-		<!-- Project End -->
 
 	</dependencies>
 

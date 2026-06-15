@@ -1,24 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Web 层配置模块，集成 Undertow 服务器、SkyWalking 链路追踪、Nacos 配置中心及缓存等 Web 基础组件 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
-		<artifactId>maozi-cloud-config</artifactId> 
-		<version>${parent-revision}</version>
+		<artifactId>maozi-cloud-config</artifactId>
+		<version>${revision}</version>
 	</parent>
+
+	<!-- Web 层配置模块构件名称 -->
 	<artifactId>maozi-cloud-config-web</artifactId>
 
 
 	<dependencies>
 
 		<!-- SkyWalking Begin -->
+		<!-- SkyWalking 链路追踪工具包，用于获取 Trace ID -->
 		<dependency>
 			<groupId>org.apache.skywalking</groupId>
 			<artifactId>apm-toolkit-trace</artifactId>
 			<version>${skywalking.version}</version>
 		</dependency>
 
+		<!-- SkyWalking Logback 集成，支持在日志中输出 Trace ID -->
 		<dependency>
 			<groupId>org.apache.skywalking</groupId>
 			<artifactId>apm-toolkit-logback-1.x</artifactId>
@@ -27,37 +35,43 @@
 		<!-- SkyWalking End -->
 
 		<!-- Spring Boot Begin -->
+		<!-- Spring Security 核心库，提供安全认证基础能力 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
 
+		<!-- Spring Boot Web Starter，排除默认 Tomcat 服务器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-				<exclusion> 
+				<exclusion>
 					<groupId>org.springframework.boot</groupId>
   					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
+		<!-- Undertow Web 服务器，替代 Tomcat 作为高性能 Servlet 容器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 
+		<!-- Spring 缓存支持，提供 CacheManager 抽象 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
 
+		<!-- Caffeine 高性能本地缓存 -->
 		<dependency>
 			<groupId>com.github.ben-manes.caffeine</groupId>
 			<artifactId>caffeine</artifactId>
 		</dependency>
 
+		<!-- Nacos 配置中心客户端，从 Nacos 拉取配置 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
@@ -66,10 +80,11 @@
 
 
 		<!-- Project Begin -->
+		<!-- 基础枚举定义，提供通用枚举常量 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-base-enum</artifactId>
-			<version>${maozi-cloud-base-enum.version}</version>
+            <artifactId>maozi-cloud-domain-enum</artifactId>
+			<version>${maozi-cloud-domain-enum.version}</version>
         </dependency>
         <!-- Project End -->
 

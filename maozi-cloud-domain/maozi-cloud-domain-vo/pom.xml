@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云视图对象(VO)模块，定义返回前端的视图对象基础结构，集成分页等扩展能力 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承领域模型父工程，统一管理依赖版本 -->
+	<parent>
+		<groupId>com.maozi</groupId>
+		<artifactId>maozi-cloud-domain</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<!-- VO 模块构件名称 -->
+	<artifactId>maozi-cloud-domain-vo</artifactId>
+
+
+	<dependencies>
+
+		<!-- Project Begin -->
+
+		<!-- MyBatis-Plus 扩展库，提供分页插件、条件构造器等增强功能 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-extension</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+
+		<!-- DTO 模块依赖，VO 可继承或复用 DTO 的字段定义 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-domain-dto</artifactId>
+			<version>${maozi-cloud-domain-dto.version}</version>
+		</dependency>
+		<!-- Project End -->
+
+	</dependencies>
+
+
+</project>
