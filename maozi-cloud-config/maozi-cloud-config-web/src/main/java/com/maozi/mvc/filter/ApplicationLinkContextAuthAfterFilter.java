@@ -22,7 +22,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * @author maozi
  */
 @Configuration
-public class ApplicationLinkContextFilter implements HandlerInterceptor {
+public class ApplicationLinkContextAuthAfterFilter implements HandlerInterceptor {
 
     /**
      * 请求处理前设置链路上下文
@@ -37,20 +37,12 @@ public class ApplicationLinkContextFilter implements HandlerInterceptor {
      * @return 始终返回 true，继续执行后续拦截器
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
 
-        // 从 Spring Security 上下文中获取当前认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // 如果用户未认证或认证信息为空，则用户名设为 null；否则提取用户名
         String username = (ObjectUtil.isNullEmpty(authentication) || !authentication.isAuthenticated()) ? null : authentication.getName();
-        // 将用户名存入线程本地变量，供后续业务逻辑使用（如操作日志记录）
         ApplicationLinkContext.USERNAMES.set(username);
-
-        // 从请求头中获取版本号，若不存在则使用默认版本
-        String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION));
-        // 将版本号存入线程本地变量，用于接口版本控制
-        ApplicationLinkContext.VERSIONS.set(version);
 
         return true;
 
@@ -66,7 +58,6 @@ public class ApplicationLinkContextFilter implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler, @Nullable Exception ex) {
-        // 清理线程本地变量中的用户名和版本号，防止线程池复用时数据泄漏
         ApplicationLinkContext.clearContext();
     }
 

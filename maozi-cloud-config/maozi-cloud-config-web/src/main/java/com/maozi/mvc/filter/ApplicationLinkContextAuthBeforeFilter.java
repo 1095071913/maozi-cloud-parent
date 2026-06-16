@@ -1,0 +1,71 @@
+package com.maozi.mvc.filter;
+
+import com.maozi.common.context.ApplicationLinkContext;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+/**
+ * 应用链路上下文过滤器（版本号）
+ * <p>
+ * 以 Servlet Filter 形式注册，优先级设为最高（{@link Ordered#HIGHEST_PRECEDENCE}），
+ * 确保在 Spring Security 过滤器链（包括 {@code BearerTokenAuthenticationFilter}、
+ * {@code OpaqueTokenIntrospector} 以及 {@code /oauth/**} 端点）之前执行。
+ * </p>
+ * <p>
+ * 负责从请求头提取版本号并写入 {@link ApplicationLinkContext#VERSIONS}，
+ * 使版本号在 {@code OpaqueTokenIntrospector} 内省令牌和 {@code /oauth/**} 端点处理时即可读取，
+ * 用于灰度路由等场景。请求完成后自动清理上下文，防止线程池复用导致的数据泄漏。
+ * </p>
+ * <p>
+ * 该过滤器在 {@code BearerTokenAuthenticationFilter}（含 {@code OpaqueTokenIntrospector}）之后执行，
+ * 确保 SecurityContext 已完成认证填充后再提取用户名。
+ * </p>
+ *
+ * @author maozi
+ */
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class ApplicationLinkContextAuthBeforeFilter extends OncePerRequestFilter {
+
+    /**
+     * 请求处理前设置版本号到链路上下文
+     * <p>
+     * 从请求头获取版本号，存入线程本地变量。
+     * 该过滤器在 Spring Security 之前执行，确保版本号在
+     * {@code OpaqueTokenIntrospector} 和 {@code /oauth/**} 端点中可用。
+     * </p>
+     *
+     * @param request HTTP 请求
+     * @param response HTTP 响应
+     * @param filterChain 过滤器链
+     * @throws ServletException Servlet 异常
+     * @throws IOException IO 异常
+     */
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+
+        // 从请求头中获取版本号，若不存在则使用默认版本
+        String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION));
+        // 将版本号存入线程本地变量，用于接口版本控制
+        ApplicationLinkContext.VERSIONS.set(version);
+
+        try {
+            // 继续执行过滤器链（包括 Spring Security 认证和后续业务处理）
+            filterChain.doFilter(request, response);
+        } finally {
+            // 清理线程本地变量中的用户名和版本号，防止线程池复用时数据泄漏
+            ApplicationLinkContext.clearContext();
+        }
+
+    }
+
+}

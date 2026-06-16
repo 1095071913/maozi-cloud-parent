@@ -2,7 +2,7 @@ package com.maozi.mvc.config.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maozi.mvc.config.json.ReadOnlyMultipartFormDataEndpointConverter;
-import com.maozi.mvc.filter.ApplicationLinkContextFilter;
+import com.maozi.mvc.filter.ApplicationLinkContextAuthAfterFilter;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ import java.util.List;
  * Web MVC 配置
  * <p>
  * 注册应用链路上下文拦截器和自定义消息转换器。
- * 配置 {@link ApplicationLinkContextFilter} 拦截所有请求路径，
+ * 配置 {@link ApplicationLinkContextAuthAfterFilter} 拦截所有请求路径，
  * 并添加 {@link ReadOnlyMultipartFormDataEndpointConverter} 支持 multipart/form-data 请求体读取。
  * </p>
  *
@@ -32,7 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     /** 应用链路上下文过滤器 */
     @Resource
-    private ApplicationLinkContextFilter applicationLinkContextFilter;
+    private ApplicationLinkContextAuthAfterFilter applicationLinkContextAuthAfterFilter;
 
     /**
      * 注册拦截器
@@ -45,7 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册链路上下文过滤器，拦截所有路径，并将优先级设为最高（确保最先执行）
-        registry.addInterceptor(applicationLinkContextFilter).addPathPatterns("/**").order(Integer.MIN_VALUE);
+        registry.addInterceptor(applicationLinkContextAuthAfterFilter).addPathPatterns("/**").order(Integer.MIN_VALUE);
     }
 
     /**
