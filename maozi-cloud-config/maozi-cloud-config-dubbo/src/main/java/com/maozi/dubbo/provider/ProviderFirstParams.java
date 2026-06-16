@@ -55,7 +55,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.TIMESTAMP_KEY;
  */
 public class ProviderFirstParams extends DefaultProviderFirstParams {
 
-    private final static String APPLICATION_VERSION_KEY = "application.version";
+    public final static String APPLICATION_VERSION_KEY = "application.version";
 
     /**
      * 服务提供者优先参数集合

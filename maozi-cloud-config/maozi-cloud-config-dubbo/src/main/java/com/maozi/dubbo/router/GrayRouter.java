@@ -3,6 +3,7 @@ package com.maozi.dubbo.router;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.dubbo.provider.ProviderFirstParams;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.Invocation;
@@ -80,7 +81,7 @@ public class GrayRouter extends AbstractRouter {
         invokers.forEach(invoker ->{
 
             // 获取服务实例的 application.version 参数，用于版本匹配
-            String clientApplicationVersion = invoker.getUrl().getParameter("application.version");
+            String clientApplicationVersion = invoker.getUrl().getParameter(ProviderFirstParams.APPLICATION_VERSION_KEY);
 
             // 如果请求版本号非空且与服务实例版本完全匹配，则归为灰度节点
             if(StringUtils.isNotBlank(version) && version.equals(clientApplicationVersion)){
