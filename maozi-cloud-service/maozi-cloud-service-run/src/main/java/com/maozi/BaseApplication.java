@@ -127,7 +127,7 @@ public class BaseApplication {
 
         properties.put("logging.level.root", "ERROR");
         properties.put("logging.level.com.maozi", "INFO");
-        properties.put("logging.file.name","logs/log.log");
+        properties.put("logging.file.name","logs/maozi-cloud-${application-project-abbreviation}.log");
 
         properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (ObjectUtil.isNotNullEmpty(serviceConfig) ? "," + serviceConfig : ""));
 
