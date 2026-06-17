@@ -1,6 +1,9 @@
 package com.maozi.dubbo.filter;
 
+import com.maozi.common.JacksonUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -28,7 +31,7 @@ import org.apache.dubbo.rpc.RpcException;
  * @see ApplicationLinkContext
  * @see Filter
  */
-public class ApplicationLinkContextSetFilter implements Filter {
+public class ApplicationRpcContextLoadFilter implements Filter {
 
     /**
      * 拦截 Dubbo 服务端调用，提取并设置链路上下文信息
@@ -54,12 +57,14 @@ public class ApplicationLinkContextSetFilter implements Filter {
         RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
 
         // 从 RPC 附件中提取版本号，设置到当前线程的 ApplicationLinkContext 中
-        String version = serverAttachment.getAttachment(ApplicationLinkContext.VERSION);
-        ApplicationLinkContext.VERSIONS.set(version);
+        String version = serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY);
+        ApplicationLinkContext.versions.set(version);
 
         // 从 RPC 附件中提取用户名，设置到当前线程的 ApplicationLinkContext 中
-        String username = serverAttachment.getAttachment(ApplicationLinkContext.USERNAME);
-        ApplicationLinkContext.USERNAMES.set(username);
+        String currentUserInfoJson = serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY);
+        if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
+            ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));
+        }
 
         // 执行实际调用，在 finally 中清理上下文，确保即使发生异常也不会造成线程数据泄漏
         try{return invoker.invoke(invocation);} finally{

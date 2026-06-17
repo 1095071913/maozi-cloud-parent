@@ -1,6 +1,9 @@
 package com.maozi.dubbo.filter;
 
+import com.maozi.common.JacksonUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -17,10 +20,10 @@ import org.apache.dubbo.rpc.RpcException;
  * 传递到服务提供者端，实现跨服务的链路上下文传播。
  * </p>
  * <p>
- * 与 {@link ApplicationLinkContextSetFilter} 配合使用：
+ * 与 {@link ApplicationRpcContextLoadFilter} 配合使用：
  * <ul>
  *   <li>本过滤器在消费者端负责"写"：将上下文信息写入 RPC 附件</li>
- *   <li>{@link ApplicationLinkContextSetFilter} 在提供者端负责"读"：从 RPC 附件中提取上下文信息</li>
+ *   <li>{@link ApplicationRpcContextLoadFilter} 在提供者端负责"读"：从 RPC 附件中提取上下文信息</li>
  * </ul>
  * </p>
  * <p>
@@ -29,10 +32,10 @@ import org.apache.dubbo.rpc.RpcException;
  *
  * @author maozi
  * @see ApplicationLinkContext
- * @see ApplicationLinkContextSetFilter
+ * @see ApplicationRpcContextLoadFilter
  * @see Filter
  */
-public class ApplicationLinkContextTransmitFilter implements Filter {
+public class ApplicationRpcContextTransmitFilter implements Filter {
 
     /**
      * 拦截 Dubbo 消费端调用，将链路上下文信息写入 RPC 附件
@@ -58,10 +61,13 @@ public class ApplicationLinkContextTransmitFilter implements Filter {
         RpcContextAttachment clientAttachment = RpcContext.getClientAttachment();
 
         // 将当前线程的版本号写入 RPC 附件，供服务提供者读取
-        clientAttachment.setAttachment(ApplicationLinkContext.VERSION,ApplicationLinkContext.VERSIONS.get());
+        clientAttachment.setAttachment(ApplicationLinkContext.VERSION_KEY,ApplicationLinkContext.versions.get());
 
-        // 将当前线程的用户名写入 RPC 附件，供服务提供者读取
-        clientAttachment.setAttachment(ApplicationLinkContext.USERNAME, ApplicationLinkContext.USERNAMES.get());
+        // 将当前线程的用户信息写入 RPC 附件，供服务提供者读取
+        CurrentUserInfo currentUserInfo = ApplicationLinkContext.currentUserInfos.get();
+        if(ObjectUtil.isNotNullEmpty(currentUserInfo)){
+            clientAttachment.setAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY, JacksonUtil.objectToJson(currentUserInfo));
+        }
 
         // 执行实际的 RPC 调用，附件信息会随请求一起发送到服务提供者
         return invoker.invoke(invocation);

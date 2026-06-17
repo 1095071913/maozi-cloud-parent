@@ -35,6 +35,11 @@
 		<!-- Project End -->
 
 		<!-- SpringCloud Begin -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
 		<!-- Spring Boot OAuth2 资源服务器，负责校验 Token 并提供身份认证 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

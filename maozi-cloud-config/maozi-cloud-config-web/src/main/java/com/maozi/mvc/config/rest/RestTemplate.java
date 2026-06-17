@@ -3,6 +3,7 @@ package com.maozi.mvc.config.rest;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.http.HttpMethod;
@@ -116,7 +117,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			log.error("",e);
 
 			// 记录异常相关的用户、描述和堆栈位置到日志
-            logs.put("ErrorUser", ApplicationLinkContext.USERNAMES.get());
+            logs.put("ErrorUser", ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));
             logs.put("ErrorDesc", e.getLocalizedMessage());
             logs.put("ErrorLine", e.getStackTrace()[0].toString());
 

@@ -56,16 +56,16 @@ public class MessageSendStream {
 
         List<ServiceInstance> instances = discoveryClient.getInstances(ApplicationEnvironmentContext.SERVICE_NAME);
 
-        Map<String,List<ServiceInstance>> applicationClients = instances.stream().collect(Collectors.groupingBy((instance)-> instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION)));
+        Map<String,List<ServiceInstance>> applicationClients = instances.stream().collect(Collectors.groupingBy((instance)-> instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION_KEY)));
 
-        String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.VERSIONS.get());
+        String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.versions.get());
 
         if(!ApplicationLinkContext.APPLICATION_DEFAULT_VERSION.equals(version) && ObjectUtil.isNullEmpty(applicationClients.get(version))){
             version = ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
         }
 
         messageBuilder.setHeader("Gray", version);
-        messageBuilder.setHeader(ApplicationLinkContext.VERSION, ApplicationLinkContext.VERSIONS.get());
+        messageBuilder.setHeader(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.versions.get());
 
         return stream.send(bindingName,messageBuilder.build());
 

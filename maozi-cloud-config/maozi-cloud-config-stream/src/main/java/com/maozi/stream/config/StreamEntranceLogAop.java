@@ -95,7 +95,7 @@ public class StreamEntranceLogAop {
             }
 
             // 从消息头中提取版本号设置到链路上下文
-            ApplicationLinkContext.VERSIONS.set(ApplicationLinkContext.getVersionDefault(headers.get(ApplicationLinkContext.VERSION)));
+            ApplicationLinkContext.versions.set(ApplicationLinkContext.getVersionDefault(headers.get(ApplicationLinkContext.VERSION_KEY)));
 
             try{resultData.accept(message);}catch (Exception e){
 

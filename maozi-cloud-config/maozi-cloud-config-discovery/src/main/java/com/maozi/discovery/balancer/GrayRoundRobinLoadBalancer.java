@@ -100,7 +100,7 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
             throw new BusinessResultException(SystemErrorCode.SERVICE_NOT_EXIST_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
         }
 
-        String version = headers.getFirst(ApplicationLinkContext.VERSION);
+        String version = headers.getFirst(ApplicationLinkContext.VERSION_KEY);
 
         List<ServiceInstance> mainApplicationClients = CollectionUtil.newArrayList();
 
@@ -108,7 +108,7 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
         instances.forEach(instance -> {
 
-            String [] clientApplicationVersionSplit = instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION).split("-");
+            String [] clientApplicationVersionSplit = instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION_KEY).split("-");
 
             String clientApplicationVersion = clientApplicationVersionSplit[clientApplicationVersionSplit.length - 1];
 

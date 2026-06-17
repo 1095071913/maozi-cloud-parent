@@ -29,6 +29,7 @@ import com.maozi.common.WebUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.code.SystemErrorCode;
@@ -152,7 +153,7 @@ public class RequestEntranceLogAop {
 
             // 收集系统错误相关的日志信息
             logs.put(LogTag.PARAM, param);                                       // 记录请求参数（系统异常时无论环境均记录）
-            logs.put(LogTag.ERROR_USER,ApplicationLinkContext.USERNAMES.get());   // 记录当前操作用户
+            logs.put(LogTag.ERROR_USER,ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));   // 记录当前操作用户
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());                 // 记录异常描述
 
             // 记录异常发生的第一行代码位置

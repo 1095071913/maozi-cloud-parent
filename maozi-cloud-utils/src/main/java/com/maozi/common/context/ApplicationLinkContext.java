@@ -4,10 +4,12 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.TtlWrappers;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
+import com.maozi.common.dto.CurrentUserInfo;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * 应用链路上下文
@@ -22,22 +24,35 @@ import java.util.function.Consumer;
 public class ApplicationLinkContext {
 
     /** 版本号请求头名称 */
-    public static final String VERSION = "X-Version";
+    public static final String VERSION_KEY = "X-Version";
 
     /** 用户名请求头名称 */
-    public static final String USERNAME = "X-Username";
+    public static final String CURRENT_USER_INFO_KEY = "X-CurrentUserInfo";
 
     /** Nacos 元数据中的版本键 */
-    public static final String NACOS_VERSION = "version";
+    public static final String NACOS_VERSION_KEY = "version";
 
     /** 默认应用版本（主版本） */
     public static final String APPLICATION_DEFAULT_VERSION = "main";
 
     /** 当前线程的版本号 */
-    public static TransmittableThreadLocal<String> VERSIONS = new TransmittableThreadLocal<>();
+    public static TransmittableThreadLocal<String> versions = new TransmittableThreadLocal<>();
 
     /** 当前线程的用户名 */
-    public static TransmittableThreadLocal<String> USERNAMES = new TransmittableThreadLocal<>();
+    public static TransmittableThreadLocal<CurrentUserInfo> currentUserInfos = new TransmittableThreadLocal<>();
+
+    /**
+     * 获取当前用户某信息
+     * @param function 获取的某属性函数
+     * @return 用户某信息
+     */
+    public static <R> R getCurrentUserInfo(Function<CurrentUserInfo, R> function) {
+        CurrentUserInfo currentUserInfo = currentUserInfos.get();
+        if(ObjectUtil.isNullEmpty(currentUserInfo)){
+            return null;
+        }
+        return function.apply(currentUserInfo);
+    }
 
     /**
      * 获取版本号，为空时返回默认版本
@@ -73,8 +88,8 @@ public class ApplicationLinkContext {
      */
     public static void clearContext(){
         LogUtil.sqlLog.remove();
-        VERSIONS.remove();
-        USERNAMES.remove();
+        versions.remove();
+        currentUserInfos.remove();
     }
 
 }

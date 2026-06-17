@@ -21,7 +21,7 @@ import java.io.IOException;
  * {@code OpaqueTokenIntrospector} 以及 {@code /oauth/**} 端点）之前执行。
  * </p>
  * <p>
- * 负责从请求头提取版本号并写入 {@link ApplicationLinkContext#VERSIONS}，
+ * 负责从请求头提取版本号并写入 {@link ApplicationLinkContext#versions}，
  * 使版本号在 {@code OpaqueTokenIntrospector} 内省令牌和 {@code /oauth/**} 端点处理时即可读取，
  * 用于灰度路由等场景。请求完成后自动清理上下文，防止线程池复用导致的数据泄漏。
  * </p>
@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ApplicationLinkContextAuthBeforeFilter extends OncePerRequestFilter {
+public class ApplicationContextFilter extends OncePerRequestFilter {
 
     /**
      * 请求处理前设置版本号到链路上下文
@@ -54,9 +54,9 @@ public class ApplicationLinkContextAuthBeforeFilter extends OncePerRequestFilter
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         // 从请求头中获取版本号，若不存在则使用默认版本
-        String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION));
+        String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));
         // 将版本号存入线程本地变量，用于接口版本控制
-        ApplicationLinkContext.VERSIONS.set(version);
+        ApplicationLinkContext.versions.set(version);
 
         try {
             // 继续执行过滤器链（包括 Spring Security 认证和后续业务处理）

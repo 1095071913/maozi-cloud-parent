@@ -45,7 +45,7 @@ public class TokenRequestInterceptor implements RequestInterceptor {
 
             }
 
-            requestTemplate.header(ApplicationLinkContext.VERSION, ApplicationLinkContext.VERSIONS.get());
+            requestTemplate.header(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.versions.get());
 
         }
 

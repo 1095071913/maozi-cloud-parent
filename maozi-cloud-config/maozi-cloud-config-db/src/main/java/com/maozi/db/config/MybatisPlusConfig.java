@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.maozi.db.constant.TableColumnName;
 import net.sf.jsqlparser.expression.LongValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -95,7 +96,7 @@ public class MybatisPlusConfig {
              */
             @Override
             public String getTenantIdColumn() {
-                return "client_id";
+                return TableColumnName.CLIENT_ID;
             }
 
         }));
