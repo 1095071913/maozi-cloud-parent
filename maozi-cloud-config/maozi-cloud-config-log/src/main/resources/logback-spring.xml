@@ -11,16 +11,12 @@
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
 
     <property name="LOG_PATH" value="./logs"/>
-    <property name="LOG_PATTERN" value="%clr([ %d{yyyy-MM-dd HH:mm:ss} ]){green}  %clr([ Level：%level ]){blue}  %clr([ %tid ]){yellow}  %clr([ Service：${APPLICATION_NAME} ]){red}  %clr([ Environment：${ENVIRONMENT} ]){yellow}  %clr([ %m ]){cyan}%n"/>
-
-    <appender name="SKYWALKING_GRPC_LOG" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender"></appender>
+    <property name="LOG_PATTERN" value="%clr([ %d{yyyy-MM-dd HH:mm:ss} ]){green}  %clr([ Level：%level ]){blue}  %clr([ Service：${APPLICATION_NAME} ]){red}  %clr([ Environment：${ENVIRONMENT} ]){yellow}  %clr([ %m ]){cyan}%n"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
-                <pattern>${LOG_PATTERN}</pattern>
-                <charset>UTF-8</charset>
-            </layout>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -36,11 +32,9 @@
             <!-- 文件最大保存历史数量 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
-                <pattern>${LOG_PATTERN}</pattern>
-                <charset>UTF-8</charset>
-            </layout>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -72,7 +66,6 @@
             <then><appender-ref ref="ASYNC_CONSOLE"/></then>
             <else><appender-ref ref="ASYNC_FILE"/></else>
         </if>
-        <appender-ref ref="SKYWALKING_GRPC_LOG"/>
     </logger>
 
 </configuration>

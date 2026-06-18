@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Web 层配置模块，集成 Undertow 服务器、SkyWalking 链路追踪、Nacos 配置中心及缓存等 Web 基础组件 -->
+<!-- Web 层配置模块，集成 Undertow 服务器 链路追踪、Nacos 配置中心及缓存等 Web 基础组件 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -17,22 +17,6 @@
 
 
 	<dependencies>
-
-		<!-- SkyWalking Begin -->
-		<!-- SkyWalking 链路追踪工具包，用于获取 Trace ID -->
-		<dependency>
-			<groupId>org.apache.skywalking</groupId>
-			<artifactId>apm-toolkit-trace</artifactId>
-			<version>${skywalking.version}</version>
-		</dependency>
-
-		<!-- SkyWalking Logback 集成，支持在日志中输出 Trace ID -->
-		<dependency>
-			<groupId>org.apache.skywalking</groupId>
-			<artifactId>apm-toolkit-logback-1.x</artifactId>
-			<version>${skywalking.version}</version>
-		</dependency>
-		<!-- SkyWalking End -->
 
 		<!-- Spring Boot Begin -->
 		<!-- Spring Security 核心库，提供安全认证基础能力 -->

@@ -68,8 +68,6 @@
 		<mybatis.version>3.5.10</mybatis.version>
 		<!-- Redisson 分布式锁与缓存客户端版本 -->
 		<redisson.version>3.18.0</redisson.version>
-		<!-- SkyWalking 链路追踪工具版本 -->
-		<skywalking.version>8.4.0</skywalking.version>
 		<!-- XXL-JOB 分布式任务调度框架版本 -->
 		<xxl-job-core.version>2.3.0</xxl-job-core.version>
 		<!-- MyBatis-Plus 增强版 ORM 框架版本 -->
