@@ -39,3 +39,11 @@ target
 
 # 临时pom文件
 .flattened-pom.xml
+
+# 中间件数据
+**/maozi-cloud-tempo/data
+**/maozi-cloud-redis/data
+**/maozi-cloud-promtail/data
+**/maozi-cloud-mysql/data
+**/maozi-cloud-loki/data
+**/maozi-cloud-grafana/data

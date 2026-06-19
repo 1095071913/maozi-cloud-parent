@@ -40,6 +40,8 @@
 		<module>maozi-cloud-service-impl</module>
 		<!-- 服务插件聚合模块，聚合数据库实现等扩展能力 -->
 		<module>maozi-cloud-service-plugin</module>
+		<!-- 所有服务管理模块 -->
+		<module>maozi-cloud-services</module>
 	</modules>
 
 </project>

@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+
+  maozi-cloud-system-service:
+    image: maozi-cloud-system-service:laster
+    container_name: maozi-cloud-system-service
+    restart: always
+    ports:
+      - 4000:4000
+      - 20881:20881
+    environment:
+      environment: test
+      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system/logs
+
+  maozi-cloud-oauth-service:
+    image: maozi-cloud-oauth-service:laster
+    container_name: maozi-cloud-oauth-service
+    restart: always
+    ports:
+      - 3000:3000
+      - 20880:20880
+    environment:
+      environment: test
+      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth/logs
+
+
+networks:
+  default:
+    external:
+      name: maozi-cloud-network

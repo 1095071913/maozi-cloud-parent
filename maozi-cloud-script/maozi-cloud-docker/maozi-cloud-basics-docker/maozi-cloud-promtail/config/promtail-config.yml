@@ -1,0 +1,33 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /data/positions.yaml
+
+clients:
+  - url: http://maozi-cloud-loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: maozi-cloud-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: maozi-cloud
+          __path__: /maozi-logs/*/*.log
+    pipeline_stages:
+      # 解析 logback 日志行的固定前缀,提取 level/service/environment
+      - regex:
+          expression: '^\[ (?P<logtime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) \]  \[ Level：(?P<level>\w+) \]  \[ TID: (?P<tid>[^\]]*) \]  \[ Service：(?P<service>[^\]]*) \]  \[ Environment：(?P<environment>[^\]]*) \]'
+      # 把 level/service/environment 提升为 Loki 标签 (注意: Promtail 不会把它们写进日志正文)
+      - labels:
+          level:
+          service:
+          environment:
+      # 用日志行里的时间作为 Loki 时间戳 (而非默认的接收时间)
+      # location 必填: logback 时间是本地时间 (Asia/Shanghai, UTC+8), 不指定会被当 UTC → 比真实时间晚 8 小时 → Loki 判定 "timestamp too new" 拒收
+      - timestamp:
+          source: logtime
+          format: '2006-01-02 15:04:05'
+          location: Asia/Shanghai

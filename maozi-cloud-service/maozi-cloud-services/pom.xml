@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云业务服务聚合工程，聚合管理 OAuth 认证服务和系统管理等业务模块 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承服务层父工程，统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-service</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- 业务服务聚合工程构件名称 -->
+    <artifactId>maozi-cloud-services</artifactId>
+    <!-- 打包类型为 pom，表示这是一个聚合工程 -->
+    <packaging>pom</packaging>
+
+    <!-- 子模块列表 -->
+    <modules>
+
+        <!-- API 网关模块，基于 Spring Cloud Gateway 实现 -->
+        <module>maozi-cloud-basics-gateway</module>
+        <!-- 服务监控模块，基于 Spring Boot Admin 实现 -->
+        <module>maozi-cloud-basics-monitor</module>
+
+        <!-- OAuth 认证授权服务模块 -->
+        <module>maozi-cloud-business-oauth</module>
+        <!-- 系统管理服务模块 -->
+        <module>maozi-cloud-business-system</module>
+
+    </modules>
+
+</project>

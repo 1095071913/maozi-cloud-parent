@@ -1,0 +1,12 @@
+version: '3'
+services:
+  arthas-tunnel-server:
+    environment:
+      # 开放管理页面有风险！管理页面没有安全拦截功能，务必自行增加安全措施
+      PARAMS: '--arthas.enable-detail-pages=true --spring.cache.type=redis --arthas.embedded-redis.enabled=true --spring.redis.host=localhost --spring.redis.port=6379 --spring.redis.password=812840531zhang'  
+    restart: always
+    image: registry.cn-shanghai.aliyuncs.com/wanfei/arthas-tunnel-server:v1
+    container_name: arthas-tunnel-server
+    ports:
+      - 9080:8080
+      - 7777:7777
