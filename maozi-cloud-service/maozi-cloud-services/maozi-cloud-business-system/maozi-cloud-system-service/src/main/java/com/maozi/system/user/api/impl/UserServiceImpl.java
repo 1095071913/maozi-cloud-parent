@@ -1,0 +1,289 @@
+
+/*
+ * Copyright 2012-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
+
+package com.maozi.system.user.api.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.github.yulichang.toolkit.MPJWrappers;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import com.maozi.base.api.impl.BaseServiceImpl;
+import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.oauth.client.api.rpc.RpcClientService;
+import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
+import com.maozi.oauth.token.param.ClientUserParam;
+import com.maozi.system.permission.api.PermissionService;
+import com.maozi.system.permission.api.RolePermissionService;
+import com.maozi.system.permission.api.UserRoleService;
+import com.maozi.system.user.api.UserService;
+import com.maozi.system.user.domain.UserDo;
+import com.maozi.system.user.dto.UserSaveUpdateParam;
+import com.maozi.system.user.mapper.UserMapper;
+import jakarta.annotation.Resource;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * 用户服务实现类
+ * <p>
+ * 用户模块的核心业务实现，继承自 BaseServiceImpl，实现了 UserService 接口。
+ * 提供用户的查询、新增、更新、删除、权限获取等基础业务逻辑。
+ * 同时提供 REST 和 RPC 服务实现的公共基础方法。
+ * </p>
+ */
+@Service
+public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> implements UserService {
+
+	/** 资源名称常量，用于异常提示信息 */
+	private final static String RESOURCE_NAME = "用户";
+
+	/**
+	 * 获取资源名称
+	 *
+	 * @return 资源名称字符串
+	 */
+	@Override
+	protected String getResourceName() {
+		return RESOURCE_NAME;
+	}
+
+	/** 密码编码器，用于用户密码的加密处理 */
+	protected final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
+	/** 用户角色服务，用于管理用户与角色的关联关系 */
+	@Resource(name = "userRoleServiceImpl")
+	protected UserRoleService userRoleService;
+
+	/** 角色权限服务，用于查询角色关联的权限信息 */
+	@Resource(name = "rolePermissionServiceImpl")
+	protected RolePermissionService rolePermissionService;
+
+	/** 权限服务，用于查询权限标识信息 */
+	@Resource(name = "permissionServiceImpl")
+	protected PermissionService permissionService;
+
+	/** OAuth令牌RPC服务，用于远程调用认证令牌相关接口 */
+	@DubboReference
+	protected RpcOauthTokenService rpcOauthTokenService;
+
+	/** 客户端RPC服务，用于远程调用客户端相关接口 */
+	@DubboReference
+	protected RpcClientService rpcClientService;
+
+	/**
+	 * 根据用户名查询用户信息
+	 * <p>
+	 * 通过用户名和指定字段查询用户数据，支持自定义返回类型和查询列。
+	 * 如果用户名为空则抛出异常，如果未查询到数据也抛出异常。
+	 * </p>
+	 *
+	 * @param username 用户名，用于查询的用户账号
+	 * @param clazz    返回值类型，指定查询结果映射的目标类型
+	 * @param columns  需要查询的字段列表，可变参数
+	 * @param <D>      返回值泛型类型
+	 * @return 查询到的用户信息对象
+	 */
+	@Override
+	public <D> D getByUsername(String username,Class<D> clazz,String ... columns) {
+
+		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
+
+		QueryWrapper<UserDo> wrapper = Wrappers.query();
+
+		wrapper.select(columns);
+		wrapper.eq(getColumn(UserDo::getUsername),username);
+
+		return getByParamThrowErrorRelation(wrapper,clazz);
+
+	}
+
+	/**
+	 * 根据用户名获取可用的用户ID
+	 * <p>
+	 * 查询指定用户名对应的可用（未被禁用/删除）用户记录，并返回其ID。
+	 * 如果用户名为空或未查询到可用用户则抛出异常。
+	 * </p>
+	 *
+	 * @param username 用户名
+	 * @return 可用用户的ID
+	 */
+	protected Long getAvailableByUsername(String username) {
+
+		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
+
+		MPJLambdaWrapper<UserDo> wrapper = MPJWrappers.lambdaJoin();
+
+		wrapper.select(UserDo::getId);
+		wrapper.eq(UserDo::getUsername,username);
+
+		UserDo domain = getAvailableByParam(wrapper);
+
+		return domain.getId();
+
+	}
+
+	/**
+	 * 用户新增或更新的统一处理方法（REST层调用）
+	 * <p>
+	 * 当 id 为空时执行新增操作，当 id 不为空时执行更新操作。
+	 * 新增时会校验客户端是否存在以及用户名在对应客户端下是否重复。
+	 * 更新时不允许修改用户名和客户端ID。
+	 * 密码不为空时会进行加密处理。
+	 * 操作完成后同步更新用户的角色绑定关系。
+	 * </p>
+	 *
+	 * @param id    用户ID，新增时为空，更新时为已有用户ID
+	 * @param param 用户新增/更新参数
+	 * @return 新增或更新后的用户ID
+	 */
+	protected Long restSaveUpdate(Long id, UserSaveUpdateParam param) {
+
+		if(ObjectUtil.isNotNullEmpty(id)) {
+
+			param.setUsername(null);
+
+			param.setClientId(null);
+
+		}else {
+
+			if(ObjectUtil.isNotNullEmpty(param.getClientId()) && ObjectUtil.isNotNullEmpty(param.getUsername())) {
+
+				rpcClientService.checkAvailableResult(param.getClientId()).getResultDataThrowError();
+
+				checkNotHas(MPJWrappers.lambdaJoin(UserDo.builder().clientId(param.getClientId()).username(param.getUsername()).build()));
+
+			}
+
+		}
+
+		if(ObjectUtil.isNotNullEmpty(param.getPassword())) {
+			param.setPassword(passwordEncoder.encode(param.getPassword()));
+		}
+
+		id = saveUpdate(id,param);
+
+		userRoleService.updateBind(id, param.getBindRoleIds(), param.getUnbindRoleIds());
+
+		return id;
+
+	}
+
+	/**
+	 * 获取当前登录用户的权限列表
+	 * <p>
+	 * 从Spring Security上下文中获取当前认证用户的权限标识列表。
+	 * </p>
+	 *
+	 * @return 当前用户拥有的权限标识列表
+	 */
+	protected List<String> getCurrentPermissions() {
+		return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+	}
+
+	/**
+	 * 根据用户名获取该用户的权限标识列表
+	 * <p>
+	 * 先通过用户名查询用户ID，再查询该用户关联的角色ID列表，
+	 * 然后通过角色ID查询关联的权限ID集合，最后获取权限标识列表。
+	 * </p>
+	 *
+	 * @param username 用户名
+	 * @return 该用户拥有的权限标识列表
+	 */
+	protected List<String> getPermissions(String username) {
+
+		Long id = getAvailableByUsername(username);
+
+		List<String> responses = CollectionUtil.newArrayList();
+
+		List<Long> roleIds = userRoleService.getRolesByUser(id);
+
+		if(!roleIds.isEmpty()) {
+
+			Collection<Long> permissionIds = rolePermissionService.getPermissionsByRoles(roleIds);
+
+			List<String> marks = permissionService.getMarks(permissionIds);
+
+			responses.addAll(marks);
+
+		}
+
+		return responses;
+
+	}
+
+	/**
+	 * 根据用户ID获取客户端用户信息
+	 * <p>
+	 * 查询指定用户ID对应的用户名和客户端ID，映射为 ClientUserParam 返回。
+	 * 如果未查询到数据则抛出异常。
+	 * </p>
+	 *
+	 * @param id 用户ID
+	 * @return 包含用户名和客户端ID的客户端用户信息对象
+	 */
+	@Override
+	public ClientUserParam getClientUser(Long id) {
+		return getByIdThrowError(id,ClientUserParam.class,UserDo::getUsername,UserDo::getClientId);
+	}
+
+	/**
+	 * 根据用户ID列表批量获取客户端用户信息
+	 * <p>
+	 * 根据传入的用户ID列表查询对应的用户名和客户端ID信息。
+	 * 如果ID列表为空则抛出异常。
+	 * </p>
+	 *
+	 * @param ids 用户ID列表
+	 * @return 客户端用户信息参数对象列表
+	 */
+	@Override
+	public List<ClientUserParam> getClientUsers(List<Long> ids) {
+
+		CollectionUtil.collectionIsEmptyThrowError(ids, getResourceName() + "列表");
+
+		LambdaQueryWrapper<UserDo> wrapper = Wrappers.lambdaQuery();
+
+		wrapper.select(UserDo::getUsername,UserDo::getClientId);
+
+		wrapper.in(UserDo::getId, ids);
+
+		return list(wrapper, ClientUserParam::new);
+
+	}
+
+	/**
+	 * 解绑用户的所有角色关联关系
+	 *
+	 * @param id 需要解绑角色的用户ID
+	 */
+	@Override
+	public void unbind(Long id) {
+		userRoleService.userUnbind(id);
+	}
+
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 系统管理服务 API 接口模块，定义系统管理对外暴露的 DTO、VO、枚举及服务接口契约 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承系统管理服务父工程，统一管理版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-business-system</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- 系统管理服务 API 接口模块构件名称 -->
+    <artifactId>maozi-cloud-system-api</artifactId>
+
+    <dependencies>
+
+        <!-- DTO 数据传输对象，定义接口出入参模型 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-domain-dto</artifactId>
+            <version>${maozi-cloud-domain-dto.version}</version>
+        </dependency>
+
+        <!-- VO 视图对象，定义返回给前端的展示模型 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-domain-vo</artifactId>
+            <version>${maozi-cloud-domain-vo.version}</version>
+        </dependency>
+
+        <!-- 基础枚举定义，如通用状态、类型枚举等 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-domain-enum</artifactId>
+            <version>${maozi-cloud-domain-enum.version}</version>
+        </dependency>
+
+        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-api</artifactId>
+            <version>${maozi-cloud-service-api.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

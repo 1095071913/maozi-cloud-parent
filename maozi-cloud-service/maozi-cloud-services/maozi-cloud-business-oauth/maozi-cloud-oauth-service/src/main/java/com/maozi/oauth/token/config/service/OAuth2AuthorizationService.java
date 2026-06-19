@@ -1,0 +1,42 @@
+package com.maozi.oauth.token.config.service;
+
+
+import com.maozi.oauth.token.param.ClientUserParam;
+
+import java.util.List;
+
+/**
+ * 扩展的OAuth2授权服务接口
+ * <p>
+ * 在标准{@link org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService}基础上
+ * 扩展了按用户主体注销授权的能力，支持根据已注册客户端ID和用户主体名称移除授权记录，
+ * 同时提供批量注销以减少Redis网络往返。
+ * </p>
+ */
+public interface OAuth2AuthorizationService extends org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService {
+
+	/**
+	 * 移除指定客户端下指定用户的所有授权记录（注销）
+	 * <p>
+	 * 通过用户主体索引查找该用户在该客户端下的所有授权ID，
+	 * 并逐一移除，实现用户注销功能。
+	 * </p>
+	 *
+	 * @param registeredClientId 已注册客户端ID
+	 * @param principalName      用户主体名称（用户名）
+	 */
+	void removeAllByPrincipal(String registeredClientId, String principalName);
+
+	/**
+	 * 批量移除多个用户的所有授权记录（批量注销）
+	 * <p>
+	 * 通过Redis Pipeline批量收集所有用户的授权ID，一次性获取授权数据并批量删除所有关联键，
+	 * 将多次Redis网络往返压缩为Pipeline + MGET + DEL共3次交互，适用于角色禁用等需要同时注销多个用户的场景。
+	 * </p>
+	 *
+	 * @param clientUsers 客户端用户参数列表，每项包含clientId和username
+	 */
+	void removeAllByPrincipals(List<ClientUserParam> clientUsers);
+
+}
+

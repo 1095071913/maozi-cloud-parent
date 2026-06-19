@@ -1,0 +1,142 @@
+/*
+ * Copyright 2012-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package com.maozi.system.user.api.rest;
+
+import com.maozi.base.annotation.Get;
+import com.maozi.base.annotation.Post;
+import com.maozi.base.enums.Status;
+import com.maozi.base.param.PageParam;
+import com.maozi.base.param.RequestParam;
+import com.maozi.base.result.PageResult;
+import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.system.user.dto.UserListParam;
+import com.maozi.system.user.dto.UserSaveUpdateParam;
+import com.maozi.system.user.vo.UserIndividualInfoVo;
+import com.maozi.system.user.vo.UserInfoVo;
+import com.maozi.system.user.vo.UserListVo;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+/**
+ * 用户管理服务 REST 接口
+ * <p>
+ * 提供系统用户的 RESTful API 接口定义，
+ * 包括用户分页列表查询、用户新增、用户详情查询、用户删除、
+ * 用户信息更新、用户状态更新以及当前登录用户个人信息查询等操作。
+ * </p>
+ */
+@Tag(name = "用户模块")
+public interface RestUserService {
+
+	/** 基础路径常量，用户模块的统一请求路径前缀 */
+	String PATH = "/user";
+
+	/**
+	 * 获取用户分页列表
+	 *
+	 * @param pageParam 分页查询参数，包含页码、每页数量以及用户搜索条件（如用户名、状态等）
+	 * @return 返回用户分页列表数据，包含用户 ID、用户名、昵称、状态、创建时间等信息
+	 */
+	@Post(value = PATH + "/list",description = "用户列表")
+	@PreAuthorize("hasAuthority('system:user:list')")
+	AbstractBaseResult<PageResult<UserListVo>> restList(@RequestBody PageParam<UserListParam> pageParam);
+
+	/**
+	 * 保存新增用户
+	 *
+	 * @param param 用户保存参数，包含用户名、密码、昵称、手机号、关联角色等必要信息
+	 * @return 返回新增用户的 ID
+	 */
+	@Post(value = PATH + "/save",description = "用户保存")
+	@PreAuthorize("hasAuthority('system:user:save')")
+	AbstractBaseResult<Long> restSave(@RequestBody UserSaveUpdateParam param);
+
+
+
+
+
+//	================== 指定资源 ===================
+
+	/** 单资源路径常量，用于指定具体用户 ID 的请求路径前缀 */
+	String CURRENT_PATH = PATH + "/{id}";
+
+	/**
+	 * 获取用户详情
+	 *
+	 * @param id 用户 ID，用于查询指定用户的详细信息
+	 * @return 返回用户详细信息，包含用户名、昵称、手机号、邮箱、关联角色等完整属性
+	 */
+	@Get(value = CURRENT_PATH + "/get",description = "用户详情")
+	@PreAuthorize("hasAuthority('system:user:get')")
+	AbstractBaseResult<UserInfoVo> restGet(@PathVariable Long id);
+
+	/**
+	 * 删除用户
+	 *
+	 * @param id 用户 ID，指定需要删除的用户记录
+	 * @return 无返回数据，仅返回操作结果状态
+	 */
+	@Post(value = CURRENT_PATH + "/remove",description = "用户删除")
+	@PreAuthorize("hasAuthority('system:user:remove')")
+	AbstractBaseResult<Void> restRemove(@PathVariable Long id);
+
+	/**
+	 * 更新用户状态（启用/禁用）
+	 *
+	 * @param id    用户 ID，指定需要更新状态的用户记录
+	 * @param param 状态参数，包含需要更新的目标状态值（启用/禁用）
+	 * @return 无返回数据，仅返回操作结果状态
+	 */
+	@Post(value = CURRENT_PATH + "/updateStatus",description = "用户更新状态")
+	@PreAuthorize("hasAuthority('system:user:update')")
+	AbstractBaseResult<Void> restUpdateStatus(@PathVariable Long id, @RequestBody RequestParam<Status> param);
+
+	/**
+	 * 更新用户信息
+	 *
+	 * @param id    用户 ID，指定需要更新的用户记录
+	 * @param param 用户更新参数，包含需要修改的用户属性信息
+	 * @return 无返回数据，仅返回操作结果状态
+	 */
+	@Post(value = CURRENT_PATH + "/update",description = "用户更新")
+	@PreAuthorize("hasAuthority('system:user:update')")
+	AbstractBaseResult<Void> restUpdate(@PathVariable Long id, @RequestBody UserSaveUpdateParam param);
+
+
+
+
+
+//	====================== 个人 =========================
+
+	/** 个人信息路径常量，用于当前登录用户个人信息相关的请求路径前缀 */
+	String INDIVIDUAL_PATH = PATH + "/individual";
+
+	/**
+	 * 获取当前登录用户的个人详情
+	 * <p>
+	 * 无需传入用户 ID，系统会根据当前登录的认证信息自动获取对应用户的详细信息。
+	 * </p>
+	 *
+	 * @return 返回当前登录用户的个人信息，包含用户名、昵称、头像、角色、权限等个人相关数据
+	 */
+	@Get(value = INDIVIDUAL_PATH + "/get",description = "用户个人详情")
+	AbstractBaseResult<UserIndividualInfoVo> restIndividualGet();
+
+}

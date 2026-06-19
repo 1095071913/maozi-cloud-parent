@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OAuth 认证服务实现模块，包含认证授权业务逻辑实现及可执行应用入口，基于 Spring Authorization Server 提供统一认证能力 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承 OAuth 认证服务父工程，统一管理版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-business-oauth</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <!-- OAuth 认证服务实现模块构件名称 -->
+    <artifactId>maozi-cloud-oauth-service</artifactId>
+
+    <properties>
+
+        <!-- 跳过单元测试 -->
+        <maven.test.skip>true</maven.test.skip>
+        <!-- 跳过 install 阶段 -->
+        <maven.install.skip>true</maven.install.skip>
+        <!-- 跳过 deploy 阶段 -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <!-- 应用启动主类全限定名 -->
+        <application-run>com.maozi.OauthApplication</application-run>
+
+    </properties>
+
+
+    <dependencies>
+
+        <!-- Oauth Begin -->
+        <!-- OAuth 认证服务 API，本模块对外暴露的接口契约 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-oauth-api</artifactId>
+            <version>${maozi-cloud-oauth-api.version}</version>
+        </dependency>
+
+        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-api</artifactId>
+            <version>${maozi-cloud-service-api.version}</version>
+        </dependency>
+        <!-- Oauth End -->
+
+        <!-- User Begin -->
+        <!-- 系统管理服务 API，用于对接用户、角色等系统管理能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-system-api</artifactId>
+            <version>${maozi-cloud-system-api.version}</version>
+        </dependency>
+        <!-- User End -->
+
+        <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-db-impl</artifactId>
+            <version>${maozi-cloud-service-db-impl.version}</version>
+        </dependency>
+
+        <!-- Spring Authorization Server 授权服务器核心依赖，提供 OAuth2 授权码、客户端凭证等认证流程 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
+    <!-- boot打包 Begin -->
+    <build>
+        <!-- 打包后的文件名 -->
+        <finalName>${artifactId}</finalName>
+        <plugins>
+            <!-- Spring Boot Maven 插件，将应用打包为可执行 JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 指定应用启动主类 -->
+                    <mainClass>${application-run}</mainClass>
+                    <!-- 包含 system scope 的依赖 -->
+                    <includeSystemScope>true</includeSystemScope>
+                    <!-- 排除 Lombok，运行时不需要 -->
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <!-- 添加 add-opens jvm参数 -->
+                    <jvmArguments>
+                        --add-opens java.base/java.math=ALL-UNNAMED
+                        --add-opens java.base/java.lang=ALL-UNNAMED
+                        --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+                    </jvmArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- 重新打包为可执行 JAR -->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- boot打包 End -->
+
+
+</project>
