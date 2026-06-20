@@ -1,188 +1,222 @@
 @echo off
+setlocal enabledelayedexpansion
 
 REM ============================================================
-REM 公共构建逻辑, 被 parent / basics / services 三个入口 call 调用
+REM 统一构建逻辑 (单一 git 仓库版), 由 maozi-cloud-build-all.bat 调用
 REM 对应 shell 版: maozi-cloud-shell/maozi-cloud-build-jar-utils.sh
 REM ------------------------------------------------------------
 REM 前置条件:
-REM   1. 调用方已 cd 到实际源码工程目录
+REM   1. 调用方已 cd 到 maozi-cloud-parent 仓库根目录
 REM   2. current_directory 已由调用方设为脚本目录, 作为相对路径锚点
 REM   3. 调用方已开启 setlocal enabledelayedexpansion, 故此处可用 !var!
 REM ------------------------------------------------------------
-REM 关键变量:
-REM   array_index              变更文件计数
-REM   array[1..N]              变更文件相对路径
-REM   buildFiles               mvn -pl 模块列表, 逗号分隔; "." 表示全量构建
-REM   current_build_directory  当前源码工程名, 如 maozi-cloud-services
-REM ------------------------------------------------------------
 REM 工作流程:
-REM   A. 调用 scan-file-utils 收集需要构建的模块
-REM        分支切换或首次构建 -> buildFiles 直接置为全量
-REM        同分支有新提交     -> 把变更文件写入 array, 由本脚本归并
-REM   B. 把 array 中的变更文件归并为 -pl 模块列表 buildFiles
-REM   C. 执行 mvn clean + mvn install -pl buildFiles -amd
-REM   D. 非 parent 工程: 查找 jar, 匹配 image 目录, 生成并执行 Docker 构建脚本
+REM   A. call scan-file-utils 比对 git 分支 / SHA, 得到 build_mode
+REM        full          -> 全量构建整个 reactor
+REM        incremental   -> 按 changed_files_* 归并出 Maven 模块列表
+REM        none          -> 无变化, 直接退出
+REM   B. 拍摄 maozi-cloud-services 下所有 jar 的 mtime 快照 (构建前)
+REM   C. 归并 changed_files_* 为 mvn -pl 模块路径列表
+REM        - 源文件: 截取 \src\ 之前的部分作为模块路径
+REM        - pom.xml: 取所在目录, 仓库根 pom 触发全量
+REM        - 其他非 Maven 文件: 忽略
+REM   D. mvn clean + mvn install -pl <modules> -amd
+REM        -amd 自动让 "a 引用 b, b 修改 -> a 一起构建" 成立
+REM   E. 拍摄构建后的 jar mtime 快照, 找出 mtime 变化 (或新增) 的 jar
+REM        只有这些 jar 才视为 "被 Maven 实际编译并生成", 进入 Docker 部署
+REM   F. 对每个变化的 jar:
+REM        - 按模块名前缀路由镜像目录 (basics-* -> maozi-cloud-basics-image 等)
+REM        - 校验镜像 Dockerfile 存在
+REM        - 生成临时 build-docker.bat: 拷贝 jar / buildx / compose up -d / 自清理
+REM        - 并行启动, 等待全部完成
 REM ============================================================
 
-REM 初始化变量
-set array_index=0
+REM 可部署服务源码根目录 (相对仓库根), 仅此目录下生成的 jar 才触发 Docker 重新部署
+set "services_subdir=maozi-cloud-service\maozi-cloud-services"
 
-set array[0]=
+REM 锁定仓库根的绝对路径, 让生成的临时脚本里的 cp 源路径不依赖 cwd
+set "repo_root=%cd%"
 
-set buildFiles=
+REM ---- A. 比对 git 状态 ----
+call "%current_directory%\maozi-cloud-scan-file-utils.bat"
 
-REM ---- A. 扫描变更 ----
-REM 当前目录不是 git 仓库, 即多仓库聚合容器: 进入每个子目录分别扫描
-if not exist ".git" (
+echo [build] mode=!build_mode!
 
-  for /d %%i in ("%cd%\*") do (
+REM 无变更: 直接退出, 不触发 Maven 与 Docker
+if "!build_mode!"=="none" goto :eof
 
-      cd %%~nxi
+REM ---- B. 拍摄构建前 jar mtime 快照 ----
+REM 用 PowerShell 把 services_subdir 下所有 jar 的 "完整路径|LastWriteTimeTicks" 写入临时文件
+set "before_manifest=%TEMP%\maozi-cloud-jar-before.txt"
+powershell -NoProfile -Command "Get-ChildItem -Path '%services_subdir%' -Recurse -Filter '*.jar' -ErrorAction SilentlyContinue | ForEach-Object { '{0}|{1}' -f $_.FullName, $_.LastWriteTime.Ticks } | Set-Content -Path '%before_manifest%' -Encoding ASCII"
 
-      call !current_directory!\..\maozi-cloud-scan-file-utils.bat !array! !buildFiles! !array_index!
+REM ---- C. 归并 changed_files_* 为 Maven 模块路径列表 ----
+set "build_files="
 
-      cd ../
+if "!build_mode!"=="full" (
 
-  )
+    REM 全量构建整个 reactor
+    set "build_files=."
 
-) else (
-REM 当前目录本身是 git 仓库: 直接扫描
-  call !current_directory!\..\maozi-cloud-scan-file-utils.bat !array! !buildFiles! !array_index!
+) else if "!build_files!"=="" (
+
+    REM 增量构建: 把变更文件归并为模块路径, 通过 changed_modules_*=1 做去重
+    set "changed_modules_count=0"
+
+    for /l %%N in (1,1,!changed_files_count!) do (
+
+        set "file=!changed_files_%%N!"
+        set "module_path="
+
+        REM 判断路径形态: 含 \src\ 是源文件, 是 pom.xml 则取目录, 否则忽略
+        REM !file! 中 / 与 \ 混用, 先统一为 \ 便于后续 findstr 匹配
+        set "file_norm=!file:/=\!"
+
+        REM 检测 \src\ 子串
+        echo !file_norm! | findstr /C:"\src\" >nul
+        if !errorlevel! equ 0 (
+            REM 源文件: 截取 \src\ 之前的部分作为模块路径
+            for /f "delims=" %%T in ("!file_norm!") do (
+                REM 用 PowerShell 截断, 避免批处理字符串切片的多字节坑
+                for /f "delims=" %%P in ('powershell -NoProfile -Command "$s='!file_norm!'; $i=$s.IndexOf('\src\'); Write-Output $s.Substring(0,$i)"') do set "module_path=%%P"
+            )
+        ) else if "!file_norm!"=="pom.xml" (
+            REM 仓库根 pom.xml 变更: 影响整个 reactor, 直接全量
+            set "build_files=."
+        ) else if "!file_norm:~-8!"=="\pom.xml" (
+            REM 子模块 / 聚合 pom.xml 变更: 取所在目录作为模块路径
+            set "module_path=!file_norm:~0,-8!"
+        ) else if exist "!file_norm!\pom.xml" (
+            REM 路径本身就是一个含 pom.xml 的目录, 通常是 git submodule 指针变化
+            REM (git diff 只返回子模块目录路径, 不返回子模块内部文件)
+            set "module_path=!file_norm!"
+        )
+
+        REM 必须真实存在 pom.xml 才算 Maven 模块, 否则忽略
+        if not "!module_path!"=="" if exist "!module_path!\pom.xml" (
+            REM 去重写入 changed_modules_*=1
+            if not defined changed_modules_!module_path! (
+                set /a changed_modules_count+=1
+                set "changed_modules_!module_path!=1"
+                set "changed_modules_list_!changed_modules_count!=!module_path!"
+            )
+        )
+
+    )
+
+    REM 合并模块路径为逗号分隔的 -pl 参数, build_files 已置 "." 则跳过
+    if not "!build_files!"=="." (
+        for /l %%N in (1,1,!changed_modules_count!) do (
+            if "!build_files!"=="" (
+                set "build_files=!changed_modules_list_%%N!"
+            ) else (
+                set "build_files=!build_files!,!changed_modules_list_%%N!"
+            )
+        )
+    )
+
 )
 
-REM ---- B. 把变更文件归并为模块列表 ----
-REM 仅当存在增量变更时处理; 全量构建时 buildFiles 已由 scan 直接给出
-if !array_index! NEQ 0 (
+REM ---- D. 执行 Maven 构建 ----
+if not "!build_files!"=="" (
 
-  for /l %%N in (1,1,!array_index!) do (
+    echo [build] mvn -pl !build_files! -amd
 
-    set "file=!array[%%N]!"
+    REM 清理整个 reactor; -T 16C 表示按 16 核并行
+    start /B /wait cmd /c mvn clean -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true
 
-    REM 路径以 maozi-cloud 开头: 属于某业务模块, 定位到该模块目录
-    if "!file:~0,11!" EQU "maozi-cloud" (
+    REM 增量安装指定模块; -amd 同时构建依赖于它们的下游模块
+    REM 这一步实现了 "a 引用 b, b 修改 -> a 也重新构建"
+    start /B /wait cmd /c mvn install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl !build_files! -amd
 
-      set "idx=0"
+)
 
-      REM 查找路径中首个 src 的位置, 截取到 src 之前即模块路径
-      for /L %%A in (1,1,100) do (
+REM ---- E. 拍摄构建后 jar mtime 快照, 找出实际更新的 jar ----
+REM 用 PowerShell 比对前后两份 manifest, 输出 mtime 变化或新增的 jar 完整路径
+set "after_manifest=%TEMP%\maozi-cloud-jar-after.txt"
+powershell -NoProfile -Command "Get-ChildItem -Path '%services_subdir%' -Recurse -Filter '*.jar' -ErrorAction SilentlyContinue | ForEach-Object { '{0}|{1}' -f $_.FullName, $_.LastWriteTime.Ticks } | Set-Content -Path '%after_manifest%' -Encoding ASCII"
 
-        set "pathName=!file:~%%A,3!"
+REM 用 PowerShell diff 两个 manifest, 把变化的 jar 路径写到一个列表文件
+set "changed_jars_list=%TEMP%\maozi-cloud-jar-changed.txt"
+powershell -NoProfile -Command "$before=@{}; Get-Content -Path '%before_manifest%' -ErrorAction SilentlyContinue | ForEach-Object { $p=$_.Split('|',2); $before[$p[0]]=$p[1] }; Get-Content -Path '%after_manifest%' -ErrorAction SilentlyContinue | ForEach-Object { $p=$_.Split('|',2); if (-not $before.ContainsKey($p[0]) -or $before[$p[0]] -ne $p[1]) { Write-Output $p[0] } } | Set-Content -Path '%changed_jars_list%' -Encoding ASCII"
 
-        if "!pathName!" EQU "src" (
+REM 读取 changed_jars_list 并行部署
+set "changed_jars_count=0"
+for /f "usebackq delims=" %%J in ("%changed_jars_list%") do (
+    set /a changed_jars_count+=1
+    set "changed_jar_!changed_jars_count!=%%J"
+)
 
-          if "!idx!"=="0" (
+echo [deploy] changed jars: !changed_jars_count!
 
-            set "idx=%%A"
+REM ---- F. 对每个变化的 jar 触发 Docker 部署 ----
+for /l %%N in (1,1,!changed_jars_count!) do (
 
-            set "file=!file:~0,%%A!"
+    set "jarfile=!changed_jar_%%N!"
 
-          )
+    REM dirname 两次: jar -> target -> 模块目录
+    for %%I in ("!jarfile!") do set "jar_dir=%%~dpI"
+    REM jar_dir 末尾带 \, 再上一级
+    for %%I in ("!jar_dir!\..") do set "module_dir=%%~fI"
+    for %%I in ("!module_dir!") do set "module_name=%%~nxI"
+    set "module_dir=!module_dir:\=/!"
+    set "service_name=!module_name!"
 
-        )
+    REM 按模块名前缀路由镜像 / docker-compose 目录
+    set "image_base=%current_directory%\..\..\maozi-cloud-image"
+    set "docker_base=%current_directory%\..\..\maozi-cloud-docker"
 
-      )
+    REM maozi-cloud-basics-* -> maozi-cloud-basics-image / -docker, 否则 services
+    echo !service_name! | findstr /B /C:"maozi-cloud-basics-" >nul
+    if !errorlevel! equ 0 (
+        set "image_directory=!image_base!\maozi-cloud-basics-image"
+        set "docker_directory=!docker_base!\maozi-cloud-basics-docker"
+    ) else (
+        set "image_directory=!image_base!\maozi-cloud-services-image"
+        set "docker_directory=!docker_base!\maozi-cloud-services-docker"
+    )
 
-      REM 未找到 src: 视为模块根文件如 pom.xml, 去掉文件名只保留目录
-      if "!idx!"=="0" (
+    REM 校验镜像目录下存在 {service_name}-image Dockerfile, 不存在则跳过
+    if exist "!image_directory!\!service_name!-image" (
 
-        set "file=!file:\=/!"
+        REM 动态生成 service_name-build-docker.bat: 拷贝 jar / 构建镜像 / compose 启动 / 清理自身
+        set "build_script=!image_directory!\!service_name!-build-docker.bat"
 
-        for %%F in ("!file!") do (
-          set "file=!file:%%~nxF=!"
-        )
+        REM 清空旧脚本
+        type nul > "!build_script!"
 
-      )
+        echo copy "!repo_root!\!module_dir!\target\!service_name!.jar" "!image_directory!\" >> "!build_script!"
+        echo cd /d "!image_directory!" >> "!build_script!"
+        echo docker buildx build -f "!image_directory!\!service_name!-image" -t !service_name!:laster . >> "!build_script!"
+        echo docker-compose -f "!docker_directory!\docker-compose.yml" up -d !service_name! >> "!build_script!"
+        echo del "!image_directory!\!service_name!.jar" >> "!build_script!"
+        echo del "%%~f0" >> "!build_script!"
 
-      REM 去重后追加到 buildFiles
-      echo !buildFiles! | findstr /C:"!file!" > nul
-      if !errorlevel! neq 0 (
-        set "buildFiles=!buildFiles!,!file!"
-      )
+        echo [deploy] !service_name!: building image and starting container
+        REM 后台执行该 Docker 构建脚本, 多个服务可并行部署
+        start "" /B cmd /c "!build_script!"
 
     ) else (
 
-      REM 非 maozi-cloud 前缀的变更, 如仓库根 pom.xml
-      if not exist ".git" (
-
-        REM 聚合目录: 取第一段路径作为模块名
-        for /f "delims=/" %%a in ("!file!") do set "file=%%a"
-
-        echo !buildFiles! | findstr /C:"!file!" > nul
-        if !errorlevel! neq 0 (
-          set "buildFiles=!buildFiles!,!file!"
-        )
-
-      ) else (
-
-        REM git 仓库根文件变更: 直接全量构建整个 reactor
-        set "buildFiles=."
-
-        goto :exitloop
-
-      )
+        echo [deploy] skip !service_name!: image file not found at "!image_directory!\!service_name!-image"
 
     )
 
-  )
-
 )
 
-:exitloop
-REM ---- C. 执行 Maven 构建 ----
-if not "!buildFiles!"=="" (
-
-  REM 清理整个 reactor; -T 8C 表示按 8 核并行
-  start /B /wait cmd /c mvn clean -T 8C -Dmaven.compile.fork=true -Dmaven.test.skip=true
-
-  REM 增量安装指定模块; -amd 同时构建依赖于它们的下游模块
-  start /B /wait cmd /c mvn install -T 8C -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl !buildFiles! -amd
-
-  REM ---- D. 生成并执行 Docker 构建脚本, parent 工程跳过 ----
-  for %%A in ("%cd%") do set "current_build_directory=%%~nxA"
-
-  if not "!current_build_directory!"=="maozi-cloud-parent" (
-
-    REM 递归查找所有 jar, 定位其所属模块; jar 上级目录即模块名 service_name
-    for /r %%F in (*.jar) do (
-
-        REM %%~dpF 为 jar 所在盘符加路径并以 \ 结尾, 截掉末尾 8 字符 \target\ 得到模块目录
-        set "file_path=%%~dpF"
-
-        set "file_path=!file_path:~0,-8!"
-
-        for %%I in ("!file_path!") do set "service_name=%%~nxI"
-
-        REM image / docker 目录, 位于 maozi-cloud-script 下, 本脚本目录上三级
-        set "image_directory=!current_directory!\..\..\..\maozi-cloud-image\!current_build_directory!-image"
-
-        set "docker_directory=!current_directory!\..\..\..\maozi-cloud-docker\!current_build_directory!-docker"
-
-        REM 在 image 目录查找名为 service_name-image 的条目, 命中则生成 Docker 构建脚本
-        for %%F in ("!image_directory!\*") do (
-
-          if "!service_name!-image"=="%%~nxF" (
-
-            REM 动态生成 service_name-build-docker.bat: 拷贝 jar, 构建镜像, compose 启动, 清理自身
-            echo copy "!file_path!\target\!service_name!.jar" "!image_directory!\" >> !image_directory!/!service_name!-build-docker.bat
-
-            echo cd !image_directory!\ >> !image_directory!/!service_name!-build-docker.bat
-
-            echo docker buildx build -f !image_directory!\!service_name!-image -t !service_name!:laster . >> !image_directory!/!service_name!-build-docker.bat
-
-            echo docker-compose -f !docker_directory!\docker-compose.yml up -d !service_name! >> !image_directory!/!service_name!-build-docker.bat
-
-            echo del "!image_directory!\!service_name!.jar" >> !image_directory!/!service_name!-build-docker.bat
-
-            echo del "!image_directory!\!service_name!-build-docker.bat" >> !image_directory!/!service_name!-build-docker.bat
-
-            start /B cmd /c !image_directory!\!service_name!-build-docker.bat
-
-          )
-
-        )
-
-    )
-
-  )
-
+REM 等待所有后台 Docker 部署完成
+REM 批处理没有原生 wait, 用 timeout 循环检测 build-docker.bat 是否还存在
+:wait_deploy
+timeout /t 1 /nobreak >nul
+set "pending=0"
+for %%F in ("%image_base%\maozi-cloud-basics-image\*-build-docker.bat" "%image_base%\maozi-cloud-services-image\*-build-docker.bat") do (
+    if exist "%%F" set "pending=1"
 )
+if "!pending!"=="1" goto :wait_deploy
+
+REM 清理临时文件
+if exist "%before_manifest%" del "%before_manifest%"
+if exist "%after_manifest%" del "%after_manifest%"
+if exist "%changed_jars_list%" del "%changed_jars_list%"
+
+endlocal
