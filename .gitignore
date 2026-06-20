@@ -47,3 +47,6 @@ target
 **/maozi-cloud-mysql/data
 **/maozi-cloud-loki/data
 **/maozi-cloud-grafana/data
+
+# 自动部署临时文件
+**/maozi-cloud-parent-env
