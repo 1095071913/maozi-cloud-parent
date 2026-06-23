@@ -18,9 +18,11 @@ import org.springframework.stereotype.Component;
  * @author maozi
  */
 @Data
-@Component
+@Component(ApplicationEnvironmentContext.CLASS_NAME)
 @RefreshScope(proxyMode = ScopedProxyMode.NO)
 public class ApplicationEnvironmentContext {
+
+    public final static String CLASS_NAME = "applicationEnvironmentContext";
 
     /** 应用是否正在运行 */
     public static boolean IS_RUNNING = false;
@@ -75,7 +77,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param loadConfig 配置文件列表
      */
-    @Value("${spring.cloud.nacos.config.shared-dataids}")
+    @Value("${spring.cloud.nacos.config.shared-dataids:null}")
     public void setLoadConfig(String loadConfig) {
         ApplicationEnvironmentContext.LOAD_CONFIG = loadConfig;
     }

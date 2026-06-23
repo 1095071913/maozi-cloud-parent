@@ -20,6 +20,9 @@
     <!-- 子模块列表 -->
     <modules>
 
+        <!-- 单体全服务模块 -->
+        <module>maozi-cloud-all-service</module>
+
         <!-- API 网关模块，基于 Spring Cloud Gateway 实现 -->
         <module>maozi-cloud-basics-gateway</module>
         <!-- 服务监控模块，基于 Spring Boot Admin 实现 -->

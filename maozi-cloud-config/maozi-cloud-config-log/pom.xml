@@ -20,12 +20,6 @@
 
 
 		<!-- Project Begin -->
-		<!-- OAuth2 认证配置模块，提供用户身份信息 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-oauth</artifactId>
-			<version>${maozi-cloud-config-oauth.version}</version>
-		</dependency>
 
 		<!-- Sentinel 限流配置模块，日志记录前进行限流判断 -->
 		<dependency>
@@ -44,6 +38,13 @@
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
+		</dependency>
+
+		<!-- Spring AOP 切面支持，用于通过注解方式实现日志切面 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-domain-enum</artifactId>
+			<version>${maozi-cloud-domain-enum.version}</version>
 		</dependency>
 		<!-- Project End -->
 

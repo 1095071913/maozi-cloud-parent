@@ -1,0 +1,14 @@
+springdoc.api-docs.enabled: true
+swagger:
+  base-package: com.maozi.*.api.rest
+  title: "${spring.application.name}服务"
+  description: ${spring.application.name}
+  version: 1.0
+  terms-of-service-url: www.maozi.tech
+  authorization:
+    name: Authorization
+    key-name: Authorization
+    auth-regex: ^.*$
+  contact:
+    name: "maozi"
+    email: 1095071913@qq.com

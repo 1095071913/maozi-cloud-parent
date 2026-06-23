@@ -1,4 +1,4 @@
-package com.maozi.discovery.balancer;
+package com.maozi.discovery.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.ServiceInstance;

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${application-datasource-jdbc-url:maozi-cloud-mysql:3306}/${application-datasource-db-name:${spring.application.name}-${project.environment}-db}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true
+    username: ${application-datasource-jdbc-username:root}
+    password: ${application-datasource-jdbc-password:password}
+    hikari:
+      maximum-pool-size: 12
+      connection-timeout: 6000
+      minimum-idle: 12
+      idle-timeout: 500000
+      max-lifetime: 540000
+      connection-test-query: SELECT 1

@@ -171,12 +171,9 @@ if [ -n "$build_files" ]; then
 
     echo "[build] mvn -pl $build_files -amd"
 
-    # 清理整个 reactor; -T 16C 表示按 16 核并行
-    mvn clean -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true
-
     # 增量安装指定模块; -amd 同时构建依赖于它们的下游模块
     # 这一步实现了 "a 引用 b, b 修改 -> a 也重新构建"
-    mvn install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true \
+    mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true \
         -pl "$build_files" -amd
 
 fi

@@ -1,4 +1,4 @@
-package com.maozi.discovery.balancer;
+package com.maozi.discovery.config;
 
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.context.annotation.Configuration;

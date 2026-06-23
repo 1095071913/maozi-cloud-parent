@@ -50,6 +50,12 @@
 			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-log</artifactId>
+			<version>${maozi-cloud-config-log.version}</version>
+		</dependency>
+
 		<!-- 项目通用工具类库 -->
         <dependency>
             <groupId>com.maozi</groupId>

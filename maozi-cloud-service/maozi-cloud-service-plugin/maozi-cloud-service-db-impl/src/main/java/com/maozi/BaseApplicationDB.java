@@ -20,6 +20,7 @@ package com.maozi;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.Properties;
 
@@ -32,6 +33,8 @@ import java.util.Properties;
  *
  * @author maozi
  */
+
+@EnableAsync
 @SpringBootApplication
 @MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".${application-project-abbreviation}.*.mapper")
 public class BaseApplicationDB {

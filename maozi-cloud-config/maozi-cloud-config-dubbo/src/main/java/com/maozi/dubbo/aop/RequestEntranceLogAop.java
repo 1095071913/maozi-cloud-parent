@@ -16,7 +16,7 @@
  *
  */
 
-package com.maozi.log.config;
+package com.maozi.dubbo.aop;
 
 import com.maozi.base.enums.EnvironmentType;
 import com.maozi.base.enums.LogCommonType;
@@ -35,12 +35,12 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.rpc.RpcContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -64,14 +64,14 @@ import java.util.Map;
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1 )
 public class RequestEntranceLogAop {
 
-	/** REST 接口切点表达式 */
-	private final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
+	/** RPC 接口切点表达式 */
+	private final String RPC_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rpc..*(..)";
 
 	/** 基础服务实现类切点表达式 */
 	private final String BASE_RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.api.impl.BaseServiceImpl.*(..)";
 
 	/** 组合切点表达式 */
-	private final String POINT = "execution(" + REST_POINT + ") || execution( " + BASE_RPC_POINT + " )";
+	private final String POINT = "execution(" + RPC_POINT + ") || execution( " + BASE_RPC_POINT + " )";
 
 	/**
 	 * 环绕通知，记录请求日志、执行业务逻辑并记录响应日志
@@ -97,11 +97,17 @@ public class RequestEntranceLogAop {
     	/* 当前 HTTP 请求 */
     	HttpServletRequest request = WebUtil.getRequest();
 
+    	/* Dubbo RPC 上下文 */
+    	RpcContext rpcContext = RpcContext.getServiceContext();
+
+    	/* RPC 服务地址 */
+    	String rpcUrl = rpcContext.getLocalHost();
+
     	/* 方法参数字符串 */
     	String param = Arrays.toString(proceedingJoinPoint.getArgs());
 
     	/* 日志信息集合 */
-    	Map<String, String> logs = requestLog(proceedingJoinPoint, request, null);
+    	Map<String, String> logs = requestLog(proceedingJoinPoint, request, rpcUrl);
 
     	// 非生产环境记录请求参数
 		if(EnvironmentUtil.notEnvironment(EnvironmentType.PROD)){
@@ -114,10 +120,6 @@ public class RequestEntranceLogAop {
         try {
         	// 执行目标业务方法
 			resultData = proceedingJoinPoint.proceed();
-
-		// 权限拒绝异常：不封装结果，直接向上抛出由 Spring Security 处理
-		}catch (AccessDeniedException e) {
-			throw e;
 
 		// 业务异常：封装为业务错误结果（已包含错误码和错误信息），不记录 error 日志
         }catch (BusinessResultException businessResultException) {

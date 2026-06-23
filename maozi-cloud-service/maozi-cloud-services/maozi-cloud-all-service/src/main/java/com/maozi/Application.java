@@ -17,22 +17,15 @@
 
 package com.maozi;
 
-/**
- * 系统模块启动类
- * <p>
- * 继承自 BaseApplicationDB，作为系统服务模块的入口类，
- * 负责初始化并启动 Spring Boot 应用程序。
- * </p>
- */
-public class SystemApplication extends BaseApplicationDB {
+public class Application extends BaseApplicationDB {
 
 	/**
-	 * 应用程序主入口方法
+	 * 应用程序主入口方法。
 	 *
-	 * @param args 启动参数，由命令行传入
+	 * @param args 启动参数
 	 */
-	public static void main(String[] args) {
-		ApplicationRun(args);
-	}
+    public static void main(String[] args) {
+        ApplicationRun(args);
+    }
 
 }

@@ -1,0 +1,12 @@
+application-project-abbreviation: all
+
+spring:
+  config:
+    import:
+      - classpath:maozi-cloud-all-service.yml
+      - classpath:boot-default.yml
+      - classpath:boot-datasource.yml
+      - classpath:boot-redis.yml
+      - classpath:boot-swagger.yml
+      - classpath:boot-lock.yml
+      - classpath:boot-db.yml

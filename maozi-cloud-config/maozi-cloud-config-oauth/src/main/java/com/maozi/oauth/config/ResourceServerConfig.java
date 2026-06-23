@@ -1,7 +1,8 @@
 package com.maozi.oauth.config;
 
 import com.maozi.common.CollectionUtil;
-import com.maozi.oauth.properties.ApiWhitelistProperties;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.properties.ApiWhitelistProperties;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
@@ -53,12 +54,16 @@ public class ResourceServerConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
         // 合并系统默认白名单和项目自定义白名单
-        List<String> witelist = CollectionUtil.newArrayList();
-        witelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
-        witelist.addAll(apiWhitelistProperties.getConfigWhitelist());
+        List<String> whitelist = CollectionUtil.newArrayList();
+        whitelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
+
+        List<String> configWhitelist = apiWhitelistProperties.getConfigWhitelist();
+        if(ObjectUtil.isNotNullEmpty(configWhitelist)){
+            whitelist.addAll(configWhitelist);
+        }
 
         // 将白名单列表转换为数组，用于Spring Security路径匹配
-        String[] requestMatchers = witelist.toArray(new String[0]);
+        String[] requestMatchers = whitelist.toArray(new String[0]);
 
         // 配置请求授权规则：白名单路径放行，其余所有请求需要认证
         http.authorizeHttpRequests((authorize) -> authorize

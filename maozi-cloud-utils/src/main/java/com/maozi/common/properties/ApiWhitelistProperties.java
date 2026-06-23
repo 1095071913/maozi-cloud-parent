@@ -1,4 +1,4 @@
-package com.maozi.oauth.properties;
+package com.maozi.common.properties;
 
 import com.maozi.common.CollectionUtil;
 import lombok.Data;

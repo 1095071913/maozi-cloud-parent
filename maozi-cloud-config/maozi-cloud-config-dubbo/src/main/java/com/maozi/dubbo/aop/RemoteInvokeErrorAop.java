@@ -1,4 +1,4 @@
-package com.maozi.log.config;
+package com.maozi.dubbo.aop;
 
 import cn.hutool.core.util.StrUtil;
 import com.maozi.base.enums.LogCommonType;

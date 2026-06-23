@@ -16,6 +16,7 @@
     <!-- 服务启动运行基础模块构件名称 -->
     <artifactId>maozi-cloud-service-run</artifactId>
 
+
     <dependencies>
 
         <!-- 通用工具类依赖，启动时提供基础工具方法支持 -->
@@ -31,12 +32,7 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
-        <!-- Spring Cloud OpenFeign 核心，启动时扫描 @FeignClient 注解注册代理 Bean -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-openfeign-core</artifactId>
-        </dependency>
-
     </dependencies>
+
 
 </project>

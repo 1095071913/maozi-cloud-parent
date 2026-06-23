@@ -1,4 +1,4 @@
-package com.maozi.discovery.balancer;
+package com.maozi.discovery.config;
 
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.ObjectUtil;

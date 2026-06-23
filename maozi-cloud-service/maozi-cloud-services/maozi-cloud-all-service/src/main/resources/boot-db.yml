@@ -1,0 +1,38 @@
+mybatis-plus:
+  mapper-locations: classpath:com/maozi/${application-project-abbreviation}/*/mapper/*.xml
+  # typeEnumsPackage: com.maozi.${application-project-abbreviation}.*.enums
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: com.maozi.db.config.MybatisPlusLog
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    refresh: false
+    banner: false
+    db-config:
+      db-type: mysql
+      id-type: AUTO
+      field-strategy: NOT_NULL
+      column-like: false
+      capital-mode: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+mybatis-plus-join:
+  banner: false
+  table-alias: main
+
+mybatis:
+  configuration:
+    cache-enabled: false
+
+spring:
+  flyway:
+    enabled: true
+    table: system_table_flyway
+    clean-disabled: true
+    out-of-order: true
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db
+    encoding: UTF-8

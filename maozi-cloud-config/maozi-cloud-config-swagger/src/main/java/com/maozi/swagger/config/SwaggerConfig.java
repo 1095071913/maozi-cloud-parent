@@ -9,9 +9,10 @@ package com.maozi.swagger.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.constant.AuthroizationConstant;
 import com.maozi.common.context.ApplicationEnvironmentContext;
-import com.maozi.oauth.properties.ApiWhitelistProperties;
+import com.maozi.common.properties.ApiWhitelistProperties;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
@@ -56,7 +57,7 @@ public class SwaggerConfig {
 
     /** API 白名单配置 */
     @Resource
-    private ApiWhitelistProperties apiWhitelist;
+    private ApiWhitelistProperties apiWhitelistProperties;
 
     /**
      * 创建 OpenAPI 文档配置
@@ -89,7 +90,11 @@ public class SwaggerConfig {
 
         List<String> whitelist = CollectionUtil.newArrayList();
         whitelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
-        whitelist.addAll(apiWhitelist.getConfigWhitelist());
+
+        List<String> configWhitelist = apiWhitelistProperties.getConfigWhitelist();
+        if(ObjectUtil.isNotNullEmpty(configWhitelist)){
+            whitelist.addAll(configWhitelist);
+        }
 
         return (Operation operation, HandlerMethod handlerMethod) -> {
 

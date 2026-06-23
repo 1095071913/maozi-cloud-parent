@@ -1,0 +1,59 @@
+project:
+  environment: ${environment:local}
+
+server:
+  port: ${application-port}
+  error.path: /application/error
+  # compression:
+  #   enabled: true
+  #   min-response-size: 1024
+  #   mime-types: application/json,application/xml,text/html,text/xml,text/plain
+
+spring:
+  main:
+    banner-mode: off
+    log-startup-info: false
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch.matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: NON_NULL
+
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+  compression:
+    request:
+      # 开启请求数据的压缩功能
+      enabled: true
+      # 最小压缩值标准，当数据大于 1024 才会进行压缩
+      min-request-size: 1024
+      # 压缩类型
+      mime-types: text/xml,application/xml,application/json
+    response:
+      enabled: true
+
+logging:
+  test: ON
+  file.name: log/log.log
+  level:
+    root: ERROR
+    com.maozi: INFO
+    org.apache.dubbo.registry: OFF
+    org.apache.dubbo.remoting: OFF
+    com.xxl.job.core.handler.impl.MethodJobHandler: INFO
+    org.springframework.cloud.stream.binding.StreamListenerMessageHandler: INFO

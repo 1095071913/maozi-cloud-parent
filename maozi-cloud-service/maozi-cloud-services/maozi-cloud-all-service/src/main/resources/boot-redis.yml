@@ -1,0 +1,22 @@
+spring:
+  data:
+    redis:
+      host: maozi-cloud-redis
+      port: 6379
+      password: 812840531zhang
+      lettuce:
+        shutdown-timeout: 300ms
+        pool:
+          max-active: 600
+          max-wait: 1000
+          max-idle: 300
+          min-idle: 0
+        timeout: 60000
+#    cluster:
+#      nodes:
+#        - 192.168.1.111:7001
+#        - 192.168.1.112:7001
+#        - 192.168.1.110:7002
+#        - 192.168.1.110:7001
+#        - 192.168.1.111:7002
+#        - 192.168.1.112:7001

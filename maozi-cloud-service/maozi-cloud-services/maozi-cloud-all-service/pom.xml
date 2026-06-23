@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 系统管理服务实现模块，包含业务逻辑实现及可执行应用入口，负责用户、角色、菜单等系统管理功能 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 继承系统管理服务父工程，统一管理版本 -->
+    <!-- 继承猫子云统一父工程，统一管理依赖版本 -->
     <parent>
         <groupId>com.maozi</groupId>
-        <artifactId>maozi-cloud-business-system</artifactId>
+        <artifactId>maozi-cloud-services</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <!-- 系统管理服务实现模块构件名称 -->
-    <artifactId>maozi-cloud-system-service</artifactId>
+    <artifactId>maozi-cloud-all-service</artifactId>
 
     <properties>
 
@@ -34,33 +32,28 @@
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-service-db-impl</artifactId>
             <version>${maozi-cloud-service-db-impl.version}</version>
-        </dependency>
-
-        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-service-api</artifactId>
-            <version>${maozi-cloud-service-api.version}</version>
-        </dependency>
-
-        <!-- OAuth 认证服务 API，用于对接认证鉴权能力 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-oauth-api</artifactId>
-            <version>${maozi-cloud-oauth-api.version}</version>
-        </dependency>
-
-        <!-- 系统管理服务 API，本模块对外暴露的接口契约 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-system-api</artifactId>
-            <version>${maozi-cloud-system-api.version}</version>
-        </dependency>
-
-        <!-- CRAC 预热加速，支持 Coordinated Restore at Checkpoint 快速启动 -->
-        <dependency>
-            <groupId>org.crac</groupId>
-            <artifactId>crac</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.maozi</groupId>
+                    <artifactId>maozi-cloud-config-discovery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.maozi</groupId>
+                    <artifactId>maozi-cloud-config-oauth</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.maozi</groupId>
+                    <artifactId>maozi-cloud-config-dubbo</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.maozi</groupId>
+                    <artifactId>maozi-cloud-config-feign</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.maozi</groupId>
+                    <artifactId>maozi-cloud-config-sentinel</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -106,5 +99,6 @@
         </plugins>
     </build>
     <!-- boot打包 End -->
+
 
 </project>
