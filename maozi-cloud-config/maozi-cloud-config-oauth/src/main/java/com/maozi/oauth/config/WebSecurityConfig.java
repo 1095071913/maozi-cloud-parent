@@ -6,6 +6,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * Spring MVC 拦截器注册配置
+ * <p>
+ * 向 Spring MVC 注册 {@link ApplicationUserContextFilter}，
+ * 用于在请求进入时将链路上下文（用户信息、版本号等）写入 {@code ApplicationLinkContext}，
+ * 拦截所有路径并将优先级设为最高（{@code Integer.MIN_VALUE}）。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/6/16 17:59
  */

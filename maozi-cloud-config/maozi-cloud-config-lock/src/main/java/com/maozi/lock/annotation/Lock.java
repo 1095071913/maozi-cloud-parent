@@ -51,7 +51,7 @@ public @interface Lock {
     long waitTime() default Long.MIN_VALUE;
 
     /**
-     *上锁以后xxx秒自动解锁
+     * 加锁成功后自动释放锁的时长（单位：秒）
      * @return leaseTime
      */
     long leaseTime() default Long.MIN_VALUE;

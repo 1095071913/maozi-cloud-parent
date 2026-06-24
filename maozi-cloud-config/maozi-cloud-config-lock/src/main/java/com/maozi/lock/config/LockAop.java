@@ -129,6 +129,7 @@ public class LockAop {
     /**
      * 解析 SpEL 表达式定义的锁键
      *
+     * @param rootObject SpEL 根对象（目标类实例）
      * @param definitionKeys SpEL 表达式数组
      * @param method 目标方法
      * @param parameterValues 方法参数值

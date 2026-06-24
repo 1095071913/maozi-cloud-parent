@@ -55,10 +55,16 @@ import static org.apache.dubbo.spring.boot.util.DubboUtils.LINE_SEPARATOR;
 public class WelcomeLogoApplicationListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
     /**
-     * 标识是否已经处理过 Banner 输出
+     * 标识 Banner 是否已经输出过
      * <p>
-     * 初始值为 true，表示尚未触发（需要配合 compareAndSet 使用）。
-     * 使用 AtomicBoolean 保证多线程环境下的原子性操作。
+     * 当前初始值为 {@code true}，配合 {@code onApplicationEvent} 开头的
+     * {@code if (processed.get()) return;} 直接跳过，会导致 Banner 永不输出。
+     * 同时末尾的 {@code compareAndSet(false, true)} 期望从 {@code false} 改为 {@code true}，
+     * 与初始值 {@code true} 语义冲突，疑似复制 Dubbo 源码后引入的回归。
+     * </p>
+     * <p>
+     * <b>待确认：</b> 是否需要将初始值改为 {@code false} 以恢复「只输出一次 Banner」的预期行为，
+     * 还是刻意保留 {@code true} 以静默 Dubbo 启动 Banner。
      * </p>
      */
     private static final AtomicBoolean processed = new AtomicBoolean(true);
@@ -80,7 +86,7 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
     @Override
     public void onApplicationEvent(@Nonnull ApplicationEnvironmentPreparedEvent event) {
 
-        // 如果已经处理过，直接跳过，防止在层级 ApplicationContext 中重复执行
+        // 当前 processed 初始值为 true，此处恒为真直接返回，Banner 实际不会输出（见字段注释中的待确认说明）
         if (processed.get()) {
             return;
         }
@@ -101,7 +107,7 @@ public class WelcomeLogoApplicationListener implements ApplicationListener<Appli
             System.out.print(bannerText);
         }
 
-        // 原子性地将 processed 从 false 设为 true，标记 Banner 已输出完毕
+        // 期望从 false 改为 true；但因初始值为 true，此处永远不会成功（见字段注释中的待确认说明）
         processed.compareAndSet(false, true);
     }
 

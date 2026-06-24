@@ -26,9 +26,6 @@
 			<artifactId>sentinel-datasource-nacos</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.alibaba.csp</groupId> <artifactId>sentinel-reactor-adapter</artifactId>
-			</dependency> -->
-
 		<!-- Spring Cloud Alibaba Sentinel 核心依赖，提供限流熔断能力 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>

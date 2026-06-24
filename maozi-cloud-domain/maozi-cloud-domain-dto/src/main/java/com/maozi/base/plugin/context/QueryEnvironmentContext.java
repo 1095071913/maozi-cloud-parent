@@ -25,13 +25,20 @@ import org.springframework.stereotype.Component;
 @RefreshScope(proxyMode = ScopedProxyMode.NO)
 public class QueryEnvironmentContext {
 
-    /** 默认排序键（表别名） */
+    /**
+     * 默认排序表别名
+     * <p>
+     * 作为排序字段拼接时的默认前缀（形如 {@code "别名.字段名"}），由配置项
+     * {@code mybatis-plus-join.table-alias} 注入。命名 {@code DEFAULT_ORDER_KEY}
+     * 强调其作为「排序键前缀」的用途，等同于「默认表别名」。
+     * </p>
+     */
     public static String DEFAULT_ORDER_KEY;
 
     /**
-     * 设置默认表别名
+     * 设置默认排序表别名
      *
-     * @param defaultOrderKey 从配置文件中读取的表别名
+     * @param defaultOrderKey 从配置文件中读取的表别名（排序键前缀）
      */
     @Value("${mybatis-plus-join.table-alias}")
     public void setDefaultTableAlias(String defaultOrderKey) {

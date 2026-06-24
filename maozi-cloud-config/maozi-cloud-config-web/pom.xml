@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Web 层配置模块，集成 Undertow 服务器 链路追踪、Nacos 配置中心及缓存等 Web 基础组件 -->
+<!-- Web 层配置模块，集成 Undertow 服务器、Nacos 配置中心、自定义消息转换器与全局异常处理等 Web 基础组件 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -47,7 +47,7 @@
 
 
 		<!-- Project Begin -->
-		<!-- 基础枚举定义，提供通用枚举常量 -->
+		<!-- 日志记录配置模块，提供 REST 入口日志切面与全局异常处理器 -->
         <dependency>
             <groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-log</artifactId>

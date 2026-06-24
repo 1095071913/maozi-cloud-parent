@@ -35,7 +35,13 @@ public class WebUtil {
     public final static String LOCAL_LOOPBACK_IP = "0:0:0:0:0:0:0:1";
 
     /**
-     * 是否HTTP请求
+     * 判断当前线程是否处于 HTTP 请求上下文
+     * <p>
+     * 通过 {@link #getRequest()} 能否拿到当前 HttpServletRequest 来判断，
+     * 用于在定时任务、消息消费者等非 Web 入口处跳过 Web 相关逻辑。
+     * </p>
+     *
+     * @return 在 Web 请求线程中返回 {@code true}，否则返回 {@code false}
      */
     public static Boolean isHttpRequest() {
         return ObjectUtil.isNotNullEmpty(getRequest());
@@ -102,7 +108,15 @@ public class WebUtil {
     }
 
     /**
-     * 获取客户端的真实 IP 地址
+     * 获取当前请求的客户端真实 IP 地址
+     * <p>
+     * 无参重载，自动从 {@link #getRequest()} 取当前请求后委托给
+     * {@link #getRequestHost(HttpServletRequest)}；当前线程无请求上下文时抛出 {@link NullPointerException}。
+     * </p>
+     *
+     * @return 客户端真实 IP 地址字符串
+     * @throws NullPointerException 不在 Web 请求上下文中调用时抛出
+     * @see #getRequestHost(HttpServletRequest)
      */
     public static String getRequestHost() {
         return getRequestHost(Objects.requireNonNull(getRequest()));

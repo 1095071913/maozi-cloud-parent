@@ -12,6 +12,14 @@
 //
 //import java.util.Map;
 //
+//--------------------------------------------------------------------------------------------------
+// 已废弃（@deprecated）：本文件整体以 // 注释停用，原用于配合 RestOauthTokenService 的 Feign 降级。
+// 令牌服务已切换为 Dubbo RPC 实现，详见：
+//   com.maozi.oauth.token.api.OauthTokenService
+//   com.maozi.oauth.token.api.impl.rpc.RpcOauthTokenServiceImpl
+// 请勿取消注释启用。
+//--------------------------------------------------------------------------------------------------
+//
 ///**
 // * OAuth 令牌服务降级工厂
 // * <p>

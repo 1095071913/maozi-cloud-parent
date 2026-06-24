@@ -221,6 +221,15 @@ public abstract class AbstractRequestEntranceLogAop {
 	 */
 	protected abstract LogCommonType getType();
 
+	/**
+	 * 钩子方法：子类可重写以追加自定义的日志字段
+	 * <p>
+	 * 在标准入口日志拼装完成后被调用，默认实现为空。
+	 * 子类通过向 {@code logs} 中 put 自定义键值对来扩展日志内容（如 Dubbo 的 URL、Rest 的 URI）。
+	 * </p>
+	 *
+	 * @param logs 当前已收集的日志字段 Map（可变，允许子类追加条目）
+	 */
 	protected void requestLog(Map<String, String> logs){};
 
 }

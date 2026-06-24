@@ -145,6 +145,8 @@ public abstract class AbstractBaseResult<D> implements Serializable {
 
 	/**
 	 * 抛出错误结果对应的业务异常
+	 *
+	 * @throws BusinessResultException 始终抛出，将当前 ErrorResult 包装为业务异常
 	 */
 	private void throwError() {
 		throw new BusinessResultException(getErrorResult());

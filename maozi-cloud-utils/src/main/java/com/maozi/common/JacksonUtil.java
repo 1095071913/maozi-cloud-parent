@@ -45,6 +45,7 @@ public class JacksonUtil {
 	@Getter
     private static final ObjectMapper objectMapper;
 
+	// 类加载时初始化全局 ObjectMapper，确保配置只执行一次
 	static{
 		objectMapper = initObjectMapperConfig();
 	}

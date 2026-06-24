@@ -1,5 +1,6 @@
 package com.maozi.oauth.token.param;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,11 @@ public class ClientUserParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 客户端 ID */
-	private String clientId;
+    @Schema(description = "客户端 ID")
+    private String clientId;
 
     /** 用户名 */
-	private String username;
+    @Schema(description = "用户名")
+    private String username;
 
 }

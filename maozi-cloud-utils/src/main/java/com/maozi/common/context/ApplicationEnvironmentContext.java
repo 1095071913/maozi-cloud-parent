@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 @RefreshScope(proxyMode = ScopedProxyMode.NO)
 public class ApplicationEnvironmentContext {
 
+    /** Spring Bean 名称常量，用于 {@code @Component(CLASS_NAME)} 显式命名 */
     public final static String CLASS_NAME = "applicationEnvironmentContext";
 
     /** 应用是否正在运行 */

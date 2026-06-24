@@ -56,9 +56,8 @@ public class ErrorResult<D> extends AbstractBaseResult<D> implements Serializabl
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** HTTP 状态码 */
+	/** HTTP 状态码（仅服务端使用，不序列化到响应体） */
 	@JsonIgnore
-	@Schema(description = "HTTP状态码")
 	protected Integer httpCode;
 
 	/** 错误内码 */
@@ -69,9 +68,8 @@ public class ErrorResult<D> extends AbstractBaseResult<D> implements Serializabl
 	@Schema(description = "错误信息")
 	private String message;
 
-	/** 异常错误信息 */
+	/** 异常错误信息（仅服务端记录，不暴露给前端） */
 	@JsonIgnore
-	@Schema(description = "异常错误信息")
 	private String exceptionMessage;
 
 	/** 错误附加数据 */

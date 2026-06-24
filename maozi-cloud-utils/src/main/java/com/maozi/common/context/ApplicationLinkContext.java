@@ -35,16 +35,21 @@ public class ApplicationLinkContext {
     /** 默认应用版本（主版本） */
     public static final String APPLICATION_DEFAULT_VERSION = "main";
 
-    /** 当前线程的版本号 */
+    /** 当前线程的版本号（用于灰度路由） */
     public static TransmittableThreadLocal<String> versions = new TransmittableThreadLocal<>();
 
-    /** 当前线程的用户名 */
+    /** 当前线程的登录用户信息（含用户名、客户端 ID） */
     public static TransmittableThreadLocal<CurrentUserInfo> currentUserInfos = new TransmittableThreadLocal<>();
 
     /**
-     * 获取当前用户某信息
-     * @param function 获取的某属性函数
-     * @return 用户某信息
+     * 通过函数式接口提取当前登录用户的指定属性
+     * <p>
+     * 当上下文中未携带用户信息时返回 {@code null}，避免 NPE。
+     * </p>
+     *
+     * @param function 从 {@link CurrentUserInfo} 提取目标属性的函数（如 {@code CurrentUserInfo::getUsername}）
+     * @param <R> 目标属性类型
+     * @return 当前用户的目标属性值；未登录或上下文缺失时返回 {@code null}
      */
     public static <R> R getCurrentUserInfo(Function<CurrentUserInfo, R> function) {
         CurrentUserInfo currentUserInfo = currentUserInfos.get();

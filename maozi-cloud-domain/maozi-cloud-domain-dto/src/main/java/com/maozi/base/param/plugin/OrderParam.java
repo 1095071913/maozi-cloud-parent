@@ -28,7 +28,7 @@ public interface OrderParam {
 	 *
 	 * @return key 为排序字段，value 为排序方向（true 降序、false 升序、null 不排序）
 	 */
-	@Schema(description = "排序组件 key:排序字段 value: true降序、false升序、null不做排序、空字段")
+	@Schema(description = "排序组件 key:排序字段 value: true降序、false升序、null不做排序、空字符串字段")
 	Map<String,Boolean> getOrderFieldMap();
 
 	/**
@@ -96,7 +96,7 @@ public interface OrderParam {
 			Map<String,Boolean> orderMainFields = orderMainFieldsMap.get(key);
 
 			// 当前表的升序字段集合
-			List<String> orderAesFields = CollectionUtil.newArrayList();
+			List<String> orderAscFields = CollectionUtil.newArrayList();
 
 			// 当前表的降序字段集合
 			List<String> orderDescFields = CollectionUtil.newArrayList();
@@ -121,14 +121,14 @@ public interface OrderParam {
 					// 将表别名转换为下划线格式（驼峰转下划线）
 					String underlineCase = StrUtil.toUnderlineCase(key);
 
-					// 如果表别名不为空，拼接为 "表别名.字段名" 格式；否则仅使用表名
+					// 表别名非空时，拼接为 "表别名.字段名"；为空时仅保留下划线格式的字段名（无前缀）
 					String field = StringUtils.isEmpty(key) ? underlineCase : underlineCase + "." + StrUtil.toUnderlineCase(orderMainField);
 
 					// true 表示降序，false 表示升序
 					if(orderMainFieldValue) {
 						orderDescFields.add(field);
 					}else {
-						orderAesFields.add(field);
+						orderAscFields.add(field);
 					}
 
 				}

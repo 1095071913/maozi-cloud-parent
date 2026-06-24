@@ -14,8 +14,9 @@ import java.util.List;
 /**
  * Web MVC 配置
  * <p>
- * 注册应用链路上下文拦截器和自定义消息转换器。
- * 并添加 {@link ReadOnlyMultipartFormDataEndpointConverter} 支持 multipart/form-data 请求体读取。
+ * 注册自定义消息转换器：
+ * 添加 {@link ReadOnlyMultipartFormDataEndpointConverter} 支持 multipart/form-data 请求体读取。
+ * 应用链路上下文拦截器不在此注册，由 {@code maozi-cloud-config-oauth} 模块的 {@code WebSecurityConfig} 负责。
  * </p>
  *
  * @author maozi

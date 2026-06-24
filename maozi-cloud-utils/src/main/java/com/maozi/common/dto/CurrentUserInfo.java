@@ -4,9 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * 当前登录用户信息
+ * <p>
+ * 通过 {@code ApplicationLinkContext} 在链路中传递的最小化用户身份信息，
+ * 仅保留用户名与客户端 ID 两个核心字段，避免在日志、上下文中暴露完整 User 实体。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/6/16 16:51
  */
@@ -15,14 +22,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CurrentUserInfo implements Serializable {
 
-    /**
-     * 用户名
-     */
+    /** 序列化标识 */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    /** 用户名 */
     private String username;
 
-    /**
-     * 客户端ID
-     */
+    /** 客户端 ID（OAuth2 Registered Client 主键） */
     private Long clientId;
 
 }

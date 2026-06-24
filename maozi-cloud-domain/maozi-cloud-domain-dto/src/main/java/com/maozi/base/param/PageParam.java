@@ -14,16 +14,6 @@ import java.io.Serializable;
  * <p>
  * 通用分页查询入参，包含页码、每页数量和查询条件。
  * 支持泛型，可搭配任意查询条件对象使用。
- * </p>
- *
- * @param <D> 查询条件数据类型
- * @author maozi
- */
-/**
- * 分页查询参数
- * <p>
- * 通用分页查询入参，包含页码、每页数量和查询条件。
- * 支持泛型，可搭配任意查询条件对象使用。
  * 使用 {@link Data} 注解自动生成 getter/setter，
  * 使用 {@link NoArgsConstructor} 和 {@link AllArgsConstructor} 生成无参和全参构造方法。
  * </p>

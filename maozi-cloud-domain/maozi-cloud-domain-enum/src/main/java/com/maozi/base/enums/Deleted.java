@@ -12,7 +12,8 @@ import lombok.Getter;
  * </p>
  * <p>
  * 通常与 MyBatis-Plus 的逻辑删除插件配合使用，
- * 自动在查询条件中追加 deleted = 0 的过滤条件。
+ * 自动在查询条件中追加删除标记字段等于 0（如 {@code deleted = 0}）的过滤条件，
+ * 这里的 {@code deleted} 指数据库列名，而非本枚举字段名。
  * </p>
  *
  * @author maozi

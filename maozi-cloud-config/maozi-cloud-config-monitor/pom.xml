@@ -32,7 +32,7 @@
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
-		<!-- Arthas 在诊断工具，提供运行时类加载、方法监控、热更新等诊断能力 -->
+		<!-- Arthas 在线诊断工具，提供运行时类加载、方法监控、热更新等诊断能力 -->
 		<dependency>
 			<groupId>com.taobao.arthas</groupId>
 			<artifactId>arthas-spring-boot-starter</artifactId>

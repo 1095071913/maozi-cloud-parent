@@ -28,6 +28,7 @@ public class ValidatorUtil {
      */
     private static final Validator VALIDATOR;
 
+    // 类加载时构建默认 ValidatorFactory 并获取线程安全的 Validator 实例
     static {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

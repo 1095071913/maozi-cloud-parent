@@ -27,10 +27,10 @@ public class SystemErrorCode extends AbstractBaseErrorCode{
     /** 系统最大错误码，大于此值的为业务错误 */
     public static final Integer MAX_SYSTEM_ERROR_CODE = 99999;
 
-    /** 默认系统异常 */
+    /** 默认系统异常（HTTP 500，对外提示「服务网络异常」） */
     public static final ErrorCode DEFAULT_ERROR = new ErrorCode(SYSTEM_ERROR_DEFAULT_CODE,"服务网络异常");
 
-    /** 没有此编码 */
+    /** 无此错误编码（code=0，对外表现为「服务网络异常」，内部异常信息为「没有此编码」），用于错误码未定义的兜底 */
     public final static ErrorCode NOT_EXIST_CODE_ERROR = new ErrorCode(0,"服务网络异常","没有此编码");
 
     /** 服务调用失败 */

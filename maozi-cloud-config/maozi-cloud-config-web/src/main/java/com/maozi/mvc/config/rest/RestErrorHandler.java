@@ -113,7 +113,7 @@ public class RestErrorHandler {
 	 * @return 标准错误响应，包含 PARAM_ERROR 错误码
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public Object handleAccessDeniedException(HttpMessageNotReadableException e) {
+	public Object handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 

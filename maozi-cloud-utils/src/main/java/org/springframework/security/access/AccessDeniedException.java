@@ -17,8 +17,16 @@
 package org.springframework.security.access;
 
 /**
- * Thrown if an {@link org.springframework.security.core.Authentication Authentication}
- * object does not hold a required authority.
+ * Spring Security 权限不足异常占位类
+ * <p>
+ * 本类与 {@code spring-security-core} 中的 {@link AccessDeniedException} 同包同名，
+ * 用于在 {@code maozi-cloud-utils} 等不直接依赖 Spring Security 的模块中引用该异常类型，
+ * 通过类路径「同包覆盖」机制隔离对 Spring Security 的强依赖。运行时由实际 Security jar 提供真实实现。
+ * </p>
+ * <p>
+ * 原始语义：当 {@link org.springframework.security.core.Authentication Authentication}
+ * 对象不具有所需权限时抛出。
+ * </p>
  *
  * @author Ben Alex
  */

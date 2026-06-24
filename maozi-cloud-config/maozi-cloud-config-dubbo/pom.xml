@@ -39,7 +39,7 @@
 			<artifactId>dubbo-nacos-spring-boot-starter</artifactId>
 			<version>${dubbo.version}</version>
 		</dependency>
-		<!-- Dubbo Begin -->
+		<!-- Dubbo End -->
 
 
 		<!-- Project Begin -->
@@ -50,6 +50,7 @@
 			<version>${maozi-cloud-config-monitor.version}</version>
 		</dependency>
 
+		<!-- 日志记录配置模块，提供 RPC 调用日志切面支持 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-log</artifactId>
