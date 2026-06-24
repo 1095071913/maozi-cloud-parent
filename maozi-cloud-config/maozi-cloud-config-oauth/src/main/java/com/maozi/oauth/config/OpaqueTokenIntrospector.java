@@ -46,8 +46,8 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     /** HTTP模式下的内省委托器 */
     private final SpringOpaqueTokenIntrospector httpDelegate;
 
-    /** Dubbo RPC令牌服务引用（check=false避免非Dubbo模式下启动校验失败） */
-    @DubboReference(check = false)
+    /** Dubbo RPC令牌服务引用 */
+    @DubboReference
     private RpcOauthTokenService rpcOauthTokenService;
 
     /**

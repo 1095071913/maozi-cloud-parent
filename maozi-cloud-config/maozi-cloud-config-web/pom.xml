@@ -19,11 +19,6 @@
 	<dependencies>
 
 		<!-- Spring Boot Begin -->
-		<!-- Spring Security 核心库，提供安全认证基础能力 -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
 
 		<!-- Spring Boot Web Starter，排除默认 Tomcat 服务器 -->
 		<dependency>
@@ -43,18 +38,6 @@
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 
-		<!-- Spring 缓存支持，提供 CacheManager 抽象 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-
-		<!-- Caffeine 高性能本地缓存 -->
-		<dependency>
-			<groupId>com.github.ben-manes.caffeine</groupId>
-			<artifactId>caffeine</artifactId>
-		</dependency>
-
 		<!-- Nacos 配置中心客户端，从 Nacos 拉取配置 -->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
@@ -67,8 +50,8 @@
 		<!-- 基础枚举定义，提供通用枚举常量 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-domain-enum</artifactId>
-			<version>${maozi-cloud-domain-enum.version}</version>
+			<artifactId>maozi-cloud-config-log</artifactId>
+			<version>${maozi-cloud-config-log.version}</version>
         </dependency>
         <!-- Project End -->
 

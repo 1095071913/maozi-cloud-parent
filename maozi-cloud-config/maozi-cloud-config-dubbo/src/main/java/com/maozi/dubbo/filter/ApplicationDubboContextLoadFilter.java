@@ -31,7 +31,7 @@ import org.apache.dubbo.rpc.RpcException;
  * @see ApplicationLinkContext
  * @see Filter
  */
-public class ApplicationRpcContextLoadFilter implements Filter {
+public class ApplicationDubboContextLoadFilter implements Filter {
 
     /**
      * 拦截 Dubbo 服务端调用，提取并设置链路上下文信息

@@ -91,9 +91,9 @@ public class SwaggerConfig {
         List<String> whitelist = CollectionUtil.newArrayList();
         whitelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
 
-        List<String> configWhitelist = apiWhitelistProperties.getConfigWhitelist();
-        if(ObjectUtil.isNotNullEmpty(configWhitelist)){
-            whitelist.addAll(configWhitelist);
+        List<String> apiWhitelist = apiWhitelistProperties.getConfigWhitelist();
+        if(ObjectUtil.isNotNullEmpty(apiWhitelist)){
+            whitelist.addAll(apiWhitelist);
         }
 
         return (Operation operation, HandlerMethod handlerMethod) -> {

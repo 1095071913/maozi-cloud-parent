@@ -1,0 +1,81 @@
+
+/*
+ * Copyright 2012-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package com.maozi.mvc.config.aop;
+
+import com.maozi.base.enums.LogCommonType;
+import com.maozi.common.WebUtil;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.log.config.AbstractRequestEntranceLogAop;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * REST 接口请求入口日志切面
+ * <p>
+ * 拦截 REST 接口和基础服务实现类的请求入口，复用
+ * {@link AbstractRequestEntranceLogAop} 的统一日志逻辑。权限拒绝异常
+ * （{@link AccessDeniedException}）原样抛出，交由 Spring Security 处理，
+ * 不封装为统一响应。
+ * </p>
+ *
+ * @author maozi
+ */
+@Aspect
+@Component
+public class RestRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
+
+	/** REST 接口切点表达式 */
+	private final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
+
+	/** 组合切点表达式 */
+	private final String POINT = "execution(" + REST_POINT + ")";
+
+	/**
+	 * 环绕通知，绑定 REST 切点并委托给基类的统一日志逻辑。
+	 *
+	 * @param proceedingJoinPoint AOP 连接点
+	 * @return 业务方法执行结果
+	 */
+	@Around(POINT)
+	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		return super.doAround(proceedingJoinPoint);
+	}
+
+	@Override
+	protected LogCommonType getType() {
+		return LogCommonType.WEB;
+	}
+
+	@Override
+	protected String getLocalHost() {
+		return WebUtil.getRequestHost();
+	}
+
+	@Override
+	protected void requestLog(Map<String, String> logs) {
+		logs.put(LogTag.URL, Objects.requireNonNull(WebUtil.getRequest()).getRequestURL().toString());
+	}
+}

@@ -43,8 +43,8 @@
 
   <!-- 子模块列表 -->
   <modules>
-		<!-- 服务数据库实现插件模块 -->
-		<module>maozi-cloud-service-db-impl</module>
+      <!-- 服务数据库实现插件模块 -->
+      <module>maozi-cloud-service-db-impl</module>
   </modules>
 
 </project>

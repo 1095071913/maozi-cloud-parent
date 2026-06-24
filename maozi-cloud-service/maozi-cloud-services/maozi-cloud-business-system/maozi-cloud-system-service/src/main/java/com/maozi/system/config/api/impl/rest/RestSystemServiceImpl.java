@@ -1,7 +1,7 @@
 package com.maozi.system.config.api.impl.rest;
 
 import cn.hutool.extra.cglib.CglibUtil;
-import com.maozi.base.annotation.RestService;
+import com.maozi.base.api.annotation.RestService;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.system.config.api.impl.SystemServiceImpl;

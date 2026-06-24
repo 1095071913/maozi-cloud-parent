@@ -31,13 +31,6 @@
 			<version>${maozi-cloud-domain-enum.version}</version>
 		</dependency>
 
-		<!-- OAuth2 认证配置模块，为 Swagger 文档提供 OAuth2 鉴权支持 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-oauth</artifactId>
-			<version>${maozi-cloud-config-oauth.version}</version>
-		</dependency>
-
 	</dependencies>
 
 </project>

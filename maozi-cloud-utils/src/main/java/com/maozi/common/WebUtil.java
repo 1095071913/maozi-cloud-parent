@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Objects;
+
 /**
  * Web 工具类
  * <p>
@@ -31,6 +33,13 @@ public class WebUtil {
      * 本地回环IP地址
      */
     public final static String LOCAL_LOOPBACK_IP = "0:0:0:0:0:0:0:1";
+
+    /**
+     * 是否HTTP请求
+     */
+    public static Boolean isHttpRequest() {
+        return ObjectUtil.isNotNullEmpty(getRequest());
+    }
 
     /**
      * 获取当前 HTTP 请求对象
@@ -90,6 +99,13 @@ public class WebUtil {
             log.error(e.getLocalizedMessage());
         }
 
+    }
+
+    /**
+     * 获取客户端的真实 IP 地址
+     */
+    public static String getRequestHost() {
+        return getRequestHost(Objects.requireNonNull(getRequest()));
     }
 
     /**

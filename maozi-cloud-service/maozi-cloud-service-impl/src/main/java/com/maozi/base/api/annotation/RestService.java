@@ -1,4 +1,4 @@
-package com.maozi.base.annotation;
+package com.maozi.base.api.annotation;
 
 import org.springframework.web.bind.annotation.RestController;
 

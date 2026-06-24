@@ -2,7 +2,7 @@ package com.maozi.system.permission.api.impl.rest;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.maozi.base.annotation.RestService;
+import com.maozi.base.api.annotation.RestService;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;

@@ -4,8 +4,9 @@ import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
+import jakarta.annotation.Nonnull;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.nullness.qual.NonNull;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
@@ -53,7 +54,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 	 */
 	@Nullable
 	@Override
-	protected <T> T doExecute(@NonNull URI url,@Nullable String uriTemplate, @Nullable HttpMethod method, @Nullable RequestCallback requestCallback, @Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
+	protected <T> T doExecute(@Nonnull URI url, @Nullable String uriTemplate, @Nullable HttpMethod method, @Nullable RequestCallback requestCallback, @Nullable ResponseExtractor<T> responseExtractor) throws RestClientException {
 
 		// 标记请求是否发生异常，用于最终日志级别判断
 		boolean error = false;

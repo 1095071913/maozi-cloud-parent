@@ -38,12 +38,6 @@
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
 
-		<!-- Spring Cloud OpenFeign 核心，用于声明式 HTTP 远程调用 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-openfeign-core</artifactId>
-		</dependency>
-
 	</dependencies>
 
 </project>

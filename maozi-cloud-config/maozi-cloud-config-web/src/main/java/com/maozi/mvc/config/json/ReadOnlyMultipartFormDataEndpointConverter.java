@@ -1,7 +1,7 @@
 package com.maozi.mvc.config.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.annotation.Nonnull;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +51,7 @@ public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2H
      * @return 是否可以读取
      */
     @Override
-    public boolean canRead(@NonNull Type type, Class<?> contextClass, MediaType mediaType) {
+    public boolean canRead(@Nonnull Type type, Class<?> contextClass, MediaType mediaType) {
         // 当使用 REST 客户端（如 RestTemplate#getForObject）发请求时，RequestAttributes 可能为 null
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {

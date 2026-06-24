@@ -1,2 +1,2 @@
-applicationRpcContextLoadFilter=com.maozi.dubbo.filter.ApplicationRpcContextLoadFilter
-applicationRpcContextTransmitFilter=com.maozi.dubbo.filter.ApplicationRpcContextTransmitFilter
+applicationDubboContextLoadFilter=com.maozi.dubbo.filter.ApplicationDubboContextLoadFilter
+applicationDubboContextTransmitFilter=com.maozi.dubbo.filter.ApplicationDubboContextTransmitFilter

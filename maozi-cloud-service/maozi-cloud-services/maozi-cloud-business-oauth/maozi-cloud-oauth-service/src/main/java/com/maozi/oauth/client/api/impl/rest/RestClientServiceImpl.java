@@ -1,6 +1,6 @@
 package com.maozi.oauth.client.api.impl.rest;
 
-import com.maozi.base.annotation.RestService;
+import com.maozi.base.api.annotation.RestService;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;

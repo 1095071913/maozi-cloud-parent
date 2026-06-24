@@ -1,0 +1,226 @@
+
+/*
+ * Copyright 2012-2018 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package com.maozi.log.config;
+
+import com.alibaba.csp.sentinel.context.ContextUtil;
+import com.alibaba.csp.sentinel.node.Node;
+import com.maozi.base.enums.EnvironmentType;
+import com.maozi.base.enums.LogCommonType;
+import com.maozi.base.utils.EnvironmentUtil;
+import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
+import com.maozi.common.ResultUtil;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
+import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.error.ErrorResult;
+import com.maozi.common.result.error.code.SystemErrorCode;
+import com.maozi.common.result.error.exception.BusinessResultException;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
+
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * 请求入口日志切面抽象基类
+ * <p>
+ * 拦截接口入口和基础服务实现类的请求，记录请求日志、响应日志和异常日志。
+ * 在非生产环境下记录请求参数；异常发生时根据错误类型自动分类记录
+ * （业务错误 warn 级别、系统错误 error 级别）。
+ * </p>
+ * <p>
+ * 子类职责：
+ * <ul>
+ *   <li>提供具体的切点表达式（通过 {@code @Around} 绑定到 {@link #doAround(ProceedingJoinPoint)}）</li>
+ *   <li>按需重写 {@link #getLocalHost()} 返回非 HTTP 请求（RPC）的来源地址，默认 {@code null}</li>
+ * </ul>
+ * </p>
+ *
+ * @author maozi
+ */
+@Slf4j
+@Order(value = Ordered.HIGHEST_PRECEDENCE + 1)
+public abstract class AbstractRequestEntranceLogAop {
+
+    /**
+	 * 环绕通知：记录请求日志、执行业务逻辑并记录响应日志。
+	 * <p>
+	 * 执行流程：
+	 * <ol>
+	 *   <li>记录请求开始时间和基本信息</li>
+	 *   <li>执行业务方法</li>
+	 *   <li>捕获异常并转换为统一错误结果</li>
+	 *   <li>在 finally 块中记录 SQL 日志、响应时间并按结果分类输出日志</li>
+	 * </ol>
+	 * </p>
+	 *
+	 * @param proceedingJoinPoint AOP 连接点
+	 * @return 业务方法执行结果
+	 */
+	protected Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
+		/* 请求开始时间戳 */
+		long startTime = System.currentTimeMillis();
+
+		/* 方法参数字符串 */
+		String param = Arrays.toString(proceedingJoinPoint.getArgs());
+
+		/* Sentinel 当前节点 */
+		Node curNode = ContextUtil.getContext().getCurNode();
+
+		/* 日志信息集合 */
+		Map<String, String> logs = requestLog(proceedingJoinPoint);
+
+		// 非生产环境记录请求参数
+		if (EnvironmentUtil.notEnvironment(EnvironmentType.PROD)) {
+			logs.put(LogTag.PARAM, param);
+		}
+
+		// 方法返回结果，初始为 null
+		Object resultData = null;
+
+		// 执行目标业务方法
+		try {
+			resultData = proceedingJoinPoint.proceed();
+
+		// 权限拒绝异常交由 Spring Security 处理
+		}catch (AccessDeniedException accessDeniedException){
+			throw accessDeniedException;
+
+		// 业务异常：封装为业务错误结果（已包含错误码和错误信息），不记录 error 日志
+		}catch (BusinessResultException businessResultException) {
+			resultData = businessResultException.getErrorResult();
+
+		// 未预期的系统异常：封装为统一的系统错误结果，并记录详细的错误日志
+		} catch (Throwable e) {
+
+			// 构建系统级错误响应
+			resultData = ResultUtil.error(SystemErrorCode.SYSTEM_ERROR).setHttpCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE);
+
+			// 记录异常堆栈日志，便于排查问题
+			LogUtil.error(log, e);
+
+			// 收集系统错误相关的日志信息
+			logs.put(LogTag.PARAM, param);                                       // 记录请求参数（系统异常时无论环境均记录）
+			logs.put(LogTag.ERROR_USER, ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));   // 记录当前操作用户
+			logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());                 // 记录异常描述
+
+			// 记录异常发生的第一行代码位置
+			StackTraceElement[] errorLines = e.getStackTrace();
+			if (errorLines.length > 0) {
+				logs.put(LogTag.ERROR_LINE, errorLines[0].toString());
+			}
+
+			return resultData;
+
+		} finally {
+
+			// 记录本次请求过程中执行的 SQL 日志（从 ThreadLocal 中获取）
+			StringBuilder sqlLog = LogUtil.sqlLog.get();
+			if (ObjectUtil.isNotNullEmpty(sqlLog)) {
+				logs.put(LogTag.SQL, sqlLog.toString());
+			}
+
+			// 记录响应时间
+			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
+
+			// 判断结果是否为框架统一响应类型 && 请求失败（业务或系统错误）
+			if (ObjectUtil.isNotNullEmpty(resultData) && resultData instanceof AbstractBaseResult<?> result && !result.isSuccess()) {
+
+				// 统计 Sentinel 阻塞 QPS（表示请求被限流或熔断）
+				curNode.increaseBlockQps(1);
+
+				// 获取错误详情，用于判断是业务错误还是系统错误
+				ErrorResult<?> errorResult = result.getErrorResult();
+
+				// 业务错误使用 warn 级别，系统错误使用 error 级别
+				if (errorResult.autoIdentifyHttpCode().isBusinessError()) {
+					log.warn(LogUtil.convertLog(logs));
+				} else {
+					LogUtil.error(log, logs);
+				}
+
+			} else {
+
+				// 统计 Sentinel 通过 QPS（表示请求成功处理）
+				curNode.addPassRequest(1);
+
+				// 请求成功，记录 info 级别日志
+				LogUtil.info(log, logs);
+
+			}
+
+		}
+
+		return resultData;
+
+	}
+
+	/**
+	 * 构建 {@link LinkedHashMap} 结构的日志信息，保证字段输出顺序与插入顺序一致。
+	 *
+	 * @param proceedingJoinPoint AOP 连接点
+	 * @return 日志字段集合
+	 */
+	private Map<String, String> requestLog(ProceedingJoinPoint proceedingJoinPoint) {
+
+		// 使用 LinkedHashMap 保证日志字段的输出顺序与插入顺序一致
+		Map<String, String> logs = new LinkedHashMap<>();
+
+		// 记录请求类型标识（WEB 或 RPC）
+		logs.put(LogTag.TYPE, getType().getDesc());
+
+		// 记录来源地址：HTTP 请求取客户端 IP，RPC 调用取远程服务地址
+		logs.put(LogTag.IP, getLocalHost());
+
+		// 仅 HTTP 请求记录完整的请求 URL
+		requestLog(logs);
+
+		// 记录被调用的方法全路径，格式为 "类全限定名:方法名"
+		logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
+
+		return logs;
+
+	}
+
+	/**
+	 * 返回非 HTTP 请求（RPC）的来源地址，用于日志记录。
+	 * <p>
+	 * 默认返回 {@code null}（REST 场景由 HTTP 请求获取地址）；
+	 * RPC 子类重写以返回对应的服务地址。
+	 * </p>
+	 *
+	 * @return 来源地址，或 {@code null}
+	 */
+	protected abstract String getLocalHost();
+
+	/**
+	 * 获取拦截类型
+	 */
+	protected abstract LogCommonType getType();
+
+	protected void requestLog(Map<String, String> logs){};
+
+}

@@ -1,11 +1,11 @@
 package com.maozi.mvc.filter;
 
 import com.maozi.common.context.ApplicationLinkContext;
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -51,7 +51,7 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
      * @throws IOException IO 异常
      */
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         // 从请求头中获取版本号，若不存在则使用默认版本
         String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));

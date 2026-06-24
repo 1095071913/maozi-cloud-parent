@@ -31,7 +31,7 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-public class RemoteInvokeErrorAop {
+public class DubboInvokeErrorAop {
 
     /** impl 包名标识，用于区分接口调用和实现调用 */
     private static final String IMPL = "impl";

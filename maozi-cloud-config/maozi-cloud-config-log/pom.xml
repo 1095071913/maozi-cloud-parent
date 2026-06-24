@@ -20,12 +20,9 @@
 
 
 		<!-- Project Begin -->
-
-		<!-- Sentinel 限流配置模块，日志记录前进行限流判断 -->
 		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sentinel</artifactId>
-			<version>${maozi-cloud-config-sentinel.version}</version>
+			<groupId>com.alibaba.csp</groupId>
+			<artifactId>sentinel-core</artifactId>
 		</dependency>
 
 		<!-- Spring AOP 切面支持，用于通过注解方式实现日志切面 -->
