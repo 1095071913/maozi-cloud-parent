@@ -21,8 +21,9 @@
 
 		<!-- Project Begin -->
 		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-core</artifactId>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-sentinel</artifactId>
+			<version>${maozi-cloud-config-sentinel.version}</version>
 		</dependency>
 
 		<!-- Spring AOP 切面支持，用于通过注解方式实现日志切面 -->
