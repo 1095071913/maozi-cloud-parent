@@ -3,8 +3,11 @@ package com.maozi.oauth.config;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.constants.OAuth2TokenClaimConstants;
+import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,10 +27,12 @@ import java.util.stream.Collectors;
 /**
  * 不透明令牌内省器
  * <p>
- * 支持 HTTP 和 Dubbo RPC 两种令牌内省模式，通过配置 {@code maozi.oauth.introspection.mode} 切换：
+ * 内省优先级：当本进程即为授权服务器（容器中存在 {@link RpcOauthTokenService} 的本地实现 Bean）时，
+ * 优先在进程内直接调用该实现，避免任何网络开销；否则根据配置 {@code spring.security.oauth2.resourceserver.opaquetoken.mode}
+ * 选择远程模式：
  * <ul>
  *   <li>{@code http}（默认）：通过 HTTP 调用 OAuth 授权服务器的 introspection 端点</li>
- *   <li>{@code dubbo}：通过 Dubbo RPC 直接调用 OAuth 授权服务器的内省服务，减少网络开销</li>
+ *   <li>{@code rpc}：通过 Dubbo RPC 直接调用 OAuth 授权服务器的内省服务，减少网络开销</li>
  * </ul>
  * 内省完成后，从响应中提取 authorities 字段并转换为 {@link GrantedAuthority} 集合，
  * 使权限信息可用于后续的访问控制决策。
@@ -46,6 +51,11 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     /** HTTP模式下的内省委托器 */
     private final SpringOpaqueTokenIntrospector httpDelegate;
 
+    /** 本地令牌内省服务（仅授权服务器进程存在），为 null 时回退到 HTTP/RPC 远程模式 */
+    @Autowired(required = false)
+    @Qualifier("oauthTokenService")
+    private OauthTokenService oauthTokenService;
+
     /** Dubbo RPC令牌服务引用 */
     @DubboReference
     private RpcOauthTokenService rpcOauthTokenService;
@@ -53,7 +63,7 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     /**
      * 构造方法
      *
-     * @param mode            内省模式（http/dubbo），默认 http
+     * @param mode            内省模式（http/rpc），默认 http
      * @param introspectionUri 令牌内省端点 URL（HTTP模式必须配置）
      * @param clientId        OAuth2 客户端 ID（HTTP模式必须配置）
      * @param clientSecret    OAuth2 客户端密钥（HTTP模式必须配置）
@@ -72,8 +82,9 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     /**
      * 内省令牌并提取权限信息
      * <p>
-     * 根据配置的内省模式（HTTP/Dubbo），调用对应的内省服务完成令牌验证，
-     * 然后从响应中提取 authorities 并构建带权限的认证主体。
+     * 优先在进程内本地内省（当本进程为授权服务器时，复用 {@link RpcOauthTokenService} 的本地实现，
+     * 与 RPC 远程调用走同一份内省逻辑，避免代码重复）；否则根据配置的内省模式（HTTP/RPC），
+     * 调用对应的远程内省服务完成令牌验证，然后从响应中提取 authorities 并构建带权限的认证主体。
      * </p>
      *
      * @param token 待内省的令牌字符串
@@ -84,7 +95,11 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         try {
-            // 根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
+            // 优先本地调用：当容器中存在本地实现（即本进程为授权服务器）时，直接进程内调用，避免网络开销
+            if (oauthTokenService != null) {
+                return buildPrincipalFromClaims(oauthTokenService.introspect(token));
+            }
+            // 否则根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
             return MODE_RPC.equalsIgnoreCase(mode) ? dubboIntrospect(token) : httpIntrospect(token);
         } catch (BadOpaqueTokenException e) {
             // 令牌无效异常直接抛出，由上层框架处理（返回401）
@@ -128,7 +143,22 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     private OAuth2AuthenticatedPrincipal dubboIntrospect(String token) {
         // 通过Dubbo RPC调用远程令牌内省服务，获取令牌的声明信息（claims）
         Map<String, Object> claims = rpcOauthTokenService.rpcIntrospect(token).getResultDataThrowError();
+        // 校验令牌活跃状态并构建带权限的认证主体
+        return buildPrincipalFromClaims(claims);
+    }
 
+    /**
+     * 从令牌内省返回的claims构建带权限的认证主体
+     * <p>
+     * 本地内省与 Dubbo RPC 内省返回的均为 claims Map，统一通过本方法
+     * 校验令牌活跃状态并构建包含权限信息的认证主体。
+     * </p>
+     *
+     * @param claims 令牌内省返回的声明信息，至少包含 active 字段
+     * @return 包含权限信息的认证主体
+     * @throws BadOpaqueTokenException 令牌不活跃时抛出
+     */
+    private OAuth2AuthenticatedPrincipal buildPrincipalFromClaims(Map<String, Object> claims) {
         // 检查令牌是否处于活跃状态
         Boolean active = (Boolean) claims.get(OAuth2TokenClaimConstants.ACTIVE);
         if (active == null || !active) {
@@ -170,7 +200,7 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     }
 
     /**
-     * 从Dubbo RPC返回的claims中提取权限
+     * 从claims中提取权限
      * <p>
      * 将claims中的authorities字段（字符串列表）转换为Spring Security的
      * {@link GrantedAuthority} 集合。

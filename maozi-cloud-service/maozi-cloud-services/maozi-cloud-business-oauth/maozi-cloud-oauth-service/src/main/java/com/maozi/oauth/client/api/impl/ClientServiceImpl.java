@@ -59,10 +59,10 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	/** 密码编码器，用于对客户端密钥进行加密存储 */
 	protected final static PasswordEncoder passwordEncoder;
 
-	/**
-	 * 静态初始化块。
-	 * 初始化OAuth2专用的ObjectMapper（注册OAuth2授权服务器和安全模块）
-	 * 以及密码编码器（使用委托式密码编码器，支持多种加密算法）。
+	/*
+	  静态初始化块。
+	  初始化OAuth2专用的ObjectMapper（注册OAuth2授权服务器和安全模块）
+	  以及密码编码器（使用委托式密码编码器，支持多种加密算法）。
 	 */
 	static {
 
