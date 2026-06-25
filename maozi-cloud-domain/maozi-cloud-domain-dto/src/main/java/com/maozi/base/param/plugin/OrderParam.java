@@ -136,7 +136,7 @@ public interface OrderParam {
 			}
 
 			// 将当前表的升序和降序字段列表存入映射中
-			orderAscFieldsMap.put(key, orderAesFields);
+			orderAscFieldsMap.put(key, orderAscFields);
 
 			orderDescFieldsMap.put(key, orderDescFields);
 
