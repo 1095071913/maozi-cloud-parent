@@ -1,4 +1,4 @@
-package com.maozi.service.api.config;
+package com.maozi.service.config;
 
 import com.maozi.service.api.annotation.RemoteResource;
 import org.apache.dubbo.config.ReferenceConfig;

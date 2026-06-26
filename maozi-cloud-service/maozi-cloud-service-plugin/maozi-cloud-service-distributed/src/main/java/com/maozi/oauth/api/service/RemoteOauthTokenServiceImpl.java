@@ -3,7 +3,7 @@ package com.maozi.oauth.api.service;
 import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.service.api.annotation.RemoteResource;
-import com.maozi.service.api.config.RemoteOauthTokenServiceConfiguration;
+import com.maozi.service.config.RemoteOauthTokenServiceConfiguration;
 
 import java.util.Map;
 

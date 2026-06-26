@@ -1,13 +1,30 @@
-application-project-abbreviation: all
-
 spring:
   config:
     import:
-      - classpath:maozi-cloud-all-service.yml
-      - classpath:boot-default.yml
-      - classpath:boot-datasource.yml
-      - classpath:boot-redis.yml
-      - classpath:boot-swagger.yml
-      - classpath:boot-lock.yml
-      - classpath:boot-db.yml
-      - classpath:cloud-oauth.yml
+      - classpath:config/boot-default.yml
+      - classpath:config/boot-datasource.yml
+      - classpath:config/boot-db.yml
+      - classpath:config/boot-redis.yml
+      - classpath:config/boot-swagger.yml
+      - classpath:config/boot-lock.yml
+      - classpath:config/cloud-oauth.yml
+
+project:
+  title: 单体全量服务
+  details: 所有服务功能
+
+application-project-abbreviation: all
+
+application-port: ${application-dev-port:1000}
+
+application-datasource-db-name: maozi-cloud-all-localhost-db
+
+application-project-whitelist:
+
+application-project-system:
+  projectName: 小猫子
+  corporationName: 小猫子
+  icon: http://dummyimage.com/100x100
+  environment: ${project.environment}
+  description: 小猫子个人脚手架
+  copyright: 本网站所有权归《${application-project-system.corporationName}》所有，请勿抄袭和抄袭

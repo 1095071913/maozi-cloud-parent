@@ -29,14 +29,14 @@
 
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-oauth</artifactId>
-            <version>${maozi-cloud-config-oauth.version}</version>
+            <artifactId>maozi-cloud-oauth-service</artifactId>
+            <version>${maozi-cloud-oauth-service.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-oauth-service</artifactId>
-            <version>${maozi-cloud-oauth-service.version}</version>
+            <artifactId>maozi-cloud-service-monomer</artifactId>
+            <version>${maozi-cloud-service-monomer.version}</version>
         </dependency>
 
         <dependency>

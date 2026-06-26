@@ -1,4 +1,4 @@
-package com.maozi.service.api.config;
+package com.maozi.service.config;
 
 import com.maozi.oauth.api.service.RemoteOauthTokenServiceImpl;
 import com.maozi.oauth.token.api.OauthTokenService;

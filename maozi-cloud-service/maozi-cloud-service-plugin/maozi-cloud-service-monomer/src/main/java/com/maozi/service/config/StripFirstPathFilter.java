@@ -1,4 +1,4 @@
-package com.maozi.web.filter;
+package com.maozi.service.config;
 
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

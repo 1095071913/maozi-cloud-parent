@@ -5,8 +5,6 @@ spring:
         opaquetoken:
           # http 或 rpc
           mode: rpc
-           匿名token自省端点
-#          introspection-uri: http://127.0.0.1:3000/oauth2/introspect
           # 客户端id
           client-id: system
           # 客户端秘钥

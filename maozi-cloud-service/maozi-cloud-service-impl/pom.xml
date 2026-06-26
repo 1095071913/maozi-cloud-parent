@@ -41,6 +41,13 @@
             <version>${maozi-cloud-utils.version}</version>
         </dependency>
 
+        <!-- OAuth 安全配置模块，集成 OAuth2 认证授权体系 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-oauth</artifactId>
+            <version>${maozi-cloud-config-oauth.version}</version>
+        </dependency>
+
         <!-- Web 配置模块，提供 Spring MVC、全局异常处理等 Web 层配置 -->
         <dependency>
             <groupId>com.maozi</groupId>
@@ -60,13 +67,6 @@
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-config-swagger</artifactId>
             <version>${maozi-cloud-config-swagger.version}</version>
-        </dependency>
-
-        <!-- 服务发现配置模块，集成注册中心服务注册与灰度负载均衡 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-discovery</artifactId>
-            <version>${maozi-cloud-config-discovery.version}</version>
         </dependency>
 
         <!-- 服务 API 接口依赖，服务实现层需要实现对应的 API 接口 -->
