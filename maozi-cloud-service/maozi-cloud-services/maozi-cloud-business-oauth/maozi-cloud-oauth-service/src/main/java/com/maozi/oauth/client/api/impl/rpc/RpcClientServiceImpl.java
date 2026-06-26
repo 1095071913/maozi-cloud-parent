@@ -2,13 +2,13 @@ package com.maozi.oauth.client.api.impl.rpc;
 
 import com.maozi.oauth.client.api.impl.ClientServiceImpl;
 import com.maozi.oauth.client.api.rpc.RpcClientService;
-import org.apache.dubbo.config.annotation.DubboService;
+import com.maozi.service.api.annotation.RemoteService;
 
 /**
  * OAuth2 客户端 Dubbo RPC 服务实现类
  * <p>
  * 继承 {@code ClientServiceImpl} 并实现 {@code RpcClientService} 接口，
- * 通过 {@code @DubboService} 注解将客户端服务的本地能力对外暴露为 Dubbo RPC 调用。
+ * 通过 {@code @RemoteService} 注解将客户端服务的本地能力对外暴露为 Dubbo RPC 调用。
  * </p>
  * <p>
  * 本类不重写任何方法，方法全部继承自 {@code ClientServiceImpl}；
@@ -16,7 +16,7 @@ import org.apache.dubbo.config.annotation.DubboService;
  * 属于典型的 RPC 适配器/暴露器角色。
  * </p>
  */
-@DubboService
+@RemoteService
 public class RpcClientServiceImpl extends ClientServiceImpl implements RpcClientService {
 
 }

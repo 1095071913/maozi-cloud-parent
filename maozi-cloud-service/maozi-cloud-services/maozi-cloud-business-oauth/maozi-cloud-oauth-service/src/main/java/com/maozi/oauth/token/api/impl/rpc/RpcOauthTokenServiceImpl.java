@@ -5,7 +5,7 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.oauth.token.api.impl.OauthTokenServiceImpl;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.oauth.token.param.ClientUserParam;
-import org.apache.dubbo.config.annotation.DubboService;
+import com.maozi.service.api.annotation.RemoteService;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
  * 进行令牌校验，替代HTTP调用introspection端点的方式，减少网络开销。
  * </p>
  */
-@DubboService
+@RemoteService
 public class RpcOauthTokenServiceImpl extends OauthTokenServiceImpl implements RpcOauthTokenService {
 
     /**

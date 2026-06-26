@@ -1,9 +1,9 @@
 package com.maozi.oauth.token.api.impl;
 
 import com.maozi.common.CollectionUtil;
-import com.maozi.oauth.constants.OAuth2TokenClaimConstants;
 import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.config.service.OAuth2AuthorizationService;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;

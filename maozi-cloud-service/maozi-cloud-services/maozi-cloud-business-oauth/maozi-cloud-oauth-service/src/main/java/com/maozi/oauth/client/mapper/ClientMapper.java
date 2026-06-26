@@ -17,9 +17,8 @@
 
 package com.maozi.oauth.client.mapper;
 
-import com.maozi.base.api.IBaseMapper;
 import com.maozi.oauth.client.domain.ClientDo;
-
+import com.maozi.service.api.IBaseMapper;
 
 
 /**

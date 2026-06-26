@@ -1,8 +1,8 @@
 package com.maozi.system.permission.api.rest;
 
-import com.maozi.base.annotation.Get;
-import com.maozi.base.annotation.Post;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.annotation.Get;
+import com.maozi.service.annotation.Post;
 import com.maozi.system.permission.dto.PermissionSaveUpdateParam;
 import com.maozi.system.permission.vo.PermissionDropDownResult;
 import com.maozi.system.permission.vo.PermissionInfoVo;

@@ -1,11 +1,11 @@
 package com.maozi.system.permission.api.rest;
 
-import com.maozi.base.annotation.Get;
-import com.maozi.base.annotation.Post;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.RequestParam;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.annotation.Get;
+import com.maozi.service.annotation.Post;
 import com.maozi.system.role.dto.RoleSaveUpdateParam;
 import com.maozi.system.role.vo.RoleInfoVo;
 import com.maozi.system.role.vo.RoleListVo;

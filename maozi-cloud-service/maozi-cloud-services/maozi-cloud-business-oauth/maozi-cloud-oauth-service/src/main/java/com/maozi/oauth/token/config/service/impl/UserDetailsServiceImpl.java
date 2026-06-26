@@ -20,8 +20,8 @@ package com.maozi.oauth.token.config.service.impl;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
+import com.maozi.service.api.annotation.RemoteResource;
 import com.maozi.system.user.api.rpc.RpcUserService;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -43,7 +43,7 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	/** 用户服务RPC接口，通过Dubbo远程调用获取用户信息 */
-	@DubboReference
+	@RemoteResource
 	private RpcUserService rpcUserService;
 
 	/**

@@ -1,5 +1,5 @@
 mybatis-plus:
-  mapper-locations: classpath:com/maozi/${application-project-abbreviation}/*/mapper/*.xml
+  mapper-locations: classpath:com/maozi/*/*/mapper/*.xml
   # typeEnumsPackage: com.maozi.${application-project-abbreviation}.*.enums
   configuration:
     map-underscore-to-camel-case: true

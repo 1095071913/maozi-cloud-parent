@@ -23,12 +23,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
-import com.maozi.base.api.impl.BaseServiceImpl;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.oauth.client.api.rpc.RpcClientService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.oauth.token.param.ClientUserParam;
+import com.maozi.service.api.annotation.RemoteResource;
+import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.permission.api.PermissionService;
 import com.maozi.system.permission.api.RolePermissionService;
 import com.maozi.system.permission.api.UserRoleService;
@@ -37,7 +38,6 @@ import com.maozi.system.user.domain.UserDo;
 import com.maozi.system.user.dto.UserSaveUpdateParam;
 import com.maozi.system.user.mapper.UserMapper;
 import jakarta.annotation.Resource;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -87,11 +87,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 	protected PermissionService permissionService;
 
 	/** OAuth令牌RPC服务，用于远程调用认证令牌相关接口 */
-	@DubboReference
+	@RemoteResource
 	protected RpcOauthTokenService rpcOauthTokenService;
 
 	/** 客户端RPC服务，用于远程调用客户端相关接口 */
-	@DubboReference
+	@RemoteResource
 	protected RpcClientService rpcClientService;
 
 	/**

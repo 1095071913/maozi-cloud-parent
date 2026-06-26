@@ -17,7 +17,6 @@
 
 package com.maozi.system.user.api.impl.rest;
 
-import com.maozi.base.api.annotation.RestService;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
@@ -26,6 +25,7 @@ import com.maozi.common.ResultUtil;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.api.annotation.RestService;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rest.RestUserService;
 import com.maozi.system.user.domain.UserDo;

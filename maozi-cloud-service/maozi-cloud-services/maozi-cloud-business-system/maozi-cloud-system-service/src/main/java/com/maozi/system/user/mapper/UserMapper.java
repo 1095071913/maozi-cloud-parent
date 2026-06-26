@@ -17,7 +17,7 @@
 
 package com.maozi.system.user.mapper;
 
-import com.maozi.base.api.IBaseMapper;
+import com.maozi.service.api.IBaseMapper;
 import com.maozi.system.user.domain.UserDo;
 
 /**

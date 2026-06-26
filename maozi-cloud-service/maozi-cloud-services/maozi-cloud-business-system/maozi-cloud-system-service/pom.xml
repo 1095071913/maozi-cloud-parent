@@ -29,12 +29,6 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-service-distributed</artifactId>
-            <version>${maozi-cloud-service-distributed.version}</version>
-        </dependency>
-
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
         <dependency>
             <groupId>com.maozi</groupId>
@@ -61,12 +55,6 @@
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-system-api</artifactId>
             <version>${maozi-cloud-system-api.version}</version>
-        </dependency>
-
-        <!-- CRAC 预热加速，支持 Coordinated Restore at Checkpoint 快速启动 -->
-        <dependency>
-            <groupId>org.crac</groupId>
-            <artifactId>crac</artifactId>
         </dependency>
 
     </dependencies>

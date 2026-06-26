@@ -1,6 +1,5 @@
 package com.maozi.oauth.client.api.impl.rest;
 
-import com.maozi.base.api.annotation.RestService;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
@@ -14,6 +13,7 @@ import com.maozi.oauth.client.param.ClientListParam;
 import com.maozi.oauth.client.param.ClientSaveUpdateParam;
 import com.maozi.oauth.client.vo.ClientInfoVo;
 import com.maozi.oauth.client.vo.ClientListVo;
+import com.maozi.service.api.annotation.RestService;
 
 import java.util.List;
 

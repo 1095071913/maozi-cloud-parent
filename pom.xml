@@ -134,8 +134,15 @@
 		<maozi-cloud-service-impl.version>${revision}</maozi-cloud-service-impl.version>
 		<!-- 服务数据库实现层版本 -->
 		<maozi-cloud-service-db-impl.version>${revision}</maozi-cloud-service-db-impl.version>
-		<maozi-cloud-service-monomer.version>${revision}</maozi-cloud-service-monomer.version>
+
 		<maozi-cloud-service-distributed.version>${revision}</maozi-cloud-service-distributed.version>
+
+		<maozi-cloud-system-api.version>${revision}</maozi-cloud-system-api.version>
+		<maozi-cloud-system-service.version>${revision}</maozi-cloud-system-service.version>
+
+		<maozi-cloud-oauth-api.version>${revision}</maozi-cloud-oauth-api.version>
+		<maozi-cloud-oauth-service.version>${revision}</maozi-cloud-oauth-service.version>
+
 		<!-- Project End -->
 
 

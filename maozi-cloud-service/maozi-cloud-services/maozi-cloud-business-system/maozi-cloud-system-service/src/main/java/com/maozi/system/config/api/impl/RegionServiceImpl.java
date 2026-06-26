@@ -1,6 +1,6 @@
 package com.maozi.system.config.api.impl;
 
-import com.maozi.base.api.impl.BaseServiceImpl;
+import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.config.api.RegionService;
 import com.maozi.system.config.domain.RegionDo;
 import com.maozi.system.config.mapper.RegionMapper;

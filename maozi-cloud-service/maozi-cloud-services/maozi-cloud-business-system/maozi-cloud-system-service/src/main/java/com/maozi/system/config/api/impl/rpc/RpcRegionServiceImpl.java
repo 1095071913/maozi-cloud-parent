@@ -3,9 +3,9 @@ package com.maozi.system.config.api.impl.rpc;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.api.annotation.RemoteService;
 import com.maozi.system.config.api.impl.RegionServiceImpl;
 import com.maozi.system.config.api.rpc.RpcRegionService;
-import org.apache.dubbo.config.annotation.DubboService;
 
 /**
  * 地区 RPC 服务实现类
@@ -15,7 +15,7 @@ import org.apache.dubbo.config.annotation.DubboService;
  * 供其他微服务通过 RPC 方式调用地区相关的接口。
  * </p>
  */
-@DubboService
+@RemoteService
 public class RpcRegionServiceImpl extends RegionServiceImpl implements RpcRegionService {
 
 	/**

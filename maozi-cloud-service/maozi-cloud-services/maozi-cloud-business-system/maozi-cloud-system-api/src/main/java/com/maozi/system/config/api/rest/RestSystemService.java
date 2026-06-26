@@ -1,7 +1,7 @@
 package com.maozi.system.config.api.rest;
 
-import com.maozi.base.annotation.Get;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.annotation.Get;
 import com.maozi.system.config.vo.SystemPropertiesVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 

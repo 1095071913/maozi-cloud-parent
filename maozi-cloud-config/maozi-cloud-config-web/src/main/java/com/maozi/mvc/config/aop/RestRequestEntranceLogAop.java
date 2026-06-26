@@ -48,10 +48,10 @@ import java.util.Objects;
 public class RestRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 
 	/** REST 接口切点表达式 */
-	private final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
+	private static final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
 
 	/** 组合切点表达式 */
-	private final String POINT = "execution(" + REST_POINT + ")";
+	private static final String POINT = "execution(" + REST_POINT + ")";
 
 	/**
 	 * 环绕通知，绑定 REST 切点并委托给基类的统一日志逻辑。

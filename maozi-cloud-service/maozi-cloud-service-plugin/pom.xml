@@ -45,6 +45,7 @@
   <modules>
       <!-- 服务数据库实现插件模块 -->
       <module>maozi-cloud-service-db-impl</module>
+	  <module>maozi-cloud-service-distributed</module>
   </modules>
 
 </project>

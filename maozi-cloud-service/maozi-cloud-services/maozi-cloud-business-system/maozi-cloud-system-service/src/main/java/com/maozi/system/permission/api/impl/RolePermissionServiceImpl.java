@@ -19,10 +19,10 @@ package com.maozi.system.permission.api.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.maozi.base.api.impl.BaseServiceImpl;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.result.error.code.SystemErrorCode;
+import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.permission.api.PermissionService;
 import com.maozi.system.permission.api.RolePermissionService;
 import com.maozi.system.permission.domain.RolePermissionDo;

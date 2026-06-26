@@ -6,10 +6,10 @@ import com.maozi.common.CollectionUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.api.annotation.RemoteService;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rpc.RpcUserService;
 import com.maozi.system.user.domain.UserDo;
-import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
  */
-@DubboService
+@RemoteService
 public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserService {
 
 	/**

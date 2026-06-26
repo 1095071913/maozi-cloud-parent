@@ -1,6 +1,6 @@
 package com.maozi.system.permission.mapper;
 
-import com.maozi.base.api.IBaseMapper;
+import com.maozi.service.api.IBaseMapper;
 import com.maozi.system.permission.domain.UserRoleDo;
 
 /**

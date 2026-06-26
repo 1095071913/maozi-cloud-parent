@@ -2,12 +2,10 @@ package com.maozi.oauth.config;
 
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.oauth.constants.OAuth2TokenClaimConstants;
 import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -51,14 +49,9 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     /** HTTP模式下的内省委托器 */
     private final SpringOpaqueTokenIntrospector httpDelegate;
 
-    /** 本地令牌内省服务（仅授权服务器进程存在），为 null 时回退到 HTTP/RPC 远程模式 */
-    @Autowired(required = false)
-    @Qualifier("oauthTokenService")
+    /** 令牌内省服务：授权服务器进程为本地实现，资源服务器进程为 RemoteOauthTokenServiceImpl（Dubbo 代理） */
+    @Resource(name = "oauthTokenService")
     private OauthTokenService oauthTokenService;
-
-    /** Dubbo RPC令牌服务引用 */
-    @DubboReference
-    private RpcOauthTokenService rpcOauthTokenService;
 
     /**
      * 构造方法
@@ -96,11 +89,8 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         try {
             // 优先本地调用：当容器中存在本地实现（即本进程为授权服务器）时，直接进程内调用，避免网络开销
-            if (oauthTokenService != null) {
-                return buildPrincipalFromClaims(oauthTokenService.introspect(token));
-            }
             // 否则根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
-            return MODE_RPC.equalsIgnoreCase(mode) ? dubboIntrospect(token) : httpIntrospect(token);
+            return MODE_RPC.equalsIgnoreCase(mode) ? rpcIntrospect(token) : httpIntrospect(token);
         } catch (BadOpaqueTokenException e) {
             // 令牌无效异常直接抛出，由上层框架处理（返回401）
             throw e;
@@ -140,9 +130,9 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
      * @param token 待验证的令牌字符串
      * @return 包含权限信息的认证主体
      */
-    private OAuth2AuthenticatedPrincipal dubboIntrospect(String token) {
+    private OAuth2AuthenticatedPrincipal rpcIntrospect(String token) {
         // 通过Dubbo RPC调用远程令牌内省服务，获取令牌的声明信息（claims）
-        Map<String, Object> claims = rpcOauthTokenService.rpcIntrospect(token).getResultDataThrowError();
+        Map<String, Object> claims = oauthTokenService.introspect(token);
         // 校验令牌活跃状态并构建带权限的认证主体
         return buildPrincipalFromClaims(claims);
     }

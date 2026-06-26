@@ -14,6 +14,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.server.resource.authentication.OpaqueTokenAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
@@ -64,6 +65,9 @@ public class ResourceServerConfig {
 
         // 将白名单列表转换为数组，用于Spring Security路径匹配
         String[] requestMatchers = whitelist.toArray(new String[0]);
+
+        // 关闭 CSRF 防护：本项目为纯 REST API，使用 Bearer Token 认证（非浏览器表单提交），不需要 CSRF Token
+        http.csrf(AbstractHttpConfigurer::disable);
 
         // 配置请求授权规则：白名单路径放行，其余所有请求需要认证
         http.authorizeHttpRequests((authorize) -> authorize

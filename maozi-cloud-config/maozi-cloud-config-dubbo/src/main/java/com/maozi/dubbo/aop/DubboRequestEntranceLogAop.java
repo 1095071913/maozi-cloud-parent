@@ -41,14 +41,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 
-	/** RPC 接口切点表达式 */
-	private final String RPC_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rpc..*(..)";
+	/** RPC 接口切点表达式：用 .. 替代 *.*，避免 AspectJ 解析歧义 */
+	private static final String RPC_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rpc..*(..)";
 
 	/** 基础服务实现类切点表达式 */
-	private final String BASE_RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.api.impl.BaseServiceImpl.*(..)";
+	private static final String BASE_RPC_POINT = ApplicationEnvironmentContext.PACKAGE_PREFIX + ".common.result.AbstractBaseResult " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".service.api.impl.BaseServiceImpl.*(..)";
 
 	/** 组合切点表达式 */
-	private final String POINT = "execution(" + RPC_POINT + ") || execution( " + BASE_RPC_POINT + " )";
+	private static final String POINT = "execution(" + RPC_POINT + ") || execution(" + BASE_RPC_POINT + ")";
 
 	/**
 	 * 环绕通知，绑定 RPC 切点并委托给基类的统一日志逻辑。
@@ -57,6 +57,7 @@ public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 	 * @return 业务方法执行结果
 	 */
 	@Around(POINT)
+	@Override
 	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		return super.doAround(proceedingJoinPoint);
 	}

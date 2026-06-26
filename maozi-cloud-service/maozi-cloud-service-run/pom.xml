@@ -32,6 +32,12 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <!-- CRAC 预热加速，支持 Coordinated Restore at Checkpoint 快速启动 -->
+        <dependency>
+            <groupId>org.crac</groupId>
+            <artifactId>crac</artifactId>
+        </dependency>
+
     </dependencies>
 
 

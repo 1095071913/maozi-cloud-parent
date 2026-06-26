@@ -1,7 +1,5 @@
 package com.maozi.oauth.client.api.rest;
 
-import com.maozi.base.annotation.Get;
-import com.maozi.base.annotation.Post;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
@@ -12,6 +10,8 @@ import com.maozi.oauth.client.param.ClientListParam;
 import com.maozi.oauth.client.param.ClientSaveUpdateParam;
 import com.maozi.oauth.client.vo.ClientInfoVo;
 import com.maozi.oauth.client.vo.ClientListVo;
+import com.maozi.service.annotation.Get;
+import com.maozi.service.annotation.Post;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;

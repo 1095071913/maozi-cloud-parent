@@ -36,13 +36,6 @@
             <artifactId>maozi-cloud-oauth-api</artifactId>
             <version>${maozi-cloud-oauth-api.version}</version>
         </dependency>
-
-        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-service-api</artifactId>
-            <version>${maozi-cloud-service-api.version}</version>
-        </dependency>
         <!-- Oauth End -->
 
         <!-- User Begin -->
@@ -54,10 +47,11 @@
         </dependency>
         <!-- User End -->
 
+        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-service-distributed</artifactId>
-            <version>${maozi-cloud-service-distributed.version}</version>
+            <artifactId>maozi-cloud-service-api</artifactId>
+            <version>${maozi-cloud-service-api.version}</version>
         </dependency>
 
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->

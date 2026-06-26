@@ -10,3 +10,4 @@ spring:
       - classpath:boot-swagger.yml
       - classpath:boot-lock.yml
       - classpath:boot-db.yml
+      - classpath:cloud-oauth.yml

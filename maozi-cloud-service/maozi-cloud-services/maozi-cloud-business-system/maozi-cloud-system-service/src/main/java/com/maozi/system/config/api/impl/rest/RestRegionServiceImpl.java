@@ -2,10 +2,10 @@ package com.maozi.system.config.api.impl.rest;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.maozi.base.api.annotation.RestService;
 import com.maozi.base.result.DropDownResult;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.api.annotation.RestService;
 import com.maozi.system.config.api.impl.RegionServiceImpl;
 import com.maozi.system.config.api.rest.RestRegionService;
 import com.maozi.system.config.domain.RegionDo;

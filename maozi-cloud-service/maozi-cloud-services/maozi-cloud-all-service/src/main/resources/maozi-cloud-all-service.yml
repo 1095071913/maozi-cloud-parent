@@ -2,7 +2,7 @@ project:
   title: 单体全量服务
   details: 所有服务功能
 
-application-port: ${application-dev-port:10000}
+application-port: ${application-dev-port:1000}
 
 application-datasource-db-name: maozi-cloud-all-localhost-db
 

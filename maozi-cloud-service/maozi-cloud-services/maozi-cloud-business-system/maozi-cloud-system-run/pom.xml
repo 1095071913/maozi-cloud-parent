@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-business-system</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>maozi-cloud-system-run</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-system-service</artifactId>
+            <version>${maozi-cloud-system-service.version}</version>
+        </dependency>
+
+        <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-db-impl</artifactId>
+            <version>${maozi-cloud-service-db-impl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-distributed</artifactId>
+            <version>${maozi-cloud-service-distributed.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

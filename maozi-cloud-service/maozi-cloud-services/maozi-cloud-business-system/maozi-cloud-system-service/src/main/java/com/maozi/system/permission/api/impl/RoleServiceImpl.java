@@ -1,7 +1,7 @@
 package com.maozi.system.permission.api.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.maozi.base.api.impl.BaseServiceImpl;
+import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.permission.api.RolePermissionService;
 import com.maozi.system.permission.api.RoleService;
 import com.maozi.system.permission.api.UserRoleService;

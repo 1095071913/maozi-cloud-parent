@@ -17,13 +17,13 @@
 
 package com.maozi.system.user.api.rest;
 
-import com.maozi.base.annotation.Get;
-import com.maozi.base.annotation.Post;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
 import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.annotation.Get;
+import com.maozi.service.annotation.Post;
 import com.maozi.system.user.dto.UserListParam;
 import com.maozi.system.user.dto.UserSaveUpdateParam;
 import com.maozi.system.user.vo.UserIndividualInfoVo;

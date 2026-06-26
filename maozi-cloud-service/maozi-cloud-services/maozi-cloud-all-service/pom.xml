@@ -29,8 +29,20 @@
 
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-service-monomer</artifactId>
-            <version>${maozi-cloud-service-monomer.version}</version>
+            <artifactId>maozi-cloud-config-oauth</artifactId>
+            <version>${maozi-cloud-config-oauth.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-oauth-service</artifactId>
+            <version>${maozi-cloud-oauth-service.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-system-service</artifactId>
+            <version>${maozi-cloud-system-service.version}</version>
         </dependency>
 
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->

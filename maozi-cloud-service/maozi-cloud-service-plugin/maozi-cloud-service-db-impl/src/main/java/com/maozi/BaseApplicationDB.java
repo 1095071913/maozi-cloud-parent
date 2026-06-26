@@ -36,7 +36,7 @@ import java.util.Properties;
 
 @EnableAsync
 @SpringBootApplication
-@MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".${application-project-abbreviation}.*.mapper")
+@MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.mapper")
 public class BaseApplicationDB {
 
     /**

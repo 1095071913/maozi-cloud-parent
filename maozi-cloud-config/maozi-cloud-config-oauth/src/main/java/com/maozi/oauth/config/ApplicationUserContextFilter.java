@@ -3,7 +3,7 @@ package com.maozi.oauth.config;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
-import com.maozi.oauth.constants.OAuth2TokenClaimConstants;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

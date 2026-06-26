@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-service-plugin</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>maozi-cloud-service-distributed</artifactId>
+
+    <dependencies>
+
+        <!-- Dubbo 配置模块，集成 Apache Dubbo RPC 远程调用框架 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-dubbo</artifactId>
+            <version>${maozi-cloud-config-dubbo.version}</version>
+        </dependency>
+
+        <!-- Feign 配置模块，集成 OpenFeign 声明式 HTTP 调用与拦截器 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-feign</artifactId>
+            <version>${maozi-cloud-config-feign.version}</version>
+        </dependency>
+
+        <!-- 监控配置模块，集成 Spring Boot Admin 服务监控与指标暴露 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-monitor</artifactId>
+            <version>${maozi-cloud-config-monitor.version}</version>
+        </dependency>
+
+        <!-- Sentinel 限流配置模块，集成熔断降级与流量控制规则 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-sentinel</artifactId>
+            <version>${maozi-cloud-config-sentinel.version}</version>
+        </dependency>
+
+        <!-- OAuth 安全配置模块，集成 OAuth2 认证授权体系 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-oauth</artifactId>
+            <version>${maozi-cloud-config-oauth.version}</version>
+        </dependency>
+
+        <!-- Nacos 配置中心客户端，从 Nacos 拉取服务配置 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

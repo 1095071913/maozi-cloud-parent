@@ -2,10 +2,10 @@ package com.maozi.system.user.api.impl.rpc;
 
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.service.api.annotation.RemoteService;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rpc.RpcUserInfoService;
 import com.maozi.system.user.dto.SystemUser;
-import org.apache.dubbo.config.annotation.DubboService;
 
 /**
  * 用户信息RPC服务实现类
@@ -14,7 +14,7 @@ import org.apache.dubbo.config.annotation.DubboService;
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
  */
-@DubboService
+@RemoteService
 public class RpcUserInfoServiceImpl extends UserServiceImpl implements RpcUserInfoService {
 
 	/**

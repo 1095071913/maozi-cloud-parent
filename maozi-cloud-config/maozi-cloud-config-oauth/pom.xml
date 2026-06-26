@@ -19,12 +19,6 @@
 	<dependencies>
 
 		<!-- Project Begin -->
-		<!-- Dubbo RPC 配置模块，用于远程调用获取用户信息 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-dubbo</artifactId>
-			<version>${maozi-cloud-config-dubbo.version}</version>
-		</dependency>
 
 		<!-- 服务 API 接口定义，包含用户、权限等 RPC 接口 -->
 		<dependency>
