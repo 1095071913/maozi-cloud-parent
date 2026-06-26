@@ -30,6 +30,7 @@ import com.maozi.oauth.token.config.handle.UserAuthenticationSuccessHandler;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -80,6 +81,7 @@ public class AuthorizationServerConfiguration {
 	 * @throws Exception 配置过程中可能抛出的异常
 	 */
 	@Bean
+	@Order(1)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);

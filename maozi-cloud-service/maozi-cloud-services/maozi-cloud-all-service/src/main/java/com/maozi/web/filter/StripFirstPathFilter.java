@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -32,30 +33,33 @@ import java.util.List;
  * 与 {@code getRequestURL()}，使 Spring 6 的 {@code ServletRequestPathUtils.parseAndCache}
  * 解析到裁剪后的路径，再由 {@code RequestMappingHandlerMapping} 用新路径匹配控制器。</p>
  *
- * <p><b>执行顺序：</b>过滤器 order 设为 {@code 0}，晚于 Spring Security 过滤器链
- * （{@code SecurityProperties.DEFAULT_FILTER_ORDER = -100}），确保：
+ * <p><b>执行顺序：</b>过滤器 order 设为 {@code SecurityProperties.DEFAULT_FILTER_ORDER - 1}（-101），
+ * 早于 Spring Security 过滤器链（{@code SecurityProperties.DEFAULT_FILTER_ORDER = -100}），确保：
  * <ul>
- *   <li>安全白名单匹配、不透明令牌（Opaque Token）校验仍基于原始路径；</li>
- *   <li>OAuth2 框架端点（{@code /oauth2/token}、{@code /oauth2/introspect}、
- *       {@code /oauth2/revoke} 等）由 Spring Security 在本过滤器之前处理，完全不受影响；</li>
- *   <li>本过滤器只对最终走到 DispatcherServlet 的请求生效。</li>
+ *   <li>带模块前缀的请求（如 {@code /oauth/oauth2/token}、{@code /oauth/user/info}）在进入安全过滤器链之前
+ *       被裁剪掉首段模块前缀，使 Spring Security 的授权服务器过滤器链能正确匹配 {@code /oauth2/token}
+ *       等框架端点，模块控制器的安全校验与 MVC 匹配也能使用裁剪后的路径；</li>
+ *   <li>OAuth2/OIDC 框架端点（{@code /oauth2}、{@code /.well-known}、{@code /userinfo}）及
+ *       Spring Boot 框架端点（{@code /actuator}、{@code /webjars} 等）通过排除列表保留原始路径，
+ *       安全白名单匹配仍基于这些原始路径。</li>
  * </ul>
  * </p>
  *
- * <p><b>路径排除：</b>默认对 Spring Boot 框架端点（{@code /actuator}、{@code /webjars}、
- * {@code /v3}、{@code /application}、{@code /error}、{@code /favicon.ico}）不做裁剪，
- * 避免破坏 Actuator 监控、Swagger 静态资源、OpenAPI 文档等。可通过配置
- * {@code application.path-strip.excluded-prefixes} 覆盖默认排除列表；如需完全关闭裁剪，
- * 可设置 {@code application.path-strip.enabled=false}。</p>
+ * <p><b>路径排除：</b>默认对以下框架端点不做裁剪：
+ * Spring Boot 框架端点（{@code /actuator}、{@code /webjars}、{@code /v3}、{@code /application}、
+ * {@code /error}、{@code /favicon.ico}），以及 OAuth2/OIDC 框架端点（{@code /oauth2}、
+ * {@code /.well-known}、{@code /userinfo}），避免破坏 Actuator 监控、Swagger 静态资源、OpenAPI 文档、
+ * OAuth2 授权服务器端点等。可通过配置 {@code application.path-strip.excluded-prefixes} 覆盖默认排除列表；
+ * 如需完全关闭裁剪，可设置 {@code application.path-strip.enabled=false}。</p>
  *
  * @author maozi
  */
 @Component
-@Order(0)
+@Order(SecurityProperties.DEFAULT_FILTER_ORDER - 1)
 public class StripFirstPathFilter extends OncePerRequestFilter {
 
     /** 默认不裁剪的路径前缀（框架端点），可通过配置覆盖 */
-    private static final String DEFAULT_EXCLUDED_PREFIXES = "/actuator,/webjars,/v3,/application,/error,/favicon.ico";
+    private static final String DEFAULT_EXCLUDED_PREFIXES = "/actuator,/webjars,/v3,/application,/error,/favicon.ico,/oauth2,/.well-known,/userinfo";
 
     /** 是否启用路径裁剪，默认开启 */
     @Value("${application.path-strip.enabled:true}")
