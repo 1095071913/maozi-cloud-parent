@@ -1,3 +1,27 @@
+# ============================================================
+# Dockerfile —— System 业务服务镜像
+# ------------------------------------------------------------
+# 基础镜像：maozi-cloud-base-jdk:1.0.0（由 maozi-cloud-base-jdk-image/Dockerfile 构建）
+# 部署制品：maozi-cloud-system-service.jar（由 maozi-cloud-build 流程产出，放入上下文根目录）
+# 暴露端口：
+#   - APPLICATION_PORT      REST/HTTP 端口（4000）
+#   - APPLICATION_DUBBO_PORT Dubbo RPC 端口（20881，注意与 oauth 错开）
+# ------------------------------------------------------------
+# !! 部署前必改 !!
+# CMD 中 -DDUBBO_IP_TO_REGISTRY=192.168.124.17 硬编码了局域网 IP，
+# 仅适用于开发者本机示例。Dubbo 注册到注册中心的 IP 必须是消费端可访问的地址，
+# 生产/其他环境请改为本机对外 IP 或通过 docker run -e / K8s 环境变量注入。
+# ------------------------------------------------------------
+# JVM 参数（针对小规格容器调优）：
+#   -Xms256m -Xmx256m                    堆内存固定 256M，避免动态调整开销
+#   -Xss256k                              线程栈缩为 256k，可承载更多线程
+#   -XX:MaxMetaspaceSize=192m             元空间上限，防内存泄漏无限增长
+#   -XX:+UseSerialGC                      单核小内存场景下使用 SerialGC 更高效
+#   -XX:CompressedClassSpaceSize=32m      压缩类空间限制
+#   -XX:ReservedCodeCacheSize=32m         JIT 代码缓存
+#   -XX:MaxDirectMemorySize=32m           直接内存上限
+#   --add-opens java.base/...=ALL-UNNAMED JDK 17 模块化开放，供反射框架使用
+# ============================================================
 FROM maozi-cloud-base-jdk:1.0.0
 
 ENV APPLICATION_NAME=maozi-cloud-system

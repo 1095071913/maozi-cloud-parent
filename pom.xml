@@ -134,15 +134,19 @@
 		<maozi-cloud-service-impl.version>${revision}</maozi-cloud-service-impl.version>
 		<!-- 服务数据库实现层版本 -->
 		<maozi-cloud-service-db-impl.version>${revision}</maozi-cloud-service-db-impl.version>
-
+		<!-- 服务单体部署插件层版本 -->
 		<maozi-cloud-service-monomer.version>${revision}</maozi-cloud-service-monomer.version>
-
+		<!-- 服务分布式部署插件层版本 -->
 		<maozi-cloud-service-distributed.version>${revision}</maozi-cloud-service-distributed.version>
 
+		<!-- 系统管理服务 API 接口层版本 -->
 		<maozi-cloud-system-api.version>${revision}</maozi-cloud-system-api.version>
+		<!-- 系统管理服务实现层版本 -->
 		<maozi-cloud-system-service.version>${revision}</maozi-cloud-system-service.version>
 
+		<!-- OAuth 认证授权服务 API 接口层版本 -->
 		<maozi-cloud-oauth-api.version>${revision}</maozi-cloud-oauth-api.version>
+		<!-- OAuth 认证授权服务实现层版本 -->
 		<maozi-cloud-oauth-service.version>${revision}</maozi-cloud-oauth-service.version>
 
 		<!-- Project End -->
@@ -234,11 +238,13 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>flatten-maven-plugin</artifactId>
 				<version>1.5.0</version>
+				<!-- 插件配置：仅解析 ${revision} 等 CI Friendly 占位符，不删除其他 POM 元素 -->
 				<configuration>
 					<updatePomFile>true</updatePomFile>
 					<flattenMode>resolveCiFriendliesOnly</flattenMode>
 				</configuration>
 				<executions>
+					<!-- 在 process-resources 阶段生成扁平化 POM -->
 					<execution>
 						<id>flatten</id>
 						<phase>process-resources</phase>
@@ -246,6 +252,7 @@
 							<goal>flatten</goal>
 						</goals>
 					</execution>
+					<!-- 在 clean 阶段清理已生成的扁平化 POM -->
 					<execution>
 						<id>flatten.clean</id>
 						<phase>clean</phase>
@@ -259,6 +266,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- 编译器配置：指定 Java 版本、编码、编译参数与告警输出 -->
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -271,12 +279,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<!-- 默认配置：不在 JAR 中写入 maven descriptor，避免泄露构建环境信息 -->
 				<configuration>
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
 				</configuration>
 				<executions>
+					<!-- 默认执行：在 MANIFEST 中写入实现/规格信息与 Classpath -->
 					<execution>
 						<configuration>
 							<archive>
@@ -321,6 +331,7 @@
 				<artifactId>git-commit-id-plugin</artifactId>
 				<version>4.0.0</version>
 				<executions>
+					<!-- 在 initialize 阶段生成 git 元信息，供后续打包使用 -->
 					<execution>
 						<id>get-the-git-infos</id>
 						<goals>
@@ -329,6 +340,7 @@
 						<phase>initialize</phase>
 					</execution>
 				</executions>
+				<!-- 输出 git.properties 文件，仅保留指定的 git 元数据字段 -->
 				<configuration>
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
 					<generateGitPropertiesFilename>

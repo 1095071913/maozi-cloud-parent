@@ -1,6 +1,28 @@
+# ============================================================
+# maozi-cloud-basics-docker —— 平台基础组件一键拉起
+# ------------------------------------------------------------
+# 本 Compose 启动平台运行所依赖的全部「基础组件」（不含业务服务）：
+#   - 注册/配置中心：mysql + nacos
+#   - 缓存：redis
+#   - 业务网关：maozi-cloud-basics-gateway（镜像本地构建）
+#   - 监控：maozi-cloud-basics-monitor（Spring Boot Admin，镜像本地构建）
+#   - 可观测性栈（Observability Stack）：
+#       * loki      日志聚合
+#       * tempo     链路追踪后端
+#       * grafana   指标/日志/追踪可视化
+#       * promtail  日志采集 agent，采集共享日志目录后推送至 loki
+# ------------------------------------------------------------
+# 启动前必须先创建外部网络：
+#     docker network create maozi-cloud-network
+# 多个 Compose 文件（basics / services / arthas / xxl-job / nexus）
+# 都通过该网络互相通信。
+# 宿主机日志挂载点（/Users/maozi/Desktop/maozi-cloud-logs）为开发者示例路径，
+# 部署环境请按需替换为实际共享日志目录，且与 promtail 挂载保持一致。
+# ============================================================
 version: "3.7"
 services:
 
+  # ============ 注册/配置中心：MySQL + Nacos ============
   maozi-cloud-mysql:
     image: mysql:8.0.29
     container_name: maozi-cloud-mysql
@@ -25,6 +47,7 @@ services:
       - 9555:9555
     restart: always
 
+  # ============ 缓存：Redis ============
   maozi-cloud-redis:
     image: redis:6.2.6
     container_name: maozi-cloud-redis
@@ -37,6 +60,7 @@ services:
     command:
       /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf "
 
+  # ============ 业务网关与监控 ============
   maozi-cloud-basics-gateway:
     image: maozi-cloud-basics-gateway:laster
     container_name: maozi-cloud-basics-gateway
@@ -64,6 +88,7 @@ services:
       - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor/logs
 
   # ============ Observability Stack ============
+  # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
   maozi-cloud-loki:
     image: grafana/loki:2.9.3
     container_name: maozi-cloud-loki
@@ -77,6 +102,7 @@ services:
       - ./maozi-cloud-loki/config/loki-config.yml:/etc/loki/loki-config.yml:ro
       - ./maozi-cloud-loki/data:/loki:rw
 
+  # Tempo —— 链路追踪后端，接收 OTLP 协议的 trace 数据
   maozi-cloud-tempo:
     image: grafana/tempo:2.4.1
     container_name: maozi-cloud-tempo
@@ -92,6 +118,7 @@ services:
       - ./maozi-cloud-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
       - ./maozi-cloud-tempo/data:/var/tempo:rw
 
+  # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
   maozi-cloud-grafana:
     image: grafana/grafana-oss:10.1.5
     container_name: maozi-cloud-grafana
@@ -107,6 +134,7 @@ services:
       - ./maozi-cloud-grafana/provisioning:/etc/grafana/provisioning:ro
       - ./maozi-cloud-grafana/data:/var/lib/grafana:rw
 
+  # Promtail —— 日志采集 agent，挂载共享日志目录后推送至 Loki
   maozi-cloud-promtail:
     image: grafana/promtail:2.9.3
     container_name: maozi-cloud-promtail
@@ -125,6 +153,7 @@ services:
       - ./maozi-cloud-promtail/data:/data:rw
 
 
+# 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建
 networks:
   default:
     external:

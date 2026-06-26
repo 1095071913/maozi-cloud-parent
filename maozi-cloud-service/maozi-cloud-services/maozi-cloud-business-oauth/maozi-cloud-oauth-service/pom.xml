@@ -79,6 +79,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Spring Boot Maven 插件配置：指定启动主类、JVM 模块开放参数、依赖范围等打包细节 -->
                 <configuration>
                     <!-- 指定应用启动主类 -->
                     <mainClass>com.maozi.Application</mainClass>
@@ -99,6 +100,7 @@
                     </jvmArguments>
                 </configuration>
                 <executions>
+                    <!-- 默认执行：调用 repackage goal 将依赖打入可执行 fat-jar -->
                     <execution>
                         <goals>
                             <!-- 重新打包为可执行 JAR -->

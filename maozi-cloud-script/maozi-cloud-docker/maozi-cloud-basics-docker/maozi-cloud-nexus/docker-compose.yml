@@ -1,4 +1,16 @@
-version: '3.1' 
+# ============================================================
+# Nexus Repository Manager 3 —— Maven 私服
+# ------------------------------------------------------------
+# 用于托管本平台 maozi-cloud-* 制品的 snapshot/release，配合
+# maven-config-setting.xml 使用。
+# 端口：宿主机 8081 -> 容器 8081（Web UI 与 API）
+# 数据卷：./data 持久化 /nexus-data（包含仓库 blob、配置、日志）
+# ------------------------------------------------------------
+# 注意：本 Compose 为独立部署，未接入 maozi-cloud-network。
+# 首次启动需等待 1-2 分钟初始化；初始管理员密码位于容器内
+# /nexus-data/admin.password，登录后强制修改。
+# ============================================================
+version: '3.1'
 services:
   nexus:
     restart: always

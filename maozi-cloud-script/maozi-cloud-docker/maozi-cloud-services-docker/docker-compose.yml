@@ -1,6 +1,26 @@
+# ============================================================
+# maozi-cloud-services-docker —— 业务服务一键拉起
+# ------------------------------------------------------------
+# 本 Compose 启动 maozi-cloud 平台的「业务服务」层（区别于 basics 的基础组件层）：
+#   - maozi-cloud-system-service  系统管理服务（端口 4000 / Dubbo 20881）
+#   - maozi-cloud-oauth-service   OAuth 鉴权服务（端口 3000 / Dubbo 20880）
+# ------------------------------------------------------------
+# 启动前置：
+#   1. 先启动 maozi-cloud-basics-docker（提供 mysql / nacos / redis 等）；
+#   2. 外部网络 maozi-cloud-network 必须已创建；
+#   3. 业务镜像需通过 maozi-cloud-build 流程构建并 tag 为 latest。
+# ------------------------------------------------------------
+# 关于 environment.environment：
+#   YAML 中 environment 既是键名也是变量名，意为「容器内传入名为 environment
+#   的环境变量，值为 test」，供 bootstrap.properties 决定加载哪套 Nacos 配置；
+#   不是书写错误。
+# 宿主机日志挂载点（/Users/maozi/Desktop/maozi-cloud-logs）为开发者示例路径，
+# 部署环境请按需替换，且需与 promtail 挂载保持一致以纳入日志采集。
+# ============================================================
 version: "3.7"
 services:
 
+  # ============ System 业务服务 ============
   maozi-cloud-system-service:
     image: maozi-cloud-system-service:laster
     container_name: maozi-cloud-system-service
@@ -15,6 +35,7 @@ services:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system/logs
 
+  # ============ OAuth 业务服务 ============
   maozi-cloud-oauth-service:
     image: maozi-cloud-oauth-service:laster
     container_name: maozi-cloud-oauth-service
@@ -30,6 +51,7 @@ services:
       - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth/logs
 
 
+# 外部网络：与 maozi-cloud-basics-docker 共享同一网络
 networks:
   default:
     external:

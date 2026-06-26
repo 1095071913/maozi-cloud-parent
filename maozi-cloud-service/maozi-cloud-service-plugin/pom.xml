@@ -43,10 +43,12 @@
 
   <!-- 子模块列表 -->
   <modules>
-      <!-- 服务数据库实现插件模块 -->
+      <!-- 服务数据库实现插件模块（Query/Join 插件、BaseServiceImpl 基础实现） -->
       <module>maozi-cloud-service-db-impl</module>
-	  <module>maozi-cloud-service-monomer</module>
-	  <module>maozi-cloud-service-distributed</module>
+      <!-- 单体部署插件模块（本地 Bean 装配，all-service 单进程模式使用） -->
+      <module>maozi-cloud-service-monomer</module>
+      <!-- 分布式部署插件模块（Dubbo 远程调用装配，各服务独立进程使用） -->
+      <module>maozi-cloud-service-distributed</module>
   </modules>
 
 </project>

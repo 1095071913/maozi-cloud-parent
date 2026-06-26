@@ -7,7 +7,7 @@
   },
   "info": {
     "name": "maozi-cloud",
-    "description": "",
+    "description": "maozi-cloud 微服务平台 API 集合（Apifox 项目导出）。导入方式：Apifox -> 项目设置 -> 数据导入 -> Apifox。涵盖网关、OAuth、System 等全部 REST 接口；Dubbo RPC 接口不在本导出范围内。",
     "mockRule": {
       "rules": [],
       "enableSystemRule": true

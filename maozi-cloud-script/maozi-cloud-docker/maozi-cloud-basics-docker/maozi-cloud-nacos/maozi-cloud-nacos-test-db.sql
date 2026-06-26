@@ -14,6 +14,21 @@
  Date: 27/06/2026 06:29:35
 */
 
+-- ============================================================
+-- Nacos 配置库初始化数据 —— 配合 maozi-cloud-basics-docker 启动
+-- ------------------------------------------------------------
+-- 内容：Nacos 2.x 标准配置表（config_info / config_info_aggr / history 等）
+--       + 平台预置的配置行（boot-redis.yml / boot-default.yml 等 dataId）。
+-- 加载方式：先通过 docker-compose 启动 mysql 后，手动 mysql < 本文件导入；
+--           库名 maozi-cloud-nacos-test-db 必须与 nacos-mysql.env 中
+--           MYSQL_SERVICE_DB_NAME 保持一致（可按需修改）。
+-- 安全提示：boot-redis.yml / cloud-default.yml 等配置行内可能内联了
+--           Redis 密码等敏感信息，部署环境请改用 Nacos 加密配置功能
+--           （Cipher）或对接配置中心密钥管理。
+-- 幂等性：脚本以 DROP DATABASE 起手，重复执行将覆盖既有配置，
+--           请勿在生产环境直接运行。
+-- ============================================================
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

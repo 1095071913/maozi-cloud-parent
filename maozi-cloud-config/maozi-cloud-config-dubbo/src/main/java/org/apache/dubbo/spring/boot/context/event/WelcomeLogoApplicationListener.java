@@ -38,8 +38,14 @@ import static org.apache.dubbo.spring.boot.util.DubboUtils.LINE_SEPARATOR;
  * Dubbo 欢迎日志监听器
  * <p>
  * 监听 Spring Boot 的 {@link ApplicationEnvironmentPreparedEvent} 事件，
- * 在应用启动时打印 Dubbo 的版本信息和相关链接（GitHub 地址、邮件讨论组）。
- * 通过 {@link AtomicBoolean} 保证 Banner 只输出一次，防止在层级 ApplicationContext 中重复执行。
+ * 原本用于在应用启动时打印 Dubbo 的版本信息和相关链接（GitHub 地址、邮件讨论组），
+ * 并通过 {@link AtomicBoolean} 保证 Banner 只输出一次，防止在层级 ApplicationContext 中重复执行。
+ * </p>
+ * <p>
+ * <b>当前实际行为：</b>字段 {@code processed} 的初始值为 {@code true}，
+ * 使得 {@code onApplicationEvent} 在入口处即 {@code return}，<b>Banner 实际不会被输出</b>。
+ * 这与原 Dubbo 源码「初始值 {@code false} + compareAndSet 保证只输出一次」的语义不一致，
+ * 推测为复制源码后引入的回归；如需恢复 Banner 输出，可将 {@code processed} 初始值改回 {@code false}。
  * </p>
  * <p>
  * 执行顺序设置为 {@link Ordered#HIGHEST_PRECEDENCE} + 21，确保在

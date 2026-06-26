@@ -1,3 +1,16 @@
+# ============================================================
+# Promtail 配置 —— 采集 maozi-cloud 共享日志目录并推送至 Loki
+# ------------------------------------------------------------
+# 关键路径：
+#   - 采集路径 /maozi-logs/*/*.log（由 docker-compose 挂载自宿主机共享目录）
+#   - 推送目标 http://maozi-cloud-loki:3100/loki/api/v1/push
+#   - 采集位置持久化 /data/positions.yaml（容器内，挂载到宿主机 ./maozi-cloud-promtail/data）
+# ------------------------------------------------------------
+# 解析逻辑：
+#   1. 正则匹配 logback-spring.xml 的日志行格式，提取 level/service/environment；
+#   2. 将这三项提升为 Loki 标签，便于按服务/级别筛选；
+#   3. 使用日志行内的时间作为时间戳（必须指定 location，详见下方注释）。
+# ============================================================
 server:
   http_listen_port: 9080
   grpc_listen_port: 0

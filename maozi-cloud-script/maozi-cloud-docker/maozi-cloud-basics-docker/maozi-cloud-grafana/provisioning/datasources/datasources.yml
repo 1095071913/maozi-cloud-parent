@@ -1,3 +1,15 @@
+# ============================================================
+# Grafana 数据源 provisioning —— 启动时自动注入
+# ------------------------------------------------------------
+# Grafana 读取本文件后自动配置以下两个数据源，无需手动在 UI 添加：
+#   - Loki   日志聚合后端，指向 maozi-cloud-loki:3100（设为默认数据源）
+#   - Tempo  链路追踪后端，指向 maozi-cloud-tempo:3200
+# 依赖 maozi-cloud-basics-docker/docker-compose.yml 中的服务名通信。
+# ------------------------------------------------------------
+# Tempo 的 tracesToLogs 配置实现「点击 trace 跳转 Loki 查对应日志」联动：
+#   - datasourceUid: loki  关联到上面名为 Loki 的数据源
+#   - filterByTraceID: true 仅展示 traceId 匹配的日志行
+# ============================================================
 apiVersion: 1
 
 datasources:

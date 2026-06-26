@@ -32,7 +32,7 @@ public class PasswordAuthenticationProvider extends BaseGrantAuthenticationProvi
     @Override
     public UsernamePasswordAuthenticationToken subAuthenticate(PasswordAuthenticationToken authentication) {
 
-        // 获取手机号密码
+        // 从附加参数中取出用户名和密码
         Map<String, Object> additionalParameters = authentication.getAdditionalParameters();
         String username = (String) additionalParameters.get("username");
         String password = (String) additionalParameters.get("password");

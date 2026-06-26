@@ -1,3 +1,17 @@
+# ============================================================
+# Tempo 单节点配置（开发环境用）
+# ------------------------------------------------------------
+# 适配镜像版本：grafana/tempo:2.4.1（见 docker-compose.yml）。
+# 接收 OTLP 协议的 trace，本地文件系统存储，仅用于开发/演示。
+# 生产环境建议改用 S3/OSS 后端并独立部署 ingester/compactor。
+# ------------------------------------------------------------
+# 关键项说明：
+#   stream_over_http_enabled: true  支持 HTTP 流式查询（Grafana 跳转查看 trace 必需）
+#   distributor.receivers.otlp      开放 4317 (gRPC) / 4318 (HTTP) 接收业务进程上报
+#   ingester.max_block_duration: 5m 内存块最大切分粒度
+#   compactor.block_retention: 48h  trace 数据保留 2 天（开发期短保留节省空间）
+#   storage.trace.backend: local    本地文件系统（生产请改为 s3 等）
+# ============================================================
 stream_over_http_enabled: true
 
 server:

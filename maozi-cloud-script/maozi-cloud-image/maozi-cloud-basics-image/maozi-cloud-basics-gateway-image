@@ -1,3 +1,18 @@
+# ============================================================
+# Dockerfile —— Gateway 基础服务镜像
+# ------------------------------------------------------------
+# 基础镜像：maozi-cloud-base-jdk:1.0.0
+# 部署制品：maozi-cloud-basics-gateway.jar（由 maozi-cloud-build 流程产出）
+# 暴露端口：APPLICATION_PORT=1000（业务 HTTP 入口）
+# 注意：网关为 Spring Cloud Gateway（Reactive），无需 Dubbo 端口，
+#       因此与 oauth/system 业务镜像不同，CMD 中没有 DUBBO_IP_TO_REGISTRY。
+# ------------------------------------------------------------
+# JVM 参数（针对小规格容器调优，详细解释见 *-service-image）：
+#   -Xms256m -Xmx256m / -Xss256k / -XX:MaxMetaspaceSize=192m
+#   -XX:+UseSerialGC / -XX:CompressedClassSpaceSize=32m
+#   -XX:ReservedCodeCacheSize=32m / -XX:MaxDirectMemorySize=32m
+#   --add-opens java.base/...=ALL-UNNAMED JDK 17 模块化开放，供反射框架使用
+# ============================================================
 FROM maozi-cloud-base-jdk:1.0.0
 
 ENV APPLICATION_NAME=maozi-cloud-gateway

@@ -17,20 +17,6 @@
 	<!-- 打包类型为 pom，表示这是一个聚合工程 -->
 	<packaging>pom</packaging>
 
-	<properties>
-
-		<!-- Oauth Begin -->
-		<!-- OAuth API 接口层版本号 -->
-		<maozi-cloud-oauth-api.version>${revision}</maozi-cloud-oauth-api.version>
-		<!-- Oauth End -->
-
-		<!-- User Begin -->
-		<!-- 系统 API 接口版本号，OAuth 服务依赖系统管理接口 -->
-		<maozi-cloud-system-api.version>2.0.0</maozi-cloud-system-api.version>
-		<!-- User End -->
-
-	</properties>
-
 
 	<!-- 子模块列表 -->
 	<modules>
@@ -38,6 +24,7 @@
 		<module>maozi-cloud-oauth-api</module>
 		<!-- OAuth 业务实现模块，提供认证授权的具体业务逻辑 -->
 		<module>maozi-cloud-oauth-service</module>
+		<!-- OAuth 可执行启动模块，装配 Spring Boot 引导类与 bootstrap.properties，分布式部署入口 -->
 		<module>maozi-cloud-oauth-run</module>
 	</modules>
 

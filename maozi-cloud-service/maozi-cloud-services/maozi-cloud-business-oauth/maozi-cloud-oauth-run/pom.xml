@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 猫子云 OAuth 服务可执行启动模块，装配 Spring Boot 引导类与分布式部署插件，作为 OAuth 服务的分布式部署入口 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承 OAuth 业务聚合父工程 -->
     <parent>
         <groupId>com.maozi</groupId>
         <artifactId>maozi-cloud-business-oauth</artifactId>
         <version>${revision}</version>
     </parent>
 
+    <!-- OAuth 可执行启动模块构件名称 -->
     <artifactId>maozi-cloud-oauth-run</artifactId>
 
     <dependencies>
 
+        <!-- OAuth 业务实现模块，提供 OAuth 服务的具体业务逻辑 -->
         <dependency>
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-oauth-service</artifactId>
@@ -26,6 +31,7 @@
             <version>${maozi-cloud-service-db-impl.version}</version>
         </dependency>
 
+        <!-- 分布式部署插件，装配 Dubbo / Feign / Sentinel / 服务发现等远程调用与治理能力 -->
         <dependency>
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-service-distributed</artifactId>

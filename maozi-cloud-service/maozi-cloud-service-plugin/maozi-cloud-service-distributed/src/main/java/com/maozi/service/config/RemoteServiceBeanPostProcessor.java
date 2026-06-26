@@ -5,8 +5,6 @@ import com.maozi.service.api.annotation.RemoteService;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -51,8 +49,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPostProcessor, SmartInitializingSingleton, ApplicationContextAware {
-
-	private static final Logger log = LoggerFactory.getLogger(RemoteServiceBeanPostProcessor.class);
 
 	/** 已暴露过的实现类型，避免重复导出 */
 	private final Set<Class<?>> exportedClasses = ConcurrentHashMap.newKeySet();
