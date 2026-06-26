@@ -58,7 +58,7 @@ import java.util.List;
 public class StripFirstPathFilter extends OncePerRequestFilter {
 
     /** 默认不裁剪的路径前缀（框架端点），可通过配置覆盖 */
-    private static final String DEFAULT_EXCLUDED_PREFIXES = "/actuator,/webjars,/v3,/application,/error,/favicon.ico,/oauth2,/.well-known,/userinfo";
+    private static final String DEFAULT_EXCLUDED_PREFIXES = "/actuator,/webjars,/v3,/application,/error,/favicon.ico,/oauth2,/.well-known";
 
     /** 是否启用路径裁剪，默认开启 */
     @Value("${application.path-strip.enabled:true}")
