@@ -1,7 +1,7 @@
 package com.maozi.service.config;
 
 import com.maozi.service.api.annotation.RemoteService;
-import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -46,7 +46,7 @@ public class LocalRemoteServiceRegistrar implements BeanDefinitionRegistryPostPr
 	 * @param registry Bean 定义注册表
 	 */
 	@Override
-	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
+	public void postProcessBeanDefinitionRegistry(@Nonnull BeanDefinitionRegistry registry) {
 
 		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
 		scanner.addIncludeFilter(new AnnotationTypeFilter(RemoteService.class));
@@ -54,7 +54,7 @@ public class LocalRemoteServiceRegistrar implements BeanDefinitionRegistryPostPr
 		AnnotationBeanNameGenerator nameGenerator = new AnnotationBeanNameGenerator();
 
 		for (BeanDefinition candidate : scanner.findCandidateComponents(BASE_PACKAGE)) {
-			String beanName = nameGenerator.generateBeanName((AnnotatedBeanDefinition) candidate, registry);
+			String beanName = nameGenerator.generateBeanName(candidate, registry);
 			candidate.setAutowireCandidate(false);
 			registry.registerBeanDefinition(beanName, candidate);
 		}
@@ -67,7 +67,7 @@ public class LocalRemoteServiceRegistrar implements BeanDefinitionRegistryPostPr
 	 * @param beanFactory 可配置的 Bean 工厂
 	 */
 	@Override
-	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+	public void postProcessBeanFactory(@Nonnull ConfigurableListableBeanFactory beanFactory) {
 		// 无需处理
 	}
 

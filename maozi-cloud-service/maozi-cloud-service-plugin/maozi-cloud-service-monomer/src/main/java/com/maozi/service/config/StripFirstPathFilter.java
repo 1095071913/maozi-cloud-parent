@@ -19,7 +19,7 @@ import java.util.List;
  * 请求首段路径裁剪过滤器
  * <p>
  * 聚合服务（maozi-cloud-all-service）将 oauth、system 等多个子模块聚合在同一进程内，
- * 各子模块控制器并不携带模块前缀（例如 {@link com.maozi.system.user.api.rest.RestUserService}
+ * 各子模块控制器并不携带模块前缀
  * 声明的路径是 {@code /user/list} 而不是 {@code /system/user/list}）。
  * 外部网关若按 {@code /<module>/<path>} 形式路由进入本服务，则需要在 Spring MVC
  * 控制器匹配前裁剪掉第一段路径，将 {@code /oauth/user/info} 改写为 {@code /user/info}，
