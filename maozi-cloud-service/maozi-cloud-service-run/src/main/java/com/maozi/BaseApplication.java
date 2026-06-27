@@ -18,7 +18,6 @@ package com.maozi;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.maozi.common.LogUtil;
-import com.maozi.common.ObjectUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -48,6 +52,9 @@ import java.util.Properties;
 @DependsOn({ApplicationEnvironmentContext.CLASS_NAME})
 public class BaseApplication {
 
+    /** 运行时配置文件目录扫描模式，匹配 classpath（含 JAR 内）下 run/config 目录中的所有 .properties 文件 */
+    private static final String CONFIG_LOCATION_PATTERN = "classpath*:run/config/*.properties";
+
     /**
      * 应用启动入口方法
      * <p>
@@ -60,6 +67,7 @@ public class BaseApplication {
     protected static void ApplicationRun(String[] args) {
 
         initProperties();
+        initFileProperties();
 
         long begin = System.currentTimeMillis();
 
@@ -74,7 +82,6 @@ public class BaseApplication {
 
             logs.put(LogTag.SERVICE_PORT, ApplicationEnvironmentContext.SERVICE_PORT);
             logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
-            logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
 
             LogUtil.info(log,logs);
 
@@ -85,7 +92,6 @@ public class BaseApplication {
             StackTraceElement stackTraceElement = e.getStackTrace()[0];
 
             logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
-            logs.put(LogTag.CONFIG, ApplicationEnvironmentContext.LOAD_CONFIG);
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
             logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
 
@@ -113,15 +119,30 @@ public class BaseApplication {
         properties.put("spring.main.log-startup-info",false);
         properties.put("spring.main.allow-circular-references",true);
         properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
-        properties.put("spring.cloud.nacos.config.file-extension", "yml");
-        properties.put("spring.cloud.nacos.config.server-addr", "${NACOS_CONFIG_SERVER:maozi-cloud-nacos:8848}");
-        properties.put("application-nacos-config-basics","cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml");
 
         properties.put("logging.level.root", "ERROR");
         properties.put("logging.level.com.maozi", "INFO");
         properties.put("logging.file.name","logs/maozi-cloud-${application-project-abbreviation}.log");
 
-        properties.compute("application-nacos-config-service", (k, serviceConfig) -> "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml" + (ObjectUtil.isNotNullEmpty(serviceConfig) ? "," + serviceConfig : ""));
+    }
+
+    private static void initFileProperties() {
+
+        Properties properties = System.getProperties();
+
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            Resource[] resources = resolver.getResources(CONFIG_LOCATION_PATTERN);
+            for (Resource resource : resources) {
+                Properties loaded = new Properties();
+                try (InputStream inputStream = resource.getInputStream()) {
+                    loaded.load(inputStream);
+                }
+                loaded.forEach((k, v) -> properties.merge(k, v, (existing, incoming) -> existing + "," + incoming));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("加载数据库运行时配置文件失败：" + CONFIG_LOCATION_PATTERN, e);
+        }
 
     }
 

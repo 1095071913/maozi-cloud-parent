@@ -22,6 +22,7 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.maozi.common.JacksonUtil;
 import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +54,11 @@ public class ErrorParamTranslation {
 	public ErrorParamTranslation() throws Exception {
 
 		// 创建 Nacos 配置服务客户端，使用应用环境中的配置中心地址
-		ConfigService configService = NacosFactory.createConfigService(ApplicationEnvironmentContext.CONFIG_ADDR);
+		String configAddr = ApplicationEnvironmentContext.CONFIG_ADDR;
+		if(ObjectUtil.isNullEmpty(configAddr)){
+			return;
+		}
+		ConfigService configService = NacosFactory.createConfigService(configAddr);
 
 		// 首次加载：从 Nacos 获取 saas-param-error.json 配置内容，超时时间 5 秒
 		errorParamTranslation(configService.getConfig("saas-param-error.json", "DEFAULT_GROUP", 5000));

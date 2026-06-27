@@ -16,9 +16,6 @@ public class LogTag {
     /** Nacos 配置信息 */
     public static final String NACOS = "Nacos";
 
-    /** 配置名称 */
-    public static final String CONFIG = "Config";
-
     /** 初始化耗时 */
     public static final String INIT_TIME = "InitTime";
 

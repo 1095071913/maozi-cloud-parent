@@ -70,19 +70,6 @@ public class ApplicationEnvironmentContext {
         ApplicationEnvironmentContext.SERVICE_PORT = servicePort;
     }
 
-    /** 加载的 Nacos 配置文件列表 */
-    public static String LOAD_CONFIG;
-
-    /**
-     * 设置加载的配置文件
-     *
-     * @param loadConfig 配置文件列表
-     */
-    @Value("${spring.cloud.nacos.config.shared-dataids:null}")
-    public void setLoadConfig(String loadConfig) {
-        ApplicationEnvironmentContext.LOAD_CONFIG = loadConfig;
-    }
-
     /** Nacos 配置中心地址 */
     public static String CONFIG_ADDR;
 
@@ -91,7 +78,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param configAddr 配置中心地址
      */
-    @Value("${spring.cloud.nacos.config.server-addr}")
+    @Value("${spring.cloud.nacos.config.server-addr:}")
     public void setConfigAddr(String configAddr) {
         ApplicationEnvironmentContext.CONFIG_ADDR = configAddr;
     }
