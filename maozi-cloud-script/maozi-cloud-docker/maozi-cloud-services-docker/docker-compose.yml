@@ -2,8 +2,8 @@
 # maozi-cloud-services-docker —— 业务服务一键拉起
 # ------------------------------------------------------------
 # 本 Compose 启动 maozi-cloud 平台的「业务服务」层（区别于 basics 的基础组件层）：
-#   - maozi-cloud-system-service  系统管理服务（端口 4000 / Dubbo 20881）
-#   - maozi-cloud-oauth-service   OAuth 鉴权服务（端口 3000 / Dubbo 20880）
+#   - maozi-cloud-system-run  系统管理服务（端口 4000 / Dubbo 20881）
+#   - maozi-cloud-oauth-run   OAuth 鉴权服务（端口 3000 / Dubbo 20880）
 # ------------------------------------------------------------
 # 启动前置：
 #   1. 先启动 maozi-cloud-basics-docker（提供 mysql / nacos / redis 等）；
@@ -21,9 +21,9 @@ version: "3.7"
 services:
 
   # ============ System 业务服务 ============
-  maozi-cloud-system-service:
-    image: maozi-cloud-system-service:laster
-    container_name: maozi-cloud-system-service
+  maozi-cloud-system-run:
+    image: maozi-cloud-system-run:laster
+    container_name: maozi-cloud-system-run
     restart: always
     ports:
       - 4000:4000
@@ -36,9 +36,9 @@ services:
       - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system/logs
 
   # ============ OAuth 业务服务 ============
-  maozi-cloud-oauth-service:
-    image: maozi-cloud-oauth-service:laster
-    container_name: maozi-cloud-oauth-service
+  maozi-cloud-oauth-run:
+    image: maozi-cloud-oauth-run:laster
+    container_name: maozi-cloud-oauth-run
     restart: always
     ports:
       - 3000:3000

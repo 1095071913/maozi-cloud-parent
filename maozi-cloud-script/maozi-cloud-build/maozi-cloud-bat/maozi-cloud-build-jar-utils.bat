@@ -29,6 +29,16 @@ REM        - 按模块名前缀路由镜像目录 (basics-* -> maozi-cloud-basic
 REM        - 校验镜像 Dockerfile 存在
 REM        - 生成临时 build-docker.bat: 拷贝 jar / buildx / compose up -d / 自清理
 REM        - 并行启动, 等待全部完成
+REM ------------------------------------------------------------
+REM 模块结构说明 (business 服务):
+REM   业务服务采用聚合分层, 一个业务在 maozi-cloud-services 下聚合为:
+REM     maozi-cloud-business-xxx\
+REM       ├── maozi-cloud-xxx-api       对外 API 契约 (产出带版本 jar, 不部署)
+REM       ├── maozi-cloud-xxx-service   业务实现 (产出带版本 jar, 不部署)
+REM       └── maozi-cloud-xxx-run       可执行启动模块 (产出 maozi-cloud-xxx-run.jar, 部署入口)
+REM   find 会扫描到上述全部 jar, 但只有 *-run 模块在镜像目录存在对应的
+REM   *-run-image Dockerfile, api / service 的 jar 会在 F 步镜像校验时被自动跳过。
+REM   basics 层 (gateway / monitor) 与 all-service 仍为扁平单模块, 行为不变。
 REM ============================================================
 
 REM 可部署服务源码根目录 (相对仓库根), 仅此目录下生成的 jar 才触发 Docker 重新部署
@@ -155,6 +165,8 @@ for /l %%N in (1,1,!changed_jars_count!) do (
     set "jarfile=!changed_jar_%%N!"
 
     REM dirname 两次: jar -> target -> 模块目录
+    REM business 服务: 得到 maozi-cloud-business-xxx\maozi-cloud-xxx-run (启动模块)
+    REM basics 服务:   得到 maozi-cloud-basics-xxx (扁平单模块)
     for %%I in ("!jarfile!") do set "jar_dir=%%~dpI"
     REM jar_dir 末尾带 \, 再上一级
     for %%I in ("!jar_dir!\..") do set "module_dir=%%~fI"

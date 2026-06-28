@@ -69,49 +69,4 @@
 
     </dependencies>
 
-
-    <!-- boot打包 Begin -->
-    <build>
-        <!-- 打包后的文件名 -->
-        <finalName>${artifactId}</finalName>
-        <plugins>
-            <!-- Spring Boot Maven 插件，将应用打包为可执行 JAR -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- Spring Boot Maven 插件配置：指定启动主类、JVM 模块开放参数、依赖范围等打包细节 -->
-                <configuration>
-                    <!-- 指定应用启动主类 -->
-                    <mainClass>com.maozi.Application</mainClass>
-                    <!-- 包含 system scope 的依赖 -->
-                    <includeSystemScope>true</includeSystemScope>
-                    <!-- 排除 Lombok，运行时不需要 -->
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                    <!-- 添加 add-opens jvm参数 -->
-                    <jvmArguments>
-                        --add-opens java.base/java.math=ALL-UNNAMED
-                        --add-opens java.base/java.lang=ALL-UNNAMED
-                        --add-opens java.base/java.lang.reflect=ALL-UNNAMED
-                    </jvmArguments>
-                </configuration>
-                <executions>
-                    <!-- 默认执行：调用 repackage goal 将依赖打入可执行 fat-jar -->
-                    <execution>
-                        <goals>
-                            <!-- 重新打包为可执行 JAR -->
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <!-- boot打包 End -->
-
-
 </project>

@@ -33,6 +33,16 @@
 #        - 校验镜像 Dockerfile 存在
 #        - 生成临时 build-docker.sh: 拷贝 jar / buildx / compose up -d / 自清理
 #        - 后台执行, 最后 wait 等待所有部署完成
+# ------------------------------------------------------------
+# 模块结构说明 (business 服务):
+#   业务服务采用聚合分层, 一个业务在 maozi-cloud-services 下聚合为:
+#     maozi-cloud-business-xxx/
+#       ├── maozi-cloud-xxx-api       对外 API 契约 (产出带版本 jar, 不部署)
+#       ├── maozi-cloud-xxx-service   业务实现 (产出带版本 jar, 不部署)
+#       └── maozi-cloud-xxx-run       可执行启动模块 (产出 maozi-cloud-xxx-run.jar, 部署入口)
+#   find 会扫描到上述全部 jar, 但只有 *-run 模块在镜像目录存在对应的
+#   *-run-image Dockerfile, api / service 的 jar 会在 F 步镜像校验时被自动跳过。
+#   basics 层 (gateway / monitor) 与 all-service 仍为扁平单模块, 行为不变。
 # ============================================================
 
 current_directory="$1"
@@ -209,6 +219,8 @@ while IFS= read -r jarfile; do
     [ -z "$jarfile" ] && continue
 
     # dirname 两次: jar -> target -> 模块目录
+    # business 服务: 得到 maozi-cloud-business-xxx/maozi-cloud-xxx-run (启动模块)
+    # basics 服务:   得到 maozi-cloud-basics-xxx (扁平单模块)
     module_dir="$(dirname "$(dirname "$jarfile")")"
     service_name="$(basename "$module_dir")"
 

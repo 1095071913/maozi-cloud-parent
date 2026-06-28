@@ -2,7 +2,7 @@
 # Dockerfile —— OAuth 业务服务镜像
 # ------------------------------------------------------------
 # 基础镜像：maozi-cloud-base-jdk:1.0.0（由 maozi-cloud-base-jdk-image/Dockerfile 构建）
-# 部署制品：maozi-cloud-oauth-service.jar（由 maozi-cloud-build 流程产出，放入上下文根目录）
+# 部署制品：maozi-cloud-oauth-run.jar（由 maozi-cloud-build 流程产出，放入上下文根目录）
 # 暴露端口：
 #   - APPLICATION_PORT      REST/HTTP 端口（3000）
 #   - APPLICATION_DUBBO_PORT Dubbo RPC 端口（20880）
@@ -33,9 +33,9 @@ RUN mkdir -p /application/${APPLICATION_NAME}
 
 WORKDIR /application/${APPLICATION_NAME}
 
-COPY maozi-cloud-${APPLICATION_ABBREVIATION}-service.jar ./
+COPY maozi-cloud-${APPLICATION_ABBREVIATION}-run.jar ./
 
-CMD java -server -DDUBBO_IP_TO_REGISTRY=192.168.124.17 -Xms256m -Xmx256m -Xss256k -XX:MaxMetaspaceSize=192m -XX:+UseSerialGC -XX:CompressedClassSpaceSize=32m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=32m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -jar maozi-cloud-${APPLICATION_ABBREVIATION}-service.jar
+CMD java -server -DDUBBO_IP_TO_REGISTRY=192.168.124.17 -Xms256m -Xmx256m -Xss256k -XX:MaxMetaspaceSize=192m -XX:+UseSerialGC -XX:CompressedClassSpaceSize=32m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=32m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -jar maozi-cloud-${APPLICATION_ABBREVIATION}-run.jar
 
 EXPOSE ${APPLICATION_PORT}
 EXPOSE ${APPLICATION_DUBBO_PORT}

@@ -59,7 +59,6 @@
 
     </dependencies>
 
-
     <!-- boot打包 Begin -->
     <build>
         <!-- 打包后的文件名 -->
@@ -102,6 +101,5 @@
         </plugins>
     </build>
     <!-- boot打包 End -->
-
 
 </project>
