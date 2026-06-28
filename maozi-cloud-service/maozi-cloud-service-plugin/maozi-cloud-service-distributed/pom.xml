@@ -48,14 +48,8 @@
         <!-- 服务发现配置模块，集成注册中心服务注册与灰度负载均衡 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-discovery</artifactId>
-            <version>${maozi-cloud-config-discovery.version}</version>
-        </dependency>
-
-        <!-- Nacos 配置中心客户端，从 Nacos 拉取服务配置 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <artifactId>maozi-cloud-config-nacos</artifactId>
+            <version>${maozi-cloud-config-nacos.version}</version>
         </dependency>
 
     </dependencies>

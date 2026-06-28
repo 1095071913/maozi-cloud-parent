@@ -13,7 +13,7 @@
 	</parent>
 
 	<!-- 服务发现配置模块构件名称 -->
-	<artifactId>maozi-cloud-config-discovery</artifactId>
+	<artifactId>maozi-cloud-config-nacos</artifactId>
 
 
 	<dependencies>
@@ -22,6 +22,12 @@
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+
+		<!-- Nacos 配置中心客户端，从 Nacos 拉取配置 -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
 
 		<!-- Spring Cloud LoadBalancer 负载均衡器，支持灰度发布等自定义负载均衡策略 -->

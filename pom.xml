@@ -124,7 +124,7 @@
 		<!-- Spring Boot Admin 监控配置模块版本 -->
 		<maozi-cloud-config-monitor.version>${revision}</maozi-cloud-config-monitor.version>
 		<!-- 服务发现配置模块版本 -->
-		<maozi-cloud-config-discovery.version>${revision}</maozi-cloud-config-discovery.version>
+		<maozi-cloud-config-nacos.version>${revision}</maozi-cloud-config-nacos.version>
 
 		<!-- 服务基础运行库版本 -->
 		<maozi-cloud-service-run.version>${revision}</maozi-cloud-service-run.version>

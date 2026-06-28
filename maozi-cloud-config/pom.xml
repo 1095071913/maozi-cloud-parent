@@ -40,7 +40,7 @@
       <!-- Redis 缓存配置模块 -->
       <module>maozi-cloud-config-redis</module>
       <!-- 服务发现配置模块 -->
-      <module>maozi-cloud-config-discovery</module>
+      <module>maozi-cloud-config-nacos</module>
       <!-- Stream 消息流配置模块 -->
       <module>maozi-cloud-config-stream</module>
       <!-- Swagger API 文档配置模块 -->

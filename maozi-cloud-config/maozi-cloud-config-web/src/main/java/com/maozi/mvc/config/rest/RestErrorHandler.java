@@ -1,11 +1,9 @@
 package com.maozi.mvc.config.rest;
 
 import com.maozi.common.CollectionUtil;
-import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.code.SystemErrorCode;
-import com.maozi.mvc.config.error.ErrorParamTranslation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -53,12 +51,11 @@ public class RestErrorHandler {
 	 * 返回 404 状态码和"资源不存在"错误信息。
 	 * </p>
 	 *
-	 * @param e NoHandlerFoundException 异常对象
 	 * @return 标准错误响应，包含 NOT_RESOURCE_ERROR 错误码
 	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public Object handle404(NoHandlerFoundException e) {
+	public Object handle404() {
 		return ResultUtil.error(SystemErrorCode.NOT_RESOURCE_ERROR);
 	}
 
@@ -86,21 +83,15 @@ public class RestErrorHandler {
 	/**
 	 * 处理缺少请求参数异常
 	 * <p>
-	 * 当请求中缺少必须的查询参数时触发。会尝试从 {@link ErrorParamTranslation} 中
 	 * 获取参数的中文翻译名称，拼接成更友好的错误提示信息。
 	 * </p>
 	 *
-	 * @param e MissingServletRequestParameterException 缺少参数异常
 	 * @return 标准错误响应，包含 PARAM_ERROR 错误码和"参数不能为空"提示信息
 	 */
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public Object handleMissingParam(MissingServletRequestParameterException e) {
-		String paramName = e.getParameterName();
-		// 优先使用翻译后的中文名称，若不存在则使用原始参数名
-		String errorMsg = ObjectUtil.isNotNullEmpty(ErrorParamTranslation.errorParams.get(paramName)) ? ErrorParamTranslation.errorParams.get(paramName) + "不能为空" : paramName + "不能为空";
-
-		return ResultUtil.error(SystemErrorCode.PARAM_ERROR).setMessage(errorMsg);
+	public Object handleMissingParam() {
+		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 
 	/**
@@ -109,11 +100,10 @@ public class RestErrorHandler {
 	 * 当请求体为空、格式错误或无法解析时触发，返回参数错误响应。
 	 * </p>
 	 *
-	 * @param e HttpMessageNotReadableException 请求体不可读异常
 	 * @return 标准错误响应，包含 PARAM_ERROR 错误码
 	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public Object handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+	public Object handleHttpMessageNotReadable() {
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 
@@ -124,11 +114,10 @@ public class RestErrorHandler {
 	 * 返回参数错误响应。
 	 * </p>
 	 *
-	 * @param e MethodArgumentTypeMismatchException 类型转换异常
 	 * @return 标准错误响应，包含 PARAM_ERROR 错误码
 	 */
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	public Object handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+	public Object handleMethodArgumentTypeMismatchException() {
 		return ResultUtil.error(SystemErrorCode.PARAM_ERROR);
 	}
 
