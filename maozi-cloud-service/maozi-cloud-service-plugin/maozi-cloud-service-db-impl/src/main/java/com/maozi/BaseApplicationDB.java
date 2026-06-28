@@ -34,7 +34,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @SpringBootApplication
-@MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".${application-project-abbreviation}.*.mapper")
+@MapperScan(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.mapper")
 public class BaseApplicationDB {
 
     /**
