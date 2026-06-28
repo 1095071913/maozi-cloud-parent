@@ -20,6 +20,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.spi.ConfigInitializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,7 +35,9 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -54,8 +57,8 @@ import java.util.Properties;
 @DependsOn({ApplicationEnvironmentContext.CLASS_NAME})
 public class BaseApplication {
 
-    /** 运行时配置文件目录扫描模式，匹配 classpath（含 JAR 内）下 run/config 目录中的所有 .properties 文件 */
-    private static final String CONFIG_LOCATION_PATTERN = "classpath*:run/config/*.properties";
+    /** 运行时配置初始化器扫描模式，匹配 classpath（含 JAR 内）下 META-INF/run/config 目录中的所有 .properties 文件，文件内容为实现类全路径 */
+    private static final String CONFIG_LOCATION_PATTERN = "classpath*:META-INF/run/config/*.properties";
 
     /**
      * 应用启动入口方法
@@ -69,13 +72,14 @@ public class BaseApplication {
     protected static void ApplicationRun(String[] args) {
 
         initProperties();
-        initFileProperties();
+
+        List<ConfigInitializer> initializers = initFileProperties();
+
+        Map<String, String> logs = new LinkedHashMap<>();
 
         long begin = System.currentTimeMillis();
 
         SpringApplicationBuilder builder = new SpringApplicationBuilder(BaseApplication.class);
-
-        Map<String, String> logs = new LinkedHashMap<>();
 
         try {
 
@@ -87,12 +91,14 @@ public class BaseApplication {
                 logs.put(LogTag.SERVICE_PORT, Integer.toString(actualPort));
             }
 
+            appendInitializerLogs(initializers, logs);
             LogUtil.info(log,logs);
 
         } catch (Exception e) {
 
             LogUtil.error(log,e);
 
+            appendInitializerLogs(initializers, logs);
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
 
             StackTraceElement stackTraceElement = e.getStackTrace()[0];
@@ -127,24 +133,65 @@ public class BaseApplication {
 
     }
 
-    private static void initFileProperties() {
+    private static List<ConfigInitializer> initFileProperties() {
 
         Properties properties = System.getProperties();
+
+        List<ConfigInitializer> initializers = new ArrayList<>();
 
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         try {
             Resource[] resources = resolver.getResources(CONFIG_LOCATION_PATTERN);
             for (Resource resource : resources) {
-                Properties loaded = new Properties();
+                Properties registrations = new Properties();
                 try (InputStream inputStream = resource.getInputStream()) {
-                    loaded.load(inputStream);
+                    registrations.load(inputStream);
                 }
-                loaded.forEach((k, v) -> properties.merge(k, v, (existing, incoming) -> existing + "," + incoming));
+                for (String className : registrations.stringPropertyNames()) {
+                    ConfigInitializer initializer = instantiateInitializer(className);
+                    initializer.initialize(properties);
+                    initializers.add(initializer);
+                }
             }
         } catch (IOException e) {
-            throw new RuntimeException("加载数据库运行时配置文件失败：" + CONFIG_LOCATION_PATTERN, e);
+            throw new RuntimeException("加载运行时配置初始化器失败：" + CONFIG_LOCATION_PATTERN, e);
+        } catch (Exception e) {
+            throw new RuntimeException("执行运行时配置初始化器失败", e);
         }
 
+        return initializers;
+
+    }
+
+    /**
+     * 依次追加各初始化器的启动日志
+     * <p>
+     * 在 Spring Boot 应用启动（成功或失败）之后调用，将各 {@link ConfigInitializer}
+     * 的诊断信息写入 logs 以便统一输出。
+     * </p>
+     *
+     * @param initializers 已加载的配置初始化器列表
+     * @param logs 启动日志容器
+     */
+    private static void appendInitializerLogs(List<ConfigInitializer> initializers, Map<String, String> logs) {
+        for (ConfigInitializer initializer : initializers) {
+            initializer.appendLogs(logs);
+        }
+    }
+
+    /**
+     * 实例化配置初始化器
+     *
+     * @param className 实现类全路径
+     * @return 配置初始化器实例
+     */
+    private static ConfigInitializer instantiateInitializer(String className) {
+        try {
+            Class<?> clazz = Class.forName(className.trim());
+            return (ConfigInitializer) clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("实例化配置初始化器失败：" + className, e);
+        }
     }
 
 }

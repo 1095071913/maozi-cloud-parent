@@ -26,7 +26,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * 数据库应用启动基类
  * <p>
  * 继承 {@link BaseApplication}，在基础启动配置上增加数据库相关配置。
- * 自动扫描项目 Mapper 接口，并迭代加载 classpath 下 {@code run/config/} 目录中的所有配置文件到系统属性。
+ * 自动扫描项目 Mapper 接口，并通过 SPI 机制加载 classpath 下 {@code META-INF/run/config/} 中的配置初始化器。
  * </p>
  *
  * @author maozi

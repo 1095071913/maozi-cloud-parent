@@ -28,6 +28,9 @@ public class LogTag {
     /** 服务端口 */
     public static final String SERVICE_PORT = "ServicePort";
 
+    /** Dubbo 端口 */
+    public static final String DUBBO_PORT = "DubboPort";
+
     /** IP 地址 */
     public static final String IP = "IP";
 
