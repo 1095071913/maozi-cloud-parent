@@ -2,7 +2,6 @@ package com.maozi.db.config;
 
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
-import com.maozi.common.context.ApplicationEnvironmentContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.logging.Log;
@@ -66,11 +65,6 @@ public class MybatisPlusLog implements Log {
      * @param s SQL 日志内容
      */
     public void debug(String s) {
-
-        // 应用未完全启动时跳过日志收集，避免启动过程中的干扰日志
-        if(!ApplicationEnvironmentContext.IS_RUNNING){
-            return;
-        }
 
         // 从线程变量中获取 SQL 日志构建器
         StringBuilder sqlLog = LogUtil.sqlLog.get();

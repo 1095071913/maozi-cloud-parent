@@ -19,7 +19,8 @@ application-port: ${application-dev-port:1000}
 
 application-datasource-db-name: maozi-cloud-all-localhost-db
 
-application-project-whitelist:
+# 白名单
+#application-project-whitelist:
 
 application-project-system:
   projectName: 小猫子

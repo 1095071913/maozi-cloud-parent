@@ -25,9 +25,6 @@ public class ApplicationEnvironmentContext {
     /** Spring Bean 名称常量，用于 {@code @Component(CLASS_NAME)} 显式命名 */
     public final static String CLASS_NAME = "applicationEnvironmentContext";
 
-    /** 应用是否正在运行 */
-    public static boolean IS_RUNNING = false;
-
     /** 基础包路径前缀 */
     public static final String PACKAGE_PREFIX = "com.maozi";
 
@@ -55,19 +52,6 @@ public class ApplicationEnvironmentContext {
     @Value("${spring.application.name}")
     public void setServiceName(String serviceName) {
         ApplicationEnvironmentContext.SERVICE_NAME = serviceName;
-    }
-
-    /** 服务端口 */
-    public static String SERVICE_PORT;
-
-    /**
-     * 设置服务端口
-     *
-     * @param servicePort 服务端口
-     */
-    @Value("${server.port}")
-    public void setServicePort(String servicePort) {
-        ApplicationEnvironmentContext.SERVICE_PORT = servicePort;
     }
 
     /** Nacos 配置中心地址 */

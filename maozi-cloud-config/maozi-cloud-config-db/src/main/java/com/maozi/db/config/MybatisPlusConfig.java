@@ -44,7 +44,7 @@ import java.util.List;
 public class MybatisPlusConfig {
 
     /** 需要启用多租户的表名列表 */
-    @Value("${mybatis-plus.configuration.tenantTables.split(','):#{null}}")
+    @Value("${mybatis-plus.configuration.tenantTables.split(','):}")
     private List<String> tenantTables;
 
     /**

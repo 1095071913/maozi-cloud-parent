@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.context.WebServerApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
@@ -77,11 +79,13 @@ public class BaseApplication {
 
         try {
 
-            builder.bannerMode(Mode.OFF).run(args);
+            ConfigurableApplicationContext context = builder.bannerMode(Mode.OFF).run(args);
             logs.put(LogTag.INIT_TIME, (System.currentTimeMillis() - begin) + " ms");
 
-            logs.put(LogTag.SERVICE_PORT, ApplicationEnvironmentContext.SERVICE_PORT);
-            logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
+            if (context instanceof WebServerApplicationContext webServerContext) {
+                int actualPort = webServerContext.getWebServer().getPort();
+                logs.put(LogTag.SERVICE_PORT, Integer.toString(actualPort));
+            }
 
             LogUtil.info(log,logs);
 
@@ -89,18 +93,15 @@ public class BaseApplication {
 
             LogUtil.error(log,e);
 
-            StackTraceElement stackTraceElement = e.getStackTrace()[0];
-
-            logs.put(LogTag.NACOS, ApplicationEnvironmentContext.CONFIG_ADDR);
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+
+            StackTraceElement stackTraceElement = e.getStackTrace()[0];
             logs.put(LogTag.ERROR_LINE, stackTraceElement.toString());
 
             LogUtil.error(log,logs);
             System.exit(0);
 
         }
-
-        ApplicationEnvironmentContext.IS_RUNNING = true;
 
     }
 
@@ -118,11 +119,11 @@ public class BaseApplication {
 
         properties.put("spring.main.log-startup-info",false);
         properties.put("spring.main.allow-circular-references",true);
-        properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}");
+        properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}-service");
 
         properties.put("logging.level.root", "ERROR");
         properties.put("logging.level.com.maozi", "INFO");
-        properties.put("logging.file.name","logs/maozi-cloud-${application-project-abbreviation}.log");
+        properties.put("logging.file.name","logs/${spring.application.name}.log");
 
     }
 

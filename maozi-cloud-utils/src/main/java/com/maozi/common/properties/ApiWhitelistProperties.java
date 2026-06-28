@@ -25,7 +25,7 @@ public class ApiWhitelistProperties {
     public final static List<String> DEFAULT_WITE_LIST;
 
     /** 项目自定义白名单路径列表，通过 application-project-whitelist 配置 */
-    @Value("${application-project-whitelist:#{null}}")
+    @Value("${application-project-whitelist:}")
     private List<String> configWhitelist;
 
     static {
