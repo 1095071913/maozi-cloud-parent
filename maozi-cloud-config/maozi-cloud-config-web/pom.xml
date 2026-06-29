@@ -19,7 +19,6 @@
 	<dependencies>
 
 		<!-- Spring Boot Begin -->
-
 		<!-- Spring Boot Web Starter，排除默认 Tomcat 服务器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

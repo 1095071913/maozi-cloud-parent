@@ -18,8 +18,6 @@
 
 package com.maozi.log.config;
 
-import com.alibaba.csp.sentinel.context.ContextUtil;
-import com.alibaba.csp.sentinel.node.Node;
 import com.maozi.base.enums.EnvironmentType;
 import com.maozi.base.enums.LogCommonType;
 import com.maozi.base.utils.EnvironmentUtil;
@@ -33,8 +31,10 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
+import com.maozi.monitor.Alarm;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
@@ -64,6 +64,10 @@ import java.util.Map;
 @Order(value = Ordered.HIGHEST_PRECEDENCE + 1)
 public abstract class AbstractRequestEntranceLogAop {
 
+    /** 限流熔断告警组件，由监控模块（如 Sentinel）提供实现并通过依赖注入获取 */
+	@Autowired(required = false)
+	private Alarm alarm;
+
     /**
 	 * 环绕通知：记录请求日志、执行业务逻辑并记录响应日志。
 	 * <p>
@@ -86,9 +90,6 @@ public abstract class AbstractRequestEntranceLogAop {
 
 		/* 方法参数字符串 */
 		String param = Arrays.toString(proceedingJoinPoint.getArgs());
-
-		/* Sentinel 当前节点 */
-		Node curNode = ContextUtil.getContext().getCurNode();
 
 		/* 日志信息集合 */
 		Map<String, String> logs = requestLog(proceedingJoinPoint);
@@ -149,8 +150,10 @@ public abstract class AbstractRequestEntranceLogAop {
 			// 判断结果是否为框架统一响应类型 && 请求失败（业务或系统错误）
 			if (ObjectUtil.isNotNullEmpty(resultData) && resultData instanceof AbstractBaseResult<?> result && !result.isSuccess()) {
 
-				// 统计 Sentinel 阻塞 QPS（表示请求被限流或熔断）
-				curNode.increaseBlockQps(1);
+				// 触发限流熔断告警（请求被限流或熔断）
+				if(ObjectUtil.isNotNullEmpty(alarm)){
+					alarm.alarm();
+				}
 
 				// 获取错误详情，用于判断是业务错误还是系统错误
 				ErrorResult<?> errorResult = result.getErrorResult();
@@ -163,13 +166,8 @@ public abstract class AbstractRequestEntranceLogAop {
 				}
 
 			} else {
-
-				// 统计 Sentinel 通过 QPS（表示请求成功处理）
-				curNode.addPassRequest(1);
-
 				// 请求成功，记录 info 级别日志
 				LogUtil.info(log, logs);
-
 			}
 
 		}

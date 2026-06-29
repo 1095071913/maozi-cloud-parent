@@ -20,13 +20,6 @@
 
 
 		<!-- Project Begin -->
-		<!-- Sentinel 限流配置模块，提供 QPS 统计节点等基础能力，日志切面依赖其上下文 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sentinel</artifactId>
-			<version>${maozi-cloud-config-sentinel.version}</version>
-		</dependency>
-
 		<!-- Spring AOP 切面支持，用于通过注解方式实现日志切面 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

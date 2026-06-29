@@ -1,7 +1,6 @@
 package com.maozi.mvc.config.enums;
 
 import cn.hutool.core.util.ClassUtil;
-import com.alibaba.nacos.shaded.com.google.common.collect.Lists;
 import com.maozi.base.BaseEnum;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.context.ApplicationEnvironmentContext;
@@ -62,7 +61,7 @@ public class EnumConfig {
                     charArray[0] += 32; // ASCII 码加 32，即大写字母转小写
 
                     // 将枚举常量列表注册到全局映射表
-                    enums.put(new String(charArray), Lists.newArrayList(enumConstants));
+                    enums.put(new String(charArray), CollectionUtil.newArrayList(enumConstants));
 
                 }
 

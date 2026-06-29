@@ -39,20 +39,31 @@
 			<artifactId>maozi-cloud-service-run</artifactId>
 			<version>${maozi-cloud-service-run.version}</version>
 		</dependency>
-
-		<!-- Web 配置模块，提供 Web 层通用配置 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-web</artifactId>
-			<version>${maozi-cloud-config-web.version}</version>
-		</dependency>
-
 		<!-- ============ 项目内部依赖 End ============ -->
 
 
 
 
 		<!-- ============ SpringBoot 相关依赖 Begin ============ -->
+
+		<!-- Spring Boot Web Starter，排除默认 Tomcat 服务器 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Undertow Web 服务器，替代 Tomcat 作为高性能 Servlet 容器 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		<!-- Spring Boot End -->
 
 		<!-- Spring Boot Admin Server 服务端，提供服务监控仪表盘 -->
 		<dependency>
@@ -65,12 +76,6 @@
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
-		</dependency>
-
-		<!-- OkHttp HTTP 客户端，用于服务间 HTTP 通信 -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
 		</dependency>
 
 		<!-- Spring Security 安全框架（当前已注释，未启用安全认证） -->
@@ -100,7 +105,7 @@
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-config-nacos</artifactId>
-			<version>2.0.0</version>
+			<version>${maozi-cloud-config-nacos.version}</version>
 		</dependency>
 
 		<!-- ============ SpringCloud 相关依赖 End ============ -->
