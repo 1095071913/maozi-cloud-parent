@@ -1,5 +1,6 @@
 package com.maozi.oauth.config;
 
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.token.api.OauthTokenService;
@@ -62,7 +63,7 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
      * @param clientSecret    OAuth2 客户端密钥（HTTP模式必须配置）
      */
     public OpaqueTokenIntrospector(
-            @Value("${spring.security.oauth2.resourceserver.opaquetoken.mode:http}") String mode,
+            @Value("${spring.security.oauth2.resourceserver.opaquetoken.mode:}") String mode,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri:}") String introspectionUri,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id:}") String clientId,
             @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret:}") String clientSecret) {
@@ -90,7 +91,7 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
         try {
             // 优先本地调用：当容器中存在本地实现（即本进程为授权服务器）时，直接进程内调用，避免网络开销
             // 否则根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
-            return MODE_RPC.equalsIgnoreCase(mode) ? rpcIntrospect(token) : httpIntrospect(token);
+            return ObjectUtil.isNullEmpty(mode) || MODE_RPC.equalsIgnoreCase(mode) ? rpcIntrospect(token) : httpIntrospect(token);
         } catch (BadOpaqueTokenException e) {
             // 令牌无效异常直接抛出，由上层框架处理（返回401）
             throw e;

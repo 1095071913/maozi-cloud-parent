@@ -17,6 +17,9 @@ public final class OAuth2TokenClaimConstants {
 	/** 令牌主体（用户名） */
 	public static final String SUB = "sub";
 
+	/** 令牌类型 */
+	public static final String TOKEN_TYPE = "token_type";
+
 	/** 客户端ID */
 	public static final String CLIENT_ID = "client_id";
 

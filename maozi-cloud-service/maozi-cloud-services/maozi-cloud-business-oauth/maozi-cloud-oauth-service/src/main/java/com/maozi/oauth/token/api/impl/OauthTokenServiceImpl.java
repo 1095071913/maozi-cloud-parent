@@ -1,6 +1,7 @@
 package com.maozi.oauth.token.api.impl;
 
 import com.maozi.common.CollectionUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.config.service.OAuth2AuthorizationService;
 import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
@@ -8,6 +9,8 @@ import jakarta.annotation.Resource;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -32,6 +35,9 @@ public class OauthTokenServiceImpl implements OauthTokenService {
     /** OAuth2授权信息服务，用于管理授权记录的存储、查找和删除 */
     @Resource
     protected OAuth2AuthorizationService authorizationService;
+
+    @Resource
+    protected RegisteredClientRepository registeredClientRepository;
 
     /**
      * {@inheritDoc}
@@ -59,11 +65,17 @@ public class OauthTokenServiceImpl implements OauthTokenService {
             return CollectionUtil.newHashMap(OAuth2TokenClaimConstants.ACTIVE, false);
         }
 
+        RegisteredClient authorizedClient = this.registeredClientRepository.findById(authorization.getRegisteredClientId());
+        if(ObjectUtil.isNullEmpty(authorizedClient)){
+            return CollectionUtil.newHashMap(OAuth2TokenClaimConstants.ACTIVE, false);
+        }
+
         // 构建内省响应，填充令牌基本声明字段
         Map<String, Object> claims = new HashMap<>();
         claims.put(OAuth2TokenClaimConstants.ACTIVE, true);
         claims.put(OAuth2TokenClaimConstants.SUB, authorization.getPrincipalName());
-        claims.put(OAuth2TokenClaimConstants.CLIENT_ID, authorization.getRegisteredClientId());
+        claims.put(OAuth2TokenClaimConstants.CLIENT_ID, authorizedClient.getClientId());
+        claims.put(OAuth2TokenClaimConstants.TOKEN_TYPE,accessToken.getToken().getTokenType().getValue());
 
         // 只提取Hessian可序列化的字段，避免复制可能包含URL等不可序列化类型的全部claims
         if (accessToken.getClaims() != null) {

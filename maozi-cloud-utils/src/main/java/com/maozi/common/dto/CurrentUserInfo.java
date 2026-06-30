@@ -30,6 +30,6 @@ public class CurrentUserInfo implements Serializable {
     private String username;
 
     /** 客户端 ID（OAuth2 Registered Client 主键） */
-    private Long clientId;
+    private String clientId;
 
 }

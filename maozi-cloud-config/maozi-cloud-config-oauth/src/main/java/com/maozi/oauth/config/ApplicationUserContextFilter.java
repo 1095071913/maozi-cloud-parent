@@ -13,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Objects;
-
 /**
  * 应用链路上下文过滤器
  * <p>
@@ -45,7 +43,7 @@ public class ApplicationUserContextFilter implements HandlerInterceptor {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(ObjectUtil.isNotNullEmpty(authentication) && authentication.isAuthenticated() && authentication.getPrincipal() instanceof DefaultOAuth2AuthenticatedPrincipal authenticatedPrincipal){
-            CurrentUserInfo currentUserInfo = new CurrentUserInfo(authentication.getName(), Long.parseLong(Objects.requireNonNull(authenticatedPrincipal.getAttribute(OAuth2TokenClaimConstants.CLIENT_ID))));
+            CurrentUserInfo currentUserInfo = new CurrentUserInfo(authentication.getName(), authenticatedPrincipal.getAttribute(OAuth2TokenClaimConstants.CLIENT_ID));
             ApplicationLinkContext.currentUserInfos.set(currentUserInfo);
         }
 
