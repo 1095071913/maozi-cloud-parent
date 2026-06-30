@@ -19,6 +19,17 @@
 	<dependencies>
 
 		<!-- Spring Boot Begin -->
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-logback-mdc-1.0</artifactId>
+			<version>${opentelemetry-instrumentation.version}-alpha</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-spring-boot-starter</artifactId>
+		</dependency>
+
 		<!-- Spring Boot Admin 客户端，将服务注册到 Admin Server 进行统一监控 -->
 		<dependency>
 			<groupId>de.codecentric</groupId>

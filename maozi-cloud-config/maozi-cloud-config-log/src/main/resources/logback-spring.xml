@@ -11,7 +11,7 @@
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
 
     <property name="LOG_PATH" value="./logs"/>
-    <property name="LOG_PATTERN" value="%clr([ %d{yyyy-MM-dd HH:mm:ss} ]){green}  %clr([ Level：%level ]){blue}  %clr([ Service：${APPLICATION_NAME} ]){red}  %clr([ Environment：${ENVIRONMENT} ]){yellow}  %clr([ %m ]){cyan}%n"/>
+    <property name="LOG_PATTERN" value="%clr([ %d{yyyy-MM-dd HH:mm:ss} ]){green}  %clr([ Level：%level ]){blue}  %clr([ TID：%X{trace_id:-} ]){magenta}  %clr([ Service：${APPLICATION_NAME} ]){red}  %clr([ Environment：${ENVIRONMENT} ]){yellow}  %clr([ %m ]){cyan}%n"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
