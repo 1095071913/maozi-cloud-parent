@@ -38,6 +38,12 @@
             <artifactId>crac</artifactId>
         </dependency>
 
+        <!-- Janino 运行时编译器，用于 Logback 日志条件判断 -->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+        </dependency>
+
     </dependencies>
 
 

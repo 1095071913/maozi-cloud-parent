@@ -7,10 +7,11 @@
 #   - 业务网关：maozi-cloud-basics-gateway（镜像本地构建）
 #   - 监控：maozi-cloud-basics-monitor（Spring Boot Admin，镜像本地构建）
 #   - 可观测性栈（Observability Stack）：
-#       * loki      日志聚合
-#       * tempo     链路追踪后端
-#       * grafana   指标/日志/追踪可视化
-#       * promtail  日志采集 agent，采集共享日志目录后推送至 loki
+#       * loki        日志聚合
+#       * tempo       链路追踪后端
+#       * prometheus  指标采集与存储
+#       * grafana     指标/日志/追踪可视化
+#       * promtail    日志采集 agent，采集共享日志目录后推送至 loki
 # ------------------------------------------------------------
 # 启动前必须先创建外部网络：
 #     docker network create maozi-cloud-network
@@ -68,11 +69,11 @@ services:
     ports:
       - 1000:1000
     environment:
-      environment: test
+      ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/gateway:/application/maozi-cloud-gateway/logs
+      - /Users/maozi/Desktop/maozi-cloud-logs/gateway:/application/maozi-cloud-gateway-service/logs
 
   maozi-cloud-basics-monitor:
     image: maozi-cloud-basics-monitor:laster
@@ -81,11 +82,11 @@ services:
     ports:
       - 2000:2000
     environment:
-      environment: test
+      ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor/logs
+      - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor-service/logs
 
   # ============ Observability Stack ============
   # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
@@ -118,9 +119,30 @@ services:
       - ./maozi-cloud-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
       - ./maozi-cloud-tempo/data:/var/tempo:rw
 
+  # Prometheus —— 指标采集与存储，抓取各服务 actuator/prometheus 端点
+  maozi-cloud-prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: maozi-cloud-prometheus
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=7d'
+      - '--enable-feature=exemplar-storage'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    volumes:
+      - ./maozi-cloud-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./maozi-cloud-prometheus/data:/prometheus:rw
+
   # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
   maozi-cloud-grafana:
-    image: grafana/grafana-oss:10.1.5
+    image: grafana/grafana-oss:10.4.13
     container_name: maozi-cloud-grafana
     restart: always
     environment:

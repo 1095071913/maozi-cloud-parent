@@ -62,7 +62,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param configAddr 配置中心地址
      */
-    @Value("${spring.cloud.nacos.config.server-addr:}")
+    @Value("${spring.cloud.nacos.config.server-addr:127.0.0.1:8848}")
     public void setConfigAddr(String configAddr) {
         ApplicationEnvironmentContext.CONFIG_ADDR = configAddr;
     }
@@ -75,7 +75,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param environment 环境标识
      */
-    @Value("${project.environment}")
+    @Value("${environment:local}")
     public void setEnvironment(String environment) {
         ApplicationEnvironmentContext.ENVIRONMENT = environment;
     }
@@ -88,7 +88,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param title 项目标题
      */
-    @Value("${project.title}")
+    @Value("${project.title:}")
     public void setTitle(String title) {
         ApplicationEnvironmentContext.TITLE = title;
     }
@@ -114,7 +114,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param details 项目描述
      */
-    @Value("${project.details}")
+    @Value("${project.details:}")
     public void setDetails(String details) {
         ApplicationEnvironmentContext.DETAILS = details;
     }

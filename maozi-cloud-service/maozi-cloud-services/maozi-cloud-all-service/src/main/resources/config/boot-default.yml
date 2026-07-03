@@ -48,8 +48,6 @@ feign:
       enabled: true
 
 logging:
-  test: ON
-  file.name: log/log.log
   level:
     root: ERROR
     com.maozi: INFO

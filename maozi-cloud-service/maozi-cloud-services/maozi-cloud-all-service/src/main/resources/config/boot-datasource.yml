@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${application-datasource-jdbc-url:maozi-cloud-mysql:3306}/${application-datasource-db-name:${spring.application.name}-${project.environment}-db}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://${application-datasource-jdbc-url:maozi-cloud-mysql:3306}/${application-datasource-db-name:${spring.application.name}-${environment}-db}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true
     username: ${application-datasource-jdbc-username:root}
     password: ${application-datasource-jdbc-password:password}
     hikari:

@@ -1,11 +1,23 @@
 # ============================================================
 # Dockerfile —— Gateway 基础服务镜像
 # ------------------------------------------------------------
-# 基础镜像：maozi-cloud-base-jdk:1.0.0
+# 基础镜像：maozi-cloud-base-jdk:1.0.0（已内置 OTel Agent 于 /opt/opentelemetry）
 # 部署制品：maozi-cloud-basics-gateway.jar（由 maozi-cloud-build 流程产出）
 # 暴露端口：APPLICATION_PORT=1000（业务 HTTP 入口）
 # 注意：网关为 Spring Cloud Gateway（Reactive），无需 Dubbo 端口，
 #       因此与 oauth/system 业务镜像不同，CMD 中没有 DUBBO_IP_TO_REGISTRY。
+# ------------------------------------------------------------
+# OpenTelemetry Agent 参数（链路追踪采集，发送至 maozi-cloud-tempo）：
+#   -javaagent:/opt/opentelemetry/opentelemetry-javaagent.jar
+#                                          挂载 OTel 官方字节码增强 Agent
+#   -Dotel.javaagent.extensions=...        自定义扩展 jar（FilterSamplerProvider 等）
+#   -Dotel.traces.sampler=FilterSamplerProvider  使用自定义采样器
+#   -Dotel.service.name=${APPLICATION_NAME}       本服务在 Tempo 中的标识
+#   -Dotel.traces.exporter=otlp / protocol=grpc   走 OTLP gRPC 上报
+#   -Dotel.exporter.otlp.endpoint=http://maozi-cloud-tempo:4317
+#   -Dotel.exporter.otlp.insecure=true     内网明文 gRPC，不启用 TLS
+#   -Dotel.metrics.exporter=none / logs.exporter=none  仅采集 trace，关指标/日志
+#   -Dotel.resource.attributes=application=maozi-cloud  统一资源标签
 # ------------------------------------------------------------
 # JVM 参数（针对小规格容器调优，详细解释见 *-service-image）：
 #   -Xms256m -Xmx256m / -Xss256k / -XX:MaxMetaspaceSize=192m
@@ -15,7 +27,7 @@
 # ============================================================
 FROM maozi-cloud-base-jdk:1.0.0
 
-ENV APPLICATION_NAME=maozi-cloud-gateway
+ENV APPLICATION_NAME=maozi-cloud-gateway-service
 ENV APPLICATION_ABBREVIATION=gateway
 ENV APPLICATION_PORT=1000
 
@@ -25,6 +37,20 @@ WORKDIR /application/${APPLICATION_NAME}
 
 COPY ./maozi-cloud-basics-${APPLICATION_ABBREVIATION}.jar ./
 
-CMD java -server -Xms256m -Xmx256m -Xss256k -XX:MaxMetaspaceSize=192m -XX:+UseSerialGC -XX:CompressedClassSpaceSize=32m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=32m --add-opens java.base/java.math=ALL-UNNAMED  --add-opens java.base/java.lang=ALL-UNNAMED  --add-opens java.base/java.lang.reflect=ALL-UNNAMED -jar maozi-cloud-basics-${APPLICATION_ABBREVIATION}.jar
+CMD java -server \
+  -javaagent:/opt/opentelemetry/opentelemetry-javaagent.jar \
+  -Dotel.javaagent.extensions=/opt/opentelemetry/maozi-cloud-agent-opentelemetry.jar \
+  -Dotel.traces.sampler=FilterSamplerProvider \
+  -Dotel.service.name=${APPLICATION_NAME} \
+  -Dotel.traces.exporter=otlp \
+  -Dotel.exporter.otlp.protocol=grpc \
+  -Dotel.exporter.otlp.endpoint=http://maozi-cloud-tempo:4317 \
+  -Dotel.metrics.exporter=none \
+  -Dotel.logs.exporter=none \
+  -Dotel.resource.attributes=application=maozi-cloud \
+  -Dotel.exporter.otlp.insecure=true \
+  -Xms256m -Xmx256m -Xss256k -XX:MaxMetaspaceSize=192m -XX:+UseSerialGC -XX:CompressedClassSpaceSize=32m -XX:ReservedCodeCacheSize=32m -XX:MaxDirectMemorySize=32m \
+  --add-opens java.base/java.math=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED \
+  -jar maozi-cloud-basics-${APPLICATION_ABBREVIATION}.jar
 
 EXPOSE ${APPLICATION_PORT}

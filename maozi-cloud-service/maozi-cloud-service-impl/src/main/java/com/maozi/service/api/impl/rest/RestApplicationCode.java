@@ -1,7 +1,7 @@
 package com.maozi.service.api.impl.rest;
 
-import com.maozi.base.BaseEnum;
 import com.maozi.common.ResultUtil;
+import com.maozi.common.enums.BaseEnum;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.mvc.config.enums.EnumConfig;
 import com.maozi.service.annotation.Get;

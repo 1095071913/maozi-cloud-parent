@@ -29,11 +29,11 @@ services:
       - 4000:4000
       - 20881:20881
     environment:
-      environment: test
+      ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system/logs
+      - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system-service/logs
 
   # ============ OAuth 业务服务 ============
   maozi-cloud-oauth-run:
@@ -44,11 +44,11 @@ services:
       - 3000:3000
       - 20880:20880
     environment:
-      environment: test
+      ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth/logs
+      - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth-service/logs
 
 
 # 外部网络：与 maozi-cloud-basics-docker 共享同一网络

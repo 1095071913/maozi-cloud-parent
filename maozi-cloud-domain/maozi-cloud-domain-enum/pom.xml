@@ -16,15 +16,4 @@
     <!-- 基础枚举定义模块构件名称 -->
     <artifactId>maozi-cloud-domain-enum</artifactId>
 
-    <dependencies>
-
-        <!-- MyBatis-Plus 注解，枚举类使用 @EnumValue、@TableField 等注解实现 ORM 映射 -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-
-    </dependencies>
-
 </project>

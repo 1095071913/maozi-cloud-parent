@@ -41,12 +41,17 @@ target
 .flattened-pom.xml
 
 # 中间件数据
-**/maozi-cloud-tempo/data
 **/maozi-cloud-redis/data
-**/maozi-cloud-promtail/data
 **/maozi-cloud-mysql/data
-**/maozi-cloud-loki/data
 **/maozi-cloud-grafana/data
+**/maozi-cloud-loki/data
+**/maozi-cloud-tempo/data
+**/maozi-cloud-promtail/data
+**/maozi-cloud-prometheus/data
 
 # 自动部署临时文件
 **/maozi-cloud-parent-env
+
+# JAVA基础镜像额外依赖
+!opentelemetry-javaagent.jar
+!maozi-cloud-agent-opentelemetry.jar

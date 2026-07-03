@@ -18,6 +18,12 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
+
 		<!-- Spring Cloud 通用组件，提供 Spring Cloud 基础上下文支持 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -35,15 +41,6 @@
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
 		</dependency>
-
-		<!-- Project Begin -->
-		<!-- 基础枚举定义，提供消息相关枚举常量 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-domain-enum</artifactId>
-			<version>${maozi-cloud-domain-enum.version}</version>
-        </dependency>
-        <!-- Project End -->
 
 	</dependencies>
 

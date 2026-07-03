@@ -17,8 +17,6 @@
 
 package com.maozi;
 
-import com.maozi.discovery.config.GrayLoadBalancerClientConfiguration;
-
 /**
  * 监控服务启动类。
  * <p>

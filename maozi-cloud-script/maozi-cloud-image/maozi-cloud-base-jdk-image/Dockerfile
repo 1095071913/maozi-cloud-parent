@@ -28,3 +28,14 @@ RUN mkdir -p /${APP_NAME} && \
 
 # 安装 dumb-init（Ubuntu/Debian 系统用 apt，Alpine 用 apk）
 RUN apt update && apt install -y dumb-init && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------------------------------------
+# OpenTelemetry Java Agent（链路追踪采集）
+# ------------------------------------------------------------
+# 两个制品统一放入 /opt/opentelemetry，供所有继承镜像的 CMD -javaagent 引用：
+#   opentelemetry-javaagent.jar           OTel 官方 Agent（字节码注入 + SPI 加载）
+#   maozi-cloud-agent-opentelemetry.jar   自定义扩展（如 FilterSamplerProvider）
+# 由 maozi-cloud-utils/maozi-cloud-utils-opentelemetry 维护，
+# 更新 jar 后在此目录覆盖同名文件，并重新 build base 镜像即可。
+COPY opentelemetry-javaagent.jar              /opt/opentelemetry/opentelemetry-javaagent.jar
+COPY maozi-cloud-agent-opentelemetry.jar      /opt/opentelemetry/maozi-cloud-agent-opentelemetry.jar

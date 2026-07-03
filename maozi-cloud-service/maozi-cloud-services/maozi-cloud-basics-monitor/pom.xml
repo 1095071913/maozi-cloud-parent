@@ -78,11 +78,11 @@
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
 
-		<!-- Spring Security 安全框架（当前已注释，未启用安全认证） -->
-<!-- 		<dependency>
+		<!-- Spring Security 安全框架，提供监控仪表盘表单登录认证 -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
 
 		<!-- ============ SpringBoot 相关依赖 End ============ -->
 
@@ -111,11 +111,6 @@
 		<!-- ============ SpringCloud 相关依赖 End ============ -->
 
 
-		<!-- Janino 编译器，用于运行时编译表达式（如日志条件判断） -->
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-		</dependency>
 
 		<!-- Netty macOS ARM64 DNS 解析器，解决 Apple Silicon 芯片下 DNS 解析问题 -->
 		<dependency>

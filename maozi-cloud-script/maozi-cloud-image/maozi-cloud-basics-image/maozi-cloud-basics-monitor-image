@@ -15,7 +15,7 @@
 # ============================================================
 FROM maozi-cloud-base-jdk:1.0.0
 
-ENV APPLICATION_NAME=maozi-cloud-monitor
+ENV APPLICATION_NAME=maozi-cloud-monitor-service
 ENV APPLICATION_ABBREVIATION=monitor
 ENV APPLICATION_PORT=2000
 

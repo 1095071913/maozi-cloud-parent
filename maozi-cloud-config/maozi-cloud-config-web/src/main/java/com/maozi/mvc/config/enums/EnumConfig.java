@@ -1,9 +1,9 @@
 package com.maozi.mvc.config.enums;
 
 import cn.hutool.core.util.ClassUtil;
-import com.maozi.base.BaseEnum;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.BaseEnum;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 

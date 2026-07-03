@@ -18,6 +18,12 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
+
 		<!-- XXL-JOB 分布式任务调度核心库，提供定时任务的注册与执行 -->
 		<dependency>
 			<groupId>com.xuxueli</groupId>
@@ -30,13 +36,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-
-		<!-- 基础枚举定义，提供任务相关枚举常量 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-domain-enum</artifactId>
-            <version>${maozi-cloud-domain-enum.version}</version>
-        </dependency>
 
     </dependencies>
 

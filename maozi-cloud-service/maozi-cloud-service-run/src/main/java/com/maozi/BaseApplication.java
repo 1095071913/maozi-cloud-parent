@@ -18,8 +18,10 @@ package com.maozi;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.EnvironmentType;
 import com.maozi.common.spi.ConfigInitializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -123,13 +126,27 @@ public class BaseApplication {
 
         Properties properties = System.getProperties();
 
+        String environment = (String) properties.get("environment");
+        if(ObjectUtil.isNullEmpty(environment)){
+            environment = System.getenv("ENVIRONMENT");
+            if(ObjectUtil.isNullEmpty(environment)){
+                environment = EnvironmentType.LOCAL.getDesc();
+            }
+            properties.put("environment",environment);
+        }
+
         properties.put("spring.main.log-startup-info",false);
         properties.put("spring.main.allow-circular-references",true);
         properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}-service");
 
         properties.put("logging.level.root", "ERROR");
         properties.put("logging.level.com.maozi", "INFO");
-        properties.put("logging.file.name","logs/${spring.application.name}.log");
+        if(!Objects.equals(environment, EnvironmentType.LOCAL.getDesc())){
+            properties.put("logging.appender","ASYNC_FILE");
+            properties.put("logging.file.name","logs/${spring.application.name}.log");
+        }else{
+            properties.put("logging.appender","ASYNC_CONSOLE");
+        }
 
     }
 

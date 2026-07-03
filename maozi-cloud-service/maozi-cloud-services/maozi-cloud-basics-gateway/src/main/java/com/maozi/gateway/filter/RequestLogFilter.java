@@ -17,8 +17,8 @@
 
 package com.maozi.gateway.filter;
 
-import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.constant.LogTag;
+import com.maozi.common.enums.LogCommonType;
 import com.maozi.gateway.config.ServerHttpResponseAgent;
 import com.maozi.gateway.utils.WebUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

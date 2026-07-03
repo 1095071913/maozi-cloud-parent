@@ -18,20 +18,20 @@
 
 package com.maozi.log.config;
 
-import com.maozi.base.enums.EnvironmentType;
-import com.maozi.base.enums.LogCommonType;
-import com.maozi.base.utils.EnvironmentUtil;
+import com.maozi.common.EnvironmentUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
+import com.maozi.common.enums.EnvironmentType;
+import com.maozi.common.enums.LogCommonType;
+import com.maozi.common.monitor.Alarm;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
-import com.maozi.monitor.Alarm;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;

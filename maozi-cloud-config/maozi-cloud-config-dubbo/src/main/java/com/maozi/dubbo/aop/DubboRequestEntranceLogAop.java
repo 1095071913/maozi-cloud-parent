@@ -18,8 +18,8 @@
 
 package com.maozi.dubbo.aop;
 
-import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.LogCommonType;
 import com.maozi.log.config.AbstractRequestEntranceLogAop;
 import org.apache.dubbo.rpc.RpcContext;
 import org.aspectj.lang.ProceedingJoinPoint;

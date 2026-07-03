@@ -1,6 +1,6 @@
 package com.maozi.system.permission.enums;
 
-import com.maozi.base.BaseEnum;
+import com.maozi.common.enums.BaseEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 

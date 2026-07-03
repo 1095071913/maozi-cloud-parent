@@ -18,10 +18,10 @@
 
 package com.maozi.mvc.config.aop;
 
-import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.WebUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.LogCommonType;
 import com.maozi.log.config.AbstractRequestEntranceLogAop;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

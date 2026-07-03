@@ -4,7 +4,7 @@ spring:
       resourceserver:
         opaquetoken:
           # http 或 rpc
-          mode: rpc
+#          mode: http
           # 客户端id
           client-id: system
           # 客户端秘钥

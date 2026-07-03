@@ -18,11 +18,11 @@
 package com.maozi.gateway.config;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.LogCommonType;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.gateway.utils.WebUtil;

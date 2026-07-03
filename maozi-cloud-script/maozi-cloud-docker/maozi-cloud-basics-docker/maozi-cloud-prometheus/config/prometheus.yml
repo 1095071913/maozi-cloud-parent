@@ -1,0 +1,56 @@
+# ============================================================
+# Prometheus 单节点配置（开发环境用）
+# ------------------------------------------------------------
+# 适配镜像版本：prom/prometheus:v2.51.2（见 docker-compose.yml）。
+# 通过 maozi-cloud-network 网络内服务名直接抓取各组件指标。
+# 仅适用于单节点开发/演示；生产环境建议加入 Federation / 远程存储。
+# ------------------------------------------------------------
+# 关键项说明：
+#   global.scrape_interval: 15s          全局抓取周期（开发期够用）
+#   global.evaluation_interval: 15s      告警规则评估周期
+#   scrape_configs                        抓取目标集合：
+#     - prometheus    自身指标（health / 容量观测）
+#     - gateway       业务网关 actuator 指标（需 micrometer-registry-prometheus）
+#     - monitor       Spring Boot Admin actuator 指标
+# ------------------------------------------------------------
+# 业务服务（services compose）抓取有两种方式，按需启用：
+#   1. 静态配置：在本文件 scrape_configs 中追加 static_configs 目标
+#   2. 服务发现：使用 nacos_sd_configs 自动发现注册到 Nacos 的实例
+#      （需确认 Prometheus 镜像编译时包含 nacos SD，官方发行版默认不含）
+# ============================================================
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: test
+
+# ============================================================
+# 抓取目标
+# ------------------------------------------------------------
+# 命名约定：job name 即服务语义，便于在 Grafana 按 job 维度过滤。
+# 以下业务端点均假设已引入 spring-boot-starter-actuator +
+#   micrometer-registry-prometheus，并通过 management 暴露 /actuator/prometheus。
+# 若某服务未暴露该端点，Prometheus 会将其标记为 down，不影响其它目标。
+# ============================================================
+scrape_configs:
+  # ---------- Prometheus 自身 ----------
+#  - job_name: 'prometheus'
+#    static_configs:
+#      - targets: ['localhost:9090']
+
+  # ---------- 业务网关 ----------
+  # 对应 docker-compose.yml 中的 maozi-cloud-basics-gateway:1000
+  - job_name: 'maozi-cloud-gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['maozi-cloud-basics-gateway:1000']
+
+  - job_name: 'maozi-cloud-oauth-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['maozi-cloud-oauth-run:3000']
+
+  - job_name: 'maozi-cloud-system-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['maozi-cloud-system-run:4000']

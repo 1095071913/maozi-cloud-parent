@@ -26,17 +26,11 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!-- Janino 运行时编译器，用于 Logback 日志条件判断 -->
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-		</dependency>
-
 		<!-- 基础枚举定义，提供日志类型等通用枚举常量 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-domain-enum</artifactId>
-			<version>${maozi-cloud-domain-enum.version}</version>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
 		</dependency>
 		<!-- Project End -->
 

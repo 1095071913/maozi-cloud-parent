@@ -1,8 +1,8 @@
 package com.maozi.lock.lock;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.maozi.base.BaseEnum;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.BaseEnum;
 import com.maozi.lock.error.strategy.impl.LockTimeoutStrategy;
 import com.maozi.lock.error.strategy.impl.UnLockTimeoutStrategy;
 import com.maozi.lock.lock.impl.FairLock;

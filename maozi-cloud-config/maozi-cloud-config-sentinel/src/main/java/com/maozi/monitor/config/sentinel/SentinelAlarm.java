@@ -2,7 +2,7 @@ package com.maozi.monitor.config.sentinel;
 
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.node.Node;
-import com.maozi.monitor.Alarm;
+import com.maozi.common.monitor.Alarm;
 import org.springframework.stereotype.Component;
 
 /**

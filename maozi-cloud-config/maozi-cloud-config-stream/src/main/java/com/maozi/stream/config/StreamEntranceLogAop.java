@@ -18,13 +18,13 @@
 
 package com.maozi.stream.config;
 
-import com.maozi.base.enums.EnvironmentType;
-import com.maozi.base.enums.LogCommonType;
-import com.maozi.base.utils.EnvironmentUtil;
+import com.maozi.common.EnvironmentUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.enums.EnvironmentType;
+import com.maozi.common.enums.LogCommonType;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

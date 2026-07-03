@@ -32,6 +32,13 @@
 			<version>${hutool.version}</version>
 		</dependency>
 
+		<!-- MyBatis-Plus 注解，枚举类使用 @EnumValue、@TableField 等注解实现 ORM 映射 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-annotation</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+
 		<!-- Swagger OpenAPI 注解，用于接口文档自动生成 -->
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>

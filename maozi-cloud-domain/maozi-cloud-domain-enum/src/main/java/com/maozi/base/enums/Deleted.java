@@ -1,6 +1,6 @@
 package com.maozi.base.enums;
 
-import com.maozi.base.BaseEnum;
+import com.maozi.common.enums.BaseEnum;
 import lombok.Getter;
 
 /**

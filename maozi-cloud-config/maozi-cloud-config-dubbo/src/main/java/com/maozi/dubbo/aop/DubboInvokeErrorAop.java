@@ -1,11 +1,11 @@
 package com.maozi.dubbo.aop;
 
 import cn.hutool.core.util.StrUtil;
-import com.maozi.base.enums.LogCommonType;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.enums.LogCommonType;
 import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import lombok.extern.slf4j.Slf4j;
