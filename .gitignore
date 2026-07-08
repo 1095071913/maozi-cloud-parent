@@ -41,8 +41,8 @@ target
 .flattened-pom.xml
 
 # 中间件数据
-**/maozi-cloud-redis/data
-**/maozi-cloud-mysql/data
+**/maozi-cloud-basic-mysql/data
+**/maozi-cloud-basic-redis/data
 **/maozi-cloud-grafana/data
 **/maozi-cloud-loki/data
 **/maozi-cloud-tempo/data
