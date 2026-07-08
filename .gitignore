@@ -43,11 +43,11 @@ target
 # 中间件数据
 **/maozi-cloud-basic-mysql/data
 **/maozi-cloud-basic-redis/data
-**/maozi-cloud-grafana/data
-**/maozi-cloud-loki/data
-**/maozi-cloud-tempo/data
-**/maozi-cloud-promtail/data
-**/maozi-cloud-prometheus/data
+**/maozi-cloud-basic-grafana/data
+**/maozi-cloud-basic-loki/data
+**/maozi-cloud-basic-tempo/data
+**/maozi-cloud-basic-promtail/data
+**/maozi-cloud-basic-prometheus/data
 
 # 自动部署临时文件
 **/maozi-cloud-parent-env
