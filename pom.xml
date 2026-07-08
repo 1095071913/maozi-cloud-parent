@@ -179,15 +179,6 @@
 	<dependencyManagement>
 		<dependencies>
 
-			<!-- OpenTelemetry Instrumentation 官方 BOM，统一管理链路追踪、指标、日志 MDC 等可观测性组件版本 -->
-			<dependency>
-				<groupId>io.opentelemetry.instrumentation</groupId>
-				<artifactId>opentelemetry-instrumentation-bom</artifactId>
-				<version>${opentelemetry-instrumentation.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
 			<!-- Spring Boot 官方 BOM，统一管理 Spring Boot 全家桶依赖版本 -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>

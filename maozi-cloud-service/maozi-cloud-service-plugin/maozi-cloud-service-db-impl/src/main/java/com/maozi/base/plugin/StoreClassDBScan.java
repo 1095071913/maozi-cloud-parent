@@ -4,6 +4,7 @@ import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.maozi.base.enums.StoreClassType;
 import com.maozi.common.CollectionUtil;
+import com.maozi.common.constant.ApplicationNameConstant;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -35,7 +36,7 @@ public class StoreClassDBScan implements ApplicationRunner {
 
         Map<String, Class<?>> storeClassDBMap = CollectionUtil.newHashMap();
 
-        String subPath = !ApplicationEnvironmentContext.ALL_APPLICATION_PROJECT_ABBREVIATION.equals(ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
+        String subPath = ApplicationNameConstant.MAOZI_CLOUD_ALL_SERVICE.equals(ApplicationEnvironmentContext.SERVICE_NAME) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
         ClassUtil.scanPackage(ApplicationEnvironmentContext.PACKAGE_PREFIX + subPath).forEach(clazz ->{
 
             if(clazz.isAnnotationPresent(TableName.class)){

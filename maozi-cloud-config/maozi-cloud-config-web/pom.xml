@@ -38,6 +38,11 @@
 		</dependency>
 		<!-- Spring Boot End -->
 
+		<!-- Micrometer Tracing OTel 桥接，基于 OpenTelemetry 实现分布式链路追踪数据上报 -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
 
 		<!-- Project Begin -->
 		<!-- 日志记录配置模块，提供 REST 入口日志切面与全局异常处理器 -->

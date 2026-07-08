@@ -1,9 +1,13 @@
 package com.maozi.mvc.config.rest;
 
+import com.maozi.common.EnvironmentUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
+import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
+import com.maozi.common.enums.EnvironmentType;
+import com.maozi.common.enums.LogCommonType;
 import jakarta.annotation.Nonnull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,9 +81,9 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			ClientHttpRequest request = createRequest(url, method);
 
 			// 记录请求类型、URI 和 HTTP 方法到日志
-            logs.put("Type", "RestTemplate");
-            logs.put("URI", request.getURI().toString());
-            logs.put("Method", request.getMethod().toString());
+            logs.put(LogTag.TYPE, LogCommonType.REST_TEMPLATE.getDesc());
+            logs.put(LogTag.URL, request.getURI().toString());
+            logs.put(LogTag.METHOD, request.getMethod().toString());
 
 			// 执行请求回调，设置请求头和请求体
 			if (requestCallback != null) {
@@ -90,7 +94,10 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			InputStream paramData = parse(request.getBody());
 			String requestParam = new String(readStream(paramData));
 
-			logs.put("Param", requestParam);
+			Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
+			if(isNotProd){
+				logs.put(LogTag.PARAM, requestParam);
+			}
 
 			// 执行 HTTP 请求并获取响应
 			response = request.execute();
@@ -99,16 +106,15 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			handleResponse(url, method, response);
 
 			// 使用响应提取器将响应体反序列化为目标类型
-			T t=(responseExtractor != null ? responseExtractor.extractData(response) : null);
+			T data = (responseExtractor != null ? responseExtractor.extractData(response) : null);
 
 			// 记录响应状态码、响应耗时和响应数据到日志
-			logs.put("Code", response.getStatusCode().value()+"");
-        	logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
-            if (ObjectUtil.isNotNullEmpty(t)) {
-                logs.put("Data", t.toString());
+			logs.put(LogTag.CODE, Integer.toString(response.getStatusCode().value()));
+            if (ObjectUtil.isNotNullEmpty(data)) {
+                logs.put(LogTag.DATA, data.toString());
             }
 
-            return t;
+            return data;
 		}
 		catch (Exception e) {
 
@@ -118,9 +124,9 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			log.error("",e);
 
 			// 记录异常相关的用户、描述和堆栈位置到日志
-            logs.put("ErrorUser", ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));
-            logs.put("ErrorDesc", e.getLocalizedMessage());
-            logs.put("ErrorLine", e.getStackTrace()[0].toString());
+            logs.put(LogTag.ERROR_USER, ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));
+            logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
+            logs.put(LogTag.ERROR_LINE, e.getStackTrace()[0].toString());
 
 			return null;
 
@@ -134,11 +140,11 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			// 收集本次请求链路中累积的 SQL 日志
 			StringBuilder sqlLog = LogUtil.sqlLog.get();
 			if (ObjectUtil.isNotNullEmpty(sqlLog)) {
-				logs.put("SQL", sqlLog.toString());
+				logs.put(LogTag.SQL, sqlLog.toString());
 			}
 
 			// 最终记录响应耗时（包含异常情况下的耗时）
-			logs.put("RT", (System.currentTimeMillis() - startTime) + " ms");
+			logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
 			// 根据是否有异常，以对应日志级别输出完整的请求日志
 			LogUtil.log(log,error,logs);

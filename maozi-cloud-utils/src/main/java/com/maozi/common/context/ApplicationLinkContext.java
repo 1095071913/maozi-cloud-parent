@@ -2,11 +2,13 @@ package com.maozi.common.context;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.alibaba.ttl.TtlWrappers;
+import com.maozi.common.JacksonUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.dto.CurrentUserInfo;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -29,17 +31,27 @@ public class ApplicationLinkContext {
     /** 当前登录用户信息请求头名称 */
     public static final String CURRENT_USER_INFO_KEY = "X-CurrentUserInfo";
 
+    /** 请求链路唯一ID */
+    public static final String TRACE_ID_KEY = "X-TraceId";
+
+    public static final String TRACE_ID_VALUE = "00000000000000000000000000000000";
+
     /** Nacos 元数据中的版本键 */
     public static final String NACOS_VERSION_KEY = "version";
 
     /** 默认应用版本（主版本） */
     public static final String APPLICATION_DEFAULT_VERSION = "main";
 
+    public static final String MDC_TRACE_ID_KEY = "trace_id";
+
     /** 当前线程的版本号（用于灰度路由） */
     public static TransmittableThreadLocal<String> versions = new TransmittableThreadLocal<>();
 
     /** 当前线程的登录用户信息（含用户名、客户端 ID） */
     public static TransmittableThreadLocal<CurrentUserInfo> currentUserInfos = new TransmittableThreadLocal<>();
+
+    /** 当前线程的链路请求ID */
+    public static TransmittableThreadLocal<String> traceIds = new TransmittableThreadLocal<>();
 
     /**
      * 通过函数式接口提取当前登录用户的指定属性
@@ -69,6 +81,19 @@ public class ApplicationLinkContext {
         return ObjectUtil.isNotNullEmpty(version) && StringUtils.isNotBlank(version.toString()) ? version.toString() : ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
     }
 
+    public static void setCurrentUserInfo(String currentUserInfoJson){
+        if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
+            ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));
+        }
+    }
+
+    public static void setTraceId(String traceId){
+        if(ObjectUtil.isNotNullEmpty(traceId)){
+            traceIds.set(traceId);
+            MDC.put(MDC_TRACE_ID_KEY,traceId);
+        }
+    }
+
     /**
      * 包装 Consumer，确保执行后自动清理上下文并支持 TTL 传递
      *
@@ -95,6 +120,7 @@ public class ApplicationLinkContext {
         LogUtil.sqlLog.remove();
         versions.remove();
         currentUserInfos.remove();
+        traceIds.remove();
     }
 
 }

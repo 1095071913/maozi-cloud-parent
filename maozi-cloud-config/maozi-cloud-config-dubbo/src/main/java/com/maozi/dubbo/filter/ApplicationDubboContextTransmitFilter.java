@@ -69,6 +69,8 @@ public class ApplicationDubboContextTransmitFilter implements Filter {
             clientAttachment.setAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY, JacksonUtil.objectToJson(currentUserInfo));
         }
 
+        clientAttachment.setAttachment(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.traceIds.get());
+
         // 执行实际的 RPC 调用，附件信息会随请求一起发送到服务提供者
         return invoker.invoke(invocation);
 

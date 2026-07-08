@@ -21,6 +21,7 @@ import com.maozi.common.result.AbstractBaseResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serial;
@@ -35,6 +36,7 @@ import java.io.Serializable;
  * @param <D> 响应数据类型
  * @author maozi
  */
+@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=true)
 @Schema(description = "接口成功结果集")
@@ -59,7 +61,7 @@ public class SuccessResult<D> extends AbstractBaseResult<D> implements Serializa
 
 	/** 响应数据 */
 	@Getter
-	private final D data;
+	private D data;
 
 	/**
 	 * 构造成功结果

@@ -1,6 +1,8 @@
 package com.maozi.mvc.filter;
 
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import io.opentelemetry.api.trace.Span;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * 应用链路上下文过滤器（版本号）
@@ -47,12 +50,20 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
      * @throws IOException IO 异常
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
-        // 从请求头中获取版本号，若不存在则使用默认版本
         String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));
-        // 将版本号存入线程本地变量，用于接口版本控制
         ApplicationLinkContext.versions.set(version);
+
+        ApplicationLinkContext.setCurrentUserInfo(request.getHeader(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
+
+        if(ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId())){
+            String traceId = request.getHeader(ApplicationLinkContext.TRACE_ID_KEY);
+            if(ObjectUtil.isNullEmpty(traceId)){
+                traceId = UUID.randomUUID().toString();
+            }
+            ApplicationLinkContext.setTraceId(traceId);
+        }
 
         try {
             // 继续执行过滤器链（包括 Spring Security 认证和后续业务处理）

@@ -1,9 +1,13 @@
 package com.maozi.oauth.api.service;
 
+import com.maozi.common.ObjectUtil;
 import com.maozi.oauth.token.api.OauthTokenService;
+import com.maozi.oauth.token.api.rest.RestOauthTokenService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.service.api.annotation.RemoteResource;
 import com.maozi.service.config.RemoteOauthTokenServiceConfiguration;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
@@ -24,12 +28,23 @@ import java.util.Map;
  */
 public class RemoteOauthTokenServiceImpl implements OauthTokenService {
 
+    private static final String MODE_RPC = "rpc";
+
+    @Value("${spring.security.oauth2.resourceserver.opaquetoken.mode:}")
+    private String mode;
+
     @RemoteResource
     private RpcOauthTokenService rpcOauthTokenService;
 
+    @Resource
+    private RestOauthTokenService restOauthTokenService;
+
     @Override
     public Map<String, Object> introspect(String token) {
-        return rpcOauthTokenService.rpcIntrospect(token).getResultDataThrowError();
+        return ObjectUtil.isNullEmpty(mode) || MODE_RPC.equalsIgnoreCase(mode) ?
+                rpcOauthTokenService.rpcIntrospect(token).getResultDataThrowError()
+                :
+                restOauthTokenService.restIntrospect(token).getResultDataThrowError();
     }
 
 }

@@ -2,6 +2,7 @@ package com.maozi.mvc.config.enums;
 
 import cn.hutool.core.util.ClassUtil;
 import com.maozi.common.CollectionUtil;
+import com.maozi.common.constant.ApplicationNameConstant;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.common.enums.BaseEnum;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class EnumConfig {
         initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.enums");
 
         // 再加载当前项目业务枚举包下的所有枚举类
-        String subPath = !ApplicationEnvironmentContext.ALL_APPLICATION_PROJECT_ABBREVIATION.equals(ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
+        String subPath = ApplicationNameConstant.MAOZI_CLOUD_ALL_SERVICE.equals(ApplicationEnvironmentContext.SERVICE_NAME) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
         initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + subPath);
 
     }

@@ -32,12 +32,6 @@
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 
-<!--		&lt;!&ndash; OpenTelemetry Spring Boot Starter，自动装配链路追踪与指标采集（已改用 agent 方式，暂时注释） &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>io.opentelemetry.instrumentation</groupId>-->
-<!--			<artifactId>opentelemetry-spring-boot-starter</artifactId>-->
-<!--		</dependency>-->
-
 		<!-- Spring Boot Admin 客户端，将服务注册到 Admin Server 进行统一监控 -->
 		<dependency>
 			<groupId>de.codecentric</groupId>

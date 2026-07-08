@@ -40,6 +40,9 @@ public class LogTag {
     /** 请求 URL */
     public static final String URL = "URL";
 
+    /** 响应状态码 */
+    public static final String CODE = "Code";
+
     /** 调用函数 */
     public static final String FUNCTION = "Function";
 

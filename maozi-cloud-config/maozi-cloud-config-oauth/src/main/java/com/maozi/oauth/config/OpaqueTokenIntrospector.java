@@ -1,20 +1,17 @@
 package com.maozi.oauth.config;
 
-import com.maozi.common.ObjectUtil;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.token.api.OauthTokenService;
 import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.resource.introspection.BadOpaqueTokenException;
 import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionException;
-import org.springframework.security.oauth2.server.resource.introspection.SpringOpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -42,36 +39,9 @@ import java.util.stream.Collectors;
 @Component
 public class OpaqueTokenIntrospector implements org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector {
 
-    private static final String MODE_RPC = "rpc";
-
-    /** 令牌内省模式：http 或 rpc */
-    private final String mode;
-
-    /** HTTP模式下的内省委托器 */
-    private final SpringOpaqueTokenIntrospector httpDelegate;
-
     /** 令牌内省服务：授权服务器进程为本地实现，资源服务器进程为 RemoteOauthTokenServiceImpl（Dubbo 代理） */
     @Resource(name = "oauthTokenService")
     private OauthTokenService oauthTokenService;
-
-    /**
-     * 构造方法
-     *
-     * @param mode            内省模式（http/rpc），默认 http
-     * @param introspectionUri 令牌内省端点 URL（HTTP模式必须配置）
-     * @param clientId        OAuth2 客户端 ID（HTTP模式必须配置）
-     * @param clientSecret    OAuth2 客户端密钥（HTTP模式必须配置）
-     */
-    public OpaqueTokenIntrospector(
-            @Value("${spring.security.oauth2.resourceserver.opaquetoken.mode:}") String mode,
-            @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri:}") String introspectionUri,
-            @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id:}") String clientId,
-            @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret:}") String clientSecret) {
-        this.mode = mode;
-        // 如果是RPC模式则不需要HTTP内省委托器，否则创建Spring默认的HTTP内省器
-        this.httpDelegate = MODE_RPC.equalsIgnoreCase(mode) ? null : new SpringOpaqueTokenIntrospector(introspectionUri, clientId, clientSecret);
-
-    }
 
     /**
      * 内省令牌并提取权限信息
@@ -89,9 +59,14 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         try {
+
             // 优先本地调用：当容器中存在本地实现（即本进程为授权服务器）时，直接进程内调用，避免网络开销
             // 否则根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
-            return ObjectUtil.isNullEmpty(mode) || MODE_RPC.equalsIgnoreCase(mode) ? rpcIntrospect(token) : httpIntrospect(token);
+            Map<String, Object> claims = oauthTokenService.introspect(token);
+
+            // 校验令牌活跃状态并构建带权限的认证主体
+            return buildPrincipalFromClaims(claims);
+
         } catch (BadOpaqueTokenException e) {
             // 令牌无效异常直接抛出，由上层框架处理（返回401）
             throw e;
@@ -102,40 +77,6 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
             // 业务异常（如RPC调用返回的业务错误），转换为令牌无效异常并保留原始业务错误信息
             throw new BadOpaqueTokenException(e.getMessage(), new BusinessResultException(e.getErrorResult()));
         }
-    }
-
-    /**
-     * HTTP模式内省令牌
-     * <p>
-     * 委托给Spring默认的HTTP内省器进行令牌验证，
-     * 然后从响应中提取权限信息，补充到认证主体中。
-     * </p>
-     *
-     * @param token 待验证的令牌字符串
-     * @return 包含权限信息的认证主体
-     */
-    private OAuth2AuthenticatedPrincipal httpIntrospect(String token) {
-        // 调用Spring默认的HTTP内省器向授权服务器验证令牌
-        OAuth2AuthenticatedPrincipal principal = httpDelegate.introspect(token);
-        // 从内省响应中提取authorities字段，构建带权限的认证主体
-        return enrichWithAuthorities(principal);
-    }
-
-    /**
-     * Dubbo RPC模式内省令牌
-     * <p>
-     * 通过Dubbo RPC直接调用授权服务器的令牌内省服务，
-     * 避免HTTP调用的网络开销，适合微服务内部调用场景。
-     * </p>
-     *
-     * @param token 待验证的令牌字符串
-     * @return 包含权限信息的认证主体
-     */
-    private OAuth2AuthenticatedPrincipal rpcIntrospect(String token) {
-        // 通过Dubbo RPC调用远程令牌内省服务，获取令牌的声明信息（claims）
-        Map<String, Object> claims = oauthTokenService.introspect(token);
-        // 校验令牌活跃状态并构建带权限的认证主体
-        return buildPrincipalFromClaims(claims);
     }
 
     /**
@@ -161,33 +102,6 @@ public class OpaqueTokenIntrospector implements org.springframework.security.oau
         // 构建认证主体，包含主体名称（sub字段）、全部声明信息和权限集合
         return new DefaultOAuth2AuthenticatedPrincipal(
                 (String) claims.getOrDefault(OAuth2TokenClaimConstants.SUB, "unknown"), claims, authorities);
-    }
-
-    /**
-     * 从HTTP内省响应的authorities属性中提取权限，构建带权限的认证主体
-     * <p>
-     * Spring默认的HTTP内省器不会自动将authorities字段转换为GrantedAuthority，
-     * 因此需要手动提取并构建包含权限信息的认证主体。
-     * </p>
-     *
-     * @param principal 原始的认证主体（不含权限信息）
-     * @return 包含权限信息的认证主体
-     */
-    private OAuth2AuthenticatedPrincipal enrichWithAuthorities(OAuth2AuthenticatedPrincipal principal) {
-        // 从内省响应的属性中获取authorities字段
-        Object authoritiesObj = principal.getAttribute(OAuth2TokenClaimConstants.AUTHORITIES);
-        // 如果authorities不是List类型，说明没有权限信息，直接返回原始主体
-        if (!(authoritiesObj instanceof List<?> list)) {
-            return principal;
-        }
-
-        // 将字符串形式的权限列表转换为GrantedAuthority集合
-        Set<GrantedAuthority> grantedAuthorities = list.stream()
-                .map(item -> new SimpleGrantedAuthority(item.toString()))
-                .collect(Collectors.toSet());
-
-        // 使用原始主体信息和新提取的权限集合，重新构建认证主体
-        return new DefaultOAuth2AuthenticatedPrincipal(principal.getName(), principal.getAttributes(), grantedAuthorities);
     }
 
     /**

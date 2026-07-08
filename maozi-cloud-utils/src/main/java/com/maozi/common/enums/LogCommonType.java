@@ -39,8 +39,11 @@ public enum LogCommonType implements BaseEnum {
     /** 消息队列日志，值为 4，记录消息的发送、接收和处理过程 */
     MQ(4,"MQ"),
 
-    /** WebSocket 日志，值为 5，记录 WebSocket 长连接的通信信息 */
-    WEB_SOCKET(5,"WebSocket"),
+    /** RestTemplate日志，值为 5，三方请求调用的详细信息 */
+    REST_TEMPLATE(5,"RestTemplate"),
+
+    /** WebSocket 日志，值为 6，记录 WebSocket 长连接的通信信息 */
+    WEB_SOCKET(6,"WebSocket"),
 
     ;
 

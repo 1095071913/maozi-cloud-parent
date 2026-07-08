@@ -1,9 +1,6 @@
 package com.maozi.dubbo.filter;
 
-import com.maozi.common.JacksonUtil;
-import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
-import com.maozi.common.dto.CurrentUserInfo;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -57,14 +54,11 @@ public class ApplicationDubboContextLoadFilter implements Filter {
         RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
 
         // 从 RPC 附件中提取版本号，设置到当前线程的 ApplicationLinkContext 中
-        String version = serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY);
-        ApplicationLinkContext.versions.set(version);
+        ApplicationLinkContext.versions.set(serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY));
 
-        // 从 RPC 附件中提取当前登录用户信息 JSON，反序列化后设置到当前线程的 ApplicationLinkContext 中
-        String currentUserInfoJson = serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY);
-        if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
-            ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));
-        }
+        ApplicationLinkContext.setCurrentUserInfo(serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
+
+        ApplicationLinkContext.setTraceId(serverAttachment.getAttachment(ApplicationLinkContext.TRACE_ID_KEY));
 
         // 执行实际调用，在 finally 中清理上下文，确保即使发生异常也不会造成线程数据泄漏
         try{return invoker.invoke(invocation);} finally{
