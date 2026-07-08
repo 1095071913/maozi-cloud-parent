@@ -1,18 +1,22 @@
+# ============================================================
+# Redis 缓存配置（Lettuce 客户端 + 连接池）
+# 默认指向 Docker 网络中的 maozi-cloud-basic-redis。
+# ============================================================
 spring:
   data:
     redis:
-      host: maozi-cloud-redis
-      port: 6379
-      password: 812840531zhang
+      host: maozi-cloud-basic-redis      # Redis 主机地址
+      port: 6379                         # Redis 端口
+      password: 812840531zhang           # Redis 密码
       lettuce:
-        shutdown-timeout: 300ms
+        shutdown-timeout: 300ms          # 关闭超时时间
         pool:
-          max-active: 600
-          max-wait: 1000
-          max-idle: 300
-          min-idle: 0
-        timeout: 60000
-#    cluster:
+          max-active: 600                # 连接池最大连接数
+          max-wait: 1000                 # 获取连接最大等待时间（毫秒）
+          max-idle: 300                  # 连接池最大空闲连接数
+          min-idle: 0                    # 连接池最小空闲连接数
+        timeout: 60000                   # 命令执行超时时间（毫秒）
+#    cluster:                             # Redis 集群配置（按需开启）
 #      nodes:
 #        - 192.168.1.111:7001
 #        - 192.168.1.112:7001

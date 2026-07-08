@@ -25,6 +25,8 @@ public class ApplicationEnvironmentContext {
     /** Spring Bean 名称常量，用于 {@code @Component(CLASS_NAME)} 显式命名 */
     public final static String CLASS_NAME = "applicationEnvironmentContext";
 
+    public final static String ALL_APPLICATION_PROJECT_ABBREVIATION = "all";
+
     /** 基础包路径前缀 */
     public static final String PACKAGE_PREFIX = "com.maozi";
 

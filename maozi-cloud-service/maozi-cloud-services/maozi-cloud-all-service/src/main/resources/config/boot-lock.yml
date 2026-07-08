@@ -1,8 +1,11 @@
+# ============================================================
+# 分布式锁配置（基于 Redisson，复用上方 Redis 连接参数）
+# ============================================================
 spring:
   lock:
-    address: redis://${spring.data.redis.host}:${spring.data.redis.port}
-    password: ${spring.data.redis.password}
-    database: ${spring.data.redis.database:0}
+    address: redis://${spring.data.redis.host}:${spring.data.redis.port}  # Redisson 连接地址（引用 Redis 配置）
+    password: ${spring.data.redis.password}                               # Redisson 密码（引用 Redis 配置）
+    database: ${spring.data.redis.database:0}                             # Redis 数据库索引
     #waitTime: 60 #获取锁最长阻塞时间（默认：60，单位：秒）
     #leaseTime: 60 #已获取锁后自动释放时间（默认：60，单位：秒）
     #redis集群配置 如 redis://127.0.0.1:7000,redis://127.0.0.1:7001,redis://127.0.0.1:7002

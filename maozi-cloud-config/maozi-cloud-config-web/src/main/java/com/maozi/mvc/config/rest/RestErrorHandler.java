@@ -83,10 +83,10 @@ public class RestErrorHandler {
 	/**
 	 * 处理缺少请求参数异常
 	 * <p>
-	 * 获取参数的中文翻译名称，拼接成更友好的错误提示信息。
+	 * 当必填的请求参数未传入时触发，返回参数错误响应。
 	 * </p>
 	 *
-	 * @return 标准错误响应，包含 PARAM_ERROR 错误码和"参数不能为空"提示信息
+	 * @return 标准错误响应，包含 PARAM_ERROR 错误码
 	 */
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingServletRequestParameterException.class)

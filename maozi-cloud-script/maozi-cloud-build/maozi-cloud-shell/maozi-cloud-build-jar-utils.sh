@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================
-# 统一构建逻辑 (单一 git 仓库版), 由 maozi-cloud-build-all.sh 调用
+# 统一构建逻辑 (单一 git 仓库版), 由 maozi-cloud-build-all-distributed.sh 调用
 # 对应 bat 版: maozi-cloud-bat/maozi-cloud-build-jar-utils.bat
 # ------------------------------------------------------------
 # 兼容性: macOS 自带 bash 3.2 不支持关联数组 (declare -A),
@@ -30,19 +30,20 @@
 #        只有这些 jar 才视为 "被 Maven 实际编译并生成", 进入 Docker 部署
 #   F. 对每个变化的 jar:
 #        - 按模块名前缀路由镜像目录 (basics-* -> maozi-cloud-basics-image 等)
-#        - 校验镜像 Dockerfile 存在
-#        - 生成临时 build-docker.sh: 拷贝 jar / buildx / compose up -d / 自清理
+#        - 调用 render-image 渲染器: 读 maozi-cloud-services.json, 按模板渲染
+#          ${service_name}-image, buildx 构建, compose up -d, 最后 rm 镜像文件
+#        - 服务不在 JSON 配置里时, 渲染器自动 skip, 不阻塞其他服务
 #        - 后台执行, 最后 wait 等待所有部署完成
 # ------------------------------------------------------------
 # 模块结构说明 (business 服务):
 #   业务服务采用聚合分层, 一个业务在 maozi-cloud-services 下聚合为:
 #     maozi-cloud-business-xxx/
 #       ├── maozi-cloud-xxx-api       对外 API 契约 (产出带版本 jar, 不部署)
-#       ├── maozi-cloud-xxx-service   业务实现 (产出带版本 jar, 不部署)
-#       └── maozi-cloud-xxx-run       可执行启动模块 (产出 maozi-cloud-xxx-run.jar, 部署入口)
-#   find 会扫描到上述全部 jar, 但只有 *-run 模块在镜像目录存在对应的
-#   *-run-image Dockerfile, api / service 的 jar 会在 F 步镜像校验时被自动跳过。
-#   basics 层 (gateway / monitor) 与 all-service 仍为扁平单模块, 行为不变。
+#       ├── maozi-cloud-xxx-business  业务实现 (产出带版本 jar, 不部署)
+#       └── maozi-cloud-xxx-service   可执行启动模块 (产出 maozi-cloud-xxx-service.jar, 部署入口)
+#   find 会扫描到上述全部 jar, 但只有 *-service 模块在 maozi-cloud-services.json 里登记,
+#   api / business 的 jar 因不在 JSON 里会在 F 步被渲染器自动跳过.
+#   basics 层 (gateway-service / monitor-service) 与 all-service 仍为扁平单模块, 行为不变。
 # ============================================================
 
 current_directory="$1"
@@ -75,7 +76,7 @@ write_snapshot() {
 
 # 根据服务名前缀路由镜像目录
 #   maozi-cloud-basics-* -> maozi-cloud-basics-image
-#   其他                -> maozi-cloud-services-image
+#   其他 (含 gateway / monitor / system / oauth 等业务服务) -> maozi-cloud-services-image
 route_image_dir() {
     local service_name="$1"
     local base="$current_directory/../../maozi-cloud-image"
@@ -106,6 +107,8 @@ trap 'rm -f "$before_manifest" "$after_manifest" "$changed_jars_list" "$modules_
 
 # ---- A. 比对 git 状态 ----
 source "$current_directory/maozi-cloud-scan-file-utils.sh"
+# 镜像渲染器: 模板 + JSON -> ${service_name}-image, 然后 buildx + compose, 最后清理
+source "$current_directory/maozi-cloud-render-image.sh"
 
 echo "[build] mode=$build_mode"
 
@@ -219,38 +222,22 @@ while IFS= read -r jarfile; do
     [ -z "$jarfile" ] && continue
 
     # dirname 两次: jar -> target -> 模块目录
-    # business 服务: 得到 maozi-cloud-business-xxx/maozi-cloud-xxx-run (启动模块)
-    # basics 服务:   得到 maozi-cloud-basics-xxx (扁平单模块)
+    # business 服务: 得到 maozi-cloud-business-xxx/maozi-cloud-xxx-service (启动模块)
+    # basics 服务:   得到 maozi-cloud-gateway-service / maozi-cloud-monitor-service (扁平单模块)
     module_dir="$(dirname "$(dirname "$jarfile")")"
     service_name="$(basename "$module_dir")"
 
-    image_directory="$(route_image_dir "$service_name")"
-    docker_directory="$(route_docker_dir "$service_name")"
-
-    # 校验镜像目录下存在 {service_name}-image Dockerfile, 不存在则跳过
-    if [ ! -e "$image_directory/${service_name}-image" ]; then
-        echo "[deploy] skip $service_name: image file not found at $image_directory/${service_name}-image"
-        continue
-    fi
-
-    # 动态生成 service_name-build-docker.sh: 拷贝 jar / 构建镜像 / compose 启动 / 清理自身
-    build_script="$image_directory/${service_name}-build-docker.sh"
-    {
-        echo "#!/bin/bash"
-        echo "cp \"$repo_root/$module_dir/target/${service_name}.jar\" \"$image_directory/\""
-        echo "cd \"$image_directory\""
-        echo "docker buildx build -f \"$image_directory/${service_name}-image\" -t \"${service_name}:laster\" ."
-        echo "docker-compose -f \"$docker_directory/docker-compose.yml\" up -d ${service_name}"
-        echo "rm -f \"$image_directory/${service_name}.jar\""
-        echo "rm -f \"\$0\""
-    } > "$build_script"
-    chmod +x "$build_script"
-
-    echo "[deploy] $service_name: building image and starting container"
-    # 后台执行该 Docker 构建脚本, 多个服务可并行部署
-    bash "$build_script" &
+    # 渲染 + 构建 + 清理统一交给 maozi-cloud-render-image.sh:
+    #   - 读 maozi-cloud-services.json 取该服务的端口 / Dubbo / OTel / JVM / base_image
+    #   - 按模板渲染出 ${service_name}-image, buildx 构建, compose 启动, rm 镜像文件
+    # 服务不在 JSON 配置里时, 渲染器返回非零并打印 skip, 不阻塞其他服务
+    render_and_build_image "$service_name" "$module_dir"
 
 done < "$changed_jars_list"
 
 # 等待所有后台 Docker 部署完成
 wait
+
+# 清理空的 maozi-cloud-services-image / -basics-image 目录
+# (渲染产物由 build-docker.sh 自清理, 留下两个空目录, 一并 rmdir 掉)
+cleanup_image_dirs

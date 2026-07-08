@@ -35,7 +35,8 @@ public class StoreClassDBScan implements ApplicationRunner {
 
         Map<String, Class<?>> storeClassDBMap = CollectionUtil.newHashMap();
 
-        ClassUtil.scanPackage(ApplicationEnvironmentContext.PACKAGE_PREFIX + "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION).forEach(clazz ->{
+        String subPath = !ApplicationEnvironmentContext.ALL_APPLICATION_PROJECT_ABBREVIATION.equals(ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
+        ClassUtil.scanPackage(ApplicationEnvironmentContext.PACKAGE_PREFIX + subPath).forEach(clazz ->{
 
             if(clazz.isAnnotationPresent(TableName.class)){
 

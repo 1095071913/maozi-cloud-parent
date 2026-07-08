@@ -23,6 +23,7 @@ import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.common.enums.EnvironmentType;
 import com.maozi.common.spi.ConfigInitializer;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,8 +36,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,7 +53,7 @@ import java.util.Properties;
  * <p>
  * 所有微服务应用的启动入口均需继承此类。统一配置 Spring Boot 应用启动参数，
  * 包括 Nacos 配置中心连接、日志级别、异步任务、缓存、定时任务、
- * 服务发现和 Feign 客户端等功能的自动开启。
+ * 服务发现和 Dubbo RPC 等功能的自动开启。
  * </p>
  *
  * @author maozi
@@ -122,6 +126,7 @@ public class BaseApplication {
      * 通过 {@code application-nacos-config-service} 系统属性追加。
      * </p>
      */
+    @SneakyThrows
     private static void initProperties() {
 
         Properties properties = System.getProperties();
@@ -135,9 +140,18 @@ public class BaseApplication {
             properties.put("environment",environment);
         }
 
+        String applicationName = getApplicationName();
+        if(ObjectUtil.isNullEmpty(applicationName)){
+            throw new Exception("服务名读取失败");
+        }
+        String applicationProjectAbbreviation = applicationName.replace("maozi-cloud","");
+        applicationProjectAbbreviation = applicationProjectAbbreviation.substring(0, applicationProjectAbbreviation.length() - 9);
+
+        properties.put("spring.application.name",applicationName);
+        properties.put("application-project-abbreviation",applicationProjectAbbreviation);
+
         properties.put("spring.main.log-startup-info",false);
         properties.put("spring.main.allow-circular-references",true);
-        properties.put("spring.application.name", "maozi-cloud-${application-project-abbreviation}-service");
 
         properties.put("logging.level.root", "ERROR");
         properties.put("logging.level.com.maozi", "INFO");
@@ -209,6 +223,108 @@ public class BaseApplication {
         } catch (Exception e) {
             throw new RuntimeException("实例化配置初始化器失败：" + className, e);
         }
+    }
+
+    /**
+     * 获取应用名称
+     * - jar 运行：取 jar 文件名
+     * - 目录运行：从启动类路径往上推导项目名
+     */
+    public static String getApplicationName() {
+        Class<?> mainClass = findMainClass();
+        if (mainClass == null) {
+            return null;
+        }
+
+        File codeLocation = getCodeLocation(mainClass);
+        if (codeLocation == null) {
+            return null;
+        }
+
+        String name = codeLocation.getName();
+
+        // jar 包：直接取文件名去掉 .jar
+        if (name.endsWith(".jar")) {
+            return name.substring(0, name.length() - 4);
+        }
+
+        // 目录：往上跳过构建目录，取项目根目录名
+        return deriveProjectName(codeLocation);
+    }
+
+    /**
+     * 从线程栈中找到 main 方法所在的类
+     */
+    private static Class<?> findMainClass() {
+        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+            if ("main".equals(element.getMethodName())) {
+                try {
+                    return Class.forName(element.getClassName());
+                } catch (ClassNotFoundException ignored) {
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从目录往上推导项目根目录名
+     */
+    private static String deriveProjectName(File dir) {
+        File current = dir;
+        while (current != null) {
+            String name = current.getName().toLowerCase();
+            if (!isBuildDir(name)) {
+                return current.getName();
+            }
+            current = current.getParentFile();
+        }
+
+        if (dir != null) {
+            return dir.getName();
+        }
+
+        return null;
+    }
+
+    @SneakyThrows
+    private static File getCodeLocation(Class<?> clazz) {
+        ProtectionDomain domain = clazz.getProtectionDomain();
+        CodeSource codeSource = domain.getCodeSource();
+        if (codeSource == null) {
+            return null;
+        }
+
+        String urlStr = codeSource.getLocation().toString();
+
+        // 场景1：jar 包运行（包括传统 jar 和 Spring Boot 3 nested jar）
+        // jar:file:/path/to/app.jar!/...
+        // jar:nested:/path/to/app.jar/!BOOT-INF/classes/!/
+        int jarEndIndex = urlStr.indexOf(".jar");
+        if (jarEndIndex != -1) {
+            // 从 .jar 位置往前找，找到路径的起始位置（最后一个 : 之后的 /）
+            String beforeJar = urlStr.substring(0, jarEndIndex + 4);
+            // 找到最后一个冒号的位置，跳过协议前缀
+            int colonIndex = beforeJar.lastIndexOf(':');
+            if (colonIndex != -1) {
+                String path = beforeJar.substring(colonIndex + 1);
+                // 处理 Windows 路径可能出现的前导 /
+                if (path.startsWith("/") && path.length() > 2 && path.charAt(2) == ':') {
+                    path = path.substring(1);
+                }
+                return new File(path);
+            }
+        }
+
+        // 场景2：IDE/目录运行，直接用 URI
+        return new File(codeSource.getLocation().toURI());
+    }
+
+    private static boolean isBuildDir(String name) {
+        return name.equals("target") || name.equals("build")
+                || name.equals("classes") || name.equals("bin")
+                || name.equals("java") || name.equals("main")
+                || name.equals("test");
     }
 
 }

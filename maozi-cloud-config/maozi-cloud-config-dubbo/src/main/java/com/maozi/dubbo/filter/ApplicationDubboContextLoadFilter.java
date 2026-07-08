@@ -16,7 +16,7 @@ import org.apache.dubbo.rpc.RpcException;
  * Dubbo 服务端链路上下文设置过滤器
  * <p>
  * 在 Dubbo 服务提供者端接收请求时，从 RPC 附件（Attachment）中提取消费者传递过来的
- * 版本号和用户名等链路上下文信息，设置到当前线程的 {@link ApplicationLinkContext} 中，
+ * 版本号和当前登录用户信息（{@link com.maozi.common.dto.CurrentUserInfo}）等链路上下文信息，设置到当前线程的 {@link ApplicationLinkContext} 中，
  * 以便后续业务逻辑可以通过 {@link ApplicationLinkContext} 获取调用方的上下文信息。
  * </p>
  * <p>
@@ -39,7 +39,7 @@ public class ApplicationDubboContextLoadFilter implements Filter {
      * 执行流程：
      * <ol>
      *   <li>从 RPC 服务端附件中获取版本号（version），设置到线程变量中</li>
-     *   <li>从 RPC 服务端附件中获取用户名（username），设置到线程变量中</li>
+     *   <li>从 RPC 服务端附件中获取当前登录用户信息（CurrentUserInfo）JSON，反序列化后设置到线程变量中</li>
      *   <li>执行实际的 Dubbo 调用</li>
      *   <li>在 finally 块中清理线程上下文，防止数据泄漏</li>
      * </ol>
@@ -60,7 +60,7 @@ public class ApplicationDubboContextLoadFilter implements Filter {
         String version = serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY);
         ApplicationLinkContext.versions.set(version);
 
-        // 从 RPC 附件中提取用户名，设置到当前线程的 ApplicationLinkContext 中
+        // 从 RPC 附件中提取当前登录用户信息 JSON，反序列化后设置到当前线程的 ApplicationLinkContext 中
         String currentUserInfoJson = serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY);
         if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
             ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));

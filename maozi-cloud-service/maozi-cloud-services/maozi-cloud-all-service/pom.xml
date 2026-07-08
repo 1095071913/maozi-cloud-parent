@@ -32,8 +32,8 @@
         <!-- OAuth 业务服务实现，单体模式下作为本地 Bean 直接装配 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-oauth-service</artifactId>
-            <version>${maozi-cloud-oauth-service.version}</version>
+            <artifactId>maozi-cloud-oauth-business</artifactId>
+            <version>${maozi-cloud-oauth-business.version}</version>
         </dependency>
 
         <!-- 单体部署插件，提供本地 Bean 装配能力，使 RPC 注解在单进程内退化为本地调用 -->
@@ -46,8 +46,8 @@
         <!-- System 业务服务实现，单体模式下作为本地 Bean 直接装配 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-system-service</artifactId>
-            <version>${maozi-cloud-system-service.version}</version>
+            <artifactId>maozi-cloud-system-business</artifactId>
+            <version>${maozi-cloud-system-business.version}</version>
         </dependency>
 
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->

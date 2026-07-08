@@ -81,6 +81,7 @@
 		<!-- Sentinel Apache Dubbo 适配器版本 -->
 		<sentinel-apache-dubbo-adapter.version>1.8.5</sentinel-apache-dubbo-adapter.version>
 
+		<!-- OpenTelemetry Instrumentation 可观测性组件版本（链路追踪、指标、日志 MDC） -->
 		<opentelemetry-instrumentation.version>2.29.0</opentelemetry-instrumentation.version>
 		<!-- Other Component End -->
 
@@ -144,12 +145,12 @@
 		<!-- 系统管理服务 API 接口层版本 -->
 		<maozi-cloud-system-api.version>${revision}</maozi-cloud-system-api.version>
 		<!-- 系统管理服务实现层版本 -->
-		<maozi-cloud-system-service.version>${revision}</maozi-cloud-system-service.version>
+		<maozi-cloud-system-business.version>${revision}</maozi-cloud-system-business.version>
 
 		<!-- OAuth 认证授权服务 API 接口层版本 -->
 		<maozi-cloud-oauth-api.version>${revision}</maozi-cloud-oauth-api.version>
 		<!-- OAuth 认证授权服务实现层版本 -->
-		<maozi-cloud-oauth-service.version>${revision}</maozi-cloud-oauth-service.version>
+		<maozi-cloud-oauth-business.version>${revision}</maozi-cloud-oauth-business.version>
 
 		<!-- Project End -->
 
@@ -178,6 +179,7 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<!-- OpenTelemetry Instrumentation 官方 BOM，统一管理链路追踪、指标、日志 MDC 等可观测性组件版本 -->
 			<dependency>
 				<groupId>io.opentelemetry.instrumentation</groupId>
 				<artifactId>opentelemetry-instrumentation-bom</artifactId>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 日志记录配置模块，集成 OAuth 认证、Sentinel 限流及 AOP 切面实现操作日志记录 -->
+<!-- 日志记录配置模块，基于 Spring AOP 切面提供 REST 入口日志、链路追踪日志格式等日志记录能力 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -26,7 +26,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!-- 基础枚举定义，提供日志类型等通用枚举常量 -->
+		<!-- 通用工具类库，提供日志记录所需的 JSON、字符串等基础工具方法 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>

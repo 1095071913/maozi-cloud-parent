@@ -47,7 +47,7 @@ import java.util.Objects;
 @Component
 public class RestRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 
-	/** REST 接口切点表达式 */
+	/** REST 实现层切点表达式（匹配 api.impl.rest 包下的方法） */
 	private static final String REST_POINT = "* " + ApplicationEnvironmentContext.PACKAGE_PREFIX + ".*.*.api.impl.rest..*(..)";
 
 	/** 组合切点表达式 */

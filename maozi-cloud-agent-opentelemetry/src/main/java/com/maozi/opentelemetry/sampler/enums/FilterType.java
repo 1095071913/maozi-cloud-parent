@@ -6,6 +6,15 @@ import com.maozi.opentelemetry.sampler.handle.filter.impl.MysqlFilterHandle;
 import com.maozi.opentelemetry.sampler.handle.filter.impl.RedisFilterHandle;
 import lombok.Getter;
 
+/**
+ * Span 属性过滤类型枚举
+ * <p>
+ * 定义按来源分类的过滤器类型，每种类型绑定一个 {@link FilterHandle} 实现，
+ * 用于在 {@link com.maozi.opentelemetry.sampler.config.FilterSampler} 中按 Span 属性判断是否丢弃。
+ * </p>
+ *
+ * @author pengjinlong
+ */
 public enum FilterType {
 
     HTTP(0,"Http",new HttpFilterHandle()),

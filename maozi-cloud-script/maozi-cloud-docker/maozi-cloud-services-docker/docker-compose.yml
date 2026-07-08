@@ -2,8 +2,10 @@
 # maozi-cloud-services-docker —— 业务服务一键拉起
 # ------------------------------------------------------------
 # 本 Compose 启动 maozi-cloud 平台的「业务服务」层（区别于 basics 的基础组件层）：
-#   - maozi-cloud-system-run  系统管理服务（端口 4000 / Dubbo 20881）
-#   - maozi-cloud-oauth-run   OAuth 鉴权服务（端口 3000 / Dubbo 20880）
+#   - maozi-cloud-system-service   系统管理服务（端口 4000 / Dubbo 20881）
+#   - maozi-cloud-oauth-service    OAuth 鉴权服务（端口 3000 / Dubbo 20880）
+#   - maozi-cloud-gateway-service  业务网关（端口 1000）
+#   - maozi-cloud-monitor-service  Spring Boot Admin 监控（端口 2000）
 # ------------------------------------------------------------
 # 启动前置：
 #   1. 先启动 maozi-cloud-basics-docker（提供 mysql / nacos / redis 等）；
@@ -20,32 +22,60 @@
 version: "3.7"
 services:
 
+  # ============ Gateway 业务网关 ============
+  maozi-cloud-gateway-service:
+    image: maozi-cloud-gateway-service:laster
+    container_name: maozi-cloud-gateway-service
+    restart: always
+    ports:
+      - 1000:1000
+    environment:
+      ENVIRONMENT: dev
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/gateway:/application/maozi-cloud-gateway-service/logs
+
+  # ============ Monitor 监控服务 (Spring Boot Admin) ============
+  maozi-cloud-monitor-service:
+    image: maozi-cloud-monitor-service:laster
+    container_name: maozi-cloud-monitor-service
+    restart: always
+    ports:
+      - 2000:2000
+    environment:
+      ENVIRONMENT: dev
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor-service/logs
+
   # ============ System 业务服务 ============
-  maozi-cloud-system-run:
-    image: maozi-cloud-system-run:laster
-    container_name: maozi-cloud-system-run
+  maozi-cloud-system-service:
+    image: maozi-cloud-system-service:laster
+    container_name: maozi-cloud-system-service
     restart: always
     ports:
       - 4000:4000
       - 20881:20881
     environment:
       ENVIRONMENT: dev
-      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system-service/logs
 
   # ============ OAuth 业务服务 ============
-  maozi-cloud-oauth-run:
-    image: maozi-cloud-oauth-run:laster
-    container_name: maozi-cloud-oauth-run
+  maozi-cloud-oauth-service:
+    image: maozi-cloud-oauth-service:laster
+    container_name: maozi-cloud-oauth-service
     restart: always
     ports:
       - 3000:3000
       - 20880:20880
     environment:
       ENVIRONMENT: dev
-      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth-service/logs

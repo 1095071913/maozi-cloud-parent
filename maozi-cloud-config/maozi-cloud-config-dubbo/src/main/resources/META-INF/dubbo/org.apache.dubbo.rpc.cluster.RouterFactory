@@ -1,1 +1,3 @@
+# Dubbo RouterFactory SPI 扩展声明
+# 注册自定义路由工厂，实现基于版本号（version 元数据）的灰度路由策略
 routerFactory=com.maozi.dubbo.router.RouterFactory

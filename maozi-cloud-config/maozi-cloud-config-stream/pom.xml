@@ -18,6 +18,7 @@
 
 	<dependencies>
 
+		<!-- 项目通用工具类库 -->
 		<dependency>
 			<groupId>com.maozi</groupId>
 			<artifactId>maozi-cloud-utils</artifactId>

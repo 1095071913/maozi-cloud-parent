@@ -24,9 +24,9 @@
         <module>maozi-cloud-all-service</module>
 
         <!-- API 网关模块，基于 Spring Cloud Gateway 实现 -->
-        <module>maozi-cloud-basics-gateway</module>
+        <module>maozi-cloud-gateway-service</module>
         <!-- 服务监控模块，基于 Spring Boot Admin 实现 -->
-        <module>maozi-cloud-basics-monitor</module>
+        <module>maozi-cloud-monitor-service</module>
 
         <!-- OAuth 认证授权服务模块 -->
         <module>maozi-cloud-business-oauth</module>

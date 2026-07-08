@@ -17,7 +17,7 @@ import java.util.Properties;
 public class NacosConfigInitializer implements ConfigInitializer {
 
     /** 分布式组件 Nacos 共享配置文件清单 */
-    private static final String SHARED_DATAIDS = "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-swagger.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml";
+    private static final String SHARED_DATAIDS = "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,api-whitelist.yml,cloud-oauth.yml,boot-redis.yml,boot-lock.yml,boot-arthas.yml,cloud-default.yml";
 
     @Override
     public void initialize(Properties properties) {

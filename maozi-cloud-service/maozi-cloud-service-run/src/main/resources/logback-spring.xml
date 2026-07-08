@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================
+     Logback 日志配置（所有服务共享）
+     ============================================================
+     日志格式包含 trace_id / service / environment 等链路字段，
+     便于 Promtail 采集后在 Loki/Grafana 中按服务和链路筛选。
+     按运行环境区分输出方式：
+       - local：异步控制台输出（ASYNC_CONSOLE）
+       - 非 local：异步文件输出（ASYNC_FILE），按天+大小滚动
+     ============================================================ -->
 <configuration>
 
     <contextName>logback</contextName>
+    <!-- 关闭 Logback 内部状态输出 -->
     <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <!-- Spring Boot 提供的颜色/异常格式转换器 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
+    <!-- 从 Spring 配置中读取环境变量，用于日志格式和输出方式判断 -->
     <springProperty scope="context" name="ENVIRONMENT" source="environment"/>
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
+    <!-- 日志输出方式：默认 ASYNC_CONSOLE（local 环境）/ ASYNC_FILE（非 local 环境） -->
     <springProperty scope="context" name="APPENDER" source="logging.appender" defaultValue="ASYNC_CONSOLE"/>
 
-
+    <!-- 日志文件根目录 -->
     <property name="LOG_PATH" value="./logs"/>
+    <!-- 日志输出格式：[ 时间 ] [ Level：级别 ] [ TID：链路追踪ID ] [ Service：服务名 ] [ Environment：环境 ] [ 消息 ] -->
     <property name="LOG_PATTERN" value="%clr([ %d{yyyy-MM-dd HH:mm:ss} ]){green}  %clr([ Level：%level ]){blue}  %clr([ TID：%X{trace_id:-} ]){magenta}  %clr([ Service：${APPLICATION_NAME} ]){red}  %clr([ Environment：${ENVIRONMENT} ]){yellow}  %clr([ %m ]){cyan}%n"/>
 
+    <!-- ============ local 环境：控制台输出 ============ -->
     <if condition='property("ENVIRONMENT").contains("local")'>
         <then>
             <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -24,6 +39,7 @@
                 </encoder>
             </appender>
 
+            <!-- 异步控制台输出，避免 IO 阻塞业务线程 -->
             <appender name ="ASYNC_CONSOLE" class= "ch.qos.logback.classic.AsyncAppender">
                 <!-- 队列剩余空间低于 20% 时，会丢弃 TRACE/DEBUG 日志-->
                 <discardingThreshold>0</discardingThreshold>
@@ -39,6 +55,7 @@
         </then>
     </if>
 
+    <!-- ============ 非 local 环境：文件输出（按天+大小滚动） ============ -->
     <if condition='!property("ENVIRONMENT").contains("local")'>
         <then>
             <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -58,6 +75,7 @@
                 </encoder>
             </appender>
 
+            <!-- 异步文件输出，避免 IO 阻塞业务线程 -->
             <appender name="ASYNC_FILE" class= "ch.qos.logback.classic.AsyncAppender">
                 <discardingThreshold>0</discardingThreshold>
                 <queueSize>512</queueSize>
@@ -68,6 +86,7 @@
         </then>
     </if>
 
+    <!-- 根日志记录器，根据 APPENDER 变量选择输出方式 -->
     <logger name="root" >
         <appender-ref ref="${APPENDER}"/>
     </logger>

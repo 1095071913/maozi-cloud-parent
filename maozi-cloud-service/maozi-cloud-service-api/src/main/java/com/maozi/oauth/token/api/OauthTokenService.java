@@ -19,7 +19,7 @@ public interface OauthTokenService {
     /**
      * 内省访问令牌
      * <p>
-     * 通过 Dubbo RPC 调用 OAuth 授权服务器进行令牌内省，
+     * 校验令牌有效性并返回令牌关联的属性信息，供资源服务器完成身份认证。
      * 替代 HTTP 调用 introspection 端点的方式，减少网络开销。
      * </p>
      *

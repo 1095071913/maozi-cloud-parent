@@ -10,6 +10,16 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * MySQL Span 过滤器
+ * <p>
+ * 当 Span 属性 {@code db.system} 为 {@code mysql} 时，根据 {@code db.statement}
+ * 匹配需要排除的 SQL 语句（如连接探活、版本查询、锁检测、information_schema 查询等），
+ * 命中则丢弃对应 Span，避免连接池和框架内部维护 SQL 产生噪声链路数据。
+ * </p>
+ *
+ * @author pengjinlong
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MysqlFilterHandle extends FilterHandle {

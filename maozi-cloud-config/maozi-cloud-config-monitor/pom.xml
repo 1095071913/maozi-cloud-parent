@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 监控配置模块，集成 Spring Boot Admin、Prometheus 及 Arthas 实现应用监控与在线诊断 -->
+<!-- 监控配置模块，集成 OpenTelemetry 链路追踪、Spring Boot Admin、Prometheus 指标及 Arthas 在线诊断实现应用可观测性 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -19,17 +19,20 @@
 	<dependencies>
 
 		<!-- Spring Boot Begin -->
+		<!-- OpenTelemetry Logback MDC 集成，将 traceId/spanId 写入日志 MDC 上下文，实现日志与链路追踪关联 -->
 		<dependency>
 			<groupId>io.opentelemetry.instrumentation</groupId>
 			<artifactId>opentelemetry-logback-mdc-1.0</artifactId>
 			<version>${opentelemetry-instrumentation.version}-alpha</version>
 		</dependency>
 
+		<!-- Micrometer Tracing OTel 桥接，基于 OpenTelemetry 实现分布式链路追踪数据上报 -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-tracing-bridge-otel</artifactId>
 		</dependency>
 
+<!--		&lt;!&ndash; OpenTelemetry Spring Boot Starter，自动装配链路追踪与指标采集（已改用 agent 方式，暂时注释） &ndash;&gt;-->
 <!--		<dependency>-->
 <!--			<groupId>io.opentelemetry.instrumentation</groupId>-->
 <!--			<artifactId>opentelemetry-spring-boot-starter</artifactId>-->

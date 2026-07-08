@@ -20,7 +20,7 @@ public class NacosConfigInitializer implements ConfigInitializer {
 
     private final static String PROJECT_NACOS_SERVER_KEY = "nacos.server";
 
-    private final static String PROJECT_NACOS_SERVER_VALUE = "${NACOS_SERVER:maozi-cloud-nacos:8848}";
+    private final static String PROJECT_NACOS_SERVER_VALUE = "${NACOS_SERVER:maozi-cloud-basic-nacos:8848}";
 
     private final static String PROJECT_NACOS_NAMESPACE_KEY = "nacos.namespace";
 
@@ -38,6 +38,7 @@ public class NacosConfigInitializer implements ConfigInitializer {
     public void initialize(Properties properties) {
 
         properties.put("spring.cloud.nacos.config.file-extension", "yml");
+        properties.put("spring.cloud.nacos.config.refreshable-dataids","${spring.application.name}.yml");
 
         if(properties.containsKey(PROJECT_NACOS_SERVER_KEY)){
             properties.put(NACOS_CONFIG_SERVER_KEY, "${" + PROJECT_NACOS_SERVER_KEY + "}");

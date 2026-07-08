@@ -1,27 +1,35 @@
+# ============================================================
+# maozi-cloud-all-service 启动引导配置（单体部署入口）
+# 本文件为单体全量服务的 bootstrap 配置，通过 spring.config.import
+# 聚合各组件子配置文件，并定义项目元信息与端口。
+# ============================================================
+
 spring:
   config:
+    # 导入各组件子配置文件（classpath 下的 config/ 目录）
     import:
-      - classpath:config/boot-default.yml
-      - classpath:config/boot-datasource.yml
-      - classpath:config/boot-db.yml
-      - classpath:config/boot-redis.yml
-      - classpath:config/boot-swagger.yml
-      - classpath:config/boot-lock.yml
-      - classpath:config/cloud-oauth.yml
+      - classpath:config/boot-default.yml       # 通用默认配置（服务器、Jackson、日志级别等）
+      - classpath:config/boot-datasource.yml     # 数据源配置（Hikari 连接池）
+      - classpath:config/boot-db.yml             # 数据库配置（MyBatis-Plus、Flyway）
+      - classpath:config/boot-redis.yml          # Redis 缓存配置
+      - classpath:config/boot-lock.yml           # 分布式锁（Redisson）配置
+      - classpath:config/cloud-oauth.yml         # OAuth2 资源服务器配置
 
+# 项目展示信息（用于 Swagger 文档、日志等）
 project:
   title: 单体全量服务
   details: 所有服务功能
 
-application-project-abbreviation: all
-
+# 服务端口，默认 1000（可通过 application-dev-port 环境变量覆盖）
 application-port: ${application-dev-port:1000}
 
-application-datasource-db-name: maozi-cloud-all-localhost-db
+# 数据库名称覆盖（注释掉则使用默认规则：${应用名}-${环境}-db）
+#application-datasource-db-name: maozi-cloud-all-local-db
 
-# 白名单
+# 接口白名单（不需要认证的路径，注释掉则全部接口需认证）
 #application-project-whitelist:
 
+# 项目系统信息（用于文档展示与版权声明）
 application-project-system:
   projectName: 小猫子
   corporationName: 小猫子

@@ -36,7 +36,8 @@ public class EnumConfig {
         initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + ".base.enums");
 
         // 再加载当前项目业务枚举包下的所有枚举类
-        initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION);
+        String subPath = !ApplicationEnvironmentContext.ALL_APPLICATION_PROJECT_ABBREVIATION.equals(ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION) ? "" : "." + ApplicationEnvironmentContext.APPLICATION_PROJECT_ABBREVIATION;
+        initEnum(ApplicationEnvironmentContext.PACKAGE_PREFIX + subPath);
 
     }
 

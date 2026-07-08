@@ -25,20 +25,20 @@ REM        -amd 自动让 "a 引用 b, b 修改 -> a 一起构建" 成立
 REM   E. 拍摄构建后的 jar mtime 快照, 找出 mtime 变化 (或新增) 的 jar
 REM        只有这些 jar 才视为 "被 Maven 实际编译并生成", 进入 Docker 部署
 REM   F. 对每个变化的 jar:
-REM        - 按模块名前缀路由镜像目录 (basics-* -> maozi-cloud-basics-image 等)
-REM        - 校验镜像 Dockerfile 存在
-REM        - 生成临时 build-docker.bat: 拷贝 jar / buildx / compose up -d / 自清理
-REM        - 并行启动, 等待全部完成
+REM        - call maozi-cloud-render-image.bat: 读 maozi-cloud-services.json,
+REM          按模板渲染 !service_name!-image, 生成 !service_name!-build-docker.bat
+REM        - 服务不在 JSON 配置里时, 渲染器返回非零并 skip, 不阻塞其他服务
+REM        - 后台 start 渲染器生成的 build-docker.bat, 等待全部完成
 REM ------------------------------------------------------------
 REM 模块结构说明 (business 服务):
 REM   业务服务采用聚合分层, 一个业务在 maozi-cloud-services 下聚合为:
 REM     maozi-cloud-business-xxx\
 REM       ├── maozi-cloud-xxx-api       对外 API 契约 (产出带版本 jar, 不部署)
-REM       ├── maozi-cloud-xxx-service   业务实现 (产出带版本 jar, 不部署)
-REM       └── maozi-cloud-xxx-run       可执行启动模块 (产出 maozi-cloud-xxx-run.jar, 部署入口)
-REM   find 会扫描到上述全部 jar, 但只有 *-run 模块在镜像目录存在对应的
-REM   *-run-image Dockerfile, api / service 的 jar 会在 F 步镜像校验时被自动跳过。
-REM   basics 层 (gateway / monitor) 与 all-service 仍为扁平单模块, 行为不变。
+REM       ├── maozi-cloud-xxx-business  业务实现 (产出带版本 jar, 不部署)
+REM       └── maozi-cloud-xxx-service   可执行启动模块 (产出 maozi-cloud-xxx-service.jar, 部署入口)
+REM   find 会扫描到上述全部 jar, 但只有 *-service 模块在 maozi-cloud-services.json 里登记,
+REM   api / business 的 jar 因不在 JSON 里会在 F 步被渲染器自动跳过.
+REM   basics 层 (gateway-service / monitor-service) 与 all-service 仍为扁平单模块, 行为不变。
 REM ============================================================
 
 REM 可部署服务源码根目录 (相对仓库根), 仅此目录下生成的 jar 才触发 Docker 重新部署
@@ -160,13 +160,16 @@ for /f "usebackq delims=" %%J in ("%changed_jars_list%") do (
 echo [deploy] changed jars: !changed_jars_count!
 
 REM ---- F. 对每个变化的 jar 触发 Docker 部署 ----
+REM image_base 在末尾 wait 循环里用于扫描 *-build-docker.bat, 在这里先设好
+set "image_base=%current_directory%\..\..\maozi-cloud-image"
+
 for /l %%N in (1,1,!changed_jars_count!) do (
 
     set "jarfile=!changed_jar_%%N!"
 
     REM dirname 两次: jar -> target -> 模块目录
-    REM business 服务: 得到 maozi-cloud-business-xxx\maozi-cloud-xxx-run (启动模块)
-    REM basics 服务:   得到 maozi-cloud-basics-xxx (扁平单模块)
+    REM business 服务: 得到 maozi-cloud-business-xxx\maozi-cloud-xxx-service (启动模块)
+    REM basics 服务:   得到 maozi-cloud-gateway-service / maozi-cloud-monitor-service (扁平单模块)
     for %%I in ("!jarfile!") do set "jar_dir=%%~dpI"
     REM jar_dir 末尾带 \, 再上一级
     for %%I in ("!jar_dir!\..") do set "module_dir=%%~fI"
@@ -174,44 +177,25 @@ for /l %%N in (1,1,!changed_jars_count!) do (
     set "module_dir=!module_dir:\=/!"
     set "service_name=!module_name!"
 
-    REM 按模块名前缀路由镜像 / docker-compose 目录
-    set "image_base=%current_directory%\..\..\maozi-cloud-image"
-    set "docker_base=%current_directory%\..\..\maozi-cloud-docker"
+    REM 渲染 + 生成 build-docker.bat 统一交给 maozi-cloud-render-image.bat:
+    REM   - 读 maozi-cloud-services.json 取该服务的端口 / Dubbo / OTel / JVM / base_image
+    REM   - 按模板渲染出 !service_name!-image, 并生成 !service_name!-build-docker.bat
+    REM 服务不在 JSON 配置里时, 渲染器返回非零并打印 skip, 不阻塞其他服务
+    call "%current_directory%\maozi-cloud-render-image.bat" "!service_name!" "!module_dir!"
 
-    REM maozi-cloud-basics-* -> maozi-cloud-basics-image / -docker, 否则 services
-    echo !service_name! | findstr /B /C:"maozi-cloud-basics-" >nul
     if !errorlevel! equ 0 (
-        set "image_directory=!image_base!\maozi-cloud-basics-image"
-        set "docker_directory=!docker_base!\maozi-cloud-basics-docker"
-    ) else (
-        set "image_directory=!image_base!\maozi-cloud-services-image"
-        set "docker_directory=!docker_base!\maozi-cloud-services-docker"
-    )
-
-    REM 校验镜像目录下存在 {service_name}-image Dockerfile, 不存在则跳过
-    if exist "!image_directory!\!service_name!-image" (
-
-        REM 动态生成 service_name-build-docker.bat: 拷贝 jar / 构建镜像 / compose 启动 / 清理自身
-        set "build_script=!image_directory!\!service_name!-build-docker.bat"
-
-        REM 清空旧脚本
-        type nul > "!build_script!"
-
-        echo copy "!repo_root!\!module_dir!\target\!service_name!.jar" "!image_directory!\" >> "!build_script!"
-        echo cd /d "!image_directory!" >> "!build_script!"
-        echo docker buildx build -f "!image_directory!\!service_name!-image" -t !service_name!:laster . >> "!build_script!"
-        echo docker-compose -f "!docker_directory!\docker-compose.yml" up -d !service_name! >> "!build_script!"
-        echo del "!image_directory!\!service_name!.jar" >> "!build_script!"
-        echo del "%%~f0" >> "!build_script!"
-
-        echo [deploy] !service_name!: building image and starting container
-        REM 后台执行该 Docker 构建脚本, 多个服务可并行部署
+        REM 后台执行渲染器刚生成的 build-docker.bat (buildx + compose + 自清理)
+        REM 路由结果 (basics vs services) 在渲染器里完成, 这里只取最终 image_directory
+        REM gateway / monitor 已迁到 services-docker, 只有 maozi-cloud-basics-* 走 basics
+        set "is_basics=0"
+        echo !service_name! | findstr /B /C:"maozi-cloud-basics-" >nul
+        if !errorlevel! equ 0 set "is_basics=1"
+        if "!is_basics!"=="1" (
+            set "build_script=!image_base!\maozi-cloud-basics-image\!service_name!-build-docker.bat"
+        ) else (
+            set "build_script=!image_base!\maozi-cloud-services-image\!service_name!-build-docker.bat"
+        )
         start "" /B cmd /c "!build_script!"
-
-    ) else (
-
-        echo [deploy] skip !service_name!: image file not found at "!image_directory!\!service_name!-image"
-
     )
 
 )
@@ -225,6 +209,12 @@ for %%F in ("%image_base%\maozi-cloud-basics-image\*-build-docker.bat" "%image_b
     if exist "%%F" set "pending=1"
 )
 if "!pending!"=="1" goto :wait_deploy
+
+REM 清理空的 maozi-cloud-services-image / -basics-image 目录
+REM (渲染产物由 build-docker.bat 自清理, 留下两个空目录, 一并 rd 掉)
+REM rd 不带 /s 只删空目录, 有遗留文件时 rd 失败, 保留现场供排查
+rd "%image_base%\maozi-cloud-services-image" 2>nul && echo [cleanup] removed empty maozi-cloud-services-image
+rd "%image_base%\maozi-cloud-basics-image"   2>nul && echo [cleanup] removed empty maozi-cloud-basics-image
 
 REM 清理临时文件
 if exist "%before_manifest%" del "%before_manifest%"

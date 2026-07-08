@@ -25,10 +25,6 @@ import java.io.IOException;
  * 使版本号在 {@code OpaqueTokenIntrospector} 内省令牌和 {@code /oauth/**} 端点处理时即可读取，
  * 用于灰度路由等场景。请求完成后自动清理上下文，防止线程池复用导致的数据泄漏。
  * </p>
- * <p>
- * 该过滤器在 {@code BearerTokenAuthenticationFilter}（含 {@code OpaqueTokenIntrospector}）之后执行，
- * 确保 SecurityContext 已完成认证填充后再提取用户名。
- * </p>
  *
  * @author maozi
  */
@@ -62,7 +58,7 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
             // 继续执行过滤器链（包括 Spring Security 认证和后续业务处理）
             filterChain.doFilter(request, response);
         } finally {
-            // 清理线程本地变量中的用户名和版本号，防止线程池复用时数据泄漏
+            // 清理链路上下文，防止线程池复用时数据泄漏
             ApplicationLinkContext.clearContext();
         }
 

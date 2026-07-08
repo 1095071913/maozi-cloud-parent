@@ -23,6 +23,7 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import jakarta.annotation.Resource;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,11 @@ import java.util.Set;
  * @author maozi
  */
 @Configuration
+@ConditionalOnProperty(
+        name = "environment",                 // 配置项名
+        havingValue = "prod",                 // 值为 prod 时才生效
+        matchIfMissing = true                 // 没配置时默认生效
+)
 public class SwaggerConfig {
 
     /** 许可证名称 */

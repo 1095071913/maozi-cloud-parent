@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenTelemetry Java Agent 扩展模块，基于 OpenTelemetry Instrumentation 实现链路追踪、指标采集与 MDC 日志增强等可观测性能力 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承猫子云统一父工程，统一管理依赖版本 -->
     <parent>
         <groupId>com.maozi</groupId>
         <artifactId>maozi-cloud-parent</artifactId>
         <version>${revision}</version>
     </parent>
 
+    <!-- OpenTelemetry Java Agent 扩展模块构件名称 -->
     <artifactId>maozi-cloud-agent-opentelemetry</artifactId>
 
     <properties>
 
+        <!-- OpenTelemetry Java Agent 核心版本 -->
         <javaagent.version>2.29.0</javaagent.version>
 
+        <!-- OpenTelemetry Java Agent 扩展版本（alpha 预发布） -->
         <javaagent-extension.version>2.29.0-alpha</javaagent-extension.version>
 
     </properties>
 
     <dependencies>
 
+        <!-- 项目通用工具类库 -->
         <dependency>
             <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-utils</artifactId>
             <version>${maozi-cloud-utils.version}</version>
         </dependency>
 
+        <!-- Google AutoService，编译期自动生成 SPI 服务注册文件（META-INF/services） -->
         <dependency>
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service</artifactId>
             <version>1.1.1</version>
         </dependency>
 
+        <!-- OpenTelemetry Java Agent 核心，提供字节码增强与 Instrumentation 基础能力 -->
         <dependency>
             <groupId>io.opentelemetry.javaagent</groupId>
             <artifactId>opentelemetry-javaagent</artifactId>
             <version>${javaagent.version}</version>
         </dependency>
 
+        <!-- OpenTelemetry Spring Boot Starter，自动装配 Spring Boot 应用的链路追踪与指标采集 -->
         <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
             <artifactId>opentelemetry-spring-boot-starter</artifactId>
@@ -46,9 +56,12 @@
 
     </dependencies>
 
+    <!-- 构建配置 Begin -->
     <build>
+        <!-- 打包后的文件名，使用 artifactId 作为 finalName -->
         <finalName>${artifactId}</finalName>
         <plugins>
+            <!-- Maven 编译插件，指定 Java 版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -59,5 +72,6 @@
             </plugin>
         </plugins>
     </build>
+    <!-- 构建配置 End -->
 
 </project>

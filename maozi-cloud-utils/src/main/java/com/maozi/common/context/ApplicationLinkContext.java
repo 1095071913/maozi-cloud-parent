@@ -14,7 +14,7 @@ import java.util.function.Function;
 /**
  * 应用链路上下文
  * <p>
- * 使用 TransmittableThreadLocal 存储当前请求的版本号和用户名等链路信息，
+ * 使用 TransmittableThreadLocal 存储当前请求的版本号和当前登录用户信息（{@link CurrentUserInfo}）等链路信息，
  * 支持线程池和异步场景下的上下文传递。同时提供 Consumer 包装和上下文清理功能。
  * </p>
  *
@@ -26,7 +26,7 @@ public class ApplicationLinkContext {
     /** 版本号请求头名称 */
     public static final String VERSION_KEY = "X-Version";
 
-    /** 用户名请求头名称 */
+    /** 当前登录用户信息请求头名称 */
     public static final String CURRENT_USER_INFO_KEY = "X-CurrentUserInfo";
 
     /** Nacos 元数据中的版本键 */

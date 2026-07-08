@@ -1,2 +1,6 @@
+# Dubbo Filter SPI 扩展声明
+# Dubbo 启动时扫描本文件，按 key=value 注册自定义 Filter 到过滤器链
+#
+# 链路上下文传递过滤器（消费者端写入 RPC 附件 → 提供者端读取）
 applicationDubboContextLoadFilter=com.maozi.dubbo.filter.ApplicationDubboContextLoadFilter
 applicationDubboContextTransmitFilter=com.maozi.dubbo.filter.ApplicationDubboContextTransmitFilter

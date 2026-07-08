@@ -13,6 +13,20 @@ import io.opentelemetry.sdk.trace.samplers.SamplingResult;
 
 import java.util.List;
 
+/**
+ * 自定义链路追踪采样器
+ * <p>
+ * 基于规则过滤噪声 Span，减少无用链路数据上报。过滤策略包括：
+ * <ul>
+ *   <li>启动阶段（main 线程）的 Span 丢弃，避免应用启动过程产生噪声</li>
+ *   <li>Nacos 心跳等指定 Span 名称直接丢弃</li>
+ *   <li>通过 {@link FilterType} 按 Span 属性过滤 HTTP（actuator/api-docs）、Redis（PING/AUTH 等）、MySQL（连接探活 SQL）等噪声请求</li>
+ * </ul>
+ * 未命中过滤规则的 Span 正常采样上报；过滤过程发生异常时为保证不丢数据，默认放行采样。
+ * </p>
+ *
+ * @author pengjinlong
+ */
 public class FilterSampler implements Sampler {
 
     private final List<String> EXCLUDED_TARGETS = List.of("NacosDiscoveryHeartBeatPublisher$$Lambda.run");
@@ -52,7 +66,7 @@ public class FilterSampler implements Sampler {
 
             return SamplingResult.create(SamplingDecision.RECORD_AND_SAMPLE);
 
-        // 若异常则不过滤 且 新增异常Span提示
+        // 若异常则不过滤（放行采样），非生产环境打印堆栈便于排查
         }catch (Exception e){
 
             if(EnvironmentUtil.notEnvironment(EnvironmentType.PROD)){

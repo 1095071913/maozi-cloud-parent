@@ -1,0 +1,103 @@
+# ============================================================
+# Grafana 数据源 provisioning —— 启动时自动注入
+# ------------------------------------------------------------
+# Grafana 读取本文件后自动配置以下三个数据源，无需手动在 UI 添加：
+#   - Prometheus 指标后端，指向 maozi-cloud-basic-prometheus:9090（设为默认数据源）
+#   - Loki       日志聚合后端，指向 maozi-cloud-basic-loki:3100
+#   - Tempo      链路追踪后端，指向 maozi-cloud-basic-tempo:3200
+# 依赖 maozi-cloud-basics-docker/docker-compose.yml 中的服务名通信。
+# ------------------------------------------------------------
+# 联动配置说明：
+#   Tempo.tracesToLogs    实现「点击 trace 跳转 Loki 查对应日志」
+#     - datasourceUid: loki  按 UID 关联到 Loki 数据源（故下方 Loki 必须显式声明 uid: loki）
+#     - filterByTraceID: true 仅展示 traceId 匹配的日志行
+#   Tempo.tracesToMetrics 实现「点击 trace 跳转 Prometheus 查对应指标」
+#     - datasourceUid: prometheus 按 UID 关联到 Prometheus 数据源（同理需声明 uid: prometheus）
+#   Loki.derivedFields   实现「点击日志里的 trace_id 跳转 Tempo 查对应链路」
+#     - matcherRegex 从 JSON 日志里抽 trace_id (与 promtail-config.yml 输出字段对齐)
+#     - datasourceUid: tempo 按 UID 关联到 Tempo 数据源
+#   Prometheus.exemplarTraceIdDestinations 实现「点击指标上的 exemplar 跳转 Tempo 查对应链路」
+#     - name: trace_id 告诉 Grafana exemplar 里哪个 label 是 trace ID
+#     - datasourceUid: tempo 按 UID 关联到 Tempo 数据源
+#     - 同时需要 Prometheus 启用 --enable-feature=exemplar-storage(见 docker-compose.yml)
+# ============================================================
+apiVersion: 1
+
+# 启动时先删除同名旧数据源，避免与持久化的 grafana.db 中历史手动配置冲突
+deleteDatasources:
+  - name: Prometheus
+    org_id: 1
+  - name: Loki
+    org_id: 1
+  - name: Tempo
+    org_id: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://maozi-cloud-basic-prometheus:9090
+    isDefault: true
+    editable: true
+    jsonData:
+      httpMethod: POST
+      # exemplarTraceIdDestinations: 实现「点击 Prometheus 指标上的 exemplar 跳转 Tempo」
+      # - Spring Boot actuator/prometheus 端点(Micrometer + OTel agent)会在指标数据点附带 exemplar,
+      #   exemplar 里包含 trace_id 和 span_id(由 OTel agent 自动注入)
+      # - name: trace_id 告诉 Grafana exemplar 里哪个 label 是 trace ID(与 OTel 默认输出对齐)
+      # - datasourceUid: tempo 跳转到 Tempo 数据源
+      exemplarTraceIdDestinations:
+        - name: trace_id
+          datasourceUid: tempo
+
+  - name: Loki
+    uid: loki
+    type: loki
+    access: proxy
+    url: http://maozi-cloud-basic-loki:3100
+    editable: true
+    jsonData:
+      # derivedFields: 从日志行抽字段生成可点击链接
+      # - promtail 推送的 JSON 行含 "trace_id":"xxx" 字段,这里用正则把 xxx 抽出来
+      # - datasourceUid 指向 tempo,点击后在 Grafana 内直接打开 Tempo 的 trace 视图
+      # - [^"]+ 要求 trace_id 至少 1 字符,空 trace_id (如启动日志 [ TID： ]) 不会出现链接
+      # - url 用 $$ 转义,防止 Grafana provisioning 把 ${...} 当环境变量解析
+      derivedFields:
+        - name: TraceID
+          matcherRegex: '"trace_id":"([^"]+)"'
+          url: '$${__value.raw}'
+          datasourceUid: tempo
+          urlDisplayLabel: 'View Trace in Tempo'
+
+  - name: Tempo
+    uid: tempo
+    type: tempo
+    access: proxy
+    url: http://maozi-cloud-basic-tempo:3200
+    editable: true
+    jsonData:
+      # tracesToLogs (V1): Grafana 10.1~10.2 走这个,生成 |= "<traceID>" 子串查询
+      # - 注:10.1.5 这版 UI 在 span 详情面板渲染 Logs tab 有已知 bug,配置正确也不显示
+      tracesToLogs:
+        datasourceUid: loki
+        filterByTraceID: true
+
+      # tracesToLogsV2: Grafana 10.3+ 走这个(优先级高于 V1),修复了 V1 的 UI 渲染问题
+      # - customQuery: 自己控制 LogQL,避免默认把 Tempo 的 service.name 标签映射成 Loki 的 service_name
+      #   (我们的 Loki 标签是 service,不是 service_name)
+      # - {service=~"maozi-cloud.*"} 用正则匹配所有 maozi-cloud-* 服务,trace 跨多服务时一次查全
+      # - |= "$${__trace.traceId}" 子串匹配 trace ID(JSON 行里有 "trace_id":"<ID>",能命中)
+      # - | json 解析 JSON 行,提取 timestamp/level/trace_id/service/environment/message 字段
+      # - | line_format 把 JSON 重新拼回 logback-spring.xml#L14 的文本格式,在 Grafana 日志面板
+      #   里看到的就是 [ timestamp ]  [ Level：INFO ]  [ TID：xxx ]  ... 这种熟悉的样式
+      # - spanStartTimeShift / spanEndTimeShift: 时间窗向前后各扩 1h,避免 trace 跨 Loki 默认窗口查不到
+      # - $$ 是 provisioning 转义,运行时替换成 Tempo 当前 trace 的 ID
+      tracesToLogsV2:
+        datasourceUid: loki
+        customQuery: true
+        query: '{service=~"maozi-cloud.*"} |= "$${__trace.traceId}" | json | line_format "[ {{.timestamp}} ]  [ Level：{{.level}} ]  [ TID：{{.trace_id}} ]  [ Service：{{.service}} ]  [ Environment：{{.environment}} ]  {{.message}}"'
+        spanStartTimeShift: -1h
+        spanEndTimeShift: 1h
+      tracesToMetrics:
+        datasourceUid: prometheus

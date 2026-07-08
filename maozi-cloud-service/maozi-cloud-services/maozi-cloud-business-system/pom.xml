@@ -22,9 +22,9 @@
 		<!-- 系统 API 接口层模块，定义系统管理服务的对外接口 -->
 		<module>maozi-cloud-system-api</module>
 		<!-- 系统业务实现模块，提供系统管理的具体业务逻辑 -->
-        <module>maozi-cloud-system-service</module>
+        <module>maozi-cloud-system-business</module>
 		<!-- System 可执行启动模块，装配 Spring Boot 引导类与 bootstrap.properties，分布式部署入口 -->
-		<module>maozi-cloud-system-run</module>
+		<module>maozi-cloud-system-service</module>
 	</modules>
 
 </project>

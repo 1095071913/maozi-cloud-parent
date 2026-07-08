@@ -54,7 +54,8 @@ import java.util.Map;
  * 子类职责：
  * <ul>
  *   <li>提供具体的切点表达式（通过 {@code @Around} 绑定到 {@link #doAround(ProceedingJoinPoint)}）</li>
- *   <li>按需重写 {@link #getLocalHost()} 返回非 HTTP 请求（RPC）的来源地址，默认 {@code null}</li>
+ *   <li>实现 {@link #getType()} 返回当前切面对应的日志类型（如 WEB、RPC）</li>
+ *   <li>实现 {@link #getLocalHost()} 返回请求来源地址（REST 场景返回 HTTP 请求地址，RPC 场景返回服务地址）</li>
  * </ul>
  * </p>
  *
@@ -204,13 +205,12 @@ public abstract class AbstractRequestEntranceLogAop {
 	}
 
 	/**
-	 * 返回非 HTTP 请求（RPC）的来源地址，用于日志记录。
+	 * 返回请求来源地址，用于日志记录。
 	 * <p>
-	 * 默认返回 {@code null}（REST 场景由 HTTP 请求获取地址）；
-	 * RPC 子类重写以返回对应的服务地址。
+	 * REST 子类返回 HTTP 请求的来源地址，RPC 子类返回对应的服务地址。
 	 * </p>
 	 *
-	 * @return 来源地址，或 {@code null}
+	 * @return 来源地址
 	 */
 	protected abstract String getLocalHost();
 

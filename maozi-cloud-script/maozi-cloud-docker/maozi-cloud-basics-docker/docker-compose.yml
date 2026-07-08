@@ -4,14 +4,14 @@
 # 本 Compose 启动平台运行所依赖的全部「基础组件」（不含业务服务）：
 #   - 注册/配置中心：mysql + nacos
 #   - 缓存：redis
-#   - 业务网关：maozi-cloud-basics-gateway（镜像本地构建）
-#   - 监控：maozi-cloud-basics-monitor（Spring Boot Admin，镜像本地构建）
 #   - 可观测性栈（Observability Stack）：
 #       * loki        日志聚合
 #       * tempo       链路追踪后端
 #       * prometheus  指标采集与存储
 #       * grafana     指标/日志/追踪可视化
 #       * promtail    日志采集 agent，采集共享日志目录后推送至 loki
+# 注: maozi-cloud-gateway-service / maozi-cloud-monitor-service 已迁往
+#     maozi-cloud-services-docker/docker-compose.yml, 与 system / oauth 同层管理.
 # ------------------------------------------------------------
 # 启动前必须先创建外部网络：
 #     docker network create maozi-cloud-network
@@ -24,75 +24,56 @@ version: "3.7"
 services:
 
   # ============ 注册/配置中心：MySQL + Nacos ============
-  maozi-cloud-mysql:
+  maozi-cloud-basic-mysql:
     image: mysql:8.0.29
-    container_name: maozi-cloud-mysql
+    container_name: maozi-cloud-basic-mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: "password"
     volumes:
-#      - ./maozi-cloud-mysql/conf/my.cnf:/etc/mysql/my.cnf
-      - ./maozi-cloud-mysql/data/mysql/:/var/lib/mysql/
+      - ./maozi-cloud-basic-mysql/data/mysql/:/var/lib/mysql/
     ports:
       - 3306:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-ppassword" ]
+      interval: 5s       # 每 5 秒检查一次
+      timeout: 3s        # 超时时间
+      retries: 10        # 重试次数
+      start_period: 10s  # 启动后等待多久开始检查
 
-  maozi-cloud-nacos:
+  maozi-cloud-basic-nacos:
     image: nacos/nacos-server:2.0.4-slim
-    container_name: maozi-cloud-nacos
+    container_name: maozi-cloud-basic-nacos
     env_file:
-      - maozi-cloud-nacos/env/nacos-mysql.env
+      - maozi-cloud-basic-nacos/env/nacos-mysql.env
     ports:
       - 8848:8848
       - 9848:9848
       - 9555:9555
     restart: always
+    depends_on:
+      maozi-cloud-basic-mysql:
+        condition: service_healthy
 
   # ============ 缓存：Redis ============
-  maozi-cloud-redis:
+  maozi-cloud-basic-redis:
     image: redis:6.2.6
-    container_name: maozi-cloud-redis
+    container_name: maozi-cloud-basic-redis
     restart: always
     ports:
       - 6379:6379
     volumes:
-      - ./maozi-cloud-redis/config/redis.conf:/usr/local/etc/redis/redis.conf:rw
-      - ./maozi-cloud-redis/data/redis/data:/data:rw
+      - ./maozi-cloud-basic-redis/config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./maozi-cloud-basic-redis/data/redis/data:/data:rw
     command:
       /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf "
 
-  # ============ 业务网关与监控 ============
-  maozi-cloud-basics-gateway:
-    image: maozi-cloud-basics-gateway:laster
-    container_name: maozi-cloud-basics-gateway
-    restart: always
-    ports:
-      - 1000:1000
-    environment:
-      ENVIRONMENT: dev
-      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
-    volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/gateway:/application/maozi-cloud-gateway-service/logs
-
-  maozi-cloud-basics-monitor:
-    image: maozi-cloud-basics-monitor:laster
-    container_name: maozi-cloud-basics-monitor
-    restart: always
-    ports:
-      - 2000:2000
-    environment:
-      ENVIRONMENT: dev
-      NACOS_CONFIG_SERVER: maozi-cloud-nacos:8848
-    volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor-service/logs
-
   # ============ Observability Stack ============
   # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
-  maozi-cloud-loki:
+  maozi-cloud-basic-loki:
     image: grafana/loki:2.9.3
-    container_name: maozi-cloud-loki
+    container_name: maozi-cloud-basic-loki
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -100,13 +81,13 @@ services:
     ports:
       - 3100:3100
     volumes:
-      - ./maozi-cloud-loki/config/loki-config.yml:/etc/loki/loki-config.yml:ro
-      - ./maozi-cloud-loki/data:/loki:rw
+      - ./maozi-cloud-basic-loki/config/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - ./maozi-cloud-basic-loki/data:/loki:rw
 
   # Tempo —— 链路追踪后端，接收 OTLP 协议的 trace 数据
-  maozi-cloud-tempo:
+  maozi-cloud-basic-tempo:
     image: grafana/tempo:2.4.1
-    container_name: maozi-cloud-tempo
+    container_name: maozi-cloud-basic-tempo
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -116,13 +97,13 @@ services:
       - 4317:4317   # otlp grpc
       - 4318:4318   # otlp http
     volumes:
-      - ./maozi-cloud-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
-      - ./maozi-cloud-tempo/data:/var/tempo:rw
+      - ./maozi-cloud-basic-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
+      - ./maozi-cloud-basic-tempo/data:/var/tempo:rw
 
   # Prometheus —— 指标采集与存储，抓取各服务 actuator/prometheus 端点
-  maozi-cloud-prometheus:
+  maozi-cloud-basic-prometheus:
     image: prom/prometheus:v2.51.2
-    container_name: maozi-cloud-prometheus
+    container_name: maozi-cloud-basic-prometheus
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -137,13 +118,13 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./maozi-cloud-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - ./maozi-cloud-prometheus/data:/prometheus:rw
+      - ./maozi-cloud-basic-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./maozi-cloud-basic-prometheus/data:/prometheus:rw
 
   # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
-  maozi-cloud-grafana:
+  maozi-cloud-basic-grafana:
     image: grafana/grafana-oss:10.4.13
-    container_name: maozi-cloud-grafana
+    container_name: maozi-cloud-basic-grafana
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -153,13 +134,13 @@ services:
     ports:
       - 3300:3000
     volumes:
-      - ./maozi-cloud-grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./maozi-cloud-grafana/data:/var/lib/grafana:rw
+      - ./maozi-cloud-basic-grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./maozi-cloud-basic-grafana/data:/var/lib/grafana:rw
 
   # Promtail —— 日志采集 agent，挂载共享日志目录后推送至 Loki
-  maozi-cloud-promtail:
+  maozi-cloud-basic-promtail:
     image: grafana/promtail:2.9.3
-    container_name: maozi-cloud-promtail
+    container_name: maozi-cloud-basic-promtail
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -170,9 +151,9 @@ services:
       # 共享日志目录,Promtail 只读采集所有应用的日志文件
       - /Users/maozi/Desktop/maozi-cloud-logs:/maozi-logs:ro
       # Promtail 配置
-      - ./maozi-cloud-promtail/config/promtail-config.yml:/etc/promtail/config.yml:ro
+      - ./maozi-cloud-basic-promtail/config/promtail-config.yml:/etc/promtail/config.yml:ro
       # positions (采集位置) 持久化,容器重启可续读
-      - ./maozi-cloud-promtail/data:/data:rw
+      - ./maozi-cloud-basic-promtail/data:/data:rw
 
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建

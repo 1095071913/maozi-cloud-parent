@@ -15,7 +15,7 @@ import org.apache.dubbo.rpc.RpcException;
 /**
  * Dubbo 消费端链路上下文传递过滤器
  * <p>
- * 在 Dubbo 服务消费者端发起 RPC 调用时，将当前线程中的版本号和用户名
+ * 在 Dubbo 服务消费者端发起 RPC 调用时，将当前线程中的版本号和当前登录用户信息（{@link com.maozi.common.dto.CurrentUserInfo}）
  * 从 {@link ApplicationLinkContext} 读取并写入 RPC 附件（Attachment）中，
  * 传递到服务提供者端，实现跨服务的链路上下文传播。
  * </p>
@@ -44,7 +44,7 @@ public class ApplicationDubboContextTransmitFilter implements Filter {
      * <ol>
      *   <li>获取 RPC 客户端附件对象</li>
      *   <li>将当前线程的版本号（version）写入附件，传递给服务提供者</li>
-     *   <li>将当前线程的用户名（username）写入附件，传递给服务提供者</li>
+     *   <li>将当前线程的登录用户信息（CurrentUserInfo）序列化为 JSON 写入附件，传递给服务提供者</li>
      *   <li>执行实际的 Dubbo RPC 调用</li>
      * </ol>
      * </p>

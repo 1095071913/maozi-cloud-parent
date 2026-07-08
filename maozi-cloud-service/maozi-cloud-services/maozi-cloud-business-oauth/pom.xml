@@ -23,9 +23,9 @@
 		<!-- OAuth API 接口层模块，定义认证授权服务的对外接口 -->
 		<module>maozi-cloud-oauth-api</module>
 		<!-- OAuth 业务实现模块，提供认证授权的具体业务逻辑 -->
-		<module>maozi-cloud-oauth-service</module>
+		<module>maozi-cloud-oauth-business</module>
 		<!-- OAuth 可执行启动模块，装配 Spring Boot 引导类与 bootstrap.properties，分布式部署入口 -->
-		<module>maozi-cloud-oauth-run</module>
+		<module>maozi-cloud-oauth-service</module>
 	</modules>
 
 
