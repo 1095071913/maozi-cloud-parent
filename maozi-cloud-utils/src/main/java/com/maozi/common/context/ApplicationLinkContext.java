@@ -121,6 +121,7 @@ public class ApplicationLinkContext {
         versions.remove();
         currentUserInfos.remove();
         traceIds.remove();
+        MDC.clear();
     }
 
 }

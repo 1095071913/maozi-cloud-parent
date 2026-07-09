@@ -3,7 +3,9 @@ package com.maozi.gateway.config;
 import com.maozi.common.JacksonUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
-import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.constant.LogTag;
+import com.maozi.common.context.ApplicationLinkContext;
+import io.opentelemetry.api.trace.Span;
 import jakarta.annotation.Nonnull;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
@@ -11,6 +13,7 @@ import org.reactivestreams.Publisher;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import reactor.core.publisher.Flux;
@@ -20,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * 服务端响应代理装饰器。
@@ -36,13 +40,13 @@ import java.util.Objects;
 public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 
 	/** 请求开始时间戳（毫秒），用于计算响应耗时 */
-	private Long requestTime;
-
-	/** Exchange 上下文属性，保留供后续扩展使用 */
-	private Map<String,Object> attributes;
+	private final Long requestTime;
 
 	/** 日志信息收集 Map，由 RequestLogFilter 传入并在此处补充响应数据 */
-	private Map<String,String> logs;
+	private final Map<String,String> logs;
+
+	/** 服务端请求对象，用于读取链路追踪 ID 请求头 */
+	private final ServerHttpRequest request;
 
 	/**
 	 * 构造响应代理装饰器。
@@ -51,16 +55,17 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 	 * @param logs        日志信息收集 Map
 	 * @param response    原始服务端响应对象
 	 * @param attributes  Exchange 上下文属性 Map
+	 * @param request     服务端请求对象，用于读取链路追踪 ID 请求头
 	 */
-	public ServerHttpResponseAgent(Long requestTime,Map<String,String> logs,ServerHttpResponse response,Map<String,Object> attributes) {
+	public ServerHttpResponseAgent(Long requestTime,Map<String,String> logs,ServerHttpResponse response,Map<String,Object> attributes,ServerHttpRequest request) {
 
 		super(response);
 
-		this.requestTime=requestTime;
+		this.requestTime = requestTime;
 
-		this.logs=logs;
+		this.logs = logs;
 
-		this.attributes=attributes;
+		this.request = request;
 
 	}
 
@@ -104,30 +109,28 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 
 	            });
 
-
 				// 尝试将响应体解析为 Map，判断是否为自定义响应格式
-	            Map result = JacksonUtil.jsonToObject(outputStream.toString(), Map.class);
+	            Map<?,?> result = JacksonUtil.jsonToObject(outputStream.toString(), Map.class);
 
-				// 标记是否为自定义响应格式（包含 code 和 success 字段）
-				boolean customResultBoo = ObjectUtil.isNotNullEmpty(result) && result.containsKey("code") && result.containsKey("success");
-
-				// 判断是否为自定义响应格式（包含 code 和 success 字段）
-
-                // 根据是否为自定义格式，选择序列化后的字节或原始字节
-				byte[] resultByte = (customResultBoo ? Objects.requireNonNull(JacksonUtil.objectToJson(result)).getBytes() : outputStream.toByteArray());
-
-				MDC.put("serviceName", ApplicationEnvironmentContext.SERVICE_NAME);
+				// 当 OpenTelemetry 未生成有效 traceId 时，从请求头获取或生成 traceId 写入 MDC；OTel 已有则由其 MDC 集成接管，不覆盖
+				if (ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId())) {
+					String traceId = request.getHeaders().getFirst(ApplicationLinkContext.TRACE_ID_KEY);
+					if (ObjectUtil.isNullEmpty(traceId)) {
+						traceId = UUID.randomUUID().toString();
+					}
+					MDC.put(ApplicationLinkContext.MDC_TRACE_ID_KEY, traceId);
+				}
 
 				// 记录响应耗时（RT）
-				logs.put("RT", System.currentTimeMillis() - requestTime+" ms");
+				logs.put(LogTag.RT, System.currentTimeMillis() - requestTime + " ms");
 				// 记录响应数据
-				logs.put("Data", new String(resultByte));
+				logs.put(LogTag.DATA, outputStream.toString());
 
 				// 根据响应状态和业务码决定日志级别
 				if(Objects.requireNonNull(getDelegate().getStatusCode()).value() != 200) {
 					// HTTP 状态码非 200，记录错误日志
 					LogUtil.error(log,logs);
-				}else if(ObjectUtil.isNotNullEmpty(result) && ObjectUtil.isNotNullEmpty(result.get("code")) && !"200".equals(result.get("code").toString())){
+				}else if(ObjectUtil.isNotNullEmpty(result) && result.containsKey("code") && !"200".equals(result.get("code").toString())){
 					// 业务码非 200，记录错误日志
 					LogUtil.error(log,logs);
 				}else{
@@ -135,11 +138,8 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 					LogUtil.info(log,logs);
 				}
 
-				// 更新响应头中的 Content-Length
-				getDelegate().getHeaders().setContentLength(resultByte.length);
-
 				// 包装结果字节并返回，同时在 finally 中关闭流和清理 MDC
-				try {return bufferFactory.wrap(resultByte); } catch (Exception e) {return null;}finally {try {outputStream.close();} catch (IOException ignored) {}MDC.clear();}
+				try {return bufferFactory.wrap(outputStream.toByteArray()); } catch (Exception e) {return null;}finally {try {outputStream.close();} catch (IOException ignored) {}MDC.clear();}
 
 	          }));
 

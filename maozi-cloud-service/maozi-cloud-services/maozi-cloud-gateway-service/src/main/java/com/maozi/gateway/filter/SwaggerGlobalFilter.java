@@ -38,6 +38,8 @@ import java.util.Set;
 @Component
 public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
 
+    private static final String API_DOC_PATH = "/v3/api-docs";
+
     /**
      * 过滤器核心逻辑。
      * <p>
@@ -54,6 +56,7 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
      * @return 过滤器链执行结果
      */
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
         ServerHttpRequest request = exchange.getRequest();
         // 获取请求路径
         String path = request.getPath().toString();
@@ -63,7 +66,7 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
         int port = request.getLocalAddress().getPort();
 
         // 仅处理 Swagger API 文档请求，其他请求直接放行
-        if (!path.endsWith("/v3/api-docs")) {
+        if (!path.endsWith(API_DOC_PATH)) {
             return chain.filter(exchange);
         }
 
@@ -80,18 +83,21 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
              */
             @Override
             public Mono<Void> writeWith(@Nonnull Publisher<? extends DataBuffer> body) {
+
                 if (Objects.equals(super.getStatusCode(), HttpStatus.OK) && body instanceof Flux) {
+
                     Flux<DataBuffer> fluxBody = Flux.from(body);
                     return DataBufferUtils.join(fluxBody).flatMap(dataBuffer -> {
+
                         // 读取响应体字节数据
                         byte[] content = new byte[dataBuffer.readableByteCount()];
                         dataBuffer.read(content);
                         DataBufferUtils.release(dataBuffer);
 
-                        String s = new String(content, StandardCharsets.UTF_8);
+                        String response = new String(content, StandardCharsets.UTF_8);
 
                         // 解析 JSON，禁用特殊字符检查以兼容各种 OpenAPI 文档格式
-                        JSONObject jsonObject = JSON.parseObject(s, Feature.DisableSpecialKeyDetect);
+                        JSONObject jsonObject = JSON.parseObject(response, Feature.DisableSpecialKeyDetect);
 
                         // 设置网关的 host 地址
                         jsonObject.put("host", host + ":" + port);
@@ -114,16 +120,17 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
                         // 替换原始 paths 为改写后的 paths
                         jsonObject.put("paths", pathJsonObject);
 
-                        s = JSON.toJSONString(jsonObject);
+                        response = JSON.toJSONString(jsonObject);
 
                         // 更新响应头中的 Content-Length
-                        int length = s.getBytes().length;
+                        int length = response.getBytes().length;
                         HttpHeaders headers = originalResponse.getHeaders();
                         headers.setContentLength(length);
 
                         // 将改写后的 JSON 包装为 DataBuffer 返回
                         DataBuffer buffer = bufferFactory().wrap(s.getBytes(StandardCharsets.UTF_8));
                         return super.writeWith(Mono.just(buffer));
+
                     });
                 }
                 return super.writeWith(body);
@@ -143,6 +150,7 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
 
         // 使用装饰器替换原始响应，继续执行过滤器链
         return chain.filter(exchange.mutate().response(decoratedResponse).build());
+
     }
 
     /**

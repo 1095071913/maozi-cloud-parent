@@ -15,7 +15,7 @@ import java.util.Optional;
  * Micrometer 指标配置
  * <p>
  * 修复 Spring Cloud Gateway 的 URI 标签在 {@code /metrics} 端点中被错误标记为
- * <b>UNKNOWN</b> 的问题（见 https://github.com/spring-cloud/spring-cloud-gateway/issues/891）。
+ * <b>UNKNOWN</b> 的问题（见 <a href="https://github.com/spring-cloud/spring-cloud-gateway/issues/891">...</a>）。
  * 通过自定义 {@link ServerRequestObservationConvention}，在 URI 标签为空或 UNKNOWN 时，
  * 从请求路径前两段提取路径模板，提升指标标签的可读性。
  * </p>

@@ -19,13 +19,16 @@ package com.maozi.gateway.config;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.maozi.common.LogUtil;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.enums.LogCommonType;
 import com.maozi.common.result.error.ErrorResult;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.gateway.utils.WebUtil;
+import io.opentelemetry.api.trace.Span;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
@@ -51,6 +54,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * 网关全局异常处理器。
@@ -167,9 +171,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 
 		ServerHttpRequest request = exchange.getRequest();
 
-		// 将链路追踪 ID 和服务名设置到 MDC 日志上下文中
-		MDC.put(LogTag.TID,exchange.getAttributes().get("TID"));
-		MDC.put(LogTag.SERVICE_NAME, ApplicationEnvironmentContext.SERVICE_NAME);
+		// 当 OpenTelemetry 未生成有效 traceId 时，从请求头获取或生成 traceId 写入 MDC；OTel 已有则由其 MDC 集成接管，不覆盖
+		if (ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId())) {
+			String traceId = request.getHeaders().getFirst(ApplicationLinkContext.TRACE_ID_KEY);
+			if (ObjectUtil.isNullEmpty(traceId)) {
+				traceId = UUID.randomUUID().toString();
+			}
+			MDC.put(ApplicationLinkContext.MDC_TRACE_ID_KEY, traceId);
+		}
 
 		// 构建错误日志信息
 		Map<String,String> logs = new LinkedHashMap<>();
