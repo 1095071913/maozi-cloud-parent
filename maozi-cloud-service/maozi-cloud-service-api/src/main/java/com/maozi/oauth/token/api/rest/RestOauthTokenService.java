@@ -1,6 +1,7 @@
 package com.maozi.oauth.token.api.rest;
 
 import com.maozi.common.constant.ApplicationNameConstant;
+import com.maozi.common.constant.RemoteConstant;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.oauth.token.api.rest.fallback.RestOauthTokenServiceFallBackFactory;
 import com.maozi.service.annotation.Get;
@@ -32,7 +33,7 @@ import java.util.Map;
 public interface RestOauthTokenService {
 
     /** 基础路径 */
-	String PATH = "/oauth/token";
+	String PATH = RemoteConstant.REMOTE_PREFIX_PATH + "/oauth/token";
 
     /**
      * 内省令牌

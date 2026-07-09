@@ -71,8 +71,7 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
         }
 
         // 从路径中提取微服务标识，如 /user-service/v3/api-docs -> user-service
-        String[] pathArray = path.split("/");
-        String basePath = pathArray[1];
+        String basePath = path.split("/")[1];
 
         ServerHttpResponse originalResponse = exchange.getResponse();
 
@@ -136,16 +135,6 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
                 return super.writeWith(body);
             }
 
-            /**
-             * 覆写响应头获取方法，强制设置 Content-Type 为 JSON UTF-8。
-             */
-            @Override
-            public HttpHeaders getHeaders() {
-                // 获取父类原始 ServerHttpResponse 的 header 请求头信息，这是代理 Delegate 类型
-                HttpHeaders httpHeaders = super.getHeaders();
-                httpHeaders.set(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
-                return httpHeaders;
-            }
         };
 
         // 使用装饰器替换原始响应，继续执行过滤器链
