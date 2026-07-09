@@ -22,7 +22,6 @@ import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.constant.LogTag;
-import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.enums.LogCommonType;
 import com.maozi.common.result.error.ErrorResult;
