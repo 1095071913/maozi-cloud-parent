@@ -48,7 +48,7 @@
 
 ## 📚 相关链接
 
-- [快速开始文档](https://www.yuque.com/pengjinlong/maozi-cloud-parent)
+- [快速开始](https://www.yuque.com/pengjinlong/maozi-cloud-parent)
 
 - [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)
 
