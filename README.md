@@ -42,14 +42,14 @@
 
 - 分布式事务支持
 
+## 🏗️ 架构图
+
+<img src="architecture_diagram.png" alt="null" style="zoom:50%;" />
+
 ## 📚 相关链接
 
 - [快速开始文档](https://www.yuque.com/pengjinlong/maozi-cloud-parent)
 
 - [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)
-
-## 🏗️ 架构图
-
-<img src="architecture_diagram.png" alt="null" style="zoom:50%;" />
 
 
