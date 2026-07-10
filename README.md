@@ -34,9 +34,9 @@
 
 - 定时任务调度
 
-- WebSocket（ACK 重试发送、多实例兼容）
+- WebSocket（ACK应答机制、重试发送消息、多实例兼容）
 
-- 方法异常重试机制
+- 方法异常重试
 
 - Spring Cloud Alibaba 版本升级
 
