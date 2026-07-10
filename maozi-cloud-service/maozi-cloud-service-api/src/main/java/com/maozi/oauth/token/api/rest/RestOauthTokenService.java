@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Map;
 
 //--------------------------------------------------------------------------------------------------
-// 已废弃（@deprecated）：本文件整体以 // 注释停用。
-// 替代实现：
-//   - 令牌内省：com.maozi.oauth.token.api.OauthTokenService#introspect(String)
-//     （通过 Dubbo RPC 调用，替代原 Feign HTTP 方案，减少网络开销）
-// 保留此文件仅作为历史参考，请勿取消注释启用。
+// 兼容说明：本接口仍以 Feign HTTP 形式保留为兼容入口，代码处于生效状态。
+// 主链路已切换为 Dubbo RPC 实现，详见：
+//   - com.maozi.oauth.token.api.OauthTokenService#introspect(String)
+//   - com.maozi.oauth.token.api.impl.rpc.RpcOauthTokenServiceImpl
+// 新业务请直接使用上述 Dubbo 接口，避免引入新的 Feign 调用。
 //--------------------------------------------------------------------------------------------------
 
 /**
@@ -24,6 +24,10 @@ import java.util.Map;
  * <p>
  * 通过 Feign 客户端调用 OAuth 认证服务的令牌管理接口，
  * 支持令牌校验和销毁操作。
+ * </p>
+ * <p>
+ * <b>当前状态：</b>代码处于生效状态，仍可作为 Feign 兼容入口使用；
+ * 但令牌内省的主链路已切换为 Dubbo RPC（{@link com.maozi.oauth.token.api.OauthTokenService}）。
  * </p>
  *
  * @author maozi

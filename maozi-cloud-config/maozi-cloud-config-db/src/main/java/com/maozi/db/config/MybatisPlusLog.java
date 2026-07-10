@@ -10,8 +10,7 @@ import org.apache.ibatis.logging.Log;
  * MyBatis-Plus 自定义日志实现
  * <p>
  * 拦截 MyBatis-Plus 的 SQL 日志输出，将 SQL 语句和参数收集到线程变量中，
-     * 用于在请求结束时统一记录完整的 SQL 日志。仅在应用运行中（IS_RUNNING=true）
-     * 且包含 SQL 准备语句或参数信息时才进行收集。
+     * 用于在请求结束时统一记录完整的 SQL 日志。仅当日志内容包含 SQL 准备语句（==>  Preparing:）或参数信息（==> Parameters:）时才进行收集。
  * </p>
  *
  * @author maozi
@@ -58,7 +57,7 @@ public class MybatisPlusLog implements Log {
     /**
      * 收集 SQL 日志
      * <p>
-     * 当应用已启动运行时，将 SQL 的 Preparing 和 Parameters 信息收集到线程变量中，
+     * 将 SQL 的 Preparing 和 Parameters 信息收集到线程变量中，
      * 并将参数值替换到 SQL 的占位符中，形成完整的可执行 SQL。
      * </p>
      *

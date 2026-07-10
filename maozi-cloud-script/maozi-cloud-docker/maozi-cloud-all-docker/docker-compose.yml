@@ -16,10 +16,11 @@
 #   2. 外部网络 maozi-cloud-network 必须已创建;
 #   3. all-service 镜像需通过 maozi-cloud-build-all-monomer.sh 构建.
 # ------------------------------------------------------------
-# 关于 environment.environment:
-#   YAML 中 environment 既是键名也是变量名, 意为「容器内传入名为 environment
-#   的环境变量, 值为 test」, 供 bootstrap.properties 决定加载哪套 Nacos 配置;
-#   不是书写错误.
+# 关于 environment.ENVIRONMENT:
+#   environment 块下传入两个环境变量:
+#     - ENVIRONMENT=dev          标识当前运行环境, 供 bootstrap.yml 决定加载哪套
+#                                Nacos 配置 (local / dev / test / prod 等);
+#     - NACOS_CONFIG_SERVER=...  指定 Nacos 配置中心地址, 避免容器内写死.
 # 宿主机日志挂载点 (/Users/maozi/Desktop/maozi-cloud-logs) 为开发者示例路径,
 # 部署环境请按需替换, 且需与 promtail 挂载保持一致以纳入日志采集.
 # ============================================================
@@ -37,7 +38,7 @@ services:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
-      # 日志文件挂载到宿主机共享目录, 供 iLogtail 采集
+      # 日志文件挂载到宿主机共享目录, 供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/all:/application/maozi-cloud-all-service/logs
 
 

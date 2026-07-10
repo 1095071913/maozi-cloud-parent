@@ -16,6 +16,7 @@ import lombok.Getter;
  *     <li>RPC - RPC 调用日志，记录服务间远程过程调用的详细信息</li>
  *     <li>JOB - 定时任务日志，记录定时调度任务的执行情况</li>
  *     <li>MQ - 消息队列日志，记录消息的发送、接收和处理过程</li>
+ *     <li>REST_TEMPLATE - RestTemplate 日志，记录三方 HTTP 请求调用</li>
  *     <li>WEB_SOCKET - WebSocket 日志，记录 WebSocket 长连接的通信信息</li>
  * </ul>
  * </p>

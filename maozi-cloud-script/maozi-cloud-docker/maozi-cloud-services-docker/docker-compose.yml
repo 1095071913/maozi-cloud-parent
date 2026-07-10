@@ -10,12 +10,15 @@
 # 启动前置：
 #   1. 先启动 maozi-cloud-basics-docker（提供 mysql / nacos / redis 等）；
 #   2. 外部网络 maozi-cloud-network 必须已创建；
-#   3. 业务镜像需通过 maozi-cloud-build 流程构建并 tag 为 latest。
+#   3. 业务镜像需通过 maozi-cloud-build 流程构建并 tag 为 laster（注：当前 compose
+#      中所有 image tag 统一使用 "laster"，疑为 "latest" 的拼写错误，但需与构建脚本
+#      输出保持一致；如需改为 latest，需同步修改本文件和构建脚本）。
 # ------------------------------------------------------------
-# 关于 environment.environment：
-#   YAML 中 environment 既是键名也是变量名，意为「容器内传入名为 environment
-#   的环境变量，值为 test」，供 bootstrap.properties 决定加载哪套 Nacos 配置；
-#   不是书写错误。
+# 关于 environment.ENVIRONMENT：
+#   environment 块下传入两个环境变量：
+#     - ENVIRONMENT=dev          标识当前运行环境，供 bootstrap.yml 决定加载哪套
+#                                Nacos 配置（local / dev / test / prod 等）；
+#     - NACOS_CONFIG_SERVER=...  指定 Nacos 配置中心地址，避免容器内写死。
 # 宿主机日志挂载点（/Users/maozi/Desktop/maozi-cloud-logs）为开发者示例路径，
 # 部署环境请按需替换，且需与 promtail 挂载保持一致以纳入日志采集。
 # ============================================================
@@ -33,7 +36,7 @@ services:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/gateway:/application/maozi-cloud-gateway-service/logs
 
   # ============ Monitor 监控服务 (Spring Boot Admin) ============
@@ -47,7 +50,7 @@ services:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor-service/logs
 
   # ============ System 业务服务 ============
@@ -62,7 +65,7 @@ services:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system-service/logs
 
   # ============ OAuth 业务服务 ============
@@ -77,7 +80,7 @@ services:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
-      # 日志文件挂载到宿主机共享目录,供 iLogtail 采集
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth-service/logs
 
 

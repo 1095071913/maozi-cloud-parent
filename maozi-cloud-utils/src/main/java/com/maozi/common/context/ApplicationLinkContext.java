@@ -16,8 +16,9 @@ import java.util.function.Function;
 /**
  * 应用链路上下文
  * <p>
- * 使用 TransmittableThreadLocal 存储当前请求的版本号和当前登录用户信息（{@link CurrentUserInfo}）等链路信息，
- * 支持线程池和异步场景下的上下文传递。同时提供 Consumer 包装和上下文清理功能。
+ * 使用 TransmittableThreadLocal 存储当前请求的链路信息，包括版本号、当前登录用户信息（{@link CurrentUserInfo}）、
+ * 以及链路追踪 ID（traceId，并同步写入 MDC 便于日志关联），支持线程池和异步场景下的上下文传递。
+ * 同时提供 Consumer 包装和上下文清理功能。
  * </p>
  *
  * @author maozi

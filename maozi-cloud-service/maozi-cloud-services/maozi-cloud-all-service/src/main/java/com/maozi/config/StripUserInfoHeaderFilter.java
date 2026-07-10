@@ -34,13 +34,14 @@ import java.util.Set;
  * <p>
  * 由于 {@link com.maozi.mvc.filter.ApplicationContextFilter} 以 {@code HIGHEST_PRECEDENCE}
  * 执行并已从该请求头写入 {@link ApplicationLinkContext#currentUserInfos} 线程本地变量，
- * 本过滤器在 Security 之前做两件事：
- * <ol>
- *   <li>清除 {@link ApplicationLinkContext#currentUserInfos}，丢弃外部注入的用户信息；</li>
- *   <li>通过 {@link UserInfoHeaderStrippedRequestWrapper} 移除请求中的 {@code X-CurrentUserInfo} 头，
- *       使下游过滤器链（含内省令牌）与控制器无法读取到该头。</li>
- * </ol>
+ * 本过滤器在 Security 之前通过 {@link UserInfoHeaderStrippedRequestWrapper} 移除请求中的
+ * {@code X-CurrentUserInfo} 头，使下游过滤器链（含内省令牌）与控制器无法读取到该头。
  * 认证完成后，{@code ApplicationUserContextFilter} 拦截器会依据内省结果重新设置真实用户信息。
+ * </p>
+ * <p>
+ * <b>注：</b>当前 {@code doFilterInternal} 仅做请求头包装，并未主动清除
+ * {@link ApplicationLinkContext#currentUserInfos} 线程本地变量。若上游 {@code ApplicationContextFilter}
+ * 已根据外部请求头写入了用户信息，则需要确认该线程变量是否会在后续被覆盖或清理，否则存在身份残留风险。
  * </p>
  *
  * @author maozi
@@ -50,10 +51,11 @@ import java.util.Set;
 public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
 
     /**
-     * 清除外部注入的用户信息并移除请求头
+     * 移除请求中的 {@code X-CurrentUserInfo} 头后继续过滤器链
      * <p>
-     * 先清除 {@link ApplicationLinkContext#currentUserInfos} 线程本地变量，
-     * 再以包装后的请求继续过滤器链，使后续内省令牌与业务处理拿不到 {@code X-CurrentUserInfo} 头。
+     * 仅以 {@link UserInfoHeaderStrippedRequestWrapper} 包装请求继续过滤器链，
+     * 使后续内省令牌与业务处理拿不到 {@code X-CurrentUserInfo} 头；
+     * 本方法不主动清除 {@link ApplicationLinkContext#currentUserInfos} 线程本地变量。
      * </p>
      *
      * @param request     原始 HTTP 请求

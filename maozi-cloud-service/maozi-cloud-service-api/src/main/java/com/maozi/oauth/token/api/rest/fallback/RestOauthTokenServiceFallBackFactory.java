@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 //--------------------------------------------------------------------------------------------------
-// 已废弃（@deprecated）：本文件整体以 // 注释停用，原用于配合 RestOauthTokenService 的 Feign 降级。
-// 令牌服务已切换为 Dubbo RPC 实现，详见：
+// 兼容说明：本降级工厂仍处于生效状态（@Component 仍注册为 Spring Bean），
+// 用于配合仍生效的 RestOauthTokenService Feign 客户端。
+// 令牌内省主链路已切换为 Dubbo RPC，详见：
 //   com.maozi.oauth.token.api.OauthTokenService
 //   com.maozi.oauth.token.api.impl.rpc.RpcOauthTokenServiceImpl
-// 请勿取消注释启用。
+// 若未来彻底移除 Feign 链路，可一并删除此降级工厂。
 //--------------------------------------------------------------------------------------------------
 
 /**

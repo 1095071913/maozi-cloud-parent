@@ -56,7 +56,9 @@ public class StatisticSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
      * <p>
      * 该方法在请求进入时执行，通过调用链式处理（fireEntry）后，根据不同结果进行统计：
      * <ul>
-     *   <li>通过（Pass）：增加线程数和通过请求数</li>
+     *   <li>通过（Pass）：当前资源节点（{@code node}）仅增加线程数，
+     *       主节点的 {@code addPassRequest} 已被注释禁用（见方法体内注释）；
+     *       来源节点和入口节点仍正常增加线程数和通过请求数</li>
      *   <li>优先等待（PriorityWait）：仅增加线程数</li>
      *   <li>被阻塞（BlockException）：增加阻塞 QPS</li>
      *   <li>异常（Throwable）：记录异常信息</li>
@@ -80,6 +82,8 @@ public class StatisticSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
 
             // 请求通过检查，增加当前资源的线程数
             node.increaseThreadNum();
+            // 注：当前资源节点（node）的 addPassRequest 调用已被禁用，
+            // 仅来源节点和入口节点会统计通过请求数（见下方分支）。原因为统计口径调整，具体历史不详
 //            node.addPassRequest(count);
 
             // 如果存在来源节点（调用方），增加来源维度的线程数和通过请求数

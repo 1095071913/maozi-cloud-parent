@@ -38,6 +38,7 @@
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
 
+		<!-- Spring Cloud OpenFeign 核心，为本模块声明的 @FeignClient 接口提供注解与契约支持 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-openfeign-core</artifactId>

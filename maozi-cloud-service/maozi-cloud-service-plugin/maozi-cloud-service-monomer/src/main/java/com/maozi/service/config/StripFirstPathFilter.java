@@ -38,7 +38,7 @@ import java.util.List;
  *   <li>带模块前缀的请求（如 {@code /oauth/oauth2/token}、{@code /oauth/user/info}）在进入安全过滤器链之前
  *       被裁剪掉首段模块前缀，使 Spring Security 的授权服务器过滤器链能正确匹配 {@code /oauth2/token}
  *       等框架端点，模块控制器的安全校验与 MVC 匹配也能使用裁剪后的路径；</li>
- *   <li>OAuth2/OIDC 框架端点（{@code /oauth2}、{@code /.well-known}、{@code /userinfo}）及
+ *   <li>OAuth2/OIDC 框架端点（{@code /oauth2}、{@code /.well-known}）及
  *       Spring Boot 框架端点（{@code /actuator}、{@code /webjars} 等）通过排除列表保留原始路径，
  *       安全白名单匹配仍基于这些原始路径。</li>
  * </ul>
@@ -47,9 +47,12 @@ import java.util.List;
  * <p><b>路径排除：</b>默认对以下框架端点不做裁剪：
  * Spring Boot 框架端点（{@code /actuator}、{@code /webjars}、{@code /v3}、{@code /application}、
  * {@code /error}、{@code /favicon.ico}），以及 OAuth2/OIDC 框架端点（{@code /oauth2}、
- * {@code /.well-known}、{@code /userinfo}），避免破坏 Actuator 监控、Swagger 静态资源、OpenAPI 文档、
+ * {@code /.well-known}），避免破坏 Actuator 监控、Swagger 静态资源、OpenAPI 文档、
  * OAuth2 授权服务器端点等。可通过配置 {@code application.path-strip.excluded-prefixes} 覆盖默认排除列表；
  * 如需完全关闭裁剪，可设置 {@code application.path-strip.enabled=false}。</p>
+ *
+ * <p><b>注：</b>{@code /userinfo} 端点（OIDC UserInfo Endpoint）当前并未包含在
+ * 默认排除列表中，若依赖该端点请通过 {@code application.path-strip.excluded-prefixes} 显式补充。</p>
  *
  * @author maozi
  */

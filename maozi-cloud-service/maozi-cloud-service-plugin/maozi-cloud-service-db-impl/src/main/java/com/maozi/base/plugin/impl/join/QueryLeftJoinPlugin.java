@@ -27,9 +27,9 @@ public class QueryLeftJoinPlugin extends JoinBasePlugin {
     @Override
     public void apply(String abbreviationModelName,MPJLambdaWrapper<?> wrapper, JoinPlugin joinPlugin) {
 
-        ObjectUtil.isNullEmptyThrowError(joinPlugin.tableName(),abbreviationModelName + "内联目标");
+        ObjectUtil.isNullEmptyThrowError(joinPlugin.tableName(),abbreviationModelName + "左联目标");
 
-        ObjectUtil.isNullEmptyThrowError(joinPlugin.on(),abbreviationModelName + "内联条件");
+        ObjectUtil.isNullEmptyThrowError(joinPlugin.on(),abbreviationModelName + "左联条件");
 
         String tableName = joinPlugin.tableName();
 

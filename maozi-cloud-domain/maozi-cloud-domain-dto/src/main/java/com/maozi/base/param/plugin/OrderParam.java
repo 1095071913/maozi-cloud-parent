@@ -121,7 +121,7 @@ public interface OrderParam {
 					// 将表别名转换为下划线格式（驼峰转下划线）
 					String underlineCase = StrUtil.toUnderlineCase(key);
 
-					// 表别名非空时，拼接为 "表别名.字段名"；为空时仅保留下划线格式的字段名（无前缀）
+					// 表别名非空时，拼接为 "表别名.字段名"；表别名为空时 field 取 underlineCase（即对空串转换的结果，下游通常会过滤掉）
 					String field = StringUtils.isEmpty(key) ? underlineCase : underlineCase + "." + StrUtil.toUnderlineCase(orderMainField);
 
 					// true 表示降序，false 表示升序

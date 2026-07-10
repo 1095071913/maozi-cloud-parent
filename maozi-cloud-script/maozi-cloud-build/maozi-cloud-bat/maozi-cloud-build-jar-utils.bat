@@ -44,7 +44,7 @@ REM ============================================================
 REM 可部署服务源码根目录 (相对仓库根), 仅此目录下生成的 jar 才触发 Docker 重新部署
 set "services_subdir=maozi-cloud-service\maozi-cloud-services"
 
-REM 锁定仓库根的绝对路径, 让生成的临时脚本里的 cp 源路径不依赖 cwd
+REM 锁定仓库根的绝对路径, 让生成的临时脚本里的 copy 源路径不依赖 cwd
 set "repo_root=%cd%"
 
 REM ---- A. 比对 git 状态 ----
@@ -211,7 +211,7 @@ for %%F in ("%image_base%\maozi-cloud-basics-image\*-build-docker.bat" "%image_b
 if "!pending!"=="1" goto :wait_deploy
 
 REM 清理空的 maozi-cloud-services-image / -basics-image 目录
-REM (渲染产物由 build-docker.bat 自清理, 留下两个空目录, 一并 rd 掉)
+REM (渲染产物由各服务动态生成的 !service_name!-build-docker.bat 自清理, 留下两个空目录, 一并 rd 掉)
 REM rd 不带 /s 只删空目录, 有遗留文件时 rd 失败, 保留现场供排查
 rd "%image_base%\maozi-cloud-services-image" 2>nul && echo [cleanup] removed empty maozi-cloud-services-image
 rd "%image_base%\maozi-cloud-basics-image"   2>nul && echo [cleanup] removed empty maozi-cloud-basics-image

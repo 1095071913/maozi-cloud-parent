@@ -30,7 +30,7 @@ import java.util.UUID;
  * <p>
  * 继承 ServerHttpResponseDecorator，拦截响应体的写入过程，实现以下功能：
  * 1. 读取并缓存响应体内容；
- * 2. 判断响应体是否为自定义格式（包含 code 和 success 字段）；
+ * 2. 判断响应体是否为自定义格式（包含 code 字段）；
  * 3. 记录请求耗时（RT）和响应数据到日志；
  * 4. 根据响应状态码和业务码决定日志级别（ERROR 或 INFO）；
  * 5. 更新响应头中的 Content-Length。
@@ -74,7 +74,7 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 	 * <p>
 	 * 当响应体类型为 Flux 时，缓冲所有数据块并执行以下操作：
 	 * 1. 合并所有 DataBuffer 为字节数组；
-	 * 2. 解析 JSON 响应体，判断是否为自定义格式（含 code 和 success 字段）；
+	 * 2. 解析 JSON 响应体，判断是否为自定义格式（含 code 字段）；
 	 * 3. 设置 MDC 上下文（服务名）；
 	 * 4. 记录响应耗时和响应数据；
 	 * 5. 根据响应状态决定日志级别；

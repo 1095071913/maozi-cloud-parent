@@ -68,10 +68,12 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper,Perm
 	@Override
 	protected void checkBind(Long id) {
 
+		// 1.校验权限是否被角色绑定，由角色权限关系服务抛出业务异常
 		rolePermissionService.checkRoleBindPermissionByPermission(id);
 
+		// 2.校验当前权限是否存在子权限（查询 parentId = id 的权限记录），存在则禁止删除
 		LambdaQueryWrapper<PermissionDo> wrapper = Wrappers.<PermissionDo>lambdaQuery().eq(PermissionDo::getParentId, id);
-		ObjectUtil.checkConditionThrowError(count(wrapper) < 1, SystemErrorCode.BUSINESS_ERROR_DEFAULT_CODE, getResourceName() + "已有权限绑定");
+		ObjectUtil.checkConditionThrowError(count(wrapper) < 1, SystemErrorCode.BUSINESS_ERROR_DEFAULT_CODE, getResourceName() + "存在子权限，不允许删除");
 
 	}
 

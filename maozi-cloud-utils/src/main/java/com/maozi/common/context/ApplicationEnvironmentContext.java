@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 /**
  * 应用环境上下文
  * <p>
- * 存储应用运行时的全局环境信息，包括服务名称、端口、Nacos 配置地址、
- * 环境类型、项目标题和版本等。使用 {@link RefreshScope} 支持配置动态刷新。
+ * 存储应用运行时的全局环境信息，包括项目缩写、服务名称、Nacos 配置地址、
+ * 环境类型、项目标题、项目版本、项目描述，以及 Spring {@link Environment} 实例。
+ * 使用 {@link RefreshScope} 支持配置动态刷新。
  * </p>
  *
  * @author maozi

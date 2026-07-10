@@ -36,6 +36,7 @@ public class OauthTokenServiceImpl implements OauthTokenService {
     @Resource
     protected OAuth2AuthorizationService authorizationService;
 
+    /** OAuth2 客户端注册信息仓库，用于按 clientId 查询已注册客户端 */
     @Resource
     protected RegisteredClientRepository registeredClientRepository;
 

@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- 继承猫子云统一父工程，统一管理依赖版本 -->
+	<!-- 继承业务服务聚合工程 maozi-cloud-services（其再向上继承 maozi-cloud-service → maozi-cloud-parent），统一管理依赖版本 -->
 	<parent>
 		<groupId>com.maozi</groupId>
 		<artifactId>maozi-cloud-services</artifactId>
@@ -24,7 +24,7 @@
 		<module>maozi-cloud-oauth-api</module>
 		<!-- OAuth 业务实现模块，提供认证授权的具体业务逻辑 -->
 		<module>maozi-cloud-oauth-business</module>
-		<!-- OAuth 可执行启动模块，装配 Spring Boot 引导类与 bootstrap.properties，分布式部署入口 -->
+		<!-- OAuth 可执行启动模块，装配 Spring Boot 引导类，作为分布式部署形态的入口（运行时通过 Nacos 拉取配置） -->
 		<module>maozi-cloud-oauth-service</module>
 	</modules>
 

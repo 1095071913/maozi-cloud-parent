@@ -14,10 +14,11 @@ import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrinci
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * 应用链路上下文过滤器
+ * 应用用户上下文拦截器
  * <p>
- * 在 HTTP 请求处理前从 Spring Security 上下文中提取当前用户名，
- * 从请求头中提取版本号，存入 {@link ApplicationLinkContext} 线程本地变量中。
+ * 在 HTTP 请求处理前从 Spring Security 上下文中提取当前认证用户名与 clientId，
+ * 封装为 {@link CurrentUserInfo} 后存入 {@link ApplicationLinkContext} 线程本地变量。
+ * 版本号和 traceId 的提取由 {@code ApplicationContextFilter}（config-web 模块）负责。
  * 请求完成后自动清理上下文，防止线程池复用导致的数据泄漏。
  * </p>
  *
@@ -27,10 +28,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class ApplicationUserContextFilter implements HandlerInterceptor {
 
     /**
-     * 请求处理前设置链路上下文
+     * 请求处理前设置当前登录用户上下文
      * <p>
-     * 从 Security 上下文中获取当前认证用户名，从请求头获取版本号，
-     * 分别存入线程本地变量。
+     * 从 Security 上下文中获取当前认证用户（必须是 {@link DefaultOAuth2AuthenticatedPrincipal}），
+     * 提取用户名与 clientId 存入线程本地变量。
      * </p>
      *
      * @param request HTTP 请求

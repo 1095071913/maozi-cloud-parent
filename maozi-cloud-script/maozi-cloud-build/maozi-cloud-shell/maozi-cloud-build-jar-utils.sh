@@ -239,5 +239,5 @@ done < "$changed_jars_list"
 wait
 
 # 清理空的 maozi-cloud-services-image / -basics-image 目录
-# (渲染产物由 build-docker.sh 自清理, 留下两个空目录, 一并 rmdir 掉)
+# (渲染产物由各服务动态生成的 ${service_name}-build-docker.sh 自清理, 留下两个空目录, 一并 rmdir 掉)
 cleanup_image_dirs

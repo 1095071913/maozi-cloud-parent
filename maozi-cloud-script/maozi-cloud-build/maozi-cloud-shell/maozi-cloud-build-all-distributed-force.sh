@@ -45,8 +45,8 @@ services_subdir="maozi-cloud-service/maozi-cloud-services"
 # ============================================================
 
 # 根据服务名前缀路由镜像目录
-#   gateway-service / monitor-service / maozi-cloud-basics-* -> maozi-cloud-basics-image
-#   其他                                                     -> maozi-cloud-services-image
+#   maozi-cloud-basics-*                                -> maozi-cloud-basics-image
+#   其他（含 gateway-service / monitor-service / system / oauth）-> maozi-cloud-services-image
 route_image_dir() {
     local service_name="$1"
     local base="$current_directory/../../maozi-cloud-image"
@@ -156,7 +156,7 @@ echo "[deploy] services in flight: $deploy_count"
 wait
 
 # 清理空的 maozi-cloud-services-image / -basics-image 目录
-# (渲染产物由 build-docker.sh 自清理, 留下两个空目录, 一并 rmdir 掉)
+# (渲染产物由各服务动态生成的 ${service_name}-build-docker.sh 自清理, 留下两个空目录, 一并 rmdir 掉)
 cleanup_image_dirs
 
 echo "[deploy] all done"
