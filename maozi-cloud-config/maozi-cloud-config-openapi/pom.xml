@@ -13,7 +13,7 @@
 	</parent>
 
 	<!-- Swagger 接口文档配置模块构件名称 -->
-	<artifactId>maozi-cloud-config-swagger</artifactId>
+	<artifactId>maozi-cloud-config-openapi</artifactId>
 
 	<dependencies>
 

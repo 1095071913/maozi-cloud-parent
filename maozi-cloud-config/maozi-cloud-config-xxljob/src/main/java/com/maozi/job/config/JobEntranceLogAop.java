@@ -59,7 +59,7 @@ public class JobEntranceLogAop {
         Map<String, String> logs = new LinkedHashMap<>();
 
         logs.put(LogTag.TYPE, LogCommonType.JOB.getDesc());
-        logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName()+":"+proceedingJoinPoint.getSignature().getName());
+        logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
 
         Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
         if(isNotProd){
@@ -92,7 +92,7 @@ public class JobEntranceLogAop {
 
             logs.put(LogTag.RT, (System.currentTimeMillis() - startTime) + " ms");
 
-            LogUtil.log(log,error,logs);
+            LogUtil.log(log, error, logs);
 
             ApplicationLinkContext.clearContext();
 

@@ -65,8 +65,8 @@
         <!-- Swagger 配置模块，集成 OpenAPI 接口文档自动生成 -->
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-swagger</artifactId>
-            <version>${maozi-cloud-config-swagger.version}</version>
+            <artifactId>maozi-cloud-config-openapi</artifactId>
+            <version>${maozi-cloud-config-openapi.version}</version>
         </dependency>
 
         <!-- 服务 API 接口依赖，服务实现层需要实现对应的 API 接口 -->

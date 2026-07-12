@@ -13,7 +13,7 @@
 	</parent>
 
 	<!-- 定时任务配置模块构件名称 -->
-	<artifactId>maozi-cloud-config-job</artifactId>
+	<artifactId>maozi-cloud-config-xxljob</artifactId>
 
 
 	<dependencies>

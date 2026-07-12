@@ -25,9 +25,9 @@ services:
 
   # ============ 注册/配置中心：MySQL + Nacos ============
   maozi-cloud-basic-mysql:
+    restart: always
     image: mysql:8.0.29
     container_name: maozi-cloud-basic-mysql
-    restart: always
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: "password"
@@ -43,6 +43,7 @@ services:
       start_period: 10s  # 启动后等待多久开始检查
 
   maozi-cloud-basic-nacos:
+    restart: always
     image: nacos/nacos-server:2.0.4-slim
     container_name: maozi-cloud-basic-nacos
     env_file:
@@ -51,16 +52,15 @@ services:
       - 8848:8848
       - 9848:9848
       - 9555:9555
-    restart: always
     depends_on:
       maozi-cloud-basic-mysql:
         condition: service_healthy
 
   # ============ 缓存：Redis ============
   maozi-cloud-basic-redis:
+    restart: always
     image: redis:6.2.6
     container_name: maozi-cloud-basic-redis
-    restart: always
     ports:
       - 6379:6379
     volumes:
@@ -72,9 +72,9 @@ services:
   # ============ Observability Stack ============
   # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
   maozi-cloud-basic-loki:
+    restart: always
     image: grafana/loki:2.9.3
     container_name: maozi-cloud-basic-loki
-    restart: always
     environment:
       TZ: Asia/Shanghai
     command: -config.file=/etc/loki/loki-config.yml
@@ -86,9 +86,9 @@ services:
 
   # Tempo —— 链路追踪后端，接收 OTLP 协议的 trace 数据
   maozi-cloud-basic-tempo:
+    restart: always
     image: grafana/tempo:2.4.1
     container_name: maozi-cloud-basic-tempo
-    restart: always
     environment:
       TZ: Asia/Shanghai
     command: -config.file=/etc/tempo-config.yml
@@ -102,9 +102,9 @@ services:
 
   # Prometheus —— 指标采集与存储，抓取各服务 actuator/prometheus 端点
   maozi-cloud-basic-prometheus:
+    restart: always
     image: prom/prometheus:v2.51.2
     container_name: maozi-cloud-basic-prometheus
-    restart: always
     environment:
       TZ: Asia/Shanghai
     command:
@@ -123,9 +123,9 @@ services:
 
   # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
   maozi-cloud-basic-grafana:
+    restart: always
     image: grafana/grafana-oss:10.4.13
     container_name: maozi-cloud-basic-grafana
-    restart: always
     environment:
       TZ: Asia/Shanghai
       GF_SECURITY_ADMIN_USER: admin
@@ -139,9 +139,9 @@ services:
 
   # Promtail —— 日志采集 agent，挂载共享日志目录后推送至 Loki
   maozi-cloud-basic-promtail:
+    restart: always
     image: grafana/promtail:2.9.3
     container_name: maozi-cloud-basic-promtail
-    restart: always
     environment:
       TZ: Asia/Shanghai
     command: -config.file=/etc/promtail/config.yml
@@ -154,6 +154,21 @@ services:
       - ./maozi-cloud-basic-promtail/config/promtail-config.yml:/etc/promtail/config.yml:ro
       # positions (采集位置) 持久化,容器重启可续读
       - ./maozi-cloud-basic-promtail/data:/data:rw
+
+  maozi-cloud-basic-xxljob:
+    restart: always
+    image: xuxueli/xxl-job-admin:3.4.2
+    container_name: maozi-cloud-basic-xxljob
+    environment:
+      PARAMS: "--spring.datasource.url=jdbc:mysql://maozi-cloud-basic-mysql:3306/maozi-cloud-xxljob-middleware-db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai --spring.datasource.username=root --spring.datasource.password=password"
+      TZ: Asia/Shanghai
+    volumes:
+      - ./maozi-cloud-basic-xxljob/data:/data/applogs
+    ports:
+      - 12000:8080
+    depends_on:
+      maozi-cloud-basic-mysql:
+        condition: service_healthy
 
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建

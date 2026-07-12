@@ -34,7 +34,7 @@
       <!-- Seata 分布式事务配置模块 -->
       <module>maozi-cloud-config-seata</module>
       <!-- XXL-JOB 定时任务配置模块 -->
-      <module>maozi-cloud-config-job</module>
+      <module>maozi-cloud-config-xxljob</module>
       <!-- Dubbo RPC 通信配置模块 -->
       <module>maozi-cloud-config-dubbo</module>
       <!-- Redis 缓存配置模块 -->
@@ -44,7 +44,7 @@
       <!-- Stream 消息流配置模块 -->
       <module>maozi-cloud-config-stream</module>
       <!-- Swagger API 文档配置模块 -->
-      <module>maozi-cloud-config-swagger</module>
+      <module>maozi-cloud-config-openapi</module>
       <!-- 分布式锁配置模块 -->
       <module>maozi-cloud-config-lock</module>
     </modules>

@@ -69,7 +69,7 @@
 		<!-- Redisson 分布式锁与缓存客户端版本 -->
 		<redisson.version>3.18.0</redisson.version>
 		<!-- XXL-JOB 分布式任务调度框架版本 -->
-		<xxl-job-core.version>2.3.0</xxl-job-core.version>
+		<xxl-job-core.version>3.4.2</xxl-job-core.version>
 		<!-- MyBatis-Plus 增强版 ORM 框架版本 -->
 		<mybatis-plus.version>3.5.6</mybatis-plus.version>
 		<!-- TransmittableThreadLocal 阿里线程上下文传递工具版本 -->
@@ -100,8 +100,6 @@
 
 		<!-- 数据库配置模块版本 -->
 		<maozi-cloud-config-db.version>${revision}</maozi-cloud-config-db.version>
-		<!-- 定时任务配置模块版本 -->
-		<maozi-cloud-config-job.version>${revision}</maozi-cloud-config-job.version>
 		<!-- 日志配置模块版本 -->
 		<maozi-cloud-config-log.version>${revision}</maozi-cloud-config-log.version>
 		<!-- Web 层配置模块版本 -->
@@ -118,16 +116,18 @@
 		<maozi-cloud-config-feign.version>${revision}</maozi-cloud-config-feign.version>
 		<!-- Seata 分布式事务配置模块版本 -->
 		<maozi-cloud-config-seata.version>${revision}</maozi-cloud-config-seata.version>
-		<!-- Stream 消息流配置模块版本 -->
-		<maozi-cloud-config-stream.version>${revision}</maozi-cloud-config-stream.version>
-		<!-- Swagger API 文档配置模块版本 -->
-		<maozi-cloud-config-swagger.version>${revision}</maozi-cloud-config-swagger.version>
-		<!-- Sentinel 限流熔断配置模块版本 -->
-		<maozi-cloud-config-sentinel.version>${revision}</maozi-cloud-config-sentinel.version>
-		<!-- Spring Boot Admin 监控配置模块版本 -->
-		<maozi-cloud-config-monitor.version>${revision}</maozi-cloud-config-monitor.version>
 		<!-- 服务发现配置模块版本 -->
 		<maozi-cloud-config-nacos.version>${revision}</maozi-cloud-config-nacos.version>
+		<!-- Stream 消息流配置模块版本 -->
+		<maozi-cloud-config-stream.version>${revision}</maozi-cloud-config-stream.version>
+		<!-- 定时任务配置模块版本 -->
+		<maozi-cloud-config-xxljob.version>${revision}</maozi-cloud-config-xxljob.version>
+		<!-- Swagger API 文档配置模块版本 -->
+		<maozi-cloud-config-openapi.version>${revision}</maozi-cloud-config-openapi.version>
+		<!-- Spring Boot Admin 监控配置模块版本 -->
+		<maozi-cloud-config-monitor.version>${revision}</maozi-cloud-config-monitor.version>
+		<!-- Sentinel 限流熔断配置模块版本 -->
+		<maozi-cloud-config-sentinel.version>${revision}</maozi-cloud-config-sentinel.version>
 
 		<!-- 服务基础运行库版本 -->
 		<maozi-cloud-service-run.version>${revision}</maozi-cloud-service-run.version>

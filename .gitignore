@@ -48,6 +48,7 @@ target
 **/maozi-cloud-basic-tempo/data
 **/maozi-cloud-basic-promtail/data
 **/maozi-cloud-basic-prometheus/data
+**/maozi-cloud-basic-xxljob/data
 
 # 自动部署临时文件
 **/maozi-cloud-parent-env
