@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "spring.lock")
-public class LockProperties {
+@ConfigurationProperties(prefix = "lock.redisson")
+public class LockRedissonProperties {
 
     /** Redis 单节点地址 */
     private String address;

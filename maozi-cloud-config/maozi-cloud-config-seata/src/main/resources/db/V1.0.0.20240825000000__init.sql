@@ -7,13 +7,16 @@
 --           库中每个参与 AT 模式的业务库均需独立存在该表。
 -- 字段说明详见各列 COMMENT。
 -- ============================================================
-CREATE TABLE undo_log (
-    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Primary key',
-    branch_id BIGINT NOT NULL COMMENT 'branch transaction id',
-    xid VARCHAR(255) NOT NULL COMMENT 'global transaction id',
-    context VARCHAR(255) COMMENT 'undo_log context, such as serialization',
-    rollback_info LONGBLOB COMMENT 'rollback info',
-    log_status INT NOT NULL COMMENT '0: normal status, 1: defense status',
-    log_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'create datetime',
-    log_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'modify datetime'
-) COMMENT='seata_undolog';
+CREATE TABLE `undo_log` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `branch_id` bigint(20) NOT NULL,
+                            `xid` varchar(100) NOT NULL,
+                            `context` varchar(128) NOT NULL,
+                            `rollback_info` longblob NOT NULL,
+                            `log_status` int(11) NOT NULL,
+                            `log_created` datetime NOT NULL,
+                            `log_modified` datetime NOT NULL,
+                            `ext` varchar(100) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

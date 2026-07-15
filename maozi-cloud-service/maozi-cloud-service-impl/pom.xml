@@ -75,13 +75,6 @@
             <artifactId>maozi-cloud-service-api</artifactId>
             <version>${maozi-cloud-service-api.version}</version>
         </dependency>
-
-        <!-- 分布式锁配置模块，集成 Redisson 等分布式锁实现 -->
-        <dependency>
-            <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-lock</artifactId>
-            <version>${maozi-cloud-config-lock.version}</version>
-        </dependency>
         <!-- Project End -->
 
     </dependencies>

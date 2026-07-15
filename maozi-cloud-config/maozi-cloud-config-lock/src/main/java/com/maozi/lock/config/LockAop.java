@@ -1,10 +1,10 @@
 package com.maozi.lock.config;
 
 import com.maozi.common.CollectionUtil;
-import com.maozi.common.context.ApplicationEnvironmentContext;
 import com.maozi.lock.annotation.LockKey;
 import com.maozi.lock.lock.LockType;
-import com.maozi.lock.properties.LockProperties;
+import com.maozi.lock.properties.LockRedissonProperties;
+import com.maozi.redis.utils.RedisUtil;
 import jakarta.annotation.Resource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -51,7 +51,7 @@ public class LockAop {
 
     /** 锁配置属性 */
     @Resource
-    private LockProperties properties;
+    private LockRedissonProperties lockRedissonProperties;
 
     /**
      * 环绕通知，执行加锁、业务逻辑和释放锁
@@ -77,13 +77,13 @@ public class LockAop {
         String lockName = org.apache.commons.lang3.StringUtils.isNotBlank(annotation.name()) ? annotation.name() : signature.getDeclaringTypeName()+ "." +signature.getMethod().getName();
 
         // 拼接最终的锁键名，格式为：服务名:lock:锁名称:业务键名
-        lockName = ApplicationEnvironmentContext.SERVICE_NAME + ":lock:" + lockName + businessKeyName;
+        lockName = RedisUtil.REDIS_KEY_PREFIX + ":lock:" + lockName + businessKeyName;
 
         // 获取等待时间：如果注解未指定（Long.MIN_VALUE），则使用全局配置的默认值
-        long waitTime = annotation.waitTime() == Long.MIN_VALUE ? properties.getWaitTime() : annotation.waitTime();
+        long waitTime = annotation.waitTime() == Long.MIN_VALUE ? lockRedissonProperties.getWaitTime() : annotation.waitTime();
 
         // 获取持有时间：如果注解未指定（Long.MIN_VALUE），则使用全局配置的默认值
-        long leaseTime = annotation.leaseTime() == Long.MIN_VALUE ? properties.getLeaseTime() : annotation.leaseTime();
+        long leaseTime = annotation.leaseTime() == Long.MIN_VALUE ? lockRedissonProperties.getLeaseTime() : annotation.leaseTime();
 
         // 执行加锁操作，如果加锁失败则根据配置的策略进行处理
         type.lock(lockName,waitTime,leaseTime,annotation.lockTimeoutStrategy());

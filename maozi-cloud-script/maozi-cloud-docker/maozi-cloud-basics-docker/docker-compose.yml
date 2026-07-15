@@ -170,6 +170,22 @@ services:
       maozi-cloud-basic-mysql:
         condition: service_healthy
 
+  maozi-cloud-basic-seata:
+    restart: always
+    image: seataio/seata-server:2.0.0
+    container_name: maozi-cloud-basic-seata
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    environment:
+      - SEATA_IP=192.168.124.2
+      - SEATA_PORT=8091
+      - STORE_MODE=db
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/timezone
+      - ./maozi-cloud-basic-seata/config/application.yml:/seata-server/resources/application.yml
+
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建
 networks:

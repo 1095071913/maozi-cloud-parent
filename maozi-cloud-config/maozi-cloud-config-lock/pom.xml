@@ -37,6 +37,12 @@
             <artifactId>maozi-cloud-domain-enum</artifactId>
             <version>${maozi-cloud-domain-enum.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-redis</artifactId>
+            <version>${maozi-cloud-config-redis.version}</version>
+        </dependency>
         <!-- Project End -->
 
     </dependencies>

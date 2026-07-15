@@ -51,6 +51,7 @@ import com.maozi.service.api.IBaseMapper;
 import com.maozi.service.api.rpc.BaseServiceResult;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Field;
@@ -1204,6 +1205,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @return 包含实体 ID 的统一响应结果
      */
 	@Override
+	@Transactional
 	public <P> AbstractBaseResult<Long> saveUpdateResult(Long id, P param){
 		return ResultUtil.success(saveUpdate(id,param));
 	}
@@ -1215,6 +1217,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @return 统一响应结果
      */
 	@Override
+	@Transactional
 	public AbstractBaseResult<Void> saveUpdateBatchResult(List<SaveUpdateBatch> collection){
 
 		CollectionUtil.collectionIsEmptyThrowError(collection, getResourceName() + "列表");
@@ -1233,6 +1236,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @return 统一响应结果
      */
 	@Override
+	@Transactional
 	public AbstractBaseResult<Void> removeByIdResult(Long id) {
 		removeById(id);
 		return ResultUtil.success();
@@ -1245,6 +1249,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @return 统一响应结果
      */
 	@Override
+	@Transactional
 	public AbstractBaseResult<Void> removeByIdBatchResult(List<Long> ids) {
 
 		CollectionUtil.collectionIsEmptyThrowError(ids, getResourceName() + "列表");

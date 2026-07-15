@@ -17,6 +17,11 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
 
 		<!-- SpringBoot Begin -->
 		<!-- Spring Cloud Alibaba Seata，提供分布式事务 AT 模式支持 -->
@@ -25,14 +30,6 @@
 			<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
 		</dependency>
 		<!-- SpringBoot End -->
-
-		<!-- Project Begin -->
-		<!-- 数据库访问配置模块，Seata 事务管理需要操作数据库 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-db</artifactId>
-			<version>${maozi-cloud-config-db.version}</version>
-		</dependency>
 		<!-- Project End -->
 
 
