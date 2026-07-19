@@ -42,20 +42,6 @@ services:
       retries: 10        # 重试次数
       start_period: 10s  # 启动后等待多久开始检查
 
-  maozi-cloud-basic-nacos:
-    restart: always
-    image: nacos/nacos-server:2.0.4-slim
-    container_name: maozi-cloud-basic-nacos
-    env_file:
-      - maozi-cloud-basic-nacos/env/nacos-mysql.env
-    ports:
-      - 8848:8848
-      - 9848:9848
-      - 9555:9555
-    depends_on:
-      maozi-cloud-basic-mysql:
-        condition: service_healthy
-
   # ============ 缓存：Redis ============
   maozi-cloud-basic-redis:
     restart: always
@@ -69,36 +55,21 @@ services:
     command:
       /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf "
 
-  # ============ Observability Stack ============
-  # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
-  maozi-cloud-basic-loki:
+  # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
+  maozi-cloud-basic-grafana:
     restart: always
-    image: grafana/loki:2.9.3
-    container_name: maozi-cloud-basic-loki
+    image: grafana/grafana-oss:10.4.13
+    container_name: maozi-cloud-basic-grafana
     environment:
       TZ: Asia/Shanghai
-    command: -config.file=/etc/loki/loki-config.yml
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
     ports:
-      - 3100:3100
+      - 3300:3000
     volumes:
-      - ./maozi-cloud-basic-loki/config/loki-config.yml:/etc/loki/loki-config.yml:ro
-      - ./maozi-cloud-basic-loki/data:/loki:rw
-
-  # Tempo —— 链路追踪后端，接收 OTLP 协议的 trace 数据
-  maozi-cloud-basic-tempo:
-    restart: always
-    image: grafana/tempo:2.4.1
-    container_name: maozi-cloud-basic-tempo
-    environment:
-      TZ: Asia/Shanghai
-    command: -config.file=/etc/tempo-config.yml
-    ports:
-      - 3200:3200   # tempo HTTP UI
-      - 4317:4317   # otlp grpc
-      - 4318:4318   # otlp http
-    volumes:
-      - ./maozi-cloud-basic-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
-      - ./maozi-cloud-basic-tempo/data:/var/tempo:rw
+      - ./maozi-cloud-basic-grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./maozi-cloud-basic-grafana/data:/var/lib/grafana:rw
 
   # Prometheus —— 指标采集与存储，抓取各服务 actuator/prometheus 端点
   maozi-cloud-basic-prometheus:
@@ -121,21 +92,36 @@ services:
       - ./maozi-cloud-basic-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./maozi-cloud-basic-prometheus/data:/prometheus:rw
 
-  # Grafana —— 可视化面板，统一查看 Loki 日志 / Tempo 追踪 / Prometheus 指标
-  maozi-cloud-basic-grafana:
+  # Tempo —— 链路追踪后端，接收 OTLP 协议的 trace 数据
+  maozi-cloud-basic-tempo:
     restart: always
-    image: grafana/grafana-oss:10.4.13
-    container_name: maozi-cloud-basic-grafana
+    image: grafana/tempo:2.4.1
+    container_name: maozi-cloud-basic-tempo
     environment:
       TZ: Asia/Shanghai
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin
-      GF_USERS_ALLOW_SIGN_UP: "false"
+    command: -config.file=/etc/tempo-config.yml
     ports:
-      - 3300:3000
+      - 3200:3200   # tempo HTTP UI
+      - 4317:4317   # otlp grpc
+      - 4318:4318   # otlp http
     volumes:
-      - ./maozi-cloud-basic-grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./maozi-cloud-basic-grafana/data:/var/lib/grafana:rw
+      - ./maozi-cloud-basic-tempo/config/tempo-config.yml:/etc/tempo-config.yml:ro
+      - ./maozi-cloud-basic-tempo/data:/var/tempo:rw
+
+  # ============ Observability Stack ============
+  # Loki —— 日志聚合后端，接收 Promtail 推送的日志流
+  maozi-cloud-basic-loki:
+    restart: always
+    image: grafana/loki:2.9.3
+    container_name: maozi-cloud-basic-loki
+    environment:
+      TZ: Asia/Shanghai
+    command: -config.file=/etc/loki/loki-config.yml
+    ports:
+      - 3100:3100
+    volumes:
+      - ./maozi-cloud-basic-loki/config/loki-config.yml:/etc/loki/loki-config.yml:ro
+      - ./maozi-cloud-basic-loki/data:/loki:rw
 
   # Promtail —— 日志采集 agent，挂载共享日志目录后推送至 Loki
   maozi-cloud-basic-promtail:
@@ -155,17 +141,16 @@ services:
       # positions (采集位置) 持久化,容器重启可续读
       - ./maozi-cloud-basic-promtail/data:/data:rw
 
-  maozi-cloud-basic-xxljob:
+  maozi-cloud-basic-nacos:
     restart: always
-    image: xuxueli/xxl-job-admin:3.4.2
-    container_name: maozi-cloud-basic-xxljob
-    environment:
-      PARAMS: "--spring.datasource.url=jdbc:mysql://maozi-cloud-basic-mysql:3306/maozi-cloud-xxljob-middleware-db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai --spring.datasource.username=root --spring.datasource.password=password"
-      TZ: Asia/Shanghai
-    volumes:
-      - ./maozi-cloud-basic-xxljob/data:/data/applogs
+    image: nacos/nacos-server:2.0.4-slim
+    container_name: maozi-cloud-basic-nacos
+    env_file:
+      - maozi-cloud-basic-nacos/env/nacos-mysql.env
     ports:
-      - 12000:8080
+      - 8848:8848
+      - 9848:9848
+      - 9555:9555
     depends_on:
       maozi-cloud-basic-mysql:
         condition: service_healthy
@@ -185,6 +170,21 @@ services:
       - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime
       - /usr/share/zoneinfo/Asia/Shanghai:/etc/timezone
       - ./maozi-cloud-basic-seata/config/application.yml:/seata-server/resources/application.yml
+
+  maozi-cloud-basic-xxljob:
+    restart: always
+    image: xuxueli/xxl-job-admin:3.4.2
+    container_name: maozi-cloud-basic-xxljob
+    environment:
+      PARAMS: "--spring.datasource.url=jdbc:mysql://maozi-cloud-basic-mysql:3306/maozi-cloud-xxljob-middleware-db?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai --spring.datasource.username=root --spring.datasource.password=password"
+      TZ: Asia/Shanghai
+    volumes:
+      - ./maozi-cloud-basic-xxljob/data:/data/applogs
+    ports:
+      - 12000:8080
+    depends_on:
+      maozi-cloud-basic-mysql:
+        condition: service_healthy
 
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建
