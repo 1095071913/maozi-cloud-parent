@@ -1,0 +1,43 @@
+# Idea业务服务启动
+
+## JDK安装
+
+选择安装Eclipse Temurin 17
+
+## 代码编译
+
+```
+mvn clean install -T 16C
+```
+
+## 启动业务服务
+
+1. [单体全量业务服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-all-service/src/main/java/com/maozi/Application.java)
+2. [网关服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-gateway-service/src/main/java/com/maozi/Application.java)
+3. [监控服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-monitor-service/src/main/java/com/maozi/Application.java)
+4. [系统服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-system/maozi-cloud-system-service/src/main/java/com/maozi/Application.java)
+5. [认证服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-oauth/maozi-cloud-oauth-service/src/main/java/com/maozi/Application.java)
+
+## 启动前需要设置JVM参数
+
+```
+-Dproject.version=maozi
+-Dapplication-dev-port=0
+-Dapplication-dev-dubbo-port=-1
+-Xms256m
+-Xmx256m
+-Xss256k
+-XX:MaxMetaspaceSize=192m
+-XX:+UseSerialGC
+-XX:CompressedClassSpaceSize=32m
+-XX:ReservedCodeCacheSize=32m
+-XX:MaxDirectMemorySize=32m
+--add-opens java.base/java.math=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
+--add-opens java.base/java.lang.reflect=ALL-UNNAMED
+
+
+# project.version 版本号,设置后根据前端传递的X-Version请求头流量分发到对应版本号服务
+# application-dev-port 随机Web端口
+# application-dev-dubbo-port 随机Dubbo端口
+```
