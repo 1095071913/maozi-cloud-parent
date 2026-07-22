@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 > nul
 setlocal enabledelayedexpansion
 
 REM ============================================================
@@ -19,16 +20,16 @@ REM ============================================================
 
 REM 切换到本脚本所在目录, 使后续相对路径 (jar-utils / scan-utils) 可靠
 cd /d "%~dp0"
-set "current_directory=%cd%"
+set current_directory=%CD%
 
-REM 源码仓库根目录 (与原 maozi-cloud-parent-directory 一致)
+REM 源码仓库根目录 (自动定位: 本脚本向上回溯 3 级 = maozi-cloud-parent)
 REM 如需迁移部署路径, 改这一行即可
-set "repo_directory=C:\Users\maozi\maozi-cloud\maozi-cloud-parent"
+set repo_directory=%~dp0..\..\..
 
 REM 切换到仓库根目录, 后续 git / mvn 命令均在此执行
 cd /d "%repo_directory%"
 
-REM 调用统一构建逻辑, 把脚本目录作为环境变量传入, 用于定位 scan-file-utils 与 image / docker 目录
-call "%current_directory%\maozi-cloud-build-jar-utils.bat"
+REM 调用统一构建逻辑, 把脚本目录作为参数传入, 用于定位 scan-file-utils 与 image / docker 目录
+call "%current_directory%\maozi-cloud-build-jar-utils.bat" "%current_directory%"
 
-endlocal
+endlocal & exit /b %errorlevel%
