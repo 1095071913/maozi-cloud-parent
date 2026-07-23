@@ -13,6 +13,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -134,6 +135,11 @@ public class RestErrorHandler {
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
 	public Object handleAccessDeniedException(AccessDeniedException e) {
+		throw e;
+	}
+
+	@ExceptionHandler(AsyncRequestNotUsableException.class)
+	public Object handleAsyncRequestNotUsableException(AsyncRequestNotUsableException e) throws AsyncRequestNotUsableException {
 		throw e;
 	}
 

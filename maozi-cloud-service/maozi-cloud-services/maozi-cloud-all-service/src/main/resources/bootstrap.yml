@@ -17,14 +17,14 @@ spring:
 
 # 项目展示信息（用于 Swagger 文档、日志等）
 project:
-  title: 单体全量服务
+  title: 单体全量业务服务
   details: 所有服务功能
 
 # 服务端口，默认 1000（可通过 application-dev-port 环境变量覆盖）
 application-port: ${application-dev-port:1000}
 
 # 数据库名称覆盖（注释掉则使用默认规则：${应用名}-${环境}-db）
-#application-datasource-db-name: maozi-cloud-all-local-db
+#application-datasource-db-name: maozi-cloud-all-service-local-db
 
 # 接口白名单（不需要认证的路径，注释掉则全部接口需认证）
 #application-project-whitelist:

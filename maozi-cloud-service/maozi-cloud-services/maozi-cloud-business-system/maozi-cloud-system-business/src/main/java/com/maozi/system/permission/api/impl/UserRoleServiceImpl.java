@@ -3,7 +3,6 @@ package com.maozi.system.permission.api.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.maozi.common.ObjectUtil;
-import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.permission.api.RoleService;
@@ -69,26 +68,24 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRole
 
 		if(ObjectUtil.isNotNullEmpty(bindRoleIds)) {
 
-			Consumer<Long> consumer = ApplicationLinkContext.wrapConsumer((roleId)->{
+			Consumer<Long> consumer = (roleId)->{
 
 				UserRoleDo domainSave = UserRoleDo.builder().userId(userId).roleId(roleId).build();
 				if(count(Wrappers.lambdaQuery(domainSave)) < 1 && roleService.has(roleId)) {
 					save(domainSave);
 				}
 
-			});
+			};
 
-            bindRoleIds.parallelStream().forEach(Objects.requireNonNull(consumer));
+            bindRoleIds.forEach(Objects.requireNonNull(consumer));
 
 		}
 
 		if(ObjectUtil.isNotNullEmpty(unbindRoleIds)) {
 
-			Consumer<Long> consumer = ApplicationLinkContext.wrapConsumer((roleId)->{
-
+			Consumer<Long> consumer = (roleId)->{
 				remove(Wrappers.lambdaQuery(UserRoleDo.builder().userId(userId).roleId(roleId).build()));
-
-			});
+			};
 
 			unbindRoleIds.parallelStream().forEach(Objects.requireNonNull(consumer));
 

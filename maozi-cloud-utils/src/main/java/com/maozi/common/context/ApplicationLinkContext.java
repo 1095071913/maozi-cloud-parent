@@ -1,7 +1,6 @@
 package com.maozi.common.context;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.alibaba.ttl.TtlWrappers;
 import com.maozi.common.JacksonUtil;
 import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
@@ -10,7 +9,6 @@ import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -93,25 +91,6 @@ public class ApplicationLinkContext {
             traceIds.set(traceId);
             MDC.put(MDC_TRACE_ID_KEY,traceId);
         }
-    }
-
-    /**
-     * 包装 Consumer，确保执行后自动清理上下文并支持 TTL 传递
-     *
-     * @param consumer 原始 Consumer
-     * @param <T> Consumer 参数类型
-     * @return 包装后的 Consumer
-     */
-    public static <T> Consumer<T> wrapConsumer(Consumer<T> consumer) {
-
-        if (ObjectUtil.isNullEmpty(consumer)) {
-            return null;
-        }
-
-        consumer = consumer.andThen((value)-> clearContext());
-
-        return TtlWrappers.wrapConsumer(consumer);
-
     }
 
     /**

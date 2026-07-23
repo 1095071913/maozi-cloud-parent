@@ -40,7 +40,6 @@ import com.maozi.common.ReflectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.SerializeUtil;
 import com.maozi.common.ValidatorUtil;
-import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.common.result.error.code.ErrorCode;
 import com.maozi.common.result.error.code.SystemErrorCode;
@@ -1019,7 +1018,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		CollectionUtil.collectionIsEmptyThrowError(domains,getResourceName() + "列表");
 
-		Consumer<T> consumer = ApplicationLinkContext.wrapConsumer((domain)->{
+		Consumer<T> consumer = (domain) -> {
 
 			if(ObjectUtil.isNotNullEmpty(domain.getId())) {
 
@@ -1033,9 +1032,9 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			super.saveOrUpdate(domain);
 
-		});
+		};
 
-		domains.parallelStream().forEach(Objects.requireNonNull(consumer));
+		domains.forEach(Objects.requireNonNull(consumer));
 
     }
 

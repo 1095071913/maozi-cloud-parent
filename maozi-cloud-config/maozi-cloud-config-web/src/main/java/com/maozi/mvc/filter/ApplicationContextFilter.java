@@ -2,6 +2,7 @@ package com.maozi.mvc.filter;
 
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.context.ApplicationLinkContext;
+import com.maozi.common.dto.CurrentUserInfo;
 import io.opentelemetry.api.trace.Span;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -55,14 +56,19 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
         String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));
         ApplicationLinkContext.versions.set(version);
 
-        ApplicationLinkContext.setCurrentUserInfo(request.getHeader(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
+        CurrentUserInfo currentUserInfo = ApplicationLinkContext.currentUserInfos.get();
+        if(ObjectUtil.isNullEmpty(currentUserInfo)){
+            ApplicationLinkContext.setCurrentUserInfo(request.getHeader(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
+        }
 
-        if(ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId())){
+        boolean notHasTraceId = ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId());
+        if(notHasTraceId){
             String traceId = request.getHeader(ApplicationLinkContext.TRACE_ID_KEY);
             if(ObjectUtil.isNullEmpty(traceId)){
                 traceId = UUID.randomUUID().toString();
             }
             ApplicationLinkContext.setTraceId(traceId);
+            response.setHeader(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.traceIds.get());
         }
 
         try {

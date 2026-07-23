@@ -52,17 +52,4 @@ public class ApplicationUserContextFilter implements HandlerInterceptor {
 
     }
 
-    /**
-     * 请求完成后清理链路上下文
-     *
-     * @param request HTTP 请求
-     * @param response HTTP 响应
-     * @param handler 处理器
-     * @param ex 处理过程中可能抛出的异常
-     */
-    @Override
-    public void afterCompletion(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler, Exception ex) {
-        ApplicationLinkContext.clearContext();
-    }
-
 }
