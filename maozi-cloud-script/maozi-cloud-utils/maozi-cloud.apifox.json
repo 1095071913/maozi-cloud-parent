@@ -7,7 +7,7 @@
   },
   "info": {
     "name": "maozi-cloud",
-    "description": "maozi-cloud 微服务平台 API 集合（Apifox 项目导出）。导入方式：Apifox -> 项目设置 -> 数据导入 -> Apifox。涵盖网关、OAuth、System 等全部 REST 接口；Dubbo RPC 接口不在本导出范围内。",
+    "description": "",
     "mockRule": {
       "rules": [],
       "enableSystemRule": true
@@ -7286,7 +7286,7 @@
       "items": [
         {
           "id": 20040838,
-          "name": "maozi-cloud-oauth",
+          "name": "maozi-cloud-oauth-service",
           "visibility": "INHERITED",
           "moduleId": 7130572,
           "items": [
@@ -7656,7 +7656,7 @@
         },
         {
           "id": 20040839,
-          "name": "maozi-cloud-oauth",
+          "name": "maozi-cloud-system-service",
           "visibility": "INHERITED",
           "moduleId": 7130572,
           "items": [
@@ -12196,7 +12196,7 @@
             "environmentId": 42554209,
             "useDataSetId": -1,
             "iterationCount": 1,
-            "threadCount": 10,
+            "threadCount": 1,
             "runnerId": 0,
             "onError": "ignore",
             "delayItem": 0,
@@ -12212,23 +12212,138 @@
           "postProcessors": [],
           "children": [],
           "performanceTestOptions": {},
-          "apiTestDataSets": [
+          "apiTestDataSets": []
+        },
+        {
+          "steps": [
             {
-              "id": 4269427,
-              "name": "数据 1",
-              "relatedId": 8404502,
-              "apiTestDataList": [
-                {
-                  "id": 1399102,
-                  "data": "oauth_access_token,oauth_refresh_token,auto_client_secret,auto_client_id,auto_permission_id,auto_role_id,auto_user_password,auto_user_id,auto_user_username,auto_client_name,auto_oauth_refresh_token,auto_oauth_access_token,auto_new_permission_id\n",
-                  "dataSetId": 4269427,
-                  "relatedId": 8404502,
-                  "relatedType": 0,
-                  "environmentId": 0
-                }
-              ]
+              "name": "认证授权 (密码认证授权)",
+              "number": 1,
+              "type": "http",
+              "bind": true,
+              "disable": false,
+              "bindType": "API_CASE",
+              "bindId": 383709650,
+              "syncMode": "SYNC_WITH_API_CASE",
+              "httpApiCase": {
+                "id": 383709650,
+                "name": "密码认证授权",
+                "method": "",
+                "path": null,
+                "auth": {},
+                "type": "DEBUG_CASE",
+                "options": {},
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responseId": "198631360",
+                "requestBody": {
+                  "parameters": [
+                    {
+                      "id": "l8eVvnZXP1",
+                      "relatedId": "kXPePc75q2",
+                      "relatedName": "grant_type",
+                      "name": "grant_type",
+                      "type": "string",
+                      "value": "password",
+                      "enable": true,
+                      "description": "认证授权方式\n授权码模式:authorization_code\n客户端模式:client_credentials\n刷新令牌模式:refresh_token\n密码模式:password",
+                      "isDelete": false
+                    },
+                    {
+                      "id": "o8Sg9PRUd4",
+                      "relatedId": "fXpVh09xZq",
+                      "relatedName": "username",
+                      "name": "username",
+                      "type": "string",
+                      "value": "{{username}}",
+                      "enable": true,
+                      "description": "账号",
+                      "isDelete": false
+                    },
+                    {
+                      "id": "nVV3ZJI1Bs",
+                      "relatedId": "5KsS5hjMZo",
+                      "relatedName": "password",
+                      "name": "password",
+                      "type": "string",
+                      "value": "{{password}}",
+                      "enable": true,
+                      "description": "密码",
+                      "isDelete": false
+                    },
+                    {
+                      "id": "xLnyi65HS9",
+                      "relatedId": "b3pLVnomJ6",
+                      "relatedName": "refresh_token",
+                      "name": "refresh_token",
+                      "type": "string",
+                      "value": "{{oauth_refresh_token}}",
+                      "enable": false,
+                      "description": "刷新令牌",
+                      "isDelete": false
+                    }
+                  ],
+                  "data": "",
+                  "type": "application/x-www-form-urlencoded",
+                  "generateMode": "normal"
+                },
+                "preProcessors": [],
+                "postProcessors": [
+                  {
+                    "type": "customScript",
+                    "data": "// 获取 JSON 格式的响应数据\nvar jsonData = pm.response.json();\n\n// 提取 refresh_token\nvar oauth_refresh_token = jsonData.data.refresh_token;\npm.environment.set(\"oauth_refresh_token\", oauth_refresh_token);\n\n// 拼接 access_token（token_type + access_token，中间带空格）\nvar oauth_access_token = jsonData.data.token_type + \" \" + jsonData.data.access_token;\npm.environment.set(\"oauth_access_token\", oauth_access_token);\n\n// 打印日志，方便调试\nconsole.log(\"oauth_access_token:\", oauth_access_token);\nconsole.log(\"oauth_refresh_token:\", oauth_refresh_token);",
+                    "defaultEnable": false,
+                    "enable": true
+                  }
+                ],
+                "advancedSettings": {
+                  "disabledSystemHeaders": {},
+                  "isDefaultUrlEncoding": 2,
+                  "disableUrlEncoding": false
+                },
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "header": [],
+                  "cookie": []
+                },
+                "inheritPreProcessors": {},
+                "inheritPostProcessors": {},
+                "inheritPreProcessorsSnapshot": null,
+                "inheritPostProcessorsSnapshot": null,
+                "moduleId": 7130572,
+                "apiId": 472222918
+              }
             }
-          ]
+          ],
+          "id": 8483964,
+          "name": "全流程自动化压力测试预数据",
+          "tags": [],
+          "options": {
+            "environmentId": 42554209,
+            "useDataSetId": -1,
+            "iterationCount": 1,
+            "threadCount": 1,
+            "runnerId": 0,
+            "onError": "ignore",
+            "delayItem": 0,
+            "saveReportDetail": "all",
+            "saveVariables": true,
+            "readGlobalCookie": false,
+            "saveGlobalCookie": false
+          },
+          "priority": 2,
+          "ordering": 20,
+          "description": "",
+          "preProcessors": [],
+          "postProcessors": [],
+          "children": [],
+          "performanceTestOptions": {},
+          "apiTestDataSets": []
         },
         {
           "steps": [
@@ -15055,23 +15170,7 @@
           "postProcessors": [],
           "children": [],
           "performanceTestOptions": {},
-          "apiTestDataSets": [
-            {
-              "id": 4269472,
-              "name": "数据 1",
-              "relatedId": 8404928,
-              "apiTestDataList": [
-                {
-                  "id": 1399157,
-                  "data": "oauth_access_token,oauth_refresh_token,auto_client_secret,auto_client_id,auto_permission_id,auto_role_id,auto_user_password,auto_user_id,auto_user_username,auto_client_name,auto_oauth_refresh_token,auto_oauth_access_token,auto_new_permission_id\n",
-                  "dataSetId": 4269472,
-                  "relatedId": 8404928,
-                  "relatedType": 0,
-                  "environmentId": 0
-                }
-              ]
-            }
-          ]
+          "apiTestDataSets": []
         }
       ]
     }
@@ -15093,20 +15192,6 @@
         {
           "name": "password",
           "securityType": "default",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
-        },
-        {
-          "name": "oauth_refresh_token",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
-        },
-        {
-          "name": "oauth_access_token",
           "value": "",
           "description": "",
           "initialValue": "",
@@ -15196,8 +15281,36 @@
   ],
   "commonScripts": [],
   "databaseConnections": [],
-  "globalVariables": [],
-  "commonParameters": null,
+  "globalVariables": [
+    {
+      "id": "7828608",
+      "variables": []
+    }
+  ],
+  "commonParameters": {
+    "id": 1012352,
+    "createdAt": "2026-07-04T22:21:30.000Z",
+    "updatedAt": "2026-07-04T22:21:30.000Z",
+    "deletedAt": null,
+    "parameters": {
+      "header": [
+        {
+          "name": "X-Version",
+          "defaultEnable": true,
+          "type": "string",
+          "id": "XZw7cK1ELD",
+          "defaultValue": "maozi",
+          "schema": {
+            "type": "string",
+            "default": "maozi"
+          }
+        }
+      ]
+    },
+    "projectId": 7828608,
+    "creatorId": 359455,
+    "editorId": 359455
+  },
   "customFunctions": [],
   "projectTestCaseCategories": [
     {
