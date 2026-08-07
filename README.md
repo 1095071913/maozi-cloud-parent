@@ -33,6 +33,8 @@
 
 - 客户端长连接消息通信（ACK应答机制、重试发送消息、多实例兼容）
 
+- 引入 Spring Ai Alibaba 实现路由工作流智能体
+
 ## 🏗️ 架构图
 
 <img src="architecture_diagram.png" alt="null" style="zoom:50%;" />
