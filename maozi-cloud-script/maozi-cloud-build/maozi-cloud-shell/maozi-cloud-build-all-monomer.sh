@@ -24,7 +24,8 @@
 
 cd "$(dirname "$0")"
 current_directory="$(pwd)"
-repo_root="/Users/maozi/maozi-cloud/maozi-cloud-parent"
+# 源码仓库根目录: 由脚本所在位置推导 (maozi-cloud-shell 向上三级)
+repo_root="$(cd "$current_directory/../../.." && pwd)"
 cd "$repo_root"
 
 # ============================================================

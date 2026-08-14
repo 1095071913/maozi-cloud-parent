@@ -1,6 +1,8 @@
 import axios, {type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig} from 'axios'
 import {ElMessage} from 'element-plus'
 import {clearTokens, getAccessToken, getRefreshToken, setAccessToken, setRefreshToken} from '@/utils/auth'
+import {getGrayVersion} from '@/utils/gray'
+import {getTempRequestUrl} from '@/utils/tempRequest'
 import {refreshToken} from './auth'
 import type {ApiResponse, TokenResult} from '@/types/api'
 
@@ -22,13 +24,23 @@ const service: AxiosInstance = axios.create({
 /** 需要跳过自动注入 token 的接口（登录/登出/刷新使用 Basic Auth） */
 const WHITE_LIST = ['/oauth/oauth2/token', '/oauth/oauth2/revoke']
 
-// 请求拦截器：注入 Bearer token
+// 请求拦截器：注入 Bearer token、灰度标识与临时请求地址
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getAccessToken()
     const isWhitelisted = WHITE_LIST.some((p) => config.url?.includes(p))
     if (token && !isWhitelisted) {
       config.headers.Authorization = `Bearer ${token}`
+    }
+    // 灰度测试开启后，所有请求携带灰度标识，由网关路由到对应灰度服务
+    const grayVersion = getGrayVersion()
+    if (grayVersion) {
+      config.headers['X-Version'] = grayVersion
+    }
+    // 临时请求开启后，所有请求改走临时地址
+    const tempUrl = getTempRequestUrl()
+    if (tempUrl) {
+      config.baseURL = tempUrl
     }
     return config
   },

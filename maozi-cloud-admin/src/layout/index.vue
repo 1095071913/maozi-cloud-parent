@@ -67,16 +67,20 @@ async function handleLogout() {
     <div class="layout-main">
       <header class="layout-header">
         <div class="header-left">
+          <el-tag effect="dark" size="large" type="info" class="header-title">
+            {{ (route.meta.title as string) || '' }}
+          </el-tag>
           <el-tag
             v-if="envInfo"
             :type="envInfo.type"
             effect="dark"
-            size="default"
+            size="large"
             class="env-tag"
           >
             {{ envInfo.label }}
           </el-tag>
-          <div class="header-title">{{ (route.meta.title as string) || '' }}</div>
+          <GrayRelease />
+          <TempRequest />
         </div>
         <div class="header-right">
           <el-dropdown trigger="click">
@@ -165,13 +169,21 @@ async function handleLogout() {
 }
 
 .env-tag {
+  /** 与 large 按钮同高（el-tag large 默认 32px） */
+  height: 40px;
+  justify-content: center;
+  min-width: 132px;
   font-weight: 600;
   letter-spacing: 1px;
 }
 
 .header-title {
-  font-size: 16px;
-  font-weight: 500;
+  /** 与其余标识同风格同尺寸 */
+  height: 40px;
+  justify-content: center;
+  min-width: 132px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .user-info {

@@ -33,8 +33,8 @@
 cd "$(dirname "$0")"
 current_directory="$(pwd)"
 
-# 源码仓库根目录 (与 maozi-cloud-build-all-distributed.sh 保持一致)
-repo_directory="/Users/maozi/maozi-cloud/maozi-cloud-parent"
+# 源码仓库根目录: 由脚本所在位置推导 (maozi-cloud-shell 向上三级)
+repo_directory="$(cd "$current_directory/../../.." && pwd)"
 cd "$repo_directory"
 
 # 可部署服务源码根目录 (仅此目录下生成的 jar 才会触发 Docker 部署)

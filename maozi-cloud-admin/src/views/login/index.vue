@@ -60,14 +60,19 @@ async function handleLogin(formEl?: FormInstance) {
   <div class="login-container">
     <div class="login-card">
       <div class="login-title">{{ loginTitle }}</div>
-      <el-tag
-        v-if="envInfo"
-        :type="envInfo.type"
-        effect="dark"
-        class="login-env"
-      >
-        {{ envInfo.label }}
-      </el-tag>
+      <div class="login-badges">
+        <el-tag
+          v-if="envInfo"
+          :type="envInfo.type"
+          effect="dark"
+          size="large"
+          class="login-env"
+        >
+          {{ envInfo.label }}
+        </el-tag>
+        <GrayRelease />
+        <TempRequest />
+      </div>
       <el-form
         ref="loginFormRef"
         :model="loginForm"
@@ -146,10 +151,26 @@ async function handleLogin(formEl?: FormInstance) {
   color: #303133;
 }
 
-.login-env {
+.login-badges {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  gap: 8px;
+  align-items: center;
   justify-content: center;
   margin-bottom: 24px;
+}
+
+/** 登录卡片内容区仅 320px，覆写顶栏的 132px 统一宽度，标签与按钮统一为 112px */
+.login-card .login-badges :deep(.el-tag),
+.login-card .login-badges :deep(.el-button) {
+  width: auto;
+  min-width: 112px;
+}
+
+.login-env {
+  /** 与 large 按钮同高（el-tag large 默认 32px） */
+  height: 40px;
   font-weight: 600;
   letter-spacing: 1px;
 }

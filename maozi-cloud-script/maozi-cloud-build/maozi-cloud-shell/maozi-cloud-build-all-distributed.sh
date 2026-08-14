@@ -20,9 +20,8 @@
 cd "$(dirname "$0")"
 current_directory="$(pwd)"
 
-# 源码仓库根目录 (与原 maozi-cloud-parent-directory 一致)
-# 如需迁移部署路径, 改这一行即可
-repo_directory="/Users/maozi/maozi-cloud/maozi-cloud-parent"
+# 源码仓库根目录: 由脚本所在位置推导 (maozi-cloud-shell 向上三级)
+repo_directory="$(cd "$current_directory/../../.." && pwd)"
 
 # 切换到仓库根目录, 后续 git / mvn 命令均在此执行
 cd "$repo_directory"
