@@ -66,7 +66,7 @@ public class MybatisPlusConfig {
             /**
              * 获取租户 ID
              *
-             * @return 租户 ID 值
+             * @return 租户 ID 值（当前实现返回空字符串占位，尚未接入真实租户上下文）
              */
             @Override
             public LongValue getTenantId() {

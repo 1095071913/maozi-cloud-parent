@@ -18,13 +18,21 @@ import io.opentelemetry.sdk.trace.samplers.Sampler;
 @AutoService(ConfigurableSamplerProvider.class)
 public class FilterSamplerProvider implements ConfigurableSamplerProvider {
 
+    /** 采样器在 SPI 体系中的注册名称 */
     public static final String PROVIDER_NAME = "FilterSamplerProvider";
 
+    /**
+     * 创建自定义采样器实例
+     *
+     * @param configProperties OpenTelemetry 配置属性
+     * @return {@link FilterSampler} 实例
+     */
     @Override
     public Sampler createSampler(ConfigProperties configProperties) {
         return new FilterSampler();
     }
 
+    /** 返回采样器注册名称，供 {@code otel.traces.sampler} 配置项选用 */
     @Override
     public String getName() {
         return PROVIDER_NAME;

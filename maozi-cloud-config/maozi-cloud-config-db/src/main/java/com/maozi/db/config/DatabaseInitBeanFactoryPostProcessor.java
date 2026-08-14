@@ -21,7 +21,9 @@ import java.sql.Statement;
  * 确保 DataSource 和 Flyway Bean 创建时数据库已存在。
  * </p>
  * <p>
- * 以避免 {@code @Configuration} 类提前实例化的问题。
+ * 之所以选择在 BeanFactoryPostProcessor 扩展点执行本逻辑，
+ * 而非依赖普通 Bean 的生命周期回调，是为了避免触发
+ * {@code @Configuration} 配置类提前实例化的问题。
  * </p>
  *
  * @author maozi
@@ -107,7 +109,7 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
      * </p>
      *
      * @param url JDBC URL
-     * @return 数据库名称
+     * @return 数据库名称；URL 中未找到路径分隔符时返回 {@code null}
      */
     private String extractDatabaseName(String url) {
         int dbStart = url.indexOf('/', JDBC_MYSQL_PREFIX.length());

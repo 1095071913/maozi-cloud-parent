@@ -41,9 +41,13 @@ public class JobEntranceLogAop {
 
     /**
      * 环绕通知，记录定时任务执行日志
+     * <p>
+     * 任务抛出的 {@code Exception} 会被捕获并记录日志，不再向上抛出，
+     * 仅 {@code Error} 级别的严重错误会继续向上传播。
+     * </p>
      *
      * @param proceedingJoinPoint AOP 连接点
-     * @throws Throwable 任务执行异常
+     * @throws Throwable 仅 Error 级别严重错误向上抛出（Exception 已被捕获记录）
      */
     @Around(POINT)
     public void around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -61,6 +65,7 @@ public class JobEntranceLogAop {
         logs.put(LogTag.TYPE, LogCommonType.JOB.getDesc());
         logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
 
+        // 非生产环境直接记录任务参数；生产环境为避免参数外泄，仅在异常时补充记录
         Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
         if(isNotProd){
             logs.put(LogTag.PARAM, arg);

@@ -16,9 +16,18 @@ import java.util.Properties;
  */
 public class RedisConfigInitializer implements ConfigInitializer {
 
-    /** 缓存相关 Nacos 共享配置文件清单 */
+    /** 缓存相关的 Nacos 共享配置文件 */
     private static final String SHARED_DATAIDS = "boot-redis.yml";
 
+    /**
+     * 追加 Redis 共享配置文件到 Nacos 共享配置列表。
+     * <p>
+     * 若 {@code spring.cloud.nacos.config.shared-dataids} 已有值，
+     * 则以逗号分隔追加，保留其他模块已注册的共享配置文件。
+     * </p>
+     *
+     * @param properties 系统属性容器
+     */
     @Override
     public void initialize(Properties properties) {
         properties.merge(
@@ -28,6 +37,7 @@ public class RedisConfigInitializer implements ConfigInitializer {
         );
     }
 
+    /** 空实现，Redis 配置初始化无需向启动日志追加诊断信息。 */
     @Override
     public void appendLogs(Map<String, String> logs) {}
 

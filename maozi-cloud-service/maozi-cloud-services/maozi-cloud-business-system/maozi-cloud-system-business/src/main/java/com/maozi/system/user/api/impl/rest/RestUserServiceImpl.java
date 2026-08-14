@@ -109,6 +109,9 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 
 	/**
 	 * 更新用户信息
+	 * <p>
+	 * 若更新参数中的状态为禁用，更新完成后会远程销毁该用户的全部 OAuth2 令牌，强制其重新登录。
+	 * </p>
 	 *
 	 * @param id    需要更新的用户ID
 	 * @param param 用户更新参数，包含需要更新的用户信息
@@ -120,6 +123,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		restSaveUpdate(id,param);
 
 		if(Status.DISABLE == param.getStatus()){
+			// 更新后状态为禁用时，销毁该用户的全部OAuth2令牌，强制下线
 			UserDo user = getByIdThrowError(id,UserDo::getUsername,UserDo::getClientId);
 			rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId(), user.getUsername()).getResultDataThrowError();
 		}
@@ -131,7 +135,8 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	/**
 	 * 更新用户状态（启用/禁用）
 	 * <p>
-	 * 如果用户当前状态与目标状态一致，则不做任何操作直接返回成功。
+	 * 如果用户当前状态与目标状态一致，则不做任何操作直接返回成功；
+	 * 状态变更为禁用后，会远程销毁该用户的全部 OAuth2 令牌，强制其重新登录。
 	 * </p>
 	 *
 	 * @param id    需要更新状态的用户ID
@@ -144,6 +149,8 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		Status status = param.getData();
 
 		UserDo user = getByIdThrowError(id,UserDo::getUsername,UserDo::getClientId,UserDo::getStatus);
+
+		// 当前状态与目标状态一致时，无需更新，直接返回成功
 		if(user.getStatus() == status){
 			return ResultUtil.success();
 		}
@@ -152,6 +159,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		user.setStatus(status);
 		updateById(user);
 
+		// 禁用用户后销毁其全部OAuth2令牌，强制下线
 		if(Status.DISABLE == status){
 			rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId(), user.getUsername()).getResultDataThrowError();
 		}
@@ -163,7 +171,8 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	/**
 	 * 获取当前登录用户的个人信息
 	 * <p>
-	 * 从应用上下文中获取当前登录用户的用户名，查询并返回该用户的姓名和头像信息。
+	 * 从应用上下文中获取当前登录用户的用户ID，按关联映射查询并返回该用户的
+	 * 姓名、头像以及权限标识列表信息。
 	 * </p>
 	 *
 	 * @return 当前登录用户的个人信息
@@ -173,6 +182,17 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		return ResultUtil.success(getByIdThrowErrorRelation(ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId), UserIndividualInfoVo.class));
 	}
 
+	/**
+	 * 更新当前登录用户的个人信息
+	 * <p>
+	 * 同时传入旧密码与新密码时先校验旧密码，校验通过后加密新密码一并更新；
+	 * 未传密码时仅更新基本信息。更新成功后销毁该用户在该客户端下的全部
+	 * OAuth2 令牌强制重新登录，并设置 {@code X-Redirect} 响应头指示前端跳转登录页。
+	 * </p>
+	 *
+	 * @param param 个人信息更新参数（姓名、头像、旧密码、新密码）
+	 * @return 操作结果
+	 */
 	@Override
 	public AbstractBaseResult<Void> restIndividualUpdate(UserIndividualUpdateParam param) {
 
@@ -180,11 +200,16 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 
 		String paramPassword = param.getPassword();
 		String paramNewPassword = param.getNewPassword();
+
+		// 旧密码与新密码同时传入时，先校验旧密码，再将新密码加密
 		if(ObjectUtil.isNotNullEmpty(paramPassword) && ObjectUtil.isNotNullEmpty(paramNewPassword)){
 			UserDo domain = getByIdThrowError(userId, UserDo::getPassword);
+
+			// 旧密码与库中密文不匹配时抛出业务异常
 			if(!passwordEncoder.matches(paramPassword,domain.getPassword())){
 				throw new BusinessResultException("旧密码不正确");
 			}
+
 			paramNewPassword = passwordEncoder.encode(paramNewPassword);
 		}
 
@@ -193,6 +218,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		domain.setPassword(paramNewPassword);
 		updateById(domain);
 
+		// 更新成功后销毁当前用户在该客户端下的全部OAuth2令牌，并指示前端跳转登录页，强制重新登录
 		Long clientId = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getClientId);
 		String username = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername);
 		rpcOauthTokenService.rpcDestroyByPrincipal(clientId, username).getResultDataThrowError();

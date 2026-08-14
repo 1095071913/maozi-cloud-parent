@@ -30,8 +30,9 @@ public interface OAuth2AuthorizationService extends org.springframework.security
 	/**
 	 * 批量移除多个用户的所有授权记录（批量注销）
 	 * <p>
-	 * 通过Redis Pipeline批量收集所有用户的授权ID，一次性获取授权数据并批量删除所有关联键，
-	 * 将多次Redis网络往返压缩为Pipeline + MGET + DEL共3次交互，适用于角色禁用等需要同时注销多个用户的场景。
+	 * 逐个用户读取其主体索引集合（N 次 SMEMBERS），再通过一次 MGET 一次性获取全部授权数据、
+	 * 一次批量 DEL 删除所有关联键，总交互次数为 N+2 次（未使用 Pipeline），
+	 * 适用于角色禁用等需要同时注销多个用户的场景。
 	 * </p>
 	 *
 	 * @param clientUsers 客户端用户参数列表，每项包含clientId和username

@@ -89,6 +89,7 @@ public class StreamEntranceLogAop {
             logs.put("Topic", Objects.requireNonNull(headers.get("ROCKET_MQ_TOPIC")).toString());
             logs.put(LogTag.FUNCTION, proceedingJoinPoint.getSignature().getDeclaringTypeName() + ":" + proceedingJoinPoint.getSignature().getName());
 
+            // 非生产环境直接记录消息参数；生产环境为避免参数外泄，仅在异常时补充记录
             Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
             if(isNotProd){
                 logs.put(LogTag.PARAM, messageData.toString());

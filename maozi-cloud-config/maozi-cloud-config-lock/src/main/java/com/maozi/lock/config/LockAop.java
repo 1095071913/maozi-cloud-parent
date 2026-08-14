@@ -76,7 +76,7 @@ public class LockAop {
         // 确定锁名称：如果注解指定了名称则使用指定名称，否则使用 "类名.方法名" 作为默认锁名称
         String lockName = org.apache.commons.lang3.StringUtils.isNotBlank(annotation.name()) ? annotation.name() : signature.getDeclaringTypeName()+ "." +signature.getMethod().getName();
 
-        // 拼接最终的锁键名，格式为：服务名:lock:锁名称:业务键名
+        // 拼接锁键名：maozi-cloud:服务名::lock:锁名称-业务键名（REDIS_KEY_PREFIX 尾部自带冒号，业务键以 "-" 连接）
         lockName = RedisUtil.REDIS_KEY_PREFIX + ":lock:" + lockName + businessKeyName;
 
         // 获取等待时间：如果注解未指定（Long.MIN_VALUE），则使用全局配置的默认值
@@ -121,7 +121,7 @@ public class LockAop {
         // 收集通过 @LockKey 注解标记的参数值作为锁键
         keyList.addAll(getParameterKey(method.getParameters(), joinPoint.getArgs()) );
 
-        // 将所有键用 "-" 连接，前后也加 "-" 分隔，形成完整的业务键名称
+        // 每个业务键前拼接 "-"，键之间不加分隔符，形如 "-key1-key2"（前缀 "-"、后缀为空、分隔符为空）
         return StringUtils.collectionToDelimitedString(keyList,"","-","");
 
     }

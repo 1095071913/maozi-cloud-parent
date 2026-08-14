@@ -31,6 +31,13 @@ import static com.alibaba.csp.sentinel.util.ConfigUtil.addSeparator;
  * 默认日志文件名不包含进程 ID，但当同一台机器上运行同一服务的多个实例时，
  * 可通过 {@link #LOG_NAME_USE_PID} 属性设置为 "true" 来启用进程 ID 区分日志文件。
  * </p>
+ * <p>
+ * <b>注：</b>本类为复制自 sentinel-core 1.8.6 的 {@code com.alibaba.csp.sentinel.log.LogBase}
+ * 的本地覆盖副本（同包同名类在 classpath 上优先于 jar 内类加载），
+ * 修改目的：注释掉类加载时的多处 {@code System.out/err} 控制台输出
+ * （日志输出类型、字符集、目录、PID 开关、日志级别等 INFO 打印及初始化失败提示），减少启动日志噪音；
+ * 升级 sentinel-core 版本时需同步比对原生类变更。
+ * </p>
  *
  * @author Carpenter Lee
  * @author Eric Zhao

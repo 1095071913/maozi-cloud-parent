@@ -43,7 +43,7 @@ public class RegionDo extends AbstractBaseNameDomain {
 	private Integer level;
 
 	/**
-	 * 编码
+	 * 城市编码
 	 */
 	private String cityCode;
 
@@ -63,7 +63,7 @@ public class RegionDo extends AbstractBaseNameDomain {
 	private Float Lng;
 
 	/**
-	 * 维度
+	 * 纬度
 	 */
 	private Float Lat;
 

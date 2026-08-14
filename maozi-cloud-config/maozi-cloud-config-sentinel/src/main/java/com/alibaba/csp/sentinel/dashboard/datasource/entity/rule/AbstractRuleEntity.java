@@ -26,7 +26,13 @@ import java.util.Date;
  * 包含规则的唯一标识 ID、所属应用名称、目标机器 IP、目标机器端口等元数据信息，
  * 以及规则对象的创建时间和修改时间。
  * 泛型参数 <T> 指定具体的规则类型，必须继承自 {@link AbstractRule}。
- * 所有的 setter 方法返回 this，支持链式调用。
+ * 除 setId（接口定义返回 void）外，其余 setter 方法返回 this，支持链式调用。
+ * </p>
+ * <p>
+ * <b>注：</b>本类为复制自 Sentinel 控制台（sentinel-dashboard）1.8.6 的同名类的本地副本，
+ * 代码逻辑未做修改；复制目的：在不整体依赖 sentinel-dashboard 模块的前提下，
+ * 为客户端侧的授权规则 JSON 转换器（{@code AuthorityRuleJsonConverter}）提供规则实体定义，
+ * 升级 Sentinel 版本时需同步比对上游变更。
  * </p>
  *
  * @param <T> 具体的 Sentinel 规则类型，如 FlowRule、DegradeRule 等

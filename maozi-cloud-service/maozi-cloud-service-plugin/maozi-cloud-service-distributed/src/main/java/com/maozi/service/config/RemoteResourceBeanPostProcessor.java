@@ -21,11 +21,13 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * {@link RemoteResource} 字段注入处理器（微服务模式）。
  * <p>
+ * {@link RemoteResource} 是纯标记注解（仅组合了 jakarta {@code @Resource}，
+ * 未标注 {@code @DubboReference}），且无法借助 {@code @DubboReference} 元注解方式注入：
  * Dubbo 3.x 的 {@code ReferenceAnnotationBeanPostProcessor} 通过反射查找
  * {@code AnnotatedElementUtils.getMergedAnnotation(AnnotatedElement, Class, boolean, boolean)}
  * 来解析组合注解上的 {@code @DubboReference} 元注解，但 Spring 仅提供 2 参数重载，
- * 该方法签名不存在，反射查找返回 null，导致 {@code @DubboReference} 作为元注解
- * （贴在 {@link RemoteResource} 上）时无法被识别，注入字段保持为 null。
+ * 该方法签名不存在，反射查找返回 null——即使把 {@code @DubboReference} 作为元注解
+ * 贴在 {@link RemoteResource} 上也无法被识别，注入字段将保持为 null。
  * </p>
  * <p>
  * 本处理器直接扫描 {@link RemoteResource} 标注的字段，通过 Dubbo 编程式 API
@@ -53,11 +55,23 @@ public class RemoteResourceBeanPostProcessor implements InstantiationAwareBeanPo
 	/** Spring Bean 工厂，用于按字段名注册引用代理单例 */
 	private ConfigurableListableBeanFactory beanFactory;
 
+	/** 保存 Bean 工厂供单例注册使用 */
 	@Override
 	public void setBeanFactory(@NotNull BeanFactory beanFactory) {
 		this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
 	}
 
+	/**
+	 * 在属性注入阶段为 {@link RemoteResource} 标注的字段写入 Dubbo 引用代理
+	 * <p>
+	 * 跳过静态字段；代理按接口类型缓存，并按字段名注册为 Spring 单例后反射写入目标字段。
+	 * </p>
+	 *
+	 * @param pvs 原始属性值
+	 * @param bean 当前正在创建的 bean 实例
+	 * @param beanName bean 名称
+	 * @return 原始属性值（不修改常规属性注入流程）
+	 */
 	@Override
 	public PropertyValues postProcessProperties(@NotNull PropertyValues pvs, Object bean, @NotNull String beanName) throws BeansException {
 		ReflectionUtils.doWithFields(bean.getClass(), field -> {

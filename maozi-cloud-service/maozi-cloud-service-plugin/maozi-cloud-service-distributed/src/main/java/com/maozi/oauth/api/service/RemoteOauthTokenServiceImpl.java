@@ -14,7 +14,8 @@ import java.util.Map;
 /**
  * 资源服务器进程中的令牌内省服务实现。
  * <p>
- * 通过 Dubbo RPC 远程调用授权服务器的 {@link RpcOauthTokenService} 完成令牌内省，
+ * 根据配置模式远程调用授权服务器完成令牌内省：模式为空或 rpc 时通过 Dubbo RPC 调用
+ * {@link RpcOauthTokenService}，其余模式通过 REST（Feign）调用 {@link RestOauthTokenService}；
  * 供 {@link com.maozi.oauth.config.OpaqueTokenIntrospector} 在非授权服务器进程中使用。
  * </p>
  * <p>
@@ -28,17 +29,31 @@ import java.util.Map;
  */
 public class RemoteOauthTokenServiceImpl implements OauthTokenService {
 
+    /** 内省调用模式：RPC（Dubbo） */
     private static final String MODE_RPC = "rpc";
 
+    /** 内省调用模式，rpc 走 Dubbo，其余走 REST，默认 rpc */
     @Value("${spring.security.oauth2.resourceserver.opaquetoken.mode:}")
     private String mode;
 
+    /** Dubbo 远程令牌服务引用 */
     @RemoteResource
     private RpcOauthTokenService rpcOauthTokenService;
 
+    /** REST 远程令牌服务引用（Feign） */
     @Resource
     private RestOauthTokenService restOauthTokenService;
 
+    /**
+     * 远程内省令牌
+     * <p>
+     * 模式为空或 {@code rpc} 时走 Dubbo RPC，否则走 REST（Feign）调用；
+     * 内省失败（结果为错误）时直接抛出业务异常。
+     * </p>
+     *
+     * @param token 访问令牌
+     * @return 令牌内省声明信息
+     */
     @Override
     public Map<String, Object> introspect(String token) {
         return ObjectUtil.isNullEmpty(mode) || MODE_RPC.equalsIgnoreCase(mode) ?

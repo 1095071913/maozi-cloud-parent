@@ -27,6 +27,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 授权规则用于控制请求来源的访问权限，即根据调用方的来源（origin）决定是否允许访问指定资源。
  * 支持"白名单"和"黑名单"两种授权策略。
  * </p>
+ * <p>
+ * <b>注：</b>本类为复制自 Sentinel 控制台（sentinel-dashboard）1.8.6 的同名类的本地副本，
+ * 代码逻辑未做修改；复制目的：在不整体依赖 sentinel-dashboard 模块的前提下，
+ * 为客户端侧的授权规则 JSON 转换器（{@code AuthorityRuleJsonConverter}）提供授权规则实体定义，
+ * 升级 Sentinel 版本时需同步比对上游变更。
+ * </p>
  *
  * @author Eric Zhao
  * @since 0.2.1

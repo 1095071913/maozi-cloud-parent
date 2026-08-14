@@ -133,6 +133,9 @@ public class AuthorizationServerConfiguration {
 
 	/**
 	 * 注册各种登陆参数校验转换器
+	 *
+	 * @return DelegatingAuthenticationConverter 委托式认证转换器，聚合密码模式、刷新令牌、
+	 *         客户端凭证、授权码及授权码请求等转换器
 	 */
 	private AuthenticationConverter accessTokenRequestConverter() {
 		return new DelegatingAuthenticationConverter(
@@ -147,7 +150,9 @@ public class AuthorizationServerConfiguration {
 	}
 
 	/**
-	 * 注册各种登陆模式
+	 * 注册自定义登陆模式的认证处理器（当前仅密码模式）
+	 *
+	 * @param http HttpSecurity对象，用于注册认证处理器并获取共享的令牌生成器
 	 */
 	private void addCustomOAuth2GrantAuthenticationProvider(HttpSecurity http){
 

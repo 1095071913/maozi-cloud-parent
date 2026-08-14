@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 分布式锁配置属性
  * <p>
- * 从配置文件中读取 {@code spring.lock} 前缀下的属性，
+ * 从配置文件中读取 {@code lock.redisson} 前缀下的属性，
  * 用于配置 Redisson 客户端连接信息和锁的默认超时参数。
  * </p>
  *

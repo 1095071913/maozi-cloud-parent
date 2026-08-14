@@ -1,15 +1,24 @@
 package com.maozi.common.constant;
 
 /**
+ * 应用服务名常量类
+ * <p>
+ * 集中定义项目内各微服务的服务名称，供服务发现、Feign 客户端声明
+ * 以及运行环境相关判断使用。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/7/8 20:04
  */
 public final class ApplicationNameConstant {
 
+    /** 单体全量服务名（所有服务合并为单个应用部署） */
     public static final String MAOZI_CLOUD_ALL_SERVICE = "maozi-cloud-all-service";
 
+    /** 系统管理服务名 */
     public static final String MAOZI_CLOUD_SYSTEM_SERVICE = "maozi-cloud-system-service";
 
+    /** OAuth 认证服务名 */
     public static final String MAOZI_CLOUD_OAUTH_SERVICE = "maozi-cloud-oauth-service";
 
 }

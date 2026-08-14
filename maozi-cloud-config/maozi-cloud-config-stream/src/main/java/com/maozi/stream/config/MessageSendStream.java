@@ -60,6 +60,7 @@ public class MessageSendStream {
 
         String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.getVersion());
 
+        // 当前为非默认版本且该版本已无存活实例时，灰度标识回退为默认版本，保证消息仍可被消费
         if(!ApplicationLinkContext.APPLICATION_DEFAULT_VERSION.equals(version) && ObjectUtil.isNullEmpty(applicationClients.get(version))){
             version = ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
         }
@@ -115,6 +116,7 @@ public class MessageSendStream {
 
         MessageBuilder<D> messageBuilder = MessageBuilder.withPayload(data);
 
+        // RocketMQ 延迟级别从 1 开始计数，枚举值从 0 开始，发送时需 +1 转换
         messageBuilder.setHeader(MessageConst.PROPERTY_DELAY_TIME_LEVEL, level.getValue() + 1);
 
         return sendMessage(bindingName,messageBuilder.build());
@@ -137,6 +139,7 @@ public class MessageSendStream {
 
         messageBuilder.setHeader(MessageConst.PROPERTY_TAGS, tags);
 
+        // RocketMQ 延迟级别从 1 开始计数，枚举值从 0 开始，发送时需 +1 转换
         messageBuilder.setHeader(MessageConst.PROPERTY_DELAY_TIME_LEVEL, level.getValue() + 1);
 
         return sendMessage(bindingName,messageBuilder.build());

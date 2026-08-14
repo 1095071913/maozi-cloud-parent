@@ -64,6 +64,8 @@ import java.util.UUID;
  * - 其他未知异常：返回系统内部错误响应。
  * 同时记录详细的错误日志，包含请求 IP、URL、方法、异常信息等。
  * </p>
+ *
+ * @author maozi
  */
 @Slf4j
 @Component
@@ -139,11 +141,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	 * </p>
 	 */
 	private class ResponseContext implements ServerResponse.Context {
+
+		/** 返回外部类的 HTTP 消息写入器列表 */
 		@Override
 		public List<HttpMessageWriter<?>> messageWriters() {
 			return GatewayExceptionHandler.this.messageWriters;
 		}
 
+		/** 返回外部类的视图解析器列表 */
 		@Override
 		public List<ViewResolver> viewResolvers() {
 			return GatewayExceptionHandler.this.viewResolvers;
@@ -157,7 +162,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	 * - NotFoundException：服务不存在，返回对应的错误码和 HTTP 状态码；
 	 * - BlockException（Sentinel 限流）：返回限流错误码和 HTTP 状态码；
 	 * - 其他异常：返回系统内部错误码和 HTTP 状态码。
-	 * 同时将 MDC 中的 TID（链路追踪 ID）和服务名写入日志上下文，
+	 * 同时在 OpenTelemetry 未生成有效 traceId 时向 MDC 写入 traceId，
 	 * 并记录完整的请求信息和错误详情。
 	 * </p>
 	 *

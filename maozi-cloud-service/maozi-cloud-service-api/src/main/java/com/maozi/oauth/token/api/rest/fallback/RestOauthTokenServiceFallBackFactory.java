@@ -40,12 +40,15 @@ public class RestOauthTokenServiceFallBackFactory implements FallbackFactory<Res
 	@Override
 	public RestOauthTokenService create(Throwable e) {
 
+		// 尝试将异常消息按服务端返回的 ErrorResult JSON 解析
 		ErrorResult<?> errorResult = JacksonUtil.jsonToObject(e.getLocalizedMessage(), ErrorResult.class);
 
+		// 解析结果为空时，回退使用业务异常（BusinessResultException）携带的结果
 		ErrorResult result = ObjectUtil.isNullEmpty(errorResult) ? ((BusinessResultException)e).getErrorResult() : errorResult;
 
 		return new RestOauthTokenService() {
 
+			/** 降级处理：直接返回解析出的服务端错误结果 */
 			@Override
 			public AbstractBaseResult<Map<String,Object>> restIntrospect(String token) {
 				return result;

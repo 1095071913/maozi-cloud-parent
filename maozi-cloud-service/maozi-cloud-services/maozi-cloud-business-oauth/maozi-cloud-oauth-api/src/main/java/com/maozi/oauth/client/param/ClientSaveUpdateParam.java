@@ -47,7 +47,7 @@ public class ClientSaveUpdateParam implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-	/** 客户端ID，新增时由系统自动生成，更新时由系统自动填充，API接口中隐藏 */
+	/** 客户端ID，新增时由系统自动生成，更新时会被清空以防被修改，API接口中隐藏 */
 	@Schema(hidden = true)
 	private String clientId;
 
@@ -65,12 +65,12 @@ public class ClientSaveUpdateParam implements Serializable {
 	@Schema(description = "授权模式",ref = "IntegerArrayList")
 	private Set<AuthType> authorizationGrantTypes;
 
-	/** 授权令牌（AccessToken）有效期，单位为秒，默认为一天 */
-	@Schema(description = "授权令牌有效期 秒 默认一天")
+	/** 授权令牌（AccessToken）有效期，单位为秒，新增时未填默认2小时 */
+	@Schema(description = "授权令牌有效期 秒 默认2小时")
 	private Long accessTokenValiditySeconds;
 
-	/** 刷新令牌（RefreshToken）有效期，单位为秒，默认为一天 */
-	@Schema(description = "刷新令牌有效期 秒 默认一天")
+	/** 刷新令牌（RefreshToken）有效期，单位为秒，新增时未填默认7天 */
+	@Schema(description = "刷新令牌有效期 秒 默认7天")
 	private Long refreshTokenValiditySeconds;
 
 	/** 备注信息，用于记录客户端的额外说明 */

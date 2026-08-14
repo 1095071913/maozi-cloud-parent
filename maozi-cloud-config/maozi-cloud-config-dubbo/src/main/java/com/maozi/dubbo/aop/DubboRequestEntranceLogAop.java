@@ -62,6 +62,7 @@ public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 		return super.doAround(proceedingJoinPoint);
 	}
 
+	/** 返回 RPC 类型的入口日志标识 */
 	@Override
 	protected LogCommonType getType() {
 		return LogCommonType.RPC;

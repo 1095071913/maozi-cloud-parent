@@ -64,6 +64,13 @@ import static com.alibaba.csp.sentinel.config.SentinelConfig.setConfig;
  * </ul>
  * 当配置项 spring.cloud.sentinel.enabled 为 true（默认）时，此配置类才会生效。
  * </p>
+ * <p>
+ * <b>注：</b>本类为覆盖 Spring Cloud Alibaba 依赖 jar 中同名原生类的本地副本
+ * （同包同名类在 classpath 上优先于 jar 内类加载），用于按项目需要定制原生自动配置行为，
+ * 主要定制点：授权规则的 JSON 转换器由原生 {@code JsonConverter} 替换为
+ * {@link AuthorityRuleJsonConverter}（兼容 Sentinel 控制台下发的实体包装格式）；
+ * 后续升级依赖版本时需同步比对原生类变更。
+ * </p>
  *
  * @author xiaojing
  * @author jiashuai.xie
@@ -86,7 +93,8 @@ public class SentinelAutoConfiguration {
 	 * 初始化方法，在 Bean 构造完成后执行
 	 * <p>
 	 * 将 Spring Boot 配置文件中的 Sentinel 配置属性设置到系统属性中，
-	 * 供 Sentinel 内部模块使用。仅当对应的系统属性尚未被设置时才会进行覆盖。
+	 * 供 Sentinel 内部模块使用。除阻塞页面外，其余配置项仅当对应的系统属性尚未被设置时才会写入；
+	 * 阻塞页面（block-page）只要配置了值就会无条件写入。
 	 * 配置项包括：日志目录、日志 PID 开关、应用名称、传输端口、控制台地址、
 	 * 心跳间隔、客户端 IP、字符集、指标文件大小、指标文件数量、冷启动因子、阻塞页面等。
 	 * </p>

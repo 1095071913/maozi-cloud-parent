@@ -36,12 +36,12 @@ public class ClientInfoVo implements Serializable {
 	@Schema(description = "授权模式", ref = "IntegerArrayList")
 	private Set<AuthType> authorizationGrantTypes;
 
-	/** 授权令牌（AccessToken）有效期，单位为秒，默认为一天 */
-	@Schema(description = "授权令牌有效期 秒 默认一天")
+	/** 授权令牌（AccessToken）有效期，单位为秒（从TokenSettings解析） */
+	@Schema(description = "授权令牌有效期 秒 默认2小时")
 	private Long accessTokenValiditySeconds;
 
-	/** 刷新令牌（RefreshToken）有效期，单位为秒，默认为一天 */
-	@Schema(description = "刷新令牌有效期 秒 默认一天")
+	/** 刷新令牌（RefreshToken）有效期，单位为秒（从TokenSettings解析） */
+	@Schema(description = "刷新令牌有效期 秒 默认7天")
 	private Long refreshTokenValiditySeconds;
 
 	/** 备注信息，记录客户端的额外说明 */

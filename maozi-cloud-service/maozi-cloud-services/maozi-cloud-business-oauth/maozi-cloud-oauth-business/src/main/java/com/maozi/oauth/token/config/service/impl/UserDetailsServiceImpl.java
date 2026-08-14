@@ -53,14 +53,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * 根据用户名加载用户详情
 	 * <p>
 	 * 通过RPC远程调用获取用户的权限列表和加密密码，
-	 * 构建包含用户名、密码和权限列表的UserDetails对象。
+	 * 构建包含用户名、密码和权限列表的UserDetails对象，
+	 * 并将用户ID写入附加属性attributes（后续随令牌claims一并颁发）。
 	 * 如果用户不存在或RPC调用失败，会根据异常类型返回对应的错误信息。
 	 * </p>
 	 *
 	 * @param username 用户名
 	 * @return 包含用户名、密码和权限的UserDetails对象
-	 * @throws UsernameNotFoundException 当用户不存在时抛出
-	 * @throws BusinessResultException   当业务异常或系统异常时抛出
+	 * @throws BusinessResultException 用户不存在等业务错误时抛出 USER_AUTH_ERROR，
+	 *                                  其他异常统一抛出 SYSTEM_ERROR（不会抛出 UsernameNotFoundException）
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -74,6 +75,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				grantedAuthorities.add(new SimpleGrantedAuthority(permission));
 			});
 
+			// 将用户ID写入附加属性，颁发令牌时会合并进claims
 			Map<String, Object> attributes = CollectionUtil.newHashMap();
 			attributes.put(OAuth2TokenClaimConstants.USER_ID,oauthUserInfo.getUserId());
 

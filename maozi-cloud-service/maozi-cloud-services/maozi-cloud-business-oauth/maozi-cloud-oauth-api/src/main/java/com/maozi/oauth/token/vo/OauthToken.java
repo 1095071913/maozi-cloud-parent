@@ -44,12 +44,12 @@ public class OauthToken implements Serializable {
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    /** 访问令牌有效期，单位为秒，表示令牌从颁发到过期的剩余时间 */
+    /** 访问令牌有效期，单位为秒，即从签发时间到过期时间的总有效期时长 */
     @Schema(description = "令牌有效期")
     @JsonProperty("expires_in")
     private Long expiresIn;
 
-    /** 刷新令牌有效期，单位为秒，表示刷新令牌从颁发到过期的剩余时间 */
+    /** 刷新令牌有效期，单位为秒，即从签发时间到过期时间的总有效期时长 */
     @Schema(description = "刷新令牌有效期")
     @JsonProperty("refresh_token_expires_in")
     private Long refreshTokenExpiresIn;

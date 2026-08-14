@@ -45,6 +45,7 @@ public class ApplicationDubboContextTransmitFilter implements Filter {
      *   <li>获取 RPC 客户端附件对象</li>
      *   <li>将当前线程的版本号（version）写入附件，传递给服务提供者</li>
      *   <li>将当前线程的登录用户信息（CurrentUserInfo）序列化为 JSON 写入附件，传递给服务提供者</li>
+     *   <li>将当前线程的链路追踪 ID（traceId）写入附件，传递给服务提供者</li>
      *   <li>执行实际的 Dubbo RPC 调用</li>
      * </ol>
      * </p>
@@ -69,6 +70,7 @@ public class ApplicationDubboContextTransmitFilter implements Filter {
             clientAttachment.setAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY, JacksonUtil.objectToJson(currentUserInfo));
         }
 
+        // 将当前线程的链路追踪 ID 写入 RPC 附件，供服务提供者延续同一调用链路
         clientAttachment.setAttachment(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.getTraceId());
 
         // 执行实际的 RPC 调用，附件信息会随请求一起发送到服务提供者

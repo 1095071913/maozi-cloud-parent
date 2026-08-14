@@ -154,7 +154,7 @@ public abstract class AbstractRequestEntranceLogAop {
 			// 判断结果是否为框架统一响应类型 && 请求失败（业务或系统错误）
 			if (ObjectUtil.isNotNullEmpty(resultData) && resultData instanceof AbstractBaseResult<?> result && !result.isSuccess()) {
 
-				// 触发限流熔断告警（请求被限流或熔断）
+				// 触发限流熔断告警组件（任何请求失败都会调用，Sentinel 实现将本次失败计入阻塞 QPS 统计）
 				if(ObjectUtil.isNotNullEmpty(alarm)){
 					alarm.alarm();
 				}

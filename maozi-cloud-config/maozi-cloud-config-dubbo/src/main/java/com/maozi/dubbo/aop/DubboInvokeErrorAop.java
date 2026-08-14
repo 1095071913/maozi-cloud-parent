@@ -25,8 +25,9 @@ import java.util.Map;
  * 当调用抛出异常时，记录错误日志并返回统一的错误结果，避免异常向上层传播。
  * </p>
  * <p>
- * 对于 impl 层（服务实现层内部）的调用，异常原样向上抛出，交由上层处理；
- * 仅对接口层的异常进行捕获封装。
+ * <b>注：</b>代码中保留了按包路径第 6 段是否为 {@code impl} 判断是否重新抛出异常的防御逻辑，
+ * 但当前切点限定的包路径第 6 段恒为 {@code rpc} 或 {@code rest}，该判断恒为真，
+ * 因此实际所有被拦截的异常都会被捕获封装，重新抛出的分支当前不可达。
  * </p>
  *
  * @author maozi
@@ -65,9 +66,9 @@ public class DubboInvokeErrorAop {
             // 包路径格式约定为：com.maozi.{服务名}.{模块名}.{层级}.rpc.{类名}
             String [] remoteInvokeClassSplit = proceedingJoinPoint.getSignature().getDeclaringTypeName().split("\\.");
 
-            // 判断是否为接口层调用（非 impl 层）
-            // remoteInvokeClassSplit[5] 对应包路径中 api 下的子包名，
-            // 如果是 "impl" 则表示是服务实现层的内部调用，需要继续向上抛出异常
+            // 判断是否为接口层调用：remoteInvokeClassSplit[5] 对应包路径中 api 下的子包名。
+            // 当前切点限定的子包名恒为 "rpc"/"rest"，条件恒成立；
+            // 若未来切点扩展到 api.impl 包，此处可让实现层内部调用的异常继续向上抛出
             if(!IMPL.equals(remoteInvokeClassSplit[5])){
 
                 // 从包路径第3段提取服务名称，例如 "com.maozi.user.xxx" 中的 "user"
@@ -98,7 +99,7 @@ public class DubboInvokeErrorAop {
 
             }
 
-            // impl 层的调用直接抛出原始异常，交给上层处理
+            // impl 层的调用直接抛出原始异常（当前切点下不可达，见类注释说明）
             throw e;
 
         }

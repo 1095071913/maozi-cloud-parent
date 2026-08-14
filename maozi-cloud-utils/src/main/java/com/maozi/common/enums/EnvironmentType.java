@@ -36,7 +36,7 @@ public enum EnvironmentType implements BaseEnum {
 	 * 枚举构造方法
 	 *
 	 * @param value 枚举的整型值，用于数据库存储和环境标识
-	 * @param desc  环境描述字符串，与配置文件中的环境标识（如 spring.profiles.active）保持一致
+	 * @param desc  环境描述字符串，与运行环境标识（系统属性/环境变量 environment 的取值，如 local、test、prod）保持一致
 	 */
 	EnvironmentType(Integer value,String desc) {
 

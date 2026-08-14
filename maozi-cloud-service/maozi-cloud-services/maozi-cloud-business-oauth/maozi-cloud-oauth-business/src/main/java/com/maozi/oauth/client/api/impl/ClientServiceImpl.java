@@ -10,6 +10,7 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.result.PageResult;
 import com.maozi.common.ObjectUtil;
+import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.client.api.ClientService;
 import com.maozi.oauth.client.domain.ClientDo;
 import com.maozi.oauth.client.mapper.ClientMapper;
@@ -90,8 +91,10 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 * <p>
 	 * 新增时：自动生成clientId，设置默认令牌有效期，构建默认客户端设置（不需要确认授权）。
 	 * 更新时：清除clientId防止被修改。
-	 * 通用处理：对客户端密钥进行加密，构建令牌设置（包括匿名令牌格式、授权码存活时间、
-	 * 设备码存活时间、是否重用刷新令牌、Access Token和Refresh Token存活时间等）。
+	 * 通用处理：对非空的客户端密钥进行加密；当Access Token和Refresh Token有效期均已提供时，
+	 * 构建令牌设置（包括不透明令牌（REFERENCE）格式、授权码存活时间、
+	 * 设备码存活时间、是否重用刷新令牌、Access Token和Refresh Token存活时间等），
+	 * 否则不重建令牌设置（沿用参数中传入的值）。
 	 * </p>
 	 *
 	 * @param id    客户端主键ID，新增时为null
@@ -130,7 +133,7 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 
 			TokenSettings.Builder builder = TokenSettings.builder();
 
-			//匿名令牌
+			//不透明令牌（REFERENCE），令牌值不携带信息，需通过内省端点校验
 			builder.accessTokenFormat(OAuth2TokenFormat.REFERENCE);
 			// 授权码存活时间：5分钟
 			builder.authorizationCodeTimeToLive(Duration.ofSeconds(300));
@@ -166,7 +169,8 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 * </p>
 	 *
 	 * @param id 客户端主键ID
-	 * @return 客户端详细信息VO对象，不存在时返回null
+	 * @return 客户端详细信息VO对象
+	 * @throws BusinessResultException 客户端不存在时抛出 DATA_NOT_EXIST_ERROR，禁用时抛出 FORBIDDEN_ERROR
 	 */
 	protected ClientInfoVo superRestGet(Long id) {
 

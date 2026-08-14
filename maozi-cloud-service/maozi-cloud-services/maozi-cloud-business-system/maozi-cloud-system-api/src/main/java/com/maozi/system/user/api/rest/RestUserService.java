@@ -31,7 +31,6 @@ import com.maozi.system.user.vo.UserIndividualInfoVo;
 import com.maozi.system.user.vo.UserInfoVo;
 import com.maozi.system.user.vo.UserListVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,8 +52,8 @@ public interface RestUserService {
 	/**
 	 * 获取用户分页列表
 	 *
-	 * @param pageParam 分页查询参数，包含页码、每页数量以及用户搜索条件（如用户名、状态等）
-	 * @return 返回用户分页列表数据，包含用户 ID、用户名、昵称、状态、创建时间等信息
+	 * @param pageParam 分页查询参数，包含页码、每页数量以及用户搜索条件（如用户名称）
+	 * @return 返回用户分页列表数据，包含用户 ID、姓名、所属客户端、状态、创建时间等信息
 	 */
 	@Post(value = PATH + "/list",description = "用户列表")
 	@PreAuthorize("hasAuthority('system:user:list')")
@@ -63,7 +62,7 @@ public interface RestUserService {
 	/**
 	 * 保存新增用户
 	 *
-	 * @param param 用户保存参数，包含用户名、密码、昵称、手机号、关联角色等必要信息
+	 * @param param 用户保存参数，包含用户名、密码、昵称、关联角色等必要信息
 	 * @return 返回新增用户的 ID
 	 */
 	@Post(value = PATH + "/save",description = "用户保存")
@@ -83,7 +82,7 @@ public interface RestUserService {
 	 * 获取用户详情
 	 *
 	 * @param id 用户 ID，用于查询指定用户的详细信息
-	 * @return 返回用户详细信息，包含用户名、昵称、手机号、邮箱、关联角色等完整属性
+	 * @return 返回用户详细信息，包含用户名、昵称、所属客户端、关联角色等完整属性
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "用户详情")
 	@PreAuthorize("hasAuthority('system:user:get')")
@@ -136,12 +135,21 @@ public interface RestUserService {
 	 * 无需传入用户 ID，系统会根据当前登录的认证信息自动获取对应用户的详细信息。
 	 * </p>
 	 *
-	 * @return 返回当前登录用户的个人信息，包含用户名、昵称、头像、角色、权限等个人相关数据
+	 * @return 返回当前登录用户的个人信息，包含姓名、头像、权限标识等个人相关数据
 	 */
 	@Get(value = INDIVIDUAL_PATH + "/get",description = "用户个人详情")
 	AbstractBaseResult<UserIndividualInfoVo> restIndividualGet();
 
+	/**
+	 * 更新当前登录用户的个人信息
+	 * <p>
+	 * 无需传入用户 ID，系统会根据当前登录的认证信息自动定位对应用户并更新其个人信息。
+	 * </p>
+	 *
+	 * @param param 个人信息更新参数，包含需要修改的个人属性（如姓名、头像、密码等）
+	 * @return 无返回数据，仅返回操作结果状态
+	 */
 	@Post(value = INDIVIDUAL_PATH + "/update",description = "用户个人信息更新")
-	AbstractBaseResult<Void> restIndividualUpdate(@RequestBody @Valid UserIndividualUpdateParam param);
+	AbstractBaseResult<Void> restIndividualUpdate(@RequestBody UserIndividualUpdateParam param);
 
 }

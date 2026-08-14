@@ -37,6 +37,8 @@ import java.util.List;
  * 注册自定义的全局异常处理器 {@link GatewayExceptionHandler}，
  * 替换 Spring WebFlux 默认的异常处理逻辑，统一网关层错误响应格式。
  * </p>
+ *
+ * @author maozi
  */
 @Configuration
 public class GatewayExceptionConfig {

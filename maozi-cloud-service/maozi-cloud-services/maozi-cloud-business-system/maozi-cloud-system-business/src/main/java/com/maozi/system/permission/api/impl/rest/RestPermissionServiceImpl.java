@@ -35,8 +35,10 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 
 		QueryWrapper<PermissionDo> wrapper = Wrappers.query();
 
+		// 仅查询列表视图对象所需的字段列
 		wrapper.select(getColumns(PermissionListVo.class,false));
 
+		// 按权限深度、排序序号降序排列
 		wrapper.orderByDesc(CollectionUtil.newArrayList(getColumns(PermissionDo::getLevel,PermissionDo::getSort)));
 
 		return ResultUtil.success(list(wrapper, PermissionListVo::new));
@@ -56,7 +58,7 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 
 	/**
 	 * 查询权限下拉列表（自定义）
-	 * <p>返回权限的下拉选项数据，包含ID、父ID、深度和名称。</p>
+	 * <p>返回权限的下拉选项数据，包含ID、父ID、深度、名称和类型。</p>
 	 *
 	 * @return 权限下拉选项列表
 	 */

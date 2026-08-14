@@ -23,6 +23,8 @@ package com.maozi;
  * 继承 BaseApplication 以复用公共的应用启动逻辑（如 Nacos 配置加载、日志初始化等），
  * 作为 Spring Cloud Gateway 的入口点，负责请求路由、灰度发布、限流等网关核心功能。
  * </p>
+ *
+ * @author maozi
  */
 public class Application extends BaseApplication {
 

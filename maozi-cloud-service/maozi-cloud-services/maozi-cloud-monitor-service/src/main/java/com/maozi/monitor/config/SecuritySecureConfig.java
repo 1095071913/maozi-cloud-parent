@@ -53,6 +53,12 @@ public class SecuritySecureConfig {
 	/** Spring Security 安全属性（包含默认用户名密码） */
 	private final SecurityProperties security;
 
+	/**
+	 * 构造方法，注入 Admin Server 属性与安全属性配置。
+	 *
+	 * @param adminServer Spring Boot Admin 服务端属性（提供监控台路径前缀）
+	 * @param security    Spring Security 安全属性（含监控台登录用户名密码）
+	 */
 	public SecuritySecureConfig(AdminServerProperties adminServer, SecurityProperties security) {
 		this.adminServer = adminServer;
 		this.security = security;

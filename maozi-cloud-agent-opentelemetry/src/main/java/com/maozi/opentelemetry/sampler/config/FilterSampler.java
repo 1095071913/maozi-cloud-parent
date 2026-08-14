@@ -29,13 +29,31 @@ import java.util.List;
  */
 public class FilterSampler implements Sampler {
 
+    /** 需要直接丢弃的 Span 名称列表（如 Nacos 心跳） */
     private final List<String> EXCLUDED_TARGETS = List.of("NacosDiscoveryHeartBeatPublisher$$Lambda.run");
 
+    /** 返回采样器名称，与 SPI 提供者注册名一致 */
     @Override
     public String getDescription() {
         return FilterSamplerProvider.PROVIDER_NAME;
     }
 
+    /**
+     * 采样决策：按规则过滤噪声 Span
+     * <p>
+     * 依次判断：main 线程（启动阶段）丢弃 → Span 名称命中排除列表丢弃 →
+     * Span 属性命中 {@link FilterType} 过滤器丢弃；否则正常采样上报。
+     * 过滤过程发生异常时为保证不丢数据，默认放行采样。
+     * </p>
+     *
+     * @param parentContext 父上下文
+     * @param traceId 链路追踪 ID
+     * @param name Span 名称
+     * @param spanKind Span 类型
+     * @param attributes Span 携带的属性集合
+     * @param parentLinks 父链路列表
+     * @return 采样结果（DROP 或 RECORD_AND_SAMPLE）
+     */
     @Override
     public SamplingResult shouldSample(Context parentContext, String traceId, String name, SpanKind spanKind, Attributes attributes, List<LinkData> parentLinks) {
 
@@ -55,6 +73,7 @@ public class FilterSampler implements Sampler {
             if(!attributes.isEmpty()){
                 for(FilterType type : FilterType.values()){
 
+                    // 任一过滤器命中即丢弃该 Span
                     if(type.getHandle().filter(attributes)){
                         return SamplingResult.create(SamplingDecision.DROP);
                     }
@@ -64,6 +83,7 @@ public class FilterSampler implements Sampler {
 
 //            System.err.println("name：" + name + "  ,attributes：" + attributes.asMap());
 
+            // 未命中任何过滤规则，放行采样
             return SamplingResult.create(SamplingDecision.RECORD_AND_SAMPLE);
 
         // 若异常则不过滤（放行采样），非生产环境打印堆栈便于排查

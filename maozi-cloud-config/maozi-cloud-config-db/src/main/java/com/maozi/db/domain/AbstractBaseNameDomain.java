@@ -45,7 +45,8 @@ import java.io.Serial;
  * <ul>
  *   <li>{@code @Data} —— Lombok 注解，自动生成 getter、setter、equals、hashCode、toString 方法</li>
  *   <li>{@code @NoArgsConstructor} —— Lombok 注解，自动生成无参构造函数</li>
- *   <li>{@code @AllArgsConstructor} —— Lombok 注解，自动生成全参构造函数（包含父类字段）</li>
+ *   <li>{@code @AllArgsConstructor} —— Lombok 注解，自动生成全参构造函数（仅含本类声明的字段，
+ *       不包含父类字段；需要含父类字段的构造请使用 Builder 方式）</li>
  *   <li>{@code @SuperBuilder(toBuilder = true)} —— Lombok 注解，支持 Builder 模式构建对象，
  *       配合父类的 {@code @SuperBuilder} 注解，可以在 Builder 中同时设置父类和本类的字段；
  *       toBuilder=true 允许基于已有对象创建新的 Builder 进行修改</li>

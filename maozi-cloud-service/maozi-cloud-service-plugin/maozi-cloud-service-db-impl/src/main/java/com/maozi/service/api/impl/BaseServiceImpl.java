@@ -303,6 +303,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * <ul>
      *   <li>无注解：直接使用字段名的下划线形式</li>
      *   <li>注解标记 ignore 且指定了 field 或 tableName：使用注解配置的列名</li>
+     *   <li>其余带注解字段（未标记 ignore，或标记 ignore 但未指定 field 与 tableName）：跳过，不生成查询列</li>
      * </ul>
      * </p>
      *
@@ -426,9 +427,14 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
     /**
      * 批量检查实体是否可用（非禁用状态）
+     * <p>
+     * 仅校验数据库中实际存在的实体状态，不校验 ID 是否存在
+     * （对照：单个 ID 重载 {@link #checkAvailable(Long)} 会校验存在性）；
+     * ID 集合为空时直接抛出数据不存在异常。
+     * </p>
      *
      * @param ids 实体 ID 列表
-     * @throws BusinessResultException 当任一实体不存在或状态为禁用时抛出异常
+     * @throws BusinessResultException 当任一已存在实体状态为禁用时抛出异常
      */
     protected void checkAvailable(List<Long> ids){
 
@@ -842,11 +848,15 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
     /**
      * 根据 DTO 参数查询列表、填充关联数据并转换为指定类型
+     * <p>
+     * 注意：关联数据当前填充到查询参数 {@code dto} 对象上（见 {@code setRelationData(dto, ...)}），
+     * 返回的列表元素本身不会被填充关联数据。
+     * </p>
      *
      * @param <V> 目标类型
      * @param dto 查询参数
      * @param target 目标类型的 Supplier
-     * @return 转换后且填充了关联数据的列表
+     * @return 转换后的列表（未填充关联数据）
      */
 	protected <V> List<V> listRelation(D dto,Supplier<V> target) {
 
@@ -1008,8 +1018,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     /**
      * 批量新增或更新实体
      * <p>
-     * 使用并行流处理批量数据，每条数据独立校验存在性后执行新增或更新。
-     * 通过 ApplicationLinkContext 包装 Consumer 以传递上下文信息。
+     * 串行遍历批量数据，每条数据独立校验存在性（携带 ID 时）后逐条执行新增或更新。
      * </p>
      *
      * @param domains 实体列表
@@ -1340,9 +1349,13 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
     /**
      * 更新实体状态
+     * <p>
+     * 更新前先调用 {@link #checkBind(Long)} 检查绑定关系；随后仅设置 ID 与状态字段
+     * 构造新实体并按 ID 更新（MyBatis-Plus 默认只更新非空字段，即仅变更状态列）。
+     * </p>
      *
      * @param id 实体 ID
-     * @param status 目标状态
+     * @param status 目标状态（为空时抛出参数错误异常）
      * @return 统一响应结果
      */
 	@SneakyThrows
@@ -1374,7 +1387,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * 处理流程：
      * <ol>
      *   <li>解析类级别的 JoinPlugins 注解，构建关联查询条件</li>
-     *   <li>遍历参数对象的所有字段，根据 QueryPlugin 注解构建查询条件</li>
+     *   <li>遍历参数对象的所有字段（值为空的字段跳过），根据 QueryPlugin 注解构建查询条件</li>
+     *   <li>处理注解标记 nest=true 的嵌套参数对象，以注解指定的表名递归解析其内部条件</li>
      *   <li>处理 TimeParam 类型的字段，自动生成范围查询条件</li>
      * </ol>
      * </p>
@@ -1422,6 +1436,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			}
 
 			Object data = ReflectUtil.invokeGet(param, field.getName());
+			// 字段值为空时不参与查询条件构建，直接跳过
 			if(ObjectUtil.isNullEmpty(data)) {continue;}
 
 			QueryPlugin annotation = field.getAnnotation(QueryPlugin.class);

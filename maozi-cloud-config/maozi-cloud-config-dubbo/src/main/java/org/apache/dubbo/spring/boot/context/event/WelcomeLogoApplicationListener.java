@@ -37,6 +37,12 @@ import static org.apache.dubbo.spring.boot.util.DubboUtils.LINE_SEPARATOR;
 /**
  * Dubbo 欢迎日志监听器
  * <p>
+ * <b>来源说明：</b>本类复刻自 Dubbo 官方 dubbo-spring-boot 项目中的同名框架类
+ * {@code org.apache.dubbo.spring.boot.context.event.WelcomeLogoApplicationListener}，
+ * 以同包同名类的方式覆盖 classpath 上的框架原生实现；相对原版的唯一功能改动是
+ * 将 {@code processed} 初始值由 {@code false} 调整为 {@code true}（效果分析见下文说明）。
+ * </p>
+ * <p>
  * 监听 Spring Boot 的 {@link ApplicationEnvironmentPreparedEvent} 事件，
  * 原本用于在应用启动时打印 Dubbo 的版本信息和相关链接（GitHub 地址、邮件讨论组），
  * 并通过 {@link AtomicBoolean} 保证 Banner 只输出一次，防止在层级 ApplicationContext 中重复执行。

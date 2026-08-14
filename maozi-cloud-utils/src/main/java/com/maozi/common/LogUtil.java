@@ -98,11 +98,12 @@ public class LogUtil {
     /**
      * 将 Map 格式的日志内容转换为字符串
      * <p>
-     * 输出格式为：key1：value1  key2：value2
+     * 每个条目按 {@code [ key：value ]  } 拼接，并去除整串最前面的 {@code "[ "} 与最后面的 {@code " ]  "}。
+     * 例如两条目时实际输出为：{@code key1：value1 ]  [ key2：value2}
      * </p>
      *
      * @param content 日志内容键值对
-     * @return 格式化后的日志字符串
+     * @return 格式化后的日志字符串，入参为空时返回 {@code null}
      */
     public static String convertLog(Map<String, String> content) {
 

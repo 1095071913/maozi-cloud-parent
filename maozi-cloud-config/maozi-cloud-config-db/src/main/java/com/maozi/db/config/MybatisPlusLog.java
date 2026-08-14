@@ -10,7 +10,8 @@ import org.apache.ibatis.logging.Log;
  * MyBatis-Plus 自定义日志实现
  * <p>
  * 拦截 MyBatis-Plus 的 SQL 日志输出，将 SQL 语句和参数收集到线程变量中，
-     * 用于在请求结束时统一记录完整的 SQL 日志。仅当日志内容包含 SQL 准备语句（==>  Preparing:）或参数信息（==> Parameters:）时才进行收集。
+ * 用于在请求结束时统一记录完整的 SQL 日志。仅当日志内容包含 SQL 准备语句
+ * （==&gt;  Preparing:）或参数信息（==&gt; Parameters:）时才进行收集。
  * </p>
  *
  * @author maozi
@@ -40,10 +41,10 @@ public class MybatisPlusLog implements Log {
     public boolean isTraceEnabled() {return true;}
 
     /**
-     * 记录 error 日志（带异常）
+     * 记录 error 日志（当前实现未输出异常堆栈，仅记录日志内容）
      *
      * @param s 日志内容
-     * @param e 异常对象
+     * @param e 异常对象（未被使用，不会随日志输出）
      */
     public void error(String s, Throwable e) {log.error(s);}
 
@@ -95,7 +96,7 @@ public class MybatisPlusLog implements Log {
 
             if(StringUtils.isNotBlank(s)) {
 
-                // 参数格式为 "value(Type),value(Type),..." 按 "), " 拆分
+                // 参数格式为 "value(Type),value(Type),..." 按 "),"(右括号+逗号) 拆分
                 String [] params = s.split("\\),");
 
                 for (String param : params) {

@@ -24,8 +24,10 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 public class MysqlFilterHandle extends FilterHandle {
 
+    /** 来源标识，匹配 Span 属性 {@code db.system} */
     private List<String> names = List.of("mysql");
 
+    /** 需要排除的 SQL 语句列表（连接探活、版本查询、锁检测等框架内部维护 SQL） */
     private final List<String> EXCLUDED_STATEMENT = List.of(
 
             "SELECT ?",
@@ -47,14 +49,26 @@ public class MysqlFilterHandle extends FilterHandle {
 
     );
 
+    /**
+     * 根据 Span 属性判断 MySQL Span 是否需要过滤
+     * <p>
+     * 先校验 {@code db.system} 是否为 mysql，再比对 {@code db.statement}
+     * 是否命中排除语句列表。
+     * </p>
+     *
+     * @param attributes Span 携带的属性集合
+     * @return {@code true} 表示命中排除语句应丢弃；{@code false} 表示保留
+     */
     @Override
     public Boolean filter(Attributes attributes) {
 
+        // 读取 db.system 来源标识，非 mysql 来源不过滤
         String type = attributes.get(InternalAttributeKeyImpl.create("db.system", AttributeType.STRING));
         if(Objects.isNull(type) || !getNames().contains(type)){
             return false;
         }
 
+        // 比对 db.statement 是否命中排除语句列表
         String statement = attributes.get(InternalAttributeKeyImpl.create("db.statement", AttributeType.STRING));
         return EXCLUDED_STATEMENT.contains(statement);
 

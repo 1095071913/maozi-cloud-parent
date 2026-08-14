@@ -55,6 +55,7 @@ import static org.apache.dubbo.common.constants.CommonConstants.TIMESTAMP_KEY;
  */
 public class ProviderFirstParams extends DefaultProviderFirstParams {
 
+    /** 自定义的应用版本参数名（值随服务注册写入 URL，供灰度路由做版本匹配） */
     public final static String APPLICATION_VERSION_KEY = "application.version";
 
     /**

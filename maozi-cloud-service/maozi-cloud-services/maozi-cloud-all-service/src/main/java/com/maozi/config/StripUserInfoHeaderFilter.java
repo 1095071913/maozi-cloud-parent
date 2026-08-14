@@ -91,6 +91,7 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             super(request);
         }
 
+        /** 目标头直接返回 {@code null}，其余透传原始请求 */
         @Override
         public String getHeader(String name) {
             if (HEADER_TO_STRIP.equalsIgnoreCase(name)) {
@@ -99,6 +100,7 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             return super.getHeader(name);
         }
 
+        /** 目标头返回空枚举，其余透传原始请求 */
         @Override
         public Enumeration<String> getHeaders(String name) {
             if (HEADER_TO_STRIP.equalsIgnoreCase(name)) {
@@ -107,6 +109,7 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             return super.getHeaders(name);
         }
 
+        /** 返回剔除目标头后的请求头名称枚举 */
         @Override
         public Enumeration<String> getHeaderNames() {
             Set<String> names = new LinkedHashSet<>();

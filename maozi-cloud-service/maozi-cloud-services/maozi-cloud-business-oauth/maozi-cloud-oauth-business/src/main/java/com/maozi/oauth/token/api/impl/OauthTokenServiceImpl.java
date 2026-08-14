@@ -46,7 +46,8 @@ public class OauthTokenServiceImpl implements OauthTokenService {
      * <ul>
      *   <li>先按 access_token 维度查找授权记录，未命中直接返回 active=false；</li>
      *   <li>命中后再校验 AccessToken 是否仍处于 active 状态；</li>
-     *   <li>仅提取 Hessian 可序列化的字段，避免复制可能含 URL 等不可序列化类型的全部 claims。</li>
+     *   <li>授权记录对应的客户端必须仍已在客户端仓库中注册，否则同样返回 active=false；</li>
+     *   <li>合并令牌原有的全部 claims，并移除 iss（issuer）声明。</li>
      * </ul>
      * </p>
      */
@@ -65,6 +66,7 @@ public class OauthTokenServiceImpl implements OauthTokenService {
             return CollectionUtil.newHashMap(OAuth2TokenClaimConstants.ACTIVE, false);
         }
 
+        // 校验授权记录对应的客户端是否仍已注册，未注册视为令牌无效
         RegisteredClient authorizedClient = this.registeredClientRepository.findById(authorization.getRegisteredClientId());
         if(ObjectUtil.isNullEmpty(authorizedClient)){
             return CollectionUtil.newHashMap(OAuth2TokenClaimConstants.ACTIVE, false);
@@ -77,7 +79,7 @@ public class OauthTokenServiceImpl implements OauthTokenService {
         claims.put(OAuth2TokenClaimConstants.CLIENT_ID, authorizedClient.getId());
         claims.put(OAuth2TokenClaimConstants.TOKEN_TYPE,accessToken.getToken().getTokenType().getValue());
 
-        // 只提取Hessian可序列化的字段，避免复制可能包含URL等不可序列化类型的全部claims
+        // 合并令牌原有claims，并移除iss（issuer）声明
         Map<String, Object> oldClaims = accessToken.getClaims();
         if (oldClaims != null) {
             claims.putAll(oldClaims);

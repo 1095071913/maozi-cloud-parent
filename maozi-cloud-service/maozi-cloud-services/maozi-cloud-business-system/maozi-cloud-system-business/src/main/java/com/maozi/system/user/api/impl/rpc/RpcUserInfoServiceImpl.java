@@ -17,6 +17,16 @@ import com.maozi.system.user.dto.SystemUser;
 @RemoteService
 public class RpcUserInfoServiceImpl extends UserServiceImpl implements RpcUserInfoService {
 
+	/**
+	 * 根据用户 ID 查询系统用户信息
+	 * <p>
+	 * 携带关联数据映射（Relation）转换为 {@link SystemUser}，查询不到时抛出业务异常。
+	 * </p>
+	 *
+	 * @param id 用户 ID
+	 * @param columns 查询列（保留参数，当前未使用）
+	 * @return 系统用户信息封装的统一结果
+	 */
 	@Override
 	public AbstractBaseResult<SystemUser> rpcGetById(Long id, String... columns) {
 		return ResultUtil.success(getByIdThrowErrorRelation(id,SystemUser.class));

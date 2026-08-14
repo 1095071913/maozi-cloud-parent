@@ -39,6 +39,8 @@ import java.util.Objects;
  * 并通过 {@link ServerHttpResponseAgent} 代理响应对象，
  * 在响应返回时自动补充响应耗时（RT）和响应数据。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 public class RequestLogFilter implements GlobalFilter, Ordered {

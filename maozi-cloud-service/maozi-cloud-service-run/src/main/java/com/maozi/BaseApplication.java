@@ -51,9 +51,10 @@ import java.util.Properties;
 /**
  * 应用启动基类
  * <p>
- * 所有微服务应用的启动入口均需继承此类。统一配置 Spring Boot 应用启动参数，
- * 包括 Nacos 配置中心连接、日志级别、异步任务、缓存、定时任务、
- * 服务发现和 Dubbo RPC 等功能的自动开启。
+ * 所有微服务应用的启动入口均需继承此类。负责统一初始化运行环境、应用名称、
+ * 日志等基础启动参数，并在启动前扫描 classpath 下 {@code META-INF/run/config/*.properties}
+ * 登记的配置初始化器（{@link ConfigInitializer}），由各初始化器写入 Nacos 配置中心/服务发现、
+ * 缓存、定时任务等组件所需的系统属性。
  * </p>
  *
  * @author maozi
@@ -71,7 +72,7 @@ public class BaseApplication {
      * 应用启动入口方法
      * <p>
      * 初始化系统属性、启动 Spring Boot 应用，记录启动日志（包括初始化时间、
-     * 服务端口、Nacos 地址和加载的配置文件）。启动失败时记录错误日志并退出。
+     * 服务端口以及各初始化器追加的诊断信息如 Nacos 地址）。启动失败时记录错误日志并退出。
      * </p>
      *
      * @param args 命令行参数
@@ -121,9 +122,11 @@ public class BaseApplication {
     /**
      * 初始化系统属性
      * <p>
-     * 设置 Spring Boot 启动参数，包括：应用名称、Nacos 配置中心地址、
-     * 基础配置文件列表、日志级别和输出路径等。服务级别的额外配置文件
-     * 通过 {@code application-nacos-config-service} 系统属性追加。
+     * 解析运行环境（优先取系统属性 environment，其次取环境变量 ENVIRONMENT，
+     * 均未设置时默认本地环境），推导应用名与项目简称，并设置应用名称、
+     * 允许循环依赖、日志级别等 Spring Boot 启动参数。非本地环境使用异步文件日志
+     * 输出到 {@code logs/应用名.log}，本地环境使用异步控制台日志。
+     * 应用名称读取失败时抛出异常，终止启动。
      * </p>
      */
     @SneakyThrows
@@ -164,6 +167,16 @@ public class BaseApplication {
 
     }
 
+    /**
+     * 加载并执行运行时配置初始化器
+     * <p>
+     * 扫描 classpath 下 {@code META-INF/run/config/*.properties} 文件，
+     * 反射实例化文件中登记的 {@link ConfigInitializer} 实现类并依次执行其 initialize
+     * 方法写入系统属性，最终返回初始化器列表供启动日志输出使用。
+     * </p>
+     *
+     * @return 已加载并执行完成的配置初始化器列表
+     */
     private static List<ConfigInitializer> initFileProperties() {
 
         Properties properties = System.getProperties();
@@ -229,6 +242,8 @@ public class BaseApplication {
      * 获取应用名称
      * - jar 运行：取 jar 文件名
      * - 目录运行：从启动类路径往上推导项目名
+     *
+     * @return 应用名称（jar 运行取 jar 文件名去掉 .jar 后缀，目录运行取推导出的项目名）；无法定位时返回 null
      */
     public static String getApplicationName() {
         Class<?> mainClass = findMainClass();
@@ -254,6 +269,8 @@ public class BaseApplication {
 
     /**
      * 从线程栈中找到 main 方法所在的类
+     *
+     * @return main 方法所在的类；线程栈中无 main 方法或类加载失败时返回 {@code null}
      */
     private static Class<?> findMainClass() {
         for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
@@ -269,6 +286,9 @@ public class BaseApplication {
 
     /**
      * 从目录往上推导项目根目录名
+     *
+     * @param dir 启动类所在的目录
+     * @return 自下而上第一个非构建产物目录的名称；祖先均为构建产物目录时返回 dir 自身名称，dir 为 {@code null} 时返回 {@code null}
      */
     private static String deriveProjectName(File dir) {
         File current = dir;
@@ -287,6 +307,16 @@ public class BaseApplication {
         return null;
     }
 
+    /**
+     * 获取类所在的代码路径
+     * <p>
+     * Location 形如 jar 包（含 Spring Boot 3 的 nested jar）时，截取其中的 jar 文件路径；
+     * 否则视为 IDE/目录运行场景，直接将 Location 转为文件。
+     * </p>
+     *
+     * @param clazz 目标类
+     * @return 类所在的 jar 文件或目录；无法获取代码来源时返回 null
+     */
     @SneakyThrows
     private static File getCodeLocation(Class<?> clazz) {
         ProtectionDomain domain = clazz.getProtectionDomain();
@@ -302,7 +332,7 @@ public class BaseApplication {
         // jar:nested:/path/to/app.jar/!BOOT-INF/classes/!/
         int jarEndIndex = urlStr.indexOf(".jar");
         if (jarEndIndex != -1) {
-            // 从 .jar 位置往前找，找到路径的起始位置（最后一个 : 之后的 /）
+            // 截取 URL 开头至 .jar 结束（含 .jar）的部分
             String beforeJar = urlStr.substring(0, jarEndIndex + 4);
             // 找到最后一个冒号的位置，跳过协议前缀
             int colonIndex = beforeJar.lastIndexOf(':');
@@ -320,6 +350,7 @@ public class BaseApplication {
         return new File(codeSource.getLocation().toURI());
     }
 
+    /** 判断给定目录名是否为构建产物目录（target、build、classes、bin、java、main、test） */
     private static boolean isBuildDir(String name) {
         return name.equals("target") || name.equals("build")
                 || name.equals("classes") || name.equals("bin")

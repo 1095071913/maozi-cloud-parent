@@ -31,16 +31,16 @@ public class ClientListParam implements OrderParam,Serializable {
 	@QueryPlugin(value = QueryBaseType.LIKE,field = "client_name")
 	private String name;
 
-	/** 排序字段映射，key为字段名，value为是否升序 */
+	/** 排序字段映射，key为字段名，value为排序方向（true 降序、false 升序、null 不排序） */
 	private Map<String,Boolean> orderFieldMap;
 
-    /** 升序排序字段映射，key为分组标识，value为该分组下需要升序排序的字段列表 */
+    /** 升序排序字段映射，key为主表别名，value为该表下需要升序排序的字段列表 */
     private Map<String,List<String>> orderAscFieldsMap;
 
-    /** 降序排序字段映射，key为分组标识，value为该分组下需要降序排序的字段列表 */
+    /** 降序排序字段映射，key为主表别名，value为该表下需要降序排序的字段列表 */
     private Map<String,List<String>> orderDescFieldsMap;
 
-    /** 主排序字段映射，key为排序分组标识，value为该分组下的排序字段及排序方向配置，默认按创建时间升序排列 */
+    /** 主排序字段映射，key为主表别名，value为该表下可排序字段及默认排序方向配置（true 降序、false 升序），默认按创建时间降序排列 */
     private Map<String, Map<String, Boolean>> orderMainFieldsMap = new HashMap<>() {{
 
         put(QueryEnvironmentContext.DEFAULT_ORDER_KEY, new HashMap<>() {{

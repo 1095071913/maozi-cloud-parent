@@ -44,6 +44,14 @@ import java.util.Collection;
  * <li>所有入口的总统计数据</li>
  * </ul>
  * </p>
+ * <p>
+ * <b>注：</b>本类为复制自 sentinel-core 1.8.6 的
+ * {@code com.alibaba.csp.sentinel.slots.statistic.StatisticSlot} 的本地覆盖副本
+ * （同包同名类在 classpath 上优先于 jar 内类加载），
+ * 修改点：entry 通过分支中当前资源节点（DefaultNode）的 {@code node.addPassRequest(count)}
+ * 调用被注释禁用，通过请求数仅统计到来源节点与全局入口节点（调整统计口径）；
+ * 升级 sentinel-core 版本时需同步比对原生类变更。
+ * </p>
  *
  * @author jialiang.linjl
  * @author Eric Zhao
@@ -57,7 +65,7 @@ public class StatisticSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
      * 该方法在请求进入时执行，通过调用链式处理（fireEntry）后，根据不同结果进行统计：
      * <ul>
      *   <li>通过（Pass）：当前资源节点（{@code node}）仅增加线程数，
-     *       主节点的 {@code addPassRequest} 已被注释禁用（见方法体内注释）；
+     *       该节点的 {@code addPassRequest} 已被注释禁用（见方法体内注释）；
      *       来源节点和入口节点仍正常增加线程数和通过请求数</li>
      *   <li>优先等待（PriorityWait）：仅增加线程数</li>
      *   <li>被阻塞（BlockException）：增加阻塞 QPS</li>

@@ -32,8 +32,8 @@ import java.util.Map;
  * <p>
  * 扩展 Spring 的 {@link org.springframework.web.client.RestTemplate}，
  * 在 {@link #doExecute} 方法中集成请求日志记录、响应时间统计、
- * SQL 日志收集和异常处理。所有 HTTP 请求（GET/POST/HEAD/EXCHANGE）均通过
- * 重写方法统一走增强后的 {@link #doExecute} 流程。
+ * SQL 日志收集和异常处理。所有 HTTP 请求（GET/POST/HEAD/EXCHANGE 等）
+ * 最终均经由基类公开方法内部调用的 {@link #doExecute} 统一走增强后的流程。
  * </p>
  *
  * @author maozi
@@ -53,7 +53,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 	 * @param requestCallback 请求回调
 	 * @param responseExtractor 响应提取器
 	 * @return 响应数据
-	 * @throws RestClientException REST 请求异常
+	 * @throws RestClientException 仅在方法签名上声明；实现中所有异常均被捕获并记录日志后返回 null，不会向上抛出
 	 */
 	@Nullable
 	@Override
@@ -101,7 +101,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			// 执行 HTTP 请求并获取响应
 			response = request.execute();
 
-			// 处理响应状态码，非 2xx 时抛出异常
+			// 处理响应状态码，错误状态码（4xx/5xx）时抛出异常
 			handleResponse(url, method, response);
 
 			// 使用响应提取器将响应体反序列化为目标类型

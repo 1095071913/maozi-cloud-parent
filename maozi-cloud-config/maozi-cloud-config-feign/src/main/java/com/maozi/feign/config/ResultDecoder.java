@@ -44,22 +44,30 @@ public class ResultDecoder implements Decoder {
 
     /**
      * 解码 Feign 响应
+     * <p>
+     * 要求目标返回类型为参数化类型（如 {@code Result<T>}），
+     * 取其第一个泛型参数作为实际数据类型进行反序列化，非参数化类型会导致类型转换异常。
+     * </p>
      *
      * @param response Feign 响应对象
-     * @param type 目标返回类型
-     * @return 反序列化后的对象
+     * @param type 目标返回类型（须为参数化类型）
+     * @return 反序列化后的对象；返回类型包含 {@link AbstractBaseResult} 时封装为 {@link SuccessResult}
      * @throws IOException IO 异常
      * @throws FeignException Feign 异常
      */
     @Override
     public Object decode(Response response, Type type) throws IOException, FeignException {
 
+        // 取目标返回类型的第一个泛型参数作为实际数据类型（如 Result<User> 中的 User）
         Type dataType = ((ParameterizedType)type).getActualTypeArguments()[0];
 
+        // 基于 Spring 消息转换器构建提取器，借助 FeignResponseAdapter 将 Feign 响应适配为 ClientHttpResponse
         HttpMessageConverterExtractor<?> extractor = new HttpMessageConverterExtractor<>(dataType, this.messageConverters.getObject().getConverters());
 
+        // 提取响应体并解析为 Map 结构，供后续按目标类型二次转换
         LinkedHashMap<String, Object> extractData = (LinkedHashMap<String, Object>) extractor.extractData(new FeignResponseAdapter(response));
 
+        // 返回类型包含 AbstractBaseResult 时封装为 SuccessResult，否则按实际数据类型转换
         return type.getTypeName().contains(AbstractBaseResult.class.getName()) ? JacksonUtil.mapToObject(extractData, SuccessResult.class) : JacksonUtil.mapToObject(extractData, dataType);
 
     }
@@ -140,6 +148,7 @@ public class ResultDecoder implements Decoder {
      */
     static HttpHeaders getHttpHeaders(Map<String, Collection<String>> headers) {
         HttpHeaders httpHeaders = new HttpHeaders();
+        // 逐项复制 Feign 响应头到 Spring HttpHeaders
         for (Map.Entry<String, Collection<String>> entry : headers.entrySet()) {
             httpHeaders.put(entry.getKey(), new ArrayList<>(entry.getValue()));
         }

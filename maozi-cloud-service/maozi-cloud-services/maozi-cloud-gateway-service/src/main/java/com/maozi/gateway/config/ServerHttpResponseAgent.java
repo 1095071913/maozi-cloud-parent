@@ -32,9 +32,10 @@ import java.util.UUID;
  * 1. 读取并缓存响应体内容；
  * 2. 判断响应体是否为自定义格式（包含 code 字段）；
  * 3. 记录请求耗时（RT）和响应数据到日志；
- * 4. 根据响应状态码和业务码决定日志级别（ERROR 或 INFO）；
- * 5. 更新响应头中的 Content-Length。
+ * 4. 根据响应状态码和业务码决定日志级别（ERROR 或 INFO）。
  * </p>
+ *
+ * @author maozi
  */
 @Slf4j
 public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
@@ -54,7 +55,7 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 	 * @param requestTime 请求开始时间戳（毫秒）
 	 * @param logs        日志信息收集 Map
 	 * @param response    原始服务端响应对象
-	 * @param attributes  Exchange 上下文属性 Map
+	 * @param attributes  Exchange 上下文属性 Map（当前实现未使用）
 	 * @param request     服务端请求对象，用于读取链路追踪 ID 请求头
 	 */
 	public ServerHttpResponseAgent(Long requestTime,Map<String,String> logs,ServerHttpResponse response,Map<String,Object> attributes,ServerHttpRequest request) {
@@ -75,10 +76,10 @@ public class ServerHttpResponseAgent extends ServerHttpResponseDecorator {
 	 * 当响应体类型为 Flux 时，缓冲所有数据块并执行以下操作：
 	 * 1. 合并所有 DataBuffer 为字节数组；
 	 * 2. 解析 JSON 响应体，判断是否为自定义格式（含 code 字段）；
-	 * 3. 设置 MDC 上下文（服务名）；
+	 * 3. 在 OpenTelemetry 未生成有效 traceId 时向 MDC 写入 traceId；
 	 * 4. 记录响应耗时和响应数据；
 	 * 5. 根据响应状态决定日志级别；
-	 * 6. 更新 Content-Length 并返回包装后的响应数据。
+	 * 6. 将合并后的字节重新包装为 DataBuffer 返回并写入下游。
 	 * </p>
 	 *
 	 * @param body 响应体数据流

@@ -3,7 +3,6 @@ package com.maozi.oauth.config;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.token.api.OauthTokenService;
-import com.maozi.oauth.token.api.rpc.RpcOauthTokenService;
 import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,12 +22,12 @@ import java.util.stream.Collectors;
 /**
  * 不透明令牌内省器
  * <p>
- * 内省优先级：当本进程即为授权服务器（容器中存在 {@link RpcOauthTokenService} 的本地实现 Bean）时，
- * 优先在进程内直接调用该实现，避免任何网络开销；否则根据配置 {@code spring.security.oauth2.resourceserver.opaquetoken.mode}
- * 选择远程模式：
+ * 内省逻辑委托给注入的 {@link OauthTokenService} 完成：授权服务器进程注入的是本地实现
+ * （进程内直接调用，无网络开销）；资源服务器进程注入的是 {@code RemoteOauthTokenServiceImpl}，
+ * 由其根据配置 {@code spring.security.oauth2.resourceserver.opaquetoken.mode} 选择远程调用方式：
  * <ul>
- *   <li>{@code http}（默认）：通过 HTTP 调用 OAuth 授权服务器的 introspection 端点</li>
- *   <li>{@code rpc}：通过 Dubbo RPC 直接调用 OAuth 授权服务器的内省服务，减少网络开销</li>
+ *   <li>{@code rpc}（默认，配置为空时生效）：通过 Dubbo RPC 直接调用 OAuth 授权服务器的内省服务，减少网络开销</li>
+ *   <li>其他值：通过 HTTP（Feign）调用授权服务器的内省接口</li>
  * </ul>
  * 内省完成后，从响应中提取 authorities 字段并转换为 {@link GrantedAuthority} 集合，
  * 使权限信息可用于后续的访问控制决策。
@@ -39,29 +38,30 @@ import java.util.stream.Collectors;
 @Component
 public class OpaqueTokenIntrospector implements org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector {
 
-    /** 令牌内省服务：授权服务器进程为本地实现，资源服务器进程为 RemoteOauthTokenServiceImpl（Dubbo 代理） */
+    /** 令牌内省服务：授权服务器进程为本地实现，资源服务器进程为 RemoteOauthTokenServiceImpl（按配置选择 Dubbo RPC 或 HTTP 远程调用） */
     @Resource(name = "oauthTokenService")
     private OauthTokenService oauthTokenService;
 
     /**
      * 内省令牌并提取权限信息
      * <p>
-     * 优先在进程内本地内省（当本进程为授权服务器时，复用 {@link RpcOauthTokenService} 的本地实现，
-     * 与 RPC 远程调用走同一份内省逻辑，避免代码重复）；否则根据配置的内省模式（HTTP/RPC），
-     * 调用对应的远程内省服务完成令牌验证，然后从响应中提取 authorities 并构建带权限的认证主体。
+     * 委托 {@link #oauthTokenService} 完成内省：本进程为授权服务器时为进程内本地调用，
+     * 资源服务器进程时由该服务按配置模式选择 Dubbo RPC 或 HTTP（Feign）远程调用；
+     * 内省完成后从响应中提取 authorities 并构建带权限的认证主体。
      * </p>
      *
      * @param token 待内省的令牌字符串
      * @return 包含权限信息的认证主体
-     * @throws BadOpaqueTokenException       令牌无效
-     * @throws OAuth2IntrospectionException  内省过程中的其他异常
+     * @throws BadOpaqueTokenException 令牌无效；内省服务抛出的 {@code OAuth2IntrospectionException}
+     *                                  与 {@code BusinessResultException} 也会被捕获并转换为本异常抛出，
+     *                                  本方法对外只会抛出 {@code BadOpaqueTokenException}
      */
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         try {
 
-            // 优先本地调用：当容器中存在本地实现（即本进程为授权服务器）时，直接进程内调用，避免网络开销
-            // 否则根据配置模式选择不同的内省方式：RPC模式走Dubbo调用，否则走HTTP调用
+            // 委托令牌内省服务：授权服务器进程为进程内本地调用；资源服务器进程由
+            // RemoteOauthTokenServiceImpl 按配置模式选择 Dubbo RPC（默认）或 HTTP 调用
             Map<String, Object> claims = oauthTokenService.introspect(token);
 
             // 校验令牌活跃状态并构建带权限的认证主体

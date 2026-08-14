@@ -35,7 +35,7 @@ import java.util.Objects;
 /**
  * REST 接口请求入口日志切面
  * <p>
- * 拦截 REST 接口和基础服务实现类的请求入口，复用
+ * 拦截 REST 实现层（{@code api.impl.rest} 包）方法的请求入口，复用
  * {@link AbstractRequestEntranceLogAop} 的统一日志逻辑。权限拒绝异常
  * （{@link AccessDeniedException}）原样抛出，交由 Spring Security 处理，
  * 不封装为统一响应。
@@ -64,16 +64,23 @@ public class RestRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 		return super.doAround(proceedingJoinPoint);
 	}
 
+	/** 返回 WEB 类型的入口日志标识 */
 	@Override
 	protected LogCommonType getType() {
 		return LogCommonType.WEB;
 	}
 
+	/** 返回当前 HTTP 请求的客户端真实 IP（穿透代理头解析）作为来源记录 */
 	@Override
 	protected String getLocalHost() {
 		return WebUtil.getRequestHost();
 	}
 
+	/**
+	 * 追加 REST 请求专属日志信息
+	 *
+	 * @param logs 日志容器，写入当前请求的完整 URL
+	 */
 	@Override
 	protected void requestLog(Map<String, String> logs) {
 		logs.put(LogTag.URL, Objects.requireNonNull(WebUtil.getRequest()).getRequestURL().toString());

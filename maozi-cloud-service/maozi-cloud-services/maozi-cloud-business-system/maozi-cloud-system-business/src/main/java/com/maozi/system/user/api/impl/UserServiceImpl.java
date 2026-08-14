@@ -70,7 +70,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 		return RESOURCE_NAME;
 	}
 
-	/** 密码编码器，用于用户密码的加密处理 */
+	/** 密码编码器（DelegatingPasswordEncoder 委派模式，默认 {bcrypt} 算法且密文带算法前缀），用于用户密码的加密及旧密码比对校验 */
 	protected final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 	/** 用户角色服务，用于管理用户与角色的关联关系 */
@@ -136,6 +136,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 
 		if(ObjectUtil.isNotNullEmpty(id)) {
 
+			// 更新时不允许修改用户名和客户端ID，置空以忽略这两个字段
 			param.setUsername(null);
 
 			param.setClientId(null);
@@ -144,8 +145,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 
 			if(ObjectUtil.isNotNullEmpty(param.getClientId()) && ObjectUtil.isNotNullEmpty(param.getUsername())) {
 
+				// 校验客户端存在且可用，不可用则抛出异常
 				rpcClientService.checkAvailableResult(param.getClientId()).getResultDataThrowError();
 
+				// 校验同一客户端下用户名未被占用，已存在则抛出异常
 				checkNotHas(MPJWrappers.lambdaJoin(UserDo.builder().clientId(param.getClientId()).username(param.getUsername()).build()));
 
 			}
@@ -153,11 +156,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 		}
 
 		if(ObjectUtil.isNotNullEmpty(param.getPassword())) {
+			// 密码非空时先加密再入库
 			param.setPassword(passwordEncoder.encode(param.getPassword()));
 		}
 
 		id = saveUpdate(id,param);
 
+		// 保存后同步更新用户与角色的绑定关系
 		userRoleService.updateBind(id, param.getBindRoleIds(), param.getUnbindRoleIds());
 
 		return id;
@@ -194,6 +199,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 
 	}
 
+	/**
+	 * 根据用户ID获取该用户的权限标识列表
+	 * <p>
+	 * 先查询用户绑定的角色ID列表，再通过角色查询关联的权限ID集合，
+	 * 最后转换为权限标识列表；用户未绑定角色时返回空列表。
+	 * </p>
+	 *
+	 * @param userId 用户ID
+	 * @return 该用户拥有的权限标识列表
+	 */
 	protected List<String> getPermissionsByUserId(Long userId) {
 
 		List<String> responses = CollectionUtil.newArrayList();

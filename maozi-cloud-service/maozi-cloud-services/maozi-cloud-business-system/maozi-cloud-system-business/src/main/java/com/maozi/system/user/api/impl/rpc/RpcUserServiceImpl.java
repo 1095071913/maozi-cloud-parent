@@ -17,26 +17,41 @@ import java.util.List;
 /**
  * 用户RPC服务实现类
  * <p>
- * 提供用户模块的Dubbo RPC远程调用接口实现，包括根据用户名查询密码、
- * 根据用户名获取全部权限标识、根据用户名和指定角色获取权限标识等功能。
+ * 提供用户模块的Dubbo RPC远程调用接口实现，包括根据用户名获取 OAuth 认证用户信息
+ * （用户ID、加密密码及全部权限标识），以及根据用户名和指定角色ID获取该角色下的
+ * 权限标识列表等功能。
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
  */
 @RemoteService
 public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserService {
 
+	/**
+	 * 根据用户名获取 OAuth 认证所需的用户信息
+	 * <p>
+	 * 查询用户的 ID、加密密码，并汇总该用户的全部权限标识，
+	 * 供授权服务器进行密码模式认证与权限填充。
+	 * 用户名为空或用户不存在时抛出业务异常。
+	 * </p>
+	 *
+	 * @param username 用户名
+	 * @return OAuth 认证用户信息（含 ID、密码、权限标识列表）
+	 */
 	@Override
 	public AbstractBaseResult<OauthUserInfoResult> rpcGetOauthUserInfoByUsername(String username) {
 
+		// 用户名为空时抛出参数异常
 		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
 
 		LambdaQueryWrapper<UserDo> wrapper = Wrappers.lambdaQuery();
 
+		// 仅查询用户ID和密码字段
 		wrapper.select(UserDo::getId,UserDo::getPassword);
 		wrapper.eq(UserDo::getUsername,username);
 
 		UserDo domain = getOne(wrapper);
 
+		// 用户不存在时抛出业务异常
 		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
 
 		Long userId = domain.getId();
@@ -60,10 +75,12 @@ public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserServic
 
 		Long id = getAvailableByUsername(username);
 
+		// 校验用户绑定了指定角色，未绑定则抛出异常
 		userRoleService.hasUserBindRole(id,roleId);
 
 		List<String> responses = CollectionUtil.newArrayList();
 
+		// 查询角色关联的权限ID集合，并转换为权限标识列表
 		List<Long> permissionIds = rolePermissionService.getPermissionsByRole(roleId);
 
 		List<String> marks = permissionService.getMarks(permissionIds);

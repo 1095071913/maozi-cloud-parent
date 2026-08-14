@@ -28,6 +28,8 @@ import reactor.core.publisher.Mono;
  * 2. 配置 HTTP 编解码器；
  * 3. 提供全局 CORS 跨域过滤器，允许前端跨域访问网关。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 public class GatewayCrossConfig {
@@ -76,7 +78,7 @@ public class GatewayCrossConfig {
 	 * - 设置 Access-Control-Allow-Origin 为请求来源；
 	 * - 允许携带凭证（Cookies）；
 	 * - 暴露所有响应头给前端；
-	 * - 缓存预检请求结果 3600 秒；
+	 * - 设置预检请求缓存时间（Access-Control-Max-Age，取 MAX_AGE 常量值）；
 	 * - 对 OPTIONS 预检请求直接返回 200。
 	 * </p>
 	 *

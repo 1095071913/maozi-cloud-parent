@@ -13,12 +13,12 @@ import java.lang.reflect.Field;
 /**
  * 通用 JSON 字段处理器
  * <p>
- * 继承 MyBatis-Plus {@link JacksonTypeHandler}，通过反射获取字段泛型类型，
+ * 继承 MyBatis-Plus {@link com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler}，通过反射获取字段泛型类型，
  * 自动完成数据库 JSON 列与 Java 对象的双向转换。
  * 支持任意类型：普通对象、List、Map 等。
  * </p>
  * <p>
- * 使用方式：在实体字段上标注 {@code @TableField(typeHandler = CustomJsonTypeHandler.class)}，
+ * 使用方式：在实体字段上标注 {@code @TableField(typeHandler = JacksonTypeHandler.class)}，
  * 实体类需设置 {@code @TableName(autoResultMap = true)}。
  * </p>
  *

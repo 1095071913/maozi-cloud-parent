@@ -33,7 +33,7 @@ public class UserListParam implements OrderParam,Serializable {
 	@QueryPlugin(value = QueryBaseType.LIKE)
 	private String name;
 
-	/** 排序字段映射，key为字段名，value为是否升序 */
+	/** 排序字段映射，key为字段名，value为排序方向（true 降序、false 升序、null 不排序） */
 	private Map<String, Boolean> orderFieldMap;
 
 	/** 升序排序字段映射 */

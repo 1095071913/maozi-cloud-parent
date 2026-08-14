@@ -58,6 +58,14 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 
 	// ==================== 阶段一：注册 @RemoteService 类为 Spring Bean ====================
 
+	/**
+	 * 阶段一：扫描 {@link RemoteService} 标注的类并注册为 Spring Bean
+	 * <p>
+	 * 注册时标记 {@code autowireCandidate = false}，使其不参与按类型自动装配。
+	 * </p>
+	 *
+	 * @param registry Bean 定义注册表
+	 */
 	@Override
 	public void postProcessBeanDefinitionRegistry(@NotNull BeanDefinitionRegistry registry) throws BeansException {
 		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
@@ -69,6 +77,7 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 		}
 	}
 
+	/** 本处理器无需在此阶段处理 BeanFactory */
 	@Override
 	public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		// 无需处理
@@ -76,6 +85,12 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 
 	// ==================== 阶段二：暴露 @RemoteService Bean 为 Dubbo 服务 ====================
 
+	/**
+	 * 阶段二：所有单例创建完毕后，将 {@link RemoteService} 标注的 bean 暴露为 Dubbo 服务
+	 * <p>
+	 * 此阶段拿到的 bean 已完成 AOP 代理，保证 Dubbo 调用时切面生效。
+	 * </p>
+	 */
 	@Override
 	public void afterSingletonsInstantiated() {
 		Map<String, Object> serviceBeans = applicationContext.getBeansWithAnnotation(RemoteService.class);
@@ -87,6 +102,7 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 		}
 	}
 
+	/** 保存 Spring 应用上下文供阶段二使用 */
 	@Override
 	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;

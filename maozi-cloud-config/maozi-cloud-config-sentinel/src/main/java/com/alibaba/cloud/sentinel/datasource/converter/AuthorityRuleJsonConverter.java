@@ -37,8 +37,15 @@ import java.util.Optional;
  * 授权规则的 JSON 转换器
  * <p>
  * 继承自 {@link JsonConverter}，专门用于将 JSON 格式的授权规则数据转换为 Sentinel 可识别的规则对象。
- * 使用严格模式解析 JSON，将 JSON 数组中的每条规则转换为 {@link AuthorityRuleEntity}，
+ * 将 JSON 数组中的每条规则转换为 {@link AuthorityRuleEntity}，
  * 然后提取其中的 {@link AuthorityRule} 规则对象放入集合中返回。
+ * </p>
+ * <p>
+ * <b>注：</b>本类为项目在框架包下新增的转换器（Spring Cloud Alibaba 依赖 jar 中并无同名类），
+ * {@link #convert(String)} 的逻辑复刻自 Spring Cloud Alibaba 的 {@code SentinelConverter#convert}，
+ * 修改点：反序列化目标由规则类本身改为控制台实体 {@link AuthorityRuleEntity}，提取其内部的
+ * {@link AuthorityRule} 加入结果集合，结果集合固定使用 {@link ArrayList}，空数据与转换失败时不再打印日志；
+ * 目的是兼容 Sentinel 控制台下发的带实体包装字段（id、app、ip、port 等）的授权规则格式。
  * </p>
  *
  * @author <a href="mailto:fangjian0423@gmail.com">Jim</a>

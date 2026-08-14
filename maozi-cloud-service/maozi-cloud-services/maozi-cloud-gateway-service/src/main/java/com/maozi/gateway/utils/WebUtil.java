@@ -12,6 +12,8 @@ import java.util.Objects;
  * 提供从 HTTP 请求中获取客户端真实 IP 地址的能力，
  * 支持多种反向代理场景（Nginx、Apache、Squid 等）。
  * </p>
+ *
+ * @author maozi
  */
 public class WebUtil {
 

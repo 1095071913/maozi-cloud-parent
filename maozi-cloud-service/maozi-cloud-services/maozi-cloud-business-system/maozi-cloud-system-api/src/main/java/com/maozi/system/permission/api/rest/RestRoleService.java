@@ -38,7 +38,7 @@ public interface RestRoleService {
 	 * 查询系统中所有角色的列表数据。
 	 * </p>
 	 *
-	 * @return 返回角色列表数据，包含角色 ID、名称、编码、状态等基本信息
+	 * @return 返回角色列表数据，包含角色 ID、名称、描述、状态等基本信息
 	 */
 	@Get(value = PATH + "/list",description = "列表")
 	@PreAuthorize("hasAuthority('system:role:list')")
@@ -47,7 +47,7 @@ public interface RestRoleService {
 	/**
 	 * 保存新增角色
 	 *
-	 * @param param 角色保存参数，包含角色名称、编码、描述、关联权限等必要信息
+	 * @param param 角色保存参数，包含角色名称、描述、关联权限等必要信息
 	 * @return 返回新增角色的 ID
 	 */
 	@Post(value = PATH + "/save",description = "保存")
@@ -79,7 +79,7 @@ public interface RestRoleService {
 	 * 获取角色详情
 	 *
 	 * @param id 角色 ID，用于查询指定角色的详细信息
-	 * @return 返回角色详细信息，包含角色名称、编码、描述、关联权限等完整属性
+	 * @return 返回角色详细信息，包含角色名称、描述、关联权限等完整属性
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "详情")
 	@PreAuthorize("hasAuthority('system:role:get')")

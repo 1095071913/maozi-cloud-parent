@@ -26,6 +26,16 @@ public class SwaggerConfigInitializer implements ConfigInitializer {
     /** 排除的接口路径前缀（Ant 风格），用于屏蔽内部 /remote 接口文档 */
     private static final String EXCLUDE_REMOTE_PATHS = RemoteConstant.REMOTE_PREFIX_PATH + "/**";
 
+    /**
+     * 根据运行环境设置 API 文档开关，并排除内部接口路径。
+     * <p>
+     * 当前环境为生产环境时关闭 {@code springdoc.api-docs.enabled}，
+     * 其余环境开启；同时将 {@code /remote} 前缀路径加入
+     * {@code springdoc.paths-to-exclude}，屏蔽服务间内部调用接口的文档。
+     * </p>
+     *
+     * @param properties 系统属性容器
+     */
     @Override
     public void initialize(Properties properties) {
         String environment = (String) properties.get("environment");
@@ -33,6 +43,7 @@ public class SwaggerConfigInitializer implements ConfigInitializer {
         properties.put("springdoc.paths-to-exclude", EXCLUDE_REMOTE_PATHS);
     }
 
+    /** 空实现，Swagger 配置初始化无需向启动日志追加诊断信息。 */
     @Override
     public void appendLogs(Map<String, String> logs) {}
 

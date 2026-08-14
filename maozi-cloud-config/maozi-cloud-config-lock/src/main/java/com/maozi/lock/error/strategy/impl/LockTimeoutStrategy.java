@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * 定义两种加锁超时处理策略：
  * <ul>
  *   <li>FAIL_FAST - 快速失败，直接抛出限流异常</li>
- *   <li>KEEP_ACQUIRE - 持续重试获取锁，超过最大重试时间后失败</li>
+ *   <li>KEEP_ACQUIRE - 持续重试获取锁，重试间隔指数翻倍，间隔超过上限后失败</li>
  * </ul>
  * </p>
  *
@@ -42,11 +42,11 @@ public enum LockTimeoutStrategy implements LockTimeoutHandler {
         /** 默认重试间隔 100ms */
         private static final Long DEFAULT_INTERVAL = 100L;
 
-        /** 默认最大重试时间 3 分钟 */
+        /** 默认最大重试间隔 3 分钟（单次重试等待的上限） */
         private static final Long DEFAULT_MAX_INTERVAL = 3L * 60L * 1000L;
 
         /**
-         * 以指数退避方式持续重试获取锁，超过最大重试时间后抛出限流异常
+         * 以指数退避方式持续重试获取锁，重试间隔翻倍增长、超过上限后抛出限流异常
          */
         @Override
         public void handle(String key,Long waitTime,Long leaseTime,Lock lock) throws Exception {
@@ -54,10 +54,10 @@ public enum LockTimeoutStrategy implements LockTimeoutHandler {
             // 初始重试间隔 100ms
             Long interval = DEFAULT_INTERVAL;
 
-            // 持续尝试获取锁，直到成功或超过最大重试时间
+            // 持续尝试获取锁，直到成功或重试间隔超过上限
             while (!lock.lock(key,waitTime,leaseTime)) {
 
-                // 如果当前重试间隔超过最大重试时间（3分钟），则停止重试并抛出限流异常
+                // 如果当前重试间隔超过上限（3分钟），则停止重试并抛出限流异常
                 if (interval > DEFAULT_MAX_INTERVAL) {
                     ErrorCode errorCode = SystemErrorCode.CURRENT_LIMITING_ERROR;
                     throw new BusinessResultException(errorCode).setHttpCode(errorCode.getCode());

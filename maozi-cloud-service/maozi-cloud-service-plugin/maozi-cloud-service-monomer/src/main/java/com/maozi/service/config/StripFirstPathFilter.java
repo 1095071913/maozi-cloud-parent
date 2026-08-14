@@ -20,7 +20,7 @@ import java.util.List;
  * <p>
  * 聚合服务（maozi-cloud-all-service）将 oauth、system 等多个子模块聚合在同一进程内，
  * 各子模块控制器并不携带模块前缀
- * 声明的路径是 {@code /user/list} 而不是 {@code /system/user/list}）。
+ * （声明的路径是 {@code /user/list} 而不是 {@code /system/user/list}）。
  * 外部网关若按 {@code /<module>/<path>} 形式路由进入本服务，则需要在 Spring MVC
  * 控制器匹配前裁剪掉第一段路径，将 {@code /oauth/user/info} 改写为 {@code /user/info}，
  * 否则无法命中控制器。
@@ -194,16 +194,19 @@ public class StripFirstPathFilter extends OncePerRequestFilter {
             return secondSlash < 0 ? "/" : path.substring(secondSlash);
         }
 
+        /** 返回裁剪后的请求 URI（含 contextPath） */
         @Override
         public String getRequestURI() {
             return newRequestUri;
         }
 
+        /** 返回裁剪后的 servlet 路径（contextPath 之后的部分） */
         @Override
         public String getServletPath() {
             return newServletPath;
         }
 
+        /** 基于原始 URL 重建裁剪后的完整请求 URL，保留 scheme、host、port 不变 */
         @Override
         public StringBuffer getRequestURL() {
             // 基于原始 URL 替换其中的 URI 段，保留 scheme、host、port 不变

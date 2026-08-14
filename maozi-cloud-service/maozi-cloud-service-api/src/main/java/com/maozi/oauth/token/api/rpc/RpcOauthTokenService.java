@@ -33,10 +33,10 @@ public interface RpcOauthTokenService {
      * RPC方式注销用户令牌
      * <p>
      * 根据客户端ID和用户主体名称，移除该用户在该客户端下的所有OAuth2授权记录，
-     * 实现用户注销功能。删除用户或强制下线时调用此方法。
+     * 实现用户注销功能。适用于删除用户、强制下线等需要注销该用户令牌的场景。
      * </p>
      *
-     * @param registeredClientId 已注册客户端ID（对应UserDo.clientId的字符串形式）
+     * @param registeredClientId 已注册客户端ID（对应UserDo.clientId）
      * @param principalName      用户主体名称（用户名）
      * @return 操作结果
      */
@@ -46,7 +46,8 @@ public interface RpcOauthTokenService {
      * RPC方式批量注销用户令牌
      * <p>
      * 根据多个客户端ID和用户主体名称，批量移除对应用户的所有OAuth2授权记录，
-     * 减少多次单条RPC调用的网络开销。禁用角色等场景下需要对多个用户统一注销时使用。
+     * 一次调用完成批量注销，减少多次单条RPC调用的网络开销。
+     * 适用于禁用角色等需要对多个用户统一注销的场景。
      * </p>
      *
      * @param clientUsers 客户端用户参数列表，每项包含clientId和username

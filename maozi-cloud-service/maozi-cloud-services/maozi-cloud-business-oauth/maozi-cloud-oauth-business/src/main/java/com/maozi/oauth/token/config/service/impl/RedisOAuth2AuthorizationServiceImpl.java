@@ -71,11 +71,11 @@ import java.util.Set;
  *   <li>支持按id或按令牌（可选令牌类型）查找</li>
  * </ul>
  *
- * <p>Redis键格式：
+ * <p>Redis键格式（前缀 {@code RedisUtil.REDIS_KEY_PREFIX} 即 {@code maozi-cloud:{服务名}:}）：
  * <ul>
- *   <li>{@code oauth2:authorization:{id}} — 授权数据主键</li>
- *   <li>{@code oauth2:authorization:index:{tokenType}:{tokenValue}} — 令牌索引键</li>
- *   <li>{@code oauth2:authorization:principal:{clientId}:{principalName}} — 用户主体索引键</li>
+ *   <li>{@code maozi-cloud:{服务名}:authorization:{id}} — 授权数据主键</li>
+ *   <li>{@code maozi-cloud:{服务名}:authorization:index:{tokenType}:{tokenValue}} — 令牌索引键</li>
+ *   <li>{@code maozi-cloud:{服务名}:authorization:principal:{clientId}:{principalName}} — 用户主体索引键</li>
  * </ul>
  */
 

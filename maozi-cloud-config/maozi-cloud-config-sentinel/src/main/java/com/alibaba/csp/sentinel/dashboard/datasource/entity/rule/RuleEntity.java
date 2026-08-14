@@ -26,6 +26,12 @@ import java.util.Date;
  * 提供了规则标识、应用名称、目标机器 IP 和端口、创建时间等元数据的访问方法，
  * 以及将实体转换为具体规则对象的方法。
  * </p>
+ * <p>
+ * <b>注：</b>本接口为复制自 Sentinel 控制台（sentinel-dashboard）1.8.6 的同名接口的本地副本，
+ * 代码逻辑未做修改；复制目的：在不整体依赖 sentinel-dashboard 模块的前提下，
+ * 为客户端侧的授权规则 JSON 转换器（{@code AuthorityRuleJsonConverter}）提供规则实体定义，
+ * 升级 Sentinel 版本时需同步比对上游变更。
+ * </p>
  *
  * @author leyou
  */

@@ -32,6 +32,13 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  * 替换默认的负载均衡策略为 {@link GrayRoundRobinLoadBalancer}（灰度轮询负载均衡器）。
  * 通过读取请求头中的灰度标识，将请求路由到对应的灰度服务实例。
  * </p>
+ * <p>
+ * 未重写 getOrder()，沿用父类的过滤器顺序常量
+ * {@code ReactiveLoadBalancerClientFilter#LOAD_BALANCER_CLIENT_FILTER_ORDER}（10150），
+ * 在路由转发（如 NettyRoutingFilter）之前完成服务实例选择。
+ * </p>
+ *
+ * @author maozi
  */
 @Component
 public class GrayReactiveLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilter {

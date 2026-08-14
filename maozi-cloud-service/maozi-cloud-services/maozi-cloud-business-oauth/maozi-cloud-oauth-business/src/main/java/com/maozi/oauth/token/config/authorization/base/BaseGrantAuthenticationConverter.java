@@ -51,11 +51,18 @@ public abstract class BaseGrantAuthenticationConverter<T extends BaseGrantAuthen
 
     /**
      * 授权类型
+     *
+     * @return 当前转换器支持的授权类型标识（对应grant_type参数值，如password）
      */
     protected abstract String getGrantType();
 
     /**
      * 校验参数
+     * <p>
+     * 子类可重写此方法校验各自授权模式所需的请求参数，默认为空实现。
+     * </p>
+     *
+     * @param request HTTP请求对象
      */
     public void checkParams(HttpServletRequest request) {}
 

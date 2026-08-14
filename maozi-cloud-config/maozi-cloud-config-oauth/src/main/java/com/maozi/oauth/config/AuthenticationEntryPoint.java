@@ -51,12 +51,12 @@ public class AuthenticationEntryPoint implements org.springframework.security.we
     @Override
     public void commence(HttpServletRequest request,HttpServletResponse response,AuthenticationException authException) {
 
-        // 获取认证异常的根本原因（Spring Security会将自定义异常包装在AuthenticationException中）
+        // 获取认证异常的直接原因（Spring Security会将自定义异常包装在AuthenticationException中）
         Throwable causeException = authException.getCause();
 
         // 尝试从异常链中提取BusinessResultException：
-        // 如果根本原因是BusinessResultException，则使用其携带的错误信息（保留了原始的业务错误详情）
-        // 否则使用默认的用户认证错误码返回
+        // 如果异常链第二层（authException 的 cause 的 cause）是BusinessResultException，
+        // 则使用其携带的错误信息（保留了原始的业务错误详情）；否则使用默认的用户认证错误码返回
         AbstractBaseResult<?> errorResult = ObjectUtil.isNotNullEmpty(causeException) && ObjectUtil.isNotNullEmpty(causeException.getCause()) && causeException.getCause() instanceof BusinessResultException businessResultException ?
                 businessResultException.getErrorResult()
                 :

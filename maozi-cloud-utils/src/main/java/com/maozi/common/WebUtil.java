@@ -87,7 +87,7 @@ public class WebUtil {
      * <p>
      * 将指定的数据对象序列化为 JSON 并写入响应输出流，
      * 同时设置响应头 Content-Type 为 application/json。
-     * 如果响应对象或数据为空，则不做任何操作。
+     * 如果响应对象或数据为空，则不做任何操作；写出过程中发生异常时仅记录 error 日志，不向外抛出。
      * </p>
      *
      * @param response HTTP 响应对象
@@ -165,7 +165,7 @@ public class WebUtil {
 
         // 处理多IP情况（x-forwarded-for 会返回 客户端IP,代理1,代理2...）
         if (ip != null && ip.contains(",")) {
-            // 取第一个非空的真实IP
+            // 取第一个 IP 作为真实客户端 IP
             ip = ip.split(",")[0].trim();
         }
 

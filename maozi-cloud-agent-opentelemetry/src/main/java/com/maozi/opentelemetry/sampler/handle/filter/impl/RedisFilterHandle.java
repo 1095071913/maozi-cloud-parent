@@ -24,8 +24,10 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 public class RedisFilterHandle extends FilterHandle {
 
+    /** 来源标识，匹配 Span 属性 {@code db.system} */
     private final List<String> names = List.of("redis");
 
+    /** 需要排除的 Redis 指令列表（连接保活、认证等指令） */
     private final List<String> EXCLUDED_STATEMENT = List.of(
             "PING",
             "AUTH ?",
@@ -33,14 +35,26 @@ public class RedisFilterHandle extends FilterHandle {
             "HELLO 3 AUTH ? ?"
     );
 
+    /**
+     * 根据 Span 属性判断 Redis Span 是否需要过滤
+     * <p>
+     * 先校验 {@code db.system} 是否为 redis，再比对 {@code db.statement}
+     * 是否命中排除指令列表。
+     * </p>
+     *
+     * @param attributes Span 携带的属性集合
+     * @return {@code true} 表示命中排除指令应丢弃；{@code false} 表示保留
+     */
     @Override
     public Boolean filter(Attributes attributes) {
 
+        // 读取 db.system 来源标识，非 redis 来源不过滤
         String type = attributes.get(InternalAttributeKeyImpl.create("db.system", AttributeType.STRING));
         if(Objects.isNull(type) || !getNames().contains(type)){
             return false;
         }
 
+        // 比对 db.statement 是否命中排除指令列表
         String statement = attributes.get(InternalAttributeKeyImpl.create("db.statement", AttributeType.STRING));
         return EXCLUDED_STATEMENT.contains(statement);
 

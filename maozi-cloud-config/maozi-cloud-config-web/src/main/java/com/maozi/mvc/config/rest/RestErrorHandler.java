@@ -35,6 +35,7 @@ import java.util.Map;
  *   <li>请求体为空或不可读（HttpMessageNotReadableException）</li>
  *   <li>参数类型转换失败（MethodArgumentTypeMismatchException）</li>
  *   <li>权限不足（AccessDeniedException）—— 交由 Spring Security 处理</li>
+ *   <li>异步请求连接失效（AsyncRequestNotUsableException）—— 原样抛出，交由 Spring 异步机制处理</li>
  *   <li>全局兜底异常（Exception）</li>
  * </ul>
  * </p>
@@ -138,6 +139,17 @@ public class RestErrorHandler {
 		throw e;
 	}
 
+	/**
+	 * 处理异步请求不可用异常
+	 * <p>
+	 * 当异步请求的连接已断开（客户端提前关闭连接）时触发，
+	 * 此处不做处理，直接重新抛出，交由 Spring 底层异步机制处理，
+	 * 避免对已失效连接二次写响应。
+	 * </p>
+	 *
+	 * @param e AsyncRequestNotUsableException 异步请求不可用异常
+	 * @return 不会返回，直接抛出异常
+	 */
 	@ExceptionHandler(AsyncRequestNotUsableException.class)
 	public Object handleAsyncRequestNotUsableException(AsyncRequestNotUsableException e) throws AsyncRequestNotUsableException {
 		throw e;

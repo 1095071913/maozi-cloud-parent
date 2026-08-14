@@ -25,10 +25,17 @@ import java.util.Optional;
 @Configuration
 public class MicrometerConfiguration {
 
+    /** URI 标签键名 */
     private static final String KEY_URI = "uri";
 
+    /** URI 标签未知占位值 */
     private static final String UNKNOWN = "UNKNOWN";
 
+    /**
+     * 创建自定义请求观测约定，修复 URI 标签为 UNKNOWN 的问题
+     *
+     * @return 请求观测约定实例
+     */
     @Bean
     public ServerRequestObservationConvention uriTagContributorForObservationApi() {
 
@@ -38,6 +45,12 @@ public class MicrometerConfiguration {
          */
         return new DefaultServerRequestObservationConvention() {
 
+            /**
+             * 在 URI 标签为空或 UNKNOWN 时，从请求路径前两段提取路径模板（如 {@code /a/b/**}）作为标签值
+             *
+             * @param context 请求观测上下文
+             * @return 低基数键值集合
+             */
             @Override
             public KeyValues getLowCardinalityKeyValues(@Nonnull ServerRequestObservationContext context) {
 
@@ -59,6 +72,13 @@ public class MicrometerConfiguration {
 
             }
 
+            /**
+             * 判断 URI 标签是否缺失或为 UNKNOWN
+             *
+             * @param context 请求观测上下文
+             * @param lowCardinalityKeyValues 当前低基数键值集合
+             * @return {@code true} 表示 URI 标签缺失或为 UNKNOWN
+             */
             private static boolean isUriTagNullOrUnknown(ServerRequestObservationContext context, KeyValues lowCardinalityKeyValues) {
 
                 Optional<KeyValue> uriKeyValue = lowCardinalityKeyValues.stream().filter(keyValue -> KEY_URI.equals(keyValue.getKey())).findFirst();

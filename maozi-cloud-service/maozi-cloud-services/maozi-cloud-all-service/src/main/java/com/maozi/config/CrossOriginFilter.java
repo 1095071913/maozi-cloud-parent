@@ -22,8 +22,9 @@ import java.io.IOException;
  * 响应式跨域过滤器语义保持一致。
  * </p>
  * <p>
- * 本过滤器优先级高于 Spring Security 过滤器链与 {@link StripUserInfoHeaderFilter}
- * （{@code SecurityProperties.DEFAULT_FILTER_ORDER - 2}）：
+ * 本过滤器（{@code SecurityProperties.DEFAULT_FILTER_ORDER - 2}）优先级高于
+ * Spring Security 过滤器链与 {@link StripUserInfoHeaderFilter}
+ * （{@code SecurityProperties.DEFAULT_FILTER_ORDER - 1}）：
  * OPTIONS 预检请求不携带访问令牌，若进入认证过滤器链会被直接拒绝（401），
  * 因此预检请求在本过滤器内补充跨域响应头后直接返回 200，不再向下转发。
  * </p>

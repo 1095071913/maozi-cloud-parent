@@ -26,12 +26,23 @@ import java.util.List;
  * 用户服务 RPC 接口
  * <p>
  * 提供用户相关的 RPC 远程调用接口定义，
- * 主要用于微服务之间的内部调用，包括根据用户名获取密码、
- * 根据用户名获取权限列表以及根据用户名和角色 ID 获取权限列表等功能。
+ * 主要用于微服务之间的内部调用，包括根据用户名获取 OAuth 认证用户信息
+ * （含用户ID、加密密码及全部权限标识），以及根据用户名和角色 ID
+ * 获取该角色下的权限标识列表等功能。
  * </p>
  */
 public interface RpcUserService {
 
+	/**
+	 * 根据用户名获取 OAuth 认证所需的用户信息
+	 * <p>
+	 * 返回用户ID、加密密码以及该用户的全部权限标识，
+	 * 供授权服务器进行密码模式认证与权限填充。
+	 * </p>
+	 *
+	 * @param username 用户名
+	 * @return OAuth 认证用户信息（含用户ID、密码、权限标识列表）
+	 */
 	AbstractBaseResult<OauthUserInfoResult> rpcGetOauthUserInfoByUsername(String username);
 
 	/**

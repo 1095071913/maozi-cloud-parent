@@ -37,6 +37,7 @@ public class ApplicationDubboContextLoadFilter implements Filter {
      * <ol>
      *   <li>从 RPC 服务端附件中获取版本号（version），设置到线程变量中</li>
      *   <li>从 RPC 服务端附件中获取当前登录用户信息（CurrentUserInfo）JSON，反序列化后设置到线程变量中</li>
+     *   <li>从 RPC 服务端附件中获取链路追踪 ID（traceId），设置到线程变量中并同步写入 MDC</li>
      *   <li>执行实际的 Dubbo 调用</li>
      *   <li>在 finally 块中清理线程上下文，防止数据泄漏</li>
      * </ol>
@@ -56,8 +57,10 @@ public class ApplicationDubboContextLoadFilter implements Filter {
         // 从 RPC 附件中提取版本号，设置到当前线程的 ApplicationLinkContext 中
         ApplicationLinkContext.setVersion(serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY));
 
+        // 从 RPC 附件中提取当前登录用户信息 JSON，反序列化后设置到当前线程的 ApplicationLinkContext 中
         ApplicationLinkContext.setCurrentUserInfo(serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
 
+        // 从 RPC 附件中提取链路追踪 ID，设置到当前线程的 ApplicationLinkContext 中（非空时同步写入 MDC）
         ApplicationLinkContext.setTraceId(serverAttachment.getAttachment(ApplicationLinkContext.TRACE_ID_KEY));
 
         // 执行实际调用，在 finally 中清理上下文，确保即使发生异常也不会造成线程数据泄漏

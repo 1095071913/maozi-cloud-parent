@@ -34,10 +34,13 @@ import java.util.Set;
  * 2. 设置 basePath 为对应微服务的路由前缀；
  * 3. 将所有 paths 中的路径添加微服务前缀，使前端 Swagger UI 通过网关访问各服务接口。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
 
+    /** Swagger/OpenAPI 文档请求的路径后缀 */
     private static final String API_DOC_PATH = "/v3/api-docs";
 
     /**
@@ -79,6 +82,13 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(originalResponse) {
             /**
              * 拦截响应体写入，改写 OpenAPI JSON 内容。
+             * <p>
+             * 仅当响应状态为 200 且响应体为 Flux 时才进行改写，
+             * 否则将原始响应体透传给下游处理。
+             * </p>
+             *
+             * @param body 响应体数据流
+             * @return 写入完成的 Void Mono
              */
             @Override
             public Mono<Void> writeWith(@Nonnull Publisher<? extends DataBuffer> body) {
@@ -95,7 +105,7 @@ public class SwaggerGlobalFilter implements GlobalFilter, Ordered {
 
                         String response = new String(content, StandardCharsets.UTF_8);
 
-                        // 解析 JSON，禁用特殊字符检查以兼容各种 OpenAPI 文档格式
+                        // 解析 JSON，禁用 fastjson 的特殊 key 检测（DisableSpecialKeyDetect），避免特殊 key 被特殊处理
                         JSONObject jsonObject = JSON.parseObject(response, Feature.DisableSpecialKeyDetect);
 
                         // 设置网关的 host 地址
