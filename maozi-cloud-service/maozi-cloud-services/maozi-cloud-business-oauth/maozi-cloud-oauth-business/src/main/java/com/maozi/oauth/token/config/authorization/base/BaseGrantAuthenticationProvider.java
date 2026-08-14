@@ -1,6 +1,8 @@
 package com.maozi.oauth.token.config.authorization.base;
 
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
+import com.maozi.oauth.token.config.domain.SecurityUserDetails;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -190,7 +192,10 @@ public abstract class BaseGrantAuthenticationProvider<T extends BaseGrantAuthent
                 List<String> authorities = finalUserAuthenticationToken.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList());
-                claims.put("authorities", authorities);
+                claims.put(OAuth2TokenClaimConstants.AUTHORITIES, authorities);
+                if(finalUserAuthenticationToken.getPrincipal() instanceof SecurityUserDetails securityUserDetails){
+                    claims.putAll(securityUserDetails.getAttributes());
+                }
                 metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, claims);
             });
         } else {
@@ -199,7 +204,10 @@ public abstract class BaseGrantAuthenticationProvider<T extends BaseGrantAuthent
             List<String> authorities = userAuthenticationToken.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
-            claims.put("authorities", authorities);
+            claims.put(OAuth2TokenClaimConstants.AUTHORITIES, authorities);
+            if(userAuthenticationToken.getPrincipal() instanceof SecurityUserDetails securityUserDetails){
+                claims.putAll(securityUserDetails.getAttributes());
+            }
             authorizationBuilder.token(accessToken, (metadata) ->
                     metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, claims));
         }

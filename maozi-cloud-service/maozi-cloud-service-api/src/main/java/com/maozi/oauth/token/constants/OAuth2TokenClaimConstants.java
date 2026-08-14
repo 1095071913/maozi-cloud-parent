@@ -20,14 +20,16 @@ public final class OAuth2TokenClaimConstants {
 	/** 令牌类型 */
 	public static final String TOKEN_TYPE = "token_type";
 
+	/** 用户ID */
+	public static final String USER_ID = "user_id";
+
 	/** 客户端ID */
 	public static final String CLIENT_ID = "client_id";
 
 	/** 用户权限列表 */
 	public static final String AUTHORITIES = "authorities";
 
-	/** 令牌授权范围 */
-	public static final String SCOPE = "scope";
+	public static final String ISS = "iss";
 
 	/**
 	 * 私有构造方法，防止实例化

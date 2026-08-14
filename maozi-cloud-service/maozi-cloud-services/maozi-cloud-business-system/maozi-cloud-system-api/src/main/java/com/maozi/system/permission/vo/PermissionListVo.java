@@ -49,4 +49,8 @@ public class PermissionListVo implements Serializable {
 	@Schema(description = "类型")
 	private PermissionType type;
 
+	/** 排序 越小越靠前 */
+	@Schema(description = "排序")
+	private Integer sort;
+
 }

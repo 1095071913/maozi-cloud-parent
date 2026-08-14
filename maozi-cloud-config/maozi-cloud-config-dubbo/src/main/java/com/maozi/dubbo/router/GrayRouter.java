@@ -69,7 +69,7 @@ public class GrayRouter extends AbstractRouter {
     public <T> RouterResult<Invoker<T>> route(List<Invoker<T>> invokers, URL url, Invocation invocation, boolean needToPrintMessage) throws RpcException {
 
         // 从线程上下文中获取当前请求的版本号，用于灰度匹配
-        String version = ApplicationLinkContext.versions.get();
+        String version = ApplicationLinkContext.getVersion();
 
         // 主版本节点列表（默认版本的服务实例）
         List<Invoker<T>> mainApplicationClients = CollectionUtil.newArrayList();

@@ -17,18 +17,24 @@
 
 package com.maozi.system.user.api.impl.rest;
 
+import cn.hutool.extra.cglib.CglibUtil;
 import com.maozi.base.enums.Status;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
 import com.maozi.base.result.PageResult;
+import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.dto.CurrentUserInfo;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.service.api.annotation.RestService;
+import com.maozi.system.redirect.enums.RedirectType;
+import com.maozi.system.redirect.util.RedirectUtil;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rest.RestUserService;
 import com.maozi.system.user.domain.UserDo;
+import com.maozi.system.user.dto.UserIndividualUpdateParam;
 import com.maozi.system.user.dto.UserListParam;
 import com.maozi.system.user.dto.UserSaveUpdateParam;
 import com.maozi.system.user.vo.UserIndividualInfoVo;
@@ -84,7 +90,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		AbstractBaseResult<Void> responseResult = removeByIdResult(id);
 
 		// 通过RPC调用OAuth服务，根据clientId+用户名销毁该用户的所有OAuth2授权令牌
-		rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId().toString(), user.getUsername()).getResultDataThrowError();
+		rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId(), user.getUsername()).getResultDataThrowError();
 
 		return responseResult;
 
@@ -115,7 +121,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 
 		if(Status.DISABLE == param.getStatus()){
 			UserDo user = getByIdThrowError(id,UserDo::getUsername,UserDo::getClientId);
-			rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId().toString(), user.getUsername()).getResultDataThrowError();
+			rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId(), user.getUsername()).getResultDataThrowError();
 		}
 
 		return ResultUtil.success();
@@ -147,7 +153,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 		updateById(user);
 
 		if(Status.DISABLE == status){
-			rpcOauthTokenService.rpcDestroyByPrincipal(String.valueOf(user.getClientId()), user.getUsername()).getResultDataThrowError();
+			rpcOauthTokenService.rpcDestroyByPrincipal(user.getClientId(), user.getUsername()).getResultDataThrowError();
 		}
 
 		return ResultUtil.success();
@@ -164,7 +170,36 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	 */
 	@Override
 	public AbstractBaseResult<UserIndividualInfoVo> restIndividualGet() {
-		return ResultUtil.success(getByUsername(ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername), UserIndividualInfoVo.class,getColumns(UserDo::getName,UserDo::getIcon)));
+		return ResultUtil.success(getByIdThrowErrorRelation(ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId), UserIndividualInfoVo.class));
+	}
+
+	@Override
+	public AbstractBaseResult<Void> restIndividualUpdate(UserIndividualUpdateParam param) {
+
+		Long userId = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId);
+
+		String paramPassword = param.getPassword();
+		String paramNewPassword = param.getNewPassword();
+		if(ObjectUtil.isNotNullEmpty(paramPassword) && ObjectUtil.isNotNullEmpty(paramNewPassword)){
+			UserDo domain = getByIdThrowError(userId, UserDo::getPassword);
+			if(!passwordEncoder.matches(paramPassword,domain.getPassword())){
+				throw new BusinessResultException("旧密码不正确");
+			}
+			paramNewPassword = passwordEncoder.encode(paramNewPassword);
+		}
+
+		UserDo domain = CglibUtil.copy(param, UserDo.class);
+		domain.setId(userId);
+		domain.setPassword(paramNewPassword);
+		updateById(domain);
+
+		Long clientId = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getClientId);
+		String username = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername);
+		rpcOauthTokenService.rpcDestroyByPrincipal(clientId, username).getResultDataThrowError();
+		RedirectUtil.redirect(RedirectType.LOGIN);
+
+		return ResultUtil.success();
+
 	}
 
 }

@@ -10,6 +10,7 @@ import com.maozi.service.api.annotation.RemoteService;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rpc.RpcUserService;
 import com.maozi.system.user.domain.UserDo;
+import com.maozi.system.user.result.OauthUserInfoResult;
 
 import java.util.List;
 
@@ -24,46 +25,23 @@ import java.util.List;
 @RemoteService
 public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserService {
 
-	/**
-	 * 根据用户名查询用户密码
-	 * <p>
-	 * 用于认证模块远程调用，通过用户名查询对应的加密密码。
-	 * 如果用户名为空或未查询到用户数据则抛出异常。
-	 * </p>
-	 *
-	 * @param username 用户名
-	 * @return 加密后的用户密码字符串
-	 */
 	@Override
-	public AbstractBaseResult<String> rpcGetPasswordByUsername(String username) {
+	public AbstractBaseResult<OauthUserInfoResult> rpcGetOauthUserInfoByUsername(String username) {
 
 		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
 
 		LambdaQueryWrapper<UserDo> wrapper = Wrappers.lambdaQuery();
 
-		wrapper.select(UserDo::getPassword);
+		wrapper.select(UserDo::getId,UserDo::getPassword);
 		wrapper.eq(UserDo::getUsername,username);
 
 		UserDo domain = getOne(wrapper);
 
 		ObjectUtil.isNullEmptyThrowError(domain, getResourceName());
 
-		return ResultUtil.success(domain.getPassword());
+		Long userId = domain.getId();
+		return ResultUtil.success(new OauthUserInfoResult(userId,domain.getPassword(),getPermissionsByUserId(userId)));
 
-	}
-
-	/**
-	 * 根据用户名获取该用户的全部权限标识列表
-	 * <p>
-	 * 查询用户关联的所有角色，再通过角色查询所有关联的权限标识。
-	 * </p>
-	 *
-	 * @param username 用户名
-	 * @return 该用户拥有的全部权限标识列表
-	 */
-	@Override
-	public AbstractBaseResult<List<String>> rpcGetPermissionsByUsername(String username) {
-		return ResultUtil.success(getPermissions(username));
 	}
 
 	/**

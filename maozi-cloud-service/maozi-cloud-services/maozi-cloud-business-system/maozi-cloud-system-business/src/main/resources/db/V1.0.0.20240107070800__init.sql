@@ -5,48 +5,44 @@
  Source Server Type    : MySQL
  Source Server Version : 80029 (8.0.29)
  Source Host           : localhost:3306
- Source Schema         : maozi-cloud-system-localhost-db
+ Source Schema         : maozi-cloud-system-service-local-db
 
  Target Server Type    : MySQL
  Target Server Version : 80029 (8.0.29)
  File Encoding         : 65001
 
- Date: 04/06/2026 11:31:46
+ Date: 14/08/2026 13:57:07
 */
 
--- 设置字符集为utf8mb4，支持完整的Unicode字符（包括emoji表情）
 SET NAMES utf8mb4;
--- 禁用外键检查，避免建表时因表之间的依赖关系导致报错
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- 表结构：system_config_region（系统地区配置表）
--- 用于存储全国省市区三级行政区划信息，支持树形结构
+-- Table structure for system_config_region
 -- ----------------------------
 DROP TABLE IF EXISTS `system_config_region`;
 CREATE TABLE `system_config_region` (
-                                        `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',        -- 主键ID，自增长，用于唯一标识每条地区记录
-                                        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称', -- 地区全称，如"北京市"、"海淀区"
-                                        `parent_id` int NOT NULL DEFAULT '1' COMMENT '父级ID', -- 父级地区ID，用于构建树形层级结构（如省->市->区）
-                                        `sname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '简称', -- 地区简称，如"北京"、"海淀"
-                                        `level` int NOT NULL COMMENT '级别',                    -- 行政级别：0-国家、1-省级、2-市级、3-区县级
-                                        `city_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码', -- 城市电话区号，如"010"、"021"
-                                        `mail_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮政编码', -- 邮政编码
-                                        `mername` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '组合名称', -- 层级组合名称，如"中国,北京,北京市,海淀区"
-                                        `lng` float(10,0) NOT NULL COMMENT '经度',              -- 地理坐标经度
-  `lat` float(10,0) NOT NULL COMMENT '维度',                                                           -- 地理坐标纬度
-  `pinyin` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '拼音',       -- 地区名称的拼音，用于按拼音搜索
-  `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',                                            -- 逻辑删除标识，0表示未删除，非0表示已删除
-  `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',                                                 -- 状态标识，1表示启用，其他值表示禁用
-  `version` int NOT NULL DEFAULT '0' COMMENT '版本号',                                                  -- 乐观锁版本号，用于并发控制
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,                                            -- 创建时间，默认为当前时间
-  PRIMARY KEY (`id`) USING BTREE,                                                                      -- 主键索引
-  KEY `actable_idx_name` (`name`) USING BTREE                                                          -- 名称字段的普通索引，加速按名称查询
+                                        `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+                                        `parent_id` int NOT NULL DEFAULT '1' COMMENT '父级ID',
+                                        `sname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '简称',
+                                        `level` int NOT NULL COMMENT '级别',
+                                        `city_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+                                        `mail_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮政编码',
+                                        `mername` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '组合名称',
+                                        `lng` float(10,0) NOT NULL COMMENT '经度',
+  `lat` float(10,0) NOT NULL COMMENT '维度',
+  `pinyin` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '拼音',
+  `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+  `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `actable_idx_name` (`name`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=900001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='地区';
 
 -- ----------------------------
--- 初始数据：system_config_region（全国省市区行政区划初始数据）
--- 包含全国所有省、市、区/县三级行政区划信息
+-- Records of system_config_region
 -- ----------------------------
 BEGIN;
 INSERT INTO `system_config_region` (`id`, `name`, `parent_id`, `sname`, `level`, `city_code`, `mail_code`, `mername`, `lng`, `lat`, `pinyin`, `deleted`, `status`, `version`, `create_time`) VALUES (100000, '中国', 0, '中国', 0, '', '', '中国', 116, 40, 'China', 0, 1, 0, '2026-06-04 03:27:04');
@@ -3802,105 +3798,95 @@ INSERT INTO `system_config_region` (`id`, `name`, `parent_id`, `sname`, `level`,
 COMMIT;
 
 -- ----------------------------
--- 表结构：system_permission（系统权限表）
--- 用于管理系统中的菜单和操作权限，支持树形层级结构
--- 权限类型：0-菜单模块、1-页面菜单、2-操作按钮
+-- Table structure for system_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `system_permission`;
 CREATE TABLE `system_permission` (
-                                     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',        -- 主键ID，自增长
-                                     `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称', -- 权限名称，如"账号管理"、"保存"、"删除"
-                                     `parent_id` int NOT NULL DEFAULT '0' COMMENT '父ID', -- 父级权限ID，用于构建树形层级结构，0表示顶级权限
-                                     `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图标', -- 菜单图标地址
-                                     `mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标识', -- 权限标识，用于代码中进行权限校验，如"system:user:list"
-                                     `level` int NOT NULL COMMENT '深度',                    -- 层级深度，0-模块、1-页面、2-按钮操作
-                                     `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路由', -- 前端路由路径
-                                     `service_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '服务地址', -- 后端服务接口URI路径
-                                     `type` tinyint NOT NULL COMMENT '类型',                 -- 权限类型：0-菜单模块、1-页面菜单、2-操作按钮
-                                     `sort` tinyint NOT NULL DEFAULT '0' COMMENT '排序',   -- 排序权重，数值越大排序越靠前
-                                     `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除', -- 逻辑删除标识，0表示未删除，非0表示已删除
-                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态', -- 状态标识，1表示启用，其他值表示禁用
-                                     `version` int NOT NULL DEFAULT '0' COMMENT '版本号', -- 乐观锁版本号，用于并发控制
-                                     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 创建时间，默认为当前时间
-                                     PRIMARY KEY (`id`) USING BTREE,                        -- 主键索引
-                                     KEY `actable_idx_name` (`name`) USING BTREE            -- 名称字段的普通索引，加速按名称查询
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='权限';
+                                     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                     `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+                                     `parent_id` int NOT NULL DEFAULT '0' COMMENT '父ID',
+                                     `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图标',
+                                     `mark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标识',
+                                     `level` int NOT NULL COMMENT '深度',
+                                     `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路由',
+                                     `service_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '服务地址',
+                                     `type` tinyint NOT NULL COMMENT '类型',
+                                     `sort` tinyint NOT NULL DEFAULT '0' COMMENT '排序',
+                                     `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+                                     `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+                                     `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                     PRIMARY KEY (`id`) USING BTREE,
+                                     KEY `actable_idx_name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='权限';
 
 -- ----------------------------
--- 初始数据：system_permission（系统权限初始数据）
--- 包含系统模块菜单、页面菜单和操作按钮的初始权限配置
--- 权限层级：系统 -> 页面菜单(账号管理、角色管理、权限管理、客户端管理) -> 操作按钮(保存、详情、删除、更新)
+-- Records of system_permission
 -- ----------------------------
 BEGIN;
 INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (1, '系统', 0, 'http://dummyimage.com/100x100', 'system', 0, '/system', '/system', 0, -99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (2, '账号管理', 1, 'http://dummyimage.com/100x100', 'system:user:list', 1, '/system/user', '/user/list', 1, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (3, '角色管理', 1, 'http://dummyimage.com/100x100', 'system:role:list', 1, '/system/role', '/role/list', 1, 98, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (4, '权限管理', 1, 'http://dummyimage.com/100x100', 'system:permission:list', 1, '/system/permission', '/permission/list', 1, 97, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (5, '客户端管理', 1, 'http://dummyimage.com/100x100', 'system:client:list', 1, '/system/client', '/client/list', 1, 96, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (6, '保存', 2, 'http://dummyimage.com/100x100', 'system:user:save', 2, '/system/user/save', '/user/save', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (7, '详情', 2, 'http://dummyimage.com/100x100', 'system:user:get', 2, '/system/user/get', '/user/**/get', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (8, '删除', 2, 'http://dummyimage.com/100x100', 'system:user:remove', 2, '/system/user/remove', '/user/**/remove', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (9, '更新', 2, 'http://dummyimage.com/100x100', 'system:user:update', 2, '/system/user/update', '/user/**/update', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (10, '详情', 3, 'http://dummyimage.com/100x100', 'system:role:get', 2, '/system/role/get', '/role/**/get', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (11, '保存', 3, 'http://dummyimage.com/100x100', 'system:role:save', 2, '/system/role/save', '/role/save', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (12, '更新', 3, 'http://dummyimage.com/100x100', 'system:role:update', 2, '/system/role/update', '/role/**/update', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (13, '删除', 3, 'http://dummyimage.com/100x100', 'system:role:remove', 2, '/system/role/remove', '/role/**/remove', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (14, '详情', 4, 'http://dummyimage.com/100x100', 'system:permission:get', 2, '/system/permission/get', '/permission/**/get', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (15, '保存', 4, 'http://dummyimage.com/100x100', 'system:permission:save', 2, '/system/permission/save', '/permission/**/save', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (16, '更新', 4, 'http://dummyimage.com/100x100', 'system:permission:update', 2, '/system/permission/update', '/permission/**/update', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (17, '删除', 4, 'http://dummyimage.com/100x100', 'system:permission:remove', 2, '/system/permission/remove', '/permission/**/remove', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (18, '详情', 5, 'http://dummyimage.com/100x100', 'system:client:get', 2, '/system/client/get', '/client/**/get', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (19, '保存', 5, 'http://dummyimage.com/100x100', 'system:client:save', 2, '/system/client/save', '/client/save', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (20, '更新', 5, 'http://dummyimage.com/100x100', 'system:client:update', 2, '/system/client/update', '/client/**/update', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
-INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (21, '删除', 5, 'http://dummyimage.com/100x100', 'system:client:remove', 2, '/system/client/remove', '/client/**/remove', 2, 99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (2, '账号管理', 1, 'http://dummyimage.com/100x100', 'system:user:list', 1, '/system/user', '/user/list', 1, -98, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (3, '角色管理', 1, 'http://dummyimage.com/100x100', 'system:role:list', 1, '/system/role', '/role/list', 1, -97, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (4, '权限管理', 1, 'http://dummyimage.com/100x100', 'system:permission:list', 1, '/system/permission', '/permission/list', 1, -96, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (5, '客户端管理', 1, 'http://dummyimage.com/100x100', 'system:client:list', 1, '/system/client', '/client/list', 1, -99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (6, '保存', 2, 'http://dummyimage.com/100x100', 'system:user:save', 2, '/system/user/save', '/user/save', 2, -98, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (7, '详情', 2, 'http://dummyimage.com/100x100', 'system:user:get', 2, '/system/user/get', '/user/**/get', 2, -99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (8, '删除', 2, 'http://dummyimage.com/100x100', 'system:user:remove', 2, '/system/user/remove', '/user/**/remove', 2, -96, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (9, '更新', 2, 'http://dummyimage.com/100x100', 'system:user:update', 2, '/system/user/update', '/user/**/update', 2, -97, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (10, '详情', 3, 'http://dummyimage.com/100x100', 'system:role:get', 2, '/system/role/get', '/role/**/get', 2, -99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (11, '保存', 3, 'http://dummyimage.com/100x100', 'system:role:save', 2, '/system/role/save', '/role/save', 2, -98, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (12, '更新', 3, 'http://dummyimage.com/100x100', 'system:role:update', 2, '/system/role/update', '/role/**/update', 2, -97, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (13, '删除', 3, 'http://dummyimage.com/100x100', 'system:role:remove', 2, '/system/role/remove', '/role/**/remove', 2, -96, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (14, '详情', 4, 'http://dummyimage.com/100x100', 'system:permission:get', 2, '/system/permission/get', '/permission/**/get', 2, -99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (15, '保存', 4, 'http://dummyimage.com/100x100', 'system:permission:save', 2, '/system/permission/save', '/permission/**/save', 2, -98, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (16, '更新', 4, 'http://dummyimage.com/100x100', 'system:permission:update', 2, '/system/permission/update', '/permission/**/update', 2, -97, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (17, '删除', 4, 'http://dummyimage.com/100x100', 'system:permission:remove', 2, '/system/permission/remove', '/permission/**/remove', 2, -96, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (18, '详情', 5, 'http://dummyimage.com/100x100', 'system:client:get', 2, '/system/client/get', '/client/**/get', 2, -99, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (19, '保存', 5, 'http://dummyimage.com/100x100', 'system:client:save', 2, '/system/client/save', '/client/save', 2, -98, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (20, '更新', 5, 'http://dummyimage.com/100x100', 'system:client:update', 2, '/system/client/update', '/client/**/update', 2, -97, 0, 1, 0, '2026-06-04 03:27:22');
+INSERT INTO `system_permission` (`id`, `name`, `parent_id`, `icon`, `mark`, `level`, `route`, `service_uri`, `type`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (21, '删除', 5, 'http://dummyimage.com/100x100', 'system:client:remove', 2, '/system/client/remove', '/client/**/remove', 2, -96, 0, 1, 0, '2026-06-04 03:27:22');
 COMMIT;
 
 -- ----------------------------
--- 表结构：system_role（系统角色表）
--- 用于管理系统中的角色信息，角色是权限分配的基本单位
--- 通过角色可以将一组权限批量分配给多个用户
+-- Table structure for system_role
 -- ----------------------------
 DROP TABLE IF EXISTS `system_role`;
 CREATE TABLE `system_role` (
-                               `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述', -- 角色描述，用于说明角色的用途和权限范围
-                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称', -- 角色名称，如"超级管理员"、"普通用户"
-                               `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',        -- 主键ID，自增长
-                               `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除', -- 逻辑删除标识，0表示未删除，非0表示已删除
-                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态', -- 状态标识，1表示启用，其他值表示禁用
-                               `version` int NOT NULL DEFAULT '0' COMMENT '版本号', -- 乐观锁版本号，用于并发控制
-                               `create_time` datetime DEFAULT CURRENT_TIMESTAMP,      -- 创建时间，默认为当前时间
-                               PRIMARY KEY (`id`) USING BTREE,                        -- 主键索引
-                               KEY `actable_idx_name` (`name`) USING BTREE            -- 名称字段的普通索引，加速按名称查询
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色';
+                               `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
+                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+                               `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+                               `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                               `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+                               PRIMARY KEY (`id`) USING BTREE,
+                               KEY `actable_idx_name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色';
 
 -- ----------------------------
--- 初始数据：system_role（系统角色初始数据）
--- 默认创建超级管理员角色，拥有系统最高权限
+-- Records of system_role
 -- ----------------------------
 BEGIN;
--- 超级管理员角色：拥有系统最高权限，可管理所有功能模块
 INSERT INTO `system_role` (`description`, `name`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES ('系统最高权限', '超级管理员', 1, 0, 1, 0, '2026-06-04 03:23:37');
 COMMIT;
 
 -- ----------------------------
--- 表结构：system_role_permission（角色权限关联表）
--- 用于建立角色与权限的多对多关系，一个角色可以拥有多个权限，一个权限可以分配给多个角色
+-- Table structure for system_role_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `system_role_permission`;
 CREATE TABLE `system_role_permission` (
-                                          `role_id` int NOT NULL COMMENT '角色ID',        -- 关联的角色ID，对应system_role表的主键
-                                          `permission_id` int NOT NULL COMMENT '权限ID', -- 关联的权限ID，对应system_permission表的主键
-                                          `id` int NOT NULL AUTO_INCREMENT COMMENT '主键', -- 主键ID，自增长
-                                          `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除', -- 逻辑删除标识，0表示未删除，非0表示已删除
-                                          `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态', -- 状态标识，1表示启用，其他值表示禁用
-                                          `version` int NOT NULL DEFAULT '0' COMMENT '版本号', -- 乐观锁版本号，用于并发控制
-                                          `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 创建时间，默认为当前时间
-                                          PRIMARY KEY (`id`) USING BTREE                      -- 主键索引
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色权限关系';
+                                          `role_id` int NOT NULL COMMENT '角色ID',
+                                          `permission_id` int NOT NULL COMMENT '权限ID',
+                                          `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                          `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+                                          `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+                                          `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                          `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                          PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色权限关系';
 
 -- ----------------------------
--- 初始数据：system_role_permission（角色权限关联初始数据）
--- 为超级管理员角色（role_id=1）分配所有权限（permission_id 1~21）
+-- Records of system_role_permission
 -- ----------------------------
 BEGIN;
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 1, 1, 0, 1, 0, '2024-09-16 10:31:44');
@@ -3911,7 +3897,6 @@ INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 6, 6, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 7, 7, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 8, 8, 0, 1, 0, '2024-09-16 10:31:44');
-INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 9, 9, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 10, 10, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 11, 11, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 12, 12, 0, 1, 0, '2024-09-16 10:31:44');
@@ -3924,64 +3909,58 @@ INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 19, 19, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 20, 20, 0, 1, 0, '2024-09-16 10:31:44');
 INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 21, 21, 0, 1, 0, '2024-09-16 10:31:44');
+INSERT INTO `system_role_permission` (`role_id`, `permission_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 9, 1452, 0, 1, 0, '2026-08-13 16:32:23');
 COMMIT;
 
 -- ----------------------------
--- 表结构：system_user（系统用户表）
--- 用于存储系统用户的基本信息，包括登录凭证和关联的客户端
+-- Table structure for system_user
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user` (
-                               `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账号', -- 用户登录账号，唯一标识用户
-                               `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码', -- 登录密码（加密存储）
-                               `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图标', -- 用户头像图标地址
-                               `client_id` int NOT NULL COMMENT '客户端ID',             -- 关联的OAuth2客户端ID，对应用户所属的客户端应用
-                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称', -- 用户真实姓名或昵称
-                               `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',        -- 主键ID，自增长
-                               `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除', -- 逻辑删除标识，0表示未删除，非0表示已删除
-                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态', -- 状态标识，1表示启用，其他值表示禁用
-                               `version` int NOT NULL DEFAULT '0' COMMENT '版本号', -- 乐观锁版本号，用于并发控制
-                               `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 创建时间，默认为当前时间
-                               PRIMARY KEY (`id`) USING BTREE,                        -- 主键索引
-                               KEY `actable_idx_username` (`username`) USING BTREE,   -- 用户名字段的普通索引，加速按用户名查询
-                               KEY `actable_idx_name` (`name`) USING BTREE            -- 名称字段的普通索引，加速按名称查询
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户';
+                               `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账号',
+                               `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
+                               `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图标',
+                               `client_id` int NOT NULL COMMENT '客户端ID',
+                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+                               `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+                               `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+                               `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                               `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                               PRIMARY KEY (`id`) USING BTREE,
+                               KEY `actable_idx_username` (`username`) USING BTREE,
+                               KEY `actable_idx_name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户';
 
 -- ----------------------------
--- 初始数据：system_user（系统用户初始数据）
--- 默认创建管理员用户admin，密码使用MD5加密
+-- Records of system_user
 -- ----------------------------
 BEGIN;
--- 管理员用户：账号admin，名称maozi，关联客户端ID为1（系统内置客户端）
-INSERT INTO `system_user` (`username`, `password`, `icon`, `client_id`, `name`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES ('admin', '{MD5}{3m2+RR3Xy7TD50VKF3i6h3XqjtvpyQVnt5ZePMRQzbI=}94ae0fbb55e1fee7ba05746d449187d8', 'http://dummyimage.com/100x100', 1, 'maozi', 1, 0, 1, 0, '2026-06-04 03:25:58');
+INSERT INTO `system_user` (`username`, `password`, `icon`, `client_id`, `name`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES ('admin', '{bcrypt}$2a$10$amFdMMT2BjNNqubXjjcbz.aWBKiTNnWwWxTLIdYa5atkfR6/QKoLa', 'http://dummyimage.com/100x100', 1, '小猫子', 1, 0, 1, 0, '2026-06-04 03:25:58');
 COMMIT;
 
 -- ----------------------------
--- 表结构：system_user_role（用户角色关联表）
--- 用于建立用户与角色的多对多关系，一个用户可以拥有多个角色，一个角色可以分配给多个用户
+-- Table structure for system_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `system_user_role`;
 CREATE TABLE `system_user_role` (
-                                    `role_id` int NOT NULL COMMENT '角色ID',        -- 关联的角色ID，对应system_role表的主键
-                                    `user_id` int NOT NULL COMMENT '用户ID',        -- 关联的用户ID，对应system_user表的主键
-                                    `id` int NOT NULL AUTO_INCREMENT COMMENT '主键', -- 主键ID，自增长
-                                    `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除', -- 逻辑删除标识，0表示未删除，非0表示已删除
-                                    `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态', -- 状态标识，1表示启用，其他值表示禁用
-                                    `version` int NOT NULL DEFAULT '0' COMMENT '版本号', -- 乐观锁版本号，用于并发控制
-                                    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 创建时间，默认为当前时间
-                                    PRIMARY KEY (`id`) USING BTREE,                     -- 主键索引
-                                    KEY `actable_idx_role_id` (`role_id`) USING BTREE,  -- 角色ID字段的普通索引，加速按角色查询
-                                    KEY `actable_idx_user_id` (`user_id`) USING BTREE   -- 用户ID字段的普通索引，加速按用户查询
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户角色关系';
+                                    `role_id` int NOT NULL COMMENT '角色ID',
+                                    `user_id` int NOT NULL COMMENT '用户ID',
+                                    `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                    `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
+                                    `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
+                                    `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                    PRIMARY KEY (`id`) USING BTREE,
+                                    KEY `actable_idx_role_id` (`role_id`) USING BTREE,
+                                    KEY `actable_idx_user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户角色关系';
 
 -- ----------------------------
--- 初始数据：system_user_role（用户角色关联初始数据）
--- 将管理员用户（user_id=1）分配超级管理员角色（role_id=1）
+-- Records of system_user_role
 -- ----------------------------
 BEGIN;
--- 将admin用户关联到超级管理员角色
 INSERT INTO `system_user_role` (`role_id`, `user_id`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 1, 1, 0, 1, 0, '2026-06-04 03:26:17');
 COMMIT;
 
--- 恢复外键检查，确保后续数据库操作的参照完整性
 SET FOREIGN_KEY_CHECKS = 1;

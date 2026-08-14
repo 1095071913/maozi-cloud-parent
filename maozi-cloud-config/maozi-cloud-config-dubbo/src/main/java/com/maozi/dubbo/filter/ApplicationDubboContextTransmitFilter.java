@@ -61,15 +61,15 @@ public class ApplicationDubboContextTransmitFilter implements Filter {
         RpcContextAttachment clientAttachment = RpcContext.getClientAttachment();
 
         // 将当前线程的版本号写入 RPC 附件，供服务提供者读取
-        clientAttachment.setAttachment(ApplicationLinkContext.VERSION_KEY,ApplicationLinkContext.versions.get());
+        clientAttachment.setAttachment(ApplicationLinkContext.VERSION_KEY,ApplicationLinkContext.getVersion());
 
         // 将当前线程的用户信息写入 RPC 附件，供服务提供者读取
-        CurrentUserInfo currentUserInfo = ApplicationLinkContext.currentUserInfos.get();
+        CurrentUserInfo currentUserInfo = ApplicationLinkContext.getCurrentUserInfo();
         if(ObjectUtil.isNotNullEmpty(currentUserInfo)){
             clientAttachment.setAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY, JacksonUtil.objectToJson(currentUserInfo));
         }
 
-        clientAttachment.setAttachment(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.traceIds.get());
+        clientAttachment.setAttachment(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.getTraceId());
 
         // 执行实际的 RPC 调用，附件信息会随请求一起发送到服务提供者
         return invoker.invoke(invocation);

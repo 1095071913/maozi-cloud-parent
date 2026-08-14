@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -72,22 +71,17 @@ public class OauthTokenServiceImpl implements OauthTokenService {
         }
 
         // 构建内省响应，填充令牌基本声明字段
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = CollectionUtil.newHashMap();
         claims.put(OAuth2TokenClaimConstants.ACTIVE, true);
         claims.put(OAuth2TokenClaimConstants.SUB, authorization.getPrincipalName());
-        claims.put(OAuth2TokenClaimConstants.CLIENT_ID, authorizedClient.getClientId());
+        claims.put(OAuth2TokenClaimConstants.CLIENT_ID, authorizedClient.getId());
         claims.put(OAuth2TokenClaimConstants.TOKEN_TYPE,accessToken.getToken().getTokenType().getValue());
 
         // 只提取Hessian可序列化的字段，避免复制可能包含URL等不可序列化类型的全部claims
-        if (accessToken.getClaims() != null) {
-            Object authorities = accessToken.getClaims().get(OAuth2TokenClaimConstants.AUTHORITIES);
-            if (authorities != null) {
-                claims.put(OAuth2TokenClaimConstants.AUTHORITIES, authorities);
-            }
-            Object scope = accessToken.getClaims().get(OAuth2TokenClaimConstants.SCOPE);
-            if (scope != null) {
-                claims.put(OAuth2TokenClaimConstants.SCOPE, scope);
-            }
+        Map<String, Object> oldClaims = accessToken.getClaims();
+        if (oldClaims != null) {
+            claims.putAll(oldClaims);
+            claims.remove(OAuth2TokenClaimConstants.ISS);
         }
 
         return claims;

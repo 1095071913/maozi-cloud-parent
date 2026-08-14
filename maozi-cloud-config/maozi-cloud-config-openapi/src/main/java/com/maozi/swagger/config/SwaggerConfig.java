@@ -46,8 +46,8 @@ import java.util.Set;
  */
 @Configuration
 @ConditionalOnProperty(
-        name = "environment",                 // 配置项名
-        havingValue = "prod",                 // 值为 prod 时才生效
+        name = "springdoc.api-docs.enabled",                 // 配置项名
+        havingValue = "true",
         matchIfMissing = true                 // 没配置时默认生效
 )
 public class SwaggerConfig {

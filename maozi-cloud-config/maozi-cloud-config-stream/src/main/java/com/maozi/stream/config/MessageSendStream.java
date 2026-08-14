@@ -58,14 +58,14 @@ public class MessageSendStream {
 
         Map<String,List<ServiceInstance>> applicationClients = instances.stream().collect(Collectors.groupingBy((instance)-> instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION_KEY)));
 
-        String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.versions.get());
+        String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.getVersion());
 
         if(!ApplicationLinkContext.APPLICATION_DEFAULT_VERSION.equals(version) && ObjectUtil.isNullEmpty(applicationClients.get(version))){
             version = ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
         }
 
         messageBuilder.setHeader("Gray", version);
-        messageBuilder.setHeader(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.versions.get());
+        messageBuilder.setHeader(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.getVersion());
 
         return stream.send(bindingName,messageBuilder.build());
 

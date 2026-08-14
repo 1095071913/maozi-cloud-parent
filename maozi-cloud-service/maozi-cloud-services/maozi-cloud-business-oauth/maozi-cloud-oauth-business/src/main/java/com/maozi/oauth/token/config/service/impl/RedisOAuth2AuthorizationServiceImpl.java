@@ -16,8 +16,12 @@
 package com.maozi.oauth.token.config.service.impl;
 
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.maozi.oauth.token.config.service.OAuth2AuthorizationService;
 import com.maozi.oauth.token.param.ClientUserParam;
 import com.maozi.redis.utils.RedisUtil;
@@ -126,7 +130,31 @@ public class RedisOAuth2AuthorizationServiceImpl implements OAuth2AuthorizationS
 		List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
 		objectMapper.registerModules(securityModules);
 		objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+		objectMapper.setDefaultTyping(trustedDefaultTyping());
 		return objectMapper;
+	}
+
+	/**
+	 * 构建受信任的 default typing，覆盖 SecurityJackson2Modules 内置的严格类白名单。
+	 * <p>
+	 * 授权数据由服务端自行序列化写入 Redis（受信任来源），其 attributes 和 token claims 以
+	 * {@code Map<String, Object>} 形式存储，default typing 会对声明类型为 {@code Object} 的值
+	 * 强制写入类型信息（@class），即便实际值是 {@link Long}、{@link String} 等 final 类型。
+	 * SecurityJackson2Modules 内置的 AllowlistTypeIdResolver 仅放行少数预定义类，对 JDK 包装类型
+	 * 及业务对象会抛出 IllegalArgumentException。由于数据来源可信，这里按 Spring Security 官方
+	 * 建议启用放开式的 default typing（{@code allowIfSubType(Object.class)}）彻底放行所有类型，
+	 * 安全性依赖 Redis 不被外部篡改。
+	 * </p>
+	 *
+	 * @return 配置好的 TypeResolverBuilder 实例
+	 */
+	private static TypeResolverBuilder<?> trustedDefaultTyping() {
+		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+				.allowIfSubType(Object.class)
+				.build();
+		return new ObjectMapper.DefaultTypeResolverBuilder(ObjectMapper.DefaultTyping.NON_FINAL, ptv)
+				.init(JsonTypeInfo.Id.CLASS, null)
+				.inclusion(JsonTypeInfo.As.PROPERTY);
 	}
 
 	/**
@@ -519,8 +547,8 @@ public class RedisOAuth2AuthorizationServiceImpl implements OAuth2AuthorizationS
 	 * @param principalName      用户主体名称（用户名）
 	 */
 	@Override
-	public void removeAllByPrincipal(String registeredClientId, String principalName) {
-		Set<String> ids = this.redisTemplate.opsForSet().members(principalIndexKey(registeredClientId, principalName));
+	public void removeAllByPrincipal(Long registeredClientId, String principalName) {
+		Set<String> ids = this.redisTemplate.opsForSet().members(principalIndexKey(registeredClientId.toString(), principalName));
 		if (ids == null || ids.isEmpty()) {
 			return;
 		}
@@ -551,7 +579,7 @@ public class RedisOAuth2AuthorizationServiceImpl implements OAuth2AuthorizationS
 		List<String> principalIndexKeys = new ArrayList<>();
 		Set<String> allAuthIds = new HashSet<>();
 		for (ClientUserParam clientUser : clientUsers) {
-			String pKey = principalIndexKey(String.valueOf(clientUser.getClientId()), clientUser.getUsername());
+			String pKey = principalIndexKey(clientUser.getClientId().toString(), clientUser.getUsername());
 			principalIndexKeys.add(pKey);
 			Set<String> ids = this.redisTemplate.opsForSet().members(pKey);
 			if (ids != null) {

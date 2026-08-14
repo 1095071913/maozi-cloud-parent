@@ -27,6 +27,7 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 自定义 RestTemplate
@@ -124,7 +125,10 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			log.error("",e);
 
 			// 记录异常相关的用户、描述和堆栈位置到日志
-            logs.put(LogTag.ERROR_USER, ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUsername));
+			Long userId = ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId);
+			if(ObjectUtil.isNotNullEmpty(userId)){
+				logs.put(LogTag.ERROR_USER, userId.toString());   // 记录当前操作用户
+			}
             logs.put(LogTag.ERROR_DESC, e.getLocalizedMessage());
             logs.put(LogTag.ERROR_LINE, e.getStackTrace()[0].toString());
 

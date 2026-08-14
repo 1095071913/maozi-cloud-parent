@@ -26,10 +26,13 @@ public class CurrentUserInfo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /** 用户名 */
-    private String username;
+    /** 用户ID */
+    private Long userId;
 
     /** 客户端 ID（OAuth2 Registered Client 主键） */
-    private String clientId;
+    private Long clientId;
+
+    /** 用户名 */
+    private String username;
 
 }

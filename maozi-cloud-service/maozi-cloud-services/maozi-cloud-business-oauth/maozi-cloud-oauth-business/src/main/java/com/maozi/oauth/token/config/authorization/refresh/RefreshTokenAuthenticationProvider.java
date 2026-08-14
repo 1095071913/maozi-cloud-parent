@@ -1,5 +1,7 @@
 package com.maozi.oauth.token.config.authorization.refresh;
 
+import com.maozi.oauth.token.config.domain.SecurityUserDetails;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -102,7 +104,10 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 				? accessTokenToken.getClaims()
 				: Collections.emptyMap();
 		Map<String, Object> claims = new HashMap<>(existingClaims);
-		claims.put("authorities", authorities);
+		claims.put(OAuth2TokenClaimConstants.AUTHORITIES, authorities);
+		if(userDetails instanceof SecurityUserDetails securityUserDetails){
+			claims.putAll(securityUserDetails.getAttributes());
+		}
 
 		// 重建授权信息，写入authorities到claims metadata
 		OAuth2Authorization.Builder builder = OAuth2Authorization.from(authorization);

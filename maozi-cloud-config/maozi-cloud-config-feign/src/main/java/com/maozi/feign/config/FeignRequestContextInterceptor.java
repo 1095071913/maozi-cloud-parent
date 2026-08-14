@@ -32,13 +32,13 @@ public class FeignRequestContextInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
 
-        CurrentUserInfo currentUserInfo = ApplicationLinkContext.currentUserInfos.get();
+        CurrentUserInfo currentUserInfo = ApplicationLinkContext.getCurrentUserInfo();
         if(ObjectUtil.isNotNullEmpty(currentUserInfo)){
             requestTemplate.header(ApplicationLinkContext.CURRENT_USER_INFO_KEY, JacksonUtil.objectToJson(currentUserInfo));
         }
 
-        requestTemplate.header(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.versions.get());
-        requestTemplate.header(ApplicationLinkContext.TRACE_ID_KEY, ApplicationLinkContext.traceIds.get());
+        requestTemplate.header(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.getVersion());
+        requestTemplate.header(ApplicationLinkContext.TRACE_ID_KEY, ApplicationLinkContext.getTraceId());
 
     }
 

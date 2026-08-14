@@ -44,8 +44,16 @@ public class ApplicationUserContextFilter implements HandlerInterceptor {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(ObjectUtil.isNotNullEmpty(authentication) && authentication.isAuthenticated() && authentication.getPrincipal() instanceof DefaultOAuth2AuthenticatedPrincipal authenticatedPrincipal){
-            CurrentUserInfo currentUserInfo = new CurrentUserInfo(authentication.getName(), authenticatedPrincipal.getAttribute(OAuth2TokenClaimConstants.CLIENT_ID));
-            ApplicationLinkContext.currentUserInfos.set(currentUserInfo);
+
+            Long userId = authenticatedPrincipal.getAttribute(OAuth2TokenClaimConstants.USER_ID);
+
+            Long clientId = null;
+            String clientIdStr = authenticatedPrincipal.getAttribute(OAuth2TokenClaimConstants.CLIENT_ID);
+            if(ObjectUtil.isNotNullEmpty(clientIdStr)){
+                clientId = Long.parseLong(clientIdStr);
+            }
+            CurrentUserInfo currentUserInfo = new CurrentUserInfo(userId,clientId,authentication.getName());
+            ApplicationLinkContext.setCurrentUserInfo(currentUserInfo);
         }
 
         return true;

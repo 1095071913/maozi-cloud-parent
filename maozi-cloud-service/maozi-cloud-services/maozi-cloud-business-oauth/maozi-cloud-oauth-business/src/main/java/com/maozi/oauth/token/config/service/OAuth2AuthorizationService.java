@@ -25,7 +25,7 @@ public interface OAuth2AuthorizationService extends org.springframework.security
 	 * @param registeredClientId 已注册客户端ID
 	 * @param principalName      用户主体名称（用户名）
 	 */
-	void removeAllByPrincipal(String registeredClientId, String principalName);
+	void removeAllByPrincipal(Long registeredClientId, String principalName);
 
 	/**
 	 * 批量移除多个用户的所有授权记录（批量注销）

@@ -17,20 +17,9 @@ import com.maozi.system.user.dto.SystemUser;
 @RemoteService
 public class RpcUserInfoServiceImpl extends UserServiceImpl implements RpcUserInfoService {
 
-	/**
-	 * 根据用户名查询系统用户信息
-	 * <p>
-	 * 通过用户名查询用户信息，支持自定义查询字段，结果映射为 SystemUser 对象。
-	 * 供其他微服务远程调用获取用户基本信息。
-	 * </p>
-	 *
-	 * @param username 用户名
-	 * @param columns  需要查询的字段列表，可变参数
-	 * @return 系统用户信息对象
-	 */
 	@Override
-	public AbstractBaseResult<SystemUser> rpcGetByUsername(String username, String... columns) {
-		return ResultUtil.success(getByUsername(username,SystemUser.class,columns));
+	public AbstractBaseResult<SystemUser> rpcGetById(Long id, String... columns) {
+		return ResultUtil.success(getByIdThrowErrorRelation(id,SystemUser.class));
 	}
 
 }

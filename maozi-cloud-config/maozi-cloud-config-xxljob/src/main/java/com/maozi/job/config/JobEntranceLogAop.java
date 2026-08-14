@@ -54,7 +54,7 @@ public class JobEntranceLogAop {
 
         String arg = XxlJobHelper.getJobParam();
 
-        ApplicationLinkContext.versions.set(ApplicationEnvironmentContext.VERSION);
+        ApplicationLinkContext.setVersion(ApplicationEnvironmentContext.VERSION);
 
         Map<String, String> logs = new LinkedHashMap<>();
 

@@ -20,17 +20,20 @@ package com.maozi.oauth.token.config.service.impl;
 import com.maozi.common.CollectionUtil;
 import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
+import com.maozi.oauth.token.config.domain.SecurityUserDetails;
+import com.maozi.oauth.token.constants.OAuth2TokenClaimConstants;
 import com.maozi.service.api.annotation.RemoteResource;
 import com.maozi.system.user.api.rpc.RpcUserService;
+import com.maozi.system.user.result.OauthUserInfoResult;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户详情服务实现类
@@ -64,15 +67,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		try{
 
-			List<String> permissions = rpcUserService.rpcGetPermissionsByUsername(username).getResultDataThrowError();
+			OauthUserInfoResult oauthUserInfo = rpcUserService.rpcGetOauthUserInfoByUsername(username).getResultDataThrowError();
 
 			List<GrantedAuthority> grantedAuthorities = CollectionUtil.newArrayList();
-
-			permissions.forEach((permission)->{
+			oauthUserInfo.getAuthorities().forEach((permission)->{
 				grantedAuthorities.add(new SimpleGrantedAuthority(permission));
 			});
 
-			return new User(username,rpcUserService.rpcGetPasswordByUsername(username).getResultDataThrowError(), grantedAuthorities);
+			Map<String, Object> attributes = CollectionUtil.newHashMap();
+			attributes.put(OAuth2TokenClaimConstants.USER_ID,oauthUserInfo.getUserId());
+
+			return new SecurityUserDetails(username,oauthUserInfo.getPassword(), grantedAuthorities, attributes);
 
 		}catch (Exception e){
 

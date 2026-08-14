@@ -18,6 +18,7 @@
 package com.maozi.system.user.api.rpc;
 
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.system.user.result.OauthUserInfoResult;
 
 import java.util.List;
 
@@ -31,27 +32,7 @@ import java.util.List;
  */
 public interface RpcUserService {
 
-	/**
-	 * 根据用户名获取密码
-	 * <p>
-	 * 用于认证服务在用户登录时验证密码是否正确。
-	 * </p>
-	 *
-	 * @param username 用户名，用于查询对应用户的加密密码
-	 * @return 返回该用户名对应的加密密码字符串
-	 */
-	AbstractBaseResult<String> rpcGetPasswordByUsername(String username);
-
-	/**
-	 * 根据用户名获取权限列表
-	 * <p>
-	 * 查询指定用户名所拥有的所有权限编码列表，用于权限校验。
-	 * </p>
-	 *
-	 * @param username 用户名，用于查询该用户关联的所有权限
-	 * @return 返回该用户拥有的权限编码列表
-	 */
-	AbstractBaseResult<List<String>> rpcGetPermissionsByUsername(String username);
+	AbstractBaseResult<OauthUserInfoResult> rpcGetOauthUserInfoByUsername(String username);
 
 	/**
 	 * 根据用户名和角色 ID 获取权限列表

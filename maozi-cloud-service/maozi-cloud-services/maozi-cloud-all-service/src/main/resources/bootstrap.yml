@@ -27,13 +27,13 @@ application-port: ${application-dev-port:1000}
 #application-datasource-db-name: maozi-cloud-all-service-local-db
 
 # 接口白名单（不需要认证的路径，注释掉则全部接口需认证）
-#application-project-whitelist:
+application-project-whitelist: /config/system/get
 
 # 项目系统信息（用于文档展示与版权声明）
 application-project-system:
-  projectName: 小猫子
-  corporationName: 小猫子
+  projectName: 小猫子脚手架
+  corporationName: 小猫子网络科技有限公司
   icon: http://dummyimage.com/100x100
   environment: ${environment}
-  description: 小猫子个人脚手架
+  description: 基于 Spring Cloud Alibaba + Dubbo 的一站式分布式解决方案开源封装，内置分布式应用开发所需全套组件，统一团队代码风格，保障代码质量，让开发者专注业务逻辑，实现高效快速开发。
   copyright: 本网站所有权归《${application-project-system.corporationName}》所有，请勿抄袭和抄袭

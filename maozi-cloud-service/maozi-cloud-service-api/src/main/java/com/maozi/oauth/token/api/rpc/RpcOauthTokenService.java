@@ -40,7 +40,7 @@ public interface RpcOauthTokenService {
      * @param principalName      用户主体名称（用户名）
      * @return 操作结果
      */
-    AbstractBaseResult<Void> rpcDestroyByPrincipal(String registeredClientId, String principalName);
+    AbstractBaseResult<Void> rpcDestroyByPrincipal(Long registeredClientId, String principalName);
 
     /**
      * RPC方式批量注销用户令牌

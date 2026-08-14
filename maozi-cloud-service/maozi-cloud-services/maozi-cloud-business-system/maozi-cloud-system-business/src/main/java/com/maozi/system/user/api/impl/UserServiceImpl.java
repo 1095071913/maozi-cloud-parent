@@ -19,7 +19,6 @@
 package com.maozi.system.user.api.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.yulichang.toolkit.MPJWrappers;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
@@ -93,33 +92,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 	/** 客户端RPC服务，用于远程调用客户端相关接口 */
 	@RemoteResource
 	protected RpcClientService rpcClientService;
-
-	/**
-	 * 根据用户名查询用户信息
-	 * <p>
-	 * 通过用户名和指定字段查询用户数据，支持自定义返回类型和查询列。
-	 * 如果用户名为空则抛出异常，如果未查询到数据也抛出异常。
-	 * </p>
-	 *
-	 * @param username 用户名，用于查询的用户账号
-	 * @param clazz    返回值类型，指定查询结果映射的目标类型
-	 * @param columns  需要查询的字段列表，可变参数
-	 * @param <D>      返回值泛型类型
-	 * @return 查询到的用户信息对象
-	 */
-	@Override
-	public <D> D getByUsername(String username,Class<D> clazz,String ... columns) {
-
-		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
-
-		QueryWrapper<UserDo> wrapper = Wrappers.query();
-
-		wrapper.select(columns);
-		wrapper.eq(getColumn(UserDo::getUsername),username);
-
-		return getByParamThrowErrorRelation(wrapper,clazz);
-
-	}
 
 	/**
 	 * 根据用户名获取可用的用户ID
@@ -216,11 +188,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 	 */
 	protected List<String> getPermissions(String username) {
 
-		Long id = getAvailableByUsername(username);
+		Long userId = getAvailableByUsername(username);
+
+		return getPermissionsByUserId(userId);
+
+	}
+
+	protected List<String> getPermissionsByUserId(Long userId) {
 
 		List<String> responses = CollectionUtil.newArrayList();
 
-		List<Long> roleIds = userRoleService.getRolesByUser(id);
+		List<Long> roleIds = userRoleService.getRolesByUser(userId);
 
 		if(!roleIds.isEmpty()) {
 

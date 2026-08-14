@@ -47,7 +47,7 @@ public class RpcOauthTokenServiceImpl extends OauthTokenServiceImpl implements R
      * @return 无数据的统一响应结果
      */
     @Override
-    public AbstractBaseResult<Void> rpcDestroyByPrincipal(String registeredClientId, String principalName) {
+    public AbstractBaseResult<Void> rpcDestroyByPrincipal(Long registeredClientId, String principalName) {
         // 根据clientId+用户名移除该用户在该客户端下的所有OAuth2授权
         authorizationService.removeAllByPrincipal(registeredClientId, principalName);
         return ResultUtil.success();

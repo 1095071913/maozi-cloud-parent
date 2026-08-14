@@ -54,9 +54,9 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
         String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));
-        ApplicationLinkContext.versions.set(version);
+        ApplicationLinkContext.setVersion(version);
 
-        CurrentUserInfo currentUserInfo = ApplicationLinkContext.currentUserInfos.get();
+        CurrentUserInfo currentUserInfo = ApplicationLinkContext.getCurrentUserInfo();
         if(ObjectUtil.isNullEmpty(currentUserInfo)){
             ApplicationLinkContext.setCurrentUserInfo(request.getHeader(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
         }
@@ -68,7 +68,7 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
                 traceId = UUID.randomUUID().toString();
             }
             ApplicationLinkContext.setTraceId(traceId);
-            response.setHeader(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.traceIds.get());
+            response.setHeader(ApplicationLinkContext.TRACE_ID_KEY,ApplicationLinkContext.getTraceId());
         }
 
         try {

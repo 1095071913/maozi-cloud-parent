@@ -33,17 +33,6 @@ import java.util.List;
 public interface UserService {
 
 	/**
-	 * 根据用户名查询用户信息
-	 *
-	 * @param username 用户名，用于查询的用户账号
-	 * @param clazz    返回值类型，指定查询结果映射的目标类型
-	 * @param columns  需要查询的字段列表，可变参数，指定要查询的列
-	 * @param <D>      返回值泛型类型
-	 * @return 查询到的用户信息对象
-	 */
-	<D> D getByUsername(String username,Class<D> clazz,String ... columns);
-
-	/**
 	 * 根据用户ID获取客户端用户信息
 	 *
 	 * @param id 用户ID

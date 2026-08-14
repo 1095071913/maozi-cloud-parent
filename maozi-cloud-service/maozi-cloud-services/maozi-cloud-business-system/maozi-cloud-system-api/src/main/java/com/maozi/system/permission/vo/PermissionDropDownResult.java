@@ -1,6 +1,7 @@
 package com.maozi.system.permission.vo;
 
 import com.maozi.base.result.DropDownResult;
+import com.maozi.system.permission.enums.PermissionType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,13 @@ public class PermissionDropDownResult extends DropDownResult {
 	/** 权限在树形结构中的层级深度 */
 	@Schema(description = "深度")
 	private Integer level;
+
+	/** 类型 */
+	@Schema(description = "类型")
+	private PermissionType type;
+
+	/** 排序 */
+	@Schema(description = "排序")
+	private Integer sort;
 
 }

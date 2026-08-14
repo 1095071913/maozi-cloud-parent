@@ -13,13 +13,6 @@ import com.maozi.system.user.dto.SystemUser;
  */
 public interface RpcUserInfoService {
 
-    /**
-     * 根据用户名查询用户信息
-     *
-     * @param username 用户名
-     * @param columns 查询字段列表
-     * @return 用户信息
-     */
-	AbstractBaseResult<SystemUser> rpcGetByUsername(String username, String ... columns);
+	AbstractBaseResult<SystemUser> rpcGetById(Long id, String ... columns);
 
 }

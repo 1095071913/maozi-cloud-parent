@@ -24,12 +24,14 @@ import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
+import com.maozi.system.user.dto.UserIndividualUpdateParam;
 import com.maozi.system.user.dto.UserListParam;
 import com.maozi.system.user.dto.UserSaveUpdateParam;
 import com.maozi.system.user.vo.UserIndividualInfoVo;
 import com.maozi.system.user.vo.UserInfoVo;
 import com.maozi.system.user.vo.UserListVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -138,5 +140,8 @@ public interface RestUserService {
 	 */
 	@Get(value = INDIVIDUAL_PATH + "/get",description = "用户个人详情")
 	AbstractBaseResult<UserIndividualInfoVo> restIndividualGet();
+
+	@Post(value = INDIVIDUAL_PATH + "/update",description = "用户个人信息更新")
+	AbstractBaseResult<Void> restIndividualUpdate(@RequestBody @Valid UserIndividualUpdateParam param);
 
 }

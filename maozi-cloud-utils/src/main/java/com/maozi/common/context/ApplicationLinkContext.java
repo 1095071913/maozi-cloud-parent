@@ -43,14 +43,26 @@ public class ApplicationLinkContext {
 
     public static final String MDC_TRACE_ID_KEY = "trace_id";
 
+    /** 当前线程的链路请求ID */
+    private static TransmittableThreadLocal<String> traceIds = new TransmittableThreadLocal<>();
+
     /** 当前线程的版本号（用于灰度路由） */
-    public static TransmittableThreadLocal<String> versions = new TransmittableThreadLocal<>();
+    private static TransmittableThreadLocal<String> versions = new TransmittableThreadLocal<>();
 
     /** 当前线程的登录用户信息（含用户名、客户端 ID） */
-    public static TransmittableThreadLocal<CurrentUserInfo> currentUserInfos = new TransmittableThreadLocal<>();
+    private static TransmittableThreadLocal<CurrentUserInfo> currentUserInfos = new TransmittableThreadLocal<>();
 
-    /** 当前线程的链路请求ID */
-    public static TransmittableThreadLocal<String> traceIds = new TransmittableThreadLocal<>();
+    public static String getTraceId() {
+        return traceIds.get();
+    }
+
+    public static String getVersion() {
+        return versions.get();
+    }
+
+    public static CurrentUserInfo getCurrentUserInfo() {
+        return currentUserInfos.get();
+    }
 
     /**
      * 通过函数式接口提取当前登录用户的指定属性
@@ -58,7 +70,7 @@ public class ApplicationLinkContext {
      * 当上下文中未携带用户信息时返回 {@code null}，避免 NPE。
      * </p>
      *
-     * @param function 从 {@link CurrentUserInfo} 提取目标属性的函数（如 {@code CurrentUserInfo::getUsername}）
+     * @param function 从 {@link CurrentUserInfo} 提取目标属性的函数（如 {@code CurrentUserInfo::getUserId}）
      * @param <R> 目标属性类型
      * @return 当前用户的目标属性值；未登录或上下文缺失时返回 {@code null}
      */
@@ -80,16 +92,24 @@ public class ApplicationLinkContext {
         return ObjectUtil.isNotNullEmpty(version) && StringUtils.isNotBlank(version.toString()) ? version.toString() : ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
     }
 
-    public static void setCurrentUserInfo(String currentUserInfoJson){
-        if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
-            ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));
-        }
-    }
-
     public static void setTraceId(String traceId){
         if(ObjectUtil.isNotNullEmpty(traceId)){
             traceIds.set(traceId);
             MDC.put(MDC_TRACE_ID_KEY,traceId);
+        }
+    }
+
+    public static void setVersion(String version) {
+        versions.set(version);
+    }
+
+    public static void setCurrentUserInfo(CurrentUserInfo currentUserInfo) {
+        currentUserInfos.set(currentUserInfo);
+    }
+
+    public static void setCurrentUserInfo(String currentUserInfoJson){
+        if(ObjectUtil.isNotNullEmpty(currentUserInfoJson)){
+            ApplicationLinkContext.currentUserInfos.set(JacksonUtil.jsonToObject(currentUserInfoJson, CurrentUserInfo.class));
         }
     }
 

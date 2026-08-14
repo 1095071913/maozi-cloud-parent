@@ -54,7 +54,7 @@ public class ApplicationDubboContextLoadFilter implements Filter {
         RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
 
         // 从 RPC 附件中提取版本号，设置到当前线程的 ApplicationLinkContext 中
-        ApplicationLinkContext.versions.set(serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY));
+        ApplicationLinkContext.setVersion(serverAttachment.getAttachment(ApplicationLinkContext.VERSION_KEY));
 
         ApplicationLinkContext.setCurrentUserInfo(serverAttachment.getAttachment(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
 

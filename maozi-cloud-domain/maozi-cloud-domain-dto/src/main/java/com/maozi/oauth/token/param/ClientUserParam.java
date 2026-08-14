@@ -28,8 +28,8 @@ public class ClientUserParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 客户端 ID */
-    @Schema(description = "客户端 ID")
-    private String clientId;
+    @Schema(description = "客户端ID")
+    private Long clientId;
 
     /** 用户名 */
     @Schema(description = "用户名")

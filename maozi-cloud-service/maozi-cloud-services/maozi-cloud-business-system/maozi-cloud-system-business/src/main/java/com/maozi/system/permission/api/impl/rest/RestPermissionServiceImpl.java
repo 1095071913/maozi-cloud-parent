@@ -62,7 +62,7 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 	 */
 	@Override
 	public AbstractBaseResult<List<PermissionDropDownResult>> dropDownListResultCustomize() {
-		return ResultUtil.success(list(PermissionDropDownResult.class,PermissionDo::getId,PermissionDo::getParentId,PermissionDo::getLevel,PermissionDo::getName));
+		return ResultUtil.success(list(PermissionDropDownResult.class,PermissionDo::getId,PermissionDo::getParentId,PermissionDo::getLevel,PermissionDo::getName,PermissionDo::getType));
 	}
 
 	/**
