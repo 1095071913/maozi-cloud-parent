@@ -1,12 +1,12 @@
 import request from './request'
 import type {
-  ApiResponse,
-  PageResult,
-  UserDetail,
-  UserInfo,
-  UserIndividualUpdateParam,
-  UserListItem,
-  UserSaveParam
+    ApiResponse,
+    PageResult,
+    UserDetail,
+    UserIndividualUpdateParam,
+    UserInfo,
+    UserListItem,
+    UserSaveParam
 } from '@/types/api'
 
 /**

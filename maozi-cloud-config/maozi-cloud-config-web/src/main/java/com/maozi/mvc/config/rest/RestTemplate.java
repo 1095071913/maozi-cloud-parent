@@ -10,7 +10,6 @@ import com.maozi.common.enums.EnvironmentType;
 import com.maozi.common.enums.LogCommonType;
 import jakarta.annotation.Nonnull;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
@@ -27,7 +26,6 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 自定义 RestTemplate
