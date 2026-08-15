@@ -42,8 +42,8 @@ const planesTop: PlaneGroup[] = [
         icon: 'https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.png'
       },
       {
-        name: 'AppActive',
-        icon: 'https://img.alicdn.com/imgextra/i3/O1CN019Nt2qs1eyZRjJMDwi_!!6000000003940-2-tps-80-80.png'
+        name: 'Spring Boot Admin',
+        icon: 'https://raw.githubusercontent.com/codecentric/spring-boot-admin/master/spring-boot-admin-server-ui/src/main/frontend/assets/img/icon-spring-boot-admin.svg'
       }
     ]
   }
@@ -65,18 +65,28 @@ const planesBottom: PlaneGroup[] = [
   },
   {
     title: '可观测',
+    /** 五个组件，占宽比放大避免拥挤 */
+    grow: 1.8,
     nodes: [
       {
         name: 'Loki',
         icon: 'https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png'
       },
       {
-        name: 'OpenTelemetry',
-        icon: 'https://img.alicdn.com/imgextra/i3/O1CN01hTFdm51Jor72V1UQ9_!!6000000001076-2-tps-80-80.png'
+        name: 'Grafana Tempo',
+        icon: 'https://raw.githubusercontent.com/grafana/tempo/main/cmd/tempo/app/static/tempo-icon.png'
       },
       {
         name: 'Prometheus',
         icon: 'https://img.alicdn.com/imgextra/i2/O1CN01xWWOPW1YLHmKw5I1Z_!!6000000003042-2-tps-80-80.png'
+      },
+      {
+        name: 'Grafana',
+        icon: 'https://cdn.simpleicons.org/grafana/F46800'
+      },
+      {
+        name: 'OpenTelemetry',
+        icon: 'https://img.alicdn.com/imgextra/i3/O1CN01hTFdm51Jor72V1UQ9_!!6000000001076-2-tps-80-80.png'
       }
     ]
   }
@@ -343,7 +353,12 @@ const clusterNodes: ArchNode[] = [
 
     <!-- 运维面 / 可观测 -->
     <div class="arch-row">
-      <div v-for="plane in planesBottom" :key="plane.title" class="arch-plane">
+      <div
+        v-for="plane in planesBottom"
+        :key="plane.title"
+        class="arch-plane"
+        :style="plane.grow ? { flex: plane.grow } : undefined"
+      >
         <div class="arch-plane__box">
           <div class="arch-plane__bg" />
           <div class="arch-plane__content">

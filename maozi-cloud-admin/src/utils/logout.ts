@@ -1,6 +1,6 @@
-import { revoke } from '@/api/auth'
-import { useAppStore } from '@/store/modules/app'
-import { useUserStore } from '@/store/modules/user'
+import {revoke} from '@/api/auth'
+import {useAppStore} from '@/store/modules/app'
+import {useUserStore} from '@/store/modules/user'
 
 /**
  * 强制重新登录：同步清理本地会话后整页跳转登录页
