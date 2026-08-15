@@ -172,19 +172,33 @@ async function handleLogin(formEl?: FormInstance) {
   backdrop-filter: blur(18px);
 }
 
-/** 右侧登录卡片：与左侧同款多层投影，呈现悬浮立体感 */
+/** 右侧登录卡片：近透明玻璃底 + 描边 + 多层投影，呈现悬浮立体感 */
 .login-card {
   flex-shrink: 0;
   width: 400px;
   padding: 40px;
-  background: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 20px;
   box-shadow:
     0 24px 60px rgb(0 0 0 / 35%),
     0 4px 16px rgb(0 0 0 / 22%),
-    inset 0 1px 0 rgb(255 255 255 / 90%),
-    inset 0 -2px 6px rgb(31 45 61 / 6%);
+    inset 0 1px 0 rgb(255 255 255 / 45%),
+    inset 0 -1px 0 rgb(255 255 255 / 12%);
+  backdrop-filter: blur(18px);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/** 悬浮时轻微上抬，强化 3D 浮起效果 */
+.login-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 32px 72px rgb(0 0 0 / 42%),
+    0 6px 20px rgb(0 0 0 / 26%),
+    inset 0 1px 0 rgb(255 255 255 / 50%),
+    inset 0 -1px 0 rgb(255 255 255 / 14%);
 }
 
 /** 窄屏隐藏左侧品牌区，登录表单回退居中 */
@@ -208,13 +222,14 @@ async function handleLogin(formEl?: FormInstance) {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #1f2d3d;
+  color: #fff;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 30%);
 }
 
 .login-subtitle {
   margin-top: 8px;
   font-size: 13px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .login-badges {
@@ -226,7 +241,7 @@ async function handleLogin(formEl?: FormInstance) {
   justify-content: center;
   margin-bottom: 28px;
   padding-bottom: 20px;
-  border-bottom: 1px dashed #ebeef5;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
 }
 
 /** 登录卡片内容区仅 320px，覆写顶栏的 132px 统一宽度，标签与按钮统一为 112px */
@@ -255,15 +270,43 @@ async function handleLogin(formEl?: FormInstance) {
   line-height: 20px;
 }
 
-/** 输入框与登录按钮统一圆角 */
+/** 输入框与登录按钮统一圆角；输入框改玻璃底并带内凹立体感 */
 .login-card :deep(.el-input__wrapper) {
   border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 2px rgb(0 0 0 / 18%),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.login-card :deep(.el-input__wrapper.is-focus) {
+  box-shadow:
+    inset 0 1px 2px rgb(0 0 0 / 18%),
+    inset 0 0 0 1px rgb(64 158 255 / 70%);
+}
+
+.login-card :deep(.el-input__inner) {
+  color: #fff;
+}
+
+.login-card :deep(.el-input__inner::placeholder) {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.login-card :deep(.el-input__prefix),
+.login-card :deep(.el-input__suffix) {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .login-btn {
   width: 100%;
   border-radius: 10px;
   letter-spacing: 6px;
+
+  /** 按钮投影发光，强化立体浮起感 */
+  box-shadow:
+    0 8px 20px rgb(64 158 255 / 35%),
+    inset 0 1px 0 rgb(255 255 255 / 30%);
 
   /** 抵消末字后多出的字距，保证文字真正居中 */
   text-indent: 6px;
