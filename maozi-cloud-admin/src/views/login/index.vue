@@ -58,8 +58,17 @@ async function handleLogin(formEl?: FormInstance) {
 
 <template>
   <div class="login-container">
+    <!-- 左侧品牌区：微服务全景图（参考 Spring Cloud Alibaba 官网架构图） -->
+    <div class="login-panel">
+      <ArchitectureDiagram />
+    </div>
+
+    <!-- 右侧登录表单 -->
     <div class="login-card">
-      <div class="login-title">{{ loginTitle }}</div>
+      <div class="login-head">
+        <div class="login-title">{{ loginTitle }}</div>
+        <div class="login-subtitle">欢迎回来，请登录您的账号</div>
+      </div>
       <div class="login-badges">
         <el-tag
           v-if="envInfo"
@@ -128,27 +137,84 @@ async function handleLogin(formEl?: FormInstance) {
 .login-container {
   position: relative;
   display: flex;
+  gap: 32px;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 32px;
+  overflow: auto;
+
+  /** 深邃夜紫底 + 双侧光晕，衬托玻璃面板 */
+  background:
+    radial-gradient(1200px 800px at 12% 18%, rgb(99 102 241 / 38%), transparent 62%),
+    radial-gradient(1000px 720px at 88% 82%, rgb(168 85 247 / 32%), transparent 62%),
+    linear-gradient(135deg, #1b1f3b 0%, #2a1e4f 55%, #241a40 100%);
 }
 
+/** 左侧品牌区：近透明玻璃底 + 描边 + 多层投影，呈现悬浮立体感 */
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: min(2200px, calc(100vw - 500px));
+  min-width: 640px;
+  padding: 24px 40px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 60px rgb(0 0 0 / 35%),
+    0 4px 16px rgb(0 0 0 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 45%),
+    inset 0 -1px 0 rgb(255 255 255 / 12%);
+  backdrop-filter: blur(18px);
+}
+
+/** 右侧登录卡片：与左侧同款多层投影，呈现悬浮立体感 */
 .login-card {
+  flex-shrink: 0;
   width: 400px;
   padding: 40px;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 60px rgb(0 0 0 / 35%),
+    0 4px 16px rgb(0 0 0 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 90%),
+    inset 0 -2px 6px rgb(31 45 61 / 6%);
+}
+
+/** 窄屏隐藏左侧品牌区，登录表单回退居中 */
+@media (max-width: 1280px) {
+  .login-panel {
+    display: none;
+  }
+
+  .login-container {
+    padding: 32px;
+  }
+}
+
+/** 登录卡片头部：居中标题 + 副标题 */
+.login-head {
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 .login-title {
-  margin-bottom: 12px;
-  font-size: 22px;
-  font-weight: 600;
-  text-align: center;
-  color: #303133;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #1f2d3d;
+}
+
+.login-subtitle {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #909399;
 }
 
 .login-badges {
@@ -158,7 +224,9 @@ async function handleLogin(formEl?: FormInstance) {
   gap: 8px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #ebeef5;
 }
 
 /** 登录卡片内容区仅 320px，覆写顶栏的 132px 统一宽度，标签与按钮统一为 112px */
@@ -181,12 +249,23 @@ async function handleLogin(formEl?: FormInstance) {
   left: 0;
   right: 0;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.55);
   text-align: center;
+  letter-spacing: 1px;
   line-height: 20px;
+}
+
+/** 输入框与登录按钮统一圆角 */
+.login-card :deep(.el-input__wrapper) {
+  border-radius: 10px;
 }
 
 .login-btn {
   width: 100%;
+  border-radius: 10px;
+  letter-spacing: 6px;
+
+  /** 抵消末字后多出的字距，保证文字真正居中 */
+  text-indent: 6px;
 }
 </style>
