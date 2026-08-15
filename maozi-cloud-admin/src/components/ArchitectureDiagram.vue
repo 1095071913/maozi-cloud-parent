@@ -84,7 +84,7 @@ const planesBottom: PlaneGroup[] = [
 
 /** 数据面核心链路节点 */
 const iotNode: ArchNode = {
-  name: 'IoT/PC/Mobile',
+  name: '客户端',
   icon: 'https://gw.alicdn.com/imgextra/i2/O1CN014ZK8OP1msdEMGutsg_!!6000000005010-2-tps-166-160.png'
 }
 const gatewayNode: ArchNode = {
