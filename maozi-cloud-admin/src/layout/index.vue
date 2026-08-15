@@ -49,9 +49,9 @@ async function handleLogout() {
       <el-menu
         :default-active="activeMenu"
         router
-        background-color="#001529"
-        text-color="#bfcbd9"
-        active-text-color="#fff"
+        background-color="#ffffff"
+        text-color="#303133"
+        active-text-color="#409eff"
       >
         <el-menu-item index="/dashboard">
           <span>首页</span>
@@ -128,17 +128,18 @@ async function handleLogout() {
   display: flex;
   flex-direction: column;
   width: 220px;
-  background-color: #001529;
+  background-color: #ffffff;
+  border-right: 1px solid #e8e8e8;
 }
 
 .layout-logo {
   height: 60px;
   line-height: 60px;
-  color: #fff;
+  color: #303133;
   font-size: 18px;
   font-weight: 600;
   text-align: center;
-  border-bottom: 1px solid #1f2d3d;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .layout-sider :deep(.el-menu) {
