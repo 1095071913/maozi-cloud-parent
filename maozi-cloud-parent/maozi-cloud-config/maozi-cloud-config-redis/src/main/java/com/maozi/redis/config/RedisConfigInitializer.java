@@ -9,21 +9,21 @@ import java.util.Properties;
  * 缓存运行时配置初始化器
  * <p>
  * 通过 SPI 机制被 {@code BaseApplication} 加载，将 Redis 相关
- * Nacos 共享配置文件追加到系统属性 {@code spring.cloud.nacos.config.shared-dataids}。
+ * Nacos 共享配置文件追加到系统属性 {@code spring.config.import} 导入列表。
  * </p>
  *
  * @author maozi
  */
 public class RedisConfigInitializer implements ConfigInitializer {
 
-    /** 缓存相关的 Nacos 共享配置文件 */
-    private static final String SHARED_DATAIDS = "boot-redis.yml";
+    /** 缓存相关的 Nacos 共享配置文件导入（optional 前缀保证文件不存在时不阻断启动） */
+    private static final String NACOS_IMPORTS = "optional:nacos:boot-redis.yml";
 
     /**
-     * 追加 Redis 共享配置文件到 Nacos 共享配置列表。
+     * 追加 Redis 共享配置文件到 Nacos 配置导入列表。
      * <p>
-     * 若 {@code spring.cloud.nacos.config.shared-dataids} 已有值，
-     * 则以逗号分隔追加，保留其他模块已注册的共享配置文件。
+     * 若 {@code spring.config.import} 已有值，则以逗号分隔前插合并，
+     * 保留其他模块已注册的共享配置文件，并保证应用自身配置文件优先级最高。
      * </p>
      *
      * @param properties 系统属性容器
@@ -31,9 +31,9 @@ public class RedisConfigInitializer implements ConfigInitializer {
     @Override
     public void initialize(Properties properties) {
         properties.merge(
-            "spring.cloud.nacos.config.shared-dataids",
-            SHARED_DATAIDS,
-            (existing, incoming) -> existing + "," + incoming
+            "spring.config.import",
+            NACOS_IMPORTS,
+            (existing, incoming) -> incoming + "," + existing
         );
     }
 

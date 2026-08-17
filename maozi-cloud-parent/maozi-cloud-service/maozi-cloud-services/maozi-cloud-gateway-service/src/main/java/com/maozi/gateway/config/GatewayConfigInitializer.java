@@ -16,14 +16,15 @@ import java.util.Properties;
  */
 public class GatewayConfigInitializer implements ConfigInitializer {
 
-    /** 网关 Nacos 共享配置文件清单 */
-    private static final String SHARED_DATAIDS = "cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml,cloud-sentinel.yml";
+    /** 网关 Nacos 共享配置文件导入清单（optional 前缀保证文件不存在时不阻断启动） */
+    private static final String NACOS_IMPORTS = "optional:nacos:cloud-nacos.yml,optional:nacos:boot-monitor.yml,optional:nacos:boot-arthas.yml,optional:nacos:cloud-default.yml,optional:nacos:cloud-sentinel.yml";
 
     /**
      * 初始化网关运行时配置
      * <p>
      * 开启同名单 Bean 定义覆盖，并将网关所需的 Nacos 共享配置文件
-     * 追加到系统属性 {@code spring.cloud.nacos.config.shared-dataids}。
+     * 追加到系统属性 {@code spring.config.import}（前插合并，保证应用自身
+     * 配置文件始终位于列表末尾、优先级最高）。
      * </p>
      *
      * @param properties 系统属性容器
@@ -34,9 +35,9 @@ public class GatewayConfigInitializer implements ConfigInitializer {
         properties.put("spring.main.allow-bean-definition-overriding",true);
 
         properties.merge(
-            "spring.cloud.nacos.config.shared-dataids",
-            SHARED_DATAIDS,
-            (existing, incoming) -> existing + "," + incoming
+            "spring.config.import",
+            NACOS_IMPORTS,
+            (existing, incoming) -> incoming + "," + existing
         );
 
     }

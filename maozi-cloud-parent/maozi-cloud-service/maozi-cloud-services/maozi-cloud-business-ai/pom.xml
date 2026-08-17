@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承业务服务聚合工程 maozi-cloud-services（其再向上继承 maozi-cloud-service → maozi-cloud-parent），统一管理依赖版本 -->
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-services</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>maozi-cloud-business-ai</artifactId>
+    <!-- 打包类型为 pom，表示这是一个聚合工程 -->
+    <packaging>pom</packaging>
+
+    <!-- 子模块列表 -->
+    <modules>
+        <module>maozi-cloud-ai-api</module>
+        <!-- AI 业务实现模块，提供认证授权的具体业务逻辑 -->
+        <module>maozi-cloud-ai-business</module>
+        <!-- AI 可执行启动模块，装配 Spring Boot 引导类，作为分布式部署形态的入口（运行时通过 Nacos 拉取配置） -->
+        <module>maozi-cloud-ai-service</module>
+    </modules>
+
+</project>

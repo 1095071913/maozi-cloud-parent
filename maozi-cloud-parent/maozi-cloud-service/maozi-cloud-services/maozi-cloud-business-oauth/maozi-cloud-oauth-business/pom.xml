@@ -15,18 +15,6 @@
     <!-- OAuth 认证服务实现模块构件名称 -->
     <artifactId>maozi-cloud-oauth-business</artifactId>
 
-    <properties>
-
-        <!-- 跳过单元测试 -->
-        <maven.test.skip>true</maven.test.skip>
-        <!-- 跳过 install 阶段 -->
-        <maven.install.skip>true</maven.install.skip>
-        <!-- 跳过 deploy 阶段 -->
-        <maven.deploy.skip>true</maven.deploy.skip>
-
-    </properties>
-
-
     <dependencies>
 
         <!-- Oauth Begin -->

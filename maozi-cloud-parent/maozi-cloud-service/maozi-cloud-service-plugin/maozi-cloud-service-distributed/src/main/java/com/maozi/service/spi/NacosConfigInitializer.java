@@ -9,7 +9,7 @@ import java.util.Properties;
  * 分布式组件运行时配置初始化器
  * <p>
  * 通过 SPI 机制被 {@link com.maozi.BaseApplication} 加载，将分布式组件所需的
- * Nacos 共享配置文件清单追加到系统属性 {@code spring.cloud.nacos.config.shared-dataids}；
+ * Nacos 共享配置文件清单追加到系统属性 {@code spring.config.import} 导入列表；
  * Nacos 配置中心连接信息由 maozi-cloud-config-nacos 模块的
  * {@code com.maozi.config.spi.NacosConfigInitializer} 负责写入。
  * </p>
@@ -18,14 +18,15 @@ import java.util.Properties;
  */
 public class NacosConfigInitializer implements ConfigInitializer {
 
-    /** 分布式组件 Nacos 共享配置文件清单 */
-    private static final String SHARED_DATAIDS = "cloud-nacos.yml,cloud-dubbo.yml,cloud-sentinel.yml,boot-monitor.yml,cloud-oauth.yml,boot-arthas.yml,cloud-default.yml";
+    /** 分布式组件 Nacos 共享配置文件导入清单（optional 前缀保证文件不存在时不阻断启动） */
+    private static final String NACOS_IMPORTS = "optional:nacos:cloud-nacos.yml,optional:nacos:cloud-dubbo.yml,optional:nacos:cloud-sentinel.yml,optional:nacos:boot-monitor.yml,optional:nacos:cloud-oauth.yml,optional:nacos:boot-arthas.yml,optional:nacos:cloud-default.yml";
 
     /**
      * 初始化分布式组件运行时配置
      * <p>
      * 将分布式组件所需的 Nacos 共享配置文件追加到系统属性
-     * {@code spring.cloud.nacos.config.shared-dataids}。
+     * {@code spring.config.import}；采用前插方式合并，保证应用自身配置文件
+     * （由 maozi-cloud-config-nacos 后插）始终位于列表末尾、优先级最高。
      * </p>
      *
      * @param properties 系统属性容器
@@ -33,9 +34,9 @@ public class NacosConfigInitializer implements ConfigInitializer {
     @Override
     public void initialize(Properties properties) {
         properties.merge(
-            "spring.cloud.nacos.config.shared-dataids",
-            SHARED_DATAIDS,
-            (existing, incoming) -> existing + "," + incoming
+            "spring.config.import",
+            NACOS_IMPORTS,
+            (existing, incoming) -> incoming + "," + existing
         );
     }
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-business-ai</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>maozi-cloud-ai-service</artifactId>
+
+    <dependencies>
+
+        <!-- OAuth 业务实现模块，提供 OAuth 服务的具体业务逻辑 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-ai-business</artifactId>
+            <version>${maozi-cloud-ai-business.version}</version>
+        </dependency>
+
+        <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-db-impl</artifactId>
+            <version>${maozi-cloud-service-db-impl.version}</version>
+        </dependency>
+
+        <!-- 分布式部署插件，装配 Dubbo / Feign / Sentinel / 服务发现等远程调用与治理能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-distributed</artifactId>
+            <version>${maozi-cloud-service-distributed.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- boot打包 Begin -->
+    <build>
+        <!-- 打包后的文件名 -->
+        <finalName>${artifactId}</finalName>
+        <plugins>
+            <!-- Spring Boot Maven 插件，将应用打包为可执行 JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Spring Boot Maven 插件配置：指定启动主类、JVM 模块开放参数、依赖范围等打包细节 -->
+                <configuration>
+                    <!-- 指定应用启动主类 -->
+                    <mainClass>com.maozi.Application</mainClass>
+                    <!-- 包含 system scope 的依赖 -->
+                    <includeSystemScope>true</includeSystemScope>
+                    <!-- 排除 Lombok，运行时不需要 -->
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <!-- 添加 add-opens jvm参数 -->
+                    <jvmArguments>
+                        --add-opens java.base/java.math=ALL-UNNAMED
+                        --add-opens java.base/java.lang=ALL-UNNAMED
+                        --add-opens java.base/java.lang.reflect=ALL-UNNAMED
+                    </jvmArguments>
+                </configuration>
+                <executions>
+                    <!-- 默认执行：调用 repackage goal 将依赖打入可执行 fat-jar -->
+                    <execution>
+                        <goals>
+                            <!-- 重新打包为可执行 JAR -->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- boot打包 End -->
+
+</project>

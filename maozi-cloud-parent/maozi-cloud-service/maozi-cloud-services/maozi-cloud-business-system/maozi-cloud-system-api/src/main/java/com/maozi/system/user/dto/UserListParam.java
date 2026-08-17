@@ -22,7 +22,7 @@ import java.util.Map;
  * </p>
  */
 @Data
-public class UserListParam implements OrderParam,Serializable {
+public class UserListParam implements OrderParam, Serializable {
 
 	/** 序列化版本号 */
 	@Serial

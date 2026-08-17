@@ -33,6 +33,8 @@
         <!-- 系统管理服务模块 -->
         <module>maozi-cloud-business-system</module>
 
+        <module>maozi-cloud-business-ai</module>
+
     </modules>
 
 </project>

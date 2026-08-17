@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.maozi.db.domain.AbstractBaseNameDomain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -35,6 +36,7 @@ import java.io.Serial;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
 @TableName("system_user")
 public class UserDo extends AbstractBaseNameDomain {
 

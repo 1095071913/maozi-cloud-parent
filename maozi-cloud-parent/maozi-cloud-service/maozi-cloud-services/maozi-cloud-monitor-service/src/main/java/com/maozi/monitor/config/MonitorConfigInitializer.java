@@ -9,28 +9,29 @@ import java.util.Properties;
  * 监控服务运行时配置初始化器
  * <p>
  * 通过 SPI 机制被 {@link com.maozi.BaseApplication} 加载，将监控服务的
- * Nacos 共享配置文件清单追加到系统属性 {@code spring.cloud.nacos.config.shared-dataids}，
- * 属性已存在时以逗号拼接合并。
+ * Nacos 共享配置文件清单追加到系统属性 {@code spring.config.import} 导入列表，
+ * 属性已存在时以逗号前插合并。
  * </p>
  *
  * @author maozi
  */
 public class MonitorConfigInitializer implements ConfigInitializer {
 
-    /** 监控服务 Nacos 共享配置文件清单 */
-    private static final String SHARED_DATAIDS = "cloud-nacos.yml,boot-monitor.yml,boot-arthas.yml,cloud-default.yml";
+    /** 监控服务 Nacos 共享配置文件导入清单（optional 前缀保证文件不存在时不阻断启动） */
+    private static final String NACOS_IMPORTS = "optional:nacos:cloud-nacos.yml,optional:nacos:boot-monitor.yml,optional:nacos:boot-arthas.yml,optional:nacos:cloud-default.yml";
 
     /**
-     * 追加监控服务的 Nacos 共享配置文件清单
+     * 追加监控服务的 Nacos 共享配置文件清单（前插合并，保证应用自身
+     * 配置文件始终位于导入列表末尾、优先级最高）
      *
      * @param properties 系统属性
      */
     @Override
     public void initialize(Properties properties) {
         properties.merge(
-            "spring.cloud.nacos.config.shared-dataids",
-            SHARED_DATAIDS,
-            (existing, incoming) -> existing + "," + incoming
+            "spring.config.import",
+            NACOS_IMPORTS,
+            (existing, incoming) -> incoming + "," + existing
         );
     }
 

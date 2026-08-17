@@ -32,7 +32,7 @@ public class Application extends BaseApplicationDB {
 	 * @param args 启动参数
 	 */
     public static void main(String[] args) {
-        BaseApplicationDB.ApplicationRun(args);
+        ApplicationRun(args);
     }
 
 }

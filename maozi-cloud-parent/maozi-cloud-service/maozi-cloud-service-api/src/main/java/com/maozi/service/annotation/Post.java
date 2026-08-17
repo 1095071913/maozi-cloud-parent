@@ -35,4 +35,7 @@ public @interface Post {
     @AliasFor(value = "summary",annotation = Operation.class)
     String description() default "";
 
+    @AliasFor(value = "produces",annotation = RequestMapping.class)
+    String[] produces() default {};
+
 }

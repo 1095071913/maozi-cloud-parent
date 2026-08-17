@@ -325,3 +325,35 @@ export interface UserSaveParam {
   /** 解绑角色 ID 列表 */
   unbindRoleIds?: (string | number)[]
 }
+
+/** AI 会话列表行（/ai/chat/record/list 返回元素） */
+export interface ConversationItem {
+  /** AI 聊天会话 ID */
+  id: string | number
+  /** 标题 */
+  title: string
+}
+
+/** AI 对话消息类型（/ai/chat/{id}/list 返回）：0=用户消息 1=AI 消息 */
+export enum ChatMessageType {
+  /** 用户消息 */
+  USER = 0,
+  /** AI 消息 */
+  AI = 1
+}
+
+/** AI 对话流类型（/ai/chat SSE 事件）：0=完成对话 1=持续对话中 */
+export enum ChatStreamType {
+  /** 完成对话（流结束标记） */
+  FINISH = 0,
+  /** 持续对话中（增量内容） */
+  OUTPUT = 1
+}
+
+/** AI 对话消息（/ai/chat/{id}/list 返回元素） */
+export interface ChatMessageItem {
+  /** 消息类型（0=用户消息 1=AI 消息） */
+  type: ChatMessageType
+  /** 消息内容 */
+  message: string
+}

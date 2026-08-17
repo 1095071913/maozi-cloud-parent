@@ -15,18 +15,6 @@
     <!-- 系统管理服务实现模块构件名称 -->
     <artifactId>maozi-cloud-system-business</artifactId>
 
-    <properties>
-
-        <!-- 跳过单元测试 -->
-        <maven.test.skip>true</maven.test.skip>
-        <!-- 跳过 install 阶段 -->
-        <maven.install.skip>true</maven.install.skip>
-        <!-- 跳过 deploy 阶段 -->
-        <maven.deploy.skip>true</maven.deploy.skip>
-
-    </properties>
-
-
     <dependencies>
 
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->

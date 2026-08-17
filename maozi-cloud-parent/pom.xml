@@ -41,11 +41,11 @@
 
 		<!-- Spring Component Begin -->
 		<!-- Spring Boot 版本 -->
-		<spring-boot.version>3.2.6</spring-boot.version>
+		<spring-boot.version>3.3.5</spring-boot.version>
 		<!-- Spring Cloud 版本 -->
-		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<spring-cloud.version>2023.0.3</spring-cloud.version>
 		<!-- Spring Cloud Alibaba 版本 -->
-		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
 		<!-- Spring Boot Admin 监控组件版本 -->
 		<spring-boot-admin-starter.version>3.2.3</spring-boot-admin-starter.version>
 		<!-- Spring Component End -->
@@ -151,6 +151,9 @@
 		<maozi-cloud-oauth-api.version>${revision}</maozi-cloud-oauth-api.version>
 		<!-- OAuth 认证授权服务实现层版本 -->
 		<maozi-cloud-oauth-business.version>${revision}</maozi-cloud-oauth-business.version>
+
+		<maozi-cloud-ai-api.version>${revision}</maozi-cloud-ai-api.version>
+		<maozi-cloud-ai-business.version>${revision}</maozi-cloud-ai-business.version>
 
 		<!-- Project End -->
 

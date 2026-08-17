@@ -209,7 +209,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "Pi8YpLWo1i",
+                              "id": "u7AcRLlN32",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -270,7 +270,7 @@
                         "serverId": "",
                         "operationId": "template",
                         "sourceUrl": "",
-                        "ordering": 6,
+                        "ordering": 0,
                         "cases": [],
                         "mocks": [],
                         "customApiFields": "{}",
@@ -340,7 +340,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "JYGTpAE2BU",
+                              "id": "nkyGYvU33v",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -401,7 +401,7 @@
                         "serverId": "",
                         "operationId": "list",
                         "sourceUrl": "",
-                        "ordering": 6,
+                        "ordering": 0,
                         "cases": [],
                         "mocks": [],
                         "customApiFields": "{}",
@@ -447,7 +447,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "e1UtBlzIXj",
+                              "id": "oTtzKPFLcj",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -508,7 +508,7 @@
                         "serverId": "",
                         "operationId": "get",
                         "sourceUrl": "",
-                        "ordering": 12,
+                        "ordering": 6,
                         "cases": [],
                         "mocks": [],
                         "customApiFields": "{}",
@@ -1428,7 +1428,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "0599ktKhZP",
+                          "id": "HiR90RvxgL",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -1605,7 +1605,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "D6ovyufLsq",
+                          "id": "FtjSJOf5VN",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -1787,7 +1787,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "n414achceO",
+                          "id": "TFC6kvKrCV",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -1963,7 +1963,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "h8IrC5qaqX",
+                          "id": "YgmAAxE7QZ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -2110,7 +2110,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "b5J4mbUZOu",
+                          "id": "sKOIifhHDS",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -2275,7 +2275,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "aPXz9pxmzP",
+                          "id": "FQhvjgio4b",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -2435,7 +2435,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "nawca1PU0P",
+                          "id": "pI2g43ks5A",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -7670,6 +7670,1674 @@
               ]
             }
           ]
+        },
+        {
+          "name": "maozi-cloud-ai",
+          "id": 93561293,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 7130572,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "公用模块",
+              "id": 93568007,
+              "auth": {},
+              "securityScheme": {},
+              "parentId": 93561293,
+              "serverId": "",
+              "description": "",
+              "identityPattern": {
+                "httpApi": {
+                  "type": "inherit",
+                  "bodyType": "",
+                  "fields": []
+                }
+              },
+              "shareSettings": {},
+              "visibility": "INHERITED",
+              "moduleId": 7130572,
+              "preProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "postProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "inheritPostProcessors": {},
+              "inheritPreProcessors": {},
+              "items": [
+                {
+                  "name": "无用忽略掉",
+                  "id": 93568010,
+                  "auth": {},
+                  "securityScheme": {},
+                  "parentId": 93568007,
+                  "serverId": "",
+                  "description": "",
+                  "identityPattern": {
+                    "httpApi": {
+                      "type": "inherit",
+                      "bodyType": "",
+                      "fields": []
+                    }
+                  },
+                  "shareSettings": {},
+                  "visibility": "INHERITED",
+                  "moduleId": 7130572,
+                  "preProcessors": [
+                    {
+                      "id": "inheritProcessors",
+                      "type": "inheritProcessors",
+                      "data": {}
+                    }
+                  ],
+                  "postProcessors": [
+                    {
+                      "id": "inheritProcessors",
+                      "type": "inheritProcessors",
+                      "data": {}
+                    }
+                  ],
+                  "inheritPostProcessors": {},
+                  "inheritPreProcessors": {},
+                  "items": [
+                    {
+                      "name": "模版",
+                      "api": {
+                        "id": "502441463",
+                        "method": "get",
+                        "path": "/ai/application/template",
+                        "parameters": {
+                          "path": [],
+                          "query": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "QcsMRviTmj",
+                              "name": "Authorization",
+                              "required": true,
+                              "enable": true,
+                              "description": "用户授权令牌",
+                              "example": "{{oauth_access_token}}",
+                              "type": "string",
+                              "schema": {
+                                "type": "string"
+                              }
+                            }
+                          ]
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "commonParameters": {},
+                        "responses": [
+                          {
+                            "id": "194686034",
+                            "code": "200",
+                            "headers": [],
+                            "jsonSchema": {
+                              "$ref": "#/definitions/284125722"
+                            },
+                            "itemSchema": {},
+                            "description": "OK",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          },
+                          {
+                            "id": "190159616",
+                            "code": "500",
+                            "headers": [],
+                            "jsonSchema": {
+                              "type": "object",
+                              "x-apifox-orders": []
+                            },
+                            "itemSchema": {},
+                            "description": "Internal Server Error",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          }
+                        ],
+                        "responseExamples": [],
+                        "requestBody": {
+                          "type": "none",
+                          "parameters": [],
+                          "required": false,
+                          "additionalContentTypes": [],
+                          "oasExtensions": ""
+                        },
+                        "description": "",
+                        "tags": [
+                          "公用模块/无用忽略掉"
+                        ],
+                        "status": "released",
+                        "serverId": "",
+                        "operationId": "template",
+                        "sourceUrl": "",
+                        "ordering": 0,
+                        "cases": [],
+                        "mocks": [],
+                        "customApiFields": "{}",
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "mockScript": {},
+                        "codeSamples": [],
+                        "commonResponseStatus": {},
+                        "responseChildren": [],
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "oasExtensions": "",
+                        "type": "http",
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "枚举常量",
+                  "id": 93568011,
+                  "auth": {},
+                  "securityScheme": {},
+                  "parentId": 93568007,
+                  "serverId": "",
+                  "description": "",
+                  "identityPattern": {
+                    "httpApi": {
+                      "type": "inherit",
+                      "bodyType": "",
+                      "fields": []
+                    }
+                  },
+                  "shareSettings": {},
+                  "visibility": "INHERITED",
+                  "moduleId": 7130572,
+                  "preProcessors": [
+                    {
+                      "id": "inheritProcessors",
+                      "type": "inheritProcessors",
+                      "data": {}
+                    }
+                  ],
+                  "postProcessors": [
+                    {
+                      "id": "inheritProcessors",
+                      "type": "inheritProcessors",
+                      "data": {}
+                    }
+                  ],
+                  "inheritPostProcessors": {},
+                  "inheritPreProcessors": {},
+                  "items": [
+                    {
+                      "name": "详情",
+                      "api": {
+                        "id": "502441464",
+                        "method": "get",
+                        "path": "/ai/application/enum/{name}/get",
+                        "parameters": {
+                          "path": [
+                            {
+                              "id": "name#0",
+                              "name": "name",
+                              "required": true,
+                              "enable": true,
+                              "description": "",
+                              "example": "",
+                              "type": "string",
+                              "schema": {
+                                "type": "string"
+                              }
+                            }
+                          ],
+                          "query": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "ARjVFTv7cf",
+                              "name": "Authorization",
+                              "required": true,
+                              "enable": true,
+                              "description": "用户授权令牌",
+                              "example": "{{oauth_access_token}}",
+                              "type": "string",
+                              "schema": {
+                                "type": "string"
+                              }
+                            }
+                          ]
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "commonParameters": {},
+                        "responses": [
+                          {
+                            "id": "128984980",
+                            "code": "200",
+                            "headers": [],
+                            "jsonSchema": {
+                              "$ref": "#/definitions/284125726"
+                            },
+                            "itemSchema": {},
+                            "description": "OK",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          },
+                          {
+                            "id": "162575400",
+                            "code": "500",
+                            "headers": [],
+                            "jsonSchema": {
+                              "type": "object",
+                              "x-apifox-orders": []
+                            },
+                            "itemSchema": {},
+                            "description": "Internal Server Error",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          }
+                        ],
+                        "responseExamples": [],
+                        "requestBody": {
+                          "type": "none",
+                          "parameters": [],
+                          "required": false,
+                          "additionalContentTypes": [],
+                          "oasExtensions": ""
+                        },
+                        "description": "",
+                        "tags": [
+                          "公用模块/枚举常量"
+                        ],
+                        "status": "released",
+                        "serverId": "",
+                        "operationId": "get",
+                        "sourceUrl": "",
+                        "ordering": 0,
+                        "cases": [],
+                        "mocks": [],
+                        "customApiFields": "{}",
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "mockScript": {},
+                        "codeSamples": [],
+                        "commonResponseStatus": {},
+                        "responseChildren": [],
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "oasExtensions": "",
+                        "type": "http",
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    },
+                    {
+                      "name": "列表",
+                      "api": {
+                        "id": "502441465",
+                        "method": "get",
+                        "path": "/ai/application/enum/list",
+                        "parameters": {
+                          "path": [],
+                          "query": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "RC8I3kdnLS",
+                              "name": "Authorization",
+                              "required": true,
+                              "enable": true,
+                              "description": "用户授权令牌",
+                              "example": "{{oauth_access_token}}",
+                              "type": "string",
+                              "schema": {
+                                "type": "string"
+                              }
+                            }
+                          ]
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "commonParameters": {},
+                        "responses": [
+                          {
+                            "id": "145309920",
+                            "code": "200",
+                            "headers": [],
+                            "jsonSchema": {
+                              "$ref": "#/definitions/284125717"
+                            },
+                            "itemSchema": {},
+                            "description": "OK",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          },
+                          {
+                            "id": "151956347",
+                            "code": "500",
+                            "headers": [],
+                            "jsonSchema": {
+                              "type": "object",
+                              "x-apifox-orders": []
+                            },
+                            "itemSchema": {},
+                            "description": "Internal Server Error",
+                            "contentType": "json",
+                            "mediaType": "*/*",
+                            "oasExtensions": ""
+                          }
+                        ],
+                        "responseExamples": [],
+                        "requestBody": {
+                          "type": "none",
+                          "parameters": [],
+                          "required": false,
+                          "additionalContentTypes": [],
+                          "oasExtensions": ""
+                        },
+                        "description": "",
+                        "tags": [
+                          "公用模块/枚举常量"
+                        ],
+                        "status": "released",
+                        "serverId": "",
+                        "operationId": "list_1",
+                        "sourceUrl": "",
+                        "ordering": 6,
+                        "cases": [],
+                        "mocks": [],
+                        "customApiFields": "{}",
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "mockScript": {},
+                        "codeSamples": [],
+                        "commonResponseStatus": {},
+                        "responseChildren": [],
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "oasExtensions": "",
+                        "type": "http",
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AI会话模块",
+              "id": 93570727,
+              "auth": {},
+              "securityScheme": {},
+              "parentId": 93561293,
+              "serverId": "",
+              "description": "",
+              "identityPattern": {
+                "httpApi": {
+                  "type": "inherit",
+                  "bodyType": "",
+                  "fields": []
+                }
+              },
+              "shareSettings": {},
+              "visibility": "INHERITED",
+              "moduleId": 7130572,
+              "preProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "postProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "inheritPostProcessors": {},
+              "inheritPreProcessors": {},
+              "items": [
+                {
+                  "name": "AI会话创建",
+                  "api": {
+                    "id": "502441469",
+                    "method": "post",
+                    "path": "/ai/chat/record/create",
+                    "parameters": {
+                      "path": [],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "c2nhvJatnE",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "160068856",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125741"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "103798499",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305096176"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI会话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restCreate",
+                    "sourceUrl": "",
+                    "ordering": 18,
+                    "cases": [
+                      {
+                        "id": 404570076,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "Ai会话创建成功",
+                        "responseId": "160068856",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "pxuHmrCn6K",
+                              "relatedId": "c2nhvJatnE",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"data\": \"你好,你是谁?\"\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.398a88f9-a8b6-493b-9088-25d67a7b2e16\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"398a88f9-a8b6-493b-9088-25d67a7b2e16\",\"requestIndex\":0,\"httpRequestId\":\"649134b3-9ca2-4574-9766-267d26ae978f\"},\"type\":\"http\",\"response\":{\"id\":\"463f38d0-e5fe-4dec-88c3-6521d260e4a6\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:43:19 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"194c3d8fccdaabd1b5785ea8dc0e6dde\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,34,50,48,56,57,49,57,54,51,52,57,54,56,48,53,49,55,49,50,50,34,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[{\"name\":\"JSESSIONID\",\"expires\":null,\"maxAge\":null,\"domain\":\"localhost\",\"path\":\"/\",\"secure\":false,\"httpOnly\":false,\"hostOnly\":true,\"value\":\"L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"responseTime\":124,\"responseSize\":41,\"downloadedBytes\":41,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.22466707229614258,\"wait\":0.11204195022583008,\"dns\":0,\"tcp\":0,\"firstByte\":123.38558292388916,\"download\":0.45320796966552734,\"process\":0.0479588508605957,\"total\":124.22345876693726}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"ai\",\"chat\",\"record\",\"create\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":35,\"system\":true},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\",\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"data\\\": \\\"你好,你是谁?\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"0e249c6d-8481-406e-9e14-052a62c83278\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":56574},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/ai/chat/record/create\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"35\"},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:43:19 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"194c3d8fccdaabd1b5785ea8dc0e6dde\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":41},\"timings\":{\"start\":1786938199740,\"requestStart\":1786938199741,\"offset\":{\"request\":0.22466707229614258,\"socket\":0.33670902252197266,\"response\":123.72229194641113,\"end\":124.17549991607666,\"lookup\":0.33670902252197266,\"connect\":0.33670902252197266,\"done\":124.22345876693726}},\"session\":{\"id\":\"0e249c6d-8481-406e-9e14-052a62c83278\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1786938199734,\"preProcessorsStarted\":1786938199736,\"preProcessorsCompleted\":1786938199736,\"postProcessorsStarted\":1786938199866,\"postProcessorsCompleted\":1786938199866,\"completed\":1786938199867},\"metaInfo\":{\"httpApiId\":502441469,\"httpApiCaseId\":404570076,\"httpApiName\":\"AI会话创建\",\"httpApiPath\":\"/ai/chat/record/create\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"Ai会话创建成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [
+                          {
+                            "type": "extractor",
+                            "data": {
+                              "variableName": "ai_conversation_id",
+                              "variableType": "environment",
+                              "subject": "responseJson",
+                              "template": "",
+                              "expression": "$.data",
+                              "extractSettings": {
+                                "expression": "$.data",
+                                "continueExtractorSettings": {
+                                  "isContinueExtractValue": false,
+                                  "JsonArrayValueIndexValue": ""
+                                }
+                              }
+                            },
+                            "defaultEnable": false,
+                            "enable": true
+                          }
+                        ],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "AI会话列表",
+                  "api": {
+                    "id": "502441467",
+                    "method": "post",
+                    "path": "/ai/chat/record/list",
+                    "parameters": {
+                      "path": [],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "e9FMMUpZxy",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "114258463",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305096169"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "132704053",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305096170"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI会话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restList",
+                    "sourceUrl": "",
+                    "ordering": 6,
+                    "cases": [
+                      {
+                        "id": 404571951,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI会话列表成功",
+                        "responseId": "114258463",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "HfdEar7TMh",
+                              "relatedId": "e9FMMUpZxy",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"current\": \"1\",\n    \"size\": \"10\",\n    \"data\": {}\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.86475663-b5ed-4c0c-815c-6bbf0abd9193\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"86475663-b5ed-4c0c-815c-6bbf0abd9193\",\"requestIndex\":0,\"httpRequestId\":\"03b09ffa-9312-44a9-8fc7-bc6045e58984\"},\"type\":\"http\",\"response\":{\"id\":\"ce400e4c-fb93-4259-80b3-2a24c1aa9378\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:45:27 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"214912c07d3afb3c76b601ec1010b92d\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,123,34,99,117,114,114,101,110,116,34,58,34,49,34,44,34,115,105,122,101,34,58,34,49,48,34,44,34,116,111,116,97,108,34,58,34,50,34,44,34,100,97,116,97,34,58,91,123,34,105,100,34,58,34,50,48,56,57,49,57,54,53,54,55,55,55,49,55,52,50,50,49,48,34,44,34,116,105,116,108,101,34,58,34,228,189,160,229,165,189,44,228,189,160,230,152,175,232,176,129,63,34,125,44,123,34,105,100,34,58,34,50,48,56,57,49,57,54,51,52,57,54,56,48,53,49,55,49,50,50,34,44,34,116,105,116,108,101,34,58,34,228,189,160,229,165,189,44,228,189,160,230,152,175,232,176,129,63,34,125,93,125,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[{\"name\":\"JSESSIONID\",\"expires\":null,\"maxAge\":null,\"domain\":\"localhost\",\"path\":\"/\",\"secure\":false,\"httpOnly\":false,\"hostOnly\":true,\"value\":\"L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"responseTime\":28,\"responseSize\":182,\"downloadedBytes\":182,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.20083379745483398,\"wait\":0.09658336639404297,\"dns\":0,\"tcp\":0,\"firstByte\":26.590582847595215,\"download\":0.45862483978271484,\"process\":0.04083395004272461,\"total\":27.38745880126953}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"ai\",\"chat\",\"record\",\"list\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":56,\"system\":true},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\",\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"current\\\": \\\"1\\\",\\n    \\\"size\\\": \\\"10\\\",\\n    \\\"data\\\": {}\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"0e249c6d-8481-406e-9e14-052a62c83278\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":56574},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/ai/chat/record/list\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"56\"},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:45:27 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"214912c07d3afb3c76b601ec1010b92d\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":182},\"timings\":{\"start\":1786938327499,\"requestStart\":1786938327499,\"offset\":{\"request\":0.20083379745483398,\"socket\":0.29741716384887695,\"response\":26.888000011444092,\"end\":27.346624851226807,\"lookup\":0.29741716384887695,\"connect\":0.29741716384887695,\"done\":27.38745880126953}},\"session\":{\"id\":\"0e249c6d-8481-406e-9e14-052a62c83278\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1786938327493,\"preProcessorsStarted\":1786938327494,\"preProcessorsCompleted\":1786938327494,\"postProcessorsStarted\":1786938327528,\"postProcessorsCompleted\":1786938327528,\"completed\":1786938327529},\"metaInfo\":{\"httpApiId\":502441467,\"httpApiCaseId\":404571951,\"httpApiName\":\"AI会话列表\",\"httpApiPath\":\"/ai/chat/record/list\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"AI会话列表成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "AI会话更新标题",
+                  "api": {
+                    "id": "502441466",
+                    "method": "post",
+                    "path": "/ai/chat/record/{conversationId}/updateTitle",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "conversationId#0",
+                          "name": "conversationId",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "integer",
+                          "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "oPRXTeC3Bl",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "110588096",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "166341521",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305096176"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI会话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restUpdateTitle",
+                    "sourceUrl": "",
+                    "ordering": 0,
+                    "cases": [
+                      {
+                        "id": 404572404,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI会话更新标题成功",
+                        "responseId": "110588096",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "conversationId#0",
+                              "name": "conversationId",
+                              "relatedId": "conversationId#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{ai_conversation_id}}",
+                              "relatedName": "conversationId"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "ztash9FEko",
+                              "relatedId": "oPRXTeC3Bl",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"data\": \"test-{{$string.nanoid(min=6,max=6)}}\"\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.8b3f379d-b165-4956-8b53-a14e23511efc\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"8b3f379d-b165-4956-8b53-a14e23511efc\",\"requestIndex\":0,\"httpRequestId\":\"d81c0de8-ddc9-4bea-a86b-93a1c608d18f\"},\"type\":\"http\",\"response\":{\"id\":\"8c467687-5093-4a6d-9c0e-0f6862074c79\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:46:41 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"28102a4efdec70527b22ca161d5f1a51\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[{\"name\":\"JSESSIONID\",\"expires\":null,\"maxAge\":null,\"domain\":\"localhost\",\"path\":\"/\",\"secure\":false,\"httpOnly\":false,\"hostOnly\":true,\"value\":\"L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"responseTime\":31,\"responseSize\":12,\"downloadedBytes\":12,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.22449970245361328,\"wait\":0.11354207992553711,\"dns\":0,\"tcp\":0,\"firstByte\":29.696166038513184,\"download\":0.34133386611938477,\"process\":0.04216623306274414,\"total\":30.417707920074463}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"ai\",\"chat\",\"record\",\"2089196567771742210\",\"updateTitle\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":29,\"system\":true},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\",\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"data\\\": \\\"test-E2jnRi\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"0e249c6d-8481-406e-9e14-052a62c83278\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":56574},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/ai/chat/record/2089196567771742210/updateTitle\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"29\"},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:46:41 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"28102a4efdec70527b22ca161d5f1a51\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":12},\"timings\":{\"start\":1786938401330,\"requestStart\":1786938401331,\"offset\":{\"request\":0.22449970245361328,\"socket\":0.3380417823791504,\"response\":30.034207820892334,\"end\":30.37554168701172,\"lookup\":0.3380417823791504,\"connect\":0.3380417823791504,\"done\":30.417707920074463}},\"session\":{\"id\":\"0e249c6d-8481-406e-9e14-052a62c83278\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1786938401326,\"preProcessorsStarted\":1786938401327,\"preProcessorsCompleted\":1786938401327,\"postProcessorsStarted\":1786938401362,\"postProcessorsCompleted\":1786938401362,\"completed\":1786938401363},\"metaInfo\":{\"httpApiId\":502441466,\"httpApiCaseId\":0,\"httpApiName\":\"AI会话更新标题\",\"httpApiPath\":\"/ai/chat/record/{conversationId}/updateTitle\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "AI会话删除",
+                  "api": {
+                    "id": "502441468",
+                    "method": "post",
+                    "path": "/ai/chat/record/{conversationId}/remove",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "conversationId#0",
+                          "name": "conversationId",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "Bs6EzH9BXF",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "185511883",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "167453362",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI会话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restRemove",
+                    "sourceUrl": "",
+                    "ordering": 12,
+                    "cases": [
+                      {
+                        "id": 404572609,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI会话删除成功",
+                        "responseId": "185511883",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "conversationId#0",
+                              "name": "conversationId",
+                              "relatedId": "conversationId#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{ai_conversation_id}}",
+                              "relatedName": "conversationId"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "YwzMlVJo1z",
+                              "relatedId": "Bs6EzH9BXF",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.7d7794bd-2ca2-4088-9f3d-bf551d7943da\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"7d7794bd-2ca2-4088-9f3d-bf551d7943da\",\"requestIndex\":0,\"httpRequestId\":\"6b522e1f-1714-4931-b3da-9e59905173b1\"},\"type\":\"http\",\"response\":{\"id\":\"f2778446-9cda-4f37-98a3-cedc22433749\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:48:32 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"15e7b3332c56914b1cfd7a4f1319e5ae\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[{\"name\":\"JSESSIONID\",\"expires\":null,\"maxAge\":null,\"domain\":\"localhost\",\"path\":\"/\",\"secure\":false,\"httpOnly\":false,\"hostOnly\":true,\"value\":\"L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"}],\"responseTime\":32,\"responseSize\":12,\"downloadedBytes\":12,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.21833419799804688,\"wait\":0.12337493896484375,\"dns\":0,\"tcp\":0,\"firstByte\":30.988207817077637,\"download\":0.3514580726623535,\"process\":0.03745889663696289,\"total\":31.718833923339844}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"ai\",\"chat\",\"record\",\"2089196567771742210\",\"remove\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\",\"system\":true},{\"key\":\"Content-Length\",\"value\":0,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"0e249c6d-8481-406e-9e14-052a62c83278\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":56574},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/ai/chat/record/2089196567771742210/remove\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer ND1UYNphEB_fZ43JKw19CNjwePjUUIgrxX2o-ls5DPLBCVvtvNh7xAC0EM61UNgmzEdRGMMyo1lnGMpFlGwA-sd9exuHSQjO3UbhbCjy3mSZSbNGRp4jk0mbkiTQed7z\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Cookie\",\"value\":\"JSESSIONID=L9-9xkEeuSPy8n9HwhIKcSxEH-seVc6TXIsSzzCU\"},{\"key\":\"Content-Length\",\"value\":\"0\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Mon, 17 Aug 2026 03:48:32 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"15e7b3332c56914b1cfd7a4f1319e5ae\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":12},\"timings\":{\"start\":1786938512467,\"requestStart\":1786938512467,\"offset\":{\"request\":0.21833419799804688,\"socket\":0.3417091369628906,\"response\":31.329916954040527,\"end\":31.68137502670288,\"lookup\":0.3417091369628906,\"connect\":0.3417091369628906,\"done\":31.718833923339844}},\"session\":{\"id\":\"0e249c6d-8481-406e-9e14-052a62c83278\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1786938512463,\"preProcessorsStarted\":1786938512464,\"preProcessorsCompleted\":1786938512464,\"postProcessorsStarted\":1786938512500,\"postProcessorsCompleted\":1786938512503,\"completed\":1786938512504},\"metaInfo\":{\"httpApiId\":502441468,\"httpApiCaseId\":404572609,\"httpApiName\":\"AI会话删除\",\"httpApiPath\":\"/ai/chat/record/{conversationId}/remove\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"AI会话删除成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [
+                          {
+                            "type": "customScript",
+                            "data": "pm.environment.unset(\"ai_conversation_id\");",
+                            "defaultEnable": false,
+                            "enable": true
+                          }
+                        ],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                }
+              ]
+            },
+            {
+              "name": "AI对话模块",
+              "id": 93568009,
+              "auth": {},
+              "securityScheme": {},
+              "parentId": 93561293,
+              "serverId": "",
+              "description": "",
+              "identityPattern": {
+                "httpApi": {
+                  "type": "inherit",
+                  "bodyType": "",
+                  "fields": []
+                }
+              },
+              "shareSettings": {},
+              "visibility": "INHERITED",
+              "moduleId": 7130572,
+              "preProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "postProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "inheritPostProcessors": {},
+              "inheritPreProcessors": {},
+              "items": [
+                {
+                  "name": "AI对话",
+                  "api": {
+                    "id": "502441470",
+                    "method": "post",
+                    "path": "/ai/chat",
+                    "parameters": {
+                      "query": [],
+                      "path": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "MZttWMFkkE",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {
+                      "query": [],
+                      "body": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "name": "X-Version"
+                        }
+                      ]
+                    },
+                    "responses": [
+                      {
+                        "id": "110213303",
+                        "code": "200",
+                        "name": "",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/305096173"
+                          }
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "eventStream",
+                        "mediaType": "text/event-stream",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "151573156",
+                        "code": "500",
+                        "name": "",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305096175"
+                      },
+                      "required": true,
+                      "mediaType": "application/json",
+                      "examples": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "# 该接口为SSE类型\n# 响应数据例子\n```\n{\"data\":{\"type\":1,\"message\":\"你好\"},\"code\":200}\n\n{\"data\":{\"type\":0},\"code\":200}\n```\n\ncode: 200.正常响应\ntype: 0.结束输出 1.持续对话中\n\n",
+                    "tags": [
+                      "AI对话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "chat",
+                    "sourceUrl": "",
+                    "ordering": 0,
+                    "cases": [
+                      {
+                        "id": 404576010,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI对话成功",
+                        "responseId": "110213303",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "pjDa1pp8V0",
+                              "relatedId": "MZttWMFkkE",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"conversationId\": \"{{ai_conversation_id}}\",\n    \"message\": \"你好,你是谁?\"\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": null,
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "AI对话列表",
+                  "api": {
+                    "id": "502441471",
+                    "method": "get",
+                    "path": "/ai/chat/{conversationId}/list",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "conversationId#0",
+                          "name": "conversationId",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "iWrTF4zJ75",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "112888154",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305096177"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "120590264",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI对话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "list",
+                    "sourceUrl": "",
+                    "ordering": 6,
+                    "cases": [
+                      {
+                        "id": 404576830,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI对话列表",
+                        "responseId": "112888154",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "conversationId#0",
+                              "name": "conversationId",
+                              "relatedId": "conversationId#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{ai_conversation_id}}",
+                              "relatedName": "conversationId"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "4ITjxGwE8H",
+                              "relatedId": "iWrTF4zJ75",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": null,
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "AI对话停止",
+                  "api": {
+                    "id": "502441472",
+                    "method": "post",
+                    "path": "/ai/chat/{conversationId}/stop",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "conversationId#0",
+                          "name": "conversationId",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "9OfIvFqnj3",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "195770321",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "122945499",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI对话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "stop",
+                    "sourceUrl": "",
+                    "ordering": 12,
+                    "cases": [
+                      {
+                        "id": 404577302,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI对话停止",
+                        "responseId": "195770321",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "conversationId#0",
+                              "name": "conversationId",
+                              "relatedId": "conversationId#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{ai_conversation_id}}",
+                              "relatedName": "conversationId"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "LNqDWKJz0d",
+                              "relatedId": "9OfIvFqnj3",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": null,
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -7716,7 +9384,7 @@
                   "type": "object",
                   "properties": {
                     "accessTokenValiditySeconds": {
-                      "description": "授权令牌有效期 秒 默认一天",
+                      "description": "授权令牌有效期 秒 默认2小时",
                       "type": "string"
                     },
                     "name": {
@@ -7746,7 +9414,7 @@
                       "type": "string"
                     },
                     "refreshTokenValiditySeconds": {
-                      "description": "刷新令牌有效期 秒 默认一天",
+                      "description": "刷新令牌有效期 秒 默认7天",
                       "type": "string"
                     },
                     "status": {
@@ -7863,6 +9531,29 @@
               "moduleId": 7130572
             },
             {
+              "name": "RequestParamStatus",
+              "displayName": "",
+              "id": "#/definitions/284125737",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "format": "int32",
+                      "description": "数据",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultPageResultClientListVo",
               "displayName": "",
               "id": "#/definitions/284125713",
@@ -7905,7 +9596,7 @@
                       "type": "string"
                     },
                     "accessTokenValiditySeconds": {
-                      "description": "授权令牌有效期 秒 默认一天",
+                      "description": "授权令牌有效期 秒 默认2小时",
                       "type": "string"
                     },
                     "name": {
@@ -7931,7 +9622,7 @@
                       "type": "string"
                     },
                     "refreshTokenValiditySeconds": {
-                      "description": "刷新令牌有效期 秒 默认一天",
+                      "description": "刷新令牌有效期 秒 默认7天",
                       "type": "string"
                     },
                     "status": {
@@ -8006,7 +9697,7 @@
                       "type": "string"
                     },
                     "accessTokenValiditySeconds": {
-                      "description": "授权令牌有效期 秒 默认一天",
+                      "description": "授权令牌有效期 秒 默认2小时",
                       "type": "string"
                     },
                     "id": {
@@ -8014,7 +9705,7 @@
                       "type": "string"
                     },
                     "refreshTokenValiditySeconds": {
-                      "description": "刷新令牌有效期 秒 默认一天",
+                      "description": "刷新令牌有效期 秒 默认7天",
                       "type": "string"
                     },
                     "status": {
@@ -8061,6 +9752,65 @@
                   "x-apifox-orders": [
                     "name",
                     "orderFieldMap"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultListDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/284125751",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/284125731"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "DropDownResult",
+              "displayName": "",
+              "id": "#/definitions/284125731",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "ID",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "id"
                   ]
                 }
               },
@@ -8232,42 +9982,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultMapStringListBaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125717",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "$ref": "#/definitions/284125736"
-                        }
-                      },
-                      "type": "object",
-                      "x-apifox-orders": []
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "SystemPropertiesVo",
               "displayName": "",
               "id": "#/definitions/284125718",
@@ -8308,34 +10022,6 @@
                     "icon",
                     "description",
                     "projectName"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "EnumResult",
-              "displayName": "",
-              "id": "#/definitions/284125719",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "format": "int32",
-                      "description": "枚举编码",
-                      "type": "integer"
-                    },
-                    "desc": {
-                      "description": "描述",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "value",
-                    "desc"
                   ]
                 }
               },
@@ -8415,35 +10101,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultTemplateResult",
-              "displayName": "",
-              "id": "#/definitions/284125722",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "$ref": "#/definitions/284125748"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "PermissionDropDownResult",
               "displayName": "",
               "id": "#/definitions/284125723",
@@ -8487,34 +10144,6 @@
                     "sort",
                     "type",
                     "parentId"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultVoid",
-              "displayName": "",
-              "id": "#/definitions/284125724",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
                   ]
                 }
               },
@@ -8573,38 +10202,6 @@
                     "name",
                     "icon",
                     "newPassword"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultListBaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125726",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/284125736"
-                      }
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
                   ]
                 }
               },
@@ -8716,39 +10313,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "ErrorResultObject",
-              "displayName": "",
-              "id": "#/definitions/304305701",
-              "description": "接口错误结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口错误结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据"
-                    },
-                    "message": {
-                      "description": "错误信息",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data",
-                    "message"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "PermissionListVo",
               "displayName": "",
               "id": "#/definitions/284125730",
@@ -8796,33 +10360,6 @@
                     "type",
                     "parentId",
                     "mark"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "DropDownResult",
-              "displayName": "",
-              "id": "#/definitions/284125731",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "ID",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "name",
-                    "id"
                   ]
                 }
               },
@@ -8914,35 +10451,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultEnumResult",
-              "displayName": "",
-              "id": "#/definitions/284125734",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "$ref": "#/definitions/284125719"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultPermissionInfoVo",
               "displayName": "",
               "id": "#/definitions/284125735",
@@ -8964,55 +10472,6 @@
                   },
                   "x-apifox-orders": [
                     "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "BaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125736",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "format": "int32",
-                      "type": "integer"
-                    },
-                    "desc": {
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "value",
-                    "desc"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "RequestParamStatus",
-              "displayName": "",
-              "id": "#/definitions/284125737",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "format": "int32",
-                      "description": "数据",
-                      "type": "integer"
-                    }
-                  },
-                  "x-apifox-orders": [
                     "data"
                   ]
                 }
@@ -9122,35 +10581,6 @@
                     "permissions",
                     "name",
                     "icon"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultLong",
-              "displayName": "",
-              "id": "#/definitions/284125741",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
                   ]
                 }
               },
@@ -9423,56 +10853,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "TemplateResult",
-              "displayName": "",
-              "id": "#/definitions/284125748",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "stringArrayList": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "properties": {
-                        "empty": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "errorResult": {
-                      "$ref": "#/definitions/304305701"
-                    },
-                    "baseResultEnumResult": {
-                      "$ref": "#/definitions/284125734"
-                    },
-                    "integerArrayList": {
-                      "type": "array",
-                      "items": {
-                        "format": "int32",
-                        "type": "integer"
-                      },
-                      "properties": {
-                        "empty": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "stringArrayList",
-                    "errorResult",
-                    "baseResultEnumResult",
-                    "integerArrayList"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "UserListParam",
               "displayName": "",
               "id": "#/definitions/284125749",
@@ -9534,11 +10914,425 @@
               },
               "visibility": "INHERITED",
               "moduleId": 7130572
+            }
+          ]
+        },
+        {
+          "id": 20893130,
+          "name": "maozi-cloud-ai-service",
+          "visibility": "INHERITED",
+          "moduleId": 7130572,
+          "items": [
+            {
+              "name": "ChatConversationRecordListParam",
+              "displayName": "",
+              "id": "#/definitions/305096168",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "orderFieldMap": {
+                      "description": "排序组件 key:排序字段 value: true降序、false升序、null不做排序、空字符串字段",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "type": "object",
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "orderFieldMap"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultListDropDownResult",
+              "name": "AbstractBaseResultPageResultChatConversationRecordListResult",
               "displayName": "",
-              "id": "#/definitions/284125751",
+              "id": "#/definitions/305096169",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305096178"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultEnumResult",
+              "displayName": "",
+              "id": "#/definitions/284125734",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/284125719"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultMapStringListBaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125717",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/284125736"
+                        }
+                      },
+                      "type": "object",
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "PageParamChatConversationRecordListParam",
+              "displayName": "",
+              "id": "#/definitions/305096170",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "default": 1,
+                      "description": "页数",
+                      "type": "string"
+                    },
+                    "size": {
+                      "default": 10,
+                      "description": "每页数量",
+                      "type": "string"
+                    },
+                    "data": {
+                      "description": "查询条件",
+                      "$ref": "#/definitions/305096168"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "current",
+                    "size",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "BaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125736",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "desc": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "value",
+                    "desc"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatConversationRecordListResult",
+              "displayName": "",
+              "id": "#/definitions/305096171",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "description": "AI聊天会话ID",
+                      "type": "string"
+                    },
+                    "title": {
+                      "description": "标题",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "title"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatResult",
+              "displayName": "",
+              "id": "#/definitions/305096172",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "format": "int32",
+                      "description": "AI对话类型",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "description": "消息",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "type",
+                    "message"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "EnumResult",
+              "displayName": "",
+              "id": "#/definitions/284125719",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "format": "int32",
+                      "description": "枚举编码",
+                      "type": "integer"
+                    },
+                    "desc": {
+                      "description": "描述",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "value",
+                    "desc"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultLong",
+              "displayName": "",
+              "id": "#/definitions/284125741",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultTemplateResult",
+              "displayName": "",
+              "id": "#/definitions/284125722",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/284125748"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultVoid",
+              "displayName": "",
+              "id": "#/definitions/284125724",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultChatResult",
+              "displayName": "",
+              "id": "#/definitions/305096173",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305096172"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatListResult",
+              "displayName": "",
+              "id": "#/definitions/305096174",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "format": "int32",
+                      "description": "AI对话类型",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "description": "消息",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "type",
+                    "message"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultListBaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125726",
               "description": "接口响应结果集",
               "schema": {
                 "jsonSchema": {
@@ -9554,12 +11348,220 @@
                       "description": "数据",
                       "type": "array",
                       "items": {
-                        "$ref": "#/definitions/284125731"
+                        "$ref": "#/definitions/284125736"
                       }
                     }
                   },
                   "x-apifox-orders": [
                     "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatParam",
+              "displayName": "",
+              "id": "#/definitions/305096175",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "conversationId": {
+                      "description": "对话ID",
+                      "type": "string"
+                    },
+                    "message": {
+                      "minLength": 1,
+                      "description": "消息",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "conversationId",
+                    "message"
+                  ],
+                  "x-apifox-orders": [
+                    "conversationId",
+                    "message"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "RequestParamString",
+              "displayName": "",
+              "id": "#/definitions/305096176",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "description": "数据",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "TemplateResult",
+              "displayName": "",
+              "id": "#/definitions/284125748",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "stringArrayList": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "properties": {
+                        "empty": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "errorResult": {
+                      "$ref": "#/definitions/304305701"
+                    },
+                    "baseResultEnumResult": {
+                      "$ref": "#/definitions/284125734"
+                    },
+                    "integerArrayList": {
+                      "type": "array",
+                      "items": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "properties": {
+                        "empty": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "stringArrayList",
+                    "errorResult",
+                    "baseResultEnumResult",
+                    "integerArrayList"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ErrorResultObject",
+              "displayName": "",
+              "id": "#/definitions/304305701",
+              "description": "接口错误结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口错误结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据"
+                    },
+                    "message": {
+                      "description": "错误信息",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data",
+                    "message"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultListChatListResult",
+              "displayName": "",
+              "id": "#/definitions/305096177",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/305096174"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "PageResultChatConversationRecordListResult",
+              "displayName": "",
+              "id": "#/definitions/305096178",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "description": "页数",
+                      "type": "string"
+                    },
+                    "total": {
+                      "description": "数据总数",
+                      "type": "string"
+                    },
+                    "size": {
+                      "description": "每页数量",
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/305096171"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "current",
+                    "total",
+                    "size",
                     "data"
                   ]
                 }
@@ -9603,7 +11605,8 @@
         "requestFolder.8406637",
         "requestFolder.8406690",
         "requestFolder.8406722",
-        "requestFolder.8407248"
+        "requestFolder.8407248",
+        "httpRequest.5420824"
       ],
       "items": []
     }
@@ -15829,6 +17832,27 @@
         {
           "name": "password",
           "securityType": "default",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "oauth_refresh_token",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "oauth_access_token",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "ai_conversation_id",
           "value": "",
           "description": "",
           "initialValue": "",

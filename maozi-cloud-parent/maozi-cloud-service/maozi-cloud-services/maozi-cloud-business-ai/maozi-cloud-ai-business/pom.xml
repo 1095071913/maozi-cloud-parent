@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maozi</groupId>
+        <artifactId>maozi-cloud-business-ai</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>maozi-cloud-ai-business</artifactId>
+
+    <properties>
+        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-ai-alibaba.version>1.0.0.2</spring-ai-alibaba.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-bom</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.alibaba.cloud.ai</groupId>
+            <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+            <!-- 排除非 jakarta 版 swagger-annotations（经 spring-ai-model 2.2.25 传入），其与 swagger-annotations-jakarta 存在同名类
+                 io.swagger.v3.oas.annotations.media.Schema，旧类先加载会导致 springdoc 调用 Schema.$dynamicRef() 时抛 NoSuchMethodError -->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-starter-model-openai</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-starter-model-zhipuai</artifactId>-->
+<!--        </dependency>-->
+
+        <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-db-impl</artifactId>
+            <version>${maozi-cloud-service-db-impl.version}</version>
+        </dependency>
+
+        <!-- 服务 API 基类，提供通用的服务接口定义和异常封装 -->
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-service-api</artifactId>
+            <version>${maozi-cloud-service-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-ai-api</artifactId>
+            <version>${maozi-cloud-ai-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-redis</artifactId>
+            <version>${maozi-cloud-config-redis.version}</version>
+        </dependency>
+
+        <!-- AOP 切面依赖，提供 AspectJ 注解与切面代理能力 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

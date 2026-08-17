@@ -40,7 +40,7 @@ public class QueryEnvironmentContext {
      *
      * @param defaultOrderKey 从配置文件中读取的表别名（排序键前缀）
      */
-    @Value("${mybatis-plus-join.table-alias}")
+    @Value("${mybatis-plus-join.table-alias:}")
     public void setDefaultTableAlias(String defaultOrderKey) {
         QueryEnvironmentContext.DEFAULT_ORDER_KEY = defaultOrderKey;
     }
