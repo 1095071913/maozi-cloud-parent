@@ -1,4 +1,4 @@
-# maozi\-cloud\-parent
+# maozi\-cloud
 
 > 基于 Spring Cloud Alibaba \+ Dubbo 的一站式分布式解决方案开源封装，内置分布式应用开发所需全套组件，统一团队代码风格，保障代码质量，让开发者专注业务逻辑，实现高效快速开发。
 
@@ -37,7 +37,10 @@
 
 ## 🏗️ 示例演示
 
-<img src="maozi-cloud-images/architecture_diagram.png" alt="null" style="zoom:50%;" />
+<img src="maozi-cloud-images/architecture_diagram_01.png" alt="null" style="zoom:50%;" />
+
+<img src="maozi-cloud-images/architecture_diagram_02.png" alt="null" style="zoom:50%;" />
+
 
 ## 📚 相关链接
 
