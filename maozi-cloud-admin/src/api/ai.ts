@@ -1,13 +1,8 @@
 import request from './request'
-import { getAccessToken } from '@/utils/auth'
-import { getGrayVersion } from '@/utils/gray'
-import { getTempRequestUrl } from '@/utils/tempRequest'
-import type {
-  ApiResponse,
-  ChatMessageItem,
-  ConversationItem,
-  PageResult
-} from '@/types/api'
+import {getAccessToken} from '@/utils/auth'
+import {getGrayVersion} from '@/utils/gray'
+import {getTempRequestUrl} from '@/utils/tempRequest'
+import type {ApiResponse, ChatMessageItem, ConversationItem, PageResult} from '@/types/api'
 
 /**
  * 会话列表查询参数
