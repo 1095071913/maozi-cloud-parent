@@ -7,10 +7,10 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -29,8 +29,8 @@ public interface RestChatService {
 
 	String PATH = "/chat";
 
-	@Post(value = PATH, produces = MediaType.TEXT_EVENT_STREAM_VALUE, description = "AI对话")
-    Flux<AbstractBaseResult<ChatResult>> chat(@RequestBody @Valid ChatParam param);
+	@Post(value = PATH, produces = MediaType.TEXT_EVENT_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, description = "AI对话")
+    Flux<AbstractBaseResult<ChatResult>> chat(@RequestPart(value = "files", required = false) List<MultipartFile> files,@RequestPart("param") ChatParam param);
 
 	@Get(value = PATH + "/{conversationId}/list", description = "AI对话列表")
 	AbstractBaseResult<List<ChatListResult>> list(@PathVariable String conversationId);

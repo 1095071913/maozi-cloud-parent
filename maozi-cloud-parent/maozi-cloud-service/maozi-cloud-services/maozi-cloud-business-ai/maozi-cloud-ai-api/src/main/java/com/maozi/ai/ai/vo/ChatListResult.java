@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author pengjinlong
@@ -28,5 +29,8 @@ public class ChatListResult implements Serializable {
 
     @Schema(description = "消息")
     private String message;
+
+    @Schema(description = "图片列表")
+    private List<Byte[]> images;
 
 }

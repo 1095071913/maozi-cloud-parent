@@ -5,9 +5,11 @@ import {
   ArrowDown,
   ChatDotRound as ChatIcon,
   Check,
+  Close,
   Delete,
   Edit,
   MagicStick,
+  Picture,
   Plus,
   Promotion,
   VideoPause
@@ -154,6 +156,8 @@ async function handleRemove(row: ConversationItem) {
 interface ChatBubble extends ChatMessageItem {
   /** 流式输出中 */
   streaming?: boolean
+  /** 图片本地预览地址（发送时取自附件 objectURL，历史消息由后端字节转换生成） */
+  imageUrls?: string[]
 }
 
 const messages = ref<ChatBubble[]>([])
@@ -164,12 +168,32 @@ const activeTitle = computed(
   () => conversations.value.find((c) => c.id === activeId.value)?.title || 'AI 对话'
 )
 
+/** 历史消息中的图片字节数组转本地预览地址 */
+function bytesToImageUrl(bytes: number[]): string {
+  const blob = new Blob([new Uint8Array(bytes)], { type: 'image/jpeg' })
+  return URL.createObjectURL(blob)
+}
+
+/** 释放消息气泡持有的本地预览地址（objectURL），避免反复加载历史造成泄漏 */
+function revokeMessageUrls() {
+  messages.value.forEach((m) => {
+    m.imageUrls?.forEach((url) => {
+      if (url.startsWith('blob:')) URL.revokeObjectURL(url)
+    })
+  })
+}
+
 async function loadMessages() {
   if (!activeId.value) return
   messageLoading.value = true
   try {
     const res = await getChatList(activeId.value)
-    messages.value = (res.data || []).map((m) => ({ ...m }))
+    revokeMessageUrls()
+    // 后端图片以字节数组返回，转为本地预览地址回显
+    messages.value = (res.data || []).map((m) => ({
+      ...m,
+      imageUrls: (m.images || []).map(bytesToImageUrl)
+    }))
     scrollToBottom()
   } finally {
     messageLoading.value = false
@@ -189,6 +213,118 @@ const sending = ref(false)
 let abortStream: (() => void) | null = null
 /** 正在生成中的会话 ID（用于切换/新建时通知服务端停止） */
 let streamingConversationId: string | number = ''
+
+// ============ 图片附件 ============
+/** 单次最多携带的图片数 */
+const MAX_IMAGES = 5
+/** 单图体积上限：后端 multipart 未配置、走 Spring 默认单文件 1MB（实测 696KB 可过、1.39MB 被拒） */
+const MAX_IMAGE_BYTES = 700 * 1024
+/** 压缩起始长边（像素），未达标时逐轮降至 0.7 倍 */
+const MAX_IMAGE_DIM = 1600
+const imageInputRef = ref<HTMLInputElement>()
+
+interface PendingImage {
+  id: number
+  file: File
+  /** 本地预览地址 */
+  url: string
+}
+
+const pendingImages = ref<PendingImage[]>([])
+let imageSeq = 0
+
+/** canvas.toBlob 的 Promise 包装 */
+function canvasToBlob(canvas: HTMLCanvasElement, quality: number): Promise<Blob | null> {
+  return new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality))
+}
+
+/**
+ * 图片压缩（白底转 JPEG，避免透明通道变黑）：
+ * 超过体积上限时按「降质量 → 降分辨率」双重递减，直至达标；
+ * 返回 null 表示无法压到目标体积（解码失败或极小图压不动），由调用方拒绝该图，
+ * 杜绝把超限原文件发给后端（会触发 multipart 解析失败）
+ */
+async function compressImage(file: File): Promise<File | null> {
+  if (file.size <= MAX_IMAGE_BYTES) return file
+  try {
+    const bitmap = await createImageBitmap(file)
+    let blob: Blob | null = null
+    let scale = Math.min(1, MAX_IMAGE_DIM / Math.max(bitmap.width, bitmap.height))
+
+    while (scale > 0) {
+      const width = Math.max(1, Math.round(bitmap.width * scale))
+      const height = Math.max(1, Math.round(bitmap.height * scale))
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return null
+      ctx.fillStyle = '#fff'
+      ctx.fillRect(0, 0, width, height)
+      ctx.drawImage(bitmap, 0, 0, width, height)
+
+      for (let quality = 0.85; quality >= 0.35; quality -= 0.15) {
+        blob = await canvasToBlob(canvas, quality)
+        if (blob && blob.size <= MAX_IMAGE_BYTES) break
+      }
+      if (blob && blob.size <= MAX_IMAGE_BYTES) break
+      // 当前分辨率压不到目标体积：降低分辨率重试（过小则放弃）
+      scale = width <= 400 ? 0 : scale * 0.7
+    }
+
+    if (!blob || blob.size > MAX_IMAGE_BYTES) return null
+    return new File([blob], `${file.name.replace(/\.[^.]+$/, '')}.jpg`, { type: 'image/jpeg' })
+  } catch {
+    return null
+  }
+}
+
+/** 追加图片附件（超限提示并截断，加入前压缩到后端可接收的体积，压不动则拒绝） */
+async function addImages(files: FileList | File[] | null | undefined) {
+  if (!files) return
+  const images = Array.from(files).filter((f) => f.type.startsWith('image/'))
+  if (!images.length) return
+  const remain = MAX_IMAGES - pendingImages.value.length
+  if (remain <= 0) {
+    ElMessage.warning(`最多携带 ${MAX_IMAGES} 张图片`)
+    return
+  }
+  if (images.length > remain) {
+    ElMessage.warning(`最多携带 ${MAX_IMAGES} 张图片，已忽略多余的 ${images.length - remain} 张`)
+  }
+  for (const file of images.slice(0, remain)) {
+    const compressed = await compressImage(file)
+    if (!compressed) {
+      ElMessage.error(`图片「${file.name}」无法压缩至可发送体积，已忽略`)
+      continue
+    }
+    pendingImages.value.push({
+      id: imageSeq++,
+      file: compressed,
+      url: URL.createObjectURL(compressed)
+    })
+  }
+  // 清空 value，允许重复选择同一文件
+  if (imageInputRef.value) imageInputRef.value.value = ''
+}
+
+function handleImagePick(event: Event) {
+  addImages((event.target as HTMLInputElement).files)
+}
+
+function removePendingImage(item: PendingImage) {
+  URL.revokeObjectURL(item.url)
+  pendingImages.value = pendingImages.value.filter((i) => i.id !== item.id)
+}
+
+/** 输入框粘贴图片：剪贴板含图片时拦截默认粘贴并转为附件 */
+function handlePaste(event: ClipboardEvent) {
+  const files = event.clipboardData?.files
+  if (files && Array.from(files).some((f) => f.type.startsWith('image/'))) {
+    event.preventDefault()
+    addImages(files)
+  }
+}
 
 // ============ 打字机效果 ============
 /** 打字机帧间隔（毫秒），逐字上屏节奏 */
@@ -265,21 +401,29 @@ function stopStreamSilently() {
 
 async function handleSend() {
   const message = input.value.trim()
-  if (!message || sending.value) return
+  const images = [...pendingImages.value]
+  // 后端 message 必填：纯图片时使用默认文案
+  const finalMessage = message || (images.length ? '请分析图片' : '')
+  if (!finalMessage || sending.value) return
 
   let conversationId = activeId.value
   try {
     sending.value = true
     // 无选中会话：先以首条消息创建会话（后端以该消息生成标题）
     if (!conversationId) {
-      const created = await createConversation(message)
+      const created = await createConversation(finalMessage)
       conversationId = created.data
       activeId.value = conversationId
       await loadConversations(1)
     }
 
     input.value = ''
-    messages.value.push({ type: ChatMessageType.USER, message })
+    pendingImages.value = []
+    messages.value.push({
+      type: ChatMessageType.USER,
+      message: finalMessage,
+      imageUrls: images.map((i) => i.url)
+    })
     // 必须为 reactive 代理对象：打字机定时器逐字修改 message 时才能触发视图更新
     const aiMessage: ChatBubble = reactive({
       type: ChatMessageType.AI,
@@ -290,7 +434,7 @@ async function handleSend() {
     scrollToBottom()
     startTyping(aiMessage)
 
-    abortStream = await chatStream(conversationId, message, {
+    abortStream = await chatStream(conversationId, finalMessage, {
       onMessage: (chunk) => {
         // 流内容先进缓冲，由打字机逐字上屏
         pendingText += chunk
@@ -304,7 +448,7 @@ async function handleSend() {
         flushTyping()
         ElMessage.error(msg)
       }
-    }, activePrompt.value || undefined)
+    }, activePrompt.value || undefined, images.length ? images.map((i) => i.file) : undefined)
     streamingConversationId = conversationId
   } catch {
     flushTyping()
@@ -327,6 +471,9 @@ onBeforeUnmount(() => {
     abortStream()
   }
   stopTypingTimer()
+  // 释放未发送图片与历史消息气泡的预览地址
+  pendingImages.value.forEach((i) => URL.revokeObjectURL(i.url))
+  revokeMessageUrls()
 })
 
 // ============ 输入法组合输入状态 ============
@@ -451,6 +598,10 @@ function handleInputKeydown(event: Event) {
           </div>
 
           <div class="bubble" :class="{ markdown: item.type === ChatMessageType.AI }">
+            <!-- 用户消息携带的图片 -->
+            <div v-if="item.imageUrls && item.imageUrls.length" class="bubble-images">
+              <img v-for="(img, i) in item.imageUrls" :key="i" :src="img" alt="" />
+            </div>
             <!-- 等待首个内容时显示打字指示 -->
             <span v-if="item.streaming && !item.message" class="typing">
               <i /><i /><i />
@@ -468,18 +619,46 @@ function handleInputKeydown(event: Event) {
       <!-- ============ 输入区 ============ -->
       <footer class="input-area">
         <div class="input-card">
+          <!-- 待发送图片预览 -->
+          <div v-if="pendingImages.length" class="attach-bar">
+            <div v-for="img in pendingImages" :key="img.id" class="attach-item">
+              <img :src="img.url" alt="" />
+              <button type="button" class="attach-remove" title="移除" @click="removePendingImage(img)">
+                <el-icon :size="10"><Close /></el-icon>
+              </button>
+            </div>
+          </div>
+
           <el-input
             v-model="input"
             type="textarea"
             :rows="3"
             resize="none"
-            placeholder="可以根据您的权限操作所有数据，请输入您的问题 ..."
+            placeholder="可以根据您的权限操作所有数据，请输入您的问题，可粘贴或选择图片 ..."
             @keydown="handleInputKeydown"
             @compositionstart="handleCompositionStart"
             @compositionend="handleCompositionEnd"
+            @paste="handlePaste"
           />
           <div class="input-toolbar">
             <div class="toolbar-left">
+              <button
+                type="button"
+                class="attach-btn"
+                :class="{ active: pendingImages.length > 0 }"
+                title="选择图片（可多选，也可直接粘贴）"
+                @click="imageInputRef?.click()"
+              >
+                <el-icon :size="14"><Picture /></el-icon>
+              </button>
+              <input
+                ref="imageInputRef"
+                type="file"
+                accept="image/*"
+                multiple
+                hidden
+                @change="handleImagePick"
+              />
               <el-popover
                 v-if="promptOptions.length"
                 v-model:visible="promptPopoverVisible"
@@ -542,7 +721,7 @@ function handleInputKeydown(event: Event) {
               class="send-btn"
               type="primary"
               :icon="Promotion"
-              :disabled="!input.trim()"
+              :disabled="!input.trim() && !pendingImages.length"
               @click="handleSend"
             >
               发送
@@ -1073,6 +1252,92 @@ $text-secondary: #606266;
     padding: 12px 14px 4px;
     font-size: 14px;
     line-height: 1.6;
+  }
+}
+
+// ============ 图片附件 ============
+.attach-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px 0;
+}
+
+.attach-item {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  overflow: visible;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+}
+
+.attach-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #f56c6c;
+  }
+}
+
+.attach-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid $border-color;
+  border-radius: 999px;
+  background: #fff;
+  color: $text-secondary;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #a5b4fc;
+    color: #6366f1;
+  }
+
+  &.active {
+    border-color: transparent;
+    color: #fff;
+    background: $accent;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.bubble-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+
+  img {
+    max-width: 180px;
+    max-height: 140px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.06);
   }
 }
 

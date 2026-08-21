@@ -90,7 +90,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
     public String messageToJson(Message message) {
 
         ChatMessage chatMessage = CglibUtil.copy(message, ChatMessage.class);
-        chatMessage.setMessageType(message.getMessageType().getValue());
+        chatMessage.setMessageType(message.getMessageType().getValue().toLowerCase());
         chatMessage.setTextContent(message.getText());
 
         if(message instanceof AssistantMessage assistantMessage){
@@ -108,8 +108,16 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
     public Message jsonToMessage(String json){
 
         ChatMessage chatMessage = JacksonUtil.jsonToObject(json, ChatMessage.class);
+        if(ObjectUtil.isNullEmpty(chatMessage)){
+            throw new RuntimeException("message data conversion error");
+        }
 
-        MessageType messageType = MessageType.fromValue(chatMessage.getMessageType());
+        String messageTypeString = chatMessage.getMessageType();
+        if(ObjectUtil.isNullEmpty(messageTypeString)){
+            throw new RuntimeException("messageType is null");
+        }
+
+        MessageType messageType = MessageType.fromValue(messageTypeString);
         switch (messageType) {
             case SYSTEM -> {
                 return new SystemMessage(chatMessage.getTextContent());

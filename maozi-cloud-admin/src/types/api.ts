@@ -356,6 +356,8 @@ export interface ChatMessageItem {
   type: ChatMessageType
   /** 消息内容 */
   message: string
+  /** 携带图片（字节数组，前端转本地预览地址展示） */
+  images?: number[][]
 }
 
 /** 配置列表行（/system/config/list 返回元素） */

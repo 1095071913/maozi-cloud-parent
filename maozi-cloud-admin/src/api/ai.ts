@@ -108,11 +108,12 @@ export interface ChatStreamCallbacks {
 
 /**
  * 组装 SSE 请求头：与 axios 实例保持一致（令牌、灰度标识）
+ * multipart 为 true 时不设置 Content-Type（由浏览器生成 boundary）
  */
-function buildStreamHeaders(): Record<string, string> {
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    Accept: 'text/event-stream'
+function buildStreamHeaders(multipart = false): Record<string, string> {
+  const headers: Record<string, string> = { Accept: 'text/event-stream' }
+  if (!multipart) {
+    headers['Content-Type'] = 'application/json'
   }
   const token = getAccessToken()
   if (token) {
@@ -126,8 +127,11 @@ function buildStreamHeaders(): Record<string, string> {
 }
 
 /**
- * AI 对话（SSE 流式）
+ * AI 对话（SSE 流式，multipart/form-data）
  * POST /ai/chat
+ *
+ * - param：ChatParam 的 JSON（message / conversationId / promptConfig）
+ * - files：可选图片列表，携带时后端走视觉模型
  *
  * promptConfig 为可选的系统提示词配置名称（取配置项 name），未选择时不传
  * 返回中止函数：调用后断开流通道（服务端会保存已生成的部分内容）
@@ -136,7 +140,8 @@ export async function chatStream(
   conversationId: string | number,
   message: string,
   callbacks: ChatStreamCallbacks,
-  promptConfig?: string
+  promptConfig?: string,
+  files?: File[]
 ): Promise<() => void> {
   const base = getTempRequestUrl() || import.meta.env.VITE_API_BASE_URL
   const controller = new AbortController()
@@ -144,14 +149,27 @@ export async function chatStream(
   const abort = () => controller.abort()
 
   const consume = async () => {
+    const form = new FormData()
+    // param 以 application/json 的 Blob 提交，保证后端 @RequestPart 按 JSON 反序列化
+    form.append(
+      'param',
+      new Blob(
+        [
+          JSON.stringify({
+            conversationId,
+            message,
+            promptConfig: promptConfig || undefined
+          })
+        ],
+        { type: 'application/json' }
+      )
+    )
+    files?.forEach((file) => form.append('files', file, file.name))
+
     const response = await fetch(`${base}/ai/chat`, {
       method: 'POST',
-      headers: buildStreamHeaders(),
-      body: JSON.stringify({
-        conversationId,
-        message,
-        promptConfig: promptConfig || undefined
-      }),
+      headers: buildStreamHeaders(true),
+      body: form,
       signal: controller.signal
     })
 

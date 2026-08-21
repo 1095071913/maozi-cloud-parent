@@ -38,4 +38,7 @@ public @interface Post {
     @AliasFor(value = "produces",annotation = RequestMapping.class)
     String[] produces() default {};
 
+    @AliasFor(value = "consumes",annotation = RequestMapping.class)
+    String[] consumes() default {};
+
 }
