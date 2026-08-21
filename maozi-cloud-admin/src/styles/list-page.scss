@@ -1,0 +1,80 @@
+/**
+ * 列表类管理页面通用样式
+ * 供 客户端/账号/角色/权限/配置 等页面共用，
+ * 统一页面布局、卡片标题、工具栏、表头与分页的外观
+ */
+
+/** 页面容器：纵向排列，卡片间距 16px */
+.list-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/** 卡片头：左侧主色竖条标题 + 副标题，右侧操作按钮 */
+.page-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .card-title {
+    position: relative;
+    padding-left: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--el-text-color-primary);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--el-color-primary);
+    }
+  }
+
+  .card-subtitle {
+    color: var(--el-text-color-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+/** 搜索工具栏：表单与操作区两端对齐 */
+.list-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 4px;
+
+  .el-form-item {
+    margin-bottom: 12px;
+  }
+}
+
+/** 列表页内表格表头：浅色底 + 加粗 */
+.list-page .el-table th.el-table__cell {
+  background-color: var(--el-fill-color-light);
+  color: var(--el-text-color-regular);
+  font-weight: 600;
+}
+
+/** 分页：右对齐，与表格间距 16px */
+.list-pagination {
+  margin-top: 16px;
+  justify-content: flex-end;
+}

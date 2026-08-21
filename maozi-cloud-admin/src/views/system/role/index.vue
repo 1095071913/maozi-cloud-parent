@@ -169,16 +169,25 @@ onMounted(loadList)
 </script>
 
 <template>
-  <div class="role-page">
+  <div class="list-page">
     <el-card shadow="never">
-      <el-form inline @submit.prevent>
-        <el-form-item label="名称">
-          <el-input v-model="keyword" placeholder="名称/描述" clearable @keyup.enter="() => {}" />
-        </el-form-item>
-        <el-form-item>
+      <template #header>
+        <div class="page-card-header">
+          <div class="header-left">
+            <span class="card-title">角色列表</span>
+            <span class="card-subtitle">共 {{ filteredList.length }} 条</span>
+          </div>
           <el-button v-auth="'system:role:save'" type="primary" @click="handleAdd">新增</el-button>
-        </el-form-item>
-      </el-form>
+        </div>
+      </template>
+
+      <div class="list-toolbar">
+        <el-form inline @submit.prevent>
+          <el-form-item label="名称">
+            <el-input v-model="keyword" placeholder="请输入名称/描述" clearable />
+          </el-form-item>
+        </el-form>
+      </div>
 
       <el-table v-loading="loading" :data="filteredList" border stripe>
         <el-table-column label="名称" prop="name" min-width="140" />
@@ -197,7 +206,7 @@ onMounted(loadList)
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="更新时间" prop="updateTime" min-width="170" />
+        <el-table-column label="创建时间" prop="createTime" min-width="170" />
         <el-table-column label="操作" width="160" fixed="right">
           <template #default="{ row }">
             <el-button v-auth="'system:role:update'" link type="primary" @click="handleEdit(row as RoleListItem)">编辑</el-button>

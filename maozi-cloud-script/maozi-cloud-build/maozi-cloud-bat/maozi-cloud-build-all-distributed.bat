@@ -22,9 +22,11 @@ REM 切换到本脚本所在目录, 使后续相对路径 (jar-utils / scan-util
 cd /d "%~dp0"
 set current_directory=%CD%
 
-REM 源码仓库根目录 (自动定位: 本脚本向上回溯 3 级 = maozi-cloud-parent)
-REM 如需迁移部署路径, 改这一行即可
+REM 源码仓库根目录 (自动定位: 本脚本向上回溯 3 级)
+REM 当前结构下脚本位于 maozi-cloud-script 内, 源码仓库 maozi-cloud-parent 是其同级目录,
+REM 向上 3 级无 pom.xml 时进入 maozi-cloud-parent (兼容脚本位于仓库内部的旧结构)
 set repo_directory=%~dp0..\..\..
+if not exist "%repo_directory%\pom.xml" set repo_directory=%~dp0..\..\..\maozi-cloud-parent
 
 REM 切换到仓库根目录, 后续 git / mvn 命令均在此执行
 cd /d "%repo_directory%"

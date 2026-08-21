@@ -36,15 +36,21 @@
       "base_image": "maozi-cloud-base-jdk:1.0.0"
     },
     {
+      "service_name": "maozi-cloud-oauth-service",
+      "service_port": 3000,
+      "dubbo_port": 20881,
+      "opentelemetry": true
+    },
+    {
       "service_name": "maozi-cloud-system-service",
       "service_port": 4000,
       "dubbo_port": 20880,
       "opentelemetry": true
     },
     {
-      "service_name": "maozi-cloud-oauth-service",
-      "service_port": 3000,
-      "dubbo_port": 20881,
+      "service_name": "maozi-cloud-ai-service",
+      "service_port": 6000,
+      "dubbo_port": 20882,
       "opentelemetry": true
     }
   ]

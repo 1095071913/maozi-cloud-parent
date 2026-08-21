@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 角色列表视图对象
@@ -33,9 +34,9 @@ public class RoleListVo implements Serializable {
 	@Schema(description = "描述")
 	private String description;
 
-	/** 角色最后更新时间（时间戳） */
-	@Schema(description = "更新时间")
-	private Long updateTime;
+	/** 角色创建时间 */
+	@Schema(description = "创建时间")
+	private LocalDateTime createTime;
 
 	/** 角色状态（启用/禁用） */
 	@Schema(description = "状态")

@@ -41,6 +41,7 @@
 
 <img src="maozi-cloud-images/architecture_diagram_02.png" alt="null" style="zoom:50%;" />
 
+<img src="maozi-cloud-images/architecture_diagram_03.png" alt="null" style="zoom:50%;" />
 
 ## 📚 相关链接
 

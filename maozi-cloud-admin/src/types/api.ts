@@ -166,8 +166,8 @@ export interface RoleListItem {
   description?: string
   /** 状态（0=禁用 1=启用） */
   status: number
-  /** 更新时间 */
-  updateTime?: string
+  /** 创建时间 */
+  createTime?: string
 }
 
 /** 角色详情（/system/role/{id}/get） */
@@ -356,4 +356,60 @@ export interface ChatMessageItem {
   type: ChatMessageType
   /** 消息内容 */
   message: string
+}
+
+/** 配置列表行（/system/config/list 返回元素） */
+export interface ConfigListItem {
+  /** 配置 ID */
+  id: string | number
+  /** 名称（全局唯一键） */
+  name: string
+  /** 别名 */
+  alias: string
+  /** 类型 */
+  type: string
+  /** 配置值 */
+  value: string
+  /** 创建时间（yyyy-MM-dd HH:mm:ss） */
+  createTime?: string
+  /** 状态（0=禁用 1=启用） */
+  status: number
+}
+
+/** 配置详情（/system/config/{id}/get） */
+export interface ConfigDetail {
+  /** 名称 */
+  name: string
+  /** 别名 */
+  alias: string
+  /** 类型 */
+  type: string
+  /** 配置值 */
+  value: string
+  /** 状态（0=禁用 1=启用） */
+  status: number
+}
+
+/** 配置保存/更新参数 */
+export interface ConfigSaveParam {
+  /** 名称（全局唯一键） */
+  name: string
+  /** 别名 */
+  alias: string
+  /** 类型 */
+  type: string
+  /** 配置值 */
+  value: string
+}
+
+/** 配置下拉选项（/system/config/{type}/dropDownList 返回元素） */
+export interface ConfigOptionItem {
+  /** 配置 ID */
+  id: string | number
+  /** 名称 */
+  name: string
+  /** 别名 */
+  alias?: string
+  /** 配置值（作为类型编码使用） */
+  value?: string
 }

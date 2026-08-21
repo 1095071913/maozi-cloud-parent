@@ -53,21 +53,6 @@ services:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/monitor:/application/maozi-cloud-monitor-service/logs
 
-  # ============ System 业务服务 ============
-  maozi-cloud-system-service:
-    image: maozi-cloud-system-service:laster
-    container_name: maozi-cloud-system-service
-    restart: always
-    ports:
-      - 4000:4000
-      - 20881:20881
-    environment:
-      ENVIRONMENT: dev
-      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
-    volumes:
-      # 日志文件挂载到宿主机共享目录,供 promtail 采集
-      - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system-service/logs
-
   # ============ OAuth 业务服务 ============
   maozi-cloud-oauth-service:
     image: maozi-cloud-oauth-service:laster
@@ -75,13 +60,43 @@ services:
     restart: always
     ports:
       - 3000:3000
-      - 20880:20880
+      - 20881:20881
     environment:
       ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
       - /Users/maozi/Desktop/maozi-cloud-logs/oauth:/application/maozi-cloud-oauth-service/logs
+
+  # ============ System 业务服务 ============
+  maozi-cloud-system-service:
+    image: maozi-cloud-system-service:laster
+    container_name: maozi-cloud-system-service
+    restart: always
+    ports:
+      - 4000:4000
+      - 20880:20880
+    environment:
+      ENVIRONMENT: dev
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/system:/application/maozi-cloud-system-service/logs
+
+  # ============ AI 业务服务 ============
+  maozi-cloud-ai-service:
+    image: maozi-cloud-ai-service:laster
+    container_name: maozi-cloud-ai-service
+    restart: always
+    ports:
+      - 6000:6000
+      - 20882:20882
+    environment:
+      ENVIRONMENT: dev
+      NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
+    volumes:
+      # 日志文件挂载到宿主机共享目录,供 promtail 采集
+      - /Users/maozi/Desktop/maozi-cloud-logs/ai:/application/maozi-cloud-ai-service/logs
 
 
 # 外部网络：与 maozi-cloud-basics-docker 共享同一网络

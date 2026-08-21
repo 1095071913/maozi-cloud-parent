@@ -19,5 +19,9 @@ export const viewModules: Record<string, () => Promise<Component>> = {
   // 权限管理
   'system:permission:list': () => import('@/views/system/permission/index.vue'),
   // 客户端管理
-  'system:client:list': () => import('@/views/system/client/index.vue')
+  'system:client:list': () => import('@/views/system/client/index.vue'),
+  // 配置管理
+  'system:config:list': () => import('@/views/system/config/index.vue'),
+  // 中间件管理
+  'system:middleware:list': () => import('@/views/system/middleware/index.vue')
 }

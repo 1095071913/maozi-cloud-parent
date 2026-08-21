@@ -56,3 +56,8 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: ['maozi-cloud-system-service:4000']
+
+  - job_name: 'maozi-cloud-ai-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['maozi-cloud-ai-service:6000']

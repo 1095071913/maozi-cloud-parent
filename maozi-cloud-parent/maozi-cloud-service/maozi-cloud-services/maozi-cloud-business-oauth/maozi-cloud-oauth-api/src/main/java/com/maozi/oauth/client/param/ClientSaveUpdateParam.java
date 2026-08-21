@@ -20,7 +20,7 @@ package com.maozi.oauth.client.param;
 import com.maozi.base.enums.Status;
 import com.maozi.oauth.client.enums.AuthType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,12 +52,12 @@ public class ClientSaveUpdateParam implements Serializable {
 	private String clientId;
 
 	/** 客户端密钥，用于客户端认证，不能为空 */
-	@NotNull(message = "客户端密钥不能为空")
+	@NotEmpty(message = "客户端密钥不能为空")
 	@Schema(description = "客户端密钥")
 	private String clientSecret;
 
 	/** 客户端名称，用于标识和描述客户端，不能为空 */
-	@NotNull(message = "名称不能为空")
+	@NotEmpty(message = "名称不能为空")
 	@Schema(description = "名称")
 	private String name;
 

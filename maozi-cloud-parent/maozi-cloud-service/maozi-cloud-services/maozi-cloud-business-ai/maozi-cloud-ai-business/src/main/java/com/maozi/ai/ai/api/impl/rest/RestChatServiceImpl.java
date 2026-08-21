@@ -13,7 +13,9 @@ import com.maozi.common.ObjectUtil;
 import com.maozi.common.ResultUtil;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.redis.utils.RedisUtil;
+import com.maozi.service.api.annotation.RemoteResource;
 import com.maozi.service.api.annotation.RestService;
+import com.maozi.system.config.api.rpc.RpcConfigService;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
@@ -34,6 +36,9 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
 
     private final ChatMemory chatMemory;
 
+    @RemoteResource
+    private RpcConfigService rpcConfigService;
+
     @Resource(name = "chatConversationRecordServiceImpl")
     private ChatConversationRecordService  chatConversationRecordService;
 
@@ -45,11 +50,21 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
         Long conversationId = param.getConversationId();
         chatConversationRecordService.has(conversationId);
 
+        ChatClient.ChatClientRequestSpec chatClientRequest = chatClient.prompt();
+
+        String promptConfig = param.getPromptConfig();
+        if(ObjectUtil.isNotNullEmpty(promptConfig)){
+            promptConfig = rpcConfigService.rpcGetValueByKey(promptConfig).getResultDataThrowError();
+            if(ObjectUtil.isNotNullEmpty(promptConfig)){
+                chatClientRequest.system(promptConfig);
+            }
+        }
+
         BoundHashOperations<String, Object, Object> hashOps = RedisUtil.getRedisClient().boundHashOps(AI_CHAT_STOP_KEY);
 
         StringBuilder aiChatOutputMessage = new StringBuilder();
         final String conversationIdFinal = conversationId.toString();
-        return chatClient.prompt()
+        return chatClientRequest
                 .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, conversationIdFinal))
                 .user(param.getMessage())
                 .stream()

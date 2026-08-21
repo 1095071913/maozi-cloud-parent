@@ -162,22 +162,33 @@ onMounted(loadList)
 </script>
 
 <template>
-  <div class="client-page">
-    <el-card class="filter-card" shadow="never">
-      <el-form inline @submit.prevent>
-        <el-form-item label="名称">
-          <el-input v-model="query.name" placeholder="请输入名称" clearable @keyup.enter="handleSearch" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleSearch">查询</el-button>
-          <el-button @click="handleReset">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-
+  <div class="list-page">
     <el-card shadow="never">
-      <div class="toolbar">
-        <el-button v-auth="'system:client:save'" type="primary" @click="handleAdd">新增</el-button>
+      <template #header>
+        <div class="page-card-header">
+          <div class="header-left">
+            <span class="card-title">客户端列表</span>
+            <span class="card-subtitle">共 {{ pagination.total }} 条</span>
+          </div>
+          <el-button v-auth="'system:client:save'" type="primary" @click="handleAdd">新增</el-button>
+        </div>
+      </template>
+
+      <div class="list-toolbar">
+        <el-form inline @submit.prevent>
+          <el-form-item label="名称">
+            <el-input
+              v-model="query.name"
+              placeholder="请输入名称"
+              clearable
+              @keyup.enter="handleSearch"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleSearch">查询</el-button>
+            <el-button @click="handleReset">重置</el-button>
+          </el-form-item>
+        </el-form>
       </div>
 
       <el-table v-loading="loading" :data="list" border stripe>
@@ -212,7 +223,7 @@ onMounted(loadList)
       </el-table>
 
       <el-pagination
-        class="pagination"
+        class="list-pagination"
         background
         layout="total, sizes, prev, pager, next, jumper"
         :current-page="pagination.current"
@@ -273,20 +284,3 @@ onMounted(loadList)
     </el-dialog>
   </div>
 </template>
-
-<style scoped lang="scss">
-.client-page {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.toolbar {
-  margin-bottom: 16px;
-}
-
-.pagination {
-  margin-top: 16px;
-  justify-content: flex-end;
-}
-</style>

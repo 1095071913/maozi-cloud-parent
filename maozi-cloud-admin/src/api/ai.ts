@@ -129,12 +129,14 @@ function buildStreamHeaders(): Record<string, string> {
  * AI 对话（SSE 流式）
  * POST /ai/chat
  *
+ * promptConfig 为可选的系统提示词配置名称（取配置项 name），未选择时不传
  * 返回中止函数：调用后断开流通道（服务端会保存已生成的部分内容）
  */
 export async function chatStream(
   conversationId: string | number,
   message: string,
-  callbacks: ChatStreamCallbacks
+  callbacks: ChatStreamCallbacks,
+  promptConfig?: string
 ): Promise<() => void> {
   const base = getTempRequestUrl() || import.meta.env.VITE_API_BASE_URL
   const controller = new AbortController()
@@ -145,7 +147,11 @@ export async function chatStream(
     const response = await fetch(`${base}/ai/chat`, {
       method: 'POST',
       headers: buildStreamHeaders(),
-      body: JSON.stringify({ conversationId, message }),
+      body: JSON.stringify({
+        conversationId,
+        message,
+        promptConfig: promptConfig || undefined
+      }),
       signal: controller.signal
     })
 

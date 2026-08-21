@@ -30,4 +30,7 @@ public class ChatParam implements Serializable {
     @NotNull(message = "对话ID不能为空")
     private Long conversationId;
 
+    @Schema(description = "提示词配置")
+    private String promptConfig;
+
 }

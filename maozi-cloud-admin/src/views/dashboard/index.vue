@@ -2,7 +2,9 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
+  ArrowDown,
   ChatDotRound as ChatIcon,
+  Check,
   Delete,
   Edit,
   MagicStick,
@@ -20,7 +22,13 @@ import {
   stopChat,
   updateConversationTitle
 } from '@/api/ai'
-import { ChatMessageType, type ChatMessageItem, type ConversationItem } from '@/types/api'
+import { getConfigDropDownList } from '@/api/config'
+import {
+  ChatMessageType,
+  type ChatMessageItem,
+  type ConfigOptionItem,
+  type ConversationItem
+} from '@/types/api'
 
 const userStore = useUserStore()
 
@@ -72,7 +80,35 @@ function handleCreate() {
 // ============ 会话选中 / 更新标题 / 删除 ============
 const activeId = ref<string | number>('')
 
+// ============ 系统提示词 ============
+/** 系统提示词的配置类型编码 */
+const AI_PROMPT_TYPE = 'ai_system_prompt'
+const promptOptions = ref<ConfigOptionItem[]>([])
+/** 当前选中的提示词配置名称（作为聊天接口 promptConfig 传入），为空表示不使用 */
+const activePrompt = ref('')
+const promptPopoverVisible = ref(false)
+
+/** 当前选中提示词的展示名（别名为空回退名称） */
+const activePromptLabel = computed(
+  () => promptOptions.value.find((p) => p.name === activePrompt.value)?.alias || activePrompt.value
+)
+
+function selectPrompt(name: string) {
+  activePrompt.value = name
+  promptPopoverVisible.value = false
+}
+
+/** 加载系统提示词选项，失败不阻塞对话功能 */
+function loadPromptOptions() {
+  getConfigDropDownList(AI_PROMPT_TYPE)
+    .then((res) => {
+      promptOptions.value = res.data || []
+    })
+    .catch(() => {})
+}
+
 onMounted(async () => {
+  loadPromptOptions()
   await loadConversations(1)
   // 默认选中最近一个会话，直接进入可对话状态
   if (conversations.value.length) {
@@ -268,7 +304,7 @@ async function handleSend() {
         flushTyping()
         ElMessage.error(msg)
       }
-    })
+    }, activePrompt.value || undefined)
     streamingConversationId = conversationId
   } catch {
     flushTyping()
@@ -437,13 +473,60 @@ function handleInputKeydown(event: Event) {
             type="textarea"
             :rows="3"
             resize="none"
-            placeholder="请输入您的问题…"
+            placeholder="可以根据您的权限操作所有数据，请输入您的问题 ..."
             @keydown="handleInputKeydown"
             @compositionstart="handleCompositionStart"
             @compositionend="handleCompositionEnd"
           />
           <div class="input-toolbar">
-            <span class="input-hint">Enter 发送 · Shift + Enter 换行</span>
+            <div class="toolbar-left">
+              <el-popover
+                v-if="promptOptions.length"
+                v-model:visible="promptPopoverVisible"
+                placement="top-start"
+                :width="320"
+                trigger="click"
+                popper-class="prompt-popper"
+              >
+                <template #reference>
+                  <button
+                    type="button"
+                    class="prompt-trigger"
+                    :class="{ active: !!activePrompt }"
+                  >
+                    <el-icon :size="13"><MagicStick /></el-icon>
+                    <span class="prompt-label">{{ activePrompt ? activePromptLabel : '系统提示词' }}</span>
+                    <el-icon class="prompt-caret" :size="12"><ArrowDown /></el-icon>
+                  </button>
+                </template>
+
+                <div class="prompt-panel">
+                  <div class="prompt-panel-title">系统提示词</div>
+                  <button
+                    type="button"
+                    class="prompt-option"
+                    :class="{ active: !activePrompt }"
+                    @click="selectPrompt('')"
+                  >
+                    <span class="option-name">不使用</span>
+                    <el-icon v-if="!activePrompt" class="option-check" :size="14"><Check /></el-icon>
+                  </button>
+                  <button
+                    v-for="p in promptOptions"
+                    :key="p.id"
+                    type="button"
+                    class="prompt-option"
+                    :class="{ active: activePrompt === p.name }"
+                    @click="selectPrompt(p.name)"
+                  >
+                    <span class="option-name">{{ p.alias || p.name }}</span>
+                    <el-icon v-if="activePrompt === p.name" class="option-check" :size="14"><Check /></el-icon>
+                    <p v-if="p.value" class="option-preview">{{ p.value }}</p>
+                  </button>
+                </div>
+              </el-popover>
+              <span class="input-hint">Enter 发送 · Shift + Enter 换行</span>
+            </div>
             <el-button
               v-if="sending"
               class="stop-btn"
@@ -1000,6 +1083,51 @@ $text-secondary: #606266;
   padding: 6px 10px 8px 14px;
 }
 
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.prompt-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid $border-color;
+  border-radius: 999px;
+  background: #fff;
+  color: $text-secondary;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #a5b4fc;
+    color: #6366f1;
+  }
+
+  &.active {
+    border-color: transparent;
+    color: #fff;
+    background: $accent;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.prompt-label {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prompt-caret {
+  transition: transform 0.2s;
+}
+
 .input-hint {
   color: #c0c4cc;
   font-size: 12px;
@@ -1026,5 +1154,75 @@ $text-secondary: #606266;
 
 .chat-page .el-button.stop-btn {
   border-radius: 10px;
+}
+</style>
+
+<!-- 系统提示词下拉面板：内容经 popover 传送至 body，需全局样式 -->
+<style lang="scss">
+.prompt-popper {
+  padding: 8px;
+
+  .prompt-panel-title {
+    padding: 2px 6px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #303133;
+  }
+
+  .prompt-panel {
+    max-height: 320px;
+    overflow: auto;
+  }
+
+  .prompt-option {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f5f5fb;
+    }
+
+    &.active {
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .option-name {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 500;
+      color: #303133;
+    }
+
+    .option-check {
+      color: #6366f1;
+    }
+
+    .option-preview {
+      flex-basis: 100%;
+      margin: 2px 0 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #909399;
+    }
+  }
 }
 </style>

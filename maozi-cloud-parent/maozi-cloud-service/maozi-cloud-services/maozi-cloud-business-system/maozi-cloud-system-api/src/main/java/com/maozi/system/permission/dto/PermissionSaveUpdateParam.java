@@ -19,6 +19,7 @@ package com.maozi.system.permission.dto;
 
 import com.maozi.system.permission.enums.PermissionType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,17 +50,17 @@ public class PermissionSaveUpdateParam implements Serializable {
 
 	/** 权限名称 */
 	@Schema(description = "名称")
-	@NotNull(message = "名称不能为空")
+	@NotEmpty(message = "名称不能为空")
 	private String name;
 
 	/** 权限图标标识 */
 	@Schema(description = "图标")
-	@NotNull(message = "图标不能为空")
+	@NotEmpty(message = "图标不能为空")
 	private String icon;
 
 	/** 权限唯一标识编码 */
 	@Schema(description = "标识")
-	@NotNull(message = "标识不能为空")
+	@NotEmpty(message = "标识不能为空")
 	private String mark;
 
 	/** 权限在树形结构中的深度层级 */

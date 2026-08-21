@@ -23,6 +23,10 @@ import java.util.Map;
  */
 public interface OrderParam {
 
+	String CREATE_TIME_KEY = "createTime";
+
+	String UPDATE_TIME_KEY = "updateTime";
+
 	/**
 	 * 获取排序字段映射
 	 *

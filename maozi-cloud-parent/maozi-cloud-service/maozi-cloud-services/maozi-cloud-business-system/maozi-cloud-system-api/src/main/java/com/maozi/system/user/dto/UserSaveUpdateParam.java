@@ -19,6 +19,7 @@ package com.maozi.system.user.dto;
 
 import com.maozi.base.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,17 +46,17 @@ public class UserSaveUpdateParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	/** 用户登录账号 */
-	@NotNull(message = "账号不能为空")
+	@NotEmpty(message = "账号不能为空")
 	@Schema(description = "账号")
 	private String username;
 
 	/** 用户姓名 */
-	@NotNull(message = "名称不能为空")
+	@NotEmpty(message = "名称不能为空")
 	@Schema(description = "名称")
 	private String name;
 
 	/** 用户登录密码 */
-	@NotNull(message = "密码不能为空")
+	@NotEmpty(message = "密码不能为空")
 	@Schema(description = "密码")
 	private String password;
 
@@ -65,7 +66,7 @@ public class UserSaveUpdateParam implements Serializable {
 	private Long clientId;
 
 	/** 用户头像图标 */
-	@NotNull(message = "图标不能为空")
+	@NotEmpty(message = "图标不能为空")
 	@Schema(description = "图标")
 	private String icon;
 

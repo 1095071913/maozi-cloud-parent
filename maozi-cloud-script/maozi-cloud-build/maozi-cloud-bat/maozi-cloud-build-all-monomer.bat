@@ -27,7 +27,9 @@ REM ============================================================
 
 cd /d "%~dp0"
 set current_directory=%CD%
+REM 源码仓库根目录: 向上 3 级无 pom.xml 时进入同级的 maozi-cloud-parent
 set repo_root=%~dp0..\..\..
+if not exist "%repo_root%\pom.xml" set repo_root=%~dp0..\..\..\maozi-cloud-parent
 cd /d "%repo_root%"
 REM 把 repo_root 转为绝对路径, 让后续拼 jar 路径不依赖 cwd
 for %%I in ("%repo_root%") do set repo_root=%%~fI

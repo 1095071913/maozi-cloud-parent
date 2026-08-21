@@ -2830,7 +2830,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "zRrs7NVyVJ",
+                              "id": "8fCTVEyMD1",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -3031,7 +3031,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "mVEZLybEyu",
+                              "id": "gAQaROpn0D",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -3256,7 +3256,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "Dr8wgw6oZ5",
+                              "id": "JvGLeN75eg",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -3561,7 +3561,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "LcEYa9z7kH",
+                          "id": "pU7kXpBEtc",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -3754,7 +3754,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "QcYWTISX30",
+                          "id": "njUECF0dZL",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -3919,7 +3919,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "UMomC1YrJC",
+                          "id": "O4FVfqgTik",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4093,7 +4093,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "tV3xqNqJPl",
+                          "id": "BoiTwI5TVw",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4253,7 +4253,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "ZfSgrMagEh",
+                          "id": "ELmsKkySWB",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4446,7 +4446,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "73t93VByDZ",
+                          "id": "cBQKU5IbB5",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4636,7 +4636,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "SKAczdoXMq",
+                          "id": "ll8AdoSaeo",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4799,7 +4799,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "C8DfyfsfNN",
+                          "id": "QX6HEzuM8Z",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -4946,7 +4946,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "2EyMyhFiVr",
+                          "id": "rqbazcNqYq",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5130,7 +5130,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "rvOFNUjhHs",
+                          "id": "r83vYl9GBQ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5315,7 +5315,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "3zIZlgYAji",
+                          "id": "5izMhQO5xQ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5489,7 +5489,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "YX86oIfpM6",
+                          "id": "mX1QraMLCQ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5645,7 +5645,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "mOUCzV2Qeq",
+                          "id": "xj0pppZjY2",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5704,7 +5704,7 @@
                     ],
                     "status": "released",
                     "serverId": "",
-                    "operationId": "restList_1",
+                    "operationId": "restList_2",
                     "sourceUrl": "",
                     "ordering": 18,
                     "cases": [
@@ -5806,7 +5806,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "rS3ln9Z708",
+                          "id": "KqUbulFBZ8",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -5980,7 +5980,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "BHc24HmbmB",
+                          "id": "fVQeWFdFyU",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -6143,7 +6143,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "pfTCOdZNqz",
+                          "id": "EdiTqYCGTI",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -6327,7 +6327,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "Ng23NZvtjZ",
+                          "id": "G6x2IITuNp",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -6540,7 +6540,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "ywjRU0d90C",
+                          "id": "kmKDDZWXTJ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -6761,7 +6761,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "gNlYOEL8WZ",
+                          "id": "fCBcgsftup",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -6820,7 +6820,7 @@
                     ],
                     "status": "released",
                     "serverId": "",
-                    "operationId": "restList_2",
+                    "operationId": "restList_3",
                     "sourceUrl": "",
                     "ordering": 12,
                     "cases": [
@@ -6974,7 +6974,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "pG7jSrx5hz",
+                          "id": "eGwT1r7avx",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -7219,7 +7219,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "gQQnAXX1GU",
+                          "id": "zxLUOvK9rr",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -7436,7 +7436,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "H3y4EC8Gvn",
+                          "id": "cdH3aedlTM",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -7668,6 +7668,1381 @@
                   }
                 }
               ]
+            },
+            {
+              "name": "配置模块",
+              "id": 93720337,
+              "auth": {},
+              "securityScheme": {},
+              "parentId": 88236425,
+              "serverId": "",
+              "description": "",
+              "identityPattern": {
+                "httpApi": {
+                  "type": "inherit",
+                  "bodyType": "",
+                  "fields": []
+                }
+              },
+              "shareSettings": {},
+              "visibility": "INHERITED",
+              "moduleId": 7130572,
+              "preProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "postProcessors": [
+                {
+                  "id": "inheritProcessors",
+                  "type": "inheritProcessors",
+                  "data": {}
+                }
+              ],
+              "inheritPostProcessors": {},
+              "inheritPreProcessors": {},
+              "items": [
+                {
+                  "name": "配置保存",
+                  "api": {
+                    "id": "503302870",
+                    "method": "post",
+                    "path": "/system/config/save",
+                    "parameters": {
+                      "path": [],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "LGqJ6xTbnD",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "123355256",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125741"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "173701236",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305688401"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restSave_3",
+                    "sourceUrl": "",
+                    "ordering": 30,
+                    "cases": [
+                      {
+                        "id": 405185427,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置保存成功",
+                        "responseId": "123355256",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "H5OTZufEv8",
+                              "relatedId": "jLBDq7xCQ9",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"name\": \"{{system_config_name}}\",\n    \"alias\": \"测试配置_{{$string.nanoid(min=6,max=6)}}\",\n    \"type\": \"system_config_type_test\",\n    \"value\": \"true\"\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.c5b43540-d38e-42a3-94b4-4d489e02259d\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"c5b43540-d38e-42a3-94b4-4d489e02259d\",\"requestIndex\":0,\"httpRequestId\":\"ef993bef-1833-4830-a98c-40ceb6b0e96b\"},\"type\":\"http\",\"consoles\":[{\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"c5b43540-d38e-42a3-94b4-4d489e02259d\",\"requestIndex\":0,\"httpRequestId\":\"ef993bef-1833-4830-a98c-40ceb6b0e96b\",\"scriptId\":\"postProcessors.0.extractor\"},\"level\":\"log\",\"logs\":[\"[[\\\"1\\\",\\\"2\\\"],\\\"___label_placeholder__processor___\\\",\\\"已设置环境变量【system_config_id】，值为 【4】\\\"]\"],\"executeOrderIndex\":2}],\"response\":{\"id\":\"c3d4a45c-4407-4aac-8112-23a0dd03752f\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:07:51 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"8d73150379bd46aa211d4551415f8009\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,34,52,34,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":29,\"responseSize\":23,\"downloadedBytes\":23,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.18754100799560547,\"wait\":0.10058403015136719,\"dns\":0,\"tcp\":0,\"firstByte\":28.44795799255371,\"download\":0.25412511825561523,\"process\":0.03599977493286133,\"total\":29.02620792388916}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"save\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":139,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"name\\\": \\\"system_config_type_L0ud9m\\\",\\n    \\\"alias\\\": \\\"测试配置_erLyv6\\\",\\n    \\\"type\\\": \\\"system_config_type_test\\\",\\n    \\\"value\\\": \\\"true\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/system/config/save\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"139\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:07:51 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"8d73150379bd46aa211d4551415f8009\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":23},\"timings\":{\"start\":1787051271868,\"requestStart\":1787051271868,\"offset\":{\"request\":0.18754100799560547,\"socket\":0.28812503814697266,\"response\":28.736083030700684,\"end\":28.9902081489563,\"lookup\":0.28812503814697266,\"connect\":0.28812503814697266,\"done\":29.02620792388916}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787051271860,\"preProcessorsStarted\":1787051271862,\"preProcessorsCompleted\":1787051271865,\"postProcessorsStarted\":1787051271898,\"postProcessorsCompleted\":1787051271901,\"completed\":1787051271902},\"metaInfo\":{\"httpApiId\":503302870,\"httpApiCaseId\":405185427,\"httpApiName\":\"配置保存\",\"httpApiPath\":\"/system/config/save\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"配置保存成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [
+                          {
+                            "type": "customScript",
+                            "data": "\nvar systemConfigName = await pm.variables.replaceInAsync(\"{{$string.nanoid(min=6,max=6)}}\");\n\n// 将生成的 UUID 设置到环境变量\npm.environment.set(\"system_config_name\", \"system_config_type_\"+systemConfigName);\n",
+                            "defaultEnable": false,
+                            "enable": true,
+                            "executionTiming": "prerequest"
+                          }
+                        ],
+                        "postProcessors": [
+                          {
+                            "type": "extractor",
+                            "data": {
+                              "variableName": "system_config_id",
+                              "variableType": "environment",
+                              "subject": "responseJson",
+                              "template": "",
+                              "expression": "$.data",
+                              "extractSettings": {
+                                "expression": "$.data",
+                                "continueExtractorSettings": {
+                                  "isContinueExtractValue": false,
+                                  "JsonArrayValueIndexValue": ""
+                                }
+                              }
+                            },
+                            "defaultEnable": false,
+                            "enable": true
+                          }
+                        ],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置列表",
+                  "api": {
+                    "id": "503302865",
+                    "method": "post",
+                    "path": "/system/config/list",
+                    "parameters": {
+                      "path": [],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "rT9sVZG41K",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "177580384",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305688410"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "179994621",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305688404"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restList_1",
+                    "sourceUrl": "",
+                    "ordering": 0,
+                    "cases": [
+                      {
+                        "id": 405186503,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置列表成功",
+                        "responseId": "177580384",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "WDXISaMB20",
+                              "relatedId": "ywiQVgzNOH",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"data\":{\n        \"name\":\"system_config_type\",\n        \"type\":\"system_config_type_test\",\n        \"alias\": \"测试配置\"\n    }\n}",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.2a7eea91-2f09-4042-b726-74ad55c4beb7\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"2a7eea91-2f09-4042-b726-74ad55c4beb7\",\"requestIndex\":0,\"httpRequestId\":\"c338d392-69d9-4952-a280-284c8072e12f\"},\"type\":\"http\",\"response\":{\"id\":\"aba1e61b-7cd1-4793-8b17-ff1407b8f621\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 10:59:53 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"61f5f432fec5d21b6568cfc6efab066f\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,123,34,99,117,114,114,101,110,116,34,58,34,49,34,44,34,115,105,122,101,34,58,34,49,48,34,44,34,116,111,116,97,108,34,58,34,49,34,44,34,100,97,116,97,34,58,91,123,34,105,100,34,58,34,50,34,44,34,110,97,109,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,95,53,72,52,119,79,70,34,44,34,97,108,105,97,115,34,58,34,230,181,139,232,175,149,233,133,141,231,189,174,95,104,117,90,103,103,52,34,44,34,116,121,112,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,95,116,101,115,116,34,44,34,118,97,108,117,101,34,58,34,116,114,117,101,34,44,34,99,114,101,97,116,101,84,105,109,101,34,58,34,50,48,50,54,45,48,56,45,49,56,32,49,56,58,53,56,58,49,53,34,44,34,115,116,97,116,117,115,34,58,49,125,93,125,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":32,\"responseSize\":238,\"downloadedBytes\":238,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.17958354949951172,\"wait\":0.1011662483215332,\"dns\":0,\"tcp\":0,\"firstByte\":31.1972918510437,\"download\":0.31504201889038086,\"process\":0.027708053588867188,\"total\":31.820791721343994}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"list\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":133,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"data\\\":{\\n        \\\"name\\\":\\\"system_config_type\\\",\\n        \\\"type\\\":\\\"system_config_type_test\\\",\\n        \\\"alias\\\": \\\"测试配置\\\"\\n    }\\n}\",\"generateMode\":\"normal\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/system/config/list\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"133\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 10:59:53 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"61f5f432fec5d21b6568cfc6efab066f\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":238},\"timings\":{\"start\":1787050793127,\"requestStart\":1787050793128,\"offset\":{\"request\":0.17958354949951172,\"socket\":0.2807497978210449,\"response\":31.478041648864746,\"end\":31.793083667755127,\"lookup\":0.2807497978210449,\"connect\":0.2807497978210449,\"done\":31.820791721343994}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787050793122,\"preProcessorsStarted\":1787050793123,\"preProcessorsCompleted\":1787050793123,\"postProcessorsStarted\":1787050793161,\"postProcessorsCompleted\":1787050793161,\"completed\":1787050793162},\"metaInfo\":{\"httpApiId\":503302865,\"httpApiCaseId\":405186503,\"httpApiName\":\"配置列表\",\"httpApiPath\":\"/system/config/list\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"配置列表成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置详情",
+                  "api": {
+                    "id": "503302869",
+                    "method": "get",
+                    "path": "/system/config/{id}/get",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "id#0",
+                          "name": "id",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "integer",
+                          "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "rnBjBYaaqb",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "159745869",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305688409"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "130477287",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restGet_3",
+                    "sourceUrl": "",
+                    "ordering": 24,
+                    "cases": [
+                      {
+                        "id": 405186610,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置详情成功",
+                        "responseId": "159745869",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "id#0",
+                              "name": "id",
+                              "relatedId": "id#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{system_config_id}}",
+                              "relatedName": "id"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "G1GOaFUTwa",
+                              "relatedId": "Ni4H5Q8on0",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.1ba76611-601d-4357-9ffd-8050289c1211\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"1ba76611-601d-4357-9ffd-8050289c1211\",\"requestIndex\":0,\"httpRequestId\":\"5f1d0a62-72cd-4956-b801-19e5dd85b15b\"},\"type\":\"http\",\"response\":{\"id\":\"cd0dbf0f-37b6-4325-8241-677de636849f\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 10:47:56 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"1d2ed9541d7656086eaea35d1ad3e7e4\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,123,34,110,97,109,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,34,44,34,97,108,105,97,115,34,58,34,233,133,141,231,189,174,231,177,187,229,158,139,34,44,34,116,121,112,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,34,44,34,118,97,108,117,101,34,58,34,91,92,34,233,133,141,231,189,174,231,177,187,229,158,139,92,34,44,92,34,65,73,231,179,187,231,187,159,230,143,144,231,164,186,232,175,141,92,34,93,34,44,34,115,116,97,116,117,115,34,58,49,125,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":63,\"responseSize\":162,\"downloadedBytes\":162,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.19062519073486328,\"wait\":0.09579181671142578,\"dns\":0,\"tcp\":0,\"firstByte\":62.34808301925659,\"download\":0.3810420036315918,\"process\":0.03500032424926758,\"total\":63.05054235458374}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"1\",\"get\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"http://localhost:1000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://localhost:1000/system/config/1/get\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 10:47:56 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"1d2ed9541d7656086eaea35d1ad3e7e4\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":162},\"timings\":{\"start\":1787050076686,\"requestStart\":1787050076686,\"offset\":{\"request\":0.19062519073486328,\"socket\":0.28641700744628906,\"response\":62.63450002670288,\"end\":63.01554203033447,\"lookup\":0.28641700744628906,\"connect\":0.28641700744628906,\"done\":63.05054235458374}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787050076681,\"preProcessorsStarted\":1787050076682,\"preProcessorsCompleted\":1787050076682,\"postProcessorsStarted\":1787050076750,\"postProcessorsCompleted\":1787050076750,\"completed\":1787050076751},\"metaInfo\":{\"httpApiId\":503302869,\"httpApiCaseId\":405186610,\"httpApiName\":\"配置详情\",\"httpApiPath\":\"/system/config/{id}/get\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"配置详情成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "名称获取配置",
+                  "api": {
+                    "id": "503302871",
+                    "method": "get",
+                    "path": "/system/config/{name}/dropDown",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "name#0",
+                          "name": "name",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "PuwE6odebO",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "127745303",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305688402"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "110133527",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restDropDown",
+                    "sourceUrl": "",
+                    "ordering": 36,
+                    "cases": [
+                      {
+                        "id": 405188390,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "名称获取配置成功",
+                        "responseId": "127745303",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "name#0",
+                              "name": "name",
+                              "relatedId": "name#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{system_config_name}}",
+                              "relatedName": "name"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "yHvsaRFbnR",
+                              "relatedId": "HBiEDn5Ztp",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.728a47b5-fb10-488d-9697-466d2e8f0360\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"728a47b5-fb10-488d-9697-466d2e8f0360\",\"requestIndex\":0,\"httpRequestId\":\"c54b6a3f-f06a-45fa-ad8f-b264b6c06e91\"},\"type\":\"http\",\"response\":{\"id\":\"9196f398-98c1-4dc7-a138-3e7d626fa344\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:10:08 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"1d1e828c68048209f31d5cfbea71547e\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,123,34,105,100,34,58,34,53,34,44,34,110,97,109,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,95,116,114,97,111,80,121,34,44,34,97,108,105,97,115,34,58,34,230,181,139,232,175,149,233,133,141,231,189,174,95,119,54,108,115,119,79,34,44,34,118,97,108,117,101,34,58,34,116,114,117,101,34,125,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":21,\"responseSize\":110,\"downloadedBytes\":110,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.23845767974853516,\"wait\":0.10816717147827148,\"dns\":0,\"tcp\":0,\"firstByte\":19.917916774749756,\"download\":0.3352503776550293,\"process\":0.03549957275390625,\"total\":20.635291576385498}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"system_config_type_traoPy\",\"dropDown\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"http://localhost:1000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://localhost:1000/system/config/system_config_type_traoPy/dropDown\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:10:08 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"1d1e828c68048209f31d5cfbea71547e\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":110},\"timings\":{\"start\":1787051408596,\"requestStart\":1787051408597,\"offset\":{\"request\":0.23845767974853516,\"socket\":0.34662485122680664,\"response\":20.264541625976562,\"end\":20.599792003631592,\"lookup\":0.34662485122680664,\"connect\":0.34662485122680664,\"done\":20.635291576385498}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787051408591,\"preProcessorsStarted\":1787051408592,\"preProcessorsCompleted\":1787051408592,\"postProcessorsStarted\":1787051408618,\"postProcessorsCompleted\":1787051408618,\"completed\":1787051408619},\"metaInfo\":{\"httpApiId\":503302871,\"httpApiCaseId\":405188390,\"httpApiName\":\"名称获取配置\",\"httpApiPath\":\"/system/config/{name}/dropDown\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"名称获取配置成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置下拉列表",
+                  "api": {
+                    "id": "503302867",
+                    "method": "get",
+                    "path": "/system/config/{type}/dropDownList",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "type#0",
+                          "name": "type",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "WZhEgLpsjD",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "103288229",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/305688408"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "112373174",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "dropDownListResult_1",
+                    "sourceUrl": "",
+                    "ordering": 12,
+                    "cases": [
+                      {
+                        "id": 405188472,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置下拉列表",
+                        "responseId": "103288229",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "type#0",
+                              "name": "type",
+                              "relatedId": "type#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "system_config_type_test",
+                              "relatedName": "type"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "niu7QUIlG2",
+                              "relatedId": "sDlmsFWBsF",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.a5e2a8f6-df02-4078-b497-076cefe234a5\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"a5e2a8f6-df02-4078-b497-076cefe234a5\",\"requestIndex\":0,\"httpRequestId\":\"70ead0b0-3d89-4eaf-b3a4-7cd4686e55a7\"},\"type\":\"http\",\"response\":{\"id\":\"ec03a8d6-70a2-4436-b40b-e29ac62f62ae\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:00:43 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"8e196dafa64c042015b44074516cb4fb\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,100,97,116,97,34,58,91,123,34,105,100,34,58,34,50,34,44,34,110,97,109,101,34,58,34,115,121,115,116,101,109,95,99,111,110,102,105,103,95,116,121,112,101,95,53,72,52,119,79,70,34,44,34,97,108,105,97,115,34,58,34,230,181,139,232,175,149,233,133,141,231,189,174,95,104,117,90,103,103,52,34,44,34,118,97,108,117,101,34,58,34,116,114,117,101,34,125,93,44,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":29,\"responseSize\":112,\"downloadedBytes\":112,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.17708396911621094,\"wait\":0.11158323287963867,\"dns\":0,\"tcp\":0,\"firstByte\":28.384166717529297,\"download\":0.29712533950805664,\"process\":0.033165931701660156,\"total\":29.003125190734863}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"system_config_type_test\",\"dropDownList\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true}],\"method\":\"GET\",\"baseUrl\":\"http://localhost:1000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"GET\",\"href\":\"http://localhost:1000/system/config/system_config_type_test/dropDownList\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:00:43 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"8e196dafa64c042015b44074516cb4fb\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":112},\"timings\":{\"start\":1787050843599,\"requestStart\":1787050843600,\"offset\":{\"request\":0.17708396911621094,\"socket\":0.2886672019958496,\"response\":28.672833919525146,\"end\":28.969959259033203,\"lookup\":0.2886672019958496,\"connect\":0.2886672019958496,\"done\":29.003125190734863}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787050843594,\"preProcessorsStarted\":1787050843595,\"preProcessorsCompleted\":1787050843595,\"postProcessorsStarted\":1787050843630,\"postProcessorsCompleted\":1787050843630,\"completed\":1787050843631},\"metaInfo\":{\"httpApiId\":503302867,\"httpApiCaseId\":405188472,\"httpApiName\":\"配置下拉列表\",\"httpApiPath\":\"/system/config/{type}/dropDownList\",\"httpApiMethod\":\"get\",\"httpApiCaseName\":\"配置下拉列表\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置更新",
+                  "api": {
+                    "id": "503302868",
+                    "method": "post",
+                    "path": "/system/config/{id}/update",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "id#0",
+                          "name": "id",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "integer",
+                          "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "yUFs8wT3f0",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "164772781",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "199151936",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/305688401"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restUpdate_3",
+                    "sourceUrl": "",
+                    "ordering": 18,
+                    "cases": [
+                      {
+                        "id": 405188564,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置更新成功",
+                        "responseId": "164772781",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "id#0",
+                              "name": "id",
+                              "relatedId": "id#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{system_config_id}}",
+                              "relatedName": "id"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "6d4HD2ei5D",
+                              "relatedId": "iwrYyiGzkh",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"name\": \"{{system_config_name}}\",\n    \"alias\": \"测试配置_{{$string.nanoid(min=6,max=6)}}\",\n    \"type\": \"system_config_type_test\",\n    \"value\": \"true\"\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.75b7d4b8-f5d9-4b5c-bc6d-88adb783c9d3\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"75b7d4b8-f5d9-4b5c-bc6d-88adb783c9d3\",\"requestIndex\":0,\"httpRequestId\":\"88986c16-571c-4e7f-8eb4-4aff8f7ae86a\"},\"type\":\"http\",\"response\":{\"id\":\"e88d2cc5-ef0c-430a-a5e1-256e50b66de7\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:07:31 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"32a12ac6411e00c34e4c263bf88b68cc\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":36,\"responseSize\":12,\"downloadedBytes\":12,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.20166587829589844,\"wait\":0.1061248779296875,\"dns\":0,\"tcp\":0,\"firstByte\":34.84299993515015,\"download\":0.35279226303100586,\"process\":0.03270769119262695,\"total\":35.536290645599365}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"3\",\"update\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":139,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"name\\\": \\\"system_config_type_cMmf_l\\\",\\n    \\\"alias\\\": \\\"测试配置_TCpGNy\\\",\\n    \\\"type\\\": \\\"system_config_type_test\\\",\\n    \\\"value\\\": \\\"true\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/system/config/3/update\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"139\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:07:31 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"32a12ac6411e00c34e4c263bf88b68cc\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":12},\"timings\":{\"start\":1787051251220,\"requestStart\":1787051251220,\"offset\":{\"request\":0.20166587829589844,\"socket\":0.30779075622558594,\"response\":35.15079069137573,\"end\":35.50358295440674,\"lookup\":0.30779075622558594,\"connect\":0.30779075622558594,\"done\":35.536290645599365}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787051251211,\"preProcessorsStarted\":1787051251212,\"preProcessorsCompleted\":1787051251216,\"postProcessorsStarted\":1787051251257,\"postProcessorsCompleted\":1787051251257,\"completed\":1787051251258},\"metaInfo\":{\"httpApiId\":503302868,\"httpApiCaseId\":405188564,\"httpApiName\":\"配置更新\",\"httpApiPath\":\"/system/config/{id}/update\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"配置更新成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [
+                          {
+                            "type": "customScript",
+                            "data": "\nvar systemConfigName = await pm.variables.replaceInAsync(\"{{$string.nanoid(min=6,max=6)}}\");\n\n// 将生成的 UUID 设置到环境变量\npm.environment.set(\"system_config_name\", \"system_config_type_\"+systemConfigName);\n",
+                            "defaultEnable": false,
+                            "enable": true,
+                            "executionTiming": "prerequest"
+                          }
+                        ],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置更新状态",
+                  "api": {
+                    "id": "503302872",
+                    "method": "post",
+                    "path": "/system/config/{id}/updateStatus",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "id#0",
+                          "name": "id",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "integer",
+                          "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "hZoUFjrRBr",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "149212338",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "180750199",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/284125737"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restUpdateStatus_1",
+                    "sourceUrl": "",
+                    "ordering": 42,
+                    "cases": [
+                      {
+                        "id": 405188589,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置更新状态成功",
+                        "responseId": "149212338",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "id#0",
+                              "name": "id",
+                              "relatedId": "id#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{system_config_id}}",
+                              "relatedName": "id"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "76pA1V31R5",
+                              "relatedId": "u1BUaI2Ngb",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"data\": 1\n}",
+                          "generateMode": "example"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.8219ee9c-d0c8-4042-97fc-97c1cef4459a\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"8219ee9c-d0c8-4042-97fc-97c1cef4459a\",\"requestIndex\":0,\"httpRequestId\":\"9af7b9f5-1d86-4848-a6fb-74b06b1b1cb8\"},\"type\":\"http\",\"response\":{\"id\":\"940ebab6-e37b-4704-aa50-3e08f4cf7052\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:01:23 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"d982e0a2c97d2d746c6affed957eddba\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":25,\"responseSize\":12,\"downloadedBytes\":12,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.18187522888183594,\"wait\":0.1061248779296875,\"dns\":0,\"tcp\":0,\"firstByte\":24.1877498626709,\"download\":0.3126249313354492,\"process\":0.03254222869873047,\"total\":24.8209171295166}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"2\",\"updateStatus\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":17,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"data\\\": 1\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/system/config/2/updateStatus\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"17\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:01:23 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"d982e0a2c97d2d746c6affed957eddba\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":12},\"timings\":{\"start\":1787050883628,\"requestStart\":1787050883628,\"offset\":{\"request\":0.18187522888183594,\"socket\":0.28800010681152344,\"response\":24.475749969482422,\"end\":24.78837490081787,\"lookup\":0.28800010681152344,\"connect\":0.28800010681152344,\"done\":24.8209171295166}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787050883622,\"preProcessorsStarted\":1787050883624,\"preProcessorsCompleted\":1787050883624,\"postProcessorsStarted\":1787050883654,\"postProcessorsCompleted\":1787050883654,\"completed\":1787050883655},\"metaInfo\":{\"httpApiId\":503302872,\"httpApiCaseId\":405188589,\"httpApiName\":\"配置更新状态\",\"httpApiPath\":\"/system/config/{id}/updateStatus\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"配置更新状态成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
+                  "name": "配置删除",
+                  "api": {
+                    "id": "503302866",
+                    "method": "post",
+                    "path": "/system/config/{id}/remove",
+                    "parameters": {
+                      "path": [
+                        {
+                          "id": "id#0",
+                          "name": "id",
+                          "required": true,
+                          "enable": true,
+                          "description": "",
+                          "example": "",
+                          "type": "integer",
+                          "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                          }
+                        }
+                      ],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "WjEvguIM4i",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "168015106",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/284125724"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "104788582",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "none",
+                      "parameters": [],
+                      "required": false,
+                      "additionalContentTypes": [],
+                      "oasExtensions": ""
+                    },
+                    "description": "",
+                    "tags": [
+                      "配置模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "restRemove_3",
+                    "sourceUrl": "",
+                    "ordering": 6,
+                    "cases": [
+                      {
+                        "id": 405188737,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "配置删除成功",
+                        "responseId": "168015106",
+                        "parameters": {
+                          "query": [],
+                          "path": [
+                            {
+                              "id": "id#0",
+                              "name": "id",
+                              "relatedId": "id#0",
+                              "enable": true,
+                              "isDelete": false,
+                              "value": "{{system_config_id}}",
+                              "relatedName": "id"
+                            }
+                          ],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "0hQm5kFAlp",
+                              "relatedId": "WR6CfGy3rf",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": "{\"id\":\"temp.e171f4f0-ac23-4769-a450-4f8e51ea74d1\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"e171f4f0-ac23-4769-a450-4f8e51ea74d1\",\"requestIndex\":0,\"httpRequestId\":\"55acb2a3-2486-4e16-bfba-d163ba83ef3a\"},\"type\":\"http\",\"response\":{\"id\":\"217c70e7-be72-498d-9ab4-a58cc1fb7679\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:10:21 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"344776b6513e05db3178c86baa8d4390\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[123,34,99,111,100,101,34,58,50,48,48,125]},\"cookie\":[],\"responseTime\":26,\"responseSize\":12,\"downloadedBytes\":12,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.17708396911621094,\"wait\":0.09600019454956055,\"dns\":0,\"tcp\":0,\"firstByte\":25.400790691375732,\"download\":0.2671670913696289,\"process\":0.02920818328857422,\"total\":25.970250129699707}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"system\",\"config\",\"5\",\"remove\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":0,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/system/config/5/remove\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer yIA0KFuyEVeP6wiTa-iuIZQZId3xOLOoiJk5DOxwmVcWyB8ey2vh8jaA1W58GKIVJpDzNFSNpM9ARC1X3jmTSRafPjrQvAht3OxfZPlp-u-8y9ufGb4H163fXOdsM2V1\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"0\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Tue, 18 Aug 2026 11:10:21 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-TraceId\",\"value\":\"344776b6513e05db3178c86baa8d4390\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":12},\"timings\":{\"start\":1787051421800,\"requestStart\":1787051421801,\"offset\":{\"request\":0.17708396911621094,\"socket\":0.2730841636657715,\"response\":25.673874855041504,\"end\":25.941041946411133,\"lookup\":0.2730841636657715,\"connect\":0.2730841636657715,\"done\":25.970250129699707}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"schema\":{\"valid\":true,\"message\":\"\",\"errors\":null},\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787051421794,\"preProcessorsStarted\":1787051421796,\"preProcessorsCompleted\":1787051421796,\"postProcessorsStarted\":1787051421828,\"postProcessorsCompleted\":1787051421828,\"completed\":1787051421828},\"metaInfo\":{\"httpApiId\":503302866,\"httpApiCaseId\":405188737,\"httpApiName\":\"配置删除\",\"httpApiPath\":\"/system/config/{id}/remove\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"配置删除成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                }
+              ]
             }
           ]
         },
@@ -7788,7 +9163,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "QcsMRviTmj",
+                              "id": "ehi2e8knQf",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -7932,7 +9307,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "ARjVFTv7cf",
+                              "id": "nYHiOzKASc",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -8026,7 +9401,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "RC8I3kdnLS",
+                              "id": "9CRBajvc2a",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -8159,7 +9534,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "c2nhvJatnE",
+                          "id": "QFhjF9lgls",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -8326,7 +9701,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "e9FMMUpZxy",
+                          "id": "8ITskrcQrG",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -8487,7 +9862,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "oPRXTeC3Bl",
+                          "id": "Fdz9LSCX88",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -8657,7 +10032,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "Bs6EzH9BXF",
+                          "id": "xrQjfc0bJB",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -8849,12 +10224,12 @@
                     "method": "post",
                     "path": "/ai/chat",
                     "parameters": {
-                      "query": [],
                       "path": [],
+                      "query": [],
                       "cookie": [],
                       "header": [
                         {
-                          "id": "MZttWMFkkE",
+                          "id": "f9p39Sk7RJ",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -8869,16 +10244,7 @@
                     },
                     "auth": {},
                     "securityScheme": {},
-                    "commonParameters": {
-                      "query": [],
-                      "body": [],
-                      "cookie": [],
-                      "header": [
-                        {
-                          "name": "X-Version"
-                        }
-                      ]
-                    },
+                    "commonParameters": {},
                     "responses": [
                       {
                         "id": "110213303",
@@ -8920,12 +10286,12 @@
                       "jsonSchema": {
                         "$ref": "#/definitions/305096175"
                       },
-                      "required": true,
                       "mediaType": "application/json",
-                      "examples": [],
-                      "oasExtensions": ""
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
                     },
-                    "description": "# 该接口为SSE类型\n# 响应数据例子\n```\n{\"data\":{\"type\":1,\"message\":\"你好\"},\"code\":200}\n\n{\"data\":{\"type\":0},\"code\":200}\n```\n\ncode: 200.正常响应\ntype: 0.结束输出 1.持续对话中\n\n",
+                    "description": "",
                     "tags": [
                       "AI对话模块"
                     ],
@@ -8948,7 +10314,7 @@
                           "header": [
                             {
                               "id": "pjDa1pp8V0",
-                              "relatedId": "MZttWMFkkE",
+                              "relatedId": "f9p39Sk7RJ",
                               "relatedName": "Authorization",
                               "value": "{{oauth_access_token}}",
                               "enable": true,
@@ -8972,7 +10338,7 @@
                         "advancedSettings": {
                           "disabledSystemHeaders": {}
                         },
-                        "requestResult": null,
+                        "requestResult": "{\"id\":\"temp.feffd45d-c0d2-46b6-8fb8-136d6d03164b\",\"cursor\":{\"position\":0,\"iteration\":0,\"length\":1,\"cycles\":1,\"empty\":false,\"eof\":false,\"bof\":true,\"cr\":false,\"ref\":\"feffd45d-c0d2-46b6-8fb8-136d6d03164b\",\"requestIndex\":0,\"httpRequestId\":\"cc9e9ef2-1f19-4149-9bdf-8c4732ae2c56\"},\"type\":\"http\",\"response\":{\"id\":\"9e994031-a492-4121-b2fb-66f16084bbd4\",\"status\":\"OK\",\"code\":200,\"header\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Wed, 19 Aug 2026 10:12:56 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"text/event-stream\"},{\"key\":\"X-TraceId\",\"value\":\"f3aedc67cea72652c2dda87809d9a71e\"}],\"trailer\":[],\"stream\":{\"type\":\"Buffer\",\"data\":[100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,189,160,229,165,189,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,239,188,129,230,136,145,230,152,175,233,128,154,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,185,137,229,141,131,233,151,174,239,188,136,81,119,101,110,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,239,188,137,226,128,148,226,128,148,233,152,191,233,135,140,229,183,180,229,183,180,231,160,148,229,143,145,231,154,132,232,182,133,229,164,167,232,167,132,230,168,161,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,186,186,229,183,165,230,153,186,232,131,189,232,175,173,232,168,128,230,168,161,229,158,139,227,128,130,32,32,92,110,230,136,145,228,184,141,230,152,175,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,231,156,159,228,186,186,239,188,140,228,189,134,230,136,145,228,188,154,232,174,164,231,156,159,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,128,190,229,144,172,227,128,129,231,144,134,232,167,163,228,189,160,231,154,132,230,175,143,228,184,128,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,143,165,232,175,157,239,188,140,229,185,182,229,176,189,229,138,155,231,187,153,229,135,186,230,184,133,230,153,176,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,227,128,129,230,156,137,231,148,168,227,128,129,229,143,139,229,150,132,231,154,132,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,155,158,229,186,148,227,128,130,32,32,92,110,230,136,145,229,143,175,228,187,165,239,188,154,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,32,92,110,226,156,133,32,229,155,158,231,173,148,229,144,132,231,177,187,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,231,159,165,232,175,134,230,128,167,233,151,174,233,162,152,239,188,136,231,167,145,229,173,166,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,227,128,129,229,142,134,229,143,178,227,128,129,230,138,128,230,156,175,227,128,129,231,148,159,230,180,187,231,173,137,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,239,188,137,32,32,92,110,226,156,133,32,229,141,143,229,138,169,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,134,153,228,189,156,239,188,136,228,189,156,230,150,135,227,128,129,230,150,135,230,161,136,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,227,128,129,233,130,174,228,187,182,227,128,129,229,137,167,230,156,172,227,128,129,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,232,175,151,230,173,140,231,173,137,239,188,137,32,32,92,110,226,156,133,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,231,188,150,231,168,139,228,184,142,232,176,131,232,175,149,239,188,136,230,148,175,230,140,129,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,80,121,116,104,111,110,227,128,129,74,97,118,97,227,128,129,74,97,118,97,83,99,114,105,112,116,231,173,137,229,164,154,231,167,141,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,232,175,173,232,168,128,239,188,137,32,32,92,110,226,156,133,32,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,233,128,187,232,190,145,230,142,168,231,144,134,227,128,129,230,149,176,229,173,166,232,174,161,231,174,151,227,128,129,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,164,154,232,189,174,229,175,185,232,175,157,32,32,92,110,226,156,133,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,233,153,170,228,189,160,230,128,157,232,128,131,227,128,129,232,174,168,232,174,186,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,227,128,129,231,148,154,232,135,179,228,184,128,232,181,183,229,164,180,232,132,145,233,163,142,230,154,180,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,92,117,68,56,51,67,92,117,68,70,49,70,32,32,92,110,92,110,228,189,160,229,183,178,231,187,143,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,233,151,174,228,186,134,228,186,148,230,172,161,226,128,156,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,189,160,229,165,189,239,188,140,228,189,160,230,152,175,232,176,129,239,188,159,226,128,157,226,128,148,226,128,148,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,232,191,153,232,174,169,230,136,145,230,131,179,229,136,176,239,188,154,228,185,159,232,174,184,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,189,160,229,156,168,230,181,139,232,175,149,230,136,145,231,154,132,228,184,128,232,135,180,230,128,167,239,188,159,230,136,150,232,128,133,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,156,168,229,175,187,230,137,190,230,159,144,231,167,141,231,137,185,229,136,171,231,154,132,229,155,158,229,186,148,239,188,159,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,92,117,68,56,51,68,92,117,68,69,48,65,32,32,92,110,230,151,160,232,174,186,229,142,159,229,155,160,230,152,175,228,187,128,228,185,136,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,239,188,140,230,136,145,229,190,136,230,132,159,232,176,162,228,189,160,231,154,132,230,175,143,228,184,128,230,172,161,230,143,144,233,151,174,227,128,130,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,32,92,110,231,142,176,229,156,168,239,188,140,230,136,145,231,156,159,232,175,154,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,156,176,230,131,179,233,130,128,232,175,183,228,189,160,239,188,154,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,32,32,92,110,92,117,68,56,51,68,92,117,68,67,52,57,32,233,151,174,228,184,128,228,184,170,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,189,160,230,131,179,231,159,165,233,129,147,231,154,132,233,151,174,233,162,152,239,188,140,32,32,92,110,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,92,117,68,56,51,68,92,117,68,67,52,57,32,230,136,150,229,145,138,232,175,137,230,136,145,228,189,160,228,187,138,229,164,169,233,156,128,232,166,129,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,228,187,128,228,185,136,229,184,174,229,138,169,239,188,159,32,32,92,110,230,136,145,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,229,135,134,229,164,135,229,165,189,229,149,166,239,188,129,226,156,168,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,49,44,34,109,101,115,115,97,103,101,34,58,34,34,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10,100,97,116,97,58,123,34,100,97,116,97,34,58,123,34,116,121,112,101,34,58,48,125,44,34,99,111,100,101,34,58,50,48,48,125,10,10]},\"cookie\":[],\"responseTime\":4374,\"responseSize\":3026,\"downloadedBytes\":3026,\"type\":\"http\",\"tempFilePath\":\"\",\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}},\"timingPhases\":{\"prepare\":0.17645788192749023,\"wait\":0.08470773696899414,\"dns\":0,\"tcp\":0,\"firstByte\":1313.7399172782898,\"download\":3059.4362077713013,\"process\":0.06641721725463867,\"total\":4373.503707885742}},\"request\":{\"url\":{\"protocol\":\"http\",\"port\":\"1000\",\"path\":[\"ai\",\"chat\"],\"host\":[\"localhost\"],\"query\":[],\"variable\":[]},\"header\":[{\"disabled\":false,\"key\":\"Authorization\",\"value\":\"Bearer HQxxhiLXyusS0U5q3NFeanUdLXBhS0btqh1Pldgiq7Z4zFmGlVo_ygzeh7AGDWjwG-kPJhfzpd0bawnkAzfl_DlhvIipk-OQi_BqmbRnpZDTwNcGSuZjrpN6Rc7Z1VNk\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\",\"system\":true},{\"key\":\"Host\",\"value\":\"localhost:1000\",\"system\":true},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\",\"system\":true},{\"key\":\"Connection\",\"value\":\"keep-alive\",\"system\":true},{\"key\":\"Content-Length\",\"value\":138,\"system\":true}],\"method\":\"POST\",\"baseUrl\":\"http://localhost:1000\",\"body\":{\"mode\":\"raw\",\"raw\":\"{\\n    \\\"promptConfig\\\": \\\"porn_identification_officer1111\\\",\\n    \\\"conversationId\\\": \\\"2090015400703098881\\\",\\n    \\\"message\\\": \\\"你好,你是谁?\\\"\\n}\",\"generateMode\":\"example\",\"type\":\"application/json\"},\"type\":\"http\"},\"history\":{\"execution\":{\"verbose\":true,\"sessions\":{\"a7d4d8d3-7987-4158-875d-612e413662e7\":{\"addresses\":{\"local\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":62608},\"remote\":{\"address\":\"::1\",\"family\":\"IPv6\",\"port\":1000}}}},\"data\":[{\"request\":{\"method\":\"POST\",\"href\":\"http://localhost:1000/ai/chat\",\"headers\":[{\"key\":\"Authorization\",\"value\":\"Bearer HQxxhiLXyusS0U5q3NFeanUdLXBhS0btqh1Pldgiq7Z4zFmGlVo_ygzeh7AGDWjwG-kPJhfzpd0bawnkAzfl_DlhvIipk-OQi_BqmbRnpZDTwNcGSuZjrpN6Rc7Z1VNk\"},{\"key\":\"X-Version\",\"value\":\"maozi\"},{\"key\":\"User-Agent\",\"value\":\"Apifox/1.0.0 (https://apifox.com)\"},{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"Accept\",\"value\":\"*/*\"},{\"key\":\"Host\",\"value\":\"localhost:1000\"},{\"key\":\"Accept-Encoding\",\"value\":\"gzip, deflate, br\"},{\"key\":\"Connection\",\"value\":\"keep-alive\"},{\"key\":\"Content-Length\",\"value\":\"138\"}],\"httpVersion\":\"1.1\"},\"response\":{\"statusCode\":200,\"headers\":[{\"key\":\"transfer-encoding\",\"value\":\"chunked\"},{\"key\":\"Expires\",\"value\":\"0\"},{\"key\":\"Cache-Control\",\"value\":\"no-cache, no-store, max-age=0, must-revalidate\"},{\"key\":\"X-XSS-Protection\",\"value\":\"0\"},{\"key\":\"Pragma\",\"value\":\"no-cache\"},{\"key\":\"X-Frame-Options\",\"value\":\"DENY\"},{\"key\":\"Date\",\"value\":\"Wed, 19 Aug 2026 10:12:56 GMT\"},{\"key\":\"X-Content-Type-Options\",\"value\":\"nosniff\"},{\"key\":\"Content-Type\",\"value\":\"text/event-stream\"},{\"key\":\"X-TraceId\",\"value\":\"f3aedc67cea72652c2dda87809d9a71e\"}],\"httpVersion\":\"1.1\",\"downloadedBytes\":3026},\"timings\":{\"start\":1787134375654,\"requestStart\":1787134375654,\"offset\":{\"request\":0.17645788192749023,\"socket\":0.2611656188964844,\"response\":1314.0010828971863,\"end\":4373.437290668488,\"lookup\":0.2611656188964844,\"connect\":0.2611656188964844,\"done\":4373.503707885742}},\"session\":{\"id\":\"a7d4d8d3-7987-4158-875d-612e413662e7\",\"reused\":true}}]}},\"responseValidation\":{\"responseCode\":{\"valid\":true}},\"passed\":true,\"timings\":{\"started\":1787134375648,\"preProcessorsStarted\":1787134375649,\"preProcessorsCompleted\":1787134375649,\"postProcessorsStarted\":1787134380029,\"postProcessorsCompleted\":1787134380029,\"completed\":1787134380029},\"metaInfo\":{\"httpApiId\":502441470,\"httpApiCaseId\":404576010,\"httpApiName\":\"AI对话\",\"httpApiPath\":\"/ai/chat\",\"httpApiMethod\":\"post\",\"httpApiCaseName\":\"AI对话成功\",\"moduleId\":7130572,\"serverId\":\"default\"},\"socketSession\":{\"addresses\":{\"local\":\"::1\",\"remote\":\"::1\"},\"httpVersion\":\"1.1\",\"tls\":{\"protocol\":\"\",\"cipherName\":\"\"},\"cert\":{\"subjectCN\":\"\",\"issuerCN\":\"\",\"validUntil\":\"\"}}}",
                         "visibility": "INHERITED",
                         "moduleId": 7130572,
                         "categoryId": 0,
@@ -9028,7 +10394,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "iWrTF4zJ75",
+                          "id": "mA9Bbf9VPx",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -9194,7 +10560,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "9OfIvFqnj3",
+                          "id": "CIWh7qNt7o",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -9531,29 +10897,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "RequestParamStatus",
-              "displayName": "",
-              "id": "#/definitions/284125737",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "format": "int32",
-                      "description": "数据",
-                      "type": "integer"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultPageResultClientListVo",
               "displayName": "",
               "id": "#/definitions/284125713",
@@ -9757,65 +11100,6 @@
               },
               "visibility": "INHERITED",
               "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultListDropDownResult",
-              "displayName": "",
-              "id": "#/definitions/284125751",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/284125731"
-                      }
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "DropDownResult",
-              "displayName": "",
-              "id": "#/definitions/284125731",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "ID",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "name",
-                    "id"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
             }
           ]
         },
@@ -9835,6 +11119,7 @@
                   "type": "object",
                   "properties": {
                     "password": {
+                      "minLength": 1,
                       "description": "密码",
                       "type": "string"
                     },
@@ -9859,14 +11144,17 @@
                       }
                     },
                     "name": {
+                      "minLength": 1,
                       "description": "名称",
                       "type": "string"
                     },
                     "icon": {
+                      "minLength": 1,
                       "description": "图标",
                       "type": "string"
                     },
                     "username": {
+                      "minLength": 1,
                       "description": "账号",
                       "type": "string"
                     },
@@ -10029,6 +11317,50 @@
               "moduleId": 7130572
             },
             {
+              "name": "RoleListVo",
+              "displayName": "",
+              "id": "#/definitions/284125729",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "createTime": {
+                      "format": "date-time",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "description": {
+                      "description": "描述",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "标识",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "createTime",
+                    "name",
+                    "description",
+                    "id",
+                    "status"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "ErrorResult",
               "displayName": "",
               "id": "#/definitions/284125720",
@@ -10094,6 +11426,72 @@
                     "total",
                     "size",
                     "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "PageResultConfigListVo",
+              "displayName": "",
+              "id": "#/definitions/305688400",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "description": "页数",
+                      "type": "string"
+                    },
+                    "total": {
+                      "description": "数据总数",
+                      "type": "string"
+                    },
+                    "size": {
+                      "description": "每页数量",
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/305688406"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "current",
+                    "total",
+                    "size",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "DropDownResult",
+              "displayName": "",
+              "id": "#/definitions/284125731",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "ID",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "id"
                   ]
                 }
               },
@@ -10238,6 +11636,53 @@
               "moduleId": 7130572
             },
             {
+              "name": "ConfigSaveUpdateParam",
+              "displayName": "",
+              "id": "#/definitions/305688401",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "minLength": 1,
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "minLength": 1,
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "type": {
+                      "minLength": 1,
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "minLength": 1,
+                      "description": "配置值",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "alias",
+                    "name",
+                    "type",
+                    "value"
+                  ],
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "type",
+                    "value"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultListPermissionDropDownResult",
               "displayName": "",
               "id": "#/definitions/284125728",
@@ -10263,49 +11708,6 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "RoleListVo",
-              "displayName": "",
-              "id": "#/definitions/284125729",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "description": {
-                      "description": "描述",
-                      "type": "string"
-                    },
-                    "updateTime": {
-                      "description": "更新时间",
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "标识",
-                      "type": "string"
-                    },
-                    "status": {
-                      "format": "int32",
-                      "description": "状态",
-                      "type": "integer"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "name",
-                    "description",
-                    "updateTime",
-                    "id",
-                    "status"
                   ]
                 }
               },
@@ -10360,6 +11762,72 @@
                     "type",
                     "parentId",
                     "mark"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultConfigDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/305688402",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305688403"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/305688403",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "ID",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "id",
+                    "value"
                   ]
                 }
               },
@@ -10480,6 +11948,40 @@
               "moduleId": 7130572
             },
             {
+              "name": "PageParamConfigListParam",
+              "displayName": "",
+              "id": "#/definitions/305688404",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "default": 1,
+                      "description": "页数",
+                      "type": "string"
+                    },
+                    "size": {
+                      "default": 10,
+                      "description": "每页数量",
+                      "type": "string"
+                    },
+                    "data": {
+                      "description": "查询条件",
+                      "$ref": "#/definitions/305688407"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "current",
+                    "size",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultUserInfoVo",
               "displayName": "",
               "id": "#/definitions/284125738",
@@ -10502,6 +12004,49 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigInfoVo",
+              "displayName": "",
+              "id": "#/definitions/305688405",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "type",
+                    "value",
+                    "status"
                   ]
                 }
               },
@@ -10781,71 +12326,53 @@
               "moduleId": 7130572
             },
             {
-              "name": "PermissionSaveUpdateParam",
+              "name": "ConfigListVo",
               "displayName": "",
-              "id": "#/definitions/284125747",
+              "id": "#/definitions/305688406",
               "description": "",
               "schema": {
                 "jsonSchema": {
                   "type": "object",
                   "properties": {
-                    "route": {
-                      "description": "路由",
-                      "type": "string"
-                    },
-                    "level": {
-                      "format": "int32",
-                      "description": "深度",
-                      "type": "integer"
-                    },
-                    "serviceUri": {
-                      "description": "服务地址",
+                    "createTime": {
+                      "format": "date-time",
+                      "description": "创建时间",
                       "type": "string"
                     },
                     "name": {
                       "description": "名称",
                       "type": "string"
                     },
-                    "icon": {
-                      "description": "图标",
+                    "alias": {
+                      "description": "别名",
                       "type": "string"
                     },
-                    "sort": {
-                      "format": "int32",
-                      "description": "排序",
-                      "type": "integer"
-                    },
-                    "type": {
-                      "format": "int32",
-                      "description": "类型",
-                      "type": "integer"
-                    },
-                    "parentId": {
-                      "description": "上级ID",
-                      "type": "string"
-                    },
-                    "mark": {
+                    "id": {
                       "description": "标识",
                       "type": "string"
+                    },
+                    "type": {
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态",
+                      "type": "integer"
                     }
                   },
-                  "required": [
-                    "icon",
-                    "level",
-                    "mark",
-                    "name",
-                    "type"
-                  ],
                   "x-apifox-orders": [
-                    "route",
-                    "level",
-                    "serviceUri",
+                    "createTime",
                     "name",
-                    "icon",
-                    "sort",
+                    "alias",
+                    "id",
                     "type",
-                    "parentId",
-                    "mark"
+                    "value",
+                    "status"
                   ]
                 }
               },
@@ -10884,6 +12411,29 @@
               "moduleId": 7130572
             },
             {
+              "name": "RequestParamStatus",
+              "displayName": "",
+              "id": "#/definitions/284125737",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "format": "int32",
+                      "description": "数据",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultListRoleListVo",
               "displayName": "",
               "id": "#/definitions/284125750",
@@ -10904,6 +12454,248 @@
                       "items": {
                         "$ref": "#/definitions/284125729"
                       }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigListParam",
+              "displayName": "",
+              "id": "#/definitions/305688407",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "type": {
+                      "minLength": 1,
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "orderFieldMap": {
+                      "description": "排序组件 key:排序字段 value: true降序、false升序、null不做排序、空字符串字段",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "type": "object",
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "type",
+                    "orderFieldMap"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultListConfigDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/305688408",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/305688403"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultConfigInfoVo",
+              "displayName": "",
+              "id": "#/definitions/305688409",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305688405"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "PermissionSaveUpdateParam",
+              "displayName": "",
+              "id": "#/definitions/284125747",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "route": {
+                      "description": "路由",
+                      "type": "string"
+                    },
+                    "level": {
+                      "format": "int32",
+                      "description": "深度",
+                      "type": "integer"
+                    },
+                    "serviceUri": {
+                      "description": "服务地址",
+                      "type": "string"
+                    },
+                    "name": {
+                      "minLength": 1,
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "icon": {
+                      "minLength": 1,
+                      "description": "图标",
+                      "type": "string"
+                    },
+                    "sort": {
+                      "format": "int32",
+                      "description": "排序",
+                      "type": "integer"
+                    },
+                    "type": {
+                      "format": "int32",
+                      "description": "类型",
+                      "type": "integer"
+                    },
+                    "parentId": {
+                      "description": "上级ID",
+                      "type": "string"
+                    },
+                    "mark": {
+                      "minLength": 1,
+                      "description": "标识",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "icon",
+                    "level",
+                    "mark",
+                    "name",
+                    "type"
+                  ],
+                  "x-apifox-orders": [
+                    "route",
+                    "level",
+                    "serviceUri",
+                    "name",
+                    "icon",
+                    "sort",
+                    "type",
+                    "parentId",
+                    "mark"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultListDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/284125751",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/284125731"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultPageResultConfigListVo",
+              "displayName": "",
+              "id": "#/definitions/305688410",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305688400"
                     }
                   },
                   "x-apifox-orders": [
@@ -11370,6 +13162,10 @@
                 "jsonSchema": {
                   "type": "object",
                   "properties": {
+                    "promptConfig": {
+                      "description": "提示词配置",
+                      "type": "string"
+                    },
                     "conversationId": {
                       "description": "对话ID",
                       "type": "string"
@@ -11385,6 +13181,7 @@
                     "message"
                   ],
                   "x-apifox-orders": [
+                    "promptConfig",
                     "conversationId",
                     "message"
                   ]
@@ -17853,6 +19650,20 @@
         },
         {
           "name": "ai_conversation_id",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "system_config_id",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "system_config_name",
           "value": "",
           "description": "",
           "initialValue": "",

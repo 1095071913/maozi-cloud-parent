@@ -37,8 +37,10 @@ REM 切换到本脚本所在目录, 使后续相对路径可靠
 cd /d "%~dp0"
 set current_directory=%CD%
 
-REM 源码仓库根目录 (与 maozi-cloud-build-all-distributed.bat 保持一致)
+REM 源码仓库根目录 (与 maozi-cloud-build-all-distributed.bat 保持一致:
+REM 向上 3 级无 pom.xml 时进入同级的 maozi-cloud-parent)
 set repo_directory=%~dp0..\..\..
+if not exist "%repo_directory%\pom.xml" set repo_directory=%~dp0..\..\..\maozi-cloud-parent
 cd /d "%repo_directory%"
 
 REM 可部署服务源码根目录 (仅此目录下生成的 jar 才会触发 Docker 部署)

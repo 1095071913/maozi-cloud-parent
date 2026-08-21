@@ -65,6 +65,11 @@ services:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
       GF_USERS_ALLOW_SIGN_UP: "false"
+      # 允许被 iframe 内嵌（管理后台中间件管理页需要），否则响应头 X-Frame-Options: deny 拒绝嵌入
+      GF_SECURITY_ALLOW_EMBEDDING: "true"
+      # 按子路径 /grafana 提供服务：配合管理后台同源代理内嵌打开（vite proxy / Nginx 转发）
+      GF_SERVER_ROOT_URL: http://localhost:999/grafana
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
     ports:
       - 3300:3000
     volumes:

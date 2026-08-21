@@ -24,8 +24,15 @@
 
 cd "$(dirname "$0")"
 current_directory="$(pwd)"
-# 源码仓库根目录: 由脚本所在位置推导 (maozi-cloud-shell 向上三级)
-repo_root="$(cd "$current_directory/../../.." && pwd)"
+# 源码仓库根目录: 由脚本所在位置推导 (maozi-cloud-shell 向上三级);
+# 当前结构下脚本位于 maozi-cloud-script 内, 源码仓库 maozi-cloud-parent 是其同级目录,
+# 向上三级无 pom.xml 时进入 maozi-cloud-parent (兼容脚本位于仓库内部的旧结构)
+repo_candidate="$(cd "$current_directory/../../.." && pwd)"
+if [ -f "$repo_candidate/pom.xml" ]; then
+	repo_root="$repo_candidate"
+else
+	repo_root="$repo_candidate/maozi-cloud-parent"
+fi
 cd "$repo_root"
 
 # ============================================================

@@ -20,6 +20,13 @@ const rawList = ref<PermissionItem[]>([])
 const loading = ref(false)
 const treeData = computed(() => buildFullPermissionTree(rawList.value))
 
+/** 树表默认仅展开目录节点，菜单/按钮保持折叠 */
+const expandRowKeys = computed(() =>
+  rawList.value
+    .filter((item) => item.type === PermissionType.DIRECTORY)
+    .map((item) => String(item.id))
+)
+
 async function loadList() {
   loading.value = true
   try {
@@ -125,6 +132,10 @@ function handleAdd(parent?: PermissionItem) {
   Object.assign(form, defaultForm())
   if (parent) {
     form.parentId = parent.id
+    // 按上级类型推导子级默认类型：菜单的子级只能是按钮，目录的子级默认菜单，
+    // 确保所选上级存在于可选树中，回显名称而非 ID
+    form.type =
+      parent.type === PermissionType.MENU ? PermissionType.BUTTON : PermissionType.MENU
   }
   dialogVisible.value = true
 }
@@ -183,13 +194,19 @@ onMounted(loadList)
 </script>
 
 <template>
-  <div class="perm-page">
+  <div class="list-page">
     <el-card shadow="never">
-      <div class="toolbar">
-        <el-button v-auth="'system:permission:save'" type="primary" @click="handleAdd()">
-          新增
-        </el-button>
-      </div>
+      <template #header>
+        <div class="page-card-header">
+          <div class="header-left">
+            <span class="card-title">权限列表</span>
+            <span class="card-subtitle">共 {{ rawList.length }} 条</span>
+          </div>
+          <el-button v-auth="'system:permission:save'" type="primary" @click="handleAdd()">
+            新增
+          </el-button>
+        </div>
+      </template>
 
       <el-table
         v-loading="loading"
@@ -197,7 +214,7 @@ onMounted(loadList)
         row-key="id"
         border
         stripe
-        default-expand-all
+        :expand-row-keys="expandRowKeys"
         :tree-props="{ children: 'children' }"
       >
         <el-table-column label="名称" prop="name" min-width="200" />
@@ -273,10 +290,6 @@ onMounted(loadList)
 </template>
 
 <style scoped lang="scss">
-.toolbar {
-  margin-bottom: 16px;
-}
-
 .hint {
   margin-left: 12px;
   color: #909399;
