@@ -1,11 +1,11 @@
 import request from './request'
 import type {
-  ApiResponse,
-  ConfigDetail,
-  ConfigListItem,
-  ConfigOptionItem,
-  ConfigSaveParam,
-  PageResult
+    ApiResponse,
+    ConfigDetail,
+    ConfigListItem,
+    ConfigOptionItem,
+    ConfigSaveParam,
+    PageResult
 } from '@/types/api'
 
 /** 配置列表查询参数 */

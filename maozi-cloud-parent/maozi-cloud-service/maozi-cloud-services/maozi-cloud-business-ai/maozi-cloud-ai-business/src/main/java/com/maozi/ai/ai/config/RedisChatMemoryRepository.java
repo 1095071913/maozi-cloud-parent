@@ -1,7 +1,6 @@
 package com.maozi.ai.ai.config;
 
 import cn.hutool.core.collection.CollStreamUtil;
-import cn.hutool.core.stream.StreamUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.cglib.CglibUtil;
 import com.maozi.common.CollectionUtil;
@@ -18,12 +17,13 @@ import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.ToolResponseMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.data.redis.core.BoundListOperations;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author pengjinlong
@@ -42,14 +42,13 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
     public List<String> findConversationIds() {
 
         String aiChatMemoryKey = AI_CHAT_MEMORY_KEY + "*";
-        Set<String> keys = redisClient.keys(aiChatMemoryKey);
-        if(ObjectUtil.isNullEmpty(keys)){
-            return CollectionUtil.newArrayList();
+
+        List<String> conversationIds = CollectionUtil.newArrayList();
+        try (Cursor<String> cursor = redisClient.scan(ScanOptions.scanOptions().match(aiChatMemoryKey).count(1000).build())) {
+            cursor.forEachRemaining(key -> conversationIds.add(StrUtil.replace(key, AI_CHAT_MEMORY_KEY, "")));
         }
 
-        return StreamUtil.of(keys)
-                .map(key -> StrUtil.replace(key, AI_CHAT_MEMORY_KEY, ""))
-                .toList();
+        return conversationIds;
 
     }
 
