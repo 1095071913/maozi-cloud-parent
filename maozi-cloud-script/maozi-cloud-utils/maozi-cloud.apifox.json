@@ -9163,7 +9163,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "e3ofDPqWGB",
+                              "id": "n1dudDfzWV",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -9307,7 +9307,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "tizH2D6Cml",
+                              "id": "bIlRrLnHIP",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -9401,7 +9401,7 @@
                           "cookie": [],
                           "header": [
                             {
-                              "id": "oQCPJTKhC6",
+                              "id": "XnfkY4BErK",
                               "name": "Authorization",
                               "required": true,
                               "enable": true,
@@ -9534,7 +9534,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "yPRAbGmwv4",
+                          "id": "I0whReqDRP",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -9701,7 +9701,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "2xHmWO5r4X",
+                          "id": "jz9hYTqIDK",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -9862,7 +9862,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "rfa5697cAw",
+                          "id": "NPQv3nr9vX",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -10032,7 +10032,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "VZO7mNZPFT",
+                          "id": "IF2OcmhxkN",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -10229,7 +10229,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "BKLMKPp930",
+                          "id": "3NDo0hkANY",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -10284,7 +10284,7 @@
                       "type": "multipart/form-data",
                       "parameters": [
                         {
-                          "id": "dRplke1Amo",
+                          "id": "sXOvaCqcqB",
                           "name": "param",
                           "required": true,
                           "enable": true,
@@ -10296,7 +10296,7 @@
                           }
                         },
                         {
-                          "id": "2FK8XXgDRh",
+                          "id": "T3hemSIluY",
                           "name": "files",
                           "required": false,
                           "enable": true,
@@ -10437,7 +10437,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "Vf33Cwmjlb",
+                          "id": "bOvILH0q2r",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -10459,7 +10459,7 @@
                         "code": "200",
                         "headers": [],
                         "jsonSchema": {
-                          "$ref": "#/definitions/305096177"
+                          "$ref": "#/definitions/307087554"
                         },
                         "itemSchema": {},
                         "description": "OK",
@@ -10579,6 +10579,153 @@
                   }
                 },
                 {
+                  "name": "AI对话图片生成",
+                  "api": {
+                    "id": "505270360",
+                    "method": "post",
+                    "path": "/ai/chat/generate/image",
+                    "parameters": {
+                      "path": [],
+                      "query": [],
+                      "cookie": [],
+                      "header": [
+                        {
+                          "id": "mEU1rFVahS",
+                          "name": "Authorization",
+                          "required": true,
+                          "enable": true,
+                          "description": "用户授权令牌",
+                          "example": "{{oauth_access_token}}",
+                          "type": "string",
+                          "schema": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "auth": {},
+                    "securityScheme": {},
+                    "commonParameters": {},
+                    "responses": [
+                      {
+                        "id": "148399322",
+                        "code": "200",
+                        "headers": [],
+                        "jsonSchema": {
+                          "$ref": "#/definitions/307087553"
+                        },
+                        "itemSchema": {},
+                        "description": "OK",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      },
+                      {
+                        "id": "159909614",
+                        "code": "500",
+                        "headers": [],
+                        "jsonSchema": {
+                          "type": "object",
+                          "x-apifox-orders": []
+                        },
+                        "itemSchema": {},
+                        "description": "Internal Server Error",
+                        "contentType": "json",
+                        "mediaType": "*/*",
+                        "oasExtensions": ""
+                      }
+                    ],
+                    "responseExamples": [],
+                    "requestBody": {
+                      "type": "application/json",
+                      "parameters": [],
+                      "jsonSchema": {
+                        "$ref": "#/definitions/307067979"
+                      },
+                      "mediaType": "application/json",
+                      "oasExtensions": "",
+                      "required": true,
+                      "additionalContentTypes": []
+                    },
+                    "description": "",
+                    "tags": [
+                      "AI对话模块"
+                    ],
+                    "status": "released",
+                    "serverId": "",
+                    "operationId": "generateImage",
+                    "sourceUrl": "",
+                    "ordering": 12,
+                    "cases": [
+                      {
+                        "id": 406620676,
+                        "type": "DEBUG_CASE",
+                        "path": null,
+                        "name": "AI对话图片生成",
+                        "responseId": "148399322",
+                        "parameters": {
+                          "query": [],
+                          "path": [],
+                          "cookie": [],
+                          "header": [
+                            {
+                              "id": "fjOT7JHi15",
+                              "relatedId": "mEIDQ1i8BQ",
+                              "relatedName": "Authorization",
+                              "value": "{{oauth_access_token}}",
+                              "enable": true,
+                              "isDelete": false
+                            }
+                          ]
+                        },
+                        "commonParameters": {
+                          "query": [],
+                          "body": [],
+                          "header": [],
+                          "cookie": []
+                        },
+                        "requestBody": {
+                          "parameters": [],
+                          "data": "{\n    \"conversationId\":\"{{ai_conversation_id}}\",\n    \"message\":\"猴子\",\n    \"count\":1,\n    \"height\":1024,\n    \"width\":1024\n}",
+                          "generateMode": "normal"
+                        },
+                        "auth": {},
+                        "securityScheme": {},
+                        "advancedSettings": {
+                          "disabledSystemHeaders": {}
+                        },
+                        "requestResult": null,
+                        "visibility": "INHERITED",
+                        "moduleId": 7130572,
+                        "categoryId": 0,
+                        "tagIds": [],
+                        "apiTestDataList": [],
+                        "preProcessors": [],
+                        "postProcessors": [],
+                        "inheritPostProcessors": {},
+                        "inheritPreProcessors": {}
+                      }
+                    ],
+                    "mocks": [],
+                    "customApiFields": "{}",
+                    "advancedSettings": {
+                      "disabledSystemHeaders": {}
+                    },
+                    "mockScript": {},
+                    "codeSamples": [],
+                    "commonResponseStatus": {},
+                    "responseChildren": [],
+                    "visibility": "INHERITED",
+                    "moduleId": 7130572,
+                    "oasExtensions": "",
+                    "type": "http",
+                    "preProcessors": [],
+                    "postProcessors": [],
+                    "inheritPostProcessors": {},
+                    "inheritPreProcessors": {}
+                  }
+                },
+                {
                   "name": "AI对话停止",
                   "api": {
                     "id": "502441472",
@@ -10603,7 +10750,7 @@
                       "cookie": [],
                       "header": [
                         {
-                          "id": "7Hck9ejOnj",
+                          "id": "42NjcW7EIV",
                           "name": "Authorization",
                           "required": true,
                           "enable": true,
@@ -10664,7 +10811,7 @@
                     "serverId": "",
                     "operationId": "stop",
                     "sourceUrl": "",
-                    "ordering": 12,
+                    "ordering": 18,
                     "cases": [
                       {
                         "id": 404577302,
@@ -12879,6 +13026,90 @@
               "moduleId": 7130572
             },
             {
+              "name": "ChatGenerateImageParam",
+              "displayName": "",
+              "id": "#/definitions/307067979",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "promptConfig": {
+                      "description": "提示词配置",
+                      "type": "string"
+                    },
+                    "conversationId": {
+                      "description": "对话ID",
+                      "type": "string"
+                    },
+                    "count": {
+                      "format": "int32",
+                      "description": "生成数量",
+                      "type": "integer"
+                    },
+                    "width": {
+                      "format": "int32",
+                      "description": "图片宽度",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "minLength": 1,
+                      "description": "消息",
+                      "type": "string"
+                    },
+                    "height": {
+                      "format": "int32",
+                      "description": "图片高度",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "conversationId",
+                    "message"
+                  ],
+                  "x-apifox-orders": [
+                    "promptConfig",
+                    "conversationId",
+                    "count",
+                    "width",
+                    "message",
+                    "height"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultChatGenerateImageResult",
+              "displayName": "",
+              "id": "#/definitions/307087553",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/307087556"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "PageParamChatConversationRecordListParam",
               "displayName": "",
               "id": "#/definitions/305096170",
@@ -12939,26 +13170,61 @@
               "moduleId": 7130572
             },
             {
-              "name": "ChatConversationRecordListResult",
+              "name": "AbstractBaseResultSetString",
               "displayName": "",
-              "id": "#/definitions/305096171",
-              "description": "",
+              "id": "#/definitions/307067980",
+              "description": "接口响应结果集",
               "schema": {
                 "jsonSchema": {
+                  "description": "接口响应结果集",
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "description": "AI聊天会话ID",
-                      "type": "string"
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
                     },
-                    "title": {
-                      "description": "标题",
-                      "type": "string"
+                    "data": {
+                      "uniqueItems": true,
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "x-apifox-orders": [
-                    "id",
-                    "title"
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultChatListResult",
+              "displayName": "",
+              "id": "#/definitions/307087554",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/305096174"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
                   ]
                 }
               },
@@ -13108,6 +13374,42 @@
               "moduleId": 7130572
             },
             {
+              "name": "ChatItemResult",
+              "displayName": "",
+              "id": "#/definitions/307087555",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "images": {
+                      "description": "Base64图片列表",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "type": {
+                      "format": "int32",
+                      "description": "AI对话类型",
+                      "type": "integer"
+                    },
+                    "message": {
+                      "description": "消息",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "images",
+                    "type",
+                    "message"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultChatResult",
               "displayName": "",
               "id": "#/definitions/305096173",
@@ -13130,46 +13432,6 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "ChatListResult",
-              "displayName": "",
-              "id": "#/definitions/305096174",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "images": {
-                      "description": "图片列表",
-                      "type": "array",
-                      "items": {
-                        "type": "array",
-                        "items": {
-                          "format": "byte",
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "type": {
-                      "format": "int32",
-                      "description": "AI对话类型",
-                      "type": "integer"
-                    },
-                    "message": {
-                      "description": "消息",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "images",
-                    "type",
-                    "message"
                   ]
                 }
               },
@@ -13351,6 +13613,33 @@
               "moduleId": 7130572
             },
             {
+              "name": "ChatConversationRecordListResult",
+              "displayName": "",
+              "id": "#/definitions/305096171",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "description": "AI聊天会话ID",
+                      "type": "string"
+                    },
+                    "title": {
+                      "description": "标题",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "title"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultListChatListResult",
               "displayName": "",
               "id": "#/definitions/305096177",
@@ -13415,6 +13704,67 @@
                     "total",
                     "size",
                     "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatListResult",
+              "displayName": "",
+              "id": "#/definitions/305096174",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "isLocked": {
+                      "description": "是否对话中",
+                      "type": "boolean"
+                    },
+                    "items": {
+                      "description": "对话内容",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/307087555"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "isLocked",
+                    "items"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ChatGenerateImageResult",
+              "displayName": "",
+              "id": "#/definitions/307087556",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "images": {
+                      "uniqueItems": true,
+                      "description": "图片列表",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "message": {
+                      "description": "消息",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "images",
+                    "message"
                   ]
                 }
               },

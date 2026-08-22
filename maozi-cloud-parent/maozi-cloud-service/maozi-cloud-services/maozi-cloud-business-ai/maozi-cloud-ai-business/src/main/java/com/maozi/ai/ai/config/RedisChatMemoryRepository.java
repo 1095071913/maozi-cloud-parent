@@ -130,7 +130,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
                         .build();
             }
             case ASSISTANT -> {
-                return new AssistantMessage(chatMessage.getTextContent(), chatMessage.getMetadata(), chatMessage.getToolCalls());
+                return new AssistantMessage(chatMessage.getTextContent(), chatMessage.getMetadata(), chatMessage.getToolCalls(),chatMessage.getMedia());
             }
             case TOOL -> {
                 return new ToolResponseMessage(chatMessage.getToolResponses(),chatMessage.getMetadata());

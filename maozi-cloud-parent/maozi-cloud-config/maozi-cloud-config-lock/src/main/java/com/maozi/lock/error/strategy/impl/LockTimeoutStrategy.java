@@ -5,6 +5,7 @@ import com.maozi.common.result.error.code.SystemErrorCode;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.lock.error.strategy.LockTimeoutHandler;
 import com.maozi.lock.lock.Lock;
+import lombok.SneakyThrows;
 
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +50,8 @@ public enum LockTimeoutStrategy implements LockTimeoutHandler {
          * 以指数退避方式持续重试获取锁，重试间隔翻倍增长、超过上限后抛出限流异常
          */
         @Override
-        public void handle(String key,Long waitTime,Long leaseTime,Lock lock) throws Exception {
+        @SneakyThrows
+        public void handle(String key,Long waitTime,Long leaseTime,Lock lock){
 
             // 初始重试间隔 100ms
             Long interval = DEFAULT_INTERVAL;

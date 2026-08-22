@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   ArrowDown,
+  Brush,
   ChatDotRound as ChatIcon,
   Check,
   Close,
@@ -18,6 +19,7 @@ import { useUserStore } from '@/store/modules/user'
 import {
   chatStream,
   createConversation,
+  generateImage,
   getChatList,
   getConversationList,
   removeConversation,
@@ -168,13 +170,12 @@ const activeTitle = computed(
   () => conversations.value.find((c) => c.id === activeId.value)?.title || 'AI 对话'
 )
 
-/** 历史消息中的图片字节数组转本地预览地址 */
-function bytesToImageUrl(bytes: number[]): string {
-  const blob = new Blob([new Uint8Array(bytes)], { type: 'image/jpeg' })
-  return URL.createObjectURL(blob)
+/** 历史消息图片：Base64 转展示地址（兼容已带 data: 前缀的值） */
+function imageSrc(base64: string): string {
+  return base64.startsWith('data:') ? base64 : `data:image/jpeg;base64,${base64}`
 }
 
-/** 释放消息气泡持有的本地预览地址（objectURL），避免反复加载历史造成泄漏 */
+/** 释放消息气泡持有的本地预览地址（仅发送时的 blob: objectURL 需要，data URL 无需释放） */
 function revokeMessageUrls() {
   messages.value.forEach((m) => {
     m.imageUrls?.forEach((url) => {
@@ -183,16 +184,66 @@ function revokeMessageUrls() {
   })
 }
 
+/** 当前会话是否对话中（/ai/chat/{id}/list 的 isLocked） */
+const chatLocked = ref(false)
+
+// ============ 对话中轮询 ============
+/** 对话中（isLocked）时每 5 秒查询一次对话列表，锁定结束后渲染最新内容 */
+const LOCK_POLL_INTERVAL = 5000
+let lockPollTimer: ReturnType<typeof setInterval> | null = null
+/** 轮询请求进行中标记，避免慢请求导致轮询重叠 */
+let lockPollInFlight = false
+
+function stopLockPolling() {
+  if (lockPollTimer) {
+    clearInterval(lockPollTimer)
+    lockPollTimer = null
+  }
+}
+
+function startLockPolling() {
+  if (lockPollTimer) return
+  lockPollTimer = setInterval(async () => {
+    const id = activeId.value
+    if (!id || lockPollInFlight) return
+    lockPollInFlight = true
+    try {
+      const res = await getChatList(id)
+      // 轮询期间已切换会话：丢弃本次结果（activeId 变化会重启轮询）
+      if (id !== activeId.value) return
+      chatLocked.value = !!res.data?.isLocked
+      // 锁定结束：渲染最新对话内容；自身流式输出进行中时不打扰（内容已实时展示）
+      if (!chatLocked.value && !sending.value) {
+        await loadMessages()
+      }
+    } catch {
+      // 单次轮询失败静默，等待下一轮
+    } finally {
+      lockPollInFlight = false
+    }
+  }, LOCK_POLL_INTERVAL)
+}
+
+// 锁定状态或会话变化时启停轮询（会话切换时 true -> true 也能触发重启）
+watch([chatLocked, activeId], () => {
+  if (chatLocked.value && activeId.value) {
+    startLockPolling()
+  } else {
+    stopLockPolling()
+  }
+})
+
 async function loadMessages() {
   if (!activeId.value) return
   messageLoading.value = true
   try {
     const res = await getChatList(activeId.value)
+    chatLocked.value = !!res.data?.isLocked
     revokeMessageUrls()
-    // 后端图片以字节数组返回，转为本地预览地址回显
-    messages.value = (res.data || []).map((m) => ({
+    // 响应为 { isLocked, items }：items 内图片以 Base64 返回，转 data URL 回显
+    messages.value = (res.data?.items || []).map((m) => ({
       ...m,
-      imageUrls: (m.images || []).map(bytesToImageUrl)
+      imageUrls: (m.images || []).map(imageSrc)
     }))
     scrollToBottom()
   } finally {
@@ -400,11 +451,19 @@ function stopStreamSilently() {
 }
 
 async function handleSend() {
+  // 图片生成模式选中时：发送走图片生成
+  if (imageGenActive.value) {
+    await handleGenerateImage()
+    return
+  }
+
   const message = input.value.trim()
   const images = [...pendingImages.value]
   // 后端 message 必填：纯图片时使用默认文案
   const finalMessage = message || (images.length ? '请分析图片' : '')
   if (!finalMessage || sending.value) return
+  // 对话中（会话被锁定）时禁止发送，等待生成结束
+  if (chatLocked.value) return
 
   let conversationId = activeId.value
   try {
@@ -419,6 +478,8 @@ async function handleSend() {
 
     input.value = ''
     pendingImages.value = []
+    // 开始生成：本地即时置为对话中（结束/停止后由 loadMessages 校正）
+    chatLocked.value = true
     messages.value.push({
       type: ChatMessageType.USER,
       message: finalMessage,
@@ -442,6 +503,9 @@ async function handleSend() {
       onFinish: () => {
         // 流结束：待缓冲内容逐字打完后自动收尾
         streamFinished = true
+        chatLocked.value = false
+        // 刷新会话列表（标题等可能有更新）
+        loadConversations(1)
       },
       onError: (msg) => {
         // 异常：已收到的内容立即完整展示
@@ -455,14 +519,121 @@ async function handleSend() {
   }
 }
 
+// ============ 图片生成 ============
+/** 图片生成模式：点击按钮选中，再次点击取消；选中后发送即走图片生成 */
+const imageGenActive = ref(false)
+const imageGenLoading = ref(false)
+const imageGenForm = reactive({ count: 1, width: 1024, height: 1024 })
+/** 生成请求的中止控制器：点"停止"时中止前端等待 */
+let imageGenAbort: AbortController | null = null
+
+function toggleImageGen() {
+  imageGenActive.value = !imageGenActive.value
+}
+
+/**
+ * 图片生成：以输入框内容为描述，按当前配置的数量/尺寸调用生成接口，
+ * 生成的图片 URL 以 AI 气泡展示
+ */
+async function handleGenerateImage() {
+  const prompt = input.value.trim()
+  if (!prompt) {
+    ElMessage.warning('请先输入图片描述')
+    return
+  }
+  if (pendingImages.value.length) {
+    ElMessage.warning('图片生成模式不支持携带附件，请先移除图片')
+    return
+  }
+  if (imageGenLoading.value) return
+  // 对话中（会话被锁定）时禁止生成，等待生成结束
+  if (chatLocked.value) {
+    ElMessage.warning('对话进行中，请稍后再试')
+    return
+  }
+
+  let conversationId = activeId.value
+  imageGenLoading.value = true
+  // 生成中同步置为对话中（停止/结束后校正）
+  chatLocked.value = true
+  imageGenAbort = new AbortController()
+  try {
+    // 无选中会话：先以描述创建会话
+    if (!conversationId) {
+      const created = await createConversation(prompt)
+      conversationId = created.data
+      activeId.value = conversationId
+      await loadConversations(1)
+    }
+
+    messages.value.push({ type: ChatMessageType.USER, message: prompt })
+    input.value = ''
+    scrollToBottom()
+
+    // 生成中的 AI 气泡：打字指示特效，完成后原位填充结果
+    const generatingBubble: ChatBubble = reactive({
+      type: ChatMessageType.AI,
+      message: '',
+      streaming: true
+    })
+    messages.value.push(generatingBubble)
+    scrollToBottom()
+
+    try {
+      const res = await generateImage(
+        {
+          message: prompt,
+          conversationId,
+          promptConfig: activePrompt.value || undefined,
+          count: imageGenForm.count,
+          width: imageGenForm.width,
+          height: imageGenForm.height
+        },
+        imageGenAbort.signal
+      )
+      // 新响应结构 { message, images }，成功后原位替换生成中气泡
+      const urls = res.data?.images || []
+      if (!urls.length) {
+        messages.value = messages.value.filter((m) => m !== generatingBubble)
+        ElMessage.error('图片生成失败，请稍后重试')
+        return
+      }
+      generatingBubble.message = res.data?.message || ''
+      generatingBubble.imageUrls = urls
+      generatingBubble.streaming = false
+      scrollToBottom()
+    } catch {
+      // 主动中止或异常：移除生成中的气泡（错误提示由请求层统一处理，中止静默）
+      messages.value = messages.value.filter((m) => m !== generatingBubble)
+    }
+  } catch {
+    // 请求层已统一提示异常（主动中止静默）
+  } finally {
+    imageGenLoading.value = false
+    imageGenAbort = null
+    chatLocked.value = false
+  }
+}
+
 async function handleStop() {
   if (!activeId.value) return
+  // 图片生成中：中止前端等待并释放服务端锁
+  if (imageGenLoading.value) {
+    imageGenAbort?.abort()
+    await stopChat(activeId.value).catch(() => {})
+    imageGenLoading.value = false
+    imageGenAbort = null
+    chatLocked.value = false
+    return
+  }
   // 服务端停止生成并落库已生成的部分内容，随后本地断开流通道
   await stopChat(activeId.value).catch(() => {})
   stopStreamSilently()
   // 服务端保存已生成内容存在轻微异步延迟，稍候再拉取最终消息
   await new Promise((resolve) => setTimeout(resolve, 300))
   await loadMessages()
+  // 刷新会话列表，更新"对话中"锁定状态
+  loadConversations(1)
 }
 
 onBeforeUnmount(() => {
@@ -471,6 +642,7 @@ onBeforeUnmount(() => {
     abortStream()
   }
   stopTypingTimer()
+  stopLockPolling()
   // 释放未发送图片与历史消息气泡的预览地址
   pendingImages.value.forEach((i) => URL.revokeObjectURL(i.url))
   revokeMessageUrls()
@@ -560,9 +732,9 @@ function handleInputKeydown(event: Event) {
       <header class="chat-header">
         <div class="header-info">
           <h3 class="header-title">{{ activeTitle }}</h3>
-          <div class="header-sub">
+          <div class="header-sub" :class="{ locked: chatLocked }">
             <span class="status-dot" />
-            AI 助手在线
+            {{ chatLocked ? '对话中 ...' : 'AI 助手在线' }}
           </div>
         </div>
       </header>
@@ -598,18 +770,35 @@ function handleInputKeydown(event: Event) {
           </div>
 
           <div class="bubble" :class="{ markdown: item.type === ChatMessageType.AI }">
-            <!-- 用户消息携带的图片 -->
-            <div v-if="item.imageUrls && item.imageUrls.length" class="bubble-images">
-              <img v-for="(img, i) in item.imageUrls" :key="i" :src="img" alt="" />
+            <!-- 消息携带的图片：相册式容器，点击放大预览（可左右切换） -->
+            <div
+              v-if="item.imageUrls && item.imageUrls.length"
+              class="bubble-images"
+              :class="{ 'with-text': !!item.message }"
+            >
+              <el-image
+                v-for="(img, i) in item.imageUrls"
+                :key="i"
+                class="bubble-image"
+                :src="img"
+                :preview-src-list="item.imageUrls"
+                :initial-index="i"
+                fit="contain"
+                preview-teleported
+                hide-on-click-modal
+              />
             </div>
             <!-- 等待首个内容时显示打字指示 -->
             <span v-if="item.streaming && !item.message" class="typing">
               <i /><i /><i />
             </span>
             <template v-else>
-              <!-- AI 输出按 Markdown 渲染，用户消息保持纯文本 -->
-              <ChatMarkdown v-if="item.type === ChatMessageType.AI" :content="item.message" />
-              <span v-else class="plain">{{ item.message }}</span>
+              <!-- AI 输出按 Markdown 渲染，用户消息保持纯文本；空内容不渲染，避免多余占位 -->
+              <ChatMarkdown
+                v-if="item.type === ChatMessageType.AI && item.message"
+                :content="item.message"
+              />
+              <span v-else-if="item.message" class="plain">{{ item.message }}</span>
               <span v-if="item.streaming" class="cursor">▍</span>
             </template>
           </div>
@@ -621,12 +810,45 @@ function handleInputKeydown(event: Event) {
         <div class="input-card">
           <!-- 待发送图片预览 -->
           <div v-if="pendingImages.length" class="attach-bar">
-            <div v-for="img in pendingImages" :key="img.id" class="attach-item">
-              <img :src="img.url" alt="" />
+            <div
+              v-for="(img, i) in pendingImages"
+              :key="img.id"
+              class="attach-item"
+            >
+              <el-image
+                class="attach-img"
+                :src="img.url"
+                fit="cover"
+                :preview-src-list="pendingImages.map((p) => p.url)"
+                :initial-index="i"
+                preview-teleported
+                hide-on-click-modal
+              />
               <button type="button" class="attach-remove" title="移除" @click="removePendingImage(img)">
                 <el-icon :size="10"><Close /></el-icon>
               </button>
             </div>
+          </div>
+
+          <!-- 图片生成模式配置条 -->
+          <div v-if="imageGenActive" class="gen-bar">
+            <span class="gen-bar-label">
+              <el-icon :size="12"><Brush /></el-icon>
+              图片生成模式
+            </span>
+            <div class="gen-bar-item">
+              <span>数量</span>
+              <el-input-number v-model="imageGenForm.count" :min="1" :max="4" size="small" controls-position="right" />
+            </div>
+            <div class="gen-bar-item">
+              <span>宽度</span>
+              <el-input-number v-model="imageGenForm.width" :min="256" :max="2048" :step="128" size="small" controls-position="right" />
+            </div>
+            <div class="gen-bar-item">
+              <span>高度</span>
+              <el-input-number v-model="imageGenForm.height" :min="256" :max="2048" :step="128" size="small" controls-position="right" />
+            </div>
+            <span class="gen-bar-tip">发送将以输入内容生成图片</span>
           </div>
 
           <el-input
@@ -634,7 +856,7 @@ function handleInputKeydown(event: Event) {
             type="textarea"
             :rows="3"
             resize="none"
-            placeholder="可以根据您的权限操作所有数据，请输入您的问题，可粘贴或选择图片 ..."
+            :placeholder="imageGenActive ? '描述要生成的图片，Enter 生成 ...' : '可以根据您的权限操作所有数据，请输入您的问题，可粘贴或选择图片 ...'"
             @keydown="handleInputKeydown"
             @compositionstart="handleCompositionStart"
             @compositionend="handleCompositionEnd"
@@ -644,12 +866,13 @@ function handleInputKeydown(event: Event) {
             <div class="toolbar-left">
               <button
                 type="button"
-                class="attach-btn"
+                class="skill-btn"
                 :class="{ active: pendingImages.length > 0 }"
                 title="选择图片（可多选，也可直接粘贴）"
                 @click="imageInputRef?.click()"
               >
-                <el-icon :size="14"><Picture /></el-icon>
+                <el-icon :size="13"><Picture /></el-icon>
+                <span>选择图片</span>
               </button>
               <input
                 ref="imageInputRef"
@@ -659,6 +882,17 @@ function handleInputKeydown(event: Event) {
                 hidden
                 @change="handleImagePick"
               />
+              <!-- 图片生成技能：点击选中，再点取消选中 -->
+              <button
+                type="button"
+                class="skill-btn"
+                :class="{ active: imageGenActive }"
+                :title="imageGenActive ? '取消图片生成模式' : '选中后发送即生成图片'"
+                @click="toggleImageGen"
+              >
+                <el-icon :size="13"><Brush /></el-icon>
+                <span>图片生成</span>
+              </button>
               <el-popover
                 v-if="promptOptions.length"
                 v-model:visible="promptPopoverVisible"
@@ -707,7 +941,7 @@ function handleInputKeydown(event: Event) {
               <span class="input-hint">Enter 发送 · Shift + Enter 换行</span>
             </div>
             <el-button
-              v-if="sending"
+              v-if="sending || imageGenLoading || chatLocked"
               class="stop-btn"
               type="danger"
               plain
@@ -720,11 +954,11 @@ function handleInputKeydown(event: Event) {
               v-else
               class="send-btn"
               type="primary"
-              :icon="Promotion"
-              :disabled="!input.trim() && !pendingImages.length"
+              :icon="imageGenActive ? Brush : Promotion"
+              :disabled="imageGenActive ? !input.trim() : !input.trim() && !pendingImages.length"
               @click="handleSend"
             >
-              发送
+              {{ imageGenActive ? '生成图片' : '发送' }}
             </el-button>
           </div>
         </div>
@@ -885,6 +1119,18 @@ $text-secondary: #606266;
   color: $text-primary;
 }
 
+@keyframes lock-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.75);
+  }
+}
+
 .item-actions {
   display: flex;
   gap: 4px;
@@ -983,6 +1229,17 @@ $text-secondary: #606266;
   margin-left: auto;
   color: #909399;
   font-size: 12px;
+
+  // 对话中（/ai/chat/{id}/list 的 isLocked）：圆点切主题色快闪
+  &.locked {
+    color: var(--el-color-primary);
+
+    .status-dot {
+      background: var(--el-color-primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+      animation: lock-pulse 1.2s ease-in-out infinite;
+    }
+  }
 }
 
 .status-dot {
@@ -1144,6 +1401,11 @@ $text-secondary: #606266;
       background: #fff;
       color: $text-primary;
       box-shadow: 0 1px 6px rgba(31, 35, 41, 0.05);
+
+      // 图片相册底色（浅灰衬托白底气泡）
+      .bubble-images {
+        background: #f6f7fb;
+      }
     }
   }
 
@@ -1160,10 +1422,23 @@ $text-secondary: #606266;
       background: linear-gradient(135deg, #4f7cf0 0%, #6366f1 100%);
       color: #fff;
       box-shadow: 0 3px 10px rgba(79, 124, 240, 0.3);
+      // 含图消息适当加大内边距，避免图文顶到气泡边缘
+      padding: 12px 14px;
 
-      /** 用户消息保持纯文本按原始换行展示 */
+      /** 用户消息保持纯文本按原始换行展示；轻投影提升渐变底上的可读性 */
       .plain {
         white-space: pre-wrap;
+        text-shadow: 0 1px 2px rgba(30, 41, 92, 0.22);
+      }
+
+      // 图片相册：磨砂白框与气泡分层，图片缩略图描白边
+      .bubble-images {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.38);
+
+        .bubble-image {
+          border-color: rgba(255, 255, 255, 0.55);
+        }
       }
     }
   }
@@ -1263,6 +1538,49 @@ $text-secondary: #606266;
   padding: 10px 14px 0;
 }
 
+// 图片生成模式配置条
+.gen-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 14px 0;
+  padding: 8px 12px;
+  border: 1px dashed #c7cdf8;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.06) 0%, rgba(139, 92, 246, 0.08) 100%);
+}
+
+.gen-bar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.gen-bar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  span {
+    font-size: 12px;
+    color: $text-secondary;
+  }
+
+  :deep(.el-input-number) {
+    width: 96px;
+  }
+}
+
+.gen-bar-tip {
+  margin-left: auto;
+  font-size: 12px;
+  color: #c0c4cc;
+}
+
 .attach-item {
   position: relative;
   width: 64px;
@@ -1271,11 +1589,11 @@ $text-secondary: #606266;
   border: 1px solid $border-color;
   overflow: visible;
 
-  img {
+  .attach-img {
     width: 100%;
     height: 100%;
     border-radius: 8px;
-    object-fit: cover;
+    cursor: zoom-in;
   }
 }
 
@@ -1300,44 +1618,64 @@ $text-secondary: #606266;
   }
 }
 
-.attach-btn {
+// 技能按钮：带文字的醒目胶囊（淡紫底 + 悬停/激活渐变高亮），选择图片 / 图片生成共用
+.skill-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 28px;
+  gap: 6px;
   height: 28px;
-  border: 1px solid $border-color;
+  padding: 0 12px;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: #fff;
-  color: $text-secondary;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.14) 100%);
+  color: #6366f1;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    border-color: #a5b4fc;
-    color: #6366f1;
+    color: #fff;
+    background: $accent;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.35);
   }
 
   &.active {
-    border-color: transparent;
     color: #fff;
     background: $accent;
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
   }
 }
 
+// 图片相册：块级独占一行（图片在上、文字在下），宽度贴合内容不整行铺满
 .bubble-images {
   display: flex;
+  width: fit-content;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 6px;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px;
+  border-radius: 10px;
 
-  img {
-    max-width: 180px;
-    max-height: 140px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+  // 图文混排时与正文拉开间距（呼吸感），纯图消息无多余间距
+  &.with-text {
+    margin-bottom: 12px;
+  }
+}
+
+// 气泡缩略图：等高、宽度按图片比例自适应，无裁切无留白格子
+.bubble-image {
+  height: 140px;
+  max-width: 240px;
+  border-radius: 6px;
+  cursor: zoom-in;
+
+  :deep(.el-image__inner) {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    border-radius: 6px;
   }
 }
 
@@ -1417,8 +1755,25 @@ $text-secondary: #606266;
   }
 }
 
+// 停止按钮：胶囊形浅红底（对话中 isLocked 时替换发送按钮出现，可中断生成）
 .chat-page .el-button.stop-btn {
-  border-radius: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 108, 108, 0.4);
+  background: rgba(245, 108, 108, 0.1);
+  color: #f56c6c;
+  font-weight: 500;
+  padding: 8px 20px;
+
+  &:hover,
+  &:focus {
+    background: rgba(245, 108, 108, 0.18);
+    border-color: rgba(245, 108, 108, 0.55);
+    color: #f56c6c;
+  }
+
+  &.is-disabled {
+    opacity: 0.55;
+  }
 }
 </style>
 

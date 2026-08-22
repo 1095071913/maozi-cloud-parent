@@ -8,25 +8,25 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author pengjinlong
- * @since 2026/8/22 20:58
+ * @since 2026/8/22 20:48
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatListResult implements Serializable {
+public class ChatGenerateImageResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "是否对话中")
-    private Boolean isLocked;
+    @Schema(description = "消息")
+    private String message;
 
-    @Schema(description = "对话内容")
-    private List<ChatItemResult> items;
+    @Schema(description = "图片列表")
+    private Set<String> images;
 
 }

@@ -18,17 +18,17 @@ public interface Lock {
      * @param waitTime 等待获取锁的最大时间（秒）
      * @param leaseTime 锁的持有时间（秒），超时后自动释放
      * @return 是否成功获取锁
-     * @throws Exception 锁操作异常
      */
-    boolean lock(String key,Long waitTime,Long leaseTime) throws Exception;
+    boolean lock(String key,Long waitTime,Long leaseTime);
 
     /**
      * 释放分布式锁
      *
      * @param key 锁的键名
      * @return 是否成功释放锁
-     * @throws Exception 解锁操作异常
      */
-    boolean unLock(String key) throws Exception;
+    boolean unLock(String key);
+
+    boolean isLocked(String key);
 
 }

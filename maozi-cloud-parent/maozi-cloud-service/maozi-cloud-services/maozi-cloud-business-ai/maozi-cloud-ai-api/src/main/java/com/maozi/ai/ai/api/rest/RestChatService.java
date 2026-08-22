@@ -1,14 +1,18 @@
 package com.maozi.ai.ai.api.rest;
 
+import com.maozi.ai.ai.dto.ChatGenerateImageParam;
 import com.maozi.ai.ai.dto.ChatParam;
+import com.maozi.ai.ai.vo.ChatGenerateImageResult;
 import com.maozi.ai.ai.vo.ChatListResult;
 import com.maozi.ai.ai.vo.ChatResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
@@ -32,8 +36,11 @@ public interface RestChatService {
 	@Post(value = PATH, produces = MediaType.TEXT_EVENT_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, description = "AI对话")
     Flux<AbstractBaseResult<ChatResult>> chat(@RequestPart(value = "files", required = false) List<MultipartFile> files,@RequestPart("param") ChatParam param);
 
+	@Post(value = PATH + "/generate/image", description = "AI对话图片生成")
+	AbstractBaseResult<ChatGenerateImageResult> generateImage(@RequestBody @Valid ChatGenerateImageParam param);
+
 	@Get(value = PATH + "/{conversationId}/list", description = "AI对话列表")
-	AbstractBaseResult<List<ChatListResult>> list(@PathVariable String conversationId);
+	AbstractBaseResult<ChatListResult> list(@PathVariable String conversationId);
 
 	@Post(value = PATH + "/{conversationId}/stop", description = "AI对话停止")
 	AbstractBaseResult<Void> stop(@PathVariable String conversationId);

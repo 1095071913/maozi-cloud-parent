@@ -350,14 +350,30 @@ export enum ChatStreamType {
   OUTPUT = 1
 }
 
-/** AI 对话消息（/ai/chat/{id}/list 返回元素） */
+/** AI 对话消息（/ai/chat/{id}/list 返回 items 元素） */
 export interface ChatMessageItem {
   /** 消息类型（0=用户消息 1=AI 消息） */
   type: ChatMessageType
   /** 消息内容 */
   message: string
-  /** 携带图片（字节数组，前端转本地预览地址展示） */
-  images?: number[][]
+  /** 携带图片（Base64 字符串，前端转 data URL 展示） */
+  images?: string[]
+}
+
+/** AI 对话列表结果（/ai/chat/{id}/list） */
+export interface ChatListResult {
+  /** 是否对话中（生成进行中） */
+  isLocked?: boolean
+  /** 对话内容 */
+  items?: ChatMessageItem[]
+}
+
+/** AI 图片生成结果（/ai/chat/generate/image） */
+export interface GenerateImageResult {
+  /** 消息（生成结果描述） */
+  message?: string
+  /** 生成图片的 URL 列表 */
+  images?: string[]
 }
 
 /** 配置列表行（/system/config/list 返回元素） */

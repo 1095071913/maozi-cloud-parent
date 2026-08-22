@@ -101,6 +101,10 @@ service.interceptors.response.use(
     return data as unknown as AxiosResponse
   },
   async (error) => {
+    // 主动中止的请求（如图片生成点停止）：静默拒绝，不弹错误提示
+    if (axios.isCancel(error) || error.code === 'ERR_CANCELED') {
+      return Promise.reject(error)
+    }
     // 后端通过响应头 X-Redirect 要求跳转时优先处理（即使 HTTP 错误也生效）
     if (error.response && applyRedirectHeader(error.response.headers)) {
       return Promise.reject(new Error('redirect:login'))

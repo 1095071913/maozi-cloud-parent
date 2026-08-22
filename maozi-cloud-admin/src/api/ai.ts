@@ -2,7 +2,13 @@ import request from './request'
 import {getAccessToken} from '@/utils/auth'
 import {getGrayVersion} from '@/utils/gray'
 import {getTempRequestUrl} from '@/utils/tempRequest'
-import type {ApiResponse, ChatMessageItem, ConversationItem, PageResult} from '@/types/api'
+import type {
+  ApiResponse,
+  ChatListResult,
+  ConversationItem,
+  GenerateImageResult,
+  PageResult
+} from '@/types/api'
 
 /**
  * 会话列表查询参数
@@ -37,6 +43,46 @@ export function getConversationList(params: ConversationListParams) {
 }
 
 /**
+ * AI 图片生成参数
+ */
+export interface GenerateImageParams {
+  /** 图片描述（必填） */
+  message: string
+  /** 会话 ID（必填） */
+  conversationId: string | number
+  /** 系统提示词配置名称 */
+  promptConfig?: string
+  /** 生成数量（默认 1） */
+  count?: number
+  /** 宽度像素（默认 1024） */
+  width?: number
+  /** 高度像素（默认 1024） */
+  height?: number
+}
+
+/**
+ * AI 图片生成（同步返回生成图片的 URL 列表）
+ * POST /ai/chat/generate/image
+ *
+ * - 生成耗时较长，超时单独放宽至 2 分钟（axios 实例默认 15 秒）
+ * - signal 用于用户点"停止"时中止前端等待
+ */
+export function generateImage(params: GenerateImageParams, signal?: AbortSignal) {
+  return request.post(
+    '/ai/chat/generate/image',
+    {
+      message: params.message,
+      conversationId: params.conversationId,
+      promptConfig: params.promptConfig || undefined,
+      count: params.count,
+      width: params.width,
+      height: params.height
+    },
+    { timeout: 120000, signal }
+  ) as unknown as Promise<ApiResponse<GenerateImageResult>>
+}
+
+/**
  * AI 会话更新标题
  * POST /ai/chat/record/{conversationId}/updateTitle
  */
@@ -61,13 +107,13 @@ export function removeConversation(conversationId: string | number) {
 }
 
 /**
- * AI 对话列表（当前会话的全部消息）
+ * AI 对话列表（当前会话的全部消息与对话中状态）
  * GET /ai/chat/{conversationId}/list
  */
 export function getChatList(conversationId: string | number) {
   return request.get(
     `/ai/chat/${conversationId}/list`
-  ) as unknown as Promise<ApiResponse<ChatMessageItem[]>>
+  ) as unknown as Promise<ApiResponse<ChatListResult>>
 }
 
 /**
