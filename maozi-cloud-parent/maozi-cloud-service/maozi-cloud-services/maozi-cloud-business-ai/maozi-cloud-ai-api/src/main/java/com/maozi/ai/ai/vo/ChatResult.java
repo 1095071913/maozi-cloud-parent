@@ -29,4 +29,12 @@ public class ChatResult implements Serializable {
     @Schema(description = "消息")
     private String message;
 
+    @Schema(description = "数据")
+    private Object data;
+
+    public ChatResult(ChatType type, String message){
+        this.type = type;
+        this.message = message;
+    }
+
 }

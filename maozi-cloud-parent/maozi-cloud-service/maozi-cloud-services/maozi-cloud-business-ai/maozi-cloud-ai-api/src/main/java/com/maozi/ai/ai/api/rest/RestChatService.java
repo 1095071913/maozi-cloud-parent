@@ -3,6 +3,7 @@ package com.maozi.ai.ai.api.rest;
 import com.maozi.ai.ai.dto.ChatGenerateImageParam;
 import com.maozi.ai.ai.dto.ChatParam;
 import com.maozi.ai.ai.vo.ChatGenerateImageResult;
+import com.maozi.ai.ai.vo.ChatItemResult;
 import com.maozi.ai.ai.vo.ChatListResult;
 import com.maozi.ai.ai.vo.ChatResult;
 import com.maozi.common.result.AbstractBaseResult;
@@ -13,6 +14,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
@@ -39,10 +41,19 @@ public interface RestChatService {
 	@Post(value = PATH + "/generate/image", description = "AI对话图片生成")
 	AbstractBaseResult<ChatGenerateImageResult> generateImage(@RequestBody @Valid ChatGenerateImageParam param);
 
-	@Get(value = PATH + "/{conversationId}/list", description = "AI对话列表")
+
+	String CURRENT_PATH = PATH + "/{conversationId}";
+
+	@Get(value = CURRENT_PATH + "/list", description = "AI对话列表")
 	AbstractBaseResult<ChatListResult> list(@PathVariable String conversationId);
 
-	@Post(value = PATH + "/{conversationId}/stop", description = "AI对话停止")
+	@Post(value = CURRENT_PATH + "/stop", description = "AI对话停止")
 	AbstractBaseResult<Void> stop(@PathVariable String conversationId);
+
+	@Get(value = CURRENT_PATH + "/getAfterMessages", description = "AI对话获取之后消息ID列表")
+	AbstractBaseResult<List<ChatItemResult>> getAfterMessages(@PathVariable String conversationId, @RequestParam Long createTime);
+
+	@Post(value = CURRENT_PATH + "/{messageId}/remove", description = "AI对话消息删除")
+	AbstractBaseResult<Void> removeMessage(@PathVariable String conversationId, @PathVariable String messageId);
 
 }

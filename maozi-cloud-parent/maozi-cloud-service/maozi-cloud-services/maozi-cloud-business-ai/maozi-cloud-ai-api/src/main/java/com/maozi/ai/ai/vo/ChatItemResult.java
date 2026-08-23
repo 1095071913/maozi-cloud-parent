@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class ChatItemResult implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "ID")
+    private String id;
+
     @Schema(description = "AI对话类型")
     private ChatMessageType type;
 
@@ -32,5 +36,8 @@ public class ChatItemResult implements Serializable {
 
     @Schema(description = "Base64图片列表")
     private List<String> images;
+
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
 
 }

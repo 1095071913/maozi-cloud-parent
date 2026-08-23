@@ -2,7 +2,14 @@ import request from './request'
 import {getAccessToken} from '@/utils/auth'
 import {getGrayVersion} from '@/utils/gray'
 import {getTempRequestUrl} from '@/utils/tempRequest'
-import type {ApiResponse, ChatListResult, ConversationItem, GenerateImageResult, PageResult} from '@/types/api'
+import type {
+    ApiResponse,
+    ChatListResult,
+    ChatMessageItem,
+    ConversationItem,
+    GenerateImageResult,
+    PageResult
+} from '@/types/api'
 
 /**
  * 会话列表查询参数
@@ -118,6 +125,27 @@ export function stopChat(conversationId: string | number) {
   return request.post(
     `/ai/chat/${conversationId}/stop`
   ) as unknown as Promise<ApiResponse<void>>
+}
+
+/**
+ * AI 对话消息删除
+ * POST /ai/chat/{conversationId}/{messageId}/remove
+ */
+export function removeChatMessage(conversationId: string | number, messageId: string) {
+  return request.post(
+    `/ai/chat/${conversationId}/${messageId}/remove`
+  ) as unknown as Promise<ApiResponse<void>>
+}
+
+/**
+ * AI 对话获取之后消息列表（createTime 之后新增的完整消息：id/type/message/images/createTime，
+ * 升序、最新在最后）：增量渲染与完成判定（AI 消息落库即本轮生成结束）
+ * GET /ai/chat/{conversationId}/getAfterMessages
+ */
+export function getAfterMessages(conversationId: string | number, createTime: number) {
+  return request.get(`/ai/chat/${conversationId}/getAfterMessages`, {
+    params: { createTime }
+  }) as unknown as Promise<ApiResponse<ChatMessageItem[]>>
 }
 
 /**

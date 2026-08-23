@@ -352,12 +352,16 @@ export enum ChatStreamType {
 
 /** AI 对话消息（/ai/chat/{id}/list 返回 items 元素） */
 export interface ChatMessageItem {
+  /** 消息 ID（删除消息接口使用；本地新增消息在操作完成后由 getAfterMessageIds 回填） */
+  id?: string
   /** 消息类型（0=用户消息 1=AI 消息） */
   type: ChatMessageType
   /** 消息内容 */
   message: string
   /** 携带图片（Base64 字符串，前端转 data URL 展示） */
   images?: string[]
+  /** 创建时间（yyyy-MM-dd HH:mm:ss） */
+  createTime?: string
 }
 
 /** AI 对话列表结果（/ai/chat/{id}/list） */

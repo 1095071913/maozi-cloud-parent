@@ -6,9 +6,9 @@ import com.alibaba.cloud.ai.dashscope.common.DashScopeApiConstants;
 import com.maozi.ai.ai.api.ChatConversationRecordService;
 import com.maozi.ai.ai.api.impl.ChatServiceImpl;
 import com.maozi.ai.ai.api.rest.RestChatService;
+import com.maozi.ai.ai.config.ChatMemoryRepository;
 import com.maozi.ai.ai.dto.ChatGenerateImageParam;
 import com.maozi.ai.ai.dto.ChatParam;
-import com.maozi.ai.ai.enums.ChatMessageType;
 import com.maozi.ai.ai.enums.ChatType;
 import com.maozi.ai.ai.vo.ChatGenerateImageResult;
 import com.maozi.ai.ai.vo.ChatItemResult;
@@ -30,9 +30,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.content.Media;
 import org.springframework.ai.image.ImageModel;
@@ -50,7 +48,6 @@ import reactor.core.publisher.Flux;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -66,6 +63,8 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
     private final ChatMemory chatMemory;
 
     private final ImageModel imageModel;
+
+    private final ChatMemoryRepository chatMemoryRepository;
 
     @Value("${spring.ai.dashscope.chat.options.text_image_model:}")
     private String imageModelName;
@@ -156,20 +155,23 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
                 // 请求结束后处理
                 .doOnComplete(() -> redisClient.delete(chatStopLockKey))
 
-                .doOnCancel(() -> chatMemory.add(conversationIdFinal,new AssistantMessage(aiChatOutputMessage.toString())))
-
                 // 是否打断对话流通道
                 .takeWhile(chatResponse -> redisClient.hasKey(chatStopLockKey))
 
+                // 打断对话流通道后执行
+                .doOnCancel(() -> {
+                    chatMemory.add(conversationIdFinal,new AssistantMessage(aiChatOutputMessage.toString()));
+                    redisClient.delete(chatStopLockKey);
+                })
+
                 // 每次获取到流数据后的处理
                 .map(chatResponse -> {
-                    Generation result = chatResponse.getResult();
-                    if(ObjectUtil.isNullEmpty(result)){
-                        return ResultUtil.success(new ChatResult(ChatType.OUTPUT,Boolean.FALSE.toString()));
-                    }
-                    String aiChat = result.getOutput().getText();
+
+                    String aiChat = chatResponse.getResult().getOutput().getText();
                     aiChatOutputMessage.append(aiChat);
+
                     return (AbstractBaseResult<ChatResult>) ResultUtil.success(new ChatResult(ChatType.OUTPUT, aiChat));
+
                 })
 
                 // 告诉前端对话流通道已结束 可以关闭连接
@@ -192,31 +194,40 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
         stringValueOperations.setIfAbsent(chatStopLockKey, Boolean.TRUE.toString(), 60L * count, TimeUnit.SECONDS);
         stringValueOperations.setIfAbsent(chatGenerateImageStopLockKey, Boolean.TRUE.toString(), 60L * count, TimeUnit.SECONDS);
 
-        String message = param.getMessage();
-        chatMemory.add(conversationId, new UserMessage(message));
-        Integer height = param.getHeight();
-        Integer width = param.getWidth();
-        ImageOptions options = ImageOptionsBuilder.builder()
-                .height(ObjectUtil.isNotNullEmpty(height) ? height : 1024)
-                .width(ObjectUtil.isNotNullEmpty(width) ? width : 1024)
-                .N(ObjectUtil.isNotNullEmpty(count) ? count : 1)
-                .build();
+        try{
 
-        ImageResponse response = imageModel.call(new ImagePrompt(message, options));
-        Set<String> images = response.getResults().stream().map(result -> result.getOutput().getUrl()).collect(Collectors.toSet());
+            String message = param.getMessage();
+            chatMemory.add(conversationId, new UserMessage(message));
 
-        List<Media> medias = CollectionUtil.newArrayList();
-        for(String image : images){
-            URL url = URI.create(image).toURL();
-            medias.add(new Media(MimeTypeUtils.IMAGE_PNG, new InputStreamResource(url.openStream())));
-        }
+            Integer height = param.getHeight();
+            Integer width = param.getWidth();
+            ImageOptions options = ImageOptionsBuilder.builder()
+                    .height(ObjectUtil.isNotNullEmpty(height) ? height : 1024)
+                    .width(ObjectUtil.isNotNullEmpty(width) ? width : 1024)
+                    .N(ObjectUtil.isNotNullEmpty(count) ? count : 1)
+                    .build();
 
-        if(redisClient.hasKey(chatGenerateImageStopLockKey)){
+            ImageResponse response = imageModel.call(new ImagePrompt(message, options));
+            Set<String> images = response.getResults().stream().map(result -> result.getOutput().getUrl()).collect(Collectors.toSet());
+
+            List<Media> medias = CollectionUtil.newArrayList();
+            for(String image : images){
+                URL url = URI.create(image).toURL();
+                medias.add(new Media(MimeTypeUtils.IMAGE_PNG, new InputStreamResource(url.openStream())));
+            }
+
+            if(!redisClient.hasKey(chatGenerateImageStopLockKey)){
+                return ResultUtil.success(new ChatGenerateImageResult(null,Set.of()));
+            }
 
             String responseMessage = "图片生成完成 ...";
             if(ObjectUtil.isNotNullEmpty(medias)){
                 chatMemory.add(conversationId, new AssistantMessage(responseMessage, CollectionUtil.newHashMap(), CollectionUtil.newArrayList(), medias));
             }
+
+            return ResultUtil.success(new ChatGenerateImageResult(responseMessage, images));
+
+        }finally {
 
             RedisUtil.getRedisClient().delete(
                     CollectionUtil.newArrayList(
@@ -225,11 +236,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
                     )
             );
 
-            return ResultUtil.success(new ChatGenerateImageResult(responseMessage, images));
-
         }
-
-        return ResultUtil.success(new ChatGenerateImageResult(null,Set.of()));
 
     }
 
@@ -238,7 +245,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
 
         Boolean isLocked = RedisUtil.getRedisClient().hasKey(AI_CHAT_STOP_KEY + conversationId);
 
-        List<Message> messages = chatMemory.get(conversationId);
+        List<Message> messages = chatMemoryRepository.findRecordByConversationId(conversationId);
         if(CollectionUtil.isEmpty(messages)){
             return ResultUtil.success(new ChatListResult(
                     isLocked,
@@ -246,25 +253,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
             );
         }
 
-        List<ChatItemResult> responses = messages.stream()
-                .filter(message -> message.getMessageType() == MessageType.ASSISTANT || message.getMessageType() == MessageType.USER)
-                .map(message -> {
-
-                    List<String> images = CollectionUtil.newArrayList();
-                    if(message instanceof UserMessage userMessage){
-                        userMessage.getMedia().forEach(media -> images.add(Base64.getEncoder().encodeToString(media.getDataAsByteArray())));
-                    }
-
-                    if(message instanceof AssistantMessage assistantMessage){
-                        assistantMessage.getMedia().forEach(media -> images.add(Base64.getEncoder().encodeToString(media.getDataAsByteArray())));
-                    }
-
-                    return new ChatItemResult(message.getMessageType() == MessageType.ASSISTANT ? ChatMessageType.AI : ChatMessageType.USER, message.getText(),images);
-
-                })
-                .toList();
-
-        return ResultUtil.success(new ChatListResult(isLocked,responses));
+        return ResultUtil.success(new ChatListResult(isLocked,convertMessageList(messages)));
 
     }
 
@@ -277,6 +266,24 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
                         AI_CHAT_GENERATE_IMAGE_STOP_KEY + conversationId
                 )
         );
+        return ResultUtil.success();
+    }
+
+    @Override
+    public AbstractBaseResult<List<ChatItemResult>> getAfterMessages(String conversationId, Long createTime) {
+
+        List<Message> messages = chatMemoryRepository.findRecordAfterTimestamp(conversationId, createTime);
+        if(ObjectUtil.isNullEmpty(messages)){
+            return ResultUtil.success(CollectionUtil.newArrayList());
+        }
+
+        return ResultUtil.success(convertMessageList(messages));
+
+    }
+
+    @Override
+    public AbstractBaseResult<Void> removeMessage(String conversationId, String messageId) {
+        chatMemoryRepository.deleteByMessageId(conversationId, messageId);
         return ResultUtil.success();
     }
 

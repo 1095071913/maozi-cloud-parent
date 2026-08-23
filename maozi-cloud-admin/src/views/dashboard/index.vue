@@ -20,8 +20,10 @@ import {
   chatStream,
   createConversation,
   generateImage,
+  getAfterMessages,
   getChatList,
   getConversationList,
+  removeChatMessage,
   removeConversation,
   stopChat,
   updateConversationTitle
@@ -175,6 +177,65 @@ function imageSrc(base64: string): string {
   return base64.startsWith('data:') ? base64 : `data:image/jpeg;base64,${base64}`
 }
 
+/**
+ * 消息时间统一为毫秒时间戳（与后端列表接口一致）：本地新增消息的时间展示与轮询入参
+ */
+function nowTimeString(): string {
+  return String(Date.now())
+}
+
+/** 消息时间展示文案（HH:mm，兼容毫秒时间戳与旧的 yyyy-MM-dd HH:mm:ss 格式） */
+function msgTimeText(item: ChatBubble): string {
+  const value = item.createTime || ''
+  // 毫秒时间戳（后端 Long 序列化为数字或纯数字字符串）
+  if (/^\d{12,}$/.test(value)) {
+    const d = new Date(Number(value))
+    const p = (n: number) => String(n).padStart(2, '0')
+    return `${p(d.getHours())}:${p(d.getMinutes())}`
+  }
+  return value.slice(11, 16)
+}
+
+/**
+ * 拉取操作开始时间之后新增的消息列表（含 ID 与时间，升序、最新在最后），
+ * 按序回填到本次新增的本地气泡（ID 供删除使用，时间以后端为准）；失败静默不影响展示
+ */
+async function syncNewMessageIds(
+  conversationId: string | number,
+  since: number,
+  bubbles: ChatBubble[],
+  /** head=从头对齐（中止场景：仅剩用户消息），tail=从尾对齐（默认，用户+AI 消息成对） */
+  align: 'head' | 'tail' = 'tail'
+) {
+  if (!bubbles.length) return
+  try {
+    const res = await getAfterMessages(conversationId, since)
+    const list = res.data || []
+    if (list.length < bubbles.length) return
+    const start = align === 'head' ? 0 : list.length - bubbles.length
+    bubbles.forEach((b, i) => {
+      const item = list[start + i]
+      if (item?.id) {
+        b.id = item.id
+        if (item.createTime) b.createTime = item.createTime
+      }
+    })
+  } catch {
+    // 静默：回填失败不影响消息展示
+  }
+}
+
+/** 删除单条消息（依赖消息 ID，历史消息自带、本地新增消息在操作完成后回填） */
+async function handleRemoveMessage(item: ChatBubble) {
+  if (!item.id || !activeId.value) return
+  await removeChatMessage(activeId.value, item.id)
+  item.imageUrls?.forEach((url) => {
+    if (url.startsWith('blob:')) URL.revokeObjectURL(url)
+  })
+  messages.value = messages.value.filter((m) => m !== item)
+  ElMessage.success('已删除')
+}
+
 /** 释放消息气泡持有的本地预览地址（仅发送时的 blob: objectURL 需要，data URL 无需释放） */
 function revokeMessageUrls() {
   messages.value.forEach((m) => {
@@ -187,12 +248,28 @@ function revokeMessageUrls() {
 /** 当前会话是否对话中（/ai/chat/{id}/list 的 isLocked） */
 const chatLocked = ref(false)
 
+/**
+ * 以服务端锁定状态同步本地"对话中"标记：
+ * 生成请求异常收尾时调用——后端仍在生成则保持停止按钮（可中断），已结束则恢复发送按钮
+ */
+async function refreshLockState() {
+  if (!activeId.value) return
+  try {
+    const res = await getChatList(activeId.value)
+    if (res.data) chatLocked.value = !!res.data.isLocked
+  } catch {
+    // 查询失败保持当前状态
+  }
+}
+
 // ============ 对话中轮询 ============
-/** 对话中（isLocked）时每 5 秒查询一次对话列表，锁定结束后渲染最新内容 */
+/** 对话中（isLocked）时每 5 秒轮询一次"之后消息列表"接口，增量渲染新消息 */
 const LOCK_POLL_INTERVAL = 5000
 let lockPollTimer: ReturnType<typeof setInterval> | null = null
 /** 轮询请求进行中标记，避免慢请求导致轮询重叠 */
 let lockPollInFlight = false
+/** 轮询窗口起点：已展示的最后一条消息时间（毫秒） */
+let lockPollSince = 0
 
 function stopLockPolling() {
   if (lockPollTimer) {
@@ -201,20 +278,87 @@ function stopLockPolling() {
   }
 }
 
+/**
+ * 消息时间转毫秒时间戳，非法返回 0。兼容：
+ * - 纯数字时间戳（秒/毫秒）
+ * - yyyy-MM-dd HH:mm:ss[.SSS]（后端当前格式，连字符为任意破折号字符也能匹配）
+ * 不依赖 new Date 的字符串解析（该格式在部分引擎下会得到 NaN -> 0）
+ */
+function timeStringToEpoch(value?: string): number {
+  if (!value) return 0
+  // 纯数字时间戳直接取值
+  if (/^\d{10,}$/.test(value)) return Number(value)
+  // 显式按分量解析日期时间串（\D 兼容普通连字符与各类破折号）
+  const m = value.match(
+    /^(\d{4})\D(\d{1,2})\D(\d{1,2})\D(\d{1,2}):(\d{1,2}):(\d{1,2})(?:\.(\d{1,3}))?/
+  )
+  if (m) {
+    const epoch = new Date(
+      Number(m[1]),
+      Number(m[2]) - 1,
+      Number(m[3]),
+      Number(m[4]),
+      Number(m[5]),
+      Number(m[6]),
+      Number(m[7] || 0)
+    ).getTime()
+    if (!Number.isNaN(epoch)) return epoch
+  }
+  // 兜底：标准格式交给引擎解析
+  const time = new Date(value.replace(/-/g, '/')).getTime()
+  return Number.isNaN(time) ? 0 : time
+}
+
+/** 取当前已展示消息中的最大创建时间：轮询窗口应取"最后一条消息的时间戳" */
+function latestMessageEpoch(): number {
+  return messages.value.reduce((max, m) => Math.max(max, timeStringToEpoch(m.createTime)), 0)
+}
+
 function startLockPolling() {
   if (lockPollTimer) return
+  // 以当前已展示的最后一条消息时间为窗口起点，轮询其后新增的消息
+  lockPollSince = latestMessageEpoch()
   lockPollTimer = setInterval(async () => {
     const id = activeId.value
     if (!id || lockPollInFlight) return
     lockPollInFlight = true
     try {
-      const res = await getChatList(id)
+      // 每轮请求前用最新展示状态校正窗口：启动时消息未就位（算出 0）也能自愈，
+      // 避免一直以 0 从会话起点全量拉取
+      lockPollSince = Math.max(lockPollSince, latestMessageEpoch())
+      const res = await getAfterMessages(id, lockPollSince)
       // 轮询期间已切换会话：丢弃本次结果（activeId 变化会重启轮询）
       if (id !== activeId.value) return
-      chatLocked.value = !!res.data?.isLocked
-      // 锁定结束：渲染最新对话内容；自身流式输出进行中时不打扰（内容已实时展示）
-      if (!chatLocked.value && !sending.value) {
-        await loadMessages()
+      const items = (res.data || []).filter(
+        (m) => m.type === ChatMessageType.USER || m.type === ChatMessageType.AI
+      )
+      let aiArrived = false
+      items.forEach((item) => {
+        if (!item.id || messages.value.some((m) => m.id === item.id)) return
+        const bubble: ChatBubble = {
+          id: item.id,
+          type: item.type,
+          message: item.message,
+          createTime: item.createTime,
+          imageUrls: (item.images || []).map(imageSrc)
+        }
+        // 插到"输出中"占位气泡之前，保持时间顺序
+        const placeholderIndex = messages.value.findIndex((m) => m.streaming && !m.id)
+        if (placeholderIndex === -1) {
+          messages.value.push(bubble)
+        } else {
+          messages.value.splice(placeholderIndex, 0, bubble)
+        }
+        if (item.type === ChatMessageType.AI) aiArrived = true
+        // 入参起点推进到本条消息创建时间，下一轮窗口随之收紧
+        lockPollSince = Math.max(lockPollSince, timeStringToEpoch(item.createTime))
+      })
+      scrollToBottom()
+      // AI 回复落库 = 本轮生成结束：直接以已渲染数据为准，仅移除"输出中"占位气泡，
+      // 不再回查对话列表接口；自身流式输出进行中时不打扰（由流结束逻辑收尾）
+      if (aiArrived && !sending.value) {
+        chatLocked.value = false
+        messages.value = messages.value.filter((m) => !(m.streaming && !m.id))
       }
     } catch {
       // 单次轮询失败静默，等待下一轮
@@ -245,6 +389,13 @@ async function loadMessages() {
       ...m,
       imageUrls: (m.images || []).map(imageSrc)
     }))
+    // 刷新/切换到对话中的会话：追加 AI 输出中的占位气泡（打字特效），
+    // 锁定结束（轮询）后 loadMessages 重建列表时自然移除
+    if (chatLocked.value) {
+      messages.value.push(
+        reactive({ type: ChatMessageType.AI, message: '', streaming: true })
+      )
+    }
     scrollToBottom()
   } finally {
     messageLoading.value = false
@@ -264,6 +415,8 @@ const sending = ref(false)
 let abortStream: (() => void) | null = null
 /** 正在生成中的会话 ID（用于切换/新建时通知服务端停止） */
 let streamingConversationId: string | number = ''
+/** 最近一次流式对话的开始时间：停止后用于拉取最新消息 ID 列表 */
+let lastStreamOpStart = 0
 
 // ============ 图片附件 ============
 /** 单次最多携带的图片数 */
@@ -436,6 +589,13 @@ function flushTyping() {
   finishTyping()
 }
 
+/** 移除无任何内容的 AI 气泡（请求异常、未收到任何输出时残留的空气泡） */
+function removeEmptyAiBubbles() {
+  messages.value = messages.value.filter(
+    (m) => m.type !== ChatMessageType.AI || m.message || (m.imageUrls && m.imageUrls.length)
+  )
+}
+
 /** 中断当前流（切换/新建会话时静默处理，不打扰用户） */
 function stopStreamSilently() {
   if (abortStream) {
@@ -466,6 +626,8 @@ async function handleSend() {
   if (chatLocked.value) return
 
   let conversationId = activeId.value
+  // 本次操作开始时间：结束后用 getAfterMessages 回填新增消息 ID 与时间
+  const opStart = Date.now()
   try {
     sending.value = true
     // 无选中会话：先以首条消息创建会话（后端以该消息生成标题）
@@ -480,15 +642,18 @@ async function handleSend() {
     pendingImages.value = []
     // 开始生成：本地即时置为对话中（结束/停止后由 loadMessages 校正）
     chatLocked.value = true
-    messages.value.push({
+    const userMessage: ChatBubble = reactive({
       type: ChatMessageType.USER,
       message: finalMessage,
+      createTime: nowTimeString(),
       imageUrls: images.map((i) => i.url)
     })
+    messages.value.push(userMessage)
     // 必须为 reactive 代理对象：打字机定时器逐字修改 message 时才能触发视图更新
     const aiMessage: ChatBubble = reactive({
       type: ChatMessageType.AI,
       message: '',
+      createTime: nowTimeString(),
       streaming: true
     })
     messages.value.push(aiMessage)
@@ -503,19 +668,34 @@ async function handleSend() {
       onFinish: () => {
         // 流结束：待缓冲内容逐字打完后自动收尾
         streamFinished = true
+        aiMessage.createTime = nowTimeString()
         chatLocked.value = false
+        // 拉取本次新增消息 ID（最新在最后），回填到本地气泡供删除使用
+        syncNewMessageIds(conversationId, opStart, [userMessage, aiMessage])
         // 刷新会话列表（标题等可能有更新）
         loadConversations(1)
       },
       onError: (msg) => {
-        // 异常：已收到的内容立即完整展示
+        // 异常：已收到的内容立即完整展示，并复位对话状态（停止按钮恢复为发送按钮）
         flushTyping()
+        // 未收到任何输出时移除残留的空 AI 气泡
+        removeEmptyAiBubbles()
+        messages.value.forEach((m) => (m.streaming = false))
+        sending.value = false
+        chatLocked.value = false
         ElMessage.error(msg)
       }
     }, activePrompt.value || undefined, images.length ? images.map((i) => i.file) : undefined)
     streamingConversationId = conversationId
+    lastStreamOpStart = opStart
   } catch {
+    // 请求异常（建立流失败等）：复位对话状态，停止按钮恢复为发送按钮
     flushTyping()
+    // 未收到任何输出时移除残留的空 AI 气泡
+    removeEmptyAiBubbles()
+    messages.value.forEach((m) => (m.streaming = false))
+    sending.value = false
+    chatLocked.value = false
   }
 }
 
@@ -526,6 +706,9 @@ const imageGenLoading = ref(false)
 const imageGenForm = reactive({ count: 1, width: 1024, height: 1024 })
 /** 生成请求的中止控制器：点"停止"时中止前端等待 */
 let imageGenAbort: AbortController | null = null
+/** 本次生成操作开始时间与仍展示的气泡：停止后用于拉取最新消息列表回填 ID */
+let imageGenOpStart = 0
+let imageGenBubbles: ChatBubble[] = []
 
 function toggleImageGen() {
   imageGenActive.value = !imageGenActive.value
@@ -553,6 +736,8 @@ async function handleGenerateImage() {
   }
 
   let conversationId = activeId.value
+  // 本次操作开始时间：结束后用 getAfterMessages 回填新增消息 ID 与时间
+  const opStart = Date.now()
   imageGenLoading.value = true
   // 生成中同步置为对话中（停止/结束后校正）
   chatLocked.value = true
@@ -566,14 +751,23 @@ async function handleGenerateImage() {
       await loadConversations(1)
     }
 
-    messages.value.push({ type: ChatMessageType.USER, message: prompt })
+    const userMessage: ChatBubble = reactive({
+      type: ChatMessageType.USER,
+      message: prompt,
+      createTime: nowTimeString()
+    })
+    messages.value.push(userMessage)
     input.value = ''
     scrollToBottom()
+    // 记录本次操作信息：中止时仅剩用户消息仍展示，用于停止后回填 ID
+    imageGenOpStart = opStart
+    imageGenBubbles = [userMessage]
 
     // 生成中的 AI 气泡：打字指示特效，完成后原位填充结果
     const generatingBubble: ChatBubble = reactive({
       type: ChatMessageType.AI,
       message: '',
+      createTime: nowTimeString(),
       streaming: true
     })
     messages.value.push(generatingBubble)
@@ -596,22 +790,33 @@ async function handleGenerateImage() {
       if (!urls.length) {
         messages.value = messages.value.filter((m) => m !== generatingBubble)
         ElMessage.error('图片生成失败，请稍后重试')
+        // 报错后以服务端锁定状态决定按钮：仍在生成保持停止，已结束恢复发送
+        await refreshLockState()
         return
       }
       generatingBubble.message = res.data?.message || ''
       generatingBubble.imageUrls = urls
       generatingBubble.streaming = false
+      generatingBubble.createTime = nowTimeString()
+      // 成功即本轮结束
+      chatLocked.value = false
       scrollToBottom()
+      // 拉取本次新增消息 ID（最新在最后），回填到本地气泡供删除使用
+      syncNewMessageIds(conversationId, opStart, [userMessage, generatingBubble])
     } catch {
-      // 主动中止或异常：移除生成中的气泡（错误提示由请求层统一处理，中止静默）
+      // 主动中止或异常：移除生成中的气泡（错误提示由请求层统一处理，中止静默），
+      // 按钮去留以服务端锁定状态为准（主动中止后通常已解锁→恢复发送按钮）
       messages.value = messages.value.filter((m) => m !== generatingBubble)
+      await refreshLockState()
     }
   } catch {
-    // 请求层已统一提示异常（主动中止静默）
+    // 创建会话等前置异常：直接恢复发送按钮
+    chatLocked.value = false
   } finally {
     imageGenLoading.value = false
     imageGenAbort = null
-    chatLocked.value = false
+    imageGenOpStart = 0
+    imageGenBubbles = []
   }
 }
 
@@ -619,16 +824,29 @@ async function handleStop() {
   if (!activeId.value) return
   // 图片生成中：中止前端等待并释放服务端锁
   if (imageGenLoading.value) {
+    // 先捕获本次操作信息（中止会触发生成的 finally 清理）
+    const opStart = imageGenOpStart
+    const bubbles = [...imageGenBubbles]
     imageGenAbort?.abort()
     await stopChat(activeId.value).catch(() => {})
     imageGenLoading.value = false
     imageGenAbort = null
     chatLocked.value = false
+    // 停止后拉取本次新增的消息列表（含 ID，最新在最后），从头对齐回填到仍展示的用户消息，
+    // 使其可删除；服务端稍后落库的生成结果在下次加载时自带 ID
+    if (opStart && bubbles.length) {
+      await syncNewMessageIds(activeId.value, opStart, bubbles, 'head')
+    }
     return
   }
   // 服务端停止生成并落库已生成的部分内容，随后本地断开流通道
   await stopChat(activeId.value).catch(() => {})
   stopStreamSilently()
+  // 停止后拉取本次流式期间新增的消息列表（含 ID，最新在最后），失败静默
+  if (lastStreamOpStart) {
+    await getAfterMessages(activeId.value, lastStreamOpStart).catch(() => {})
+    lastStreamOpStart = 0
+  }
   // 服务端保存已生成内容存在轻微异步延迟，稍候再拉取最终消息
   await new Promise((resolve) => setTimeout(resolve, 300))
   await loadMessages()
@@ -802,6 +1020,14 @@ function handleInputKeydown(event: Event) {
               <span v-if="item.streaming" class="cursor">▍</span>
             </template>
           </div>
+
+          <!-- 消息时间与操作（悬停显示删除，依赖消息 ID） -->
+          <span v-if="msgTimeText(item)" class="msg-time">{{ msgTimeText(item) }}</span>
+          <span v-if="item.id" class="msg-actions" @click.stop>
+            <button class="msg-del" type="button" title="删除消息" @click="handleRemoveMessage(item)">
+              <el-icon :size="13"><Delete /></el-icon>
+            </button>
+          </span>
         </div>
       </div>
 
@@ -1352,6 +1578,48 @@ $text-secondary: #606266;
   gap: 10px;
   margin-bottom: 22px;
   animation: rise 0.25s ease-out;
+
+  // 消息时间：气泡外侧底部对齐
+  .msg-time {
+    align-self: flex-end;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: #c0c4cc;
+    white-space: nowrap;
+    line-height: 1;
+    padding-bottom: 2px;
+  }
+
+  // 消息操作：悬停行时显示
+  .msg-actions {
+    align-self: flex-end;
+    flex-shrink: 0;
+    visibility: hidden;
+    padding-bottom: 2px;
+
+    .msg-del {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #909399;
+      cursor: pointer;
+      transition: all 0.15s;
+
+      &:hover {
+        background: #fef0f0;
+        color: #f56c6c;
+      }
+    }
+  }
+
+  &:hover .msg-actions {
+    visibility: visible;
+  }
 
   .avatar {
     display: flex;

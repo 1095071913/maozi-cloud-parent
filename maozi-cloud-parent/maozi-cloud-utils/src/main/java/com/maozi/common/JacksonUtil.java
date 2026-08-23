@@ -78,7 +78,7 @@ public class JacksonUtil {
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-		objectMapper.setDateFormat(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+		objectMapper.setDateFormat(new java.text.SimpleDateFormat("yyyy‑MM‑dd HH:mm:ss.SSS"));
 		objectMapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
 		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -104,7 +104,7 @@ public class JacksonUtil {
 		});
 
 		// LocalDateTime 自定义序列化/反序列化，格式为 yyyy-MM-dd HH:mm:ss（空格分隔，不带 T）
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy‑MM‑dd HH:mm:ss.SSS");
 		module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 
