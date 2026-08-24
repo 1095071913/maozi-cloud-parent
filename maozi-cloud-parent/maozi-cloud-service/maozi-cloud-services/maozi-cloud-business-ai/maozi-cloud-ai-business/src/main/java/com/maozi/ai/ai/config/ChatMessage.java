@@ -25,6 +25,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 对话消息存储结构
+ * <p>
+ * 消息对象序列化为 JSON 存入对话记忆（Redis）时的载体结构，
+ * 统一承载各类型消息（系统/用户/AI/工具）的属性：
+ * 消息类型、元数据、媒体、工具调用、工具响应、文本内容等。
+ * 媒体字段使用自定义序列化器保证可无损往返。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/17 03:17
  */
@@ -36,20 +44,27 @@ public class ChatMessage implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /** 消息类型（SYSTEM / USER / ASSISTANT / TOOL 等） */
     private String messageType;
 
+    /** 消息元数据（包含消息 ID、写入时间戳等，见 ChatMessageConstant） */
     private Map<String,Object> metadata = Map.of();
 
+    /** 消息携带的媒体列表（多模态图片等），使用自定义序列化器保证无损往返 */
     @JsonSerialize(contentUsing = MediaSerializer.class)
     @JsonDeserialize(contentUsing = MediaDeserializer.class)
     private List<Media> media = List.of();
 
+    /** AI 消息发起的工具调用列表 */
     private List<AssistantMessage.ToolCall> toolCalls = List.of();
 
+    /** 消息文本内容 */
     private String textContent;
 
+    /** 工具响应消息的工具响应列表 */
     private List<ToolResponseMessage.ToolResponse> toolResponses = List.of();
 
+    /** 附加参数 */
     private Map<String, Object> params = Map.of();
 
     /**

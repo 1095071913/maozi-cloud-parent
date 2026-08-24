@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.Map;
  *   <li>缺少请求参数（MissingServletRequestParameterException）</li>
  *   <li>请求体为空或不可读（HttpMessageNotReadableException）</li>
  *   <li>参数类型转换失败（MethodArgumentTypeMismatchException）</li>
+ *   <li>上传文件大小超限（MaxUploadSizeExceededException）</li>
  *   <li>权限不足（AccessDeniedException）—— 交由 Spring Security 处理</li>
  *   <li>异步请求连接失效（AsyncRequestNotUsableException）—— 原样抛出，交由 Spring 异步机制处理</li>
  *   <li>全局兜底异常（Exception）</li>
@@ -153,6 +155,21 @@ public class RestErrorHandler {
 	@ExceptionHandler(AsyncRequestNotUsableException.class)
 	public Object handleAsyncRequestNotUsableException(AsyncRequestNotUsableException e) throws AsyncRequestNotUsableException {
 		throw e;
+	}
+
+	/**
+	 * 处理上传文件大小超限异常
+	 * <p>
+	 * 当上传的文件大小超过配置的最大限制（spring.servlet.multipart.max-file-size）时触发，
+	 * 返回请求数据过大错误响应。
+	 * </p>
+	 *
+	 * @param e MaxUploadSizeExceededException 上传文件大小超限异常
+	 * @return 标准错误响应，包含 REQUEST_EXCESSIVE_ERROR 错误码
+	 */
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public Object handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+		return ResultUtil.error(SystemErrorCode.REQUEST_EXCESSIVE_ERROR);
 	}
 
 	/**

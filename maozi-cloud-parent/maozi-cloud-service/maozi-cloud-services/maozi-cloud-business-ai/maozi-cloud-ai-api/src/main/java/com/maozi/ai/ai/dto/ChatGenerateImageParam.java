@@ -8,6 +8,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * AI文生图请求参数
+ * <p>
+ * 继承对话请求参数，追加生成数量与图片宽高，宽高与数量未传时使用默认值。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/22 15:21
  */

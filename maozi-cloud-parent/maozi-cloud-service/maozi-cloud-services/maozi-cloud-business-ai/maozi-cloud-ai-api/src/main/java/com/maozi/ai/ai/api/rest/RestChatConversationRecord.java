@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
+ * AI会话管理服务 REST 接口
+ * <p>
+ * 提供AI对话会话的 RESTful API 接口定义，
+ * 包括当前用户的会话分页列表查询、会话创建、
+ * 会话标题更新以及会话删除等操作。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/16 21:35
  */

@@ -15,18 +15,16 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 /**
- * AI交互会话管理服务 REST 接口
+ * AI对话服务 REST 接口
  * <p>
- * 提供AI交互会话的 RESTful API 接口定义，
- * 包括会话分页列表查询、会话新增、会话详情查询、
- * 会话更新、会话状态更新以及会话删除等操作。
+ * 提供AI对话的 RESTful API 接口定义，
+ * 包括AI流式对话、文生图、对话消息列表查询、
+ * 停止对话、增量获取消息以及删除指定消息等操作。
  * 所有接口均需要相应的权限授权才能访问。
  * </p>
  */
@@ -35,8 +33,8 @@ public interface RestChatService {
 
 	String PATH = "/chat";
 
-	@Post(value = PATH, produces = MediaType.TEXT_EVENT_STREAM_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, description = "AI对话")
-    Flux<AbstractBaseResult<ChatResult>> chat(@RequestPart(value = "files", required = false) List<MultipartFile> files,@RequestPart("param") ChatParam param);
+	@Post(value = PATH, produces = MediaType.TEXT_EVENT_STREAM_VALUE, description = "AI对话")
+    Flux<AbstractBaseResult<ChatResult>> chat(@RequestBody @Valid ChatParam param);
 
 	@Post(value = PATH + "/generate/image", description = "AI对话图片生成")
 	AbstractBaseResult<ChatGenerateImageResult> generateImage(@RequestBody @Valid ChatGenerateImageParam param);
@@ -50,7 +48,7 @@ public interface RestChatService {
 	@Post(value = CURRENT_PATH + "/stop", description = "AI对话停止")
 	AbstractBaseResult<Void> stop(@PathVariable String conversationId);
 
-	@Get(value = CURRENT_PATH + "/getAfterMessages", description = "AI对话获取之后消息ID列表")
+	@Get(value = CURRENT_PATH + "/getAfterMessages", description = "AI对话获取指定时间之后的消息列表")
 	AbstractBaseResult<List<ChatItemResult>> getAfterMessages(@PathVariable String conversationId, @RequestParam Long createTime);
 
 	@Post(value = CURRENT_PATH + "/{messageId}/remove", description = "AI对话消息删除")

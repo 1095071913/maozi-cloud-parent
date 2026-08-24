@@ -12,12 +12,13 @@ import java.lang.annotation.Target;
  * 图片文件校验注解
  * <p>
  * 标注在 {@link org.springframework.web.multipart.MultipartFile} 类型的字段上，
+ * 或集合元素的类型位置（如 {@code List<@ImageFile MultipartFile>}），
  * 校验上传文件是否为图片格式（Content-Type 以 "image" 开头）。
  * </p>
  *
  * @author maozi
  */
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD,ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = ImageFileValidator.class)

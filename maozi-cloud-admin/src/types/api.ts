@@ -8,6 +8,18 @@ export interface ApiResponse<T = unknown> {
   message?: string
 }
 
+/** 图片上传结果（/system/image/upload） */
+export interface ImageUploadResult {
+  /** 文件原始名称 */
+  fileName: string
+  /** 文件大小（字节） */
+  fileSize: string
+  /** 对象存储文件路径 */
+  fileKey: string
+  /** 文件访问地址 */
+  url: string
+}
+
 /** 系统详情（项目信息，/system/config/system/get） */
 export interface SystemInfo {
   /** 项目名称 */
@@ -358,7 +370,7 @@ export interface ChatMessageItem {
   type: ChatMessageType
   /** 消息内容 */
   message: string
-  /** 携带图片（Base64 字符串，前端转 data URL 展示） */
+  /** 携带图片的 URL 地址列表 */
   images?: string[]
   /** 创建时间（yyyy-MM-dd HH:mm:ss） */
   createTime?: string

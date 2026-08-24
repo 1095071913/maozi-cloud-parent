@@ -4,6 +4,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 /**
+ * AI对话流状态类型枚举
+ * <p>
+ * 用于流式对话返回结果中标识当前对话所处的状态：
+ * OUTPUT 表示AI正在持续输出回复内容，FINISH 表示对话已结束。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/16 18:45
  */
@@ -19,8 +25,8 @@ public enum ChatType {
     /**
      * 构造方法
      *
-     * @param value 权限类型的数值编码
-     * @param desc  权限类型的中文描述
+     * @param value AI对话类型的数值编码
+     * @param desc  AI对话类型的中文描述
      */
     ChatType(Integer value,String desc) {
 
@@ -30,11 +36,11 @@ public enum ChatType {
 
     }
 
-    /** 权限类型的数值编码 */
+    /** AI对话类型的数值编码 */
     @Getter
     private final Integer value;
 
-    /** 权限类型的中文描述 */
+    /** AI对话类型的中文描述 */
     @Getter
     private final String desc;
 

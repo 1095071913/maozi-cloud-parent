@@ -60,6 +60,9 @@ public class SystemErrorCode extends AbstractBaseErrorCode{
     /** 请求方法错误 */
     public final static ErrorCode REQUEST_METHOD_ERROR = new ErrorCode(405,"请求方法错误");
 
+    /** 请求数据过大错误 */
+    public final static ErrorCode REQUEST_EXCESSIVE_ERROR = new ErrorCode(413,"请求数据过大");
+
     /** 请求格式错误 */
     public final static ErrorCode REQUEST_FORMAT_ERROR = new ErrorCode(415,"请求格式错误");
 

@@ -11,6 +11,11 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
+ * AI文生图返回结果
+ * <p>
+ * 包含提示消息与生成图片的地址列表。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/22 20:48
  */

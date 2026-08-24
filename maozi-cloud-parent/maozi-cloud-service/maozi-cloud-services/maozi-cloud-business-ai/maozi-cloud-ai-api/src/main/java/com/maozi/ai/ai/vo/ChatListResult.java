@@ -11,6 +11,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * AI对话消息列表返回结果
+ * <p>
+ * 包含会话是否正在对话中以及该会话的用户对话消息列表。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/22 20:58
  */

@@ -27,7 +27,28 @@ application-project-system:
   description: 基于 Spring Cloud Alibaba + Dubbo 的一站式分布式解决方案开源封装，内置分布式应用开发所需全套组件，统一团队代码风格，保障代码质量，让开发者专注业务逻辑，实现高效快速开发。
   copyright: 本网站所有权归《${application-project-system.corporationName}》所有，请勿抄袭和抄袭
 
+# 图片存储配置（store-type 决定上传路由到的存储处理器，取值见 ImageStorageType 枚举 code）
+oss:
+  # 存储类型：aliyun-阿里云OSS（后续可扩展 local-本地存储、minio 等）
+  store-type: aliyun
+  aliyun:
+    access-key-id:
+    access-key-secret:
+    # 地域（Region），如华东1（杭州）为 cn-hangzhou
+    region: cn-hangzhou
+    # 访问域名（Endpoint），如 https://oss-cn-hangzhou.aliyuncs.com，注释掉则由地域自动解析
+    endpoint: https://oss-cn-hangzhou.aliyuncs.com
+    # 存储空间（Bucket）名称
+    bucket:
+    # 自定义访问域名（可选），如 CDN 加速域名，配置后文件访问地址基于该域名生成
+    #domain:
+
 spring:
+  # 上传文件大小限制（图片上传接口，单文件 10MB、单次请求合计 50MB）
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
   config:
     # 导入各组件子配置文件（classpath 下的 config/ 目录）
     import:

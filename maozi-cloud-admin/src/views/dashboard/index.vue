@@ -29,6 +29,7 @@ import {
   updateConversationTitle
 } from '@/api/ai'
 import { getConfigDropDownList } from '@/api/config'
+import { uploadImage } from '@/api/image'
 import {
   ChatMessageType,
   type ChatMessageItem,
@@ -160,7 +161,7 @@ async function handleRemove(row: ConversationItem) {
 interface ChatBubble extends ChatMessageItem {
   /** 流式输出中 */
   streaming?: boolean
-  /** 图片本地预览地址（发送时取自附件 objectURL，历史消息由后端字节转换生成） */
+  /** 图片展示地址（发送时为上传后的 URL，历史消息为后端返回的 URL） */
   imageUrls?: string[]
 }
 
@@ -171,11 +172,6 @@ const scrollRef = ref<HTMLElement>()
 const activeTitle = computed(
   () => conversations.value.find((c) => c.id === activeId.value)?.title || 'AI 对话'
 )
-
-/** 历史消息图片：Base64 转展示地址（兼容已带 data: 前缀的值） */
-function imageSrc(base64: string): string {
-  return base64.startsWith('data:') ? base64 : `data:image/jpeg;base64,${base64}`
-}
 
 /**
  * 消息时间统一为毫秒时间戳（与后端列表接口一致）：本地新增消息的时间展示与轮询入参
@@ -229,20 +225,8 @@ async function syncNewMessageIds(
 async function handleRemoveMessage(item: ChatBubble) {
   if (!item.id || !activeId.value) return
   await removeChatMessage(activeId.value, item.id)
-  item.imageUrls?.forEach((url) => {
-    if (url.startsWith('blob:')) URL.revokeObjectURL(url)
-  })
   messages.value = messages.value.filter((m) => m !== item)
   ElMessage.success('已删除')
-}
-
-/** 释放消息气泡持有的本地预览地址（仅发送时的 blob: objectURL 需要，data URL 无需释放） */
-function revokeMessageUrls() {
-  messages.value.forEach((m) => {
-    m.imageUrls?.forEach((url) => {
-      if (url.startsWith('blob:')) URL.revokeObjectURL(url)
-    })
-  })
 }
 
 /** 当前会话是否对话中（/ai/chat/{id}/list 的 isLocked） */
@@ -340,7 +324,7 @@ function startLockPolling() {
           type: item.type,
           message: item.message,
           createTime: item.createTime,
-          imageUrls: (item.images || []).map(imageSrc)
+          imageUrls: item.images || []
         }
         // 插到"输出中"占位气泡之前，保持时间顺序
         const placeholderIndex = messages.value.findIndex((m) => m.streaming && !m.id)
@@ -383,11 +367,10 @@ async function loadMessages() {
   try {
     const res = await getChatList(activeId.value)
     chatLocked.value = !!res.data?.isLocked
-    revokeMessageUrls()
-    // 响应为 { isLocked, items }：items 内图片以 Base64 返回，转 data URL 回显
+    // 响应为 { isLocked, items }：items 内 images 为图片 URL 地址，直接回显
     messages.value = (res.data?.items || []).map((m) => ({
       ...m,
-      imageUrls: (m.images || []).map(imageSrc)
+      imageUrls: m.images || []
     }))
     // 刷新/切换到对话中的会话：追加 AI 输出中的占位气泡（打字特效），
     // 锁定结束（轮询）后 loadMessages 重建列表时自然移除
@@ -421,7 +404,7 @@ let lastStreamOpStart = 0
 // ============ 图片附件 ============
 /** 单次最多携带的图片数 */
 const MAX_IMAGES = 5
-/** 单图体积上限：后端 multipart 未配置、走 Spring 默认单文件 1MB（实测 696KB 可过、1.39MB 被拒） */
+/** 单图体积上限：图片上传接口 multipart 未配置、走 Spring 默认单文件 1MB（实测 696KB 可过、1.39MB 被拒） */
 const MAX_IMAGE_BYTES = 700 * 1024
 /** 压缩起始长边（像素），未达标时逐轮降至 0.7 倍 */
 const MAX_IMAGE_DIM = 1600
@@ -630,6 +613,17 @@ async function handleSend() {
   const opStart = Date.now()
   try {
     sending.value = true
+    // 选中图片时：先上传获取 URL 地址，再随对话参数（ChatParam.images）发给后端
+    let imageUrls: string[] = []
+    if (images.length) {
+      const uploaded = await uploadImage('ai/chat', images.map((i) => i.file))
+      imageUrls = (uploaded.data || []).map((i) => i.url)
+      if (imageUrls.length !== images.length) {
+        ElMessage.error('图片上传失败，请重试')
+        sending.value = false
+        return
+      }
+    }
     // 无选中会话：先以首条消息创建会话（后端以该消息生成标题）
     if (!conversationId) {
       const created = await createConversation(finalMessage)
@@ -640,13 +634,15 @@ async function handleSend() {
 
     input.value = ''
     pendingImages.value = []
+    // 本地预览地址已完成使命（气泡改用上传后的 URL），及时释放
+    images.forEach((i) => URL.revokeObjectURL(i.url))
     // 开始生成：本地即时置为对话中（结束/停止后由 loadMessages 校正）
     chatLocked.value = true
     const userMessage: ChatBubble = reactive({
       type: ChatMessageType.USER,
       message: finalMessage,
       createTime: nowTimeString(),
-      imageUrls: images.map((i) => i.url)
+      imageUrls
     })
     messages.value.push(userMessage)
     // 必须为 reactive 代理对象：打字机定时器逐字修改 message 时才能触发视图更新
@@ -685,7 +681,7 @@ async function handleSend() {
         chatLocked.value = false
         ElMessage.error(msg)
       }
-    }, activePrompt.value || undefined, images.length ? images.map((i) => i.file) : undefined)
+    }, activePrompt.value || undefined, imageUrls.length ? imageUrls : undefined)
     streamingConversationId = conversationId
     lastStreamOpStart = opStart
   } catch {
@@ -861,9 +857,8 @@ onBeforeUnmount(() => {
   }
   stopTypingTimer()
   stopLockPolling()
-  // 释放未发送图片与历史消息气泡的预览地址
+  // 释放未发送图片的预览地址
   pendingImages.value.forEach((i) => URL.revokeObjectURL(i.url))
-  revokeMessageUrls()
 })
 
 // ============ 输入法组合输入状态 ============
