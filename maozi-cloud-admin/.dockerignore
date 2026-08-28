@@ -1,0 +1,6 @@
+# Docker 多阶段构建上下文裁剪 (部署脚本以本目录为上下文)
+# 依赖由镜像内 npm ci 重装, 产物由镜像内 vite build 重新生成
+node_modules
+dist
+dist-ssr
+*.local
