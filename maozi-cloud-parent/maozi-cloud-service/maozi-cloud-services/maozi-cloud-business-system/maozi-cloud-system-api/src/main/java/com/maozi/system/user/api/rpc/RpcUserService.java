@@ -18,6 +18,7 @@
 package com.maozi.system.user.api.rpc;
 
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.system.user.result.AiGetUserInfoResult;
 import com.maozi.system.user.result.OauthUserInfoResult;
 
 import java.util.List;
@@ -27,8 +28,9 @@ import java.util.List;
  * <p>
  * 提供用户相关的 RPC 远程调用接口定义，
  * 主要用于微服务之间的内部调用，包括根据用户名获取 OAuth 认证用户信息
- * （含用户ID、加密密码及全部权限标识），以及根据用户名和角色 ID
- * 获取该角色下的权限标识列表等功能。
+ * （含用户ID、加密密码及全部权限标识）、根据用户名和角色 ID
+ * 获取该角色下的权限标识列表，以及供 AI 工具根据用户 ID
+ * 查询用户信息等功能。
  * </p>
  */
 public interface RpcUserService {
@@ -57,5 +59,17 @@ public interface RpcUserService {
 	 * @return 返回该用户在指定角色下拥有的权限编码列表
 	 */
 	AbstractBaseResult<List<String>> rpcGetPermissionsByUsernameRole(String username,Long roleId);
+
+	/**
+	 * 根据用户 ID 获取 AI 工具所需的用户信息
+	 * <p>
+	 * 返回内容包括用户ID、所属客户端、用户名称、客户端信息
+	 * 以及该用户拥有的权限列表，供 AI 工具查询用户信息时使用。
+	 * </p>
+	 *
+	 * @param userId 用户 ID，用于查询指定用户的信息
+	 * @return AI 查询用户信息结果（含用户ID、客户端、名称、权限列表等）
+	 */
+	AbstractBaseResult<AiGetUserInfoResult> rpcAiGetUserInfo(Long userId);
 
 }

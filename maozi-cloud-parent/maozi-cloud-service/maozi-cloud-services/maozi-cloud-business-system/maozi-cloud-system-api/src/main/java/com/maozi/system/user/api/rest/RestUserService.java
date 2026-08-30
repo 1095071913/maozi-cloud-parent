@@ -24,12 +24,12 @@ import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
-import com.maozi.system.user.dto.UserIndividualUpdateParam;
-import com.maozi.system.user.dto.UserListParam;
-import com.maozi.system.user.dto.UserSaveUpdateParam;
-import com.maozi.system.user.vo.UserIndividualInfoVo;
-import com.maozi.system.user.vo.UserInfoVo;
-import com.maozi.system.user.vo.UserListVo;
+import com.maozi.system.user.param.UserIndividualUpdateParam;
+import com.maozi.system.user.param.UserListParam;
+import com.maozi.system.user.param.UserSaveUpdateParam;
+import com.maozi.system.user.result.UserIndividualInfoResult;
+import com.maozi.system.user.result.UserInfoResult;
+import com.maozi.system.user.result.UserListResult;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,12 +57,12 @@ public interface RestUserService {
 	 */
 	@Post(value = PATH + "/list",description = "用户列表")
 	@PreAuthorize("hasAuthority('system:user:list')")
-	AbstractBaseResult<PageResult<UserListVo>> restList(@RequestBody PageParam<UserListParam> pageParam);
+	AbstractBaseResult<PageResult<UserListResult>> restList(@RequestBody PageParam<UserListParam> pageParam);
 
 	/**
 	 * 保存新增用户
 	 *
-	 * @param param 用户保存参数，包含用户名、密码、昵称、关联角色等必要信息
+	 * @param param 用户保存参数，包含账号、密码、姓名、关联角色等必要信息
 	 * @return 返回新增用户的 ID
 	 */
 	@Post(value = PATH + "/save",description = "用户保存")
@@ -82,11 +82,11 @@ public interface RestUserService {
 	 * 获取用户详情
 	 *
 	 * @param id 用户 ID，用于查询指定用户的详细信息
-	 * @return 返回用户详细信息，包含用户名、昵称、所属客户端、关联角色等完整属性
+	 * @return 返回用户详细信息，包含账号、姓名、所属客户端、状态、关联角色等完整属性
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "用户详情")
 	@PreAuthorize("hasAuthority('system:user:get')")
-	AbstractBaseResult<UserInfoVo> restGet(@PathVariable Long id);
+	AbstractBaseResult<UserInfoResult> restGet(@PathVariable Long id);
 
 	/**
 	 * 删除用户
@@ -107,7 +107,7 @@ public interface RestUserService {
 	 */
 	@Post(value = CURRENT_PATH + "/updateStatus",description = "用户更新状态")
 	@PreAuthorize("hasAuthority('system:user:update')")
-	AbstractBaseResult<Void> restUpdateStatus(@PathVariable Long id, @RequestBody RequestParam<Status> param);
+	AbstractBaseResult<Void> restUpdateStatusResult(@PathVariable Long id, @RequestBody RequestParam<Status> param);
 
 	/**
 	 * 更新用户信息
@@ -138,7 +138,7 @@ public interface RestUserService {
 	 * @return 返回当前登录用户的个人信息，包含姓名、头像、权限标识等个人相关数据
 	 */
 	@Get(value = INDIVIDUAL_PATH + "/get",description = "用户个人详情")
-	AbstractBaseResult<UserIndividualInfoVo> restIndividualGet();
+	AbstractBaseResult<UserIndividualInfoResult> restIndividualGet();
 
 	/**
 	 * 更新当前登录用户的个人信息

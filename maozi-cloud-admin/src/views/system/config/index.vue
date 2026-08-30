@@ -172,7 +172,8 @@ const defaultForm = (): ConfigSaveParam => ({
   name: '',
   alias: '',
   type: '',
-  value: ''
+  value: '',
+  sort: 99
 })
 const form = reactive(defaultForm())
 
@@ -201,7 +202,8 @@ async function handleEdit(row: ConfigListItem) {
     alias: d.alias,
     type: d.type,
     // JSON 值编辑时预格式化，便于查看修改
-    value: tryFormatJson(d.value) ?? d.value ?? ''
+    value: tryFormatJson(d.value) ?? d.value ?? '',
+    sort: d.sort ?? 99
   })
   dialogVisible.value = true
 }
@@ -309,6 +311,7 @@ onMounted(loadTypes)
       <el-table v-loading="loading" :data="list" border stripe>
         <el-table-column label="名称" prop="name" min-width="180" show-overflow-tooltip />
         <el-table-column label="别名" prop="alias" min-width="140" show-overflow-tooltip />
+        <el-table-column label="排序" prop="sort" width="80" align="center" />
         <el-table-column label="配置值" min-width="260">
           <template #default="{ row }">
             <div v-if="tryFormatJson(row.value)" class="json-wrap">
@@ -391,6 +394,10 @@ onMounted(loadTypes)
             placeholder="请输入配置值"
           />
         </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input-number v-model="form.sort" :min="0" controls-position="right" />
+          <span class="sort-hint">数值越小越靠前</span>
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -401,6 +408,12 @@ onMounted(loadTypes)
 </template>
 
 <style scoped lang="scss">
+.sort-hint {
+  margin-left: 12px;
+  color: #909399;
+  font-size: 12px;
+}
+
 .type-list {
   display: flex;
   flex-wrap: wrap;

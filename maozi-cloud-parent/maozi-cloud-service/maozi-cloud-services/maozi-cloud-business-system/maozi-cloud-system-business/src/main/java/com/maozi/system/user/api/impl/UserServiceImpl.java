@@ -34,8 +34,8 @@ import com.maozi.system.permission.api.RolePermissionService;
 import com.maozi.system.permission.api.UserRoleService;
 import com.maozi.system.user.api.UserService;
 import com.maozi.system.user.domain.UserDo;
-import com.maozi.system.user.dto.UserSaveUpdateParam;
 import com.maozi.system.user.mapper.UserMapper;
+import com.maozi.system.user.param.UserSaveUpdateParam;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -122,7 +122,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> imp
 	 * 用户新增或更新的统一处理方法（REST层调用）
 	 * <p>
 	 * 当 id 为空时执行新增操作，当 id 不为空时执行更新操作。
-	 * 新增时会校验客户端是否存在以及用户名在对应客户端下是否重复。
+	 * 新增时（客户端ID与用户名均非空的前提下）会校验客户端是否可用
+	 * 以及用户名在对应客户端下是否重复。
 	 * 更新时不允许修改用户名和客户端ID。
 	 * 密码不为空时会进行加密处理。
 	 * 操作完成后同步更新用户的角色绑定关系。

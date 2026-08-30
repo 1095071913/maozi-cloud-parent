@@ -10,6 +10,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * AI会话列表查询返回结果
+ * <p>
+ * 会话分页列表中单条会话的展示数据，仅包含会话 ID 与会话标题。
+ * </p>
+ *
  * @author pengjinlong
  * @since 2026/8/17 09:34
  */

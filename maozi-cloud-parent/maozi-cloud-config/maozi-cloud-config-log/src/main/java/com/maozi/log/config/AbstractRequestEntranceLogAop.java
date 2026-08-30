@@ -55,7 +55,7 @@ import java.util.Map;
  * <ul>
  *   <li>提供具体的切点表达式（通过 {@code @Around} 绑定到 {@link #doAround(ProceedingJoinPoint)}）</li>
  *   <li>实现 {@link #getType()} 返回当前切面对应的日志类型（如 WEB、RPC）</li>
- *   <li>实现 {@link #getLocalHost()} 返回请求来源地址（REST 场景返回 HTTP 请求地址，RPC 场景返回服务地址）</li>
+ *   <li>实现 {@link #getLocalHost()} 返回请求来源地址（REST 场景返回客户端真实 IP，RPC 场景返回当前 Dubbo 服务地址）</li>
  * </ul>
  * </p>
  *
@@ -194,7 +194,7 @@ public abstract class AbstractRequestEntranceLogAop {
 		// 记录请求类型标识（WEB 或 RPC）
 		logs.put(LogTag.TYPE, getType().getDesc());
 
-		// 记录来源地址：HTTP 请求取客户端 IP，RPC 调用取远程服务地址
+		// 记录来源地址：HTTP 请求取客户端真实 IP，RPC 调用取当前服务（Dubbo 提供方）地址
 		logs.put(LogTag.IP, getLocalHost());
 
 		// 仅 HTTP 请求记录完整的请求 URL
@@ -226,7 +226,7 @@ public abstract class AbstractRequestEntranceLogAop {
 	 * 钩子方法：子类可重写以追加自定义的日志字段
 	 * <p>
 	 * 在标准入口日志拼装完成后被调用，默认实现为空。
-	 * 子类通过向 {@code logs} 中 put 自定义键值对来扩展日志内容（如 Dubbo 的 URL、Rest 的 URI）。
+	 * 子类通过向 {@code logs} 中 put 自定义键值对来扩展日志内容（如 Rest 子类记录的完整请求 URL）。
 	 * </p>
 	 *
 	 * @param logs 当前已收集的日志字段 Map（可变，允许子类追加条目）

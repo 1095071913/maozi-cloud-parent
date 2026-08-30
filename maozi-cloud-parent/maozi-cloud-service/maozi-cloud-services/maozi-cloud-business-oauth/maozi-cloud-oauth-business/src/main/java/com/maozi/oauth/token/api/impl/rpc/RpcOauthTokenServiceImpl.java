@@ -13,8 +13,9 @@ import java.util.Map;
 /**
  * OAuth令牌Dubbo RPC服务实现类
  * <p>
- * 通过Dubbo RPC对外暴露令牌内省能力，资源服务器可直接通过RPC调用
- * 进行令牌校验，替代HTTP调用introspection端点的方式，减少网络开销。
+ * 通过Dubbo RPC对外暴露令牌内省与授权注销能力：资源服务器可直接通过RPC调用
+ * 进行令牌校验（替代HTTP调用introspection端点的方式，减少网络开销），
+ * 也可按用户单个或批量注销其在客户端下的授权记录，实现强制下线。
  * </p>
  */
 @RemoteService

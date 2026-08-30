@@ -23,8 +23,10 @@ import java.util.Map;
  */
 public interface OrderParam {
 
+	/** 排序字段 key：创建时间（构建排序条件时转换为下划线列名 create_time） */
 	String CREATE_TIME_KEY = "createTime";
 
+	/** 排序字段 key：更新时间（构建排序条件时转换为下划线列名 update_time） */
 	String UPDATE_TIME_KEY = "updateTime";
 
 	/**

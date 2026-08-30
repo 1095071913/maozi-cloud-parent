@@ -404,6 +404,8 @@ export interface ConfigListItem {
   type: string
   /** 配置值 */
   value: string
+  /** 排序（数值越小越靠前） */
+  sort?: number
   /** 创建时间（yyyy-MM-dd HH:mm:ss） */
   createTime?: string
   /** 状态（0=禁用 1=启用） */
@@ -420,6 +422,8 @@ export interface ConfigDetail {
   type: string
   /** 配置值 */
   value: string
+  /** 排序（数值越小越靠前） */
+  sort?: number
   /** 状态（0=禁用 1=启用） */
   status: number
 }
@@ -434,6 +438,8 @@ export interface ConfigSaveParam {
   type: string
   /** 配置值 */
   value: string
+  /** 排序（数值越小越靠前） */
+  sort?: number
 }
 
 /** 配置下拉选项（/system/config/{type}/dropDownList 返回元素） */
@@ -446,4 +452,6 @@ export interface ConfigOptionItem {
   alias?: string
   /** 配置值（作为类型编码使用） */
   value?: string
+  /** 排序（数值越小越靠前） */
+  sort?: number
 }

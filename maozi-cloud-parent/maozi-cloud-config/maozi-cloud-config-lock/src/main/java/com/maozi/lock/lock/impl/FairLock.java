@@ -59,6 +59,12 @@ public class FairLock implements Lock {
 
     }
 
+    /**
+     * 判断公平锁是否处于锁定状态
+     *
+     * @param key 锁的键名
+     * @return 是否处于锁定状态
+     */
     @Override
     public boolean isLocked(String key) {
         return redissonClient.getFairLock(key).isLocked();

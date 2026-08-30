@@ -2,6 +2,8 @@ package com.maozi.oauth.client.api.rpc;
 
 import com.maozi.base.result.DropDownResult;
 import com.maozi.common.result.AbstractBaseResult;
+import com.maozi.oauth.client.dto.ClientDto;
+import com.maozi.oauth.client.param.ClientSaveUpdateParam;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,10 +18,22 @@ import java.util.List;
 public interface RpcClientService {
 
 	/**
+	 * 新增客户端并返回保存后的客户端信息
+	 * <p>
+	 * 供AI智能体等远程调用方使用：先以新增方式保存客户端，
+	 * 再根据保存后的主键ID查询并返回客户端详细信息DTO。
+	 * </p>
+	 *
+	 * @param param 客户端保存参数
+	 * @return 返回包含新增客户端信息的DTO结果
+	 */
+	AbstractBaseResult<ClientDto> rpcAiSave(ClientSaveUpdateParam param);
+
+	/**
 	 * 校验指定客户端是否可用
 	 *
 	 * @param id 客户端唯一标识 ID
-	 * @return 返回空结果，校验通过无异常；不可用时返回错误信息
+	 * @return 返回空结果，校验通过时无异常；客户端不存在或禁用时抛出业务异常
 	 */
 	AbstractBaseResult<Void> checkAvailableResult(Long id);
 

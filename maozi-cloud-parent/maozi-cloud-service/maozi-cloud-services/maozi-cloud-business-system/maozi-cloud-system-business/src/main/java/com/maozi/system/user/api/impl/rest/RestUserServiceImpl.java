@@ -34,12 +34,12 @@ import com.maozi.system.redirect.util.RedirectUtil;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rest.RestUserService;
 import com.maozi.system.user.domain.UserDo;
-import com.maozi.system.user.dto.UserIndividualUpdateParam;
-import com.maozi.system.user.dto.UserListParam;
-import com.maozi.system.user.dto.UserSaveUpdateParam;
-import com.maozi.system.user.vo.UserIndividualInfoVo;
-import com.maozi.system.user.vo.UserInfoVo;
-import com.maozi.system.user.vo.UserListVo;
+import com.maozi.system.user.param.UserIndividualUpdateParam;
+import com.maozi.system.user.param.UserListParam;
+import com.maozi.system.user.param.UserSaveUpdateParam;
+import com.maozi.system.user.result.UserIndividualInfoResult;
+import com.maozi.system.user.result.UserInfoResult;
+import com.maozi.system.user.result.UserListResult;
 
 /**
  * 用户REST服务实现类
@@ -59,8 +59,8 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	 * @return 分页查询结果，包含用户列表数据
 	 */
 	@Override
-	public AbstractBaseResult<PageResult<UserListVo>> restList(PageParam<UserListParam> pageParam) {
-		return ResultUtil.success(listRelation(pageParam, UserListVo.class));
+	public AbstractBaseResult<PageResult<UserListResult>> restList(PageParam<UserListParam> pageParam) {
+		return ResultUtil.success(listRelation(pageParam, UserListResult.class));
 	}
 
 	/**
@@ -97,14 +97,29 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	}
 
 	/**
+	 * 更新用户状态（启用/禁用）
+	 * <p>委托本类重写的 {@code updateStatusResult} 处理：当前状态与目标状态一致时直接返回成功；
+	 * 状态变更为禁用后会销毁该用户的全部OAuth2令牌，强制其下线。</p>
+	 *
+	 * @param id 需要更新状态的用户ID
+	 * @param param 状态参数，包含目标状态值
+	 * @return 操作结果
+	 */
+	@Override
+	public AbstractBaseResult<Void> restUpdateStatusResult(Long id, RequestParam<Status> param) {
+		return updateStatusResult(id, param);
+	}
+
+	/**
 	 * 查询用户详情
+	 * <p>按ID查询用户详情并填充关联映射数据（如所属客户端、关联角色ID列表），用户不存在时抛出业务异常。</p>
 	 *
 	 * @param id 用户ID
 	 * @return 用户详细信息
 	 */
 	@Override
-	public AbstractBaseResult<UserInfoVo> restGet(Long id) {
-		return ResultUtil.success(getByIdThrowErrorRelation(id, UserInfoVo.class));
+	public AbstractBaseResult<UserInfoResult> restGet(Long id) {
+		return ResultUtil.success(getByIdThrowErrorRelation(id, UserInfoResult.class));
 	}
 
 	/**
@@ -144,7 +159,7 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	 * @return 操作结果
 	 */
 	@Override
-	public AbstractBaseResult<Void> restUpdateStatus(Long id, RequestParam<Status> param){
+	public AbstractBaseResult<Void> updateStatusResult(Long id, RequestParam<Status> param){
 
 		Status status = param.getData();
 
@@ -178,15 +193,15 @@ public class RestUserServiceImpl extends UserServiceImpl implements RestUserServ
 	 * @return 当前登录用户的个人信息
 	 */
 	@Override
-	public AbstractBaseResult<UserIndividualInfoVo> restIndividualGet() {
-		return ResultUtil.success(getByIdThrowErrorRelation(ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId), UserIndividualInfoVo.class));
+	public AbstractBaseResult<UserIndividualInfoResult> restIndividualGet() {
+		return ResultUtil.success(getByIdThrowErrorRelation(ApplicationLinkContext.getCurrentUserInfo(CurrentUserInfo::getUserId), UserIndividualInfoResult.class));
 	}
 
 	/**
 	 * 更新当前登录用户的个人信息
 	 * <p>
-	 * 同时传入旧密码与新密码时先校验旧密码，校验通过后加密新密码一并更新；
-	 * 未传密码时仅更新基本信息。更新成功后销毁该用户在该客户端下的全部
+	 * 旧密码与新密码同时传入时先校验旧密码，校验通过后加密新密码一并更新；
+	 * 两者均未传入时不修改密码，仅更新其他基本信息。更新成功后销毁该用户在该客户端下的全部
 	 * OAuth2 令牌强制重新登录，并设置 {@code X-Redirect} 响应头指示前端跳转登录页。
 	 * </p>
 	 *

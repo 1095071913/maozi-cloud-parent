@@ -8,9 +8,9 @@ import com.maozi.common.ObjectUtil;
 import com.maozi.service.api.impl.BaseServiceImpl;
 import com.maozi.system.config.api.ConfigService;
 import com.maozi.system.config.domain.ConfigDo;
-import com.maozi.system.config.dto.ConfigSaveUpdateParam;
 import com.maozi.system.config.mapper.ConfigMapper;
-import com.maozi.system.config.vo.ConfigDropDownResult;
+import com.maozi.system.config.param.ConfigSaveUpdateParam;
+import com.maozi.system.config.result.ConfigDropDownResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Voi
 	/**
 	 * 获取资源名称
 	 *
-	 * @return 返回当前服务所管理的资源名称 "全局配置"
+	 * @return 返回当前服务所管理的资源名称 "配置"
 	 */
 	@Override
 	protected String getResourceName() {
@@ -41,16 +41,16 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Voi
 	/**
 	 * 根据配置名称获取配置信息
 	 * <p>
-	 * 配置名称为空或配置不存在时抛出业务异常。
+	 * 配置名称为空时抛出业务异常，配置不存在时返回 null。
 	 * </p>
 	 *
 	 * @param name 配置名称
-	 * @return 配置信息，包含配置 ID、名称、别名与配置值
+	 * @return 配置信息，包含配置 ID、名称、别名与配置值；配置不存在时返回 null
 	 */
 	@Override
 	public ConfigDropDownResult getConfigByName(String name) {
 
-		// 配置名称为空时抛出参数异常
+		// 配置名称为空时抛出业务异常
 		ObjectUtil.isNullEmptyThrowError(name, getResourceName());
 
 		LambdaQueryWrapper<ConfigDo> wrapper = Wrappers.lambdaQuery();
@@ -61,7 +61,7 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Voi
 
 		ConfigDo domain = getOne(wrapper);
 
-		// 配置不存在时抛出业务异常
+		// 配置不存在时返回 null
 		if(ObjectUtil.isNullEmpty(domain)){
 			return null;
 		}
@@ -77,17 +77,17 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Voi
 	 * </p>
 	 *
 	 * @param type 配置类型（必传）
-	 * @return 下拉列表数据，每项包含配置 ID、名称、别名与配置值
+	 * @return 下拉列表数据，每项包含配置 ID、名称、别名、配置值与排序
 	 */
 	protected List<ConfigDropDownResult> dropDownList(String type) {
 
-		// 配置类型为空时抛出参数异常
+		// 配置类型为空时抛出业务异常
 		ObjectUtil.isNullEmptyThrowError(type, getResourceName() + "类型");
 
 		LambdaQueryWrapper<ConfigDo> wrapper = Wrappers.lambdaQuery();
 
-		// 仅查询ID、名称、别名和配置值字段
-		wrapper.select(ConfigDo::getId,ConfigDo::getName,ConfigDo::getAlias,ConfigDo::getValue);
+		// 仅查询ID、名称、别名、配置值和排序字段
+		wrapper.select(ConfigDo::getId,ConfigDo::getName,ConfigDo::getAlias,ConfigDo::getValue,ConfigDo::getSort);
 
 		// 根据配置类型筛选
 		wrapper.eq(ConfigDo::getType,type);
@@ -95,7 +95,8 @@ public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Voi
 		// 仅查询启用状态的配置
 		wrapper.eq(ConfigDo::getStatus,Status.ENABLE);
 
-		wrapper.orderByAsc(ConfigDo::getCreateTime);
+		// 按排序值升序排列，排序值相同时按创建时间升序排列
+		wrapper.orderByAsc(ConfigDo::getSort,ConfigDo::getCreateTime);
 
 		return list(wrapper,ConfigDropDownResult::new);
 

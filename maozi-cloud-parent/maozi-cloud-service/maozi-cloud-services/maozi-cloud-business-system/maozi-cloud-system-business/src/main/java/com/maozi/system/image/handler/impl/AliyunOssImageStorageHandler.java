@@ -12,7 +12,7 @@ import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.system.image.enums.ImageStorageType;
 import com.maozi.system.image.handler.ImageStorageHandler;
 import com.maozi.system.image.properties.ImageStorageProperties;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.result.ImageUploadResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
@@ -30,7 +30,8 @@ import java.util.UUID;
  * <p>
  * 基于 OSS Java SDK V2 实现图片的简单上传（PutObject），
  * 客户端在应用启动时根据配置初始化，应用关闭时释放资源。
- * 上传的对象路径格式为 image/日期目录/UUID.扩展名，避免同名覆盖与顺序前缀。
+ * 上传的对象路径格式为 目录前缀/日期目录/UUID.扩展名（目录前缀取上传参数的保存路径，为空时默认 image），
+ * 避免同名覆盖与顺序前缀。
  * </p>
  */
 @Component
@@ -94,14 +95,20 @@ public class AliyunOssImageStorageHandler implements ImageStorageHandler {
 
 	/**
 	 * 上传图片到阿里云 OSS
+	 * <p>
+	 * 校验文件非空后，按生成的对象路径将文件流写入配置的 Bucket，
+	 * 上传成功后返回文件原始名称、对象存储路径、访问地址与文件大小。
+	 * </p>
 	 *
 	 * @param file 上传的图片文件
 	 * @param path 保存路径（目录前缀）
-	 * @return 上传结果，包含对象存储路径与访问地址等信息
+	 * @return 上传结果，包含文件原始名称、对象存储路径、访问地址与文件大小
+	 * @throws BusinessResultException 上传文件为空或上传过程发生异常时抛出
 	 */
 	@Override
 	public ImageUploadResult upload(MultipartFile file,String path) {
 
+		// 上传文件为空时抛出业务异常
 		if(ObjectUtil.isNullEmpty(file) || file.isEmpty()) {
 			throw new BusinessResultException(new ErrorCode("上传文件不能为空"));
 		}
@@ -121,9 +128,11 @@ public class AliyunOssImageStorageHandler implements ImageStorageHandler {
 
 			ossClient.putObject(request);
 
+			// 对象存储路径统一补上前导斜杠后返回
 			return new ImageUploadResult(file.getOriginalFilename(),"/" + fileKey,buildAccessUrl(fileKey), file.getSize());
 
 		} catch (Exception e) {
+			// 上传过程中的任意异常统一转换为业务异常抛出
 			throw new BusinessResultException(e.getMessage(),new ErrorCode(SystemErrorCode.SYSTEM_ERROR_DEFAULT_CODE,"文件上传失败"));
 		}
 
@@ -133,8 +142,9 @@ public class AliyunOssImageStorageHandler implements ImageStorageHandler {
 	 * 构建对象存储路径
 	 * <p>
 	 * 格式为 目录前缀/yyyy/MM/dd/UUID.扩展名，
-	 * 目录前缀取入参传递的保存路径（接口层已校验非空，首尾斜杠会被清除），
-	 * 使用随机 UUID 避免同名文件覆盖，日期目录便于按时间归类管理。
+	 * 目录前缀取入参传递的保存路径（接口层已校验非空，首尾斜杠会被清除，清除后为空时默认 image），
+	 * 使用随机 UUID 避免同名文件覆盖（UUID 中的连字符会被去除），
+	 * 扩展名统一转为小写（文件无扩展名时省略），日期目录便于按时间归类管理。
 	 * </p>
 	 *
 	 * @param path 保存路径（目录前缀）

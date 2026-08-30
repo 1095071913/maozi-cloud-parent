@@ -1,7 +1,7 @@
 package com.maozi.system.image.handler;
 
 import com.maozi.system.image.enums.ImageStorageType;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.result.ImageUploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

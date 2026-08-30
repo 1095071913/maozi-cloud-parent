@@ -82,6 +82,7 @@ public class ChatMessage implements Serializable {
 
             JsonNode node = parser.getCodec().readTree(parser);
 
+            // 解析 MIME 类型节点及其携带的参数
             JsonNode mimeTypeNode = node.get("mimeType");
 
             Map<String, String> parameters = new LinkedHashMap<>();
@@ -91,6 +92,7 @@ public class ChatMessage implements Serializable {
             Media.Builder builder = Media.builder()
                     .mimeType(new MimeType(mimeTypeNode.get("type").asText(), mimeTypeNode.get("subtype").asText(), parameters));
 
+            // data 为整型数组（byte[]）时按字节还原，否则按 URI 字符串处理
             JsonNode dataNode = node.get("data");
             if (dataNode.isArray()) {
                 byte[] data = new byte[dataNode.size()];
@@ -102,6 +104,7 @@ public class ChatMessage implements Serializable {
                 builder.data(dataNode.asText());
             }
 
+            // id 与 name 为可选字段，序列化时可能不存在，存在时才回填
             if (node.hasNonNull("id")) {
                 builder.id(node.get("id").asText());
             }
@@ -142,6 +145,7 @@ public class ChatMessage implements Serializable {
             generator.writeObjectField("parameters", mimeType.getParameters());
             generator.writeEndObject();
 
+            // data 为 byte[] 时输出整型数组（与反序列化对称），其余（URI 等）输出字符串
             Object data = media.getData();
             if (data instanceof byte[] bytes) {
                 generator.writeArrayFieldStart("data");

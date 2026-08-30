@@ -10,6 +10,7 @@ import com.maozi.service.api.annotation.RemoteService;
 import com.maozi.system.user.api.impl.UserServiceImpl;
 import com.maozi.system.user.api.rpc.RpcUserService;
 import com.maozi.system.user.domain.UserDo;
+import com.maozi.system.user.result.AiGetUserInfoResult;
 import com.maozi.system.user.result.OauthUserInfoResult;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserServic
 	@Override
 	public AbstractBaseResult<OauthUserInfoResult> rpcGetOauthUserInfoByUsername(String username) {
 
-		// 用户名为空时抛出参数异常
+		// 用户名为空时抛出数据不存在业务异常
 		ObjectUtil.isNullEmptyThrowError(username, getResourceName());
 
 		LambdaQueryWrapper<UserDo> wrapper = Wrappers.lambdaQuery();
@@ -89,6 +90,21 @@ public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserServic
 
 		return ResultUtil.success(responses);
 
+	}
+
+	/**
+	 * 根据用户ID查询AI工具所需的用户信息
+	 * <p>
+	 * 携带关联数据映射转换为 {@link AiGetUserInfoResult}，
+	 * 自动填充所属客户端信息及该用户的权限标识列表，用户不存在时抛出业务异常。
+	 * </p>
+	 *
+	 * @param userId 用户ID
+	 * @return AI工具用户信息封装的统一结果
+	 */
+	@Override
+	public AbstractBaseResult<AiGetUserInfoResult> rpcAiGetUserInfo(Long userId) {
+		return ResultUtil.success(getByIdThrowErrorRelation(userId,AiGetUserInfoResult.class));
 	}
 
 }

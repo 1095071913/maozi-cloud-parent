@@ -31,7 +31,7 @@ public class PasswordAuthenticationConverter extends BaseGrantAuthenticationConv
      * </p>
      *
      * @param request HTTP请求对象
-     * @throws OAuth2AuthenticationException 当用户名或密码为空时抛出
+     * @throws OAuth2AuthenticationException 当用户名或密码为空或存在多个值时抛出
      */
     @Override
     public void checkParams(HttpServletRequest request) {

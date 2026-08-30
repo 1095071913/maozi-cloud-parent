@@ -251,6 +251,12 @@ public enum LockType implements BaseEnum {
 
     }
 
+    /**
+     * 判断当前锁类型对应的锁是否处于锁定状态
+     *
+     * @param key 锁键名
+     * @return 是否处于锁定状态
+     */
     public boolean isLocked(String key){
         // 从 Spring 容器中获取当前锁类型对应的锁实现类实例
         Lock lock = getLock();

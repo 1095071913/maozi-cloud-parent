@@ -25,7 +25,7 @@ public class ImageStorageProperties implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	/** 图片存储类型（对应 ImageStorageType 的 code，如 aliyun） */
+	/** 图片存储类型（对应 ImageStorageType 的 code，如 aliyun），默认 aliyun */
 	private String storeType = ImageStorageType.ALIYUN_OSS.getCode();
 
 	/** 阿里云 OSS 配置 */

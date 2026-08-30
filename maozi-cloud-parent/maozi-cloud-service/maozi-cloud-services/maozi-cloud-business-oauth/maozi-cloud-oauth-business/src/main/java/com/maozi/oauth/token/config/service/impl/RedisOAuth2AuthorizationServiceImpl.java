@@ -428,7 +428,7 @@ public class RedisOAuth2AuthorizationServiceImpl implements OAuth2AuthorizationS
 	 * </p>
 	 *
 	 * @param data 授权数据
-	 * @return 授权数据的TTL，如果没有任何令牌有过期时间则返回null
+	 * @return 授权数据的TTL，如果没有任何令牌有过期时间则返回null，若最晚过期时间已过则返回零时长
 	 */
 	private Duration resolveAuthorizationTtl(AuthorizationData data) {
 		Instant maxExpiry = null;
@@ -455,7 +455,7 @@ public class RedisOAuth2AuthorizationServiceImpl implements OAuth2AuthorizationS
 	 * @param data  授权数据
 	 * @param type  令牌类型
 	 * @param value 令牌值
-	 * @return 令牌索引的TTL，如果令牌不存在或无过期时间则返回null
+	 * @return 令牌索引的TTL，如果令牌不存在或无过期时间则返回null，若令牌已过期则返回零时长
 	 */
 	private Duration resolveIndexTtl(AuthorizationData data, String type, String value) {
 		TokenData<?> token = switch (type) {

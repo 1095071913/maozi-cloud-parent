@@ -25,9 +25,9 @@ public interface RestRegionService {
 	 * 根据父级地区 ID 获取地区下拉列表
 	 *
 	 * @param parentId 父级地区 ID，用于查询该地区下的所有子级地区
-	 * @return 返回地区下拉列表结果，包含地区 ID 和名称等基本信息
+	 * @return 返回地区下拉列表结果，仅包含地区 ID 和名称两项基本信息
 	 */
 	@Get(value = PATH + "/region/{parentId}/list",description = "列表")
-	AbstractBaseResult<List<DropDownResult>> list(@PathVariable("parentId") Long parentId);
+	AbstractBaseResult<List<DropDownResult>> restList(@PathVariable("parentId") Long parentId);
 
 }

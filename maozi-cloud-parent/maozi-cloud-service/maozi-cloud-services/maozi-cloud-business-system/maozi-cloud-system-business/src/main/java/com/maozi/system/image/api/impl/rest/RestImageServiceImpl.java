@@ -5,9 +5,9 @@ import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.api.annotation.RestService;
 import com.maozi.system.image.api.impl.ImageServiceImpl;
 import com.maozi.system.image.api.rest.RestImageService;
-import com.maozi.system.image.dto.ImageUploadParam;
 import com.maozi.system.image.handler.ImageStorageHandler;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.param.ImageUploadParam;
+import com.maozi.system.image.result.ImageUploadResult;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class RestImageServiceImpl extends ImageServiceImpl implements RestImageS
 	/**
 	 * 上传图片
 	 *
-	 * @param param 图片上传参数，包含上传的图片文件列表
+	 * @param param 图片上传参数，包含上传的图片文件列表与保存路径（目录前缀）
 	 * @return 上传结果列表，每张图片对应一项，包含文件原始名称、对象存储路径、访问地址与文件大小
 	 */
 	@Override

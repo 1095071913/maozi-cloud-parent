@@ -11,7 +11,7 @@
  Target Server Version : 80029 (8.0.29)
  File Encoding         : 65001
 
- Date: 21/08/2026 07:40:06
+ Date: 31/08/2026 06:59:32
 */
 
 SET NAMES utf8mb4;
@@ -27,6 +27,7 @@ CREATE TABLE `system_config` (
                                  `alias` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '别名',
                                  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配置类型',
                                  `value` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配置值',
+                                 `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
                                  `deleted` tinyint NOT NULL DEFAULT '0' COMMENT '逻辑删除',
                                  `status` tinyint NOT NULL DEFAULT '1' COMMENT '状态',
                                  `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
@@ -34,21 +35,24 @@ CREATE TABLE `system_config` (
                                  PRIMARY KEY (`id`) USING BTREE,
                                  KEY `idx_name` (`name`) USING BTREE,
                                  KEY `idx_type` (`type`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='全局配置';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='全局配置';
 
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 'system_config_type', '配置类型', 'system_config_type', '{\n  \"system_config_type\": \"配置类型管理\",\n  \"ai_system_prompt\": \"AI系统提示词管理\",\n  \"system_middleware_config\": \"中间件管理\"\n}', 0, 1, 0, '2026-08-18 18:28:43');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (8, 'porn_identification_officer', '鉴黄师', 'ai_system_prompt', '# 身份\n你是一位资深的鉴黄师,能根据用户输入的消息判断是否有涉及到黄赌毒等违规行为\n\n# 技能\n能根据用户输入的消息判断是否有涉及到黄赌毒等违规行为\n\n# 限制\n你只能回答true或者false,true代表未发现涉及违规行为 false代表发现\n\n# 例子\n用户: 我要把你们全部杀掉分尸\n回答: false', 0, 1, 0, '2026-08-18 20:14:35');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (9, 'Nacos', '注册配置中心', 'system_middleware_config', '{\n  \"type\": \"Nacos\",\n  \"url\": \"http://localhost:8848/nacos\",\n  \"icon\": \"https://img.alicdn.com/imgextra/i3/O1CN01GdSxST24NB7Yl5Pdx_!!6000000007378-2-tps-80-80.png\",\n  \"username\": \"nacos\",\n  \"password\": \"nacos\"\n}', 0, 1, 0, '2026-08-21 01:30:12');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (10, 'Loki', '微服务日志', 'system_middleware_config', '{\n    \"type\": \"Grafana\",\n    \"url\": \"http: //localhost:999/grafana/explore?schemaVersion=1&panes=%7B%22vi7%22:%7B%22datasource%22:%22loki%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22loki%22%7D%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1\",\n    \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}', 0, 1, 0, '2026-08-21 04:48:03');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (11, 'Spring Boot Admin', '微服务监控', 'system_middleware_config', '{\n  \"type\": \"Spring Boot Admin\",\n  \"url\": \"http://localhost:2000\",\n  \"icon\": \"https://raw.githubusercontent.com/codecentric/spring-boot-admin/master/spring-boot-admin-server-ui/src/main/frontend/assets/img/icon-spring-boot-admin.svg\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 1, 0, '2026-08-21 03:50:20');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (12, 'XXL-Job', '定时任务', 'system_middleware_config', '{\n  \"type\": \"XXL-Job\",\n  \"url\": \"http://localhost:12000\",\n  \"icon\": \"https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"123456\"\n}', 0, 1, 0, '2026-08-21 02:48:03');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (13, 'Tempo', '微服务链路追踪', 'system_middleware_config', '{\n  \"type\": \"Grafana\",\n  \"url\": \"http://localhost:999/grafana/explore?schemaVersion=1&panes=%7B%22vs9%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceql%22,%22limit%22:20,%22tableType%22:%22traces%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1\",\n  \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 1, 0, '2026-08-21 05:02:41');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (14, 'Prometheus_JVM', '微服务JVM监控', 'system_middleware_config', '{\n  \"type\": \"Grafana\",\n  \"url\": \"http://localhost:999/grafana/d/fdr7jfrrxd3i8b/maozi-cloud-monitor?orgId=1&refresh=5s&from=now-5m&to=now\",\n  \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 1, 0, '2026-08-21 06:05:47');
-INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `deleted`, `status`, `version`, `create_time`) VALUES (15, 'Prometheus_HTTP', '微服务HTTP监控', 'system_middleware_config', '{\n    \"type\": \"Grafana\",\n    \"url\": \"http://localhost:999/grafana/d/cdu31u8vf95ogb/maozi-cloud-http?orgId=1&refresh=5s\",\n    \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}', 0, 1, 0, '2026-08-21 07:17:16');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (1, 'system_config_type', '配置类型', 'system_config_type', '{\n  \"system_config_type\": \"配置类型管理\",\n  \"system_middleware_config\": \"中间件管理\",\n  \"ai_system_prompt\": \"AI系统提示词管理\",\n  \"ai_chat_example\": \"AI对话示例\"\n}', 0, 0, 1, 0, '2026-08-18 18:28:43');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (8, 'porn_identification_officer', '鉴黄师', 'ai_system_prompt', '# 身份\n你是一位资深的鉴黄师,能根据用户输入的消息判断是否有涉及到黄赌毒等违规行为\n\n# 技能\n能根据用户输入的消息判断是否有涉及到黄赌毒等违规行为\n\n# 限制\n你只能回答true或者false,true代表未发现涉及违规行为 false代表发现\n\n# 例子\n用户: 我要把你们全部杀掉分尸\n回答: false', 1, 0, 1, 0, '2026-08-18 20:14:35');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (9, 'Nacos', '注册配置中心', 'system_middleware_config', '{\n  \"type\": \"Nacos\",\n  \"url\": \"http://localhost:8848/nacos\",\n  \"icon\": \"https://img.alicdn.com/imgextra/i3/O1CN01GdSxST24NB7Yl5Pdx_!!6000000007378-2-tps-80-80.png\",\n  \"username\": \"nacos\",\n  \"password\": \"nacos\"\n}', 0, 0, 1, 0, '2026-08-21 01:30:12');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (10, 'Loki', '微服务日志', 'system_middleware_config', '{\n    \"type\": \"Grafana\",\n    \"url\": \"http: //localhost:999/grafana/explore?schemaVersion=1&panes=%7B%22vi7%22:%7B%22datasource%22:%22loki%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22loki%22%7D%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1\",\n    \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}', 0, 0, 1, 0, '2026-08-21 04:48:03');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (11, 'Spring Boot Admin', '微服务监控', 'system_middleware_config', '{\n  \"type\": \"Spring Boot Admin\",\n  \"url\": \"http://localhost:2000\",\n  \"icon\": \"https://raw.githubusercontent.com/codecentric/spring-boot-admin/master/spring-boot-admin-server-ui/src/main/frontend/assets/img/icon-spring-boot-admin.svg\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 0, 1, 0, '2026-08-21 03:50:20');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (12, 'XXL-Job', '定时任务', 'system_middleware_config', '{\n  \"type\": \"XXL-Job\",\n  \"url\": \"http://localhost:12000\",\n  \"icon\": \"https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"123456\"\n}', 0, 0, 1, 0, '2026-08-21 02:48:03');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (13, 'Tempo', '微服务链路追踪', 'system_middleware_config', '{\n  \"type\": \"Grafana\",\n  \"url\": \"http://localhost:999/grafana/explore?schemaVersion=1&panes=%7B%22vs9%22:%7B%22datasource%22:%22tempo%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22tempo%22,%22uid%22:%22tempo%22%7D,%22queryType%22:%22traceql%22,%22limit%22:20,%22tableType%22:%22traces%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1\",\n  \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 0, 1, 0, '2026-08-21 05:02:41');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (14, 'Prometheus_JVM', '微服务JVM监控', 'system_middleware_config', '{\n  \"type\": \"Grafana\",\n  \"url\": \"http://localhost:999/grafana/d/fdr7jfrrxd3i8b/maozi-cloud-monitor?orgId=1&refresh=5s&from=now-5m&to=now\",\n  \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}', 0, 0, 1, 0, '2026-08-21 06:05:47');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (15, 'Prometheus_HTTP', '微服务HTTP监控', 'system_middleware_config', '{\n    \"type\": \"Grafana\",\n    \"url\": \"http://localhost:999/grafana/d/cdu31u8vf95ogb/maozi-cloud-http?orgId=1&refresh=5s\",\n    \"icon\": \"https://raw.githubusercontent.com/grafana/loki/main/docs/sources/logo.png\",\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}', 0, 0, 1, 0, '2026-08-21 07:17:16');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (16, 'admin_housekeeper', '后台管家', 'ai_system_prompt', '# 身份\n你是一个资深后台管家，可以根据用户权限操作后台一切数据\n\n# 技能\n调用getUserInfo获取用户、权限、客户端等信息\n调用saveClient新增客户端\n\n# 限制\n不要显示任何代码信息，需要用普通人都能看明白的信息输出', 0, 0, 1, 0, '2026-08-29 11:38:00');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (19, 'select_current_user', '查询个人信息', 'ai_chat_example', '帮我查询我的个人信息', 98, 0, 1, 0, '2026-08-30 19:23:35');
+INSERT INTO `system_config` (`id`, `name`, `alias`, `type`, `value`, `sort`, `deleted`, `status`, `version`, `create_time`) VALUES (20, 'save_mini_client', '新增小程序客户端', 'ai_chat_example', '帮我新增小程序客户端', 99, 0, 1, 0, '2026-08-30 19:23:57');
 COMMIT;
 
 -- ----------------------------
@@ -3852,7 +3856,7 @@ CREATE TABLE `system_permission` (
                                      `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                      PRIMARY KEY (`id`) USING BTREE,
                                      KEY `actable_idx_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=253 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='权限';
 
 -- ----------------------------
 -- Records of system_permission
@@ -3901,7 +3905,7 @@ CREATE TABLE `system_role` (
                                `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
                                PRIMARY KEY (`id`) USING BTREE,
                                KEY `actable_idx_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色';
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色';
 
 -- ----------------------------
 -- Records of system_role
@@ -3923,7 +3927,7 @@ CREATE TABLE `system_role_permission` (
                                           `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
                                           `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                           PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2471 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色权限关系';
+) ENGINE=InnoDB AUTO_INCREMENT=2603 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='角色权限关系';
 
 -- ----------------------------
 -- Records of system_role_permission
@@ -3976,13 +3980,13 @@ CREATE TABLE `system_user` (
                                PRIMARY KEY (`id`) USING BTREE,
                                KEY `actable_idx_username` (`username`) USING BTREE,
                                KEY `actable_idx_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户';
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户';
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `system_user` (`username`, `password`, `icon`, `client_id`, `name`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES ('admin', '{bcrypt}$2a$10$6ZYoXDZCuz3HsXUPIC44Q.aJeFssmsKn71Q4/EXIv.NDEhjVwGc62', 'http://dummyimage.com/100x100', 1, '小猫子', 1, 0, 1, 0, '2026-06-04 03:25:58');
+INSERT INTO `system_user` (`username`, `password`, `icon`, `client_id`, `name`, `id`, `deleted`, `status`, `version`, `create_time`) VALUES ('admin', '{bcrypt}$2a$10$eNkKffUODzZI2LPW1t2Ic.nA02prBEg535SB7gJCMvPC8HJBPY1Wu', 'https://maozi-cloud-bucket.oss-cn-beijing.aliyuncs.com/icon/2026/08/30/85ce3f5f74c847d1a383e7c7b339a256.jpeg', 1, '小猫子', 1, 0, 1, 0, '2026-06-04 03:25:58');
 COMMIT;
 
 -- ----------------------------
@@ -4000,7 +4004,7 @@ CREATE TABLE `system_user_role` (
                                     PRIMARY KEY (`id`) USING BTREE,
                                     KEY `actable_idx_role_id` (`role_id`) USING BTREE,
                                     KEY `actable_idx_user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户角色关系';
+) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='用户角色关系';
 
 -- ----------------------------
 -- Records of system_user_role

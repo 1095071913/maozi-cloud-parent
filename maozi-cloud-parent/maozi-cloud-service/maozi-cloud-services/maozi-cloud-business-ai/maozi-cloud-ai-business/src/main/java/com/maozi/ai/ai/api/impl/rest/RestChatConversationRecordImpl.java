@@ -6,7 +6,7 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.maozi.ai.ai.api.impl.ChatConversationRecordServiceImpl;
 import com.maozi.ai.ai.api.rest.RestChatConversationRecord;
 import com.maozi.ai.ai.domain.ChatConversationRecordDo;
-import com.maozi.ai.ai.dto.ChatConversationRecordListParam;
+import com.maozi.ai.ai.param.ChatConversationRecordListParam;
 import com.maozi.ai.ai.vo.ChatConversationRecordListResult;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
@@ -72,6 +72,7 @@ public class RestChatConversationRecordImpl extends ChatConversationRecordServic
      *
      * @param param 携带首条消息内容的请求参数
      * @return 新建会话 ID
+     * @throws BusinessResultException 消息内容为空时抛出
      */
     @Override
     public AbstractBaseResult<Long> restCreate(RequestParam<String> param) {
@@ -100,6 +101,7 @@ public class RestChatConversationRecordImpl extends ChatConversationRecordServic
      * @param conversationId 会话 ID
      * @param param 携带新标题的请求参数
      * @return 空结果
+     * @throws BusinessResultException 标题为空或长度超过 20 字符时抛出
      */
     @Override
     public AbstractBaseResult<Void> restUpdateTitle(Long conversationId, RequestParam<String> param) {

@@ -7,11 +7,11 @@ import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
-import com.maozi.system.config.dto.ConfigListParam;
-import com.maozi.system.config.dto.ConfigSaveUpdateParam;
-import com.maozi.system.config.vo.ConfigDropDownResult;
-import com.maozi.system.config.vo.ConfigInfoVo;
-import com.maozi.system.config.vo.ConfigListVo;
+import com.maozi.system.config.param.ConfigListParam;
+import com.maozi.system.config.param.ConfigSaveUpdateParam;
+import com.maozi.system.config.result.ConfigDropDownResult;
+import com.maozi.system.config.result.ConfigInfoResult;
+import com.maozi.system.config.result.ConfigListResult;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,18 +37,24 @@ public interface RestConfigService {
 
 	/**
 	 * 获取全局配置分页列表
+	 * <p>
+	 * 默认按排序值升序、创建时间倒序排列。
+	 * </p>
 	 *
-	 * @param pageParam 分页查询参数，包含页码、每页数量以及配置搜索条件（类型、名称、别名）
-	 * @return 返回配置分页列表数据，包含配置 ID、名称、别名、类型、配置值、状态、创建时间等信息
+	 * @param pageParam 分页查询参数，包含页码、每页数量以及配置搜索条件（类型必填、名称与别名模糊查询）
+	 * @return 返回配置分页列表数据，包含配置 ID、名称、别名、类型、配置值、排序值、状态、创建时间等信息
 	 */
 	@Post(value = PATH + "/list",description = "配置列表")
 	@PreAuthorize("hasAuthority('system:config:list')")
-	AbstractBaseResult<PageResult<ConfigListVo>> restList(@RequestBody @Valid PageParam<ConfigListParam> pageParam);
+	AbstractBaseResult<PageResult<ConfigListResult>> restList(@RequestBody @Valid PageParam<ConfigListParam> pageParam);
 
 	/**
 	 * 保存新增全局配置
+	 * <p>
+	 * 配置名称全局唯一，名称重复时抛出业务异常。
+	 * </p>
 	 *
-	 * @param param 配置保存参数，包含配置名称、类型、配置值
+	 * @param param 配置保存参数，包含配置名称、别名、类型、配置值与排序值
 	 * @return 返回新增配置的 ID
 	 */
 	@Post(value = PATH + "/save",description = "配置保存")
@@ -58,8 +64,8 @@ public interface RestConfigService {
 	/**
 	 * 获取配置下拉列表
 	 * <p>
-	 * 根据配置类型（必传）返回该类型下所有启用状态的配置选项，
-	 * 每项包含配置 ID、名称、别名与配置值。
+	 * 根据配置类型（必传，为空时抛出业务异常）返回该类型下所有启用状态的配置选项，
+	 * 每项包含配置 ID、名称、别名、配置值与排序值，按排序值升序、创建时间升序排列。
 	 * </p>
 	 *
 	 * @param type 配置类型（必传），用于筛选指定类型的配置选项
@@ -72,6 +78,7 @@ public interface RestConfigService {
 	 * 根据配置名称获取配置
 	 * <p>
 	 * 配置名称为全局唯一键，用于前端按名称直接获取对应的配置信息。
+	 * 配置名称为空时抛出业务异常，配置不存在时返回空数据。
 	 * </p>
 	 *
 	 * @param name 配置名称，用于查询对应的配置记录
@@ -87,13 +94,16 @@ public interface RestConfigService {
 
 	/**
 	 * 获取配置详情
+	 * <p>
+	 * 配置不存在时抛出业务异常。
+	 * </p>
 	 *
 	 * @param id 配置 ID，用于查询指定配置的详细信息
-	 * @return 返回配置详细信息，包含名称、类型、配置值、状态等完整属性
+	 * @return 返回配置详细信息，包含名称、别名、类型、配置值、排序值、状态等完整属性
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "配置详情")
 	@PreAuthorize("hasAuthority('system:config:get')")
-	AbstractBaseResult<ConfigInfoVo> restGet(@PathVariable Long id);
+	AbstractBaseResult<ConfigInfoResult> restGet(@PathVariable Long id);
 
 	/**
 	 * 删除配置
@@ -108,8 +118,9 @@ public interface RestConfigService {
 	/**
 	 * 更新配置信息（动态更新）
 	 * <p>
-	 * 仅更新传入的字段（名称、别名、类型、配置值），
-	 * 未传入的字段保持原值不变，不参与更新。
+	 * 仅更新传入的字段（名称、别名、类型、配置值、排序值），
+	 * 未传入的字段保持原值不变，不参与更新；
+	 * 传入配置名称时校验其唯一性（排除自身记录），重复时抛出业务异常。
 	 * </p>
 	 *
 	 * @param id    配置 ID，指定需要更新的配置记录
@@ -129,6 +140,6 @@ public interface RestConfigService {
 	 */
 	@Post(value = CURRENT_PATH + "/updateStatus",description = "配置更新状态")
 	@PreAuthorize("hasAuthority('system:config:update')")
-	AbstractBaseResult<Void> restUpdateStatus(@PathVariable Long id, @RequestBody RequestParam<Status> param);
+	AbstractBaseResult<Void> restUpdateStatusResult(@PathVariable Long id, @RequestBody RequestParam<Status> param);
 
 }

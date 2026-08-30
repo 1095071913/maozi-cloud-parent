@@ -7,7 +7,7 @@ import com.maozi.system.permission.api.RoleService;
 import com.maozi.system.permission.api.UserRoleService;
 import com.maozi.system.permission.domain.RoleDo;
 import com.maozi.system.permission.mapper.RoleMapper;
-import com.maozi.system.role.dto.RoleSaveUpdateParam;
+import com.maozi.system.role.param.RoleSaveUpdateParam;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +45,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,RoleDo,Void> imp
 	 * <p>在删除角色前校验该角色是否已被用户绑定。</p>
 	 *
 	 * @param id 角色ID
+	 * @throws com.maozi.common.result.error.exception.BusinessResultException 角色已被用户绑定时抛出
 	 */
 	@Override
 	protected void checkBind(Long id) {

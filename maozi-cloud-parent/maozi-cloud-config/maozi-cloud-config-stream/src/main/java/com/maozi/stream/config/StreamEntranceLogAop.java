@@ -70,6 +70,7 @@ public class StreamEntranceLogAop {
     @Around(POINT)
     public Consumer<Message<Object>> doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
+        // 执行目标方法取得原始消费者，随后返回包装了日志逻辑的新消费者
         Consumer<Object> resultData = (Consumer<Object>) proceedingJoinPoint.proceed();
 
         return (message) -> {

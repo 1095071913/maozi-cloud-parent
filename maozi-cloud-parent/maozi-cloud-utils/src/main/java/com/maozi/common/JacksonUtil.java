@@ -103,7 +103,7 @@ public class JacksonUtil {
 			}
 		});
 
-		// LocalDateTime 自定义序列化/反序列化，格式为 yyyy-MM-dd HH:mm:ss（空格分隔，不带 T）
+		// LocalDateTime 自定义序列化/反序列化，格式为 yyyy-MM-dd HH:mm:ss.SSS（空格分隔、含毫秒，不带 T）
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy‑MM‑dd HH:mm:ss.SSS");
 		module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));

@@ -9,6 +9,11 @@ package com.maozi.ai.ai.api;
  */
 public interface ChatConversationRecordService {
 
+    /**
+     * 校验会话是否存在
+     *
+     * @param conversationId 会话 ID
+     */
     void has(Long conversationId);
 
 }

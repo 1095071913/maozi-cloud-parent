@@ -46,6 +46,7 @@ import java.util.Set;
 @Component
 public class RedisChatMemoryRepository implements ChatMemoryRepository {
 
+    /** Redis 客户端，用于读写会话记忆的消息主体与索引 key */
     @Resource
     private StringRedisTemplate redisClient;
 
@@ -133,7 +134,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
      *
      * @param conversationId 会话 ID
      * @param indexKeySuffix 索引 key 后缀（:order 全部消息 / :record 用户对话记录）
-     * @param minScore 最小写入时刻毫秒时间戳（不含）
+     * @param minScore 最小写入时刻毫秒时间戳（包含，查询 score 大于等于该值的消息，调用方通过传入 timestamp + 1 实现"晚于 timestamp"语义）
      * @return 消息列表
      */
     private List<Message> findMessageByIndexSuffix(String conversationId, String indexKeySuffix, double minScore) {

@@ -54,10 +54,13 @@ public class MessageSendStream {
 
         MessageBuilder<D> messageBuilder = MessageBuilder.fromMessage(message);
 
+        // 获取当前服务在注册中心的全部存活实例
         List<ServiceInstance> instances = discoveryClient.getInstances(ApplicationEnvironmentContext.SERVICE_NAME);
 
+        // 按实例元数据中的 version（灰度标识）对存活实例分组，用于判断当前版本是否仍有存活实例
         Map<String,List<ServiceInstance>> applicationClients = instances.stream().collect(Collectors.groupingBy((instance)-> instance.getMetadata().get(ApplicationLinkContext.NACOS_VERSION_KEY)));
 
+        // 当前请求版本号，链路上下文未设置时取默认版本 main
         String version = ApplicationLinkContext.getVersionDefault(ApplicationLinkContext.getVersion());
 
         // 当前为非默认版本且该版本已无存活实例时，灰度标识回退为默认版本，保证消息仍可被消费
@@ -65,7 +68,9 @@ public class MessageSendStream {
             version = ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
         }
 
+        // Gray 头写入用于灰度路由的版本（可能已回退为默认版本）
         messageBuilder.setHeader("Gray", version);
+        // X-Version 头透传原始版本号，供消费端恢复链路上下文
         messageBuilder.setHeader(ApplicationLinkContext.VERSION_KEY, ApplicationLinkContext.getVersion());
 
         return stream.send(bindingName,messageBuilder.build());

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * AI交互会话服务实现类
- * <p>实现AI交互会话相关的业务逻辑，包括会话的保存/更新、
- * 详情查询和分页列表查询等功能。</p>
+ * <p>实现AI交互会话相关的业务逻辑，提供会话存在性校验能力；
+ * 会话的保存/更新与分页列表查询由 REST 层实现类
+ * RestChatConversationRecordImpl 提供并复用本类的通用数据访问能力。</p>
  */
 @Service
 public class ChatConversationRecordServiceImpl extends BaseServiceImpl<ChatConversationRecordMapper, ChatConversationRecordDo,Void> implements ChatConversationRecordService {
@@ -30,6 +31,14 @@ public class ChatConversationRecordServiceImpl extends BaseServiceImpl<ChatConve
 	}
 
 
+	/**
+	 * 校验会话是否存在
+	 * <p>
+	 * 按会话 ID 统计记录数，会话不存在时抛出数据不存在的业务异常。
+	 * </p>
+	 *
+	 * @param conversationId 会话 ID
+	 */
 	@Override
 	public void has(Long conversationId) {
 		LambdaQueryWrapper<ChatConversationRecordDo> wrapper = Wrappers.lambdaQuery();

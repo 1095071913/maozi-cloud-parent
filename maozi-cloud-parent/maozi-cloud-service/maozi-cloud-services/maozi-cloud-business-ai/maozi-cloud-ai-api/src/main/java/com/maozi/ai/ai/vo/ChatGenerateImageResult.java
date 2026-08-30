@@ -28,9 +28,11 @@ public class ChatGenerateImageResult implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /** 提示消息（正常完成时为"图片生成完成 ..."，生成期间被停止时为空） */
     @Schema(description = "消息")
     private String message;
 
+    /** 生成图片的地址列表 */
     @Schema(description = "图片列表")
     private Set<String> images;
 

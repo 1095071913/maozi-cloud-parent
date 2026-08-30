@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,6 +23,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OauthUserInfoResult implements Serializable {
+
+    /** 序列化版本号 */
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** 用户ID */
     @Schema(description = "用户ID")

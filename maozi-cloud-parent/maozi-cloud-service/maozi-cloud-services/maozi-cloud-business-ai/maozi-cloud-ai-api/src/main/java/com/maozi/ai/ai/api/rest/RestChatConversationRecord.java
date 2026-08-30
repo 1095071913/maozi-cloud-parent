@@ -1,6 +1,6 @@
 package com.maozi.ai.ai.api.rest;
 
-import com.maozi.ai.ai.dto.ChatConversationRecordListParam;
+import com.maozi.ai.ai.param.ChatConversationRecordListParam;
 import com.maozi.ai.ai.vo.ChatConversationRecordListResult;
 import com.maozi.base.param.PageParam;
 import com.maozi.base.param.RequestParam;
@@ -25,17 +25,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "AI会话模块")
 public interface RestChatConversationRecord {
 
+    /** 接口基础路径 */
     String PATH = "/chat/record";
 
+    /**
+     * 查询当前用户的会话分页列表
+     *
+     * @param pageParam 分页查询参数，包含页码、每页数量以及会话列表的排序条件
+     * @return 返回会话分页列表数据，包含会话 ID、标题等信息
+     */
     @Post(value = PATH + "/list", description = "AI会话列表")
     AbstractBaseResult<PageResult<ChatConversationRecordListResult>> restList(@RequestBody PageParam<ChatConversationRecordListParam> pageParam);
 
+    /**
+     * 创建会话
+     *
+     * @param param 携带首条消息内容的请求参数，该消息内容作为会话标题
+     * @return 返回新建会话的 ID
+     */
     @Post(value = PATH + "/create", description = "AI会话创建")
     AbstractBaseResult<Long> restCreate(@RequestBody RequestParam<String> param);
 
+    /**
+     * 更新会话标题
+     *
+     * @param conversationId 会话 ID
+     * @param param 携带新标题的请求参数
+     * @return 空结果
+     */
     @Post(value = PATH + "/{conversationId}/updateTitle", description = "AI会话更新标题")
     AbstractBaseResult<Void> restUpdateTitle(@PathVariable Long conversationId, @RequestBody RequestParam<String> param);
 
+    /**
+     * 删除会话
+     *
+     * @param conversationId 会话 ID
+     * @return 空结果
+     */
     @Post(value = PATH + "/{conversationId}/remove", description = "AI会话删除")
     AbstractBaseResult<Void> restRemove(@PathVariable String conversationId);
 

@@ -7,7 +7,8 @@ import java.util.Map;
  * OAuth2客户端服务接口。
  * <p>
  * 定义客户端信息的查询方法，包括根据主键获取客户端ID
- * 以及批量获取客户端ID映射关系。供RPC远程调用和REST接口层使用。
+ * 以及批量获取客户端ID映射关系，由 ClientServiceImpl 提供实现，
+ * 并随其子类（RPC/REST 服务实现）一并承载。
  * </p>
  */
 public interface ClientService {

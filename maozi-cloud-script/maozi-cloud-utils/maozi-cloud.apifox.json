@@ -11838,6 +11838,42 @@
               "moduleId": 7130572
             },
             {
+              "name": "AbstractBaseResultMapStringListBaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125717",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/284125736"
+                        }
+                      },
+                      "type": "object",
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "SystemPropertiesVo",
               "displayName": "",
               "id": "#/definitions/284125718",
@@ -12175,6 +12211,32 @@
               "moduleId": 7130572
             },
             {
+              "name": "BaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125736",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "desc": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "value",
+                    "desc"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "UserIndividualUpdateParam",
               "displayName": "",
               "id": "#/definitions/304540919",
@@ -12241,53 +12303,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "ConfigSaveUpdateParam",
-              "displayName": "",
-              "id": "#/definitions/305688401",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "minLength": 1,
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "alias": {
-                      "minLength": 1,
-                      "description": "别名",
-                      "type": "string"
-                    },
-                    "type": {
-                      "minLength": 1,
-                      "description": "类型",
-                      "type": "string"
-                    },
-                    "value": {
-                      "minLength": 1,
-                      "description": "配置值",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "alias",
-                    "name",
-                    "type",
-                    "value"
-                  ],
-                  "x-apifox-orders": [
-                    "name",
-                    "alias",
-                    "type",
-                    "value"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultListPermissionDropDownResult",
               "displayName": "",
               "id": "#/definitions/284125728",
@@ -12313,6 +12328,59 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigSaveUpdateParam",
+              "displayName": "",
+              "id": "#/definitions/305688401",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "minLength": 1,
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "minLength": 1,
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "sort": {
+                      "format": "int32",
+                      "description": "排序",
+                      "type": "integer"
+                    },
+                    "type": {
+                      "minLength": 1,
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "minLength": 1,
+                      "description": "配置值",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "alias",
+                    "name",
+                    "type",
+                    "value"
+                  ],
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "sort",
+                    "type",
+                    "value"
                   ]
                 }
               },
@@ -12396,43 +12464,6 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "ConfigDropDownResult",
-              "displayName": "",
-              "id": "#/definitions/305688403",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "alias": {
-                      "description": "别名",
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "ID",
-                      "type": "string"
-                    },
-                    "value": {
-                      "description": "配置值",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "name",
-                    "alias",
-                    "id",
-                    "value"
                   ]
                 }
               },
@@ -12561,6 +12592,49 @@
               "moduleId": 7130572
             },
             {
+              "name": "ConfigDropDownResult",
+              "displayName": "",
+              "id": "#/definitions/305688403",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "ID",
+                      "type": "string"
+                    },
+                    "sort": {
+                      "format": "int32",
+                      "description": "排序",
+                      "type": "integer"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "id",
+                    "sort",
+                    "value"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultPermissionInfoVo",
               "displayName": "",
               "id": "#/definitions/284125735",
@@ -12624,6 +12698,34 @@
               "moduleId": 7130572
             },
             {
+              "name": "EnumResult",
+              "displayName": "",
+              "id": "#/definitions/284125719",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "format": "int32",
+                      "description": "枚举编码",
+                      "type": "integer"
+                    },
+                    "desc": {
+                      "description": "描述",
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "value",
+                    "desc"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultUserInfoVo",
               "displayName": "",
               "id": "#/definitions/284125738",
@@ -12653,49 +12755,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "ConfigInfoVo",
-              "displayName": "",
-              "id": "#/definitions/305688405",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "alias": {
-                      "description": "别名",
-                      "type": "string"
-                    },
-                    "type": {
-                      "description": "类型",
-                      "type": "string"
-                    },
-                    "value": {
-                      "description": "配置值",
-                      "type": "string"
-                    },
-                    "status": {
-                      "format": "int32",
-                      "description": "状态",
-                      "type": "integer"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "name",
-                    "alias",
-                    "type",
-                    "value",
-                    "status"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultListImageUploadResult",
               "displayName": "",
               "id": "#/definitions/307495354",
@@ -12716,6 +12775,35 @@
                       "items": {
                         "$ref": "#/definitions/307495352"
                       }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultTemplateResult",
+              "displayName": "",
+              "id": "#/definitions/284125722",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/284125748"
                     }
                   },
                   "x-apifox-orders": [
@@ -12800,6 +12888,83 @@
                     "permissions",
                     "name",
                     "icon"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigInfoVo",
+              "displayName": "",
+              "id": "#/definitions/305688405",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "sort": {
+                      "format": "int32",
+                      "description": "排序",
+                      "type": "integer"
+                    },
+                    "type": {
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "name",
+                    "alias",
+                    "sort",
+                    "type",
+                    "value",
+                    "status"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultVoid",
+              "displayName": "",
+              "id": "#/definitions/284125724",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
                   ]
                 }
               },
@@ -12942,6 +13107,38 @@
               "moduleId": 7130572
             },
             {
+              "name": "AbstractBaseResultListBaseEnum",
+              "displayName": "",
+              "id": "#/definitions/284125726",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/284125736"
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultPageResultUserListVo",
               "displayName": "",
               "id": "#/definitions/284125745",
@@ -13000,53 +13197,32 @@
               "moduleId": 7130572
             },
             {
-              "name": "ConfigListVo",
+              "name": "ErrorResultObject",
               "displayName": "",
-              "id": "#/definitions/305688406",
-              "description": "",
+              "id": "#/definitions/304305701",
+              "description": "接口错误结果集",
               "schema": {
                 "jsonSchema": {
+                  "description": "接口错误结果集",
                   "type": "object",
                   "properties": {
-                    "createTime": {
-                      "format": "date-time",
-                      "description": "创建时间",
-                      "type": "string"
-                    },
-                    "name": {
-                      "description": "名称",
-                      "type": "string"
-                    },
-                    "alias": {
-                      "description": "别名",
-                      "type": "string"
-                    },
-                    "id": {
-                      "description": "标识",
-                      "type": "string"
-                    },
-                    "type": {
-                      "description": "类型",
-                      "type": "string"
-                    },
-                    "value": {
-                      "description": "配置值",
-                      "type": "string"
-                    },
-                    "status": {
+                    "code": {
                       "format": "int32",
-                      "description": "状态",
+                      "description": "业务内码",
                       "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据"
+                    },
+                    "message": {
+                      "description": "错误信息",
+                      "type": "string"
                     }
                   },
                   "x-apifox-orders": [
-                    "createTime",
-                    "name",
-                    "alias",
-                    "id",
-                    "type",
-                    "value",
-                    "status"
+                    "code",
+                    "data",
+                    "message"
                   ]
                 }
               },
@@ -13078,6 +13254,66 @@
                   "x-apifox-orders": [
                     "name",
                     "orderFieldMap"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "ConfigListVo",
+              "displayName": "",
+              "id": "#/definitions/305688406",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "createTime": {
+                      "format": "date-time",
+                      "description": "创建时间",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "名称",
+                      "type": "string"
+                    },
+                    "alias": {
+                      "description": "别名",
+                      "type": "string"
+                    },
+                    "id": {
+                      "description": "标识",
+                      "type": "string"
+                    },
+                    "sort": {
+                      "format": "int32",
+                      "description": "排序",
+                      "type": "integer"
+                    },
+                    "type": {
+                      "description": "类型",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "配置值",
+                      "type": "string"
+                    },
+                    "status": {
+                      "format": "int32",
+                      "description": "状态",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "createTime",
+                    "name",
+                    "alias",
+                    "id",
+                    "sort",
+                    "type",
+                    "value",
+                    "status"
                   ]
                 }
               },
@@ -13128,6 +13364,64 @@
                       "items": {
                         "$ref": "#/definitions/284125729"
                       }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultEnumResult",
+              "displayName": "",
+              "id": "#/definitions/284125734",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "$ref": "#/definitions/284125719"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "code",
+                    "data"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
+              "name": "AbstractBaseResultLong",
+              "displayName": "",
+              "id": "#/definitions/284125741",
+              "description": "接口响应结果集",
+              "schema": {
+                "jsonSchema": {
+                  "description": "接口响应结果集",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "format": "int32",
+                      "description": "业务内码",
+                      "type": "integer"
+                    },
+                    "data": {
+                      "description": "数据",
+                      "type": "string"
                     }
                   },
                   "x-apifox-orders": [
@@ -13353,6 +13647,56 @@
               "moduleId": 7130572
             },
             {
+              "name": "TemplateResult",
+              "displayName": "",
+              "id": "#/definitions/284125748",
+              "description": "",
+              "schema": {
+                "jsonSchema": {
+                  "type": "object",
+                  "properties": {
+                    "stringArrayList": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "properties": {
+                        "empty": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "errorResult": {
+                      "$ref": "#/definitions/304305701"
+                    },
+                    "baseResultEnumResult": {
+                      "$ref": "#/definitions/284125734"
+                    },
+                    "integerArrayList": {
+                      "type": "array",
+                      "items": {
+                        "format": "int32",
+                        "type": "integer"
+                      },
+                      "properties": {
+                        "empty": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "stringArrayList",
+                    "errorResult",
+                    "baseResultEnumResult",
+                    "integerArrayList"
+                  ]
+                }
+              },
+              "visibility": "INHERITED",
+              "moduleId": 7130572
+            },
+            {
               "name": "AbstractBaseResultPageResultConfigListVo",
               "displayName": "",
               "id": "#/definitions/305688410",
@@ -13445,42 +13789,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultMapStringListBaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125717",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "additionalProperties": {
-                        "type": "array",
-                        "items": {
-                          "$ref": "#/definitions/284125736"
-                        }
-                      },
-                      "type": "object",
-                      "x-apifox-orders": []
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultListChatAfterMessageListResult",
               "displayName": "",
               "id": "#/definitions/307133488",
@@ -13506,34 +13814,6 @@
                   "x-apifox-orders": [
                     "code",
                     "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "EnumResult",
-              "displayName": "",
-              "id": "#/definitions/284125719",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "format": "int32",
-                      "description": "枚举编码",
-                      "type": "integer"
-                    },
-                    "desc": {
-                      "description": "描述",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "value",
-                    "desc"
                   ]
                 }
               },
@@ -13604,35 +13884,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultTemplateResult",
-              "displayName": "",
-              "id": "#/definitions/284125722",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "$ref": "#/definitions/284125748"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultSetString",
               "displayName": "",
               "id": "#/definitions/307067980",
@@ -13666,34 +13917,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultVoid",
-              "displayName": "",
-              "id": "#/definitions/284125724",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "AbstractBaseResultChatListResult",
               "displayName": "",
               "id": "#/definitions/307087554",
@@ -13711,38 +13934,6 @@
                     "data": {
                       "description": "数据",
                       "$ref": "#/definitions/305096174"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultListBaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125726",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/284125736"
-                      }
                     }
                   },
                   "x-apifox-orders": [
@@ -13876,68 +14067,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "ErrorResultObject",
-              "displayName": "",
-              "id": "#/definitions/304305701",
-              "description": "接口错误结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口错误结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据"
-                    },
-                    "message": {
-                      "description": "错误信息",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data",
-                    "message"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "AbstractBaseResultEnumResult",
-              "displayName": "",
-              "id": "#/definitions/284125734",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "$ref": "#/definitions/284125719"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "ChatGenerateImageParam",
               "displayName": "",
               "id": "#/definitions/307067979",
@@ -14016,32 +14145,6 @@
                   },
                   "x-apifox-orders": [
                     "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "BaseEnum",
-              "displayName": "",
-              "id": "#/definitions/284125736",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "value": {
-                      "format": "int32",
-                      "type": "integer"
-                    },
-                    "desc": {
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "value",
-                    "desc"
                   ]
                 }
               },
@@ -14211,35 +14314,6 @@
               "moduleId": 7130572
             },
             {
-              "name": "AbstractBaseResultLong",
-              "displayName": "",
-              "id": "#/definitions/284125741",
-              "description": "接口响应结果集",
-              "schema": {
-                "jsonSchema": {
-                  "description": "接口响应结果集",
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "format": "int32",
-                      "description": "业务内码",
-                      "type": "integer"
-                    },
-                    "data": {
-                      "description": "数据",
-                      "type": "string"
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "code",
-                    "data"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
               "name": "ChatAfterMessageListResult",
               "displayName": "",
               "id": "#/definitions/307133489",
@@ -14291,56 +14365,6 @@
                   "x-apifox-orders": [
                     "isLocked",
                     "items"
-                  ]
-                }
-              },
-              "visibility": "INHERITED",
-              "moduleId": 7130572
-            },
-            {
-              "name": "TemplateResult",
-              "displayName": "",
-              "id": "#/definitions/284125748",
-              "description": "",
-              "schema": {
-                "jsonSchema": {
-                  "type": "object",
-                  "properties": {
-                    "stringArrayList": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "properties": {
-                        "empty": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "errorResult": {
-                      "$ref": "#/definitions/304305701"
-                    },
-                    "baseResultEnumResult": {
-                      "$ref": "#/definitions/284125734"
-                    },
-                    "integerArrayList": {
-                      "type": "array",
-                      "items": {
-                        "format": "int32",
-                        "type": "integer"
-                      },
-                      "properties": {
-                        "empty": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  },
-                  "x-apifox-orders": [
-                    "stringArrayList",
-                    "errorResult",
-                    "baseResultEnumResult",
-                    "integerArrayList"
                   ]
                 }
               },
@@ -20673,20 +20697,6 @@
         {
           "name": "password",
           "securityType": "default",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
-        },
-        {
-          "name": "oauth_refresh_token",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
-        },
-        {
-          "name": "oauth_access_token",
           "value": "",
           "description": "",
           "initialValue": "",

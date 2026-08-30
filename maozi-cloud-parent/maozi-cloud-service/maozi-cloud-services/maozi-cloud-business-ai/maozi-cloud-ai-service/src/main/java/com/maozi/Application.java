@@ -18,9 +18,9 @@
 package com.maozi;
 
 /**
- * 系统模块启动类
+ * AI服务模块启动类
  * <p>
- * 继承自 BaseApplicationDB，作为系统服务模块的入口类，
+ * 继承自 BaseApplicationDB，作为 AI 对话服务模块的入口类，
  * 负责初始化并启动 Spring Boot 应用程序。
  * </p>
  */

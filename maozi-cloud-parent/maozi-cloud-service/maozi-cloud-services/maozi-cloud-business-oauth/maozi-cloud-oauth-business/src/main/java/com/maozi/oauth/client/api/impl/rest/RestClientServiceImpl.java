@@ -11,8 +11,8 @@ import com.maozi.oauth.client.api.impl.ClientServiceImpl;
 import com.maozi.oauth.client.api.rest.RestClientService;
 import com.maozi.oauth.client.param.ClientListParam;
 import com.maozi.oauth.client.param.ClientSaveUpdateParam;
-import com.maozi.oauth.client.vo.ClientInfoVo;
-import com.maozi.oauth.client.vo.ClientListVo;
+import com.maozi.oauth.client.result.ClientInfoResult;
+import com.maozi.oauth.client.result.ClientListResult;
 import com.maozi.service.api.annotation.RestService;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class RestClientServiceImpl extends ClientServiceImpl implements RestClie
 	 * @return 包含客户端分页列表的统一响应结果
 	 */
 	@Override
-	public AbstractBaseResult<PageResult<ClientListVo>> restList(PageParam<ClientListParam> pageParam) {
+	public AbstractBaseResult<PageResult<ClientListResult>> restList(PageParam<ClientListParam> pageParam) {
 		return ResultUtil.success(superRestList(pageParam));
 	}
 
@@ -55,11 +55,11 @@ public class RestClientServiceImpl extends ClientServiceImpl implements RestClie
 	/**
 	 * 获取客户端下拉列表数据。
 	 *
-	 * @return 包含下拉列表数据的统一响应结果
+	 * @return 包含客户端下拉选项列表的统一响应结果
 	 */
 	@Override
-	public AbstractBaseResult<List<DropDownResult>> dropDownListResult(){
-		return super.dropDownListResult();
+	public AbstractBaseResult<List<DropDownResult>> restDropDownListResult() {
+		return dropDownListResult();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class RestClientServiceImpl extends ClientServiceImpl implements RestClie
 	 * @return 包含客户端详细信息的统一响应结果
 	 */
     @Override
-    public AbstractBaseResult<ClientInfoVo> restGet(Long id) {
+    public AbstractBaseResult<ClientInfoResult> restGet(Long id) {
         return ResultUtil.success(superRestGet(id));
     }
 
@@ -89,20 +89,20 @@ public class RestClientServiceImpl extends ClientServiceImpl implements RestClie
 
     }
 
-    /**
-     * 更新客户端状态（启用/禁用）。
-     *
-     * @param id    客户端主键ID
-     * @param param 包含状态值的请求参数
-     * @return 无数据的统一响应结果
-     */
-    @Override
-    public AbstractBaseResult<Void> restUpdateStatus(Long id, RequestParam<Status> param) {
-        return updateStatus(id,param.getData());
-    }
+	/**
+	 * 更新客户端状态（启用/禁用）。
+	 *
+	 * @param id    客户端主键ID
+	 * @param param 状态更新参数，包含目标状态值
+	 * @return 无数据的统一响应结果
+	 */
+	@Override
+	public AbstractBaseResult<Void> restUpdateStatusResult(Long id, RequestParam<Status> param) {
+		return updateStatusResult(id, param);
+	}
 
-    /**
-     * 根据主键ID删除客户端。
+	/**
+     * 根据主键ID删除客户端（逻辑删除）。
      *
      * @param id 客户端主键ID
      * @return 无数据的统一响应结果

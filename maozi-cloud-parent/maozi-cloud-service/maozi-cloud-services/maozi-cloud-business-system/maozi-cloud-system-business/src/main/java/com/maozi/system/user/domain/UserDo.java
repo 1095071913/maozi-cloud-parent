@@ -28,7 +28,7 @@ import java.io.Serial;
 /**
  * 用户实体类
  * <p>
- * 对应数据库表 system_user，继承自 AbstractBaseNameDomain（包含名称、状态、排序等基础字段）。
+ * 对应数据库表 system_user，继承自 AbstractBaseNameDomain（包含ID、名称、状态、逻辑删除标志、创建时间等基础字段）。
  * 用于存储系统用户的核心信息，包括用户账号、密码、头像图标以及所属客户端ID。
  * </p>
  */

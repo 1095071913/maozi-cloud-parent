@@ -93,6 +93,7 @@ public class RestTemplate extends org.springframework.web.client.RestTemplate {
 			InputStream paramData = parse(request.getBody());
 			String requestParam = new String(readStream(paramData));
 
+			// 非生产环境才记录请求参数，避免生产环境敏感信息写入日志
 			Boolean isNotProd = EnvironmentUtil.notEnvironment(EnvironmentType.PROD);
 			if(isNotProd){
 				logs.put(LogTag.PARAM, requestParam);

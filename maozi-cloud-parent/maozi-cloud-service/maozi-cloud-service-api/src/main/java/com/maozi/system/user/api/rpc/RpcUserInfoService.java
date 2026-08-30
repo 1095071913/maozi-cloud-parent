@@ -22,7 +22,8 @@ public interface RpcUserInfoService {
 	 * @param id 用户 ID
 	 * @param columns 查询列（保留参数，当前实现未使用，返回完整用户信息）
 	 * @return 系统用户信息封装的统一结果
+	 * @throws com.maozi.common.result.error.exception.BusinessResultException 用户不存在时抛出
 	 */
-	AbstractBaseResult<SystemUser> rpcGetById(Long id, String ... columns);
+	AbstractBaseResult<SystemUser> rpcGet(Long id, String ... columns);
 
 }

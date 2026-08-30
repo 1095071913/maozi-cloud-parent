@@ -45,9 +45,10 @@ import java.util.Collection;
  * </ul>
  * </p>
  * <p>
- * <b>注：</b>本类为复制自 sentinel-core 1.8.6 的
+ * <b>注：</b>本类为复制自 sentinel-core 的
  * {@code com.alibaba.csp.sentinel.slots.statistic.StatisticSlot} 的本地覆盖副本
- * （同包同名类在 classpath 上优先于 jar 内类加载），
+ * （同包同名类在 classpath 上优先于 jar 内类加载；
+ * 1.8.6 与项目当前依赖的 1.8.8 中该类源码完全一致），
  * 修改点：entry 通过分支中当前资源节点（DefaultNode）的 {@code node.addPassRequest(count)}
  * 调用被注释禁用，通过请求数仅统计到来源节点与全局入口节点（调整统计口径）；
  * 升级 sentinel-core 版本时需同步比对原生类变更。

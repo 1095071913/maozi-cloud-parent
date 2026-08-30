@@ -26,9 +26,10 @@ public class RpcUserInfoServiceImpl extends UserServiceImpl implements RpcUserIn
 	 * @param id 用户 ID
 	 * @param columns 查询列（保留参数，当前未使用）
 	 * @return 系统用户信息封装的统一结果
+	 * @throws com.maozi.common.result.error.exception.BusinessResultException 用户不存在时抛出
 	 */
 	@Override
-	public AbstractBaseResult<SystemUser> rpcGetById(Long id, String... columns) {
+	public AbstractBaseResult<SystemUser> rpcGet(Long id, String... columns) {
 		return ResultUtil.success(getByIdThrowErrorRelation(id,SystemUser.class));
 	}
 

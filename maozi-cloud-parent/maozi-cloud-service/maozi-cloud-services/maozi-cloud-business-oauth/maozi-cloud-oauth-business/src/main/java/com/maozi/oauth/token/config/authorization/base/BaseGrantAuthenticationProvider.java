@@ -115,7 +115,7 @@ public abstract class BaseGrantAuthenticationProvider<T extends BaseGrantAuthent
      * 2. 验证客户端是否支持该授权模式
      * 3. 验证请求的scope是否合法
      * 4. 调用子类实现进行用户认证
-     * 5. 生成AccessToken（包含用户权限信息）
+     * 5. 生成AccessToken（claims中写入用户权限与用户附加属性）
      * 6. 可选地生成RefreshToken
      * 7. 可选地生成IDToken（当scope包含openid时）
      * 8. 保存授权信息并返回

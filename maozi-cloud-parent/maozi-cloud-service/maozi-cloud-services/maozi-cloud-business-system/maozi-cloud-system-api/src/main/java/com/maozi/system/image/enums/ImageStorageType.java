@@ -70,7 +70,7 @@ public enum ImageStorageType implements BaseEnum {
 	/**
 	 * 输出枚举的字符串表示
 	 *
-	 * @return 格式为 "编码.描述" 的字符串，例如 "0.阿里云OSS"
+	 * @return 格式为 "数值编码.描述" 的字符串，例如 "0.阿里云OSS"
 	 */
 	@Override
 	public String toString() {

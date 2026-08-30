@@ -29,6 +29,12 @@ public interface Lock {
      */
     boolean unLock(String key);
 
+    /**
+     * 判断锁是否处于锁定状态
+     *
+     * @param key 锁的键名
+     * @return 是否处于锁定状态
+     */
     boolean isLocked(String key);
 
 }

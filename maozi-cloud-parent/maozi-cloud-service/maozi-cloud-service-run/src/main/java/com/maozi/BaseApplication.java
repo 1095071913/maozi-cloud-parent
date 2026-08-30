@@ -51,7 +51,8 @@ import java.util.Properties;
 /**
  * 应用启动基类
  * <p>
- * 所有微服务应用的启动入口均需继承此类。负责统一初始化运行环境、应用名称、
+ * 微服务应用的统一启动基类，各服务启动入口直接继承此类，或继承 {@code BaseApplicationDB}
+ * （组合关系，非继承）并委托本类执行启动。负责统一初始化运行环境、应用名称、
  * 日志等基础启动参数，并在启动前扫描 classpath 下 {@code META-INF/run/config/*.properties}
  * 登记的配置初始化器（{@link ConfigInitializer}），由各初始化器写入 Nacos 配置中心/服务发现、
  * 缓存、定时任务等组件所需的系统属性。
@@ -125,8 +126,7 @@ public class BaseApplication {
      * 解析运行环境（优先取系统属性 environment，其次取环境变量 ENVIRONMENT，
      * 均未设置时默认本地环境），推导应用名与项目简称，并设置应用名称、
      * 允许循环依赖、日志级别等 Spring Boot 启动参数。非本地环境使用异步文件日志
-     * 输出到 {@code logs/应用名.log}，本地环境使用异步控制台日志；
-     * 同时在 Spring 日志配置生效前压低 Nacos 客户端日志级别，屏蔽启动阶段刷屏。
+     * 输出到 {@code logs/应用名.log}，本地环境使用异步控制台日志。
      * 应用名称读取失败时抛出异常，终止启动。
      * </p>
      */

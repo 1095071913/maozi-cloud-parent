@@ -39,13 +39,22 @@ import {
 
 const userStore = useUserStore()
 
-/** 空状态快捷提问 */
-const suggestions = [
-  '帮我写一封周报',
-  '用通俗的语言解释一下微服务',
-  '写一个 SQL 优化的小技巧',
-  '给我推荐几本技术书籍'
-]
+// ============ 对话示例 ============
+/** 对话示例的配置类型编码 */
+const AI_CHAT_EXAMPLE_TYPE = 'ai_chat_example'
+/** 空状态快捷提问（从配置 ai_chat_example 加载） */
+const suggestions = ref<string[]>([])
+
+/** 加载对话示例，失败不阻塞对话功能 */
+function loadChatExamples() {
+  getConfigDropDownList(AI_CHAT_EXAMPLE_TYPE)
+    .then((res) => {
+      suggestions.value = (res.data || [])
+        .map((item) => item.alias || item.name)
+        .filter(Boolean)
+    })
+    .catch(() => {})
+}
 
 function handleSuggestion(text: string) {
   input.value = text
@@ -116,6 +125,7 @@ function loadPromptOptions() {
 
 onMounted(async () => {
   loadPromptOptions()
+  loadChatExamples()
   await loadConversations(1)
   // 默认选中最近一个会话，直接进入可对话状态
   if (conversations.value.length) {
@@ -229,8 +239,13 @@ async function handleRemoveMessage(item: ChatBubble) {
   ElMessage.success('已删除')
 }
 
-/** 当前会话是否对话中（/ai/chat/{id}/list 的 isLocked） */
+/** 当前会话是否对话中（/ai/chat/{id}/list 的 isLocked），本地发送时也会置真（仅控制停止按钮） */
 const chatLocked = ref(false)
+/**
+ * 是否需要轮询增量消息：仅在进入会话（loadMessages）发现服务端 isLocked 时置真，
+ * 本地点击发送置位的 chatLocked 不启用轮询（自身流式输出驱动渲染）
+ */
+const lockPolling = ref(false)
 
 /**
  * 以服务端锁定状态同步本地"对话中"标记：
@@ -342,6 +357,8 @@ function startLockPolling() {
       // 不再回查对话列表接口；自身流式输出进行中时不打扰（由流结束逻辑收尾）
       if (aiArrived && !sending.value) {
         chatLocked.value = false
+        // 本轮生成结束：复位轮询标记，watch 停止轮询
+        lockPolling.value = false
         messages.value = messages.value.filter((m) => !(m.streaming && !m.id))
       }
     } catch {
@@ -352,9 +369,10 @@ function startLockPolling() {
   }, LOCK_POLL_INTERVAL)
 }
 
-// 锁定状态或会话变化时启停轮询（会话切换时 true -> true 也能触发重启）
-watch([chatLocked, activeId], () => {
-  if (chatLocked.value && activeId.value) {
+// 进入会话时服务端锁定（isLocked）或会话变化时启停轮询（会话切换时 true -> true 也能触发重启）；
+// 本地发送置位的 chatLocked 不在此列，避免发送后立即轮询
+watch([lockPolling, activeId], () => {
+  if (lockPolling.value && activeId.value) {
     startLockPolling()
   } else {
     stopLockPolling()
@@ -367,6 +385,8 @@ async function loadMessages() {
   try {
     const res = await getChatList(activeId.value)
     chatLocked.value = !!res.data?.isLocked
+    // 进入会话时服务端仍在生成才启用轮询（本地发送置位的 chatLocked 不启用）
+    lockPolling.value = !!res.data?.isLocked
     // 响应为 { isLocked, items }：items 内 images 为图片 URL 地址，直接回显
     messages.value = (res.data?.items || []).map((m) => ({
       ...m,
@@ -960,7 +980,7 @@ function handleInputKeydown(event: Event) {
           </div>
           <h2 class="welcome-title">欢迎回来{{ userStore.name }}，有什么可以帮助您 !</h2>
           <p class="welcome-desc">输入问题开始对话，或从下面的话题开始</p>
-          <div class="welcome-suggestions">
+          <div v-if="suggestions.length" class="welcome-suggestions">
             <button v-for="s in suggestions" :key="s" @click="handleSuggestion(s)">
               {{ s }}
             </button>

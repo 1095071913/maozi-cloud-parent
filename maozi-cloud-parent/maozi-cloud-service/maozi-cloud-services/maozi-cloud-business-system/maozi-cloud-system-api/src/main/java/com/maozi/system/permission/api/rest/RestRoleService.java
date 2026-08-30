@@ -6,9 +6,9 @@ import com.maozi.base.result.DropDownResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
-import com.maozi.system.role.dto.RoleSaveUpdateParam;
-import com.maozi.system.role.vo.RoleInfoVo;
-import com.maozi.system.role.vo.RoleListVo;
+import com.maozi.system.role.param.RoleSaveUpdateParam;
+import com.maozi.system.role.result.RoleInfoResult;
+import com.maozi.system.role.result.RoleListResult;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,14 +35,15 @@ public interface RestRoleService {
 	/**
 	 * 获取角色列表
 	 * <p>
-	 * 查询系统中所有角色的列表数据。
+	 * 查询系统中所有角色的列表数据，
+	 * 当前实现仅查询角色的 ID 与名称字段。
 	 * </p>
 	 *
-	 * @return 返回角色列表数据，包含角色 ID、名称、描述、状态等基本信息
+	 * @return 返回角色列表数据，仅包含角色 ID 与名称
 	 */
 	@Get(value = PATH + "/list",description = "列表")
 	@PreAuthorize("hasAuthority('system:role:list')")
-	AbstractBaseResult<List<RoleListVo>> restList();
+	AbstractBaseResult<List<RoleListResult>> restList();
 
 	/**
 	 * 保存新增角色
@@ -60,11 +61,11 @@ public interface RestRoleService {
 	 * 用于新增或更新用户时选择角色的下拉列表数据。
 	 * </p>
 	 *
-	 * @return 返回角色下拉列表结果，包含角色 ID 和名称等下拉选项信息
+	 * @return 返回角色下拉列表结果，包含角色 ID 和名称信息
 	 */
 	@Get(value = PATH + "/dropDownList",description = "下拉列表")
 	@PreAuthorize("hasAuthority('system:role:save') or hasAuthority('system:role:update')")
-	AbstractBaseResult<List<DropDownResult>> dropDownListResult();
+	AbstractBaseResult<List<DropDownResult>> restDropDownListResult();
 
 
 
@@ -83,7 +84,7 @@ public interface RestRoleService {
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "详情")
 	@PreAuthorize("hasAuthority('system:role:get')")
-	AbstractBaseResult<RoleInfoVo> restGet(@PathVariable Long id);
+	AbstractBaseResult<RoleInfoResult> restGet(@PathVariable Long id);
 
 	/**
 	 * 删除角色
@@ -115,6 +116,6 @@ public interface RestRoleService {
 	 */
 	@Post(value = CURRENT_PATH + "/updateStatus",description = "更新状态")
 	@PreAuthorize("hasAuthority('system:role:update')")
-	AbstractBaseResult<Void> updateStatus(@PathVariable Long id, @RequestBody RequestParam<Status> param);
+	AbstractBaseResult<Void> restUpdateStatusResult(@PathVariable Long id, @RequestBody RequestParam<Status> param);
 
 }

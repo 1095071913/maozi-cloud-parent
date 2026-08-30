@@ -47,6 +47,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRole
 	 * <p>如果角色已被用户绑定，则抛出业务异常。</p>
 	 *
 	 * @param roleId 角色ID
+	 * @throws com.maozi.common.result.error.exception.BusinessResultException 角色已被用户绑定时抛出
 	 */
 	@Override
 	public void checkUserBindRoleByRole(Long roleId) {
@@ -71,6 +72,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRole
 			Consumer<Long> consumer = (roleId)->{
 
 				UserRoleDo domainSave = UserRoleDo.builder().userId(userId).roleId(roleId).build();
+				// 绑定关系不存在且角色存在时才保存，避免重复绑定
 				if(count(Wrappers.lambdaQuery(domainSave)) < 1 && roleService.has(roleId)) {
 					save(domainSave);
 				}
@@ -83,9 +85,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRole
 
 		if(ObjectUtil.isNotNullEmpty(unbindRoleIds)) {
 
-			Consumer<Long> consumer = (roleId)->{
-				remove(Wrappers.lambdaQuery(UserRoleDo.builder().userId(userId).roleId(roleId).build()));
-			};
+			Consumer<Long> consumer = (roleId)-> remove(Wrappers.lambdaQuery(UserRoleDo.builder().userId(userId).roleId(roleId).build()));
 
 			unbindRoleIds.parallelStream().forEach(Objects.requireNonNull(consumer));
 
@@ -116,6 +116,7 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRole
 	 *
 	 * @param userId 用户ID
 	 * @param roleId 角色ID
+	 * @throws com.maozi.common.result.error.exception.BusinessResultException 用户未绑定该角色时抛出
 	 */
 	@Override
 	public void hasUserBindRole(Long userId, Long roleId) {

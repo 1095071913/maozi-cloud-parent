@@ -29,26 +29,22 @@ application-project-system:
 
 # 图片存储配置（store-type 决定上传路由到的存储处理器，取值见 ImageStorageType 枚举 code）
 oss:
-  # 存储类型：aliyun-阿里云OSS（后续可扩展 local-本地存储、minio 等）
+  # 路由到阿里云处理器
   store-type: aliyun
   aliyun:
-    access-key-id:
-    access-key-secret:
-    # 地域（Region），如华东1（杭州）为 cn-hangzhou
-    region: cn-hangzhou
-    # 访问域名（Endpoint），如 https://oss-cn-hangzhou.aliyuncs.com，注释掉则由地域自动解析
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
-    # 存储空间（Bucket）名称
-    bucket:
-    # 自定义访问域名（可选），如 CDN 加速域名，配置后文件访问地址基于该域名生成
-    #domain:
+    access-key-id: ${ALIYUN_CLIENT_ID}
+    access-key-secret: ${ALIYUN_CLIENT_SECRET}
+    region: cn-beijing
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucket: maozi-cloud-bucket
+    #domain:                  # 可选，CDN 自定义域名
 
 spring:
   # 上传文件大小限制（图片上传接口，单文件 10MB、单次请求合计 50MB）
   servlet:
     multipart:
-      max-file-size: 10MB
-      max-request-size: 50MB
+      max-file-size: 1MB
+      max-request-size: 5MB
   config:
     # 导入各组件子配置文件（classpath 下的 config/ 目录）
     import:
@@ -68,11 +64,12 @@ spring:
     #   embedding:
     #     enabled: false
     dashscope:
-      api-key:
+      api-key: ${AI_DASHSCOPE_KEY}
       chat:
         enabled: true
         options:
-          model: qwen-plus
+          model: qwen-max
+          text_image_model: qwen-vl-max
       embedding:
         enabled: false
         options:

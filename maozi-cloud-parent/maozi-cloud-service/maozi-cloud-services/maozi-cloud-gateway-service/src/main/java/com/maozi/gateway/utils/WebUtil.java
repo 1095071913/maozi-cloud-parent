@@ -70,7 +70,7 @@ public class WebUtil {
 
 		// 处理多 IP 情况（x-forwarded-for 会返回 客户端IP,代理1,代理2...）
 		if (requestHost != null && requestHost.contains(",")) {
-			// 取第一个非空的真实 IP
+			// 固定取第一段并去除首尾空白（x-forwarded-for 首位即客户端真实 IP）
 			requestHost = requestHost.split(",")[0].trim();
 		}
 
@@ -84,7 +84,7 @@ public class WebUtil {
 	}
 
 	/**
-	 * 统一判断：IP 是否为 null、空字符串、unknown（忽略大小写）。
+	 * 统一判断：IP 是否为 null、空字符串、纯空白字符串或 unknown（忽略大小写）。
 	 *
 	 * @param ip 待检查的 IP 字符串
 	 * @return 如果 IP 为空、空白或 "unknown" 则返回 true

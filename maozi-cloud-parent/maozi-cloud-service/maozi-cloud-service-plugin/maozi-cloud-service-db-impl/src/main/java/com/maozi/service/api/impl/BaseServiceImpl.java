@@ -20,6 +20,7 @@ import com.maozi.base.constant.ResultFunName;
 import com.maozi.base.enums.Status;
 import com.maozi.base.enums.StoreClassType;
 import com.maozi.base.param.PageParam;
+import com.maozi.base.param.RequestParam;
 import com.maozi.base.param.SaveUpdateBatch;
 import com.maozi.base.param.plugin.OrderParam;
 import com.maozi.base.param.plugin.TimeParam;
@@ -73,7 +74,7 @@ import java.util.stream.Collectors;
  * <p>
  * 提供通用的数据库 CRUD 操作封装，包括单条查询、列表查询、分页查询、
  * 下拉数据查询、新增/更新/删除操作，以及结果集封装方法。
- * 支持基于注解的动态查询条件构建（QueryPlugin）和关联查询（JoinPlugin），
+ * 支持基于注解的动态查询条件构建（QueryPlugin）和关联查询（JoinPlugins），
  * 并通过 QueryMapping 注解实现关联数据的自动填充。
  * </p>
  * <p>
@@ -114,6 +115,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	@SuppressWarnings("unchecked")
 	public BaseServiceImpl() {
 
+		// 沿继承链向上查找带泛型参数的父类，提取领域模型与 DTO 的泛型实参
 		for(Class<?> superClass = this.getClass() ;; superClass = superClass.getSuperclass()) {
 
 		Type genericSuperclass = superClass.getGenericSuperclass();
@@ -233,6 +235,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	@SneakyThrows
     protected <O> String getColumn(SFunction<O, ?> sfunction) {
 
+		// 通过 writeReplace 方法反射获取 Lambda 的序列化元信息
 		Method method = sfunction.getClass().getDeclaredMethod(SerializeUtil.WRITE_REPLACE_FIELD_NAME);
 
 		method.setAccessible(true);
@@ -241,15 +244,18 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		String fieldWithGet = serializedLambda.getImplMethodName();
 
+		// 去掉方法名的 get 前缀得到属性名，并转为下划线格式
 		String propertyName = StrUtil.toUnderlineCase(fieldWithGet.substring(3));
 
 		TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
 		ObjectUtil.checkConditionThrowError(ObjectUtil.isNotNullEmpty(tableInfo),"领域模型映射关系不存在");
 
+		// 命中主键属性：返回主键列名
 		if (tableInfo.getKeyProperty().equals(propertyName)) {
 			return tableInfo.getKeyColumn();
 		}
 
+		// 遍历普通字段映射：属性名匹配时返回映射列名
 		for (TableFieldInfo fieldInfo : tableInfo.getFieldList()) {
 			if (fieldInfo.getProperty().equals(propertyName)) {
 				return fieldInfo.getColumn();
@@ -327,12 +333,14 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				QueryMapping annotation = field.getAnnotation(QueryMapping.class);
 				if(ObjectUtil.isNullEmpty(annotation)) {
 
+					// 无注解：字段名转下划线，关联模式下追加默认表别名前缀
 					String fieldName = StrUtil.toUnderlineCase(field.getName());
 					columns.add(isJoin ? QueryEnvironmentContext.DEFAULT_ORDER_KEY + "." + fieldName : fieldName);
 
 				}else if(annotation.ignore() && (StringUtils.isNotBlank(annotation.field()) || StringUtils.isNotBlank(annotation.tableName()))){
 
-					String tableName = StringUtils.isNotBlank(annotation.tableName()) ?
+				// ignore 且显式指定来源字段或表名：按注解配置生成列名，未指定的部分回退字段名/默认别名
+				String tableName = StringUtils.isNotBlank(annotation.tableName()) ?
 							annotation.tableName()
 							:
 							QueryEnvironmentContext.DEFAULT_ORDER_KEY;
@@ -464,6 +472,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @param id 实体 ID
      * @param columns Lambda 函数引用指定的查询字段
      * @return 可用的实体对象
+     * @throws BusinessResultException 当实体不存在或状态为禁用时抛出异常
      */
 	@SafeVarargs
     protected final T getAvailableById(Long id, SFunction<T, ?>... columns){
@@ -698,6 +707,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @param id 实体 ID
      * @param columns Lambda 函数引用指定的查询字段
      * @return 实体对象
+     * @throws BusinessResultException 当实体不存在时抛出异常
      */
     @SafeVarargs
     protected final <R> T getByIdThrowError(Long id, SFunction<R, ?> ... columns) {
@@ -713,6 +723,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @param clazz 目标类型 Class 对象
      * @param columns Lambda 函数引用指定的查询字段
      * @return 转换后的对象
+     * @throws BusinessResultException 当实体不存在时抛出异常
      */
     @SafeVarargs
     protected final <V,R> V getByIdThrowError(Long id, Class<V> clazz, SFunction<R, ?> ... columns){
@@ -726,6 +737,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @param id 实体 ID
      * @param clazz 目标类型 Class 对象
      * @return 转换后且填充了关联数据的对象
+     * @throws BusinessResultException 当实体不存在时抛出异常
      */
     protected <V> V getByIdThrowErrorRelation(Long id,Class<V> clazz) {
 
@@ -745,6 +757,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
      * @param dto 查询参数
      * @param clazz 目标类型 Class 对象
      * @return 转换后且填充了关联数据的对象
+     * @throws BusinessResultException 当查询参数为空或实体不存在时抛出异常
      */
 	protected <V,R> V getByParamThrowErrorRelation(R dto,Class<V> clazz) {
 
@@ -963,6 +976,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		ObjectUtil.isNullEmptyThrowError(domain,getResourceName());
 
+    	// 携带 ID 视为更新：先校验数据存在
     	if(ObjectUtil.isNotNullEmpty(domain.getId())) {
 
 			QueryWrapper<T> wrapper = Wrappers.query();
@@ -995,6 +1009,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
     	T domain = CglibUtil.copy(param, domainClass);
 
+    	// 携带 ID 视为更新：回填 ID 并校验数据存在
     	if(ObjectUtil.isNotNullEmpty(id)) {
 
     		domain.setId(id);
@@ -1006,6 +1021,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 			ObjectUtil.checkConditionThrowError(count(wrapper) > 0, errorCode, getResourceName() + errorCode.getMessage());
 
     	}else {
+    		// 未携带 ID 视为新增：校验参数合法性
     		ValidatorUtil.validate(param);
     	}
 
@@ -1029,6 +1045,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		Consumer<T> consumer = (domain) -> {
 
+			// 携带 ID 视为更新：先校验数据存在
 			if(ObjectUtil.isNotNullEmpty(domain.getId())) {
 
 				QueryWrapper<T> wrapper = Wrappers.query();
@@ -1350,20 +1367,25 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     /**
      * 更新实体状态
      * <p>
-     * 更新前先调用 {@link #checkBind(Long)} 检查绑定关系；随后仅设置 ID 与状态字段
-     * 构造新实体并按 ID 更新（MyBatis-Plus 默认只更新非空字段，即仅变更状态列）。
+     * 目标状态为禁用（DISABLE）时先调用 {@link #checkBind(Long)} 检查绑定关系；
+     * 随后仅设置 ID 与状态字段构造新实体并按 ID 更新
+     * （MyBatis-Plus 默认只更新非空字段，即仅变更状态列）。
      * </p>
      *
      * @param id 实体 ID
-     * @param status 目标状态（为空时抛出参数错误异常）
+     * @param param 携带目标状态的请求参数（data 为空时抛出参数错误异常）
      * @return 统一响应结果
      */
 	@SneakyThrows
-	public AbstractBaseResult<Void> updateStatus(Long id, Status status){
+	public AbstractBaseResult<Void> updateStatusResult(Long id, RequestParam<Status> param){
 
+		Status status = param.getData();
 		ObjectUtil.isNullEmptyThrowError(status,SystemErrorCode.PARAM_ERROR,"状态");
 
-		checkBind(id);
+		// 目标状态为禁用时，需先检查是否存在绑定关系
+		if(param.getData() == Status.DISABLE){
+			checkBind(id);
+		}
 
 		T domain = domainClass.getDeclaredConstructor().newInstance();
 
@@ -1401,6 +1423,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		Class<?> paramClass = param.getClass();
 
+		// 解析类级 JoinPlugins 注解：逐个校验连接类型并应用关联插件拼接 JOIN
 		if (paramClass.isAnnotationPresent(JoinPlugins.class)) {
 
 			JoinPlugins annotations = paramClass.getAnnotation(JoinPlugins.class);
@@ -1448,6 +1471,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			if(ObjectUtil.isNotNullEmpty(annotation)) {
 
+				// 嵌套参数：以注解指定的表名递归解析其内部字段的查询条件
 				if(annotation.nest()) {
 
 					paramFieldSetWrapper(annotation.tableName(),field,wrapper);
@@ -1466,6 +1490,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 				ObjectUtil.isNullEmptyThrowError(queryType, getResourceName() + "查询类型");
 
+                // 字段注解显式指定表名时，覆盖外层传入的表名
                 if(StringUtils.isNotBlank(annotation.tableName())){
                     tableName = annotation.tableName();
                 }
@@ -1478,6 +1503,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 			}
 
+			// 时间范围参数：起始时间拼 >= 条件、结束时间拼 <= 条件（不依赖 QueryPlugin 注解）
 			if(data instanceof TimeParam timeParam) {
 
 				if(ObjectUtil.isNotNullEmpty(timeParam.getStartTime())) {
@@ -1498,8 +1524,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
     /**
      * 设置查询映射关联（MPJ 关联查询的 selectCollection/selectAssociation）
      * <p>
-     * 遍历 VO 类中带有 QueryMapping 注解的字段，根据注解配置自动构建
-     * MyBatis-Plus-Join 的 selectCollection 或 selectAssociation 映射。
+     * 遍历 VO 类中带有 QueryMapping 注解且未标记 ignore、isService 的字段，
+     * 根据注解配置自动构建 MyBatis-Plus-Join 的 selectCollection 或 selectAssociation 映射。
      * </p>
      *
      * @param clazz VO 类型 Class 对象
@@ -1576,6 +1602,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		paramFieldSetWrapper(null,param,wrapper);
 
+		// 排序参数：初始化默认排序后，按默认表别名取升序/降序字段拼接 ORDER BY
 		if(param instanceof OrderParam orderParam) {
 
 			orderParam.initOrderParam();
@@ -1724,7 +1751,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 	 * 批量模式：设置单个字段的关联数据
 	 * <p>
 	 * 根据字段类型进行 4 路分发：functionName 自定义方法、List 一对多、DropDownResult 下拉、其他一对一。
-	 * 批量收集所有响应对象的关联 ID，统一调用服务后将结果分发回各对象。
+	 * 批量收集 ID 后统一调用服务获取关联数据，再分发回各响应对象
+	 * （一对多关联收集对象自身主键 ID 作为关联值，其余分支收集关联字段的值）。
 	 * </p>
 	 *
 	 * @param responses 响应数据列表
@@ -1738,6 +1766,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		Class<?> type = field.getType();
 
+		// 自定义方法分支：按关联字段收集参数统一调用，再按关联字段取回并分发结果
 		if (StringUtils.isNotBlank(functionName)) {
 
 			Set<Object> param = CollectionUtil.newHashSet();
@@ -1756,6 +1785,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				}
 			}
 
+		// 一对多分支：以对象自身主键 ID 作为关联值，按关联字段分组取回列表
 		} else if (type.equals(List.class)) {
 
 			Set<Long> relationIds = CollectionUtil.newHashSet();
@@ -1776,6 +1806,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				}
 			}
 
+		// 下拉关联分支：按关联字段批量取回下拉选项，转 Map 后按 ID 分发
 		} else if (type.equals(DropDownResult.class)) {
 
 			Set<Long> relationIds = CollectionUtil.newHashSet();
@@ -1797,6 +1828,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				}
 			}
 
+		// 一对一分支：按关联字段批量取回关联对象，转 Map 后按 ID 分发
 		} else {
 
 			Set<Long> relationIds = CollectionUtil.newHashSet();
@@ -1839,6 +1871,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 
 		Class<?> type = field.getType();
 
+		// 自定义方法分支：配置了关联字段则携带其值调用，否则无参调用
 		if (StringUtils.isNotBlank(functionName)) {
 
 			Object result = null;
@@ -1853,6 +1886,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				ReflectUtil.invokeSet(data, field.getName(), result);
 			}
 
+		// 一对多分支：以对象自身主键作为关联值查询关联列表
 		} else if (type.equals(List.class)) {
 
 			Long id = ReflectUtil.invokeFunGetId(data);
@@ -1863,6 +1897,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				ReflectUtil.invokeSet(data, field.getName(), resultData);
 			}
 
+		// 下拉关联分支：按关联字段值查询单个下拉选项
 		} else if (type.equals(DropDownResult.class)) {
 
 			Long relationId = ReflectUtil.invokeGet(data, relationFieldName);
@@ -1875,6 +1910,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T extends Abstra
 				}
 			}
 
+		// 一对一分支：按关联字段值查询单个关联对象
 		} else {
 
 			Long relationId = ReflectUtil.invokeGet(data, relationFieldName);

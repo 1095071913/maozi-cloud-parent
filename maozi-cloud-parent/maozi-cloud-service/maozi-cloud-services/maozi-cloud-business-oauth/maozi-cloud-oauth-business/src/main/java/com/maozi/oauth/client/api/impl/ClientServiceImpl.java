@@ -13,11 +13,12 @@ import com.maozi.common.ObjectUtil;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.oauth.client.api.ClientService;
 import com.maozi.oauth.client.domain.ClientDo;
+import com.maozi.oauth.client.dto.ClientDto;
 import com.maozi.oauth.client.mapper.ClientMapper;
 import com.maozi.oauth.client.param.ClientListParam;
 import com.maozi.oauth.client.param.ClientSaveUpdateParam;
-import com.maozi.oauth.client.vo.ClientInfoVo;
-import com.maozi.oauth.client.vo.ClientListVo;
+import com.maozi.oauth.client.result.ClientInfoResult;
+import com.maozi.oauth.client.result.ClientListResult;
 import com.maozi.service.api.impl.BaseServiceImpl;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +44,7 @@ import java.util.stream.Collectors;
  * </p>
  */
 @Service
-public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Void> implements ClientService {
+public class ClientServiceImpl extends BaseServiceImpl<ClientMapper, ClientDo, ClientDto> implements ClientService {
 
 	/** 资源名称标识，用于日志和异常提示 */
 	private static final String RESOURCE_NAME = "客户端";
@@ -93,7 +94,7 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 * 更新时：清除clientId防止被修改。
 	 * 通用处理：对非空的客户端密钥进行加密；当Access Token和Refresh Token有效期均已提供时，
 	 * 构建令牌设置（包括不透明令牌（REFERENCE）格式、授权码存活时间、
-	 * 设备码存活时间、是否重用刷新令牌、Access Token和Refresh Token存活时间等），
+	 * 设备码存活时间、不重用刷新令牌、Access Token和Refresh Token存活时间等），
 	 * 否则不重建令牌设置（沿用参数中传入的值）。
 	 * </p>
 	 *
@@ -105,6 +106,7 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 
 		if(ObjectUtil.isNullEmpty(id)) {
 
+			//新增：自动生成客户端标识（clientId）
 			param.setClientId(String.valueOf(IdWorker.getId()));
 
 			if(ObjectUtil.isNullEmpty(param.getAccessTokenValiditySeconds())){
@@ -120,9 +122,11 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 			param.setClientSettings(clientSettings.getSettings());
 
 		}else{
+			//更新：清空clientId，防止客户端标识被修改
 			param.setClientId(null);
 		}
 		
+		//客户端密钥非空时加密存储（更新未传密钥则保持原值）
 		if(ObjectUtil.isNotNullEmpty(param.getClientSecret())) {
 			param.setClientSecret(passwordEncoder.encode(param.getClientSecret()));
 		}
@@ -139,7 +143,7 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 			builder.authorizationCodeTimeToLive(Duration.ofSeconds(300));
 			// 设备码存活时间：5分钟
 			builder.deviceCodeTimeToLive(Duration.ofSeconds(300));
-			// 刷新 Access Token 后是否重用 Refresh Token
+			// 不重用 Refresh Token（每次刷新令牌时签发新的 Refresh Token）
 			builder.reuseRefreshTokens(Boolean.FALSE);
 
 
@@ -165,22 +169,25 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 * 根据主键ID获取客户端详细信息。
 	 * <p>
 	 * 查询客户端基础信息后，从TokenSettings中提取Access Token和Refresh Token的有效期（秒），
-	 * 封装到ClientInfoVo中返回。
+	 * 封装到ClientInfoResult中返回。
 	 * </p>
 	 *
 	 * @param id 客户端主键ID
-	 * @return 客户端详细信息VO对象
+	 * @return 客户端详细信息结果对象
 	 * @throws BusinessResultException 客户端不存在时抛出 DATA_NOT_EXIST_ERROR，禁用时抛出 FORBIDDEN_ERROR
 	 */
-	protected ClientInfoVo superRestGet(Long id) {
+	protected ClientInfoResult superRestGet(Long id) {
 
 		ClientDo domain = getAvailableById(id, ClientDo::getClientId, ClientDo::getName, ClientDo::getAuthorizationGrantTypes, ClientDo::getTokenSettings, ClientDo::getRemark, ClientDo::getStatus);
+
+		//防御性判空（getAvailableById在数据不存在时已抛出异常，正常不会进入该分支）
 		if(ObjectUtil.isNullEmpty(domain)){
 			return null;
 		}
 
-		ClientInfoVo response = CglibUtil.copy(domain, ClientInfoVo.class);
+		ClientInfoResult response = CglibUtil.copy(domain, ClientInfoResult.class);
 
+		//从tokenSettings中解析Access/Refresh Token有效期（秒）
 		TokenSettings tokenSettings = TokenSettings.withSettings(domain.getTokenSettings()).build();
 		response.setAccessTokenValiditySeconds(tokenSettings.getAccessTokenTimeToLive().getSeconds());
 		response.setRefreshTokenValiditySeconds(tokenSettings.getRefreshTokenTimeToLive().getSeconds());
@@ -199,14 +206,15 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 * @param pageParam 分页查询参数，包含查询条件和分页信息
 	 * @return 分页结果，包含客户端列表数据
 	 */
-	protected PageResult<ClientListVo> superRestList(PageParam<ClientListParam> pageParam){
+	protected PageResult<ClientListResult> superRestList(PageParam<ClientListParam> pageParam){
 
-		Class<ClientListVo> responseClass = ClientListVo.class;
+		Class<ClientListResult> responseClass = ClientListResult.class;
 		MPJLambdaWrapper<ClientDo> wrapper = buildQueryWrapper(pageParam.getData(), responseClass);
-		Page<ClientListVo> page = selectJoinListPage(convertPage(pageParam), responseClass,wrapper);
+		Page<ClientListResult> page = selectJoinListPage(convertPage(pageParam), responseClass,wrapper);
 
 		page.getRecords().forEach(item -> {
 
+			//从tokenSettings中解析Access/Refresh Token有效期（秒）
 			TokenSettings tokenSettings = TokenSettings.withSettings(item.getTokenSettings()).build();
 			item.setAccessTokenValiditySeconds(tokenSettings.getAccessTokenTimeToLive().getSeconds());
 			item.setRefreshTokenValiditySeconds(tokenSettings.getRefreshTokenTimeToLive().getSeconds());
@@ -221,6 +229,7 @@ public class ClientServiceImpl extends BaseServiceImpl<ClientMapper,ClientDo,Voi
 	 *
 	 * @param id 客户端主键ID
 	 * @return 客户端标识字符串
+	 * @throws BusinessResultException 客户端不存在时抛出 DATA_NOT_EXIST_ERROR
 	 */
 	@Override
 	public String getClientId(Long id) {

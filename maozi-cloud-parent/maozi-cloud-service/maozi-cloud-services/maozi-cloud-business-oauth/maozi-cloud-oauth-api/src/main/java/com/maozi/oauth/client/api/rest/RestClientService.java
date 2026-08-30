@@ -8,8 +8,8 @@ import com.maozi.base.result.PageResult;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.oauth.client.param.ClientListParam;
 import com.maozi.oauth.client.param.ClientSaveUpdateParam;
-import com.maozi.oauth.client.vo.ClientInfoVo;
-import com.maozi.oauth.client.vo.ClientListVo;
+import com.maozi.oauth.client.result.ClientInfoResult;
+import com.maozi.oauth.client.result.ClientListResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,7 +40,7 @@ public interface RestClientService {
 	 */
 	@Post(value = PATH + "/list",description = "列表")
 	@PreAuthorize("hasAuthority('system:client:list')")
-	AbstractBaseResult<PageResult<ClientListVo>> restList(@RequestBody PageParam<ClientListParam> pageParam);
+	AbstractBaseResult<PageResult<ClientListResult>> restList(@RequestBody PageParam<ClientListParam> pageParam);
 
 	/**
 	 * 保存（新增）客户端信息
@@ -56,14 +56,14 @@ public interface RestClientService {
 	 * 获取客户端下拉列表数据
 	 * <p>
 	 * 用于前端下拉选择框等场景，返回精简的客户端信息列表。
-	 * 需要 system:user:list 权限。
+	 * 需要 system:client:list 权限。
 	 * </p>
 	 *
 	 * @return 返回客户端下拉选项列表
 	 */
 	@Get(value = PATH + "/dropDownList",description = "下拉列表")
-	@PreAuthorize("hasAuthority('system:user:list')")
-	AbstractBaseResult<List<DropDownResult>> dropDownListResult();
+	@PreAuthorize("hasAuthority('system:client:list')")
+	AbstractBaseResult<List<DropDownResult>> restDropDownListResult();
 
 
 
@@ -82,7 +82,7 @@ public interface RestClientService {
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "详情")
 	@PreAuthorize("hasAuthority('system:client:get')")
-	AbstractBaseResult<ClientInfoVo> restGet(@PathVariable Long id);
+	AbstractBaseResult<ClientInfoResult> restGet(@PathVariable Long id);
 
 	/**
 	 * 根据客户端 ID 更新客户端信息
@@ -96,7 +96,7 @@ public interface RestClientService {
 	AbstractBaseResult<Void> restUpdate(@PathVariable Long id,@RequestBody ClientSaveUpdateParam param);
 
 	/**
-	 * 根据客户端 ID 更新客户端状态（启用/禁用等）
+	 * 根据客户端 ID 更新客户端状态（启用/禁用）
 	 *
 	 * @param id    客户端唯一标识 ID
 	 * @param param 状态更新参数，包含目标状态值
@@ -104,7 +104,7 @@ public interface RestClientService {
 	 */
 	@Post(value = CURRENT_PATH + "/updateStatus",description = "更新状态")
 	@PreAuthorize("hasAuthority('system:client:update')")
-	AbstractBaseResult<Void> restUpdateStatus(@PathVariable Long id, @RequestBody RequestParam<Status> param);
+	AbstractBaseResult<Void> restUpdateStatusResult(@PathVariable Long id, @RequestBody RequestParam<Status> param);
 
 	/**
 	 * 根据客户端 ID 删除客户端

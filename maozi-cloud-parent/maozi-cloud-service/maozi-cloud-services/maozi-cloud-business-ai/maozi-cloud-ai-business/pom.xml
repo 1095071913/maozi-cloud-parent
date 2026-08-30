@@ -83,6 +83,12 @@
 
         <dependency>
             <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-redis</artifactId>
+            <version>${maozi-cloud-config-redis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.maozi</groupId>
             <artifactId>maozi-cloud-ai-api</artifactId>
             <version>${maozi-cloud-ai-api.version}</version>
         </dependency>
@@ -95,8 +101,8 @@
 
         <dependency>
             <groupId>com.maozi</groupId>
-            <artifactId>maozi-cloud-config-redis</artifactId>
-            <version>${maozi-cloud-config-redis.version}</version>
+            <artifactId>maozi-cloud-oauth-api</artifactId>
+            <version>${maozi-cloud-oauth-api.version}</version>
         </dependency>
 
     </dependencies>

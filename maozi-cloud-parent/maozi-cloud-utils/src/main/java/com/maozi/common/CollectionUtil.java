@@ -85,6 +85,18 @@ public class CollectionUtil {
     }
 
     /**
+     * 根据可变参数创建 HashSet
+     *
+     * @param array 元素数组
+     * @param <T> 元素类型
+     * @return 包含指定元素的 HashSet
+     */
+    @SafeVarargs
+    public static <T> Set<T> newHashSet(T ... array) {
+        return new HashSet<>(newArrayList(array));
+    }
+
+    /**
      * 根据已有 Map 创建新的 HashMap
      *
      * @param oldMap 原始 Map

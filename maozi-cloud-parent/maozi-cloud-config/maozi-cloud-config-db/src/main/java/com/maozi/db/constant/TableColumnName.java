@@ -11,7 +11,7 @@ package com.maozi.db.constant;
  */
 public final class TableColumnName {
 
-    /** OAuth2 客户端表的外键列名，对应用户与客户端的关联字段 */
+    /** 租户标识列名（client_id），被 MyBatis-Plus 多租户插件用作租户隔离字段，兼作 OAuth2 客户端关联字段 */
     public final static String CLIENT_ID = "client_id";
 
 }

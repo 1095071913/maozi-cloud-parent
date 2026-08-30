@@ -1,7 +1,7 @@
 package com.maozi.system.image.api;
 
-import com.maozi.system.image.dto.ImageUploadParam;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.param.ImageUploadParam;
+import com.maozi.system.image.result.ImageUploadResult;
 
 import java.util.List;
 

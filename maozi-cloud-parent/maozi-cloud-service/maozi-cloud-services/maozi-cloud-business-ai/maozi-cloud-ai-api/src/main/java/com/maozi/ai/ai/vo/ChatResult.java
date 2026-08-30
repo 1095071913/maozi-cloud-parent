@@ -29,12 +29,15 @@ public class ChatResult implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /** 对话流状态类型：OUTPUT 持续输出中 / FINISH 对话已结束 */
     @Schema(description = "AI对话类型")
     private ChatType type;
 
+    /** 当前分片的回复内容 */
     @Schema(description = "消息")
     private String message;
 
+    /** 附加数据（预留字段，当前流式对话未写入该字段） */
     @Schema(description = "数据")
     private Object data;
 

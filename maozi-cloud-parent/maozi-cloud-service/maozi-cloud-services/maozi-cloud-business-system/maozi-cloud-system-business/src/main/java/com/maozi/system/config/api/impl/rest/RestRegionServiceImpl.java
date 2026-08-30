@@ -33,7 +33,7 @@ public class RestRegionServiceImpl extends RegionServiceImpl implements RestRegi
 	 * @return 返回包含下拉列表数据的统一响应结果，列表中每个元素包含地区的ID和名称
 	 */
 	@Override
-	public AbstractBaseResult<List<DropDownResult>> list(Long parentId) {
+	public AbstractBaseResult<List<DropDownResult>> restList(Long parentId) {
 
 		// 构建查询条件
 		LambdaQueryWrapper<RegionDo> wrapper = Wrappers.lambdaQuery();

@@ -3,11 +3,11 @@ package com.maozi.system.image.api.impl;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.system.image.api.ImageService;
-import com.maozi.system.image.dto.ImageUploadParam;
 import com.maozi.system.image.enums.ImageStorageType;
 import com.maozi.system.image.handler.ImageStorageHandler;
+import com.maozi.system.image.param.ImageUploadParam;
 import com.maozi.system.image.properties.ImageStorageProperties;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.result.ImageUploadResult;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * 图片服务实现类
  * <p>
- * 实现图片上传的业务逻辑，启动时收集容器内全部
+ * 实现图片上传的业务逻辑，构造时收集容器内全部
  * {@link ImageStorageHandler} 实现并按存储类型索引，
  * 上传时根据配置项 oss.store-type
  * 匹配存储类型并路由到对应的处理器处理，

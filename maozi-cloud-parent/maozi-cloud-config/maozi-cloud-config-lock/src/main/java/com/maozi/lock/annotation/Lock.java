@@ -45,13 +45,13 @@ public @interface Lock {
     LockType type() default LockType.REENTRANT;
 
     /**
-     * 尝试加锁，最多等待时间
+     * 尝试加锁，最多等待时间（单位：秒），默认未指定（Long.MIN_VALUE，回退到全局配置）
      * @return waitTime
      */
     long waitTime() default Long.MIN_VALUE;
 
     /**
-     * 加锁成功后自动释放锁的时长（单位：秒）
+     * 加锁成功后自动释放锁的时长（单位：秒），默认未指定（Long.MIN_VALUE，回退到全局配置）
      * @return leaseTime
      */
     long leaseTime() default Long.MIN_VALUE;

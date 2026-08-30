@@ -62,7 +62,7 @@ public class PermissionDo extends AbstractBaseNameDomain {
 	/** 权限类型（如菜单、按钮、接口等） */
 	private PermissionType type;
 
-	/** 排序序号，值越小越靠前 */
+	/** 排序序号，权限列表按深度与该值降序排列，值越大越靠前 */
 	private Integer sort;
 
 }

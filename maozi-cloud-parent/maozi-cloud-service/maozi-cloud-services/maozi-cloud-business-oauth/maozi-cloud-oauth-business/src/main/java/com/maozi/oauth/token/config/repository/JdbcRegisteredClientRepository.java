@@ -36,7 +36,7 @@ public class JdbcRegisteredClientRepository extends org.springframework.security
 	/** 数据库表名 */
 	private static final String TABLE_NAME = "oauth2_registered_client";
 
-	/** 基础查询SQL，拼接在WHERE条件之前 */
+	/** 基础查询SQL，以WHERE结尾，后续直接拼接过滤条件 */
 	private static final String LOAD_SQL = "SELECT " + COLUMN_NAMES + " FROM " + TABLE_NAME + " WHERE ";
 
 	/**

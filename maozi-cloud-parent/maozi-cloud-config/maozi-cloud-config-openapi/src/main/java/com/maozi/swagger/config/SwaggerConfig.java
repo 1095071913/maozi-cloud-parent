@@ -94,9 +94,11 @@ public class SwaggerConfig {
     @Bean
     public OperationCustomizer globalHeaderOperation() {
 
+        // 白名单 = 系统默认白名单 + 配置文件自定义白名单
         List<String> whitelist = CollectionUtil.newArrayList();
         whitelist.addAll(ApiWhitelistProperties.DEFAULT_WITE_LIST);
 
+        // 合并项目自定义白名单（可能未配置）
         List<String> apiWhitelist = apiWhitelistProperties.getConfigWhitelist();
         if(ObjectUtil.isNotNullEmpty(apiWhitelist)){
             whitelist.addAll(apiWhitelist);
@@ -104,11 +106,13 @@ public class SwaggerConfig {
 
         return (Operation operation, HandlerMethod handlerMethod) -> {
 
+            // 取方法 @RequestMapping 声明的第一个路径，白名单内的接口不注入认证头
             String url = Objects.requireNonNull(handlerMethod.getMethodAnnotation(RequestMapping.class)).value()[0];
             if (whitelist.contains(url)) {
                 return operation;
             }
 
+            // 构建全局 Authorization 请求头参数，示例值便于在 Swagger UI 中直接调试
             Parameter tokenHeader = new HeaderParameter()
                     .name(AuthroizationConstant.AUTHORIZATION_HEADER)
                     .example(AUTHORIZATION_VALUE)
@@ -153,6 +157,7 @@ public class SwaggerConfig {
 
                 Map<String, Schema> properties = schema.getProperties();
                 properties.forEach((fieldName, fieldSchema) -> {
+                    // Long 字段在文档中呈现为 int64，改为 string 避免 JS 精度丢失
                     if ("int64".equals(fieldSchema.getFormat())) {
                         Set<String> types = CollectionUtil.newHashSet();
                         types.add("string");

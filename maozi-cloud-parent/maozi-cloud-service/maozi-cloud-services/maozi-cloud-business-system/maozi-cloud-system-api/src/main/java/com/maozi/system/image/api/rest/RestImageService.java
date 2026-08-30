@@ -2,8 +2,8 @@ package com.maozi.system.image.api.rest;
 
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Post;
-import com.maozi.system.image.dto.ImageUploadParam;
-import com.maozi.system.image.vo.ImageUploadResult;
+import com.maozi.system.image.param.ImageUploadParam;
+import com.maozi.system.image.result.ImageUploadResult;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;

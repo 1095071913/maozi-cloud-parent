@@ -21,7 +21,8 @@ public class RpcRegionServiceImpl extends RegionServiceImpl implements RpcRegion
 	/**
 	 * 根据ID远程获取地区下拉信息
 	 * <p>
-	 * 通过地区ID查询对应的地区信息，并转换为下拉列表格式返回。
+	 * 通过地区ID查询对应的地区信息，并转换为下拉选项格式返回（仅包含地区 ID 与名称）；
+	 * 地区ID为空或地区不存在时抛出业务异常。
 	 * 该方法通过 Dubbo RPC 协议对外暴露，供其他微服务远程调用。
 	 * </p>
 	 *

@@ -20,9 +20,10 @@ import java.util.Map;
  * <p>
  * 实现资源服务器对访问令牌（Access Token）的内省逻辑：基于
  * {@link OAuth2AuthorizationService#findByToken} 查询授权记录，
- * 校验令牌是否仍处于有效状态，并按需返回 active、sub、client_id、authorities、scope 等声明。
- * 该本地实现由 {@code RpcOauthTokenServiceImpl} 通过 Dubbo RPC 对外暴露，
- * 资源服务器经 Dubbo 调用即可完成令牌校验。
+ * 校验令牌是否仍处于有效状态，并按需返回 active、sub、client_id、token_type、authorities、scope 等声明。
+ * 该本地实现由 {@code RpcOauthTokenServiceImpl} 通过 Dubbo RPC、
+ * {@code RestOauthTokenServiceImpl} 通过 REST 接口对外暴露，
+ * 资源服务器经 Dubbo 或 HTTP 调用即可完成令牌校验。
  * </p>
  *
  * @author pengjinlong

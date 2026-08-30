@@ -62,14 +62,17 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
+        // 从请求头提取版本号（为空时取默认版本），写入链路上下文，供灰度路由等场景使用
         String version = ApplicationLinkContext.getVersionDefault(request.getHeader(ApplicationLinkContext.VERSION_KEY));
         ApplicationLinkContext.setVersion(version);
 
+        // 上下文中尚无当前用户信息时，从请求头解析并补齐（供网关/上游透传用户信息的场景）
         CurrentUserInfo currentUserInfo = ApplicationLinkContext.getCurrentUserInfo();
         if(ObjectUtil.isNullEmpty(currentUserInfo)){
             ApplicationLinkContext.setCurrentUserInfo(request.getHeader(ApplicationLinkContext.CURRENT_USER_INFO_KEY));
         }
 
+        // 当前链路尚未产生有效 traceId（OTel Span 为 32 个 0 的占位值）时，从请求头读取，为空则生成随机 UUID，写入上下文并回写响应头
         boolean notHasTraceId = ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId());
         if(notHasTraceId){
             String traceId = request.getHeader(ApplicationLinkContext.TRACE_ID_KEY);

@@ -3,10 +3,10 @@ package com.maozi.system.permission.api.rest;
 import com.maozi.common.result.AbstractBaseResult;
 import com.maozi.service.annotation.Get;
 import com.maozi.service.annotation.Post;
-import com.maozi.system.permission.dto.PermissionSaveUpdateParam;
-import com.maozi.system.permission.vo.PermissionDropDownResult;
-import com.maozi.system.permission.vo.PermissionInfoVo;
-import com.maozi.system.permission.vo.PermissionListVo;
+import com.maozi.system.permission.param.PermissionSaveUpdateParam;
+import com.maozi.system.permission.result.PermissionDropDownResult;
+import com.maozi.system.permission.result.PermissionInfoResult;
+import com.maozi.system.permission.result.PermissionListResult;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,14 +32,16 @@ public interface RestPermissionService {
 	/**
 	 * 获取权限列表
 	 * <p>
-	 * 查询系统中所有权限的列表数据，返回权限树形结构信息。
+	 * 查询系统中所有权限的列表数据，返回平铺的权限列表
+	 * （结果带有上级 ID，可由前端据此组装为树形结构），
+	 * 列表按深度与排序序号降序排列。
 	 * </p>
 	 *
 	 * @return 返回权限列表数据，包含权限 ID、名称、类型、父级 ID 等信息
 	 */
 	@Get(value = PATH + "/list",description = "列表")
 	@PreAuthorize("hasAuthority('system:permission:list')")
-	AbstractBaseResult<List<PermissionListVo>> restList();
+	AbstractBaseResult<List<PermissionListResult>> restList();
 
 	/**
 	 * 保存新增权限
@@ -57,11 +59,11 @@ public interface RestPermissionService {
 	 * 用于新增或更新权限时选择父级权限的下拉列表数据。
 	 * </p>
 	 *
-	 * @return 返回权限下拉列表结果，包含权限 ID 和名称等下拉选项信息
+	 * @return 返回权限下拉列表结果，包含权限 ID、名称、上级 ID、层级深度及类型等信息
 	 */
 	@Get(value = PATH + "/dropDownList",description = "下拉列表")
 	@PreAuthorize("hasAuthority('system:permission:save') or hasAuthority('system:permission:update')")
-	AbstractBaseResult<List<PermissionDropDownResult>> dropDownListResultCustomize();
+	AbstractBaseResult<List<PermissionDropDownResult>> restDropDownListResult();
 
 
 
@@ -80,7 +82,7 @@ public interface RestPermissionService {
 	 */
 	@Get(value = CURRENT_PATH + "/get",description = "详情")
 	@PreAuthorize("hasAuthority('system:permission:get')")
-	AbstractBaseResult<PermissionInfoVo> restGet(@PathVariable Long id);
+	AbstractBaseResult<PermissionInfoResult> restGet(@PathVariable Long id);
 
 	/**
 	 * 删除权限

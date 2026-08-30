@@ -44,4 +44,9 @@ public class ConfigDo extends AbstractBaseNameDomain {
 	 */
 	private String value;
 
+	/**
+	 * 排序序号，值越小越靠前
+	 */
+	private Integer sort;
+
 }

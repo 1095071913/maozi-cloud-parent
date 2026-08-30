@@ -9,9 +9,9 @@ import com.maozi.service.api.annotation.RestService;
 import com.maozi.system.permission.api.impl.RoleServiceImpl;
 import com.maozi.system.permission.api.rest.RestRoleService;
 import com.maozi.system.permission.domain.RoleDo;
-import com.maozi.system.role.dto.RoleSaveUpdateParam;
-import com.maozi.system.role.vo.RoleInfoVo;
-import com.maozi.system.role.vo.RoleListVo;
+import com.maozi.system.role.param.RoleSaveUpdateParam;
+import com.maozi.system.role.result.RoleInfoResult;
+import com.maozi.system.role.result.RoleListResult;
 
 import java.util.List;
 
@@ -25,12 +25,13 @@ public class RestRoleServiceImpl extends RoleServiceImpl implements RestRoleServ
 
 	/**
 	 * 查询角色列表
+	 * <p>仅查询角色的ID和名称两列数据。</p>
 	 *
 	 * @return 角色列表视图数据
 	 */
 	@Override
-	public AbstractBaseResult<List<RoleListVo>> restList() {
-		return ResultUtil.success(list(RoleListVo.class, RoleDo::getId,RoleDo::getName));
+	public AbstractBaseResult<List<RoleListResult>> restList() {
+		return ResultUtil.success(list(RoleListResult.class, RoleDo::getId,RoleDo::getName));
 	}
 
 	/**
@@ -46,27 +47,30 @@ public class RestRoleServiceImpl extends RoleServiceImpl implements RestRoleServ
 
 	/**
 	 * 查询角色下拉列表
+	 * <p>复用基类通用下拉查询，仅返回启用状态角色的ID和名称。</p>
 	 *
 	 * @return 角色下拉选项列表
 	 */
 	@Override
-	public AbstractBaseResult<List<DropDownResult>> dropDownListResult(){
-		return super.dropDownListResult();
+	public AbstractBaseResult<List<DropDownResult>> restDropDownListResult() {
+		return dropDownListResult();
 	}
 
 	/**
 	 * 查询角色详情
+	 * <p>按ID查询角色详情并填充关联映射数据（如角色绑定的权限ID列表），角色不存在时抛出业务异常。</p>
 	 *
 	 * @param id 角色ID
 	 * @return 角色详情视图数据
 	 */
 	@Override
-	public AbstractBaseResult<RoleInfoVo> restGet(Long id) {
-		return ResultUtil.success(getByIdThrowErrorRelation(id, RoleInfoVo.class));
+	public AbstractBaseResult<RoleInfoResult> restGet(Long id) {
+		return ResultUtil.success(getByIdThrowErrorRelation(id, RoleInfoResult.class));
 	}
 
 	/**
 	 * 删除角色
+	 * <p>删除前校验角色未被用户绑定，并级联解除该角色与权限的关联关系。</p>
 	 *
 	 * @param id 角色ID
 	 * @return 操作结果
@@ -93,22 +97,17 @@ public class RestRoleServiceImpl extends RoleServiceImpl implements RestRoleServ
 	}
 
 	/**
-	 * 更新角色状态
+	 * 更新角色状态（启用/禁用）
+	 * <p>委托基类 {@code updateStatusResult} 仅更新状态字段；
+	 * 目标状态为禁用时会先校验角色是否已被用户绑定，已被绑定时抛出业务异常。</p>
 	 *
 	 * @param id 角色ID
-	 * @param param 状态参数（包含启用/禁用状态）
+	 * @param param 状态参数，包含目标状态值
 	 * @return 操作结果
 	 */
 	@Override
-	public AbstractBaseResult<Void> updateStatus(Long id, RequestParam<Status> param){
-
-		// 禁用前校验是否有用户绑定该角色，有则抛出异常阻止禁用
-		if(param.getData() == Status.DISABLE){
-			checkBind(id);
-		}
-
-		return super.updateStatus(id, param.getData());
-
+	public AbstractBaseResult<Void> restUpdateStatusResult(Long id, RequestParam<Status> param) {
+		return updateStatusResult(id, param);
 	}
 
 }

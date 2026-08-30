@@ -35,9 +35,11 @@ public @interface Post {
     @AliasFor(value = "summary",annotation = Operation.class)
     String description() default "";
 
+    /** 响应内容类型（Produces），透传给 {@link RequestMapping#produces} */
     @AliasFor(value = "produces",annotation = RequestMapping.class)
     String[] produces() default {};
 
+    /** 请求内容类型（Consumes），透传给 {@link RequestMapping#consumes} */
     @AliasFor(value = "consumes",annotation = RequestMapping.class)
     String[] consumes() default {};
 

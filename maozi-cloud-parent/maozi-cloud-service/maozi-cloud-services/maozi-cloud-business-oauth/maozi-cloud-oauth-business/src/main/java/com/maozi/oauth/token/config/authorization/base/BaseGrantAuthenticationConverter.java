@@ -119,7 +119,7 @@ public abstract class BaseGrantAuthenticationConverter<T extends BaseGrantAuthen
         //参数检查
         checkParams(request);
 
-        // 提取附加参数
+        // 提取附加参数（排除grant_type与client_id）
         Map<String, Object> additionalParameters = new HashMap<>();
         parameters.forEach((key, value) -> {
             if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) &&

@@ -93,7 +93,7 @@ public class NacosConfigInitializer implements ConfigInitializer {
         }
 
         // Nacos 客户端在 spring.config.import 阶段（早于 Spring 应用 logback-spring.xml）即初始化并输出 INFO 日志，
-        // 此时 logback 仍处于内置默认配置（root=DEBUG + 控制台输出），上面的 logging.level.root 尚未生效；
+        // 此时 logback 仍处于内置默认配置（root=DEBUG + 控制台输出），启动前置写入的 logging.level.root 尚未生效；
         // 因此在 Spring 启动前直接以编程方式将 Nacos 客户端日志级别压至 WARN，屏蔽启动阶段的 INFO 刷屏。
         // Spring 加载 logback-spring.xml 时会 reset 上下文，此设置不会影响运行期日志体系。
         if (LoggerFactory.getILoggerFactory() instanceof LoggerContext loggerContext) {

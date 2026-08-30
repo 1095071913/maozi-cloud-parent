@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 当前登录用户信息
  * <p>
  * 通过 {@code ApplicationLinkContext} 在链路中传递的最小化用户身份信息，
- * 仅保留用户 ID、客户端 ID、用户名三个核心字段，避免在日志、上下文中暴露完整 User 实体。
+ * 仅保留用户 ID、客户端 ID、用户名、权限列表四个核心字段，避免在日志、上下文中暴露完整 User 实体。
  * </p>
  *
  * @author pengjinlong
@@ -34,5 +35,8 @@ public class CurrentUserInfo implements Serializable {
 
     /** 用户名 */
     private String username;
+
+    /** 权限列表 */
+    private List<String> permissions;
 
 }

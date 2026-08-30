@@ -9,10 +9,10 @@ import com.maozi.service.api.annotation.RestService;
 import com.maozi.system.permission.api.impl.PermissionServiceImpl;
 import com.maozi.system.permission.api.rest.RestPermissionService;
 import com.maozi.system.permission.domain.PermissionDo;
-import com.maozi.system.permission.dto.PermissionSaveUpdateParam;
-import com.maozi.system.permission.vo.PermissionDropDownResult;
-import com.maozi.system.permission.vo.PermissionInfoVo;
-import com.maozi.system.permission.vo.PermissionListVo;
+import com.maozi.system.permission.param.PermissionSaveUpdateParam;
+import com.maozi.system.permission.result.PermissionDropDownResult;
+import com.maozi.system.permission.result.PermissionInfoResult;
+import com.maozi.system.permission.result.PermissionListResult;
 
 import java.util.List;
 
@@ -31,17 +31,17 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 	 * @return 权限列表视图数据
 	 */
 	@Override
-	public AbstractBaseResult<List<PermissionListVo>> restList() {
+	public AbstractBaseResult<List<PermissionListResult>> restList() {
 
 		QueryWrapper<PermissionDo> wrapper = Wrappers.query();
 
 		// 仅查询列表视图对象所需的字段列
-		wrapper.select(getColumns(PermissionListVo.class,false));
+		wrapper.select(getColumns(PermissionListResult.class,false));
 
 		// 按权限深度、排序序号降序排列
 		wrapper.orderByDesc(CollectionUtil.newArrayList(getColumns(PermissionDo::getLevel,PermissionDo::getSort)));
 
-		return ResultUtil.success(list(wrapper, PermissionListVo::new));
+		return ResultUtil.success(list(wrapper, PermissionListResult::new));
 
 	}
 
@@ -57,14 +57,15 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 	}
 
 	/**
-	 * 查询权限下拉列表（自定义）
-	 * <p>返回权限的下拉选项数据，包含ID、父ID、深度、名称和类型。</p>
+	 * 查询权限下拉列表
+	 * <p>区别于基类通用下拉（仅ID和名称），此处直接指定权限下拉所需的查询列，
+	 * 返回包含ID、父ID、深度、名称和类型的下拉选项数据。</p>
 	 *
 	 * @return 权限下拉选项列表
 	 */
 	@Override
-	public AbstractBaseResult<List<PermissionDropDownResult>> dropDownListResultCustomize() {
-		return ResultUtil.success(list(PermissionDropDownResult.class,PermissionDo::getId,PermissionDo::getParentId,PermissionDo::getLevel,PermissionDo::getName,PermissionDo::getType));
+	public AbstractBaseResult<List<PermissionDropDownResult>> restDropDownListResult() {
+		return ResultUtil.success(list(PermissionDropDownResult.class, PermissionDo::getId, PermissionDo::getParentId, PermissionDo::getLevel, PermissionDo::getName, PermissionDo::getType));
 	}
 
 	/**
@@ -74,8 +75,8 @@ public class RestPermissionServiceImpl extends PermissionServiceImpl implements 
 	 * @return 权限详情视图数据
 	 */
 	@Override
-	public AbstractBaseResult<PermissionInfoVo> restGet(Long id) {
-		return ResultUtil.success(getByIdThrowError(id, PermissionInfoVo.class, PermissionDo::getParentId,PermissionDo::getName,PermissionDo::getIcon,PermissionDo::getMark,PermissionDo::getRoute,PermissionDo::getServiceUri,PermissionDo::getType,PermissionDo::getSort));
+	public AbstractBaseResult<PermissionInfoResult> restGet(Long id) {
+		return ResultUtil.success(getByIdThrowError(id, PermissionInfoResult.class, PermissionDo::getParentId,PermissionDo::getName,PermissionDo::getIcon,PermissionDo::getMark,PermissionDo::getRoute,PermissionDo::getServiceUri,PermissionDo::getType,PermissionDo::getSort));
 	}
 
 	/**

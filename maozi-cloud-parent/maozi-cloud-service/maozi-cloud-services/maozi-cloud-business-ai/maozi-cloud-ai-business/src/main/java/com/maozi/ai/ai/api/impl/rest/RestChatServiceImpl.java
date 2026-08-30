@@ -7,9 +7,9 @@ import com.maozi.ai.ai.api.ChatConversationRecordService;
 import com.maozi.ai.ai.api.impl.ChatServiceImpl;
 import com.maozi.ai.ai.api.rest.RestChatService;
 import com.maozi.ai.ai.config.ChatMemoryRepository;
-import com.maozi.ai.ai.dto.ChatGenerateImageParam;
-import com.maozi.ai.ai.dto.ChatParam;
 import com.maozi.ai.ai.enums.ChatType;
+import com.maozi.ai.ai.param.ChatGenerateImageParam;
+import com.maozi.ai.ai.param.ChatParam;
 import com.maozi.ai.ai.vo.ChatGenerateImageResult;
 import com.maozi.ai.ai.vo.ChatItemResult;
 import com.maozi.ai.ai.vo.ChatListResult;
@@ -87,7 +87,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
     @RemoteResource
     private RpcConfigService rpcConfigService;
 
-    /** 会话记录服务，用于校验会话归属 */
+    /** 会话记录服务，用于校验会话是否存在 */
     @Resource(name = "chatConversationRecordServiceImpl")
     private ChatConversationRecordService  chatConversationRecordService;
 
@@ -108,6 +108,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
      *
      * @param param 对话参数（会话 ID、消息内容、图片列表、提示词配置）
      * @return AI 回复的分片流，最后追加一条对话完成（FINISH）消息
+     * @throws BusinessResultException 会话不存在、图片类型不受支持或提示词配置获取失败时抛出
      */
     @Override
     @SneakyThrows
@@ -115,7 +116,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
 
         Long conversationId = param.getConversationId();
 
-        // 校验会话是否存在且归属当前用户
+        // 校验会话是否存在
         chatConversationRecordService.has(conversationId);
 
         // 构建用户消息
@@ -169,7 +170,7 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
         // 配置了提示词 key 时，从系统配置服务获取提示词内容作为系统消息
         String promptConfig = param.getPromptConfig();
         if(ObjectUtil.isNotNullEmpty(promptConfig)){
-            promptConfig = rpcConfigService.rpcGetValueByKey(promptConfig).getResultDataThrowError();
+            promptConfig = rpcConfigService.rpcGet(promptConfig).getResultDataThrowError();
             if(ObjectUtil.isNotNullEmpty(promptConfig)){
                 chatClientRequest.system(promptConfig);
             }
@@ -183,6 +184,8 @@ public class RestChatServiceImpl extends ChatServiceImpl implements RestChatServ
         StringBuilder aiChatOutputMessage = new StringBuilder();
         final String conversationIdFinal = conversationId.toString();
         return chatClientRequest
+
+                // 携带会话 ID 参数，供对话记忆 Advisor 定位当前会话并读写上下文消息
                 .advisors(advisor -> advisor.param(ChatMemory.CONVERSATION_ID, conversationIdFinal))
 
                 .stream()

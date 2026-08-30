@@ -91,6 +91,7 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermissionMap
 
 				RolePermissionDo domainSave = RolePermissionDo.builder().roleId(roleId).permissionId(permissionId).build();
 
+				// 绑定关系不存在且权限存在时才保存，避免重复绑定
 				if(count(Wrappers.lambdaQuery(domainSave)) < 1 && permissionService.has(permissionId)) {
 					save(domainSave);
 				}
@@ -104,6 +105,7 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermissionMap
 		if(ObjectUtil.isNotNullEmpty(unbindPermissionIds)) {
 
 			Consumer<Long> consumer = (permissionId)->{
+				// 直接删除对应的角色权限绑定记录
 				remove(Wrappers.lambdaQuery(RolePermissionDo.builder().roleId(roleId).permissionId(permissionId).build()));
 			};
 
