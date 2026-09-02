@@ -63,8 +63,12 @@ COMPOSE_FILE="$current_directory/../../maozi-cloud-deploy-docker/maozi-cloud-mon
 # 构建"改了 X, 重建 X 的下游"设计的; 部署单服务的场景方向相反, 用 -am.
 # ============================================================
 if [ "$1" != "--no-build" ]; then
-    echo "[build] mvn clean install -pl $MODULE_DIR -am"
-    mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true \
+    # Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+    # (getconf 同时支持 macOS / Linux, sysctl / nproc 作兜底)
+    cpu_cores="$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)"
+    mvn_threads=$(( cpu_cores * 2 ))
+    echo "[build] mvn clean install -T $mvn_threads -pl $MODULE_DIR -am"
+    mvn clean install -T "$mvn_threads" -Dmaven.compile.fork=true -Dmaven.test.skip=true \
         -pl "$MODULE_DIR" -am
     if [ $? -ne 0 ]; then
         echo "[build] FAILED: mvn error, abort"

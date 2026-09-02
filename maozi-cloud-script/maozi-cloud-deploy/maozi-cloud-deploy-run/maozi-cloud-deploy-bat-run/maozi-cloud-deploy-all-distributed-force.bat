@@ -16,7 +16,7 @@ REM 工作流程:
 REM   1. 切换到仓库根目录
 REM   2. 构建基础镜像 maozi-cloud-base-jdk:1.0.0 + maozi-cloud-business-jdk:1.0.0
 REM      (服务镜像 FROM 它们, 必须先就绪)
-REM   3. mvn clean install -T 16C 全量构建整个 reactor
+REM   3. mvn clean install (并行线程数按 CPU 核数动态计算) 全量构建整个 reactor
 REM   4. for /r 扫描 maozi-cloud-services 下所有 jar
 REM   5. 对每个 jar:
 REM        - 按服务名前缀路由镜像 / docker-compose 目录
@@ -96,7 +96,13 @@ REM 2. 全量 Maven 构建 (不做 -pl / -amd 增量, 直接整个 reactor)
 REM ============================================================
 echo [build] mvn clean install (full reactor)
 
-call mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true
+REM Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+REM %NUMBER_OF_PROCESSORS% 为 Windows 自动设置的逻辑核数, 极端环境未定义时兜底 4
+if not defined NUMBER_OF_PROCESSORS set NUMBER_OF_PROCESSORS=4
+set /a MVN_THREADS=%NUMBER_OF_PROCESSORS% * 2
+echo [build] mvn threads: %MVN_THREADS% ^(cores: %NUMBER_OF_PROCESSORS%^)
+
+call mvn clean install -T %MVN_THREADS% -Dmaven.compile.fork=true -Dmaven.test.skip=true
 if errorlevel 1 (
     echo [build] FAILED: mvn clean install error, abort
     endlocal & exit /b 1

@@ -12,7 +12,7 @@
 # 工作流程:
 #   1. 切换到仓库根目录
 #   2. 构建基础镜像 maozi-cloud-base-jdk:1.0.0 (服务镜像 FROM 它, 必须先就绪)
-#   3. mvn clean install -T 16C 全量构建整个 reactor
+#   3. mvn clean install (并行线程数按 CPU 核数动态计算) 全量构建整个 reactor
 #   4. find 扫描 maozi-cloud-services 下所有 jar
 #   5. 对每个 jar:
 #        - 按服务名前缀路由镜像 / docker-compose 目录
@@ -117,11 +117,19 @@ fi
 # ============================================================
 echo "[build] mvn clean install (full reactor)"
 
+# Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+#   - 原 -T 16C 在多核机器上线程过多 (16 核 = 256), 配合 compile fork
+#     会同时派生大量编译 JVM, 反而拖慢构建并吃紧内存
+#   - getconf 同时支持 macOS / Linux, sysctl / nproc 作兜底
+cpu_cores="$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)"
+mvn_threads=$(( cpu_cores * 2 ))
+echo "[build] mvn threads: $mvn_threads (cores: $cpu_cores)"
+
 # 复用 jar-utils 的参数:
-#   -T 16C                    并行线程数 = 16 * CPU 核
+#   -T $mvn_threads           并行线程数 = 2 * CPU 核
 #   -Dmaven.compile.fork=true 编译过程 fork 专属 JVM, 加快速度
 #   -Dmaven.test.skip=true    跳过测试编译与执行, 加快部署
-mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true
+mvn clean install -T "$mvn_threads" -Dmaven.compile.fork=true -Dmaven.test.skip=true
 
 # Maven 失败立即中止, 不进入 Docker 部署阶段 (避免用旧 jar 重建镜像)
 if [ $? -ne 0 ]; then

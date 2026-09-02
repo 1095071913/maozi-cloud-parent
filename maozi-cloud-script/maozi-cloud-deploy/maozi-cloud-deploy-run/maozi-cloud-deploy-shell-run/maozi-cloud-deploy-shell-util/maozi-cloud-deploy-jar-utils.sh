@@ -184,11 +184,15 @@ fi
 # ---- D. 执行 Maven 构建 ----
 if [ -n "$build_files" ]; then
 
-    echo "[build] mvn -pl $build_files -amd"
+    # Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+    # (getconf 同时支持 macOS / Linux, sysctl / nproc 作兜底)
+    cpu_cores="$(getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)"
+    mvn_threads=$(( cpu_cores * 2 ))
+    echo "[build] mvn -T $mvn_threads -pl $build_files -amd"
 
     # 增量安装指定模块; -amd 同时构建依赖于它们的下游模块
     # 这一步实现了 "a 引用 b, b 修改 -> a 也重新构建"
-    mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true \
+    mvn clean install -T "$mvn_threads" -Dmaven.compile.fork=true -Dmaven.test.skip=true \
         -pl "$build_files" -amd
 
 fi

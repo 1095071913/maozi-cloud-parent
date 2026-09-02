@@ -93,8 +93,12 @@ for /f "usebackq tokens=* delims=" %%m in ("%modules_file%") do (
 REM ---- D. 执行 Maven 构建 ----
 if not defined build_files goto :after_build
 if "!build_files!"=="" goto :after_build
-echo [build] mvn -pl !build_files! -amd
-call mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl "!build_files!" -amd
+REM Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+REM %NUMBER_OF_PROCESSORS% 为 Windows 自动设置的逻辑核数, 极端环境未定义时兜底 4
+if not defined NUMBER_OF_PROCESSORS set NUMBER_OF_PROCESSORS=4
+set /a MVN_THREADS=%NUMBER_OF_PROCESSORS% * 2
+echo [build] mvn -T %MVN_THREADS% -pl !build_files! -amd
+call mvn clean install -T %MVN_THREADS% -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl "!build_files!" -amd
 if errorlevel 1 (
     echo [build] FAILED: mvn install error, abort
     goto :fail

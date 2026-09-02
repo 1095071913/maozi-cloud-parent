@@ -61,8 +61,12 @@ REM 本地仓库缺失时就会因 HTTP blocker 失败 (或下载不必要的远
 REM ============================================================
 if /i "%~1"=="--no-build" goto :check_jar
 
-echo [build] mvn clean install -pl %MODULE_DIR% -am
-call mvn clean install -T 16C -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl "%MODULE_DIR%" -am
+REM Maven 并行线程数按当前机器 CPU 核数动态计算: 2 * 核数
+REM %NUMBER_OF_PROCESSORS% 为 Windows 自动设置的逻辑核数, 极端环境未定义时兜底 4
+if not defined NUMBER_OF_PROCESSORS set NUMBER_OF_PROCESSORS=4
+set /a MVN_THREADS=%NUMBER_OF_PROCESSORS% * 2
+echo [build] mvn clean install -T %MVN_THREADS% -pl %MODULE_DIR% -am
+call mvn clean install -T %MVN_THREADS% -Dmaven.compile.fork=true -Dmaven.test.skip=true -pl "%MODULE_DIR%" -am
 if errorlevel 1 (
     echo [build] FAILED: mvn error, abort
     endlocal & exit /b 1
