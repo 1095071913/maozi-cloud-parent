@@ -12,11 +12,11 @@ mvn clean install -T 16C
 
 ## 启动业务服务
 
-1. [单体全量业务服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-all-service/src/main/java/com/maozi/Application.java)
-2. [网关服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-gateway-service/src/main/java/com/maozi/Application.java)
-3. [监控服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-monitor-service/src/main/java/com/maozi/Application.java)
-4. [系统服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-system/maozi-cloud-system-service/src/main/java/com/maozi/Application.java)
-5. [认证服务启动](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-oauth/maozi-cloud-oauth-service/src/main/java/com/maozi/Application.java)
+1. [单体全量业务服务启动](../maozi-cloud-parent/maozi-cloud-service/maozi-cloud-services/maozi-cloud-all-service/src/main/java/com/maozi/Application.java)
+2. [网关服务启动](../maozi-cloud-parent/maozi-cloud-service/maozi-cloud-services/maozi-cloud-gateway-service/src/main/java/com/maozi/Application.java)
+3. [监控服务启动](../maozi-cloud-parent/maozi-cloud-service/maozi-cloud-services/maozi-cloud-monitor-service/src/main/java/com/maozi/Application.java)
+4. [系统服务启动](../maozi-cloud-parent/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-system/maozi-cloud-system-service/src/main/java/com/maozi/Application.java)
+5. [认证服务启动](../maozi-cloud-parent/maozi-cloud-service/maozi-cloud-services/maozi-cloud-business-oauth/maozi-cloud-oauth-service/src/main/java/com/maozi/Application.java)
 
 ## 启动前需要设置JVM参数
 

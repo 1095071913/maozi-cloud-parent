@@ -45,6 +45,6 @@
 
 ## 📚 相关链接
 
-- [文档说明](https://github.com/1095071913/maozi-cloud-parent/blob/release/maozi-cloud-doc/框架文档目录.md)
+- [文档说明](maozi-cloud-doc/框架文档目录.md)
 
 - [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)
