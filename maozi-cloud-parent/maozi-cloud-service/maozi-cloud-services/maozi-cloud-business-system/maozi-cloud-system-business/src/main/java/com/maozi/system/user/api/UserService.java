@@ -29,6 +29,8 @@ import java.util.List;
  * 根据用户 ID 列表批量获取客户端用户信息等功能。该接口为用户模块的核心服务接口，
  * 由 UserServiceImpl 实现具体业务逻辑。
  * </p>
+ *
+ * @author maozi
  */
 public interface UserService {
 

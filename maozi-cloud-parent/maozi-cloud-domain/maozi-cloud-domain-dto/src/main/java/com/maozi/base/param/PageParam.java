@@ -14,8 +14,6 @@ import java.io.Serializable;
  * <p>
  * 通用分页查询入参，包含页码、每页数量和查询条件。
  * 支持泛型，可搭配任意查询条件对象使用。
- * 使用 {@link Data} 注解自动生成 getter/setter，
- * 使用 {@link NoArgsConstructor} 和 {@link AllArgsConstructor} 生成无参和全参构造方法。
  * </p>
  *
  * @param <D> 查询条件数据类型
@@ -38,7 +36,7 @@ public class PageParam<D> implements Serializable {
 	@Schema(description = "每页数量",defaultValue = "10")
 	private Long size = 10L;
 
-	/** 查询条件数据，使用 @Valid 开启嵌套校验 */
+	/** 查询条件数据 */
 	@Valid
 	@Schema(description = "查询条件")
 	private D data;

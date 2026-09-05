@@ -25,21 +25,8 @@ import java.util.Map;
  * <p>
  * 使用 {@code @RestControllerAdvice} 统一拦截 Controller 层抛出的各类异常，
  * 将异常转换为标准错误响应格式（通过 {@link ResultUtil#error}），
- * 避免将原始异常堆栈直接暴露给前端。
- * </p>
- * <p>
- * 处理的异常类型包括：
- * <ul>
- *   <li>404 接口不存在（NoHandlerFoundException）</li>
- *   <li>参数校验失败（MethodArgumentNotValidException）</li>
- *   <li>缺少请求参数（MissingServletRequestParameterException）</li>
- *   <li>请求体为空或不可读（HttpMessageNotReadableException）</li>
- *   <li>参数类型转换失败（MethodArgumentTypeMismatchException）</li>
- *   <li>上传文件大小超限（MaxUploadSizeExceededException）</li>
- *   <li>权限不足（AccessDeniedException）—— 交由 Spring Security 处理</li>
- *   <li>异步请求连接失效（AsyncRequestNotUsableException）—— 原样抛出，交由 Spring 异步机制处理</li>
- *   <li>全局兜底异常（Exception）</li>
- * </ul>
+ * 避免将原始异常堆栈直接暴露给前端；权限不足与异步请求连接失效两类异常
+ * 原样抛出，交由对应框架机制处理。
  * </p>
  *
  * @author maozi
@@ -76,7 +63,6 @@ public class RestErrorHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public Object handleValidException(MethodArgumentNotValidException e) {
-		// 构建字段错误映射表，key 为字段名，value 为校验失败消息
 		Map<String, String> errorMap = CollectionUtil.newHashMap();
 		e.getFieldErrors().forEach(error ->
 			errorMap.put(error.getField(), error.getDefaultMessage())
@@ -135,6 +121,7 @@ public class RestErrorHandler {
 	 *
 	 * @param e AccessDeniedException 权限不足异常
 	 * @return 不会返回，直接抛出异常
+	 * @throws AccessDeniedException 原样上抛，交由 Spring Security 异常处理机制统一处理
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
 	public Object handleAccessDeniedException(AccessDeniedException e) {
@@ -151,6 +138,7 @@ public class RestErrorHandler {
 	 *
 	 * @param e AsyncRequestNotUsableException 异步请求不可用异常
 	 * @return 不会返回，直接抛出异常
+	 * @throws AsyncRequestNotUsableException 原样上抛，交由 Spring 底层异步机制处理
 	 */
 	@ExceptionHandler(AsyncRequestNotUsableException.class)
 	public Object handleAsyncRequestNotUsableException(AsyncRequestNotUsableException e) throws AsyncRequestNotUsableException {
@@ -186,7 +174,6 @@ public class RestErrorHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public Object handleGlobalException(Exception e) {
 		ErrorCode errorCode = SystemErrorCode.SYSTEM_ERROR;
-		// 记录完整的异常堆栈日志，方便排查问题
 		log.error(errorCode.getMessage(), e);
 		return ResultUtil.error(errorCode);
 	}

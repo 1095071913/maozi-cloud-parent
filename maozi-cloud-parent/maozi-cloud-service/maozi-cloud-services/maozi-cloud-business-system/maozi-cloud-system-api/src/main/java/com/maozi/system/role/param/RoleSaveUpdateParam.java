@@ -16,13 +16,14 @@ import java.util.Set;
  * 用于新增或修改角色信息时的请求参数封装。
  * 包含角色的基本信息以及需要绑定/解绑的权限ID列表。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleSaveUpdateParam implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

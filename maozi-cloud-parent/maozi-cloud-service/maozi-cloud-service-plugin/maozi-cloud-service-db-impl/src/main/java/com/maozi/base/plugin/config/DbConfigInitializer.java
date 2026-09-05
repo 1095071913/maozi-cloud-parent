@@ -38,7 +38,11 @@ public class DbConfigInitializer implements ConfigInitializer {
         );
     }
 
-    /** 本初始化器无需输出额外的启动诊断日志 */
+    /**
+     * 本初始化器无需输出额外的启动诊断日志
+     *
+     * @param logs 启动日志容器（未使用）
+     */
     @Override
     public void appendLogs(Map<String, String> logs) {}
 

@@ -19,6 +19,8 @@ import java.time.Duration;
  * 当用户认证授权成功后，将OAuth2令牌信息（AccessToken、RefreshToken、IDToken等）
  * 封装为OauthTokenDto对象，并以统一格式返回给客户端。
  * </p>
+ *
+ * @author maozi
  */
 @Slf4j
 public class UserAuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {

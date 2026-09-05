@@ -32,6 +32,8 @@ import java.util.List;
  * 获取该角色下的权限标识列表，以及供 AI 工具根据用户 ID
  * 查询用户信息等功能。
  * </p>
+ *
+ * @author maozi
  */
 public interface RpcUserService {
 

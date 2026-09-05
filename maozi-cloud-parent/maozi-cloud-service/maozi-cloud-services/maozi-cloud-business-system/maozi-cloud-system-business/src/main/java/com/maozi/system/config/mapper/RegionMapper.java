@@ -6,8 +6,9 @@ import com.maozi.system.config.domain.RegionDo;
 /**
  * 地区 Mapper 接口
  * <p>
- * 继承自 IBaseMapper，提供地区实体（RegionDo）的数据库访问操作。
- * 基于 MyBatis-Plus 框架，自动提供基础的 CRUD 操作方法。
+ * 对应表 system_config_region，提供地区记录的增删改查等数据库操作。
  * </p>
+ *
+ * @author maozi
  */
 public interface RegionMapper extends IBaseMapper<RegionDo>{}

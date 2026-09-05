@@ -32,6 +32,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  * 当客户端未进行认证授权时，返回401状态码和"客户端未认证授权"的错误信息。
  * 用于处理需要客户端认证但客户端未提供有效凭证的请求。
  * </p>
+ *
+ * @author maozi
  */
 public class ClientAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

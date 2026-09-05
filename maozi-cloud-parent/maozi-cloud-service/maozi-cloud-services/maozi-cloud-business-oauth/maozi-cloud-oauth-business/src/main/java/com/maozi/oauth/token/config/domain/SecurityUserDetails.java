@@ -31,8 +31,7 @@ import java.util.Map;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SecurityUserDetails extends User implements Serializable {
-
-    /** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

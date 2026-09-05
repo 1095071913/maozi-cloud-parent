@@ -34,13 +34,14 @@ import java.io.Serializable;
  * 用于新增或修改权限信息时的请求参数封装。
  * 包含权限的层级关系、基本信息、路由配置及类型等字段。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionSaveUpdateParam implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

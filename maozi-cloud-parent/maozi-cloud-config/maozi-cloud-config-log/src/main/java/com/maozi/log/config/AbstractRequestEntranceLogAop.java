@@ -83,6 +83,7 @@ public abstract class AbstractRequestEntranceLogAop {
 	 *
 	 * @param proceedingJoinPoint AOP 连接点
 	 * @return 业务方法执行结果
+	 * @throws AccessDeniedException 权限拒绝异常原样上抛，交由 Spring Security 处理
 	 */
 	protected Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
@@ -218,7 +219,9 @@ public abstract class AbstractRequestEntranceLogAop {
 	protected abstract String getLocalHost();
 
 	/**
-	 * 获取拦截类型
+	 * 返回当前切面对应的请求入口日志类型。
+	 *
+	 * @return 日志类型标识（如 WEB、RPC）
 	 */
 	protected abstract LogCommonType getType();
 

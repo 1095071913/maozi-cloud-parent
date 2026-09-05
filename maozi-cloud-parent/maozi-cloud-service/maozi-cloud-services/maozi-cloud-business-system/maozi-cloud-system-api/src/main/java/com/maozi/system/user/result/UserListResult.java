@@ -19,13 +19,14 @@ import java.time.LocalDateTime;
  * 用于用户列表展示时的视图对象，包含用户的基本信息，
  * 如ID、姓名、所属客户端、状态和创建时间等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserListResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

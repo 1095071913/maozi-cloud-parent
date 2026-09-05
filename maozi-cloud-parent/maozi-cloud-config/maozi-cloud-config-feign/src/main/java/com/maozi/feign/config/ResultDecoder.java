@@ -74,6 +74,8 @@ public class ResultDecoder implements Decoder {
 
     /**
      * Feign 响应到 Spring ClientHttpResponse 的适配器
+     *
+     * @author maozi
      */
     public static final class FeignResponseAdapter implements ClientHttpResponse {
 
@@ -91,6 +93,9 @@ public class ResultDecoder implements Decoder {
 
         /**
          * 获取 HTTP 状态码枚举
+         *
+         * @return Feign 响应状态码对应的 HttpStatus
+         * @throws IOException 接口声明异常，本实现不会抛出
          */
         @NotNull
         @Override
@@ -100,6 +105,9 @@ public class ResultDecoder implements Decoder {
 
         /**
          * 获取状态描述
+         *
+         * @return Feign 响应的状态描述文本
+         * @throws IOException 接口声明异常，本实现不会抛出
          */
         @NotNull
         @Override
@@ -122,6 +130,9 @@ public class ResultDecoder implements Decoder {
 
         /**
          * 获取响应体输入流
+         *
+         * @return Feign 响应体对应的输入流
+         * @throws IOException 打开响应体流失败时抛出
          */
         @NotNull
         @Override
@@ -131,6 +142,8 @@ public class ResultDecoder implements Decoder {
 
         /**
          * 获取响应头
+         *
+         * @return 转换为 Spring HttpHeaders 的响应头
          */
         @NotNull
         @Override

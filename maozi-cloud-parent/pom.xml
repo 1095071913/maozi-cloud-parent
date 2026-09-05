@@ -70,6 +70,8 @@
 		<redisson.version>3.18.0</redisson.version>
 		<!-- XXL-JOB 分布式任务调度框架版本 -->
 		<xxl-job-core.version>3.4.2</xxl-job-core.version>
+		<!-- SnailJob 分布式任务调度与重试框架版本（2.x 需 JDK 21，当前项目 JDK 17 故使用 1.x 最新版） -->
+		<snail-job.version>1.10.0</snail-job.version>
 		<!-- MyBatis-Plus 增强版 ORM 框架版本 -->
 		<mybatis-plus.version>3.5.6</mybatis-plus.version>
 		<!-- TransmittableThreadLocal 阿里线程上下文传递工具版本 -->
@@ -122,6 +124,8 @@
 		<maozi-cloud-config-stream.version>${revision}</maozi-cloud-config-stream.version>
 		<!-- 定时任务配置模块版本 -->
 		<maozi-cloud-config-xxljob.version>${revision}</maozi-cloud-config-xxljob.version>
+		<!-- SnailJob 任务调度与重试配置模块版本 -->
+		<maozi-cloud-config-snailjob.version>${revision}</maozi-cloud-config-snailjob.version>
 		<!-- Swagger API 文档配置模块版本 -->
 		<maozi-cloud-config-openapi.version>${revision}</maozi-cloud-config-openapi.version>
 		<!-- Spring Boot Admin 监控配置模块版本 -->

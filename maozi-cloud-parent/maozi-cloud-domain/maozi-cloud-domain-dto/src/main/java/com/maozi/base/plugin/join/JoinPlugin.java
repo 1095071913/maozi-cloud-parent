@@ -10,20 +10,7 @@ import java.lang.annotation.Target;
  * <p>
  * 标注在类上，声明该实体参与 JOIN 关联查询的配置信息，
  * 包括关联类型（内连接/左连接/右连接）、关联条件和表信息。
- * </p>
- * <p>
- * 使用示例：
- * <pre>
- * // 单个 JOIN 关联
- * {@code @JoinPlugin(value = JoinBaseType.LEFT_JOIN, tableName = "t_user", tableAlias = "u", on = "t.user_id = u.id")}
- * public class UserVO { ... }
- *
- * // 多个 JOIN 关联时使用 @JoinPlugins 包装
- * {@code @JoinPlugins({
- *     @JoinPlugin(value = JoinBaseType.LEFT_JOIN, tableName = "t_user", tableAlias = "u", on = "t.user_id = u.id"),
- *     @JoinPlugin(value = JoinBaseType.LEFT_JOIN, tableName = "t_dept", tableAlias = "d", on = "t.dept_id = d.id")
- * })}
- * </pre>
+ * 同一实体需要配置多个 JOIN 关联时，使用 {@link JoinPlugins} 包装多个本注解。
  * </p>
  *
  * @author maozi

@@ -55,6 +55,7 @@ import java.util.stream.Collectors;
  * </p>
  *
  * @param <T> 自定义授权令牌类型，必须继承自BaseGrantAuthenticationToken
+ * @author maozi
  */
 @Slf4j
 public abstract class BaseGrantAuthenticationProvider<T extends BaseGrantAuthenticationToken> implements AuthenticationProvider {

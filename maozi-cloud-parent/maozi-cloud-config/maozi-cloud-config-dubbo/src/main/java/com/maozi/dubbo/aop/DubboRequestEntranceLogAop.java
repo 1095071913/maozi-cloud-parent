@@ -55,6 +55,7 @@ public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 	 *
 	 * @param proceedingJoinPoint AOP 连接点
 	 * @return 业务方法执行结果
+	 * @throws AccessDeniedException 权限拒绝时经基类原样上抛，交由 Spring Security 处理
 	 */
 	@Around(POINT)
 	@Override
@@ -62,7 +63,11 @@ public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 		return super.doAround(proceedingJoinPoint);
 	}
 
-	/** 返回 RPC 类型的入口日志标识 */
+	/**
+	 * 返回 RPC 类型的入口日志标识
+	 *
+	 * @return RPC 日志类型
+	 */
 	@Override
 	protected LogCommonType getType() {
 		return LogCommonType.RPC;
@@ -70,6 +75,8 @@ public class DubboRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 
 	/**
 	 * 返回当前 Dubbo RPC 服务地址，作为非 HTTP 请求的来源记录。
+	 *
+	 * @return 当前 Dubbo 服务地址
 	 */
 	@Override
 	protected String getLocalHost() {

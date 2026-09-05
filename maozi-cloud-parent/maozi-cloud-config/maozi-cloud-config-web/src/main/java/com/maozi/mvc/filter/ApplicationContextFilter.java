@@ -73,9 +73,10 @@ public class ApplicationContextFilter extends OncePerRequestFilter {
         }
 
         // 当前链路尚未产生有效 traceId（OTel Span 为 32 个 0 的占位值）时，从请求头读取，为空则生成随机 UUID，写入上下文并回写响应头
-        boolean notHasTraceId = ApplicationLinkContext.TRACE_ID_VALUE.equals(Span.current().getSpanContext().getTraceId());
+        String traceId = Span.current().getSpanContext().getTraceId();
+        boolean notHasTraceId = ApplicationLinkContext.TRACE_ID_VALUE.equals(traceId);
         if(notHasTraceId){
-            String traceId = request.getHeader(ApplicationLinkContext.TRACE_ID_KEY);
+            traceId = request.getHeader(ApplicationLinkContext.TRACE_ID_KEY);
             if(ObjectUtil.isNullEmpty(traceId)){
                 traceId = UUID.randomUUID().toString();
             }

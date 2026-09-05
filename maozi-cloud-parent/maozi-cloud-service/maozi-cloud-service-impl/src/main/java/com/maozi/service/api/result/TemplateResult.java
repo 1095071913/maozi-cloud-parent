@@ -22,7 +22,7 @@ import java.io.Serializable;
 @Data
 public class TemplateResult implements Serializable {
 
-    /** 序列化版本 ID */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

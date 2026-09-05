@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
  * 用于角色列表展示时的视图对象，包含角色的基本信息，
  * 如ID、名称、描述、创建时间和状态等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class RoleListResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

@@ -27,21 +27,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * {@link RemoteService} 服务暴露处理器（微服务模式），分两阶段工作：
  * <p>
- * <b>阶段一：注册为 Spring Bean</b>（{@link BeanDefinitionRegistryPostProcessor}）。
- * {@link RemoteService} 是裸标记注解，不像 {@code @DubboService} 那样能被 Dubbo 的
- * {@code ServiceClassPostProcessor} 自动注册为 bean；而它也不能直接加 {@code @Component}
- * 元注解——因为典型用法是 {@code RpcXxxServiceImpl extends XxxServiceImpl implements RpcXxxService}，
- * 父类 {@code XxxServiceImpl} 已是 {@code @Service} bean，子类若也成为 bean 会与父类在
- * {@code XxxService} 类型上产生自动装配歧义。因此本处理器在注册时将 bean 标记为
- * {@code autowireCandidate = false}，使其<b>能被创建</b>（依赖照常注入）但<b>不参与按类型注入</b>。
- * </p>
- * <p>
- * <b>阶段二：暴露为 Dubbo 服务</b>（{@link SmartInitializingSingleton}）。
- * 在所有非懒加载单例 bean 创建完毕（含 AOP 代理生成）之后，遍历容器中标注 {@link RemoteService}
- * 的 bean，将其暴露为 Dubbo 远程服务。之所以不在 {@code BeanPostProcessor} 阶段导出，是因为
- * BPP 的 {@code postProcessAfterInitialization} 执行顺序不保证在 AOP 代理创建之后——若先于
- * {@code AbstractAutoProxyCreator} 执行，{@code service.setRef(bean)} 拿到的是未代理的原始对象，
- * Dubbo 调用时切面（如日志、事务）不会生效。
+ * 阶段一（{@link BeanDefinitionRegistryPostProcessor}）：扫描 {@link RemoteService} 标注的类并注册为
+ * Spring Bean，标记 {@code autowireCandidate = false}——能被创建且依赖照常注入，但不参与按类型注入，
+ * 避免与父类 {@code @Service} bean 在共同接口上产生自动装配歧义。
+ * 阶段二（{@link SmartInitializingSingleton}）：在所有非懒加载单例（含 AOP 代理）创建完毕后，
+ * 将标注 {@link RemoteService} 的 bean 统一暴露为 Dubbo 远程服务，保证暴露引用为代理对象、切面生效。
  * </p>
  *
  * @author pengjinlong
@@ -77,10 +67,13 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 		}
 	}
 
-	/** 本处理器无需在此阶段处理 BeanFactory */
+	/**
+	 * 本处理器无需在此阶段处理 BeanFactory
+	 *
+	 * @param beanFactory Bean 工厂（未使用）
+	 */
 	@Override
 	public void postProcessBeanFactory(@NotNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		// 无需处理
 	}
 
 	// ==================== 阶段二：暴露 @RemoteService Bean 为 Dubbo 服务 ====================
@@ -102,7 +95,11 @@ public class RemoteServiceBeanPostProcessor implements BeanDefinitionRegistryPos
 		}
 	}
 
-	/** 保存 Spring 应用上下文供阶段二使用 */
+	/**
+	 * 保存 Spring 应用上下文供阶段二使用
+	 *
+	 * @param applicationContext Spring 应用上下文
+	 */
 	@Override
 	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;

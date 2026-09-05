@@ -14,6 +14,8 @@ import java.util.Map;
  * 从认证令牌的附加参数中提取用户名和密码，
  * 构建未认证的UsernamePasswordAuthenticationToken交由父类进行密码校验。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 @RequiredArgsConstructor

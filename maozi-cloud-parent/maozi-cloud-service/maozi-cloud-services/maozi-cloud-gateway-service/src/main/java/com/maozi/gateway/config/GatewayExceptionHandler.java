@@ -80,6 +80,8 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	/** 视图解析器列表，用于视图渲染
      * -- SETTER --
      *  设置视图解析器列表。
+     *
+     * @param viewResolvers 视图解析器列表
      */
 	@Setter
     private List<ViewResolver> viewResolvers = Collections.emptyList();
@@ -139,16 +141,26 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	 * <p>
 	 * 提供消息写入器和视图解析器给 ServerResponse 使用。
 	 * </p>
+	 *
+	 * @author maozi
 	 */
 	private class ResponseContext implements ServerResponse.Context {
 
-		/** 返回外部类的 HTTP 消息写入器列表 */
+		/**
+		 * 返回外部类的 HTTP 消息写入器列表
+		 *
+		 * @return HTTP 消息写入器列表
+		 */
 		@Override
 		public List<HttpMessageWriter<?>> messageWriters() {
 			return GatewayExceptionHandler.this.messageWriters;
 		}
 
-		/** 返回外部类的视图解析器列表 */
+		/**
+		 * 返回外部类的视图解析器列表
+		 *
+		 * @return 视图解析器列表
+		 */
 		@Override
 		public List<ViewResolver> viewResolvers() {
 			return GatewayExceptionHandler.this.viewResolvers;

@@ -194,22 +194,33 @@ public class StripFirstPathFilter extends OncePerRequestFilter {
             return secondSlash < 0 ? "/" : path.substring(secondSlash);
         }
 
-        /** 返回裁剪后的请求 URI（含 contextPath） */
+        /**
+         * 重写为裁剪后的请求 URI
+         *
+         * @return 裁剪后的新请求 URI（含 contextPath）
+         */
         @Override
         public String getRequestURI() {
             return newRequestUri;
         }
 
-        /** 返回裁剪后的 servlet 路径（contextPath 之后的部分） */
+        /**
+         * 重写为裁剪后的 servlet 路径
+         *
+         * @return 裁剪后的新 servlet 路径（contextPath 之后的部分）
+         */
         @Override
         public String getServletPath() {
             return newServletPath;
         }
 
-        /** 基于原始 URL 重建裁剪后的完整请求 URL，保留 scheme、host、port 不变 */
+        /**
+         * 基于原始 URL 重建裁剪后的完整请求 URL
+         *
+         * @return 裁剪后的完整请求 URL（scheme、host、port 保持不变；原始 URI 未命中时返回原始 URL）
+         */
         @Override
         public StringBuffer getRequestURL() {
-            // 基于原始 URL 替换其中的 URI 段，保留 scheme、host、port 不变
             StringBuffer url = new StringBuffer(originalRequestUrl);
             int idx = url.indexOf(originalRequestUri);
             if (idx >= 0) {

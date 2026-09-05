@@ -16,11 +16,12 @@ import java.util.Set;
  * 用于返回OAuth客户端的详细配置信息，包括客户端ID、名称、
  * 支持的授权模式、令牌有效期、备注及状态等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class ClientInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

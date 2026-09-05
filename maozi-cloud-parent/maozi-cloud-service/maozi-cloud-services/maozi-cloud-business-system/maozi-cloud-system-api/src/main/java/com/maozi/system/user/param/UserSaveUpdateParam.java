@@ -35,13 +35,14 @@ import java.util.List;
  * 用于新增或修改用户信息时的请求参数封装。
  * 包含用户的基本信息、所属客户端以及需要绑定/解绑的角色列表。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSaveUpdateParam implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

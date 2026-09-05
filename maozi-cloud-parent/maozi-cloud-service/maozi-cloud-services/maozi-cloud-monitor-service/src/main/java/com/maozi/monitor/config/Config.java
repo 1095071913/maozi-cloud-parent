@@ -21,11 +21,13 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Spring Boot Admin Server 配置类。
+ * Spring Boot Admin Server 配置类
  * <p>
- * 通过 @EnableAdminServer 注解启用 Spring Boot Admin Server 功能，
- * 使当前应用作为监控中心，自动发现并监控注册到 Nacos 的所有微服务实例。
+ * 启用 Spring Boot Admin Server 监控中心功能，
+ * 自动发现并监控注册到 Nacos 的所有微服务实例。
  * </p>
+ *
+ * @author maozi
  */
 @Configuration
 @EnableAdminServer

@@ -25,6 +25,8 @@ import java.util.List;
  * 分页查询、新增、详情查询、删除、更新、状态变更、
  * 下拉列表以及按名称获取配置值等功能。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestConfigServiceImpl extends ConfigServiceImpl implements RestConfigService {

@@ -24,6 +24,8 @@ package com.maozi;
  * 作为 Spring Boot Admin Server 的入口点，提供微服务监控仪表盘功能，
  * 可查看各服务的健康状态、JVM 指标、线程信息、日志级别等。
  * </p>
+ *
+ * @author maozi
  */
 public class Application extends BaseApplication {
 

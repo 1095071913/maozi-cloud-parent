@@ -20,13 +20,14 @@ import java.util.List;
  * 用于展示用户的详细信息，包括账号、姓名、所属客户端、头像、状态
  * 以及关联的角色列表。通过 QueryMapping 注解自动查询关联数据。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 
@@ -63,7 +64,7 @@ public class UserInfoResult implements Serializable {
 	private Status status;
 
 	/** 用户关联的角色ID列表，通过用户角色服务查询自动填充 */
-	@Schema(description = "权限列表",ref = "StringArrayList")
+	@Schema(description = "角色列表",ref = "StringArrayList")
 	@QueryMapping(isService = true,serviceName = "userRoleServiceImpl",functionName = "getRolesByUser",relationField = "id")
 	private List<Long> roleIds;
 

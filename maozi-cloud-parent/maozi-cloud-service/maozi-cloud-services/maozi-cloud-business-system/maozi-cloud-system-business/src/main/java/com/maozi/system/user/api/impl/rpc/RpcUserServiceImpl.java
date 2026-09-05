@@ -23,6 +23,8 @@ import java.util.List;
  * 权限标识列表等功能。
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcUserServiceImpl extends UserServiceImpl implements RpcUserService {

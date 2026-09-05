@@ -26,6 +26,8 @@ import java.util.List;
  * 状态更新、下拉列表等HTTP接口功能。
  * 使用 @RestService 注解标识为REST服务。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestClientServiceImpl extends ClientServiceImpl implements RestClientService {

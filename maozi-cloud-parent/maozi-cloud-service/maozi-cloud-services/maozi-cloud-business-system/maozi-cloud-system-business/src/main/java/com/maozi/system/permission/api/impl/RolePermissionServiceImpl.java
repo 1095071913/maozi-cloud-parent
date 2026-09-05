@@ -40,6 +40,8 @@ import java.util.stream.Collectors;
  * 角色权限关系服务实现类
  * <p>实现角色与权限绑定关系的管理逻辑，包括绑定关系校验、
  * 批量绑定/解绑、根据角色查询权限以及角色解绑等功能。</p>
+ *
+ * @author maozi
  */
 @Service
 public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermissionMapper,RolePermissionDo,Void> implements RolePermissionService {

@@ -56,13 +56,9 @@ public class LogBase {
     /** 日志级别的配置属性键 */
     public static final String LOG_LEVEL = "csp.sentinel.log.level";
 
-    /**
-     * 将业务日志（如 RecordLog 和 CommandCenterLog）输出到文件
-     */
+    /** 将业务日志（如 RecordLog 和 CommandCenterLog）输出到文件 */
     public static final String LOG_OUTPUT_TYPE_FILE = "file";
-    /**
-     * 将业务日志（如 RecordLog 和 CommandCenterLog）输出到控制台
-     */
+    /** 将业务日志（如 RecordLog 和 CommandCenterLog）输出到控制台 */
     public static final String LOG_OUTPUT_TYPE_CONSOLE = "console";
     /** 默认日志字符集：UTF-8 */
     public static final String LOG_CHARSET_UTF8 = "utf-8";

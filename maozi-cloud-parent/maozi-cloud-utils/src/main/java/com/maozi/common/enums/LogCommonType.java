@@ -18,6 +18,7 @@ import lombok.Getter;
  *     <li>MQ - 消息队列日志，记录消息的发送、接收和处理过程</li>
  *     <li>REST_TEMPLATE - RestTemplate 日志，记录三方 HTTP 请求调用</li>
  *     <li>WEB_SOCKET - WebSocket 日志，记录 WebSocket 长连接的通信信息</li>
+ *     <li>RPC_RETRY - RPC 重试日志，记录服务间远程调用失败后的重试请求</li>
  * </ul>
  * </p>
  *
@@ -32,7 +33,7 @@ public enum LogCommonType implements BaseEnum {
     WEB(1,"Web"),
 
     /** RPC 调用日志，值为 2，记录服务间远程过程调用的详细信息 */
-    RPC(2,"Rpc"),
+    RPC(2,"RPC"),
 
     /** 定时任务日志，值为 3，记录定时调度任务的执行情况 */
     JOB(3,"Job"),
@@ -45,6 +46,9 @@ public enum LogCommonType implements BaseEnum {
 
     /** WebSocket 日志，值为 6，记录 WebSocket 长连接的通信信息 */
     WEB_SOCKET(6,"WebSocket"),
+
+    /** RPC 重试日志，值为 7，记录服务间远程调用失败后的重试请求 */
+    RPC_RETRY(7,"RPCRetry"),
 
     ;
 

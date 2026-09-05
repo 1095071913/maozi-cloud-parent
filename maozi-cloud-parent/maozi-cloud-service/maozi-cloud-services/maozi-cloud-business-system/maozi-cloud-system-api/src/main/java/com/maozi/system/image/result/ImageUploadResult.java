@@ -14,13 +14,14 @@ import java.io.Serializable;
  * 用于图片上传接口的返回结果对象，
  * 包含原始文件名、对象存储路径以及文件访问地址等信息。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageUploadResult implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

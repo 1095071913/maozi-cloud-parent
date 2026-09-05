@@ -17,6 +17,8 @@ import java.util.Map;
  * 进行令牌校验（替代HTTP调用introspection端点的方式，减少网络开销），
  * 也可按用户单个或批量注销其在客户端下的授权记录，实现强制下线。
  * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcOauthTokenServiceImpl extends OauthTokenServiceImpl implements RpcOauthTokenService {

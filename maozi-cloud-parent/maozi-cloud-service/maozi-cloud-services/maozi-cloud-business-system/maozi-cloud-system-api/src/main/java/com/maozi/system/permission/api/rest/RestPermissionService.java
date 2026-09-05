@@ -22,6 +22,8 @@ import java.util.List;
  * 包括权限列表查询、权限新增、权限详情查询、权限删除、权限更新以及权限下拉列表等操作。
  * 所有接口均需要相应的权限授权才能访问。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "权限模块")
 public interface RestPermissionService {

@@ -28,6 +28,8 @@ import java.util.List;
  * 配置删除、配置更新、配置状态更新、配置下拉列表
  * 以及根据配置名称获取配置值等操作。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "配置模块")
 public interface RestConfigService {

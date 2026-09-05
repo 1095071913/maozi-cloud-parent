@@ -48,11 +48,11 @@ const planesTop: PlaneGroup[] = [
         desc: '面向分布式、多语言异构化服务架构的流量治理组件。'
       },
       {
-        name: 'XXL-Job',
-        icon: 'https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.png',
-        site: 'https://www.xuxueli.com/xxl-job/',
-        github: 'https://github.com/xuxueli/xxl-job',
-        desc: '轻量级分布式任务调度平台，开发迅速、学习简单、易扩展。'
+        name: 'Snail-Job',
+        icon: 'https://snailjob.opensnail.com/logo.svg',
+        site: 'https://snailjob.opensnail.com/',
+        github: 'https://github.com/aizuda/snail-job',
+        desc: '灵活、可靠且高效的分布式任务重试与任务调度平台，支持可视化任务编排与多样化告警监控。'
       },
       {
         name: 'RocketMQ',

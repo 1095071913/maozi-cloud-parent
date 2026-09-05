@@ -84,6 +84,7 @@ public class ObjectUtil {
      *
      * @param data 待检查对象
      * @param sourceName 资源名称
+     * @throws BusinessResultException 对象为 null 或空时抛出
      */
     public static void isNullEmptyThrowError(Object data, String sourceName) {
         isNullEmptyThrowError(data,SystemErrorCode.DATA_NOT_EXIST_ERROR,sourceName);
@@ -94,6 +95,7 @@ public class ObjectUtil {
      *
      * @param data 待检查对象
      * @param sourceName 资源名称
+     * @throws BusinessResultException 对象不为空时抛出
      */
     public static void isNotNullEmptyThrowError(Object data, String sourceName) {
         isNotNullEmptyThrowError(data, SystemErrorCode.DATA_EXIST_ERROR, sourceName);
@@ -105,6 +107,7 @@ public class ObjectUtil {
      * @param data 待检查对象
      * @param errorCode 错误码
      * @param resourceName 资源名称
+     * @throws BusinessResultException 对象为 null 或空时抛出
      */
     public static void isNullEmptyThrowError(Object data, ErrorCode errorCode, String resourceName) {
         if(isNullEmpty(data)) {
@@ -119,6 +122,7 @@ public class ObjectUtil {
      * @param data 待检查对象
      * @param errorCode 错误码
      * @param resourceName 资源名称
+     * @throws BusinessResultException 对象不为空时抛出
      */
     public static void isNotNullEmptyThrowError(Object data, ErrorCode errorCode, String resourceName) {
         if(isNotNullEmpty(data)) {
@@ -132,6 +136,7 @@ public class ObjectUtil {
      *
      * @param data 待检查对象
      * @param errorCode 错误码
+     * @throws BusinessResultException 对象为 null 或空时抛出
      */
     public static void isNullEmptyThrowError(Object data, ErrorCode errorCode) {
         if(isNullEmpty(data)) {
@@ -144,6 +149,7 @@ public class ObjectUtil {
      *
      * @param data 待检查对象
      * @param errorCode 错误码
+     * @throws BusinessResultException 对象不为空时抛出
      */
     public static void isNotNullEmptyThrowError(Object data, ErrorCode errorCode) {
         if(isNotNullEmpty(data)) {
@@ -156,6 +162,7 @@ public class ObjectUtil {
      *
      * @param condition 校验条件
      * @param message 异常信息
+     * @throws BusinessResultException 条件为 false 时抛出（HTTP 500 系统错误）
      */
     public static void checkConditionThrowError(boolean condition, String message) {
         if(condition) {
@@ -171,6 +178,7 @@ public class ObjectUtil {
      * @param condition 校验条件
      * @param code 异常编码
      * @param message 异常信息
+     * @throws BusinessResultException 条件为 false 时抛出
      */
     public static void checkConditionThrowError(boolean condition, Integer code, String message) {
         if(condition) {
@@ -185,6 +193,7 @@ public class ObjectUtil {
      * @param condition 校验条件
      * @param errorCode 错误码
      * @param message 异常信息
+     * @throws BusinessResultException 条件为 false 时抛出
      */
     public static void checkConditionThrowError(boolean condition, ErrorCode errorCode, String message) {
         if(condition) {

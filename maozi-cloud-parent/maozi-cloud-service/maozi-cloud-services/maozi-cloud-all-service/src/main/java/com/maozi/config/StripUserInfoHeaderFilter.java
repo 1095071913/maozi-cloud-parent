@@ -76,6 +76,8 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
      * HTTP 请求头大小写不敏感，因此重写 {@code getHeader}、{@code getHeaders}、
      * {@code getHeaderNames} 时均使用 {@code equalsIgnoreCase} 过滤目标头。
      * </p>
+     *
+     * @author maozi
      */
     private static class UserInfoHeaderStrippedRequestWrapper extends HttpServletRequestWrapper {
 
@@ -91,7 +93,12 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             super(request);
         }
 
-        /** 目标头直接返回 {@code null}，其余透传原始请求 */
+        /**
+         * 获取指定名称的请求头值
+         *
+         * @param name 请求头名称
+         * @return 目标头返回 null，其余返回原始请求的头值
+         */
         @Override
         public String getHeader(String name) {
             if (HEADER_TO_STRIP.equalsIgnoreCase(name)) {
@@ -100,7 +107,12 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             return super.getHeader(name);
         }
 
-        /** 目标头返回空枚举，其余透传原始请求 */
+        /**
+         * 获取指定名称的请求头值枚举
+         *
+         * @param name 请求头名称
+         * @return 目标头返回空枚举，其余返回原始请求的头值枚举
+         */
         @Override
         public Enumeration<String> getHeaders(String name) {
             if (HEADER_TO_STRIP.equalsIgnoreCase(name)) {
@@ -109,7 +121,11 @@ public class StripUserInfoHeaderFilter extends OncePerRequestFilter {
             return super.getHeaders(name);
         }
 
-        /** 返回剔除目标头后的请求头名称枚举 */
+        /**
+         * 获取剔除目标头后的请求头名称枚举
+         *
+         * @return 不包含目标头的请求头名称枚举
+         */
         @Override
         public Enumeration<String> getHeaderNames() {
             Set<String> names = new LinkedHashSet<>();

@@ -27,5 +27,7 @@ import com.maozi.service.api.IBaseMapper;
  * 继承 IBaseMapper<ClientDo>，提供客户端实体与数据库表 oauth2_registered_client
  * 之间的ORM映射操作，包括基础的增删改查和关联查询功能。
  * </p>
+ *
+ * @author maozi
  */
 public interface ClientMapper extends IBaseMapper<ClientDo>{}

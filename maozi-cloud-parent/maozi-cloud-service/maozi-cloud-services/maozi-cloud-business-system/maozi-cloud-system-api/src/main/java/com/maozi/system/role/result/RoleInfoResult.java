@@ -19,13 +19,14 @@ import java.util.List;
  * 用于展示角色的详细信息，包括角色名称、描述、状态以及关联的权限列表。
  * 通过 QueryMapping 注解自动查询角色关联的权限ID列表。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

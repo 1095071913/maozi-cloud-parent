@@ -29,6 +29,8 @@ import java.io.Serial;
  * 用户角色关系实体类
  * <p>对应数据库表 system_user_role，存储用户与角色的多对多关联关系，
  * 一个用户可以拥有多个角色，一个角色也可以分配给多个用户。</p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
@@ -37,8 +39,7 @@ import java.io.Serial;
 @EqualsAndHashCode(callSuper = true)
 @TableName("system_user_role")
 public class UserRoleDo extends AbstractBaseDomain {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

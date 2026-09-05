@@ -15,13 +15,9 @@ import java.util.Map;
  * 资源服务器进程中的令牌内省服务实现。
  * <p>
  * 根据配置模式远程调用授权服务器完成令牌内省：模式为空或 rpc 时通过 Dubbo RPC 调用
- * {@link RpcOauthTokenService}，其余模式通过 REST（Feign）调用 {@link RestOauthTokenService}；
- * 供 {@link com.maozi.oauth.config.OpaqueTokenIntrospector} 在非授权服务器进程中使用。
- * </p>
- * <p>
- * 本类不通过 {@code @Service} 注册，而是由 {@link RemoteOauthTokenServiceConfiguration}
- * 通过 {@code @Bean @ConditionalOnMissingBean} 按需注册——当容器中已有本地
- * {@link OauthTokenService} 实现时（授权服务器进程），本类不会被创建。
+ * {@link RpcOauthTokenService}，其余模式通过 REST（Feign）调用 {@link RestOauthTokenService}，
+ * 供 {@code OpaqueTokenIntrospector} 使用。本类由 {@link RemoteOauthTokenServiceConfiguration}
+ * 在容器中不存在本地 {@link OauthTokenService} 实现时按需注册（授权服务器进程不创建本类）。
  * </p>
  *
  * @author pengjinlong

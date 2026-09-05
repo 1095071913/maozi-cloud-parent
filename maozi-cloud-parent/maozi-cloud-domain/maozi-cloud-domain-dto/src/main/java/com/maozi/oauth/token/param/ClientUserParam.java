@@ -23,7 +23,7 @@ import java.io.Serializable;
 @SuperBuilder(toBuilder = true)
 public class ClientUserParam implements Serializable {
 
-    /** 序列化版本 ID */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

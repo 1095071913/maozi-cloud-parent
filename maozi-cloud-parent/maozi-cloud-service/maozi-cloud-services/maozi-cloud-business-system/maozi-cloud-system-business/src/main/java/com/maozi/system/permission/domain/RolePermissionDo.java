@@ -29,6 +29,8 @@ import java.io.Serial;
  * 角色权限关系实体类
  * <p>对应数据库表 system_role_permission，存储角色与权限的多对多关联关系，
  * 一个角色可以拥有多个权限，一个权限也可以分配给多个角色。</p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
@@ -37,8 +39,7 @@ import java.io.Serial;
 @EqualsAndHashCode(callSuper = true)
 @TableName("system_role_permission")
 public class RolePermissionDo extends AbstractBaseDomain {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

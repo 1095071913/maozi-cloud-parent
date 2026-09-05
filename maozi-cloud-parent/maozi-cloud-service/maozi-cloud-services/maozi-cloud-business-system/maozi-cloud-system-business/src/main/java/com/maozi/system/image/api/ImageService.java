@@ -12,6 +12,8 @@ import java.util.List;
  * 路由到对应的存储处理器完成实际上传，
  * 支持单次上传一个或多个图片文件。
  * </p>
+ *
+ * @author maozi
  */
 public interface ImageService {
 

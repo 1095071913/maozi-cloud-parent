@@ -62,21 +62,15 @@ import java.util.Set;
 
 /**
  * 基于Redis的OAuth2授权信息服务实现
+ * <p>
+ * 将OAuth2授权信息序列化后存入Redis，模拟JDBC服务行为：authorization:{id} 键存储完整授权数据，
+ * authorization:index:{tokenType}:{tokenValue} 键作为state和令牌值的辅助查找索引，
+ * authorization:principal:{clientId}:{principalName} 键作为用户主体索引（以上键均带
+ * {@code RedisUtil.REDIS_KEY_PREFIX} 前缀）。支持按ID或按令牌（可选令牌类型）查找，
+ * 并实现{@link OAuth2AuthorizationService}扩展的按用户单个/批量注销授权能力。
+ * </p>
  *
- * <p>实现了{@link OAuth2AuthorizationService}接口，使用Redis存储OAuth2授权信息。
- * 该实现模拟了JDBC服务的行为：
- * <ul>
- *   <li>在id键下存储完整的授权数据</li>
- *   <li>为state和令牌值创建辅助查找索引</li>
- *   <li>支持按id或按令牌（可选令牌类型）查找</li>
- * </ul>
- *
- * <p>Redis键格式（前缀 {@code RedisUtil.REDIS_KEY_PREFIX} 即 {@code maozi-cloud:{服务名}:}）：
- * <ul>
- *   <li>{@code maozi-cloud:{服务名}:authorization:{id}} — 授权数据主键</li>
- *   <li>{@code maozi-cloud:{服务名}:authorization:index:{tokenType}:{tokenValue}} — 令牌索引键</li>
- *   <li>{@code maozi-cloud:{服务名}:authorization:principal:{clientId}:{principalName}} — 用户主体索引键</li>
- * </ul>
+ * @author maozi
  */
 
 @Service

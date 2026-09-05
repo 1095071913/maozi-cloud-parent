@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
  * 角色服务实现类
  * <p>实现角色相关的业务逻辑，包括角色存在性判断、删除前的绑定关系校验、
  * 角色与权限的级联更新等功能。</p>
+ *
+ * @author maozi
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<RoleMapper,RoleDo,Void> implements RoleService {

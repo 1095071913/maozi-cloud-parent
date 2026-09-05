@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
  * 继承自 BaseServiceImpl，提供地区（Region）相关的基础业务操作实现。
  * 基于 MyBatis-Plus 的 Mapper 层实现数据库访问操作。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class RegionServiceImpl extends BaseServiceImpl<RegionMapper,RegionDo,Void> implements RegionService {

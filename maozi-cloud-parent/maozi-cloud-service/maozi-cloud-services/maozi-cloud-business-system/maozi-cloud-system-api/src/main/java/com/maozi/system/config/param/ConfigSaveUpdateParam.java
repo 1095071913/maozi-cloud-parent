@@ -15,13 +15,14 @@ import java.io.Serializable;
  * 用于新增或修改全局配置时的请求参数封装。
  * 仅允许传入配置名称、配置别名、配置类型、配置值与排序字段。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigSaveUpdateParam implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

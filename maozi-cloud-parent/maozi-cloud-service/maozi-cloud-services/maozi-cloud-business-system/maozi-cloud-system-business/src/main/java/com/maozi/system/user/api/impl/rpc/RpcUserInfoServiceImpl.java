@@ -13,6 +13,8 @@ import com.maozi.system.user.dto.SystemUser;
  * 提供用户信息的Dubbo RPC远程调用接口实现，用于跨服务查询用户基本信息。
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcUserInfoServiceImpl extends UserServiceImpl implements RpcUserInfoService {

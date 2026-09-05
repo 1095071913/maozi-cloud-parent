@@ -58,19 +58,28 @@ public class RestRequestEntranceLogAop extends AbstractRequestEntranceLogAop {
 	 *
 	 * @param proceedingJoinPoint AOP 连接点
 	 * @return 业务方法执行结果
+	 * @throws AccessDeniedException 权限拒绝时经基类原样上抛，交由 Spring Security 处理
 	 */
 	@Around(POINT)
 	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		return super.doAround(proceedingJoinPoint);
 	}
 
-	/** 返回 WEB 类型的入口日志标识 */
+	/**
+	 * 返回 WEB 类型的入口日志标识
+	 *
+	 * @return WEB 日志类型
+	 */
 	@Override
 	protected LogCommonType getType() {
 		return LogCommonType.WEB;
 	}
 
-	/** 返回当前 HTTP 请求的客户端真实 IP（穿透代理头解析）作为来源记录 */
+	/**
+	 * 返回当前 HTTP 请求的客户端真实 IP（穿透代理头解析）作为来源记录
+	 *
+	 * @return 客户端真实 IP
+	 */
 	@Override
 	protected String getLocalHost() {
 		return WebUtil.getRequestHost();

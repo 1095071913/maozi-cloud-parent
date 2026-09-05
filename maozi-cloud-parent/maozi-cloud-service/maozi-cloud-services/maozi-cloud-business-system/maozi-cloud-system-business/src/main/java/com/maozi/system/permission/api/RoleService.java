@@ -3,6 +3,8 @@ package com.maozi.system.permission.api;
 /**
  * 角色服务接口
  * <p>提供角色相关的业务操作，包括角色存在性判断等功能。</p>
+ *
+ * @author maozi
  */
 public interface RoleService {
 

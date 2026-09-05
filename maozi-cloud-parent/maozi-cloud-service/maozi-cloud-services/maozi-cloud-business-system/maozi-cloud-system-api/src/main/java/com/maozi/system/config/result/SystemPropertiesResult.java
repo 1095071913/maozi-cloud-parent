@@ -12,11 +12,12 @@ import java.io.Serializable;
  * 用于展示系统的基础配置信息，数据来源于系统属性配置（SystemProperties），
  * 包括项目名称、公司名称、图标、运行环境、项目描述和版权声明等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class SystemPropertiesResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

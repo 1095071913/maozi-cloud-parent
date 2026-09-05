@@ -17,13 +17,14 @@ import java.io.Serializable;
  * 用于全局配置详情接口的返回数据封装，
  * 包含配置名称、别名、类型、配置值、排序值与状态等属性（配置 ID 不对外输出）。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

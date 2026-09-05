@@ -37,13 +37,14 @@ import java.util.Set;
  * 用于OAuth客户端新增和更新操作的请求参数，包含客户端的基本配置信息、
  * 授权模式、令牌有效期等核心配置项。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientSaveUpdateParam implements Serializable {
-
-    /** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

@@ -17,14 +17,15 @@ import java.io.Serializable;
  * 继承自通用下拉结果基类（包含配置 ID 与名称），额外包含配置别名、配置值与排序信息，
  * 以支持前端在下拉选择时直接展示或使用配置内容。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ConfigDropDownResult extends DropDownResult implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

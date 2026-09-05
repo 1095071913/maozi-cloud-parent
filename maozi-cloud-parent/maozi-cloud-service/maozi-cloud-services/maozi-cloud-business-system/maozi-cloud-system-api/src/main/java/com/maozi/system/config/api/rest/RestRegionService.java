@@ -14,6 +14,8 @@ import java.util.List;
  * 提供地区数据的 RESTful API 接口定义，主要用于查询地区下拉列表信息。
  * 支持根据父级地区 ID 获取对应的子地区列表。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "地区模块")
 public interface RestRegionService {

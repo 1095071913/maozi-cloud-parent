@@ -10,6 +10,8 @@ import java.util.Map;
  * 以及批量获取客户端ID映射关系，由 ClientServiceImpl 提供实现，
  * 并随其子类（RPC/REST 服务实现）一并承载。
  * </p>
+ *
+ * @author maozi
  */
 public interface ClientService {
 

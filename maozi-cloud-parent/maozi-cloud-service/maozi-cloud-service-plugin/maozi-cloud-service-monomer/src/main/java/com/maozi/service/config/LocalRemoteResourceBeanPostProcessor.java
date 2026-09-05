@@ -18,18 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 单体服务 {@code @RemoteResource} 字段本地注入处理器。
  * <p>
- * 单体服务（maozi-cloud-all-service）不引入 maozi-cloud-service-distributed（Dubbo 模块），
- * {@link RemoteResource} 标注的字段不会有 Dubbo 引用代理注入。
- * 注解上的 {@code @Resource} 元注解也无效——Spring 的
- * {@code CommonAnnotationBeanPostProcessor} 使用 {@code field.isAnnotationPresent(Resource.class)}
- * 判断字段，该方法只检查直接标注，不追溯元注解。
- * </p>
- * <p>
- * 本处理器在 Bean 属性填充阶段扫描 {@link RemoteResource} 字段，
- * 按字段声明的接口类型从本地容器获取 Bean 实例并反射写入，
- * 同时按字段名注册为 Spring 单例，使 {@code SpringUtil.getBean(字段名)} 等按名查找可用
- * （如 {@code BaseServiceImpl} 的关联数据解析机制 {@code @QueryMapping(serviceName=...)}）。
- * {@code beanFactory.getBean(Class)} 在仅有一个候选时忽略 {@code autowireCandidate} 标志，
+ * 单体服务（maozi-cloud-all-service）不引入 Dubbo 模块，注解上的 {@code @Resource} 元注解也不被
+ * Spring 识别，故由本处理器在 Bean 属性填充阶段按字段声明的接口类型从本地容器获取 Bean 实例并反射写入，
+ * 同时按字段名注册为 Spring 单例，供 {@code SpringUtil.getBean(字段名)} 等按名查找使用
+ * （{@code BaseServiceImpl} 的 {@code @QueryMapping(serviceName=...)} 关联数据解析依赖于此）。
+ * {@code getBean(Class)} 在仅有一个候选时忽略 {@code autowireCandidate} 标志，
  * 因此 {@link LocalRemoteServiceRegistrar} 注册的 {@code autowireCandidate = false} 的
  * RPC 实现类仍可被正确解析。
  * </p>

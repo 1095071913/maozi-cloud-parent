@@ -15,11 +15,12 @@ import java.time.LocalDateTime;
  * 用于全局配置分页列表接口的返回数据封装，
  * 默认按排序值升序、创建时间倒序排列。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class ConfigListResult implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

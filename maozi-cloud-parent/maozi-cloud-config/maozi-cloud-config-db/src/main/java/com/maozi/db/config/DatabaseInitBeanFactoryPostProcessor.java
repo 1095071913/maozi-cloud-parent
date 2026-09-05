@@ -66,7 +66,7 @@ public class DatabaseInitBeanFactoryPostProcessor implements BeanFactoryPostProc
      * </p>
      *
      * @param beanFactory Bean 工厂（未使用，由 Spring 框架传入）
-     * @throws BeansException Bean 异常
+     * @throws RuntimeException 连接 MySQL 或执行检查/创建数据库语句失败时抛出（消息携带目标数据库名）
      */
     @Override
     public void postProcessBeanFactory(@Nonnull ConfigurableListableBeanFactory beanFactory) throws BeansException {

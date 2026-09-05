@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
  * 当客户端认证失败时（如客户端ID或密钥错误），返回401状态码和
  * "客户端认证授权失败"的错误信息。
  * </p>
+ *
+ * @author maozi
  */
 public class ClientAuthenticationFailureHandler implements AuthenticationFailureHandler {
 

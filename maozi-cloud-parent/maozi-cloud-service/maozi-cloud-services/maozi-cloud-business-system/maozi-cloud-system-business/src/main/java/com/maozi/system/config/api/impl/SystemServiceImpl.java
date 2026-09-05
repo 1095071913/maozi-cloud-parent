@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
  * 实现 SystemService 接口，提供系统级别的配置属性访问功能。
  * 通过注入 SystemProperties 获取系统相关的配置信息。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class SystemServiceImpl implements SystemService {

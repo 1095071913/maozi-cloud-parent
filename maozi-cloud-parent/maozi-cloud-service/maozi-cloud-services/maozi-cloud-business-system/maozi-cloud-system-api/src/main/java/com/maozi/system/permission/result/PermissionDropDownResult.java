@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
  * 额外包含上级权限ID、层级深度、类型及排序信息，
  * 以支持树形结构的权限选择。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor

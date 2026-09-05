@@ -53,6 +53,8 @@ import java.util.List;
  * 提供用户的查询、新增、更新、删除、权限获取等基础业务逻辑。
  * 同时提供 REST 和 RPC 服务实现的公共基础方法。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserMapper,UserDo,Void> implements UserService {

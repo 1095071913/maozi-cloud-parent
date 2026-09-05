@@ -25,6 +25,8 @@ import java.util.List;
  * 角色状态更新以及角色下拉列表等操作。
  * 所有接口均需要相应的权限授权才能访问。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "角色模块")
 public interface RestRoleService {

@@ -22,7 +22,8 @@ import com.maozi.system.permission.domain.RolePermissionDo;
 
 /**
  * 角色权限关系Mapper接口
- * <p>提供角色权限关系实体 RolePermissionDo 的数据库操作接口，
- * 继承自 IBaseMapper，支持基础的CRUD操作。</p>
+ * <p>对应表 system_role_permission，提供角色权限关联记录的增删改查等数据库操作。</p>
+ *
+ * @author maozi
  */
 public interface RolePermissionMapper extends IBaseMapper<RolePermissionDo>{}

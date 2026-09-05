@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
  * 重写了附加认证检查逻辑，当凭证为空时跳过密码校验，
  * 当密码错误时抛出自定义的中文错误提示"用户认证授权失败"。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 public class BaseDaoAuthenticationProvider extends DaoAuthenticationProvider {

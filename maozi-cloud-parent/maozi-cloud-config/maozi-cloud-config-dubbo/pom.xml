@@ -63,6 +63,13 @@
             <artifactId>maozi-cloud-utils</artifactId>
 			<version>${maozi-cloud-utils.version}</version>
         </dependency>
+
+		<!-- 服务启动运行基础模块，提供 BaseApplication 启动基类（banner 统一过滤特征注册） -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-run</artifactId>
+			<version>${maozi-cloud-service-run.version}</version>
+		</dependency>
         <!-- Project End -->
 
 

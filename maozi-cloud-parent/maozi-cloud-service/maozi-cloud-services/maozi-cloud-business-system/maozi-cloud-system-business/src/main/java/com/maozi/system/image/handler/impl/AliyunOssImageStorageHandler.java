@@ -33,6 +33,8 @@ import java.util.UUID;
  * 上传的对象路径格式为 目录前缀/日期目录/UUID.扩展名（目录前缀取上传参数的保存路径，为空时默认 image），
  * 避免同名覆盖与顺序前缀。
  * </p>
+ *
+ * @author maozi
  */
 @Component
 public class AliyunOssImageStorageHandler implements ImageStorageHandler {

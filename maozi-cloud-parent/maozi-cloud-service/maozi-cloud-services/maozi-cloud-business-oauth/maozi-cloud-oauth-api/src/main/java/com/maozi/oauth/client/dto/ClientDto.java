@@ -21,8 +21,7 @@ import java.util.Set;
  */
 @Data
 public class ClientDto implements Serializable {
-
-    /** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

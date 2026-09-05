@@ -49,10 +49,10 @@ public class AsyncConfig {
 	/** 缓冲队列数 */
 	private static final int QUEUE_CAPACITY = 1024;
 
-	/** 线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁 */
+	/** 应用关闭时等待任务完成的最长时间（秒），超时后强制关闭线程池 */
 	private static final int AWAIT_TERMINATION = 60;
 
-	/** 用来设置线程池关闭的时候等待所有任务都完成再继续销毁其他的Bean */
+	/** 应用关闭时是否等待所有异步任务执行完成后再销毁线程池 */
 	private static final Boolean WAIT_FOR_TASKS_TO_COMPLETE_ON_SHUTDOWN = true;
 
 	/** 线程池名前缀 */

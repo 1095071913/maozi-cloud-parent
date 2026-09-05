@@ -48,6 +48,8 @@ import com.maozi.system.user.result.UserListResult;
  * 详情查询、更新、状态变更以及当前登录用户个人信息查询等功能。
  * 继承自 UserServiceImpl，复用用户基础业务逻辑。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestUserServiceImpl extends UserServiceImpl implements RestUserService {

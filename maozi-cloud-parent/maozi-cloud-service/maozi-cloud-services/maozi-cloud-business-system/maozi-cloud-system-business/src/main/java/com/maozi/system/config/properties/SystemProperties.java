@@ -12,6 +12,8 @@ import java.io.Serializable;
  * 对应配置文件中 "application-project-system" 前缀下的配置项，
  * 用于映射和管理系统级别的配置属性，包括项目名称、公司名称、图标等信息。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @Configuration

@@ -26,6 +26,8 @@ import java.util.List;
  * 包括AI流式对话、文生图、对话消息列表查询、
  * 停止对话、增量获取消息以及删除指定消息等操作。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "AI对话模块")
 public interface RestChatService {

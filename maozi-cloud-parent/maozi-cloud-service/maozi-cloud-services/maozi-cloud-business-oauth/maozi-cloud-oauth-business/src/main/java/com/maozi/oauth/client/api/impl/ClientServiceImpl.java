@@ -42,6 +42,8 @@ import java.util.stream.Collectors;
  * 提供客户端的增删改查、Token设置、客户端设置等核心业务逻辑，
  * 包括客户端密钥加密、令牌有效期配置、OAuth2相关设置的构建等功能。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class ClientServiceImpl extends BaseServiceImpl<ClientMapper, ClientDo, ClientDto> implements ClientService {

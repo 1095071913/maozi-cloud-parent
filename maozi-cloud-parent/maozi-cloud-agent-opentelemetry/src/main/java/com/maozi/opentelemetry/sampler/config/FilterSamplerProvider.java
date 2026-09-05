@@ -32,7 +32,11 @@ public class FilterSamplerProvider implements ConfigurableSamplerProvider {
         return new FilterSampler();
     }
 
-    /** 返回采样器注册名称，供 {@code otel.traces.sampler} 配置项选用 */
+    /**
+     * 返回采样器注册名称，供 {@code otel.traces.sampler} 配置项选用
+     *
+     * @return 采样器注册名称
+     */
     @Override
     public String getName() {
         return PROVIDER_NAME;

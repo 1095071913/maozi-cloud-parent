@@ -15,6 +15,8 @@ import com.maozi.system.config.result.ConfigDropDownResult;
  * 基于 Apache Dubbo 协议提供远程过程调用（RPC）服务，
  * 供其他微服务通过 RPC 方式获取系统全局配置。
  * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcConfigServiceImpl extends ConfigServiceImpl implements RpcConfigService {

@@ -7,10 +7,10 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import java.util.Objects;
 
 /**
- * Web 工具类。
+ * Web 工具类
  * <p>
  * 提供从 HTTP 请求中获取客户端真实 IP 地址的能力，
- * 支持多种反向代理场景（Nginx、Apache、Squid 等）。
+ * 兼容 Nginx、Apache、WebLogic 等多种反向代理场景。
  * </p>
  *
  * @author maozi
@@ -18,21 +18,13 @@ import java.util.Objects;
 public class WebUtil {
 
 	/**
-	 * 获取客户端真实 IP 地址。
+	 * 获取客户端真实 IP 地址
 	 * <p>
-	 * 按优先级依次从以下 HTTP 头中获取客户端 IP：
-	 * 1. X-Forwarded-For —— 最常用的代理头（Nginx 等）；
-	 * 2. Proxy-Client-IP —— Apache 服务器代理头；
-	 * 3. WL-Proxy-Client-IP —— WebLogic 代理头；
-	 * 4. HTTP_CLIENT_IP —— 部分代理服务器使用；
-	 * 5. HTTP_X_FORWARDED_FOR —— 部分代理服务器使用；
-	 * 6. X-Real-IP —— Nginx 代理头；
-	 * 7. 如果以上头均无效，则从远程地址直接获取。
-	 * </p>
-	 * <p>
-	 * 处理逻辑：
-	 * - 对于 X-Forwarded-For 中的多 IP 格式（客户端IP, 代理1, 代理2...），取第一个 IP；
-	 * - 将 IPv6 本地回环地址（0:0:0:0:0:0:0:1）转换为 IPv4 的 127.0.0.1。
+	 * 按优先级依次从 X-Forwarded-For、Proxy-Client-IP、WL-Proxy-Client-IP、
+	 * HTTP_CLIENT_IP、HTTP_X_FORWARDED_FOR、X-Real-IP 请求头中获取，
+	 * 均无效时取请求远程地址兜底；
+	 * X-Forwarded-For 含多个 IP（客户端IP, 代理1, 代理2...）时取第一个，
+	 * IPv6 本地回环地址（0:0:0:0:0:0:0:1）转换为 IPv4 的 127.0.0.1。
 	 * </p>
 	 *
 	 * @param request 服务端 HTTP 请求对象

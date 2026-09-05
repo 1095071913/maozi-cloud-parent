@@ -25,6 +25,8 @@ import java.util.Map;
  * 匹配存储类型并路由到对应的处理器处理，
  * 逐个文件调用处理器完成上传。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class ImageServiceImpl implements ImageService {

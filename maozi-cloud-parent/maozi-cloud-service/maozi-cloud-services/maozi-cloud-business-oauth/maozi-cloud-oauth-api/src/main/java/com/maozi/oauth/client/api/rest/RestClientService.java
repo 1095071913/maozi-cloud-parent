@@ -25,6 +25,8 @@ import java.util.List;
  * 提供客户端（OAuth2 Client）的增删改查、状态更新及下拉列表等 REST 风格的 HTTP 接口定义。
  * 所有接口均基于 /client 路径，并通过 Spring Security 权限注解进行访问控制。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "客户端模块")
 public interface RestClientService {

@@ -20,11 +20,12 @@ import java.util.Map;
  * 支持按用户名称模糊查询，并实现了排序参数接口以支持自定义排序。
  * 默认按创建时间倒序排列。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class UserListParam implements OrderParam, Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

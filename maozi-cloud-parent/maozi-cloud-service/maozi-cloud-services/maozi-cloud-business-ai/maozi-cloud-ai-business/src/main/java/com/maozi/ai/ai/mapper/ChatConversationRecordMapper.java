@@ -5,7 +5,11 @@ import com.maozi.service.api.IBaseMapper;
 
 /**
  * AI交互会话Mapper接口
- * <p>提供AI交互会话实体 ChatConversationRecordDo 的数据库操作接口，
- * 继承自 IBaseMapper，支持基础的CRUD及关联查询操作。</p>
+ * <p>
+ * 提供AI交互会话实体 ChatConversationRecordDo 的数据库操作接口，
+ * 基础 CRUD 及关联查询能力继承自 IBaseMapper。
+ * </p>
+ *
+ * @author maozi
  */
 public interface ChatConversationRecordMapper extends IBaseMapper<ChatConversationRecordDo>{}

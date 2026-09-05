@@ -23,9 +23,9 @@ import com.maozi.system.user.domain.UserDo;
 /**
  * 用户Mapper接口
  * <p>
- * 用户模块的数据访问层接口，继承自 IBaseMapper<UserDo>，
- * 提供用户表（system_user）的CRUD数据库操作能力。
- * 基于MyBatis-Plus框架，通过继承自动获得基础的增删改查方法。
+ * 对应表 system_user，提供用户记录的增删改查等数据库操作。
  * </p>
+ *
+ * @author maozi
  */
 public interface UserMapper extends IBaseMapper<UserDo>{}

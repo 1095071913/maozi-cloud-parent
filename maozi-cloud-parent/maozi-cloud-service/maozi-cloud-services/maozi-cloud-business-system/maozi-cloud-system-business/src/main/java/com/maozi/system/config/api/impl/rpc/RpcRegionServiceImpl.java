@@ -14,6 +14,8 @@ import com.maozi.system.config.api.rpc.RpcRegionService;
  * 基于 Apache Dubbo 协议提供远程过程调用（RPC）服务，
  * 供其他微服务通过 RPC 方式调用地区相关的接口。
  * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcRegionServiceImpl extends RegionServiceImpl implements RpcRegionService {

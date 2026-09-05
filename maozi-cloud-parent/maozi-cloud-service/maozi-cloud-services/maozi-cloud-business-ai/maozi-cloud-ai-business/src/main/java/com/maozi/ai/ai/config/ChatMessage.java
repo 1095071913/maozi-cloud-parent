@@ -40,7 +40,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatMessage implements Serializable {
-
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -74,9 +74,19 @@ public class ChatMessage implements Serializable {
      * 需解析 JSON 后通过 Builder 手动构建。data 字段兼容两种形态：
      * byte[]（序列化为整型数组）与 URI（序列化为字符串）。
      * </p>
+     *
+     * @author maozi
      */
     public static class MediaDeserializer extends JsonDeserializer<Media> {
 
+        /**
+         * 从 JSON 节点还原 Media 对象
+         *
+         * @param parser  JSON 解析器，指向当前 Media 节点
+         * @param context 反序列化上下文，当前未使用
+         * @return 还原后的 Media 对象
+         * @throws IOException 读取 JSON 树失败时抛出
+         */
         @Override
         public Media deserialize(JsonParser parser, DeserializationContext context) throws IOException {
 
@@ -126,9 +136,19 @@ public class ChatMessage implements Serializable {
      * data 为 byte[] 时输出整型数组（与 hutool 序列化格式一致，而非 Jackson 默认的 base64 字符串），
      * 为 URI 时输出字符串，保证序列化与反序列化可无损往返。
      * </p>
+     *
+     * @author maozi
      */
     public static class MediaSerializer extends JsonSerializer<Media> {
 
+        /**
+         * 将 Media 对象写入约定的 JSON 结构
+         *
+         * @param media     待序列化的媒体对象
+         * @param generator JSON 生成器
+         * @param provider  序列化提供器，当前未使用
+         * @throws IOException 写入 JSON 失败时抛出
+         */
         @Override
         public void serialize(Media media, JsonGenerator generator, SerializerProvider provider) throws IOException {
 

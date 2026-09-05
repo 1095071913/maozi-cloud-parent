@@ -16,11 +16,12 @@ import java.util.Map;
  * 用于OAuth客户端列表页面展示的视图对象，包含客户端的基本信息，
  * 如ID、客户端ID、名称、令牌有效期和状态等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class ClientListResult implements Serializable {
-	
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

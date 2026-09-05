@@ -23,25 +23,15 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import java.util.UUID;
 
 /**
- * Spring Boot Admin 监控仪表盘安全配置。
+ * Spring Boot Admin 监控仪表盘安全配置
  * <p>
- * 采用 Spring Security 6.x 组件化方式（SecurityFilterChain Bean）启用基于表单登录的安全认证，主要功能：
- * - 静态资源、健康检查、登录页面允许匿名访问；
- * - 其他请求需要认证；
- * - 表单登录（登录页面、成功处理器）；
- * - HTTP Basic 认证；
- * - CSRF 保护（使用 Cookie 存储，并对部分接口忽略）；
- * - Remember-Me 记住我功能（有效期 14 天）；
- * - 内存中的用户认证（使用 Spring Security 配置的用户名密码）。
+ * 启用基于表单登录的认证：静态资源、健康检查与登录页匿名可访问，其余请求需认证；
+ * 同时提供 HTTP Basic、CSRF 保护（Cookie 存储 + SPA 明文 token 适配）、
+ * Remember-Me（有效期 14 天）与内存用户认证。
+ * 登录用户名密码来自 {@link SecurityProperties}（spring.security.user.* 配置项）。
  * </p>
- * <p>
- * 登录用户名密码通过 Spring Security 的 {@link SecurityProperties} 注入，
- * 可在 Nacos 共享配置 boot-monitor.yml 中通过以下属性配置：
- * <pre>
- * spring.security.user.name=xxx
- * spring.security.user.password=xxx
- * </pre>
- * </p>
+ *
+ * @author maozi
  */
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
@@ -66,6 +56,10 @@ public class SecuritySecureConfig {
 
 	/**
 	 * 安全过滤链：配置认证授权、表单登录、CSRF、Remember-Me 等。
+	 *
+	 * @param http HttpSecurity对象，用于构建监控台的安全过滤器链
+	 * @return 配置完成的监控台安全过滤器链
+	 * @throws Exception 配置过程中可能抛出的异常
 	 */
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -136,6 +130,8 @@ public class SecuritySecureConfig {
 	 * 密码使用 {noop} 前缀，表示明文存储（不经过 PasswordEncoder 加密），
 	 * 由 Spring Security 的 DelegatingPasswordEncoder 识别。
 	 * </p>
+	 *
+	 * @return 基于配置用户的内存 UserDetailsService
 	 */
 	@Bean
 	public UserDetailsService userDetailsService() {

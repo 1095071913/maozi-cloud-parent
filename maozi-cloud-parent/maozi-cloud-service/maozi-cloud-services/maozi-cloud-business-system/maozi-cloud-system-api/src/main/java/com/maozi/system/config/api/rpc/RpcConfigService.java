@@ -8,6 +8,8 @@ import com.maozi.common.result.AbstractBaseResult;
  * 定义全局配置相关的 RPC 远程调用方法，
  * 供其他微服务通过 RPC 方式获取系统全局配置。
  * </p>
+ *
+ * @author maozi
  */
 public interface RpcConfigService {
 

@@ -75,7 +75,12 @@ public class ReadOnlyMultipartFormDataEndpointConverter extends MappingJackson2H
         return super.canRead(type, contextClass, mediaType);
     }
 
-    /** 此转换器仅用于请求读取，不支持写入响应 */
+    /**
+     * 此转换器仅用于请求读取，不支持写入响应
+     *
+     * @param mediaType 媒体类型
+     * @return 恒为 false，不支持写入
+     */
     @Override
     protected boolean canWrite(MediaType mediaType) {
         return false;

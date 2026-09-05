@@ -47,6 +47,8 @@
       <module>maozi-cloud-config-openapi</module>
       <!-- 分布式锁配置模块 -->
       <module>maozi-cloud-config-lock</module>
+      <!-- SnailJob 任务调度与重试配置模块 -->
+      <module>maozi-cloud-config-snailjob</module>
     </modules>
 
 </project>

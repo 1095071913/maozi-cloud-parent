@@ -21,11 +21,12 @@ import java.util.Map;
  * 支持按配置类型精确查询、按配置名称与配置别名模糊查询，
  * 并实现了排序参数接口以支持自定义排序，默认按排序值升序、创建时间倒序排列。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 public class ConfigListParam implements OrderParam, Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

@@ -25,7 +25,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatResult implements Serializable {
-
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

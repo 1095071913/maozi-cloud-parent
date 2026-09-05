@@ -191,6 +191,29 @@ services:
       maozi-cloud-basic-mysql:
         condition: service_healthy
 
+  # SnailJob —— 分布式任务重试与调度平台
+  # 部署文档: https://snailjob.opensnail.com/docs/guide/server/service_deployment.html
+  # Web 控制台: http://localhost:8800/snail-job (默认账号 admin/admin)
+  maozi-cloud-basic-snailjob:
+    restart: always
+    image: opensnail/snail-job:1.10.0
+    container_name: maozi-cloud-basic-snailjob
+    environment:
+      TZ: Asia/Shanghai
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_URL: jdbc:mysql://maozi-cloud-basic-mysql:3306/maozi-cloud-snailjob-middleware-db?useSSL=false&characterEncoding=utf8&useUnicode=true&serverTimezone=Asia/Shanghai
+      # 屏蔽 Fory 序列化框架（SnailJob 底层依赖）的任务分发冗余日志：类注册告警/实例创建/序列化代码生成/白名单提示
+      # relaxed binding: LOGGING_LEVEL_ORG_APACHE_FORY -> logging.level.org.apache.fory
+      LOGGING_LEVEL_ORG_APACHE_FORY: ERROR
+    ports:
+      - 8800:8080     # Web 控制台
+      - 17888:17888   # Netty 通信端口, 客户端(执行器)需能访问
+    depends_on:
+      maozi-cloud-basic-mysql:
+        condition: service_healthy
+
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建
 networks:

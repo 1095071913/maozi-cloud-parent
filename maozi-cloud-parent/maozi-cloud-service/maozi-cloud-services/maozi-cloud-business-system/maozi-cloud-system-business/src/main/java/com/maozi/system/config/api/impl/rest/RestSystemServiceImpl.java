@@ -15,6 +15,8 @@ import com.maozi.system.config.result.SystemPropertiesResult;
  * 提供 RESTful 风格的系统配置信息查询接口，
  * 将系统属性配置转换为 SystemPropertiesResult 结果对象返回给前端使用。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestSystemServiceImpl extends SystemServiceImpl implements RestSystemService {

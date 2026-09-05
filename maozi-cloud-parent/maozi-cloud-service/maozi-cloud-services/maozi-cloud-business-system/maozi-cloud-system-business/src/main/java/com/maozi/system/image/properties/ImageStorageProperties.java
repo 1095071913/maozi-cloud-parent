@@ -15,13 +15,14 @@ import java.io.Serializable;
  * store-type 决定图片上传路由到的存储处理器，
  * aliyun 为阿里云 OSS 处理器所需的连接配置。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @Configuration
 @ConfigurationProperties("oss")
 public class ImageStorageProperties implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 
@@ -36,11 +37,12 @@ public class ImageStorageProperties implements Serializable {
 	 * <p>
 	 * 包含访问凭证、地域、访问域名、存储空间等连接 OSS 所需的配置。
 	 * </p>
+	 *
+	 * @author maozi
 	 */
 	@Data
 	public static class Aliyun implements Serializable {
-
-		/** 序列化版本号 */
+		/** 序列化标识 */
 		@Serial
 		private static final long serialVersionUID = 1L;
 

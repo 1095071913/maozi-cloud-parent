@@ -35,6 +35,7 @@ public class FluxReturnWrapAop {
 	 *
 	 * @param proceedingJoinPoint AOP 连接点
 	 * @return Flux 包装后的方法执行结果
+	 * @throws Throwable 目标方法执行失败时抛出
 	 */
 	@Around(POINT)
 	public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {

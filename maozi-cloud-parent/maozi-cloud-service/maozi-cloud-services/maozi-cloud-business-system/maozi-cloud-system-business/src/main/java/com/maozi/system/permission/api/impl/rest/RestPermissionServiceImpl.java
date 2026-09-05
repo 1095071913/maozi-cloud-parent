@@ -20,6 +20,8 @@ import java.util.List;
  * 权限REST服务实现类
  * <p>提供权限管理的RESTful接口实现，包括权限列表查询、
  * 权限新增、权限详情查询、权限更新、权限删除以及下拉列表等功能。</p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestPermissionServiceImpl extends PermissionServiceImpl implements RestPermissionService {

@@ -23,6 +23,8 @@ package com.maozi;
  * 继承自 BaseApplicationDB，作为系统服务模块的入口类，
  * 负责初始化并启动 Spring Boot 应用程序。
  * </p>
+ *
+ * @author maozi
  */
 public class Application extends BaseApplicationDB {
 

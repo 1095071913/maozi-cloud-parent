@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
  * 用户角色关系服务实现类
  * <p>实现用户与角色绑定关系的管理逻辑，包括绑定关系校验、
  * 批量绑定/解绑、根据用户或角色查询关联关系以及用户解绑等功能。</p>
+ *
+ * @author maozi
  */
 @Service
 public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper,UserRoleDo,Void> implements UserRoleService {

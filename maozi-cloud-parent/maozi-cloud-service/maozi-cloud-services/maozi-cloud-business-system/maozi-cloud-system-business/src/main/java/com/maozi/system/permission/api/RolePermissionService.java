@@ -26,6 +26,8 @@ import java.util.Set;
  * 角色权限关系服务接口
  * <p>提供角色与权限绑定关系的管理功能，包括绑定关系校验、
  * 绑定/解绑操作以及根据角色查询权限等功能。</p>
+ *
+ * @author maozi
  */
 public interface RolePermissionService {
 

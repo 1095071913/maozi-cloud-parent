@@ -20,13 +20,14 @@ import java.util.List;
  * 通过 {@link ImageFile} 注解校验每个上传文件必须为图片格式，
  * 保存路径必填，作为对象存储的目录前缀。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageUploadParam implements Serializable {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

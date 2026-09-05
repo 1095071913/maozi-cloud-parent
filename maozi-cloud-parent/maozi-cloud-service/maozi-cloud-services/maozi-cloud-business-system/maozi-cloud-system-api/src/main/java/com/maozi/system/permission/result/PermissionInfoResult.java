@@ -16,13 +16,14 @@ import java.io.Serializable;
  * 用于展示权限的详细信息，包括层级关系、基本信息、
  * 路由配置、服务地址、权限类型及排序等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

@@ -20,6 +20,8 @@ import org.springframework.util.Assert;
  * 在令牌成功撤销后，从授权服务中物理删除匹配的授权记录，
  * 确保令牌被彻底清除而不仅仅是标记为失效。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public final class TokenRevocationAuthenticationProvider implements AuthenticationProvider {

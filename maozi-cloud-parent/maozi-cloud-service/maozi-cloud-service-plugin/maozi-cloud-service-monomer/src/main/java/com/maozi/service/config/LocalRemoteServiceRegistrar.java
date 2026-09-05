@@ -68,7 +68,6 @@ public class LocalRemoteServiceRegistrar implements BeanDefinitionRegistryPostPr
 	 */
 	@Override
 	public void postProcessBeanFactory(@Nonnull ConfigurableListableBeanFactory beanFactory) {
-		// 无需处理
 	}
 
 }

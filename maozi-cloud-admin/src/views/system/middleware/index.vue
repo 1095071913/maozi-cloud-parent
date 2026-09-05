@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { Link as LinkIcon, Promotion, Refresh } from '@element-plus/icons-vue'
+import { Md5 } from 'ts-md5'
 import { getConfigDropDownList } from '@/api/config'
 import type { ConfigOptionItem } from '@/types/api'
 
@@ -69,8 +70,11 @@ interface LoginStrategy {
    * sameOrigin：经后台同源代理加载，登录态写入方式见 auth
    */
   mode: 'form' | 'sameOrigin'
-  /** sameOrigin 模式登录态写入方式：cookie=表单登录响应 Set-Cookie；token=登录响应写 localStorage */
-  auth?: 'cookie' | 'token'
+  /** sameOrigin 模式登录态写入方式：cookie=表单登录响应 Set-Cookie；token=登录响应写 localStorage；
+   *  snailjob=按 Snail-Job 约定将 token 与默认命名空间写 localStorage */
+  auth?: 'cookie' | 'token' | 'snailjob'
+  /** 密码提交前做 md5 哈希（Snail-Job 登录页即以 md5 后的值提交，服务端存哈希比对） */
+  hash?: 'md5'
   /** 登录体编码：form=表单（默认）；json=JSON 体（如 Grafana，表单格式会被其拒绝返回 400） */
   bodyType?: 'form' | 'json'
   /** 为 true 时先 GET 登录页取 XSRF-TOKEN Cookie，再随表单提交 _csrf（Spring Security 表单登录，如 SBA）。
@@ -101,12 +105,26 @@ const XXL_JOB_STRATEGY: LoginStrategy = {
   fields: { username: 'userName', password: 'password' }
 }
 
+/** Snail-Job 策略：官方前端生产构建即挂载于 /snail-job 子路径（hash 路由），经同源代理加载；
+ *  密码 md5 后 JSON 提交 /auth/login，成功将 token 与默认命名空间写入 localStorage
+ *  （与官方前端 localStg 的 JSON 序列化格式一致），控制台读取后即登录 */
+const SNAIL_JOB_STRATEGY: LoginStrategy = {
+  mode: 'sameOrigin',
+  auth: 'snailjob',
+  bodyType: 'json',
+  hash: 'md5',
+  proxyPath: '/snail-job/',
+  action: (base) => `${base}auth/login`,
+  fields: { username: 'username', password: 'password' }
+}
+
 /**
  * 各中间件登录策略（key 为 value.type 归一化结果，未配置 type 时用配置名称），未命中的走默认策略：
  * - grafana：经 /grafana 同源代理（容器已按子路径提供服务），表单登录后 Cookie 为第一方，自动登录稳定生效
  * - nacos：经 /nacos 同源代理，登录响应按其约定写入 localStorage.token，控制台读取后即登录
  * - springbootadmin：直连监控台地址，取 CSRF 后提交表单登录（同域 Cookie 共享生效）
  * - xxljob：直连调度中心，AJAX 表单登录（userName 字段），令牌 Cookie 同域共享生效
+ * - snailjob：经 /snail-job 同源代理，md5 密码 JSON 登录，token + 默认命名空间写 localStorage 生效
  */
 const LOGIN_STRATEGIES: Record<string, LoginStrategy> = {
   grafana: {
@@ -129,7 +147,9 @@ const LOGIN_STRATEGIES: Record<string, LoginStrategy> = {
   sba: SPRING_BOOT_ADMIN_STRATEGY,
   monitor: SPRING_BOOT_ADMIN_STRATEGY,
   // XXL-Job（xxl-job / xxl_job / XXL-Job 等命名归一化后均命中）
-  xxljob: XXL_JOB_STRATEGY
+  xxljob: XXL_JOB_STRATEGY,
+  // Snail-Job（Snail-Job / snail_job / SnailJob 等命名归一化后均命中）
+  snailjob: SNAIL_JOB_STRATEGY
 }
 
 const DEFAULT_STRATEGY: LoginStrategy = {
@@ -162,7 +182,7 @@ function buildLoginBody(mw: MiddlewareItem, strategy: LoginStrategy): string {
     pairs[strategy.fields.username] = mw.username
   }
   if (strategy.fields.password && mw.password) {
-    pairs[strategy.fields.password] = mw.password
+    pairs[strategy.fields.password] = strategy.hash === 'md5' ? Md5.hashStr(mw.password) : mw.password
   }
   if (!Object.keys(pairs).length) return ''
   return strategy.bodyType === 'json'
@@ -239,10 +259,11 @@ async function performLogin(mw: MiddlewareItem, strategy: LoginStrategy) {
 }
 
 /**
- * sameOrigin 模式（Grafana / Nacos）：
+ * sameOrigin 模式（Grafana / Nacos / Snail-Job）：
  * 登录接口经同源代理，第一方上下文无跨站 Cookie 限制——
  * cookie 型（Grafana）：响应 Set-Cookie 直接生效，加载控制台即登录；
- * token 型（Nacos）：登录响应按其约定写入 localStorage.token，控制台读取后即登录。
+ * token 型（Nacos）：登录响应按其约定写入 localStorage.token，控制台读取后即登录；
+ * snailjob 型（Snail-Job）：登录响应的 token 与默认命名空间按官方前端约定写入 localStorage。
  * 接口失败不阻塞，退回控制台自身登录页
  */
 async function performSameOriginLogin(mw: MiddlewareItem, strategy: LoginStrategy) {
@@ -281,6 +302,21 @@ async function performSameOriginLogin(mw: MiddlewareItem, strategy: LoginStrateg
       })
       if (res.ok && strategy.auth === 'token') {
         localStorage.setItem('token', JSON.stringify(await res.json()))
+      }
+      if (res.ok && strategy.auth === 'snailjob') {
+        // Snail-Job 登录响应：{ status, data: { token, id, namespaceIds: [{ uniqueId }] } }（status=1 成功）。
+        //  按官方前端约定写 localStorage（JSON 序列化），控制台加载时读取 token 即视为已登录
+        const data = (await res.json())?.data
+        if (data?.token) {
+          localStorage.setItem('token', JSON.stringify(data.token))
+          const ns = data.namespaceIds?.[0]?.uniqueId
+          if (ns) {
+            localStorage.setItem('namespaceId', JSON.stringify(ns))
+            if (data.id) {
+              localStorage.setItem('userNamespace', JSON.stringify({ [data.id]: ns }))
+            }
+          }
+        }
       }
     } catch {
       // 网络异常不阻塞，继续加载控制台
@@ -465,11 +501,12 @@ onMounted(loadList)
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  color: #fff;
+  color: #6366f1;
   font-size: 20px;
   font-weight: 600;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+  background: var(--el-fill-color-dark);
+  border: 1px solid var(--el-border-color-light);
+  box-shadow: none;
 
   img {
     width: 28px;

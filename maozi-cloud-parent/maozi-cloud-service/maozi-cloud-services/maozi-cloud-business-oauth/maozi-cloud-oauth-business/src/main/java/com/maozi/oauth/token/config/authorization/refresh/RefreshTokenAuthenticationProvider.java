@@ -28,9 +28,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 自定义刷新Token认证提供者，包装默认的 {@link OAuth2RefreshTokenAuthenticationProvider}，
- * 在刷新Token后将用户权限与附加属性（如用户ID）写入新AccessToken的claims metadata中，
+ * 自定义刷新Token认证提供者
+ * <p>
+ * 包装默认的 {@link OAuth2RefreshTokenAuthenticationProvider}，在刷新Token后
+ * 将用户权限与附加属性（如用户ID）写入新AccessToken的claims metadata中，
  * 确保刷新后的Token通过introspection端点能正确返回权限信息。
+ * </p>
+ *
+ * @author maozi
  */
 @Slf4j
 @Component
@@ -83,6 +88,8 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
 
 	/**
 	 * 将用户权限与附加属性写入新AccessToken的claims metadata，与密码模式保持一致
+	 *
+	 * @param accessToken 刷新后新生成的访问令牌
 	 */
 	private void enrichAuthorizationWithAuthorities(OAuth2AccessToken accessToken) {
 		OAuth2Authorization authorization = authorizationService.findByToken(

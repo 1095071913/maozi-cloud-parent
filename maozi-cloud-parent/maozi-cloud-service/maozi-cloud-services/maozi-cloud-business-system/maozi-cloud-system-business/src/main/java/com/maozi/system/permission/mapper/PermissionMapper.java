@@ -22,7 +22,8 @@ import com.maozi.system.permission.domain.PermissionDo;
 
 /**
  * 权限Mapper接口
- * <p>提供权限实体 PermissionDo 的数据库操作接口，
- * 继承自 IBaseMapper，支持基础的CRUD操作。</p>
+ * <p>对应表 system_permission，提供权限记录的增删改查等数据库操作。</p>
+ *
+ * @author maozi
  */
 public interface PermissionMapper extends IBaseMapper<PermissionDo>{}

@@ -14,6 +14,8 @@ import java.util.List;
  * 继承自Spring Authorization Server的JdbcRegisteredClientRepository，
  * 扩展了查询逻辑，在查找客户端时增加了状态过滤条件，只查询启用状态的客户端。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class JdbcRegisteredClientRepository extends org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository {

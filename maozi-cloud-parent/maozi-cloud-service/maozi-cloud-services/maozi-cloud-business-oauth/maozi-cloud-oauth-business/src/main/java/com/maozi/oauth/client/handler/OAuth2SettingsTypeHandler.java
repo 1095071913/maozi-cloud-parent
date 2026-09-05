@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
  * 正确处理数据库中 token_settings / client_settings 的类型感知 JSON 格式
  * （如 ["java.time.Duration", 7200.000000000]、{"@class":"...OAuth2TokenFormat","value":"reference"} 等）。
  * </p>
+ *
+ * @author maozi
  */
 @Slf4j
 public class OAuth2SettingsTypeHandler extends JacksonTypeHandler {
@@ -52,6 +54,7 @@ public class OAuth2SettingsTypeHandler extends JacksonTypeHandler {
      *
      * @param json 数据库中存储的JSON字符串
      * @return 反序列化后的设置对象（Map类型）
+     * @throws RuntimeException JSON解析失败时抛出
      */
     @Override
     public Object parse(String json) {
@@ -73,6 +76,7 @@ public class OAuth2SettingsTypeHandler extends JacksonTypeHandler {
      *
      * @param obj 待序列化的设置对象
      * @return 序列化后的JSON字符串
+     * @throws RuntimeException JSON序列化失败时抛出
      */
     @Override
     public String toJson(Object obj) {

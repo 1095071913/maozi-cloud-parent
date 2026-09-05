@@ -283,6 +283,7 @@ public class RedisChatMemoryRepository implements ChatMemoryRepository {
      *
      * @param json 消息 JSON
      * @return 消息对象
+     * @throws RuntimeException 消息数据非法（反序列化为空或消息类型缺失、无法识别）时抛出
      */
     public Message jsonToMessage(String json){
 

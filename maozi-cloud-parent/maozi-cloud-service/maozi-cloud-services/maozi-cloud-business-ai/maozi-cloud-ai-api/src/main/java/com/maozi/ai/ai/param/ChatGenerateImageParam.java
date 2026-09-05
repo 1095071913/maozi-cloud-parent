@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ChatGenerateImageParam extends ChatParam implements Serializable {
-
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

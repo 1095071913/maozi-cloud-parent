@@ -15,6 +15,8 @@ import org.springframework.util.StringUtils;
  * 将HTTP请求中的密码模式（password grant type）参数转换为PasswordAuthenticationToken。
  * 负责校验请求中的用户名和密码参数是否为空。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

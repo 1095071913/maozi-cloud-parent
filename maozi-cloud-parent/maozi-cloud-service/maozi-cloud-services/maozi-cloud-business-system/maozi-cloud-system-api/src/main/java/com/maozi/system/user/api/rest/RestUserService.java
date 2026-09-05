@@ -42,6 +42,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * 包括用户分页列表查询、用户新增、用户详情查询、用户删除、
  * 用户信息更新、用户状态更新以及当前登录用户个人信息查询等操作。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "用户模块")
 public interface RestUserService {

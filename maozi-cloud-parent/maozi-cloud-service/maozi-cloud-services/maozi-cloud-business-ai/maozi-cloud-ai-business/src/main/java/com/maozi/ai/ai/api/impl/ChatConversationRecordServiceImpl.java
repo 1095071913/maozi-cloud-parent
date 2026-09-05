@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.maozi.ai.ai.api.ChatConversationRecordService;
 import com.maozi.ai.ai.domain.ChatConversationRecordDo;
 import com.maozi.ai.ai.mapper.ChatConversationRecordMapper;
+import com.maozi.common.result.error.exception.BusinessResultException;
 import com.maozi.service.api.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
  * <p>实现AI交互会话相关的业务逻辑，提供会话存在性校验能力；
  * 会话的保存/更新与分页列表查询由 REST 层实现类
  * RestChatConversationRecordImpl 提供并复用本类的通用数据访问能力。</p>
+ *
+ * @author maozi
  */
 @Service
 public class ChatConversationRecordServiceImpl extends BaseServiceImpl<ChatConversationRecordMapper, ChatConversationRecordDo,Void> implements ChatConversationRecordService {
@@ -38,6 +41,7 @@ public class ChatConversationRecordServiceImpl extends BaseServiceImpl<ChatConve
 	 * </p>
 	 *
 	 * @param conversationId 会话 ID
+	 * @throws BusinessResultException 会话不存在时抛出
 	 */
 	@Override
 	public void has(Long conversationId) {

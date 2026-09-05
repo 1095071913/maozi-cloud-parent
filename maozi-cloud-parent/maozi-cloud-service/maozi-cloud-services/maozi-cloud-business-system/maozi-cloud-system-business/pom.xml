@@ -23,6 +23,12 @@
             <version>0.5.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.maozi</groupId>
+            <artifactId>maozi-cloud-config-snailjob</artifactId>
+            <version>${maozi-cloud-config-snailjob.version}</version>
+        </dependency>
+
         <!-- 数据库实现插件，提供 MyBatis-Plus、数据源等数据库访问能力 -->
         <dependency>
             <groupId>com.maozi</groupId>

@@ -29,6 +29,8 @@ public class JobProperties {
 
     /**
      * 调度中心配置
+     *
+     * @author maozi
      */
     @Data
     public static class Admin {
@@ -40,6 +42,8 @@ public class JobProperties {
 
     /**
      * 执行器配置
+     *
+     * @author maozi
      */
     @Data
     public static class Executor {

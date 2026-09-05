@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @since 2026/8/23 19:07
  */
 public class ChatMessageConstant implements Serializable {
-
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

@@ -16,13 +16,14 @@ import java.util.List;
  * 用于展示当前登录用户的个人信息，包括用户名称、头像
  * 以及该用户拥有的权限标识列表。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserIndividualInfoResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
 	@Serial
     private static final long serialVersionUID = 1L;
 

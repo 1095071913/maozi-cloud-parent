@@ -38,6 +38,12 @@ export default defineConfig({
       '/grafana': {
         target: 'http://localhost:3300',
         changeOrigin: true
+      },
+      // Snail-Job 控制台走同源代理：官方前端生产构建即以 /snail-job 子路径提供服务（hash 路由），
+      // 自动登录需向其同源 localStorage 写入 token（生产部署需在网关/Nginx 配置等效转发，端口按实际调整）
+      '/snail-job': {
+        target: 'http://localhost:8800',
+        changeOrigin: true
       }
     }
   }

@@ -32,7 +32,11 @@ public class FilterSampler implements Sampler {
     /** 需要直接丢弃的 Span 名称列表（如 Nacos 心跳） */
     private final List<String> EXCLUDED_TARGETS = List.of("NacosDiscoveryHeartBeatPublisher$$Lambda.run");
 
-    /** 返回采样器名称，与 SPI 提供者注册名一致 */
+    /**
+     * 返回采样器名称，与 SPI 提供者注册名一致
+     *
+     * @return 采样器注册名称
+     */
     @Override
     public String getDescription() {
         return FilterSamplerProvider.PROVIDER_NAME;
@@ -80,8 +84,6 @@ public class FilterSampler implements Sampler {
 
                 }
             }
-
-//            System.err.println("name：" + name + "  ,attributes：" + attributes.asMap());
 
             // 未命中任何过滤规则，放行采样
             return SamplingResult.create(SamplingDecision.RECORD_AND_SAMPLE);

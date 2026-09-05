@@ -21,7 +21,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class SystemUser implements Serializable {
 
-    /** 序列化版本 ID */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

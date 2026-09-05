@@ -21,6 +21,8 @@ import java.util.List;
  * 继承自 BaseServiceImpl，提供全局配置（Config）相关的基础业务操作实现。
  * 基于 MyBatis-Plus 的 Mapper 层实现数据库访问操作。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class ConfigServiceImpl extends BaseServiceImpl<ConfigMapper,ConfigDo,Void> implements ConfigService {

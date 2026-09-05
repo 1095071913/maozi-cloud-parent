@@ -41,6 +41,8 @@ import java.util.Set;
  * 包括客户端标识、密钥、授权方式、授权范围、重定向地址、客户端设置和令牌设置等。
  * 继承 AbstractBaseDomain 获得公共字段（如id、状态、创建时间等）。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
@@ -49,8 +51,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "oauth2_registered_client",autoResultMap = true)
 public class ClientDo extends AbstractBaseDomain {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

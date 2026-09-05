@@ -18,6 +18,8 @@ import java.util.List;
  * 上传的图片根据配置路由到对应的存储处理器
  * （当前支持阿里云 OSS，通过 oss.store-type 配置）。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "图片模块")
 public interface RestImageService {

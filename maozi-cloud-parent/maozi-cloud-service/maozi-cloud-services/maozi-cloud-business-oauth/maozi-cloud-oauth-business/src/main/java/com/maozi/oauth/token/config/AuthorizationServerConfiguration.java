@@ -64,6 +64,8 @@ import java.util.Arrays;
  * 各种认证模式（密码模式、刷新令牌模式等）、令牌端点处理器、
  * 密码编码器以及授权确认服务等。
  * </p>
+ *
+ * @author maozi
  */
 @Configuration
 public class AuthorizationServerConfiguration {

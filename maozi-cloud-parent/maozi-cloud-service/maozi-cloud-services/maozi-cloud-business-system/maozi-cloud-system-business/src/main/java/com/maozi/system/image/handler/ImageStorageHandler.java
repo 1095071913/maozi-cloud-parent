@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
  * 提供一个实现类，由配置项 oss.store-type
  * 决定上传请求实际路由到的处理器。
  * </p>
+ *
+ * @author maozi
  */
 public interface ImageStorageHandler {
 

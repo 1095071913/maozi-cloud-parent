@@ -41,6 +41,8 @@ import java.util.Map;
  * 实现Spring Security的UserDetailsService接口，通过Dubbo RPC远程调用用户服务
  * 获取用户的权限列表和密码信息，构建并返回Spring Security的UserDetails对象。
  * </p>
+ *
+ * @author maozi
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -28,9 +28,7 @@ public class RequestParam<D> implements Serializable {
 	@Serial
     private static final long serialVersionUID = 1L;
 
-	/**
-	 * 业务数据
-	 */
+	/** 业务数据 */
 	@Valid
 	@Schema(description = "数据")
 	private D data;

@@ -18,6 +18,8 @@ import java.util.List;
  * 继承自 RegionServiceImpl，实现 RestRegionService 接口，
  * 提供 RESTful 风格的地区查询接口，主要用于前端下拉列表数据获取。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestRegionServiceImpl extends RegionServiceImpl implements RestRegionService {

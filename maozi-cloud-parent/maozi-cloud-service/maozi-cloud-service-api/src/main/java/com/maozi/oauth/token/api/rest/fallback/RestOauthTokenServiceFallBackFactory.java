@@ -48,7 +48,12 @@ public class RestOauthTokenServiceFallBackFactory implements FallbackFactory<Res
 
 		return new RestOauthTokenService() {
 
-			/** 降级处理：直接返回解析出的服务端错误结果 */
+			/**
+			 * 降级处理：直接返回解析出的服务端错误结果
+			 *
+			 * @param token 令牌字符串
+			 * @return 服务端返回的错误结果
+			 */
 			@Override
 			public AbstractBaseResult<Map<String,Object>> restIntrospect(String token) {
 				return result;

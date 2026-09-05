@@ -12,6 +12,8 @@ import java.util.List;
  * 扩展了按用户主体注销授权的能力，支持根据已注册客户端ID和用户主体名称移除授权记录，
  * 同时提供批量注销以减少Redis网络往返。
  * </p>
+ *
+ * @author maozi
  */
 public interface OAuth2AuthorizationService extends org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService {
 

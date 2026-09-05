@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * 主要用于获取系统属性配置信息，包含项目名称、公司名称、图标、
  * 运行环境、项目描述与版权信息等。
  * </p>
+ *
+ * @author maozi
  */
 @Tag(name = "系统模块")
 public interface RestSystemService {

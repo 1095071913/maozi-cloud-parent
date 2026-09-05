@@ -18,6 +18,8 @@ import java.util.List;
  * 提供图片上传的 RESTful API 接口实现，
  * 上传请求根据配置路由到对应的存储处理器处理。
  * </p>
+ *
+ * @author maozi
  */
 @RestService
 public class RestImageServiceImpl extends ImageServiceImpl implements RestImageService {

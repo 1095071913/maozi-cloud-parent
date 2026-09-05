@@ -21,23 +21,11 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * {@link RemoteResource} 字段注入处理器（微服务模式）。
  * <p>
- * {@link RemoteResource} 是纯标记注解（仅组合了 jakarta {@code @Resource}，
- * 未标注 {@code @DubboReference}），且无法借助 {@code @DubboReference} 元注解方式注入：
- * Dubbo 3.x 的 {@code ReferenceAnnotationBeanPostProcessor} 通过反射查找
- * {@code AnnotatedElementUtils.getMergedAnnotation(AnnotatedElement, Class, boolean, boolean)}
- * 来解析组合注解上的 {@code @DubboReference} 元注解，但 Spring 仅提供 2 参数重载，
- * 该方法签名不存在，反射查找返回 null——即使把 {@code @DubboReference} 作为元注解
- * 贴在 {@link RemoteResource} 上也无法被识别，注入字段将保持为 null。
- * </p>
- * <p>
- * 本处理器直接扫描 {@link RemoteResource} 标注的字段，通过 Dubbo 编程式 API
- * （{@link ReferenceConfig} + {@link DubboBootstrap}）创建远程引用代理：
- * <ul>
- *   <li>按字段名注册为 Spring 单例，使 {@code SpringUtil.getBean(字段名)} 等按名查找可用
- *       （如 {@code BaseServiceImpl} 的关联数据解析机制 {@code @QueryMapping(serviceName=...)}）</li>
- *   <li>反射写入目标字段</li>
- * </ul>
- * 引用代理按接口类型缓存，避免同一接口重复创建。
+ * {@link RemoteResource} 是纯标记注解，无法借助 {@code @DubboReference} 元注解方式完成注入；
+ * 本处理器扫描其标注的字段，通过 Dubbo 编程式 API（{@link ReferenceConfig} + {@link DubboBootstrap}）
+ * 创建远程引用代理并反射写入（代理按接口类型缓存），同时按字段名将代理注册为 Spring 单例，
+ * 供 {@code SpringUtil.getBean(字段名)} 等按名查找使用（如 {@code BaseServiceImpl} 的
+ * {@code @QueryMapping(serviceName=...)} 关联数据解析机制）。
  * </p>
  *
  * @author pengjinlong
@@ -55,7 +43,11 @@ public class RemoteResourceBeanPostProcessor implements InstantiationAwareBeanPo
 	/** Spring Bean 工厂，用于按字段名注册引用代理单例 */
 	private ConfigurableListableBeanFactory beanFactory;
 
-	/** 保存 Bean 工厂供单例注册使用 */
+	/**
+	 * 保存 Bean 工厂供单例注册使用
+	 *
+	 * @param beanFactory Spring Bean 工厂
+	 */
 	@Override
 	public void setBeanFactory(@NotNull BeanFactory beanFactory) {
 		this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;

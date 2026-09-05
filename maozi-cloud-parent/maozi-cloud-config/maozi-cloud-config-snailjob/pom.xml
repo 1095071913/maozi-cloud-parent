@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 任务调度与重试配置模块，集成 SnailJob 分布式任务调度与重试框架 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承配置聚合父工程，统一管理依赖版本 -->
+	<parent>
+		<groupId>com.maozi</groupId>
+		<artifactId>maozi-cloud-config</artifactId>
+		<version>${revision}</version>
+	</parent>
+
+	<!-- 任务调度与重试配置模块构件名称 -->
+	<artifactId>maozi-cloud-config-snailjob</artifactId>
+
+
+	<dependencies>
+
+		<!-- 项目通用工具类库 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
+
+		<!-- 服务启动运行基础模块，提供 BaseApplication 启动基类（banner 统一过滤特征注册） -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-run</artifactId>
+			<version>${maozi-cloud-service-run.version}</version>
+		</dependency>
+
+		<!-- SnailJob 客户端启动器，提供自动装配与 @EnableSnailJob 注解支持 -->
+		<dependency>
+			<groupId>com.aizuda</groupId>
+			<artifactId>snail-job-client-starter</artifactId>
+			<version>${snail-job.version}</version>
+		</dependency>
+
+		<!-- SnailJob 重试模块，提供服务重试能力 -->
+		<dependency>
+			<groupId>com.aizuda</groupId>
+			<artifactId>snail-job-client-retry-core</artifactId>
+			<version>${snail-job.version}</version>
+		</dependency>
+
+		<!-- SnailJob 定时任务模块，提供分布式任务调度能力 -->
+		<dependency>
+			<groupId>com.aizuda</groupId>
+			<artifactId>snail-job-client-job-core</artifactId>
+			<version>${snail-job.version}</version>
+		</dependency>
+
+		<!-- Spring AOP 切面支持，用于任务执行的切面增强 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- Micrometer Tracing OTel 桥接，基于 OpenTelemetry 实现分布式链路追踪数据上报 -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+
+    </dependencies>
+
+
+
+</project>

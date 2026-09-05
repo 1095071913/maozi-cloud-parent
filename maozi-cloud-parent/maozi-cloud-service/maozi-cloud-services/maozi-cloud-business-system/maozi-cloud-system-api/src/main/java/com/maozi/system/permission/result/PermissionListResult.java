@@ -15,13 +15,14 @@ import java.io.Serializable;
  * 用于权限列表展示时的视图对象，包含权限的基本信息，
  * 如ID、上级ID、名称、图标、标识和类型等。
  * </p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionListResult implements Serializable {
-
-	/** 序列化版本号 */
+    /** 序列化标识 */
     @Serial
     private static final long serialVersionUID = 1L;
 

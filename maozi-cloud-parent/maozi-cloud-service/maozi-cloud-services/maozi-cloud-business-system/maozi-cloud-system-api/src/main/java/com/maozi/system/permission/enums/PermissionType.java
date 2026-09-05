@@ -10,6 +10,8 @@ import lombok.Getter;
  * 用于定义系统中权限的分类类型，包括目录、菜单和按钮三种类型。
  * 实现 BaseEnum 接口，提供枚举值和描述的标准访问方式。
  * </p>
+ *
+ * @author maozi
  */
 @Schema(description = "权限类型",type = "integer")
 public enum PermissionType implements BaseEnum {

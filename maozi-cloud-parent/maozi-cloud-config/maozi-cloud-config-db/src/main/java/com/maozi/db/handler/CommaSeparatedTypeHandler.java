@@ -16,21 +16,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 逗号分隔字符串 TypeHandler。
+ * 逗号分隔字符串与集合的双向转换 TypeHandler
  * <p>
- * 将数据库中以逗号分隔的字符串（如 "a,b,c"）与 Java 的 {@link Set}{@code <String>} 或 {@link List}{@code <String>} 双向转换。
- * 自动根据字段类型返回对应的集合实现：字段声明为 Set 则返回 {@link LinkedHashSet}，声明为 List 则返回 {@link ArrayList}。
+ * 将数据库中以逗号分隔的字符串（如 "a,b,c"）与 {@link Set}{@code <String>} 或 {@link List}{@code <String>} 互转，
+ * 按字段声明类型返回对应集合实现：声明为 Set 返回 {@link LinkedHashSet}，声明为 List 返回 {@link ArrayList}。
+ * 读取时去除元素首尾空格并过滤空元素。
  * </p>
- * <p>
- * 使用方式：
- * </p>
- * <pre>
- * &#64;TableField(typeHandler = CommaSeparatedTypeHandler.class)
- * private Set&lt;String&gt; tags;
- *
- * &#64;TableField(typeHandler = CommaSeparatedTypeHandler.class)
- * private List&lt;String&gt; names;
- * </pre>
  *
  * @author maozi
  */
@@ -140,7 +131,7 @@ public class CommaSeparatedTypeHandler extends BaseTypeHandler<Collection<String
     /**
      * 判断字段声明类型是否为 Set 类型
      *
-     * @return 如果字段类型是 Set 或其子类则返回 true，否则返回 false
+     * @return 字段类型可赋值给 Set 时返回 true
      */
     private boolean isSetType() {
         return declaredType != null && Set.class.isAssignableFrom(declaredType);

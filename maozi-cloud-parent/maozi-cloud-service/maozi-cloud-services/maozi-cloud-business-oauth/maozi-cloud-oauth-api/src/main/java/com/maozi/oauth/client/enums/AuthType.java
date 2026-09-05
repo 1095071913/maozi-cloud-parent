@@ -11,6 +11,8 @@ import lombok.Getter;
  * <p>
  * 定义OAuth2.0中支持的授权模式类型，包括授权码模式、客户端模式、刷新令牌模式和密码模式。
  * </p>
+ *
+ * @author maozi
  */
 public enum AuthType implements BaseEnum {
 

@@ -29,6 +29,8 @@ import java.io.Serial;
  * 权限实体类
  * <p>对应数据库表 system_permission，存储系统权限的详细信息，
  * 包括权限的层级结构、图标、标识、路由、类型等属性。</p>
+ *
+ * @author maozi
  */
 @Data
 @NoArgsConstructor
@@ -36,8 +38,7 @@ import java.io.Serial;
 @SuperBuilder(toBuilder = true)
 @TableName("system_permission")
 public class PermissionDo extends AbstractBaseNameDomain {
-
-	/** 序列化版本号 */
+	/** 序列化标识 */
 	@Serial
 	private static final long serialVersionUID = 1L;
 

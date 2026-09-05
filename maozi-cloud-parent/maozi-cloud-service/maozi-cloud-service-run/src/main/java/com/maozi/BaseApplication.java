@@ -39,6 +39,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 应用启动基类
@@ -56,6 +58,11 @@ import java.util.Properties;
  * 日志等基础启动参数，并在启动前扫描 classpath 下 {@code META-INF/run/config/*.properties}
  * 登记的配置初始化器（{@link ConfigInitializer}），由各初始化器写入 Nacos 配置中心/服务发现、
  * 缓存、定时任务等组件所需的系统属性。
+ * </p>
+ * <p>
+ * 同时在启动最初阶段安装 {@link BannerFilterPrintStream} 包装标准输出，
+ * 各组件模块（如 Dubbo、SnailJob 配置模块）通过 {@link #addBannerFilter(String)}
+ * 注册第三方框架启动 banner 的过滤特征，由该包装器统一丢弃对应输出。
  * </p>
  *
  * @author maozi
@@ -69,6 +76,9 @@ public class BaseApplication {
     /** 运行时配置初始化器扫描模式，匹配 classpath（含 JAR 内）下 META-INF/run/config 目录中的所有 .properties 文件，文件内容为实现类全路径 */
     private static final String CONFIG_LOCATION_PATTERN = "classpath*:META-INF/run/config/*.properties";
 
+    /** banner 过滤特征列表，由各组件模块在配置初始化阶段注册，{@link BannerFilterPrintStream} 过滤时实时读取 */
+    private static final List<String> BANNER_FILTERS = new CopyOnWriteArrayList<>();
+
     /**
      * 应用启动入口方法
      * <p>
@@ -79,6 +89,8 @@ public class BaseApplication {
      * @param args 命令行参数
      */
     protected static void ApplicationRun(String[] args) {
+
+        initBannerFilter();
 
         initProperties();
 
@@ -117,6 +129,43 @@ public class BaseApplication {
             System.exit(0);
 
         }
+
+    }
+
+    /**
+     * 安装启动 banner 过滤输出流
+     * <p>
+     * 在一切启动流程之前将标准输出包装为 {@link BannerFilterPrintStream}，
+     * 后续各组件模块注册的过滤特征在输出时实时生效；已安装时跳过，保证全局仅一层包装
+     * （多层嵌套会导致内层过滤被绕过而失效）。
+     * </p>
+     */
+    private static void initBannerFilter() {
+
+        PrintStream stdout = System.out;
+        if (!(stdout instanceof BannerFilterPrintStream)) {
+            System.setOut(new BannerFilterPrintStream(stdout, BANNER_FILTERS));
+        }
+
+    }
+
+    /**
+     * 注册启动 banner 过滤特征
+     * <p>
+     * 由各组件模块（如 Dubbo、SnailJob 配置模块）在配置初始化阶段调用，
+     * 注册后标准输出中含该特征片段的内容将被 {@link BannerFilterPrintStream} 整体丢弃。
+     * 特征重复注册或为空时忽略。
+     * </p>
+     *
+     * @param flag banner 特征片段
+     */
+    public static void addBannerFilter(String flag) {
+
+        if (ObjectUtil.isNullEmpty(flag) || BANNER_FILTERS.contains(flag)) {
+            return;
+        }
+
+        BANNER_FILTERS.add(flag);
 
     }
 
@@ -351,7 +400,12 @@ public class BaseApplication {
         return new File(codeSource.getLocation().toURI());
     }
 
-    /** 判断给定目录名是否为构建产物目录（target、build、classes、bin、java、main、test） */
+    /**
+     * 判断给定目录名是否为构建产物目录（target、build、classes、bin、java、main、test）
+     *
+     * @param name 目录名（已转小写）
+     * @return 是构建产物目录返回 true
+     */
     private static boolean isBuildDir(String name) {
         return name.equals("target") || name.equals("build")
                 || name.equals("classes") || name.equals("bin")

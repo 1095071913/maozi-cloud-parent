@@ -8,16 +8,14 @@ import com.maozi.oauth.client.param.ClientSaveUpdateParam;
 import com.maozi.service.api.annotation.RemoteService;
 
 /**
- * OAuth2 客户端 Dubbo RPC 服务实现类
+ * OAuth2客户端RPC服务实现类
  * <p>
- * 继承 {@code ClientServiceImpl} 并实现 {@code RpcClientService} 接口，
- * 通过 {@code @RemoteService} 注解将客户端服务的本地能力对外暴露为 Dubbo RPC 调用。
+ * 继承 ClientServiceImpl 并实现 RpcClientService 接口，通过 @RemoteService 注解
+ * 将客户端服务能力暴露为微服务间RPC调用；除 rpcAiSave（供AI智能体调用）外，
+ * 其余方法均直接继承自 ClientServiceImpl。
  * </p>
- * <p>
- * 除重写供AI智能体调用的 {@code rpcAiSave} 方法外，其余方法全部继承自
- * {@code ClientServiceImpl}；存在的意义主要是「让本地 Service 多实现一个
- * RPC 接口并注册到 Dubbo 注册中心」，属于典型的 RPC 适配器/暴露器角色。
- * </p>
+ *
+ * @author maozi
  */
 @RemoteService
 public class RpcClientServiceImpl extends ClientServiceImpl implements RpcClientService {
