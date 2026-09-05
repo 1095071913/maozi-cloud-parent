@@ -22,7 +22,7 @@ public class QueryLikePlugin extends QueryBasePlugin{
      */
     @Override
     public void apply(MPJLambdaWrapper<?> wrapper,String field,Object data) {
-        wrapper.likeRight(field, data);
+        wrapper.like(field, data);
     }
 
 }
