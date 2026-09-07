@@ -21,6 +21,7 @@ import com.maozi.common.LogUtil;
 import com.maozi.common.ObjectUtil;
 import com.maozi.common.constant.LogTag;
 import com.maozi.common.context.ApplicationEnvironmentContext;
+import com.maozi.common.context.ApplicationLinkContext;
 import com.maozi.common.enums.EnvironmentType;
 import com.maozi.common.spi.ConfigInitializer;
 import lombok.SneakyThrows;
@@ -184,13 +185,22 @@ public class BaseApplication {
 
         Properties properties = System.getProperties();
 
-        String environment = (String) properties.get("environment");
+        String environment = (String) properties.get("application.environment");
         if(ObjectUtil.isNullEmpty(environment)){
-            environment = System.getenv("ENVIRONMENT");
+            environment = System.getenv("APPLICATION_ENVIRONMENT");
             if(ObjectUtil.isNullEmpty(environment)){
                 environment = EnvironmentType.LOCAL.getDesc();
             }
-            properties.put("environment",environment);
+            properties.put("application.environment",environment);
+        }
+
+        String version = (String) properties.get("application.version");
+        if(ObjectUtil.isNullEmpty(version)){
+            version = System.getenv("APPLICATION_VERSION");
+            if(ObjectUtil.isNullEmpty(version)){
+                version = ApplicationLinkContext.APPLICATION_DEFAULT_VERSION;
+            }
+            properties.put("application.version", version);
         }
 
         String applicationName = getApplicationName();

@@ -34,8 +34,8 @@ mvn clean install -T 16C
 --add-opens java.base/java.lang.reflect=ALL-UNNAMED
 
 
-# project.version 版本号,设置后根据前端传递的X-Version请求头流量分发到对应版本号服务
-# application-dev-port 随机Web端口
-# application-dev-dubbo-port 随机Dubbo端口
+# application.version 版本号,设置后根据前端传递的X-Version请求头流量分发到对应版本号服务
+# application.port 随机Web端口
+# application.dubbo.port 随机Dubbo端口
 # 内存看情况给,当前代码绰绰有余
 ```

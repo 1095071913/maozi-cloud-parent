@@ -34,7 +34,7 @@ public class NacosConfigInitializer implements ConfigInitializer {
     private final static String PROJECT_NACOS_NAMESPACE_KEY = "nacos.namespace";
 
     /** Nacos 命名空间默认值占位符：优先取环境变量 NACOS_NAMESPACE，缺省跟随当前运行环境 */
-    private final static String PROJECT_NACOS_NAMESPACE_VALUE = "${NACOS_NAMESPACE:${environment}}";
+    private final static String PROJECT_NACOS_NAMESPACE_VALUE = "${NACOS_NAMESPACE:${application.environment}}";
 
     /** Nacos 配置中心服务地址属性键 */
     private final static String NACOS_CONFIG_SERVER_KEY = "spring.cloud.nacos.config.server-addr";

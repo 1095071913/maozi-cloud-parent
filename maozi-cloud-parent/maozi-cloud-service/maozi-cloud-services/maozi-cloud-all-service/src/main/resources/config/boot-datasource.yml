@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver             # MySQL 8 驱动
     # JDBC 连接地址，默认指向 Docker 网络中的 maozi-cloud-basic-mysql:3306
     # 数据库名默认规则：${应用名}-${环境}-db
-    url: jdbc:mysql://${application-datasource-jdbc-url:maozi-cloud-basic-mysql:3306}/${application-datasource-db-name:${spring.application.name}-${environment}-db}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://${application-datasource-jdbc-url:maozi-cloud-basic-mysql:3306}/${application-datasource-db-name:${spring.application.name}-${application.environment}-db}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&nullCatalogMeansCurrent=true
     username: ${application-datasource-jdbc-username:root}  # 数据库用户名
     password: ${application-datasource-jdbc-password:password}  # 数据库密码
     hikari:

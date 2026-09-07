@@ -30,6 +30,8 @@ services:
       - 999:999
     environment:
       TZ: Asia/Shanghai
+      # 后端请求地址: 直接指向 maozi-cloud-network 内的网关容器服务名
+      API_BASE_PATH: http://maozi-cloud-gateway-service:1000
 
 # 外部网络: 与 services-docker / basics-docker 共享同一网络,
 # nginx 才能通过容器服务名转发到网关 / Nacos / Grafana

@@ -19,7 +19,7 @@
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 
     <!-- 从 Spring 配置中读取环境变量，用于日志格式和输出方式判断 -->
-    <springProperty scope="context" name="ENVIRONMENT" source="environment"/>
+    <springProperty scope="context" name="ENVIRONMENT" source="application.environment"/>
     <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
     <!-- 日志输出方式：默认 ASYNC_CONSOLE（local 环境）/ ASYNC_FILE（非 local 环境） -->
     <springProperty scope="context" name="APPENDER" source="logging.appender" defaultValue="ASYNC_CONSOLE"/>

@@ -31,9 +31,10 @@ services:
     container_name: maozi-cloud-gateway-service
     restart: always
     ports:
-      - 1000:1000
+      - 1100:1100
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
@@ -47,7 +48,8 @@ services:
     ports:
       - 2000:2000
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
@@ -60,9 +62,10 @@ services:
     restart: always
     ports:
       - 3000:3000
-      - 20881:20881
+      - 21881:21881
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
@@ -75,9 +78,10 @@ services:
     restart: always
     ports:
       - 4000:4000
-      - 20880:20880
+      - 21880:21880
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集
@@ -90,9 +94,10 @@ services:
     restart: always
     ports:
       - 6000:6000
-      - 20882:20882
+      - 21882:21882
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录,供 promtail 采集

@@ -34,9 +34,11 @@ services:
     container_name: maozi-cloud-monomer-service
     restart: always
     ports:
-      - 1000:1000
+      - 1100:1100
     environment:
-      ENVIRONMENT: dev
+      APPLICATION_PORT: 1100
+      APPLICATION_VERSION: main
+      APPLICATION_ENVIRONMENT: dev
       NACOS_CONFIG_SERVER: maozi-cloud-basic-nacos:8848
     volumes:
       # 日志文件挂载到宿主机共享目录, 供 promtail 采集

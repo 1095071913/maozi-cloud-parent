@@ -26,7 +26,7 @@
   "services": [
     {
       "service_name": "maozi-cloud-gateway-service",
-      "service_port": 1000,
+      "service_port": 1100,
       "opentelemetry": true
     },
     {
@@ -38,19 +38,19 @@
     {
       "service_name": "maozi-cloud-oauth-service",
       "service_port": 3000,
-      "dubbo_port": 20881,
+      "dubbo_port": 21881,
       "opentelemetry": true
     },
     {
       "service_name": "maozi-cloud-system-service",
       "service_port": 4000,
-      "dubbo_port": 20880,
+      "dubbo_port": 21880,
       "opentelemetry": true
     },
     {
       "service_name": "maozi-cloud-ai-service",
       "service_port": 6000,
-      "dubbo_port": 20882,
+      "dubbo_port": 21882,
       "opentelemetry": true
     }
   ]

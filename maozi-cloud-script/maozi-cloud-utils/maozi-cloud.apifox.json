@@ -20683,7 +20683,7 @@
   "testCaseReferences": [],
   "environments": [
     {
-      "name": "个人开发环境",
+      "name": "本地环境",
       "requestProxyAgentSettings": {},
       "variables": [
         {
@@ -20732,7 +20732,7 @@
       },
       "type": "normal",
       "visibility": "protected",
-      "ordering": 0,
+      "ordering": -2,
       "tags": [
         {
           "name": "",
@@ -20744,6 +20744,51 @@
       "baseUrl": "http://localhost:1000",
       "baseUrls": {
         "7130572": "http://localhost:1000"
+      },
+      "socketioBaseUrls": {},
+      "websocketBaseUrls": {}
+    },
+    {
+      "name": "开发环境",
+      "requestProxyAgentSettings": {},
+      "variables": [
+        {
+          "name": "username",
+          "securityType": "default",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        },
+        {
+          "name": "password",
+          "securityType": "default",
+          "value": "",
+          "description": "",
+          "initialValue": "",
+          "isSync": true
+        }
+      ],
+      "parameters": {
+        "cookie": [],
+        "query": [],
+        "header": [],
+        "body": []
+      },
+      "type": "normal",
+      "visibility": "protected",
+      "ordering": -1,
+      "tags": [
+        {
+          "name": "",
+          "color": "#1890FF"
+        }
+      ],
+      "advancedSettings": {},
+      "id": "48825947",
+      "baseUrl": "http://localhost:1100",
+      "baseUrls": {
+        "7130572": "http://localhost:1100"
       },
       "socketioBaseUrls": {},
       "websocketBaseUrls": {}

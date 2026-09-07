@@ -76,7 +76,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param environment 环境标识
      */
-    @Value("${environment:local}")
+    @Value("${application.environment:local}")
     public void setEnvironment(String environment) {
         ApplicationEnvironmentContext.ENVIRONMENT = environment;
     }
@@ -89,7 +89,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param title 项目标题
      */
-    @Value("${project.title:}")
+    @Value("${application.title:}")
     public void setTitle(String title) {
         ApplicationEnvironmentContext.TITLE = title;
     }
@@ -102,7 +102,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param version 版本号
      */
-    @Value("${project.version:main}")
+    @Value("${application.version:main}")
     public void setVersion(String version) {
         ApplicationEnvironmentContext.VERSION = version;
     }
@@ -115,7 +115,7 @@ public class ApplicationEnvironmentContext {
      *
      * @param details 项目描述
      */
-    @Value("${project.details:}")
+    @Value("${application.details:}")
     public void setDetails(String details) {
         ApplicationEnvironmentContext.DETAILS = details;
     }

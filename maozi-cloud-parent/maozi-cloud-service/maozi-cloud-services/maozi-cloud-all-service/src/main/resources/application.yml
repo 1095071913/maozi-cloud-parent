@@ -5,12 +5,10 @@
 # ============================================================
 
 # 项目展示信息（用于 Swagger 文档、日志等）
-project:
+application:
+  port: 1000
   title: 单体全量业务服务
   details: 所有服务功能
-
-# 服务端口，默认 1000（可通过 application-dev-port 环境变量覆盖）
-application-port: ${application-dev-port:1000}
 
 # 数据库名称覆盖（注释掉则使用默认规则：${应用名}-${环境}-db）
 #application-datasource-db-name: maozi-cloud-all-service-local-db
@@ -23,7 +21,7 @@ application-project-system:
   projectName: 小猫子脚手架
   corporationName: 小猫子网络科技有限公司
   icon: http://dummyimage.com/100x100
-  environment: ${environment}
+  environment: ${application.environment}
   description: 基于 Spring Cloud Alibaba + Dubbo 的一站式分布式解决方案开源封装，内置分布式应用开发所需全套组件，统一团队代码风格，保障代码质量，让开发者专注业务逻辑，实现高效快速开发。
   copyright: 本网站所有权归《${application-project-system.corporationName}》所有，请勿抄袭和抄袭
 

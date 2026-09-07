@@ -4,13 +4,9 @@
 # Feign 远程调用、日志级别等通用设置。
 # ============================================================
 
-# 项目环境标识（local/dev/test/prod），由启动参数或环境变量注入，默认 local
-project:
-  environment: ${environment:local}
-
 server:
-  port: ${application-port}                    # 服务端口（由 bootstrap.yml 注入）
-  error.path: /application/error               # 全局错误处理路径
+  port: ${APPLICATION_PORT:${application.port:0}}
+  error.path: /application/error
   # compression:                               # 响应压缩（按需开启）
   #   enabled: true
   #   min-response-size: 1024
