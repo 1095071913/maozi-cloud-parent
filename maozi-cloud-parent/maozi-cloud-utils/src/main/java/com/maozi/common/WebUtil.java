@@ -1,5 +1,6 @@
 package com.maozi.common;
 
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -111,70 +112,13 @@ public class WebUtil {
      * 获取当前请求的客户端真实 IP 地址
      * <p>
      * 无参重载，自动从 {@link #getRequest()} 取当前请求后委托给
-     * {@link #getRequestHost(HttpServletRequest)}；当前线程无请求上下文时抛出 {@link NullPointerException}。
      * </p>
      *
      * @return 客户端真实 IP 地址字符串
      * @throws NullPointerException 不在 Web 请求上下文中调用时抛出
-     * @see #getRequestHost(HttpServletRequest)
      */
     public static String getRequestHost() {
-        return getRequestHost(Objects.requireNonNull(getRequest()));
-    }
-
-    /**
-     * 获取客户端的真实 IP 地址
-     * <p>
-     * 依次从以下 HTTP 头中获取 IP 地址：
-     * 1. X-Forwarded-For（最常用的反向代理头）
-     * 2. Proxy-Client-IP（Apache 服务器代理头）
-     * 3. WL-Proxy-Client-IP（WebLogic 代理头）
-     * 4. HTTP_CLIENT_IP
-     * 5. HTTP_X_FORWARDED_FOR
-     * 如果以上头都为空，则使用 request.getRemoteAddr() 获取直连 IP。
-     * 对于 X-Forwarded-For 中的多 IP 格式，取第一个 IP 作为真实客户端 IP。
-     * IPv6 本地回环地址会被转换为 IPv4 的 127.0.0.1。
-     * </p>
-     *
-     * @param request HTTP 请求对象
-     * @return 客户端真实 IP 地址字符串
-     */
-    public static String getRequestHost(HttpServletRequest request) {
-
-        // 优先从反向代理header中获取
-        String ip = request.getHeader("x-forwarded-for");
-
-        // 依次检查常用代理IP头
-        if (isBlankOrUnknown(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (isBlankOrUnknown(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (isBlankOrUnknown(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (isBlankOrUnknown(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-
-        // 兜底：直接获取远程地址
-        if (isBlankOrUnknown(ip)) {
-            ip = request.getRemoteAddr();
-        }
-
-        // 处理多IP情况（x-forwarded-for 会返回 客户端IP,代理1,代理2...）
-        if (ip != null && ip.contains(",")) {
-            // 取第一个 IP 作为真实客户端 IP
-            ip = ip.split(",")[0].trim();
-        }
-
-        // 处理 IPv6 本地回环地址
-        if (LOCAL_LOOPBACK_IP.equals(ip)) {
-            ip = LOCAL_IP;
-        }
-
-        return ip;
+        return JakartaServletUtil.getClientIP(Objects.requireNonNull(getRequest()));
     }
 
     /**

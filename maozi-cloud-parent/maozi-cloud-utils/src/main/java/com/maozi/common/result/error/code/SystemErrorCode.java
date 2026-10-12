@@ -54,6 +54,9 @@ public class SystemErrorCode extends AbstractBaseErrorCode{
     /** 权限不足 */
     public final static ErrorCode PERMISSION_ERROR = new ErrorCode(403,"权限不足");
 
+    /** 黑名单 */
+    public final static ErrorCode BLACKLIST_ERROR = new ErrorCode(403,"黑名单无法访问");
+
     /** 接口不存在 */
     public final static ErrorCode NOT_RESOURCE_ERROR = new ErrorCode(404,"接口不存在");
 

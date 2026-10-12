@@ -27,12 +27,13 @@
         <module>maozi-cloud-gateway-service</module>
         <!-- 服务监控模块，基于 Spring Boot Admin 实现 -->
         <module>maozi-cloud-monitor-service</module>
+        <!-- 服务监控模块，基于 Spring Boot Admin 实现 -->
+        <module>maozi-cloud-sentinel-service</module>
 
         <!-- OAuth 认证授权服务模块 -->
         <module>maozi-cloud-business-oauth</module>
         <!-- 系统管理服务模块 -->
         <module>maozi-cloud-business-system</module>
-
         <module>maozi-cloud-business-ai</module>
 
     </modules>

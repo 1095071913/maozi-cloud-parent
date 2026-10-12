@@ -22,6 +22,9 @@ import java.util.Properties;
  */
 public class DubboConfigInitializer implements ConfigInitializer {
 
+    /** 定时任务相关的 Nacos 共享配置文件导入（optional 前缀保证文件不存在时不阻断启动） */
+    private static final String IMPORTS = "optional:nacos:cloud-dubbo.yml";
+
     /** Dubbo banner 输出类的全路径，该类仅有 banner 一处日志输出，整类关闭无副作用 */
     private static final String WELCOME_LOGO_LOGGER = "org.apache.dubbo.spring.boot.context.event.WelcomeLogoApplicationListener";
 
@@ -41,6 +44,12 @@ public class DubboConfigInitializer implements ConfigInitializer {
      */
     @Override
     public void initialize(Properties properties) {
+
+        properties.merge(
+                "spring.config.import",
+                IMPORTS,
+                (existing, incoming) -> incoming + "," + existing
+        );
 
         properties.put("logging.level." + WELCOME_LOGO_LOGGER, "OFF");
 

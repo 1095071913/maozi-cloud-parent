@@ -195,6 +195,18 @@ services:
       maozi-cloud-basic-nacos:
         condition: service_healthy
 
+  # Sentinel Dashboard —— 流量控制/熔断降级规则控制台
+  # Web 控制台: http://localhost:8858 (默认账号 sentinel/sentinel)
+  # 宿主机端口对齐 nacos 客户端默认配置 spring.cloud.sentinel.transport.dashboard: localhost:8858
+  maozi-cloud-basic-sentinel:
+    restart: always
+    image: bladex/sentinel-dashboard:1.8.8
+    container_name: maozi-cloud-basic-sentinel
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 8858:8858   # Web 控制台 + 客户端通信端口
+
   maozi-cloud-basic-xxljob:
     restart: always
     image: xuxueli/xxl-job-admin:3.4.2
