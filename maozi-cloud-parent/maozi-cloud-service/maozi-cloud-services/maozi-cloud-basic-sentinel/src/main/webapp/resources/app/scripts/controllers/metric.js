@@ -260,7 +260,8 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         // 注意: 当前 G2 构建(3.4.10)没有 geom.data()/geom.filter(), point 对 null 值
         // 不跳过(画在 0 位置), view 独立数据源又会吞掉图例。最终方案: 圆点图层留在
         // chart 层(图例正常), 数据携带 flag 字段, 通过 size/opacity 字段回调把 0 值点
-        // 置为半径 0 + 完全透明(alpha=0, canvas 不产生像素); line 用原始字段, 曲线连续
+        // 置为半径 0 + 完全透明(alpha=0, canvas 不产生像素); line 用原始字段, 曲线连续。
+        // 空档内部补 null 断线留白(仅数据点 ±N 秒位置补 0 保持 0→数据→0 脉冲形态)
         var chartData = [];
         for (var d in metric.data) {
           var item = metric.data[d];
@@ -276,9 +277,12 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         if (hasPass) {
           var linePass = chart.line().position('timestamp*passQps').size(2).color('#1d9d74').opacity(0.9).shape('smooth');
           linePass.__mrtField = 'passQps';
+          // 圆点图层关闭 tooltip: 其 passFlag/blockFlag 映射字段(size/opacity)会被默认
+          // tooltip 收集显示出来; 线图层字段干净, 由它提供"通过 QPS"提示项
           var ptPass = chart.point().position('timestamp*passQps').shape('circle').color('#1d9d74')
             .size('passFlag', function (v) { return v > 0 ? 3 : 0; })
-            .opacity('passFlag', function (v) { return v > 0 ? 0.85 : 0; });
+            .opacity('passFlag', function (v) { return v > 0 ? 0.85 : 0; })
+            .tooltip(false);
           ptPass.__mrtField = 'passQps';
         }
         if (hasBlock) {
@@ -286,10 +290,40 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
           lineBlock.__mrtField = 'blockQps';
           var ptBlock = chart.point().position('timestamp*blockQps').shape('circle').color('#F53F3F')
             .size('blockFlag', function (v) { return v > 0 ? 3 : 0; })
-            .opacity('blockFlag', function (v) { return v > 0 ? 0.85 : 0; });
+            .opacity('blockFlag', function (v) { return v > 0 ? 0.85 : 0; })
+            .tooltip(false);
           ptBlock.__mrtField = 'blockQps';
         }
         //chart.line().position('timestamp*rt').size(1).color('gray').shape('smooth');
+        // 悬停提示固定输出 通过/拒绝 QPS 两项: G2 默认按鼠标附近图形收集 items,
+        // 悬停位置贴近某条线时另一条的项可能偶发缺失, 这里按命中记录强制补全
+        chart.on('tooltip:change', function (ev) {
+          var tipItems = ev.items || [];
+          var record = null;
+          var tipTitle = null;
+          for (var ti = 0; ti < tipItems.length; ti++) {
+            if (!tipTitle && tipItems[ti].title) {
+              tipTitle = tipItems[ti].title;
+            }
+            if (!record && tipItems[ti].point && tipItems[ti].point._origin) {
+              record = tipItems[ti].point._origin;
+            }
+          }
+          if (!record) {
+            return;
+          }
+          var fixedItems = [];
+          if (hasPass) {
+            fixedItems.push({ name: '通过 QPS', value: record.passQps, color: '#1d9d74', marker: true, title: tipTitle });
+          }
+          if (hasBlock) {
+            fixedItems.push({ name: '拒绝 QPS', value: record.blockQps, color: '#F53F3F', marker: true, title: tipTitle });
+          }
+          tipItems.splice(0, tipItems.length);
+          for (var fi = 0; fi < fixedItems.length; fi++) {
+            tipItems.push(fixedItems[fi]);
+          }
+        });
         G2.track(false);
         chart.render();
         bindChartRangeSelection(idx);
@@ -456,8 +490,9 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         }
       });
     };
-    // 按数据节奏补零: 自动识别相邻数据点的最小间隔(聚合粒度为 N 秒时即 N),
-    // 只按该节奏补较短缺口, 大缺口不补, 避免图表断线误判与大跨度查询补出巨量零点
+    // 按数据节奏补点: 自动识别相邻数据点的最小间隔(聚合粒度为 N 秒时即 N)。
+    // 首点前/末点后 N 秒、空档毗邻数据点处补 0(0→数据→0 脉冲形态);
+    // 空档内部补 null 断线留白 —— 无流量时段不画贴 0 长平线
     function fillZeros(metricData) {
       if (!metricData || metricData.length == 0) {
         return [];
@@ -471,6 +506,17 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
           "exception": 0,
           "rt": 0,
           "count": 0
+        };
+      }
+      function nullAt(ts) {
+        return {
+          "timestamp": ts,
+          "passQps": null,
+          "blockQps": null,
+          "successQps": null,
+          "exception": null,
+          "rt": null,
+          "count": null
         };
       }
       var stepMs = ($scope.aggregateSeconds > 0 ? $scope.aggregateSeconds : 10) * 1000;
@@ -523,11 +569,15 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
       var lastTime = metricData[0].timestamp / 1000;
       for (var i = 1; i < metricData.length; i++) {
         var curTime = metricData[i].timestamp / 1000;
-        // 点间空档按 N 秒步长全部补 0(不设上限): 长时间无流量时段曲线贴 0 走平,
-        // 而不是被平滑曲线连成"缓坡"造成持续低流量的假象
+        // 点间空档按 N 秒步长补点(不设上限): 毗邻数据点的位置(前一点后 N 秒、
+        // 后一点前 N 秒)补 0 完成脉冲形态; 空档内部(离两边数据点都超过 N 秒)补
+        // null —— line 断开留白, 不画贴 0 长平线, 也不产生圆点
         if (curTime > lastTime + cadence) {
-          for (var j = lastTime + stepMs / 1000; j < curTime; j += stepMs / 1000) {
-            filledData.push(zeroAt(j * 1000));
+          var stepSec = stepMs / 1000;
+          for (var j = lastTime + stepSec; j < curTime; j += stepSec) {
+            var nearPrev = (j - lastTime) <= stepSec + 0.5;
+            var nearCur = (curTime - j) <= stepSec + 0.5;
+            filledData.push(nearPrev || nearCur ? zeroAt(j * 1000) : nullAt(j * 1000));
           }
         }
         filledData.push(metricData[i]);
