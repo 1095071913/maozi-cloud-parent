@@ -27,9 +27,18 @@
       "opentelemetry": true
     },
     {
-      "service_name": "maozi-cloud-monitor-service",
+      "service_name": "maozi-cloud-basic-monitor",
       "opentelemetry": false,
-      "base_image": "maozi-cloud-base-jdk:1.0.0"
+      "base_image": "maozi-cloud-base-jdk:1.0.0",
+      "is_middleware": true,
+      "is_log_file": false
+    },
+    {
+      "service_name": "maozi-cloud-basic-sentinel",
+      "opentelemetry": false,
+      "base_image": "maozi-cloud-base-jdk:1.0.0",
+      "is_middleware": true,
+      "is_log_file": false
     },
     {
       "service_name": "maozi-cloud-oauth-service",

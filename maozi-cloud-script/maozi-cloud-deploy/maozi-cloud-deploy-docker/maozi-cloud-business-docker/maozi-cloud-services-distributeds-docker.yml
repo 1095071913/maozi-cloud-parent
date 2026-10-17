@@ -5,7 +5,10 @@
 #   - maozi-cloud-system-service   系统管理服务（端口 4000 / Dubbo 20881）
 #   - maozi-cloud-oauth-service    OAuth 鉴权服务（端口 3000 / Dubbo 20880）
 #   - maozi-cloud-gateway-service  业务网关（端口 1000）
-#   - maozi-cloud-monitor-service  Spring Boot Admin 监控（端口 2000）
+# 注: maozi-cloud-monitor-service / maozi-cloud-sentinel-service 属中间件服务
+#     (maozi-cloud-services.json 里 is_middleware=true), 已迁往
+#     maozi-cloud-basics-docker/docker-compose.yml, 由 maozi-cloud-deploy-basics-all.sh
+#     构建镜像并随基础组件一起启动.
 # ------------------------------------------------------------
 # 启动前置：
 #   1. 先启动 maozi-cloud-basics-docker（提供 mysql / nacos / redis 等）；
@@ -69,44 +72,8 @@ services:
       retries: 3         # 连续失败 5 次后标记 unhealthy
       start_period: 60s # 启动宽限期(Java 服务启动较慢), 宽限期内失败不计入重试
 
-  # ============ Monitor 监控服务 (Spring Boot Admin) ============
-  maozi-cloud-monitor-service:
-    image: maozi-cloud-monitor-service:latest
-    container_name: maozi-cloud-monitor-service-${ENVIRONMENT:-${APPLICATION_ENVIRONMENT:-dev}}-${VERSION:-${APPLICATION_VERSION:-main}}
-    restart: always
-    ports:
-      - ${MAOZI_CLOUD_MONITOR_SERVICE_PORT:-0}:${MAOZI_CLOUD_MONITOR_SERVICE_PORT:-2000}
-    environment:
-      JVM_PARAMS: ${MAOZI_CLOUD_MONITOR_SERVICE_JVM_PARAMS:-${JVM_PARAMS:-${APPLICATION_JVM_PARAMS}}}
-      APPLICATION_PORT: ${MAOZI_CLOUD_MONITOR_SERVICE_PORT:-2000}
-      APPLICATION_VERSION: ${VERSION:-${APPLICATION_VERSION:-main}}
-      APPLICATION_ENVIRONMENT: ${ENVIRONMENT:-${APPLICATION_ENVIRONMENT:-dev}}
-    volumes:
-      # 日志文件挂载到宿主机共享目录,供 promtail 采集
-      - ${APPLICATION_LOG_PATH:-./../maozi-cloud-basics-docker/maozi-cloud-basic-promtail/maozi-cloud-logs}/${ENVIRONMENT:-${APPLICATION_ENVIRONMENT:-dev}}/${VERSION:-${APPLICATION_VERSION:-main}}/maozi-cloud-monitor-service:/application/maozi-cloud-monitor-service/logs
-    stop_grace_period: 150s
-    # 停止前钩子: docker compose stop/down/restart 时, 在发送 SIGTERM 前依次执行:
-    #   1. POST /actuator/serviceregistry 将实例置为 DOWN, 先从 Nacos 摘流(进程仍正常服务)
-    #   2. sleep 10: 等待 Nacos 推送(~2s) + 网关 LoadBalancer 缓存过期(ttl 5s), 流量彻底切净
-    #   3. POST /actuator/shutdown: 优雅停机(graceful 排空在途请求后再注销注册中心)
-    # 每步失败不阻塞停机(|| true); $$ 双转义同 healthcheck: 端口取容器运行时环境变量 APPLICATION_PORT
-    pre_stop:
-      - command: |
-          sh -c '
-            if [ "${GRACEFUL_UPDATE:-false}" = "true" ]; then
-              sleep 40;
-              curl -sf -X POST -H "Content-Type: application/json" -d '\''{"status":"DOWN"}'\'' http://localhost:$${APPLICATION_PORT}/actuator/serviceregistry || true;
-              sleep 40
-            fi
-          '
-    healthcheck:
-      # $$ 双转义: 端口取容器运行时环境变量 APPLICATION_PORT, 随各服务端口配置自动生效
-      # liveness(存活) 与 readiness(就绪) 探针均返回 200 才视为健康
-      test: ["CMD-SHELL", "curl -sf http://localhost:$$APPLICATION_PORT/actuator/health/liveness && curl -sf http://localhost:$$APPLICATION_PORT/actuator/health/readiness"]
-      interval: 5s      # 每 30 秒检查一次
-      timeout: 5s        # 单次检查超时时间
-      retries: 3         # 连续失败 5 次后标记 unhealthy
-      start_period: 60s # 启动宽限期(Java 服务启动较慢), 宽限期内失败不计入重试
+  # 注: monitor / sentinel 两个中间件服务已迁往 maozi-cloud-basics-docker/docker-compose.yml
+  #     (is_middleware=true), 由 maozi-cloud-deploy-basics-all.sh 构建镜像并启动
 
   # ============ OAuth 业务服务 ============
   maozi-cloud-oauth-service:

@@ -28,7 +28,7 @@ public class NacosConfigInitializer implements ConfigInitializer {
     private final static String PROJECT_NACOS_SERVER_KEY = "nacos.server";
 
     /** Nacos 服务地址默认值占位符：优先取环境变量 NACOS_SERVER，缺省使用内置 Nacos 服务地址 */
-    private final static String PROJECT_NACOS_SERVER_VALUE = "${NACOS_SERVER:maozi-cloud-basic-nacos:8848}";
+    private final static String PROJECT_NACOS_SERVER_VALUE = "${APPLICATION_NACOS_SERVER:maozi-cloud-basic-nacos:8848}";
 
     /** Nacos 命名空间默认值占位符：优先取环境变量 NACOS_NAMESPACE，缺省跟随当前运行环境 */
     private final static String PROJECT_NACOS_NAMESPACE_VALUE = "${application.environment}";

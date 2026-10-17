@@ -15,6 +15,11 @@
 #   - ENTRYPOINT (exec 数组写法, java 作为 PID 1 直接收 SIGTERM 优雅停机)
 #     用单 __CMD_LINE__ 占位符整段替换, OTel 关闭时不会遗留孤立反斜杠
 #   - 渲染产物 ${service_name}-image 由生成的 build-docker.sh 在构建后 rm 删除
+#   - JSON 里 is_middleware=true 的服务 (中间件, 由独立 compose 编排) 统一 skip,
+#     两个部署入口 (distributed / distributed-force) 因此都不会处理它们
+#   - 渲染核心抽成顶层函数 render_image_dockerfile (只渲染, 不构建不启容器),
+#     供 maozi-cloud-deploy-basics-all.sh 复用; render_and_build_image 是
+#     "渲染 + buildx 构建 + compose 启动" 的完整封装
 # ------------------------------------------------------------
 # 单独运行时 (./maozi-cloud-render-image-utils.sh <service_name>) 进入 dry-run:
 # 把渲染结果打到 stdout, 不构建, 不写文件, 便于人工核对模板渲染是否正确.
@@ -28,6 +33,122 @@ read_env_key() {
     echo "${value:-$default}"
 }
 
+# ============================================================
+# 渲染单个服务的 Dockerfile (模板 + JSON -> ${service_name}-image 内容)
+# ------------------------------------------------------------
+# 供 render_and_build_image 与 maozi-cloud-deploy-basics-all.sh 复用.
+#   $1 = service_name (如 maozi-cloud-monitor-service)
+#   $2 = out_path    ("-" = 打到 stdout, 即 dry-run)
+#   $3 = 可选 skip-middleware 标志: 传入非空值时, is_middleware=true 的服务退出码 3
+# 返回码: 0 成功 / 1 不在 JSON 里 / 环境缺失 / 渲染失败 / 3 skip-middleware 且 is_middleware=true
+# 依赖调用方已设: current_directory
+# ============================================================
+render_image_dockerfile() {
+    local service_name="$1"
+    local out_path="$2"
+    local skip_middleware="$3"
+
+    local image_root="$current_directory/../maozi-cloud-deploy-docker-image/maozi-cloud-services-image"
+    local config_file="$image_root/maozi-cloud-services.json"
+    local template_file="$image_root/maozi-cloud-service-image.template"
+
+    if [ ! -f "$config_file" ]; then
+        echo "[render] config not found at $config_file" >&2
+        return 1
+    fi
+    if [ ! -f "$template_file" ]; then
+        echo "[render] template not found at $template_file" >&2
+        return 1
+    fi
+    if ! command -v python3 >/dev/null 2>&1; then
+        echo "[render] python3 not found in PATH" >&2
+        return 1
+    fi
+
+    # python3 一次完成: 读 JSON 取配置 + 读模板 + 计算占位符 + 渲染输出
+    python3 - "$service_name" "$config_file" "$template_file" "$out_path" "$skip_middleware" <<'PYEOF'
+import json, sys
+
+service_name    = sys.argv[1]
+config_path     = sys.argv[2]
+template_path   = sys.argv[3]
+out_path        = sys.argv[4]
+skip_middleware = sys.argv[5]
+
+with open(config_path) as f:
+    cfg = json.load(f)
+
+d = cfg.get("defaults", {}) or {}
+svc = None
+for s in cfg.get("services", []):
+    if s.get("service_name") == service_name:
+        svc = s
+        break
+if svc is None:
+    sys.stderr.write("service '%s' not in %s\n" % (service_name, config_path))
+    sys.exit(1)
+
+# skip-middleware (部署链路传入): is_middleware=true 的服务由 basics-all 独立编排,
+# 退出码 3 让调用方打印 skip; 不传 (basics-all 自身 / dry-run) 则照常渲染
+if skip_middleware and svc.get("is_middleware"):
+    sys.exit(3)
+
+otel      = bool(svc.get("opentelemetry"))
+jvm       = svc.get("jvm_params")  or d.get("jvm_params", "")
+base      = svc.get("base_image")  or d.get("base_image", "maozi-cloud-base-jdk:1.0.0")
+
+# OTel / add-opens 标志全部从 JSON 读, 改参数不用动部署脚本
+# 服务块里同名键会整体覆盖 defaults 里的列表 (不合并)
+otel_flags = svc.get("otel_flags") or d.get("otel_flags", [])
+add_opens  = svc.get("add_opens")  or d.get("add_opens", [])
+
+# is_log_file: 默认 true (缺省 / null 均视为 true);
+# true -> 渲染 ENV LOG_FILE 行, false -> 模板 __LOG_FILE_ENV__ 整行不渲染
+is_log_file = svc.get("is_log_file")
+if is_log_file is None:
+    is_log_file = True
+
+# ENTRYPOINT 行 (exec 数组写法): ["/bin/sh", "-c", "exec java -server [...] -jar"]
+#   - 纯数组 ["java", ...] 不做变量展开, 而 ${JVM_PARAMS} 由 compose 运行时注入,
+#     ${APPLICATION_NAME} 也要启动时展开, 故经 /bin/sh -c 执行
+#   - 命令串前加 exec: java 顶替 sh 成为 PID 1, docker stop 的 SIGTERM 直达
+#     JVM 触发 shutdown hooks 优雅停机 (裸 sh 作为 PID 1 不会转发信号)
+#   - 续行 \ 由 Dockerfile 解析器在 JSON 解析前剥掉, 渲染结果仍是合法 JSON;
+#     cmd_parts 每个元素独立占一行便于阅读, OTel 关闭时不会遗留孤立反斜杠
+cmd_parts = ["java -server"]
+if otel and otel_flags:
+    cmd_parts.extend(otel_flags)
+cmd_parts.append(jvm)
+if add_opens:
+    cmd_parts.extend(add_opens)
+cmd_parts.append("-jar ${APPLICATION_NAME}.jar")
+cmd_line = 'ENTRYPOINT ["/bin/sh", "-c", "exec ' + " \\\n  ".join(cmd_parts) + '"]'
+
+otel_yes  = "yes" if otel      else "no"
+
+with open(template_path) as f:
+    tpl = f.read()
+
+replacements = {
+    "__BASE_IMAGE__":        base,
+    "__SERVICE_NAME__":      service_name,
+    "__OTEL_YES_NO__":       otel_yes,
+    "__CMD_LINE__":          cmd_line,
+    # key 含 \n: false 时连同换行一起替换为空, 不遗留空行
+    "__LOG_FILE_ENV__\n":    ("ENV LOG_FILE=/application/${APPLICATION_NAME}/logs/${APPLICATION_NAME}.log\n"
+                              if is_log_file else ""),
+}
+for k, v in replacements.items():
+    tpl = tpl.replace(k, v)
+
+if out_path == "-":
+    sys.stdout.write(tpl)
+else:
+    with open(out_path, "w") as f:
+        f.write(tpl)
+PYEOF
+}
+
 # 渲染并构建单个服务的镜像
 #   $1 = service_name (如 maozi-cloud-system-service)
 #   $2 = module_dir   (相对仓库根, 如 maozi-cloud-business-system/maozi-cloud-system-service)
@@ -36,23 +157,6 @@ read_env_key() {
 render_and_build_image() {
     local service_name="$1"
     local module_dir="$2"
-
-    local image_root="$current_directory/../maozi-cloud-deploy-docker-image/maozi-cloud-services-image"
-    local config_file="$image_root/maozi-cloud-services.json"
-    local template_file="$image_root/maozi-cloud-service-image.template"
-
-    if [ ! -f "$config_file" ]; then
-        echo "[render] skip $service_name: config not found at $config_file"
-        return 1
-    fi
-    if [ ! -f "$template_file" ]; then
-        echo "[render] skip $service_name: template not found at $template_file"
-        return 1
-    fi
-    if ! command -v python3 >/dev/null 2>&1; then
-        echo "[render] skip $service_name: python3 not found in PATH"
-        return 1
-    fi
 
     # 路由镜像 / docker-compose 目录 (沿用 jar-utils 的前缀匹配规则)
     local image_directory docker_directory
@@ -90,80 +194,18 @@ render_and_build_image() {
     # 渲染前确保存在, 否则 Python open(out_path, "w") 会抛 FileNotFoundError
     mkdir -p "$image_directory"
 
-    # python3 一次完成: 读 JSON 取配置 + 读模板 + 计算占位符 + 渲染输出
-    # 服务不在 JSON 里 / JSON 损坏 -> 退出码非零, shell 据此 skip
-    # 输出到 stdout 时为 dry-run, 写文件时为正式渲染
-    _render_image_py() {
-        local out_path="$1"
-        python3 - "$service_name" "$config_file" "$template_file" "$out_path" <<'PYEOF'
-import json, sys
-
-service_name  = sys.argv[1]
-config_path   = sys.argv[2]
-template_path = sys.argv[3]
-out_path      = sys.argv[4]
-
-with open(config_path) as f:
-    cfg = json.load(f)
-
-d = cfg.get("defaults", {}) or {}
-svc = None
-for s in cfg.get("services", []):
-    if s.get("service_name") == service_name:
-        svc = s
-        break
-if svc is None:
-    sys.exit(1)
-
-otel      = bool(svc.get("opentelemetry"))
-jvm       = svc.get("jvm_params")  or d.get("jvm_params", "")
-base      = svc.get("base_image")  or d.get("base_image", "maozi-cloud-base-jdk:1.0.0")
-
-# OTel / add-opens 标志全部从 JSON 读, 改参数不用动部署脚本
-# 服务块里同名键会整体覆盖 defaults 里的列表 (不合并)
-otel_flags = svc.get("otel_flags") or d.get("otel_flags", [])
-add_opens  = svc.get("add_opens")  or d.get("add_opens", [])
-
-# ENTRYPOINT 行 (exec 数组写法): ["/bin/sh", "-c", "exec java -server [...] -jar"]
-#   - 纯数组 ["java", ...] 不做变量展开, 而 ${JVM_PARAMS} 由 compose 运行时注入,
-#     ${APPLICATION_NAME} 也要启动时展开, 故经 /bin/sh -c 执行
-#   - 命令串前加 exec: java 顶替 sh 成为 PID 1, docker stop 的 SIGTERM 直达
-#     JVM 触发 shutdown hooks 优雅停机 (裸 sh 作为 PID 1 不会转发信号)
-#   - 续行 \ 由 Dockerfile 解析器在 JSON 解析前剥掉, 渲染结果仍是合法 JSON;
-#     cmd_parts 每个元素独立占一行便于阅读, OTel 关闭时不会遗留孤立反斜杠
-cmd_parts = ["java -server"]
-if otel and otel_flags:
-    cmd_parts.extend(otel_flags)
-cmd_parts.append(jvm)
-if add_opens:
-    cmd_parts.extend(add_opens)
-cmd_parts.append("-jar ${APPLICATION_NAME}.jar")
-cmd_line = 'ENTRYPOINT ["/bin/sh", "-c", "exec ' + " \\\n  ".join(cmd_parts) + '"]'
-
-otel_yes  = "yes" if otel      else "no"
-
-with open(template_path) as f:
-    tpl = f.read()
-
-replacements = {
-    "__BASE_IMAGE__":        base,
-    "__SERVICE_NAME__":      service_name,
-    "__OTEL_YES_NO__":       otel_yes,
-    "__CMD_LINE__":          cmd_line,
-}
-for k, v in replacements.items():
-    tpl = tpl.replace(k, v)
-
-if out_path == "-":
-    sys.stdout.write(tpl)
-else:
-    with open(out_path, "w") as f:
-        f.write(tpl)
-PYEOF
-    }
-
-    if ! _render_image_py "$image_file"; then
-        echo "[render] skip $service_name: not in $config_file or render failed"
+    # 渲染统一交给 render_image_dockerfile:
+    #   - 读 maozi-cloud-services.json 取该服务的 OTel / JVM / base_image 配置
+    #   - 传 skip-middleware: is_middleware=true 的服务退出码 3 (由 basics-all 编排)
+    # 退出码区分: 3 = is_middleware=true 跳过, 其他非零 = 不在 JSON 里 / 渲染失败
+    render_image_dockerfile "$service_name" "$image_file" "skip-middleware"
+    render_rc=$?
+    if [ "$render_rc" -eq 3 ]; then
+        echo "[render] skip $service_name: is_middleware=true, not managed by deploy scripts"
+        return 1
+    fi
+    if [ "$render_rc" -ne 0 ]; then
+        echo "[render] skip $service_name: not in config or render failed"
         return 1
     fi
 
@@ -229,66 +271,11 @@ if [ "${BASH_SOURCE[0]}" = "$0" ]; then
         echo "Services are defined in maozi-cloud-deploy-docker-image/maozi-cloud-services-image/maozi-cloud-services.json"
         exit 1
     fi
-    current_directory="$(cd "$(dirname "$0")" && pwd)"
-    repo_root="$(pwd)"
-
-    # 复用 render_and_build_image 里的 python 渲染, 但输出到 stdout (传 "-" 作为 out_path)
     # 独立运行时 current_directory 是本脚本所在目录 (与入口脚本同目录, maozi-cloud-deploy-docker-run),
     # 向上一级即到 maozi-cloud-deploy, 与函数内 ../ 逻辑一致
-    image_root="$current_directory/../maozi-cloud-deploy-docker-image/maozi-cloud-services-image"
-    config_file="$image_root/maozi-cloud-services.json"
-    template_file="$image_root/maozi-cloud-service-image.template"
+    current_directory="$(cd "$(dirname "$0")" && pwd)"
 
-    if [ ! -f "$config_file" ]; then
-        echo "config not found at $config_file" >&2; exit 1
-    fi
-    if [ ! -f "$template_file" ]; then
-        echo "template not found at $template_file" >&2; exit 1
-    fi
-    if ! command -v python3 >/dev/null 2>&1; then
-        echo "python3 not found in PATH" >&2; exit 1
-    fi
-
-    # 直接调 python, 不走 render_and_build_image (后者会触发 docker build)
-    if ! python3 - "$service_name" "$config_file" "$template_file" - <<'PYEOF'
-import json, sys
-service_name  = sys.argv[1]
-config_path   = sys.argv[2]
-template_path = sys.argv[3]
-with open(config_path) as f: cfg = json.load(f)
-d = cfg.get("defaults", {}) or {}
-svc = None
-for s in cfg.get("services", []):
-    if s.get("service_name") == service_name:
-        svc = s; break
-if svc is None:
-    sys.stderr.write("service '%s' not in %s\n" % (service_name, config_path))
-    sys.exit(1)
-otel      = bool(svc.get("opentelemetry"))
-jvm       = svc.get("jvm_params")  or d.get("jvm_params", "")
-base      = svc.get("base_image")  or d.get("base_image", "maozi-cloud-base-jdk:1.0.0")
-otel_flags = svc.get("otel_flags") or d.get("otel_flags", [])
-add_opens  = svc.get("add_opens")  or d.get("add_opens", [])
-cmd_parts = ["java -server"]
-if otel and otel_flags:
-    cmd_parts.extend(otel_flags)
-cmd_parts.append(jvm)
-if add_opens:
-    cmd_parts.extend(add_opens)
-cmd_parts.append("-jar ${APPLICATION_NAME}.jar")
-cmd_line = 'ENTRYPOINT ["/bin/sh", "-c", "exec ' + " \\\n  ".join(cmd_parts) + '"]'
-otel_yes  = "yes" if otel      else "no"
-with open(template_path) as f: tpl = f.read()
-for k, v in {
-    "__BASE_IMAGE__":        base,
-    "__SERVICE_NAME__":      service_name,
-    "__OTEL_YES_NO__":       otel_yes,
-    "__CMD_LINE__":          cmd_line,
-}.items():
-    tpl = tpl.replace(k, v)
-sys.stdout.write(tpl)
-PYEOF
-    then
-        exit 1
-    fi
+    # 复用 render_image_dockerfile, 输出到 stdout (传 "-" 作为 out_path), 不构建不写文件
+    # 不传 skip-middleware: dry-run 也可核对 is_middleware=true 服务的渲染结果
+    render_image_dockerfile "$service_name" "-" || exit 1
 fi

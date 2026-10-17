@@ -47,7 +47,7 @@
 		<!-- Spring Cloud Alibaba 版本 -->
 		<spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
 		<!-- Spring Boot Admin 监控组件版本 -->
-		<spring-boot-admin-starter.version>3.2.3</spring-boot-admin-starter.version>
+		<spring-boot-admin-starter.version>3.3.6</spring-boot-admin-starter.version>
 		<!-- Spring Component End -->
 
 

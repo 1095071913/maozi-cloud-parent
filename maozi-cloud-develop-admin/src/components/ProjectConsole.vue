@@ -221,7 +221,7 @@
                 <div class="pc-compose-desc">中间件容器编排 · 一键启停 · 实时资源监控</div>
               </div>
             </div>
-            <div class="pc-compose-head-ops">
+            <div class="pc-compose-head-ops basics-ops-row">
               <button class="pc-compose-refresh" type="button" title="刷新运行状态" @click="loadComposeStatuses">
                 <span class="refresh-ico" :class="{ spinning: statusLoading }">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -240,10 +240,12 @@
                 <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" /></svg>
                 全部重启
               </button>
-              <button class="svc-all-btn stop" type="button" @click="onCompose('all', 'stop')">
-                <svg viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2.2" /></svg>
-                全部关闭
-              </button>
+              <div class="svc-stop-stack">
+                <button class="svc-all-btn stop" type="button" @click="onCompose('all', 'stop')">
+                  <svg viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2.2" /></svg>
+                  全部关闭
+                </button>
+              </div>
               <button
                 class="pc-compose-refresh pc-collapse-btn"
                 type="button"
@@ -253,6 +255,17 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="pc-collapse-ico" :class="{ folded: basicsCollapsed }">
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
+              </button>
+              <button
+                class="svc-all-btn rebuild"
+                type="button"
+                title="强制 mvn 重建全部自研中间件镜像（monitor / sentinel 等），仅重启当前运行中的容器"
+                @click="onCompose('all', 'rebuild')"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z" />
+                </svg>
+                重新构建自研服务
               </button>
             </div>
           </div>
@@ -3291,7 +3304,7 @@ type LastAction =
   | { type: 'sshClone' }
   | { type: 'gitPull' }
   | { type: 'gitCheckout'; branch: string }
-  | { type: 'compose'; service: string; action: 'start' | 'stop' | 'restart' }
+  | { type: 'compose'; service: string; action: 'start' | 'stop' | 'restart' | 'rebuild' }
   | { type: 'adminStop' }
   | { type: 'hostsInit' }
   | { type: 'networkCreate' }
@@ -5710,40 +5723,53 @@ onUnmounted(() => {
   document.removeEventListener('visibilitychange', refreshGitOnFocus)
 })
 
-async function onCompose(service: string, action: 'start' | 'stop' | 'restart', skipConfirm = false): Promise<void> {
+async function onCompose(
+  service: string,
+  action: 'start' | 'stop' | 'restart' | 'rebuild',
+  skipConfirm = false
+): Promise<void> {
   const isAll = service === 'all'
   const isAllStart = isAll && action === 'start'
   const isAllStop = isAll && action === 'stop'
   const isAllRestart = isAll && action === 'restart'
+  const isRebuild = action === 'rebuild'
   const isRestart = action === 'restart'
   if (focusRunning((a) => a.type === 'compose' && a.service === service && a.action === action)) return
   const s = startSession(
     { type: 'compose', service, action },
     {
-      label: isAllStart
-        ? '全量启动'
-        : isAllStop
-          ? '全量关闭'
-          : isAllRestart
-            ? '全量重启'
-            : `${svcName(service)} ${action === 'start' ? '启动' : action === 'stop' ? '关闭' : '重启'}`,
+      label: isRebuild
+        ? '重建自研服务'
+        : isAllStart
+          ? '全量启动'
+          : isAllStop
+            ? '全量关闭'
+            : isAllRestart
+              ? '全量重启'
+              : `${svcName(service)} ${action === 'start' ? '启动' : action === 'stop' ? '关闭' : '重启'}`,
       icon: '🐳',
-      title: isAllStart
-        ? 'Docker 服务 · 全量中间件启动'
-        : isAllStop
-          ? 'Docker 服务 · 全量中间件关闭'
-          : isAllRestart
-            ? 'Docker 服务 · 全量中间件重启'
-            : `Docker 服务 · ${action === 'start' ? '启动' : action === 'stop' ? '关闭' : '重启'} ${svcName(service)}`,
-      sub: isAllStart
-        ? 'docker compose up -d · 实时输出'
-        : isAllStop
-          ? 'docker compose down · 实时输出'
-          : isAllRestart
-            ? 'docker compose down && docker compose up -d · 实时输出'
-            : isRestart
-              ? `docker compose stop + rm -f ${service} && docker compose up -d ${service} · 实时输出`
-              : `docker compose ${action === 'start' ? `up -d ${service}` : `stop + rm -f ${service}`} · 实时输出`
+      title: isRebuild
+        ? 'Docker 服务 · 重新构建自研中间件'
+        : isAllStart
+          ? 'Docker 服务 · 全量中间件启动'
+          : isAllStop
+            ? 'Docker 服务 · 全量中间件关闭'
+            : isAllRestart
+              ? 'Docker 服务 · 全量中间件重启'
+              : `Docker 服务 · ${action === 'start' ? '启动' : action === 'stop' ? '关闭' : '重启'} ${svcName(service)}`,
+      sub: isRebuild
+        ? 'bash maozi-cloud-build-basics-force.sh · 强制 mvn 构建 + 重建镜像 · 实时输出'
+        : isAllStart
+          ? 'bash maozi-cloud-deploy-basics-all.sh · 补齐缺失镜像并启动全部 · 实时输出'
+          : isAllStop
+            ? 'docker compose down · 实时输出'
+            : isAllRestart
+              ? 'docker compose down && docker compose up -d · 实时输出'
+              : isRestart
+                ? `docker compose stop + rm -f ${service} && docker compose up -d ${service} · 实时输出`
+                : action === 'start'
+                  ? `bash maozi-cloud-deploy-basics-all.sh ${service} · 补齐缺失镜像并启动 · 实时输出`
+                  : `docker compose stop + rm -f ${service} · 实时输出`
     }
   )
   try {
@@ -5752,17 +5778,19 @@ async function onCompose(service: string, action: 'start' | 'stop' | 'restart', 
     if (!r.ok && !stopRequestedSids.has(s.id)) ElMessage.error(r.error ?? 'docker 操作失败')
     else if (r.ok && !stopRequestedSids.has(s.id)) {
       ElMessage.success(
-        isAllStart
-          ? '全部基础中间件已启动'
-          : isAllStop
-            ? '全部基础中间件已关闭'
-            : isAllRestart
-              ? '全部基础中间件已重启'
-              : action === 'start'
-                ? `服务 ${svcName(service)} 已启动`
-                : action === 'stop'
-                  ? `服务 ${svcName(service)} 已关闭`
-                  : `服务 ${svcName(service)} 已重启`
+        isRebuild
+          ? '自研中间件镜像已重建并重启运行中的容器'
+          : isAllStart
+            ? '全部基础中间件已启动'
+            : isAllStop
+              ? '全部基础中间件已关闭'
+              : isAllRestart
+                ? '全部基础中间件已重启'
+                : action === 'start'
+                  ? `服务 ${svcName(service)} 已启动`
+                  : action === 'stop'
+                    ? `服务 ${svcName(service)} 已关闭`
+                    : `服务 ${svcName(service)} 已重启`
       )
       await loadComposeStatuses()
     }
@@ -7913,6 +7941,30 @@ onMounted(loadState)
   gap: 9px;
 }
 
+/* 全部关闭：上方 42px 为悬置的重建按钮预留空间，行高不变；容器宽度只由全部关闭决定 */
+.svc-stop-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 42px;
+}
+
+/* 重建按钮悬于操作行顶部、靠最右（右缘与收展按钮对齐），向左伸展；
+   绝对定位的收缩适应宽度会被钳制在容器宽内，显式按内容取宽 + 禁止换行 */
+.basics-ops-row .svc-all-btn.rebuild {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: max-content;
+  white-space: nowrap;
+}
+
+/* 基础服务操作行：定位锚点 + 底对齐——全部关闭仍与 全部启动/全部重启 同一水平线，重建按钮悬于其上 */
+.basics-ops-row {
+  position: relative;
+  align-items: flex-end;
+}
+
 /* 全量启停：翠绿渐变主按钮与浅红描边幽灵变体 */
 .svc-all-btn {
   display: inline-flex;
@@ -7974,6 +8026,69 @@ onMounted(loadState)
 
 .svc-all-btn.restart:hover {
   box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* 重建自研服务：极光蓝紫渐变 + 顶部高光 + 悬停光泽扫过（构建类主操作，与启停按钮区分）；
+   文字较长，按钮做长：内距 / 图文间距 / 字距均明显放宽，避免拥挤 */
+.svc-all-btn.rebuild {
+  position: relative;
+  overflow: hidden;
+  padding: 0 28px;
+  gap: 10px;
+  letter-spacing: 0.4px;
+  background:
+    radial-gradient(130% 150% at 18% 0%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 46%),
+    linear-gradient(135deg, #6f8dff 0%, #5b5ef2 46%, #8147f0 100%);
+  box-shadow:
+    0 4px 14px rgba(91, 94, 242, 0.34),
+    0 1px 3px rgba(49, 46, 129, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* 悬停光泽：斜切高光条自左向右扫过一次（不遮挡点击） */
+.svc-all-btn.rebuild::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -55%;
+  width: 38%;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-18deg);
+  transition: left 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  pointer-events: none;
+}
+
+.svc-all-btn.rebuild:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 22px rgba(91, 94, 242, 0.46),
+    0 2px 6px rgba(49, 46, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.svc-all-btn.rebuild:hover::after {
+  left: 118%;
+}
+
+/* 图标：悬停轻微回弹摆动（挥动扳手的意象） */
+.svc-all-btn.rebuild svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.svc-all-btn.rebuild:hover svg {
+  transform: rotate(-24deg);
+}
+
+.svc-all-btn.rebuild:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow:
+    0 3px 10px rgba(91, 94, 242, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 /* 刷新：方形图标按钮（加载时旋转） */

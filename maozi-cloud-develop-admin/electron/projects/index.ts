@@ -47,6 +47,12 @@ const REPO_URL = 'https://github.com/1095071913/maozi-cloud.git'
 /** 基础服务 docker compose 目录（相对项目根目录） */
 const COMPOSE_DIR =
   'maozi-cloud-script/maozi-cloud-deploy/maozi-cloud-deploy-docker/maozi-cloud-basics-docker'
+/** 基础服务一键部署脚本（相对项目根目录）：构建缺失的中间件镜像（mvn + buildx）后由 compose 拉起，无参全部 / 有参仅指定服务 */
+const BASICS_DEPLOY_SCRIPT =
+  'maozi-cloud-script/maozi-cloud-deploy/maozi-cloud-deploy-docker-run/maozi-cloud-deploy-basics-all.sh'
+/** 自研中间件服务强制重建脚本（相对项目根目录）：不检查已有镜像，强制 mvn + 重建全部中间件镜像，仅重启当前运行中的容器 */
+const BASICS_REBUILD_SCRIPT =
+  'maozi-cloud-script/maozi-cloud-deploy/maozi-cloud-deploy-docker-run/maozi-cloud-build-basics-force.sh'
 
 /** ===== SSH 远程服务器操作 ===== */
 interface SshTarget {
@@ -2274,7 +2280,10 @@ export function registerProjectHandlers(): void {
   })
 
   /**
-   * 基础服务启动/停止/重启：up -d <svc> / down / stop + rm <svc>（优雅停机，触发生命周期钩子），
+   * 基础服务启动/停止/重启/重建自研服务：
+   * 启动（全部/单服务）走 maozi-cloud-deploy-basics-all.sh——补齐缺失的中间件镜像（mvn + buildx）后由 compose 拉起，单服务启动传 compose 服务名；
+   * 重建（仅全部）走 maozi-cloud-build-basics-force.sh——强制 mvn 重建全部自研中间件镜像，仅重启当前运行中的容器；
+   * 停止 = down（全部）/ stop + rm（单服务，优雅停机，触发生命周期钩子），
    * 重启 = 先 stop + rm 移除容器再 up -d 重建，日志走 projects:scriptLog
    */
   ipcMain.handle('projects:composeAction', async (event, service: string, action: string, sidArg?: string) => {
@@ -2283,24 +2292,50 @@ export function registerProjectHandlers(): void {
       const b = getBinding()
       if (!b) throw new Error('尚未绑定项目')
       if (!/^[A-Za-z0-9_.-]+$/.test(String(service))) throw new Error('非法的服务名')
-      if (action !== 'start' && action !== 'stop' && action !== 'restart') throw new Error('非法的操作')
+      if (action !== 'start' && action !== 'stop' && action !== 'restart' && action !== 'rebuild') {
+        throw new Error('非法的操作')
+      }
       await checkDockerCompose()
       const dir = projPath(COMPOSE_DIR)
       if (!(await projFileExists(path.join(COMPOSE_DIR, 'docker-compose.yml')))) {
         throw new Error(`未找到 ${COMPOSE_DIR}/docker-compose.yml`)
       }
       const isAll = service === 'all'
+      // 启动（全部/单服务）与重建自研服务改走一键部署脚本：脚本自身按 compose 服务名校验参数并决定构建范围，
+      // 可能触发 mvn 增量构建 + buildx，超时放宽到与编译启动脚本一致的 30 分钟
+      if (action === 'start' || action === 'rebuild') {
+        const scriptRel = action === 'start' ? BASICS_DEPLOY_SCRIPT : BASICS_REBUILD_SCRIPT
+        if (action === 'rebuild' && !isAll) throw new Error('重建自研服务仅支持全部执行')
+        if (!(await projFileExists(scriptRel))) throw new Error(`未找到脚本：${scriptRel}`)
+        const scriptArgs = action === 'start' && !isAll ? [service] : []
+        if (!event.sender.isDestroyed()) {
+          event.sender.send('projects:scriptLog', {
+            kind: 'line',
+            text: `▶ bash ${scriptRel}${scriptArgs.length ? ` ${service}` : ''}`,
+            sid
+          })
+        }
+        try {
+          await projStream(event.sender, 'projects:scriptLog', 'bash', [projPath(scriptRel), ...scriptArgs], {
+            timeoutMs: 30 * 60_000,
+            sid,
+            // 镜像拉取 / maven 依赖下载经系统代理（远程绑定时 extraEnv 由 SSH 前缀忽略，无副作用）
+            extraEnv: await getProxyEnv()
+          })
+        } catch (err) {
+          const msg = (err as Error).message
+          throw new Error(msg.startsWith('exit ') ? `脚本执行失败（${msg}），详见日志` : msg)
+        }
+        return { ok: true }
+      }
+      // 此处 action 只剩 stop / restart（start 已提前返回）：重启 = 先停移除再 up -d 重建
       const cmdList: string[][] = isAll
-        ? action === 'start'
-          ? [['compose', 'up', '-d']]
-          : action === 'stop'
-            ? [['compose', 'down']]
-            : [['compose', 'down'], ['compose', 'up', '-d']]
-        : action === 'start'
-          ? [['compose', 'up', '-d', service]]
-          : action === 'stop'
-            ? [['compose', 'stop', service], ['compose', 'rm', service]]
-            : [['compose', 'stop', service], ['compose', 'rm', service], ['compose', 'up', '-d', service]]
+        ? action === 'stop'
+          ? [['compose', 'down']]
+          : [['compose', 'down'], ['compose', 'up', '-d']]
+        : action === 'stop'
+          ? [['compose', 'stop', service], ['compose', 'rm', service]]
+          : [['compose', 'stop', service], ['compose', 'rm', service], ['compose', 'up', '-d', service]]
       for (const args of cmdList) {
         if (!event.sender.isDestroyed()) {
           event.sender.send('projects:scriptLog', {

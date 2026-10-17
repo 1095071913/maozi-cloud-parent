@@ -10,8 +10,11 @@
 #       * prometheus  指标采集与存储
 #       * grafana     指标/日志/追踪可视化
 #       * promtail    日志采集 agent，采集共享日志目录后推送至 loki
-# 注: maozi-cloud-gateway-service / maozi-cloud-monitor-service 已迁往
-#     maozi-cloud-business-docker/maozi-cloud-services-distributeds-docker.yml, 与 system / oauth 同层管理.
+# 注: maozi-cloud-gateway-service 已迁往 maozi-cloud-business-docker/
+#     maozi-cloud-services-distributeds-docker.yml, 与 system / oauth 同层管理;
+#     maozi-cloud-monitor-service / maozi-cloud-sentinel-service 属中间件服务
+#     (maozi-cloud-services.json 里 is_middleware=true), 由 maozi-cloud-deploy-basics-all.sh
+#     构建镜像并随本 compose 启动 (distributed / distributed-force 部署链路会跳过它们).
 # ------------------------------------------------------------
 # 启动前必须先创建外部网络：
 #     docker network create maozi-cloud-network
@@ -195,18 +198,6 @@ services:
       maozi-cloud-basic-nacos:
         condition: service_healthy
 
-  # Sentinel Dashboard —— 流量控制/熔断降级规则控制台
-  # Web 控制台: http://localhost:8858 (默认账号 sentinel/sentinel)
-  # 宿主机端口对齐 nacos 客户端默认配置 spring.cloud.sentinel.transport.dashboard: localhost:8858
-  maozi-cloud-basic-sentinel:
-    restart: always
-    image: bladex/sentinel-dashboard:1.8.8
-    container_name: maozi-cloud-basic-sentinel
-    environment:
-      TZ: Asia/Shanghai
-    ports:
-      - 8858:8858   # Web 控制台 + 客户端通信端口
-
   maozi-cloud-basic-xxljob:
     restart: always
     image: xuxueli/xxl-job-admin:3.4.2
@@ -245,6 +236,58 @@ services:
       maozi-cloud-basic-mysql:
         condition: service_healthy
 
+
+  # ============ Java 中间件服务 (is_middleware=true) ============
+  # 由 maozi-cloud-deploy-basics-all.sh 判断 maozi-cloud-*-service:latest 镜像是否存在,
+  # 不存在则 mvn -pl <module> -amd 构建 jar 并渲染 Dockerfile 构建镜像 (不在此启动),
+  # 最后统一由本 compose 拉起
+  maozi-cloud-basic-monitor:
+    image: maozi-cloud-basic-monitor:latest
+    container_name: maozi-cloud-basic-monitor
+    restart: always
+    ports:
+      - 2000:2000
+    environment:
+      JVM_PARAMS: ${APPLICATION_JVM_PARAMS}
+      APPLICATION_PORT: 2000
+    stop_grace_period: 150s
+    healthcheck:
+      # $$ 双转义: 端口取容器运行时环境变量 APPLICATION_PORT, 随各服务端口配置自动生效
+      # liveness(存活) 与 readiness(就绪) 探针均返回 200 才视为健康
+      test: ["CMD-SHELL", "curl -sf http://localhost:$$APPLICATION_PORT/actuator/health/liveness && curl -sf http://localhost:$$APPLICATION_PORT/actuator/health/readiness"]
+      interval: 5s      # 每 30 秒检查一次
+      timeout: 5s        # 单次检查超时时间
+      retries: 3         # 连续失败 5 次后标记 unhealthy
+      start_period: 60s # 启动宽限期(Java 服务启动较慢), 宽限期内失败不计入重试
+    depends_on:
+      maozi-cloud-basic-nacos:
+        condition: service_healthy
+
+  # Sentinel —— 流控规则控制台 (Dashboard), 规则持久化到 mysql / nacos
+  maozi-cloud-basic-sentinel:
+    image: maozi-cloud-basic-sentinel:latest
+    container_name: maozi-cloud-basic-sentinel
+    restart: always
+    ports:
+      - 8858:8858
+    environment:
+      AUTH_USERNAME: sentinel
+      AUTH_PASSWORD: sentinel
+      MYSQL_HOST: maozi-cloud-basic-mysql
+      MYSQL_PORT: 3306
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: maozi-cloud-sentinel-middleware-db
+      NACOS_SERVER: maozi-cloud-basic-nacos:8848
+      NACOS_NAMESPACE: middleware
+      NACOS_GROUP: SENTINEL_GROUP
+      METRICE_RETENTION_DAYS: 30
+      METRIC_AGGREGATE_SECONDS: 10
+    depends_on:
+      maozi-cloud-basic-mysql:
+        condition: service_healthy
+      maozi-cloud-basic-nacos:
+        condition: service_healthy
 
 # 外部网络：所有 Compose 通过该网络互通，启动前需先手动创建
 networks:

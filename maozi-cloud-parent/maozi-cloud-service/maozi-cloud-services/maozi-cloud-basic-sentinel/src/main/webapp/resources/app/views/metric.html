@@ -1,0 +1,570 @@
+<style>
+  .mrt-page { padding: 2px 4px 30px; }
+
+  /* ---------- 头部横幅 ---------- */
+  .mrt-page .mrt-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0 16px;
+    padding: 18px 24px;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(135deg, #1d9d74 0%, #157a5a 60%, #106048 100%);
+    box-shadow: 0 4px 14px rgba(21, 122, 90, 0.28);
+  }
+  .mrt-page .mrt-hero-title { font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+  .mrt-page .mrt-hero-title i { margin-right: 10px; opacity: .9; }
+  .mrt-page .mrt-hero-app { margin-top: 5px; font-size: 13px; opacity: .85; }
+  .mrt-page .mrt-hero-app i { margin-right: 6px; }
+  .mrt-page .mrt-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    color: #f2fffa;
+    background: linear-gradient(135deg, rgba(255,255,255,.24), rgba(255,255,255,.10));
+    border: 1px solid rgba(255,255,255,.38);
+    box-shadow: 0 4px 14px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.30);
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .mrt-page .mrt-live:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.34);
+  }
+  .mrt-page .mrt-live-num {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    background: rgba(255,255,255,.24);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 8px;
+    padding: 1px 8px;
+    margin: 0 3px;
+  }
+  .mrt-page .mrt-live-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 6px rgba(125,255,205,.85); }
+  .mrt-page .mrt-live-on .mrt-live-dot { background: #7dffcd; animation: mrt-pulse 1.6s infinite; }
+  .mrt-page .mrt-live-off .mrt-live-dot { background: #ffd666; box-shadow: 0 0 6px rgba(255,214,102,.85); animation: none; }
+  @keyframes mrt-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(125, 255, 205, .6); }
+    70% { box-shadow: 0 0 0 7px rgba(125, 255, 205, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(125, 255, 205, 0); }
+  }
+
+  /* ---------- 查询工具栏 ---------- */
+  .mrt-page .mrt-toolbar {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(31, 45, 61, .05);
+  }
+  .mrt-page .mrt-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7a8794;
+  }
+  .mrt-page .mrt-field label i { margin-right: 4px; }
+
+  /* ---------- 自定义日期时间选择器 ---------- */
+  .mrt-page mrt-datetime { display: block; }
+  .mrt-page .mrt-dt { position: relative; width: 200px; }
+  .mrt-page .mrt-dt-input {
+    width: 100%;
+    height: 34px;
+    padding: 0 32px 0 10px;
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color .18s, box-shadow .18s;
+  }
+  .mrt-page .mrt-dt:hover .mrt-dt-input {
+    border-color: #1d9d74;
+    box-shadow: 0 0 0 3px rgba(29, 157, 116, .12);
+  }
+  .mrt-page .mrt-dt.open .mrt-dt-input {
+    border-color: #1d9d74;
+    box-shadow: 0 0 0 3px rgba(29, 157, 116, .12);
+  }
+  .mrt-page .mrt-dt-icon {
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #98a3ad;
+    pointer-events: none;
+  }
+  .mrt-page .mrt-dt.open .mrt-dt-icon { color: #1d9d74; }
+  .mrt-page .mrt-dt-panel {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1050;
+    width: 262px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(31, 45, 61, .16);
+  }
+  .mrt-page .mrt-dt-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .mrt-page .mrt-dt-title { font-size: 13px; font-weight: 600; color: #2f3941; }
+  .mrt-page .mrt-dt-nav {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    color: #7a8794;
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-dt-nav:hover { color: #1d9d74; border-color: #1d9d74; }
+  .mrt-page .mrt-dt-weeks {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+  .mrt-page .mrt-dt-weeks span { padding: 4px 0; font-size: 11px; color: #98a3ad; text-align: center; }
+  .mrt-page .mrt-dt-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+  .mrt-page .mrt-dt-day {
+    height: 30px;
+    font-size: 12px;
+    color: #4a5560;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .mrt-page .mrt-dt-day:hover { background: #eef7f3; }
+  .mrt-page .mrt-dt-day.muted { color: #c6cdd3; }
+  .mrt-page .mrt-dt-day.muted:hover { background: transparent; }
+  .mrt-page .mrt-dt-day.today { color: #1d9d74; font-weight: 600; box-shadow: inset 0 0 0 1px #1d9d74; }
+  .mrt-page .mrt-dt-day.selected,
+  .mrt-page .mrt-dt-day.selected:hover { background: #1d9d74; color: #fff; box-shadow: none; }
+  .mrt-page .mrt-dt-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f2f5;
+    color: #7a8794;
+  }
+  .mrt-page .mrt-dt-time select {
+    height: 28px;
+    padding: 0 4px;
+    font-size: 12px;
+    color: #4a5560;
+    background: #fff;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+  }
+  .mrt-page .mrt-dt-time select:hover { border-color: #1d9d74; }
+  .mrt-page .mrt-dt-colon { font-weight: 600; }
+  .mrt-page .mrt-dt-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .mrt-page .mrt-dt-btn {
+    height: 28px;
+    padding: 0 14px;
+    font-size: 12px;
+    color: #4a5560;
+    background: #fff;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-dt-btn:hover { color: #1d9d74; border-color: #1d9d74; }
+  .mrt-page .mrt-dt-ok {
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(135deg, #1d9d74, #178a66);
+  }
+  .mrt-page .mrt-dt-ok:hover { color: #fff; filter: brightness(1.06); }
+  .mrt-page .mrt-arrow { padding-bottom: 8px; color: #a5b0ba; }
+  .mrt-page .mrt-btn {
+    height: 34px;
+    padding: 0 16px;
+    font-size: 13px;
+    color: #4a5560;
+    background: #fff;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-btn i { margin-right: 5px; }
+  .mrt-page .mrt-btn:hover { color: #1d9d74; border-color: #1d9d74; }
+  .mrt-page .mrt-btn-primary {
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    background: linear-gradient(135deg, #1d9d74, #178a66);
+    box-shadow: 0 2px 6px rgba(29, 157, 116, .35);
+  }
+  .mrt-page .mrt-btn-primary:hover { color: #fff; filter: brightness(1.06); }
+  .mrt-page .mrt-chips {
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    border-radius: 999px;
+    background: #f2f4f6;
+  }
+  .mrt-page .mrt-chip {
+    padding: 6px 13px;
+    font-size: 12px;
+    color: #66727e;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-chip:hover { color: #1d9d74; }
+  .mrt-page .mrt-refresh { display: inline-flex; align-items: center; gap: 6px; margin-left: 10px; color: #5f6b74; }
+  .mrt-page .mrt-refresh i { color: #1d9d74; transition: transform .45s ease; }
+  .mrt-page .mrt-refresh:hover i { transform: rotate(180deg); }
+  .mrt-page .mrt-refresh-select {
+    -webkit-appearance: none; appearance: none;
+    border: 1px solid #d7dee4; border-radius: 18px;
+    padding: 5px 26px 5px 12px; font-size: 12px; font-weight: 500;
+    color: #2f4147;
+    background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235f6b74' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center / 10px 6px;
+    outline: none; cursor: pointer;
+    box-shadow: 0 1px 3px rgba(31,56,61,.06);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .mrt-page .mrt-refresh-select:hover { border-color: #1d9d74; box-shadow: 0 3px 8px rgba(29,157,116,.15); }
+  .mrt-page .mrt-refresh-select:focus { border-color: #1d9d74; box-shadow: 0 0 0 3px rgba(29,157,116,.14); }
+  .mrt-page .mrt-chip.active {
+    color: #1d9d74;
+    font-weight: 600;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+  }
+  .mrt-page .mrt-toolbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .mrt-page .mrt-search {
+    width: 190px;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color .18s, box-shadow .18s;
+  }
+  .mrt-page .mrt-search:focus {
+    border-color: #1d9d74;
+    box-shadow: 0 0 0 3px rgba(29, 157, 116, .12);
+  }
+
+  /* ---------- 资源卡片 ---------- */
+  .mrt-page .mrt-card {
+    margin-bottom: 18px;
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .mrt-page .mrt-card:hover {
+    box-shadow: 0 8px 24px rgba(31, 45, 61, .09);
+    transform: translateY(-2px);
+  }
+  .mrt-page .mrt-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #f0f2f5;
+    background: linear-gradient(180deg, #fafbfc, #fff);
+  }
+  .mrt-page .mrt-card-title {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2f3941;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+  .mrt-page .mrt-card-title i { margin-right: 8px; color: #1d9d74; }
+  .mrt-page .mrt-card-badge {
+    flex-shrink: 0;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1d9d74;
+    background: rgba(29, 157, 116, .1);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .mrt-page .mrt-card-body { display: flex; flex-wrap: wrap; }
+  .mrt-page .mrt-chart-wrap { flex: 1 1 55%; min-width: 320px; padding: 8px 4px 4px 10px; }
+  .mrt-page .mrt-table-wrap { flex: 1 1 40%; min-width: 300px; padding: 14px 16px; }
+
+  /* ---------- 数据表格 ---------- */
+  .mrt-page .mrt-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+  .mrt-page .mrt-table th {
+    padding: 8px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5a6672;
+    text-align: center;
+    background: #f7f9fa;
+    border-bottom: 1px solid #e8ebef;
+  }
+  .mrt-page .mrt-table td {
+    padding: 7px 6px;
+    text-align: center;
+    color: #4a5560;
+    border-bottom: 1px solid #f2f4f6;
+    font-variant-numeric: tabular-nums;
+  }
+  .mrt-page .mrt-table tr:hover td { background: #f6fbf9; }
+  .mrt-page .mrt-table tr:last-child td { border-bottom: none; }
+  .mrt-page .g2-legend { border: none !important; margin-top: 2px; text-align: center; }
+  .mrt-page .g2-legend .g2-legend-list { padding: 0; }
+  .mrt-page .g2-legend .g2-legend-list-item { cursor: pointer; margin: 0 10px; font-size: 12px; color: #4a5a61; }
+  .mrt-page .g2-legend .g2-legend-list-item:hover { color: #1d9d74; }
+  .mrt-page .mrt-chart-hint { font-size: 11px; color: #86909c; text-align: right; padding: 0 4px 2px 0; }
+  .mrt-page .mrt-td-pass { color: #1d9d74; font-weight: 600; }
+  .mrt-page .mrt-td-block { color: #F53F3F; font-weight: 600; }
+  .mrt-page .mrt-td-rt { color: #3469ff; }
+  .mrt-page .mrt-td-muted { color: #c3cad1; }
+
+  /* ---------- 表格迷你分页器 ---------- */
+  .mrt-page .mrt-tbl-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .mrt-page .mrt-tbl-pager-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    color: #7a8794;
+    background: #fff;
+    border: 1px solid #e8ebef;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-tbl-pager-btn:hover:not([disabled]) { color: #1d9d74; border-color: #1d9d74; }
+  .mrt-page .mrt-tbl-pager-btn[disabled] { color: #c6cdd3; border-color: #eef0f2; cursor: not-allowed; }
+  .mrt-page .mrt-tbl-pager-info { font-size: 12px; color: #7a8794; }
+  .mrt-page .mrt-tbl-pager-info b { color: #1d9d74; }
+
+  /* ---------- 空状态 ---------- */
+  .mrt-page .mrt-empty {
+    padding: 60px 20px;
+    text-align: center;
+    background: #fff;
+    border: 1px dashed #dce1e6;
+    border-radius: 10px;
+  }
+  .mrt-page .mrt-empty i { font-size: 46px; color: #c9d3db; }
+  .mrt-page .mrt-empty .mrt-empty-title {
+    margin: 14px 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a5560;
+  }
+  .mrt-page .mrt-empty .mrt-empty-sub { margin: 0; font-size: 12px; color: #98a3ad; }
+
+  /* ---------- 分页 ---------- */
+  .mrt-page .mrt-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .mrt-page .mrt-footer-info { font-size: 12px; color: #7a8794; }
+  .mrt-page .mrt-footer-info b { color: #1d9d74; }
+  .mrt-page .mrt-footer .pagination { margin: 0; }
+  .mrt-page .mrt-footer .pagination > li > a,
+  .mrt-page .mrt-footer .pagination > li > span {
+    margin: 0 2px;
+    color: #4a5560;
+    border: 1px solid #e8ebef;
+    border-radius: 6px !important;
+    transition: all .18s;
+  }
+  .mrt-page .mrt-footer .pagination > li > a:hover {
+    color: #1d9d74;
+    border-color: #1d9d74;
+    background: #fff;
+  }
+  .mrt-page .mrt-footer .pagination > .active > a,
+  .mrt-page .mrt-footer .pagination > .active > a:hover,
+  .mrt-page .mrt-footer .pagination > .active > a:focus {
+    color: #fff;
+    background: #1d9d74;
+    border-color: #1d9d74;
+  }
+</style>
+
+<div class="mrt-page">
+
+  <!-- 头部横幅 -->
+  <div class="mrt-hero">
+    <div>
+      <div class="mrt-hero-title"><i class="fa fa-area-chart" aria-hidden="true"></i>实时监控</div>
+      <div class="mrt-hero-app"><i class="fa fa-cube" aria-hidden="true"></i>{{app}}</div>
+    </div>
+    <div class="mrt-live" ng-class="isRealtimeQuery() ? 'mrt-live-on' : 'mrt-live-off'">
+      <span class="mrt-live-dot"></span>
+      <span ng-if="isRealtimeQuery() && refreshIntervalMs > 0">实时刷新中 · 每<span class="mrt-live-num">{{refreshIntervalMs / 1000}}</span>秒</span>
+      <span ng-if="isRealtimeQuery() && refreshIntervalMs == 0">实时数据 · 自动刷新已关闭</span>
+      <span ng-if="!isRealtimeQuery()">历史区间 · 不自动刷新</span>
+    </div>
+  </div>
+
+  <!-- 查询工具栏 -->
+  <form class="mrt-toolbar" ng-submit="queryByTime()" novalidate>
+    <div class="mrt-field">
+      <label><i class="fa fa-clock-o" aria-hidden="true"></i>开始时间</label>
+      <mrt-datetime ng-model="startTime"></mrt-datetime>
+    </div>
+    <span class="mrt-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+    <div class="mrt-field">
+      <label><i class="fa fa-clock-o" aria-hidden="true"></i>结束时间</label>
+      <mrt-datetime ng-model="endTime"></mrt-datetime>
+    </div>
+    <button type="submit" class="mrt-btn mrt-btn-primary"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
+    <span class="mrt-chips">
+      <button type="button" class="mrt-chip" ng-repeat="r in quickRanges"
+        ng-class="{active: activeQuickMinutes === r.minutes}" ng-click="useQuickRange(r.minutes)">{{r.label}}</button>
+    </span>
+    <span class="mrt-refresh" title="实时数据的自动刷新周期">
+      <i class="fa fa-refresh" aria-hidden="true"></i>
+      <select class="mrt-refresh-select" ng-model="refreshIntervalMs"
+        ng-options="opt.ms as opt.label for opt in refreshOptions"
+        ng-change="changeRefreshInterval()"></select>
+    </span>
+    <span class="mrt-toolbar-right">
+      <input class="mrt-search" type="text" placeholder="搜索资源关键字" ng-model="serviceQuery" ng-change="searchService()">
+      <button type="button" class="mrt-btn" ng-click="setDescOrder()" ng-if="!isDescOrder">
+        <i class="fa fa-sort-amount-desc" aria-hidden="true"></i>降序
+      </button>
+      <button type="button" class="mrt-btn" ng-click="setAscOrder()" ng-if="isDescOrder">
+        <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>升序
+      </button>
+    </span>
+  </form>
+
+  <!-- 空状态 -->
+  <div class="mrt-empty" ng-if="emptyServices">
+    <i class="fa fa-line-chart" aria-hidden="true"></i>
+    <p class="mrt-empty-title">该时间范围内暂无监控数据</p>
+    <p class="mrt-empty-sub">试试调整开始/结束时间, 或点击上方的快捷时间范围</p>
+  </div>
+
+  <!-- 资源卡片列表 -->
+  <div ng-repeat="metric in metrics" ng-if="!emptyServices">
+    <span ng-if="$index == metrics.length-1" ng-init="initAllChart()"></span>
+    <div class="mrt-card" ng-if="$index < metrics.length-1">
+      <div class="mrt-card-head">
+        <span class="mrt-card-title"><i class="fa fa-link" aria-hidden="true"></i>{{metric.resource}}</span>
+        <span class="mrt-card-badge">#{{$index + 1}}</span>
+      </div>
+      <div class="mrt-card-body">
+        <div class="mrt-chart-wrap">
+          <div class="mrt-chart-hint">按住拖拽可框选时间区间查询</div>
+          <div id="chart{{$index}}"></div>
+        </div>
+        <div class="mrt-table-wrap">
+          <table class="mrt-table">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th title="聚合周期(N秒)内通过的请求总数">通过 QPS</th>
+                <th title="聚合周期(N秒)内拒绝的请求总数">拒绝 QPS</th>
+                <th title="聚合周期(N秒=METRIC_AGGREGATE_SECONDS)内全部请求的平均响应时间（毫秒）">响应时间 (ms)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="tableObj in metric.rowsDesc | limitTo : tblPageSize : (metric.tablePage - 1) * tblPageSize">
+                <td>{{tableObj.timestamp | date: showDate ? 'MM-dd HH:mm:ss' : 'HH:mm:ss'}}</td>
+                <td class="mrt-td-pass">{{tableObj.passQps | number : 1}}</td>
+                <td class="mrt-td-block">{{tableObj.blockQps | number : 1}}</td>
+                <td class="mrt-td-rt">{{tableObj.rt | number : 2}}</td>
+              </tr>
+              <tr ng-if="!metric.rowsDesc.length">
+                <td colspan="4" class="mrt-td-muted" style="padding: 18px 0;">该区间暂无数据点</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mrt-tbl-pager" ng-if="metric.rowsDesc.length">
+            <button type="button" class="mrt-tbl-pager-btn" ng-click="changeTablePage(metric, -1)"
+              ng-disabled="metric.tablePage <= 1" title="上一页"><i class="fa fa-chevron-left"></i></button>
+            <span class="mrt-tbl-pager-info">
+              第 <b>{{metric.tablePage}}</b> / <b>{{metric.tblTotal}}</b> 页 · 共 {{metric.rowsDesc.length}} 条
+            </span>
+            <button type="button" class="mrt-tbl-pager-btn" ng-click="changeTablePage(metric, 1)"
+              ng-disabled="metric.tablePage >= metric.tblTotal" title="下一页"><i class="fa fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:none;">
+    <li dir-paginate="empty in emptyObjs | itemsPerPage : servicePageConfig.pageSize"
+      current-page="servicePageConfig.currentPageIndex" pagination-id="servicesPagination"></li>
+  </div>
+
+  <!-- 分页(区间内无资源时隐藏, 页面仅展示空态提示) -->
+  <div class="mrt-footer" ng-if="!emptyServices">
+    <div class="mrt-footer-info">
+      共 <b>{{emptyObjs.length}}</b> 个资源&nbsp;&nbsp;|&nbsp;&nbsp;每页 <b>{{servicePageConfig.pageSize}}</b> 个&nbsp;&nbsp;|&nbsp;&nbsp;第
+      <b>{{servicePageConfig.currentPageIndex}}</b> / <b>{{servicePageConfig.totalPage || 1}}</b> 页
+    </div>
+    <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html"
+      pagination-id="servicesPagination" on-page-change="pageChanged(newPageNumber)">
+    </dir-pagination-controls>
+  </div>
+
+</div>
