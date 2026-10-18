@@ -148,13 +148,10 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         }
         // 数据全为 0 时避免 Y 轴退化成 [0,0] 导致曲线不可见
         maxQps = Math.max(maxQps, 1);
-        // 横轴右端固定为查询窗口 endTime: 实时模式下始终是当前时间, 数据滞后/断流时
-        // 曲线不到右边缘, 一眼可见; 横轴左端为窗口起点, 但与窗口相交的聚合桶(桶起点
-        // 经网格对齐查询进入, 可能早于窗口起点)需延伸到最早数据点, 否则点落在轴外被裁剪
+        // 横轴严格与查询组件的开始/结束时间对齐: 左端为 startTime, 右端为 endTime
+        // (实时模式下右端始终是当前时间, 数据滞后/断流时曲线不到右边缘, 一眼可见);
+        // 与窗口相交的聚合桶(桶起点经网格对齐查询进入, 可能早于窗口起点)落在轴外被裁剪
         var axisStart = $scope.startTime instanceof Date ? $scope.startTime.getTime() : null;
-        if (metric.data && metric.data.length && axisStart !== null && metric.data[0].timestamp < axisStart) {
-          axisStart = metric.data[0].timestamp;
-        }
         chart.scale('timestamp', {
           type: 'time',
           mask: 'YYYY-MM-DD HH:mm:ss',
@@ -174,6 +171,19 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
           fine: true,
           alias: '拒绝 QPS',
         });
+        // 线/点图层统一绑定 passLine/blockLine(序列按自身非零数据画脉冲, 其余 null 断线)。
+        // passLine 为首个 Y 字段 → 刻度画在左侧; blockLine 为第二 Y 字段(默认排右侧),
+        // 其坐标轴整体隐藏, 避免右侧出现重复刻度
+        chart.scale('passLine', {
+          min: 0,
+          max: maxQps,
+          fine: true
+        });
+        chart.scale('blockLine', {
+          min: 0,
+          max: maxQps,
+          fine: true
+        });
         chart.scale('rt', {
           min: 0,
           fine: true,
@@ -183,6 +193,10 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
           label: null
         });
         chart.axis('blockQps', {
+          grid: null,
+          label: null
+        });
+        chart.axis('blockLine', {
           grid: null,
           label: null
         });
@@ -263,32 +277,102 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         // 置为半径 0 + 完全透明(alpha=0, canvas 不产生像素); line 用原始字段, 曲线连续。
         // 空档内部补 null 断线留白(仅数据点 ±N 秒位置补 0 保持 0→数据→0 脉冲形态)
         var chartData = [];
+        // 各序列只在自身非零数据点及其前后 N 秒边缘画线(0→数据→0 脉冲),
+        // 其余位置 passLine/blockLine 置 null —— 拒绝 QPS 为 0 的时间段
+        // 不再画贴 0 的红线(整窗序列级显隐仍由 hasPass/hasBlock 控制)
+        var passTs = {};
+        var blockTs = {};
+        var stepSec = $scope.aggregateSeconds > 0 ? $scope.aggregateSeconds : 10;
         for (var d in metric.data) {
           var item = metric.data[d];
+          if (item.passQps > 0) {
+            passTs[Math.round(item.timestamp / 1000)] = true;
+          }
+          if (item.blockQps > 0) {
+            blockTs[Math.round(item.timestamp / 1000)] = true;
+          }
+        }
+        // 以秒值组行并补齐序列脉冲边缘行(非零点 ±N 秒, 数据节奏判定跳过补点时缺失)。
+        // 所有行的时间都夹在查询窗口内(与窗口相交的聚合桶起点可能早于窗口起点):
+        // 值保留显示、时间取窗口边界, 保证横轴起止与查询组件的开始/结束时间严格一致
+        var rowBySec = {};
+        var lineRows = [];
+        var winStartSec = $scope.startTime instanceof Date ? Math.round($scope.startTime.getTime() / 1000) : null;
+        var winEndSec = $scope.endTime instanceof Date ? Math.round($scope.endTime.getTime() / 1000) : null;
+        function clampSec(sec) {
+          if (winStartSec !== null && sec < winStartSec) {
+            return winStartSec;
+          }
+          if (winEndSec !== null && sec > winEndSec) {
+            return winEndSec;
+          }
+          return sec;
+        }
+        function ensureRow(sec) {
+          if (!rowBySec[sec]) {
+            rowBySec[sec] = { sec: sec, timestamp: sec * 1000, passQps: 0, blockQps: 0 };
+            lineRows.push(rowBySec[sec]);
+          }
+          return rowBySec[sec];
+        }
+        for (var d in metric.data) {
+          var item = metric.data[d];
+          var sec = clampSec(Math.round(item.timestamp / 1000));
+          var row = ensureRow(sec);
+          row.passQps = item.passQps;
+          row.blockQps = item.blockQps;
+        }
+        // 窗口外的序列脉冲边缘行不生成
+        function addEdgeRow(sec) {
+          if (winStartSec !== null && sec < winStartSec) {
+            return;
+          }
+          if (winEndSec !== null && sec > winEndSec) {
+            return;
+          }
+          ensureRow(sec);
+        }
+        for (var ps in passTs) {
+          addEdgeRow(Number(ps) - stepSec);
+          addEdgeRow(Number(ps) + stepSec);
+        }
+        for (var bs in blockTs) {
+          addEdgeRow(Number(bs) - stepSec);
+          addEdgeRow(Number(bs) + stepSec);
+        }
+        lineRows.sort(function (a, b) { return a.sec - b.sec; });
+        for (var ri = 0; ri < lineRows.length; ri++) {
+          var row = lineRows[ri];
+          var passLineVal = row.passQps > 0 ? row.passQps
+            : (passTs[row.sec - stepSec] || passTs[row.sec + stepSec] ? 0 : null);
+          var blockLineVal = row.blockQps > 0 ? row.blockQps
+            : (blockTs[row.sec - stepSec] || blockTs[row.sec + stepSec] ? 0 : null);
           chartData.push({
-            timestamp: item.timestamp,
-            passQps: item.passQps,
-            blockQps: item.blockQps,
-            passFlag: item.passQps > 0 ? 1 : 0,
-            blockFlag: item.blockQps > 0 ? 1 : 0
+            timestamp: row.timestamp,
+            passQps: row.passQps,
+            blockQps: row.blockQps,
+            passLine: passLineVal,
+            blockLine: blockLineVal,
+            passFlag: row.passQps > 0 ? 1 : 0,
+            blockFlag: row.blockQps > 0 ? 1 : 0
           });
         }
         chart.source(chartData);
         if (hasPass) {
-          var linePass = chart.line().position('timestamp*passQps').size(2).color('#1d9d74').opacity(0.9).shape('smooth');
+          var linePass = chart.line().position('timestamp*passLine').size(2).color('#1d9d74').opacity(0.9).shape('smooth');
           linePass.__mrtField = 'passQps';
           // 圆点图层关闭 tooltip: 其 passFlag/blockFlag 映射字段(size/opacity)会被默认
           // tooltip 收集显示出来; 线图层字段干净, 由它提供"通过 QPS"提示项
-          var ptPass = chart.point().position('timestamp*passQps').shape('circle').color('#1d9d74')
+          var ptPass = chart.point().position('timestamp*passLine').shape('circle').color('#1d9d74')
             .size('passFlag', function (v) { return v > 0 ? 3 : 0; })
             .opacity('passFlag', function (v) { return v > 0 ? 0.85 : 0; })
             .tooltip(false);
           ptPass.__mrtField = 'passQps';
         }
         if (hasBlock) {
-          var lineBlock = chart.line().position('timestamp*blockQps').size(2).color('#F53F3F').opacity(0.9).shape('smooth');
+          var lineBlock = chart.line().position('timestamp*blockLine').size(2).color('#F53F3F').opacity(0.9).shape('smooth');
           lineBlock.__mrtField = 'blockQps';
-          var ptBlock = chart.point().position('timestamp*blockQps').shape('circle').color('#F53F3F')
+          var ptBlock = chart.point().position('timestamp*blockLine').shape('circle').color('#F53F3F')
             .size('blockFlag', function (v) { return v > 0 ? 3 : 0; })
             .opacity('blockFlag', function (v) { return v > 0 ? 0.85 : 0; })
             .tooltip(false);
@@ -313,10 +397,11 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
             return;
           }
           var fixedItems = [];
-          if (hasPass) {
+          // 提示项与该点实际画线的序列一致: 序列在该位置断线(null)时不显示提示行
+          if (hasPass && record.passLine != null) {
             fixedItems.push({ name: '通过 QPS', value: record.passQps, color: '#1d9d74', marker: true, title: tipTitle });
           }
-          if (hasBlock) {
+          if (hasBlock && record.blockLine != null) {
             fixedItems.push({ name: '拒绝 QPS', value: record.blockQps, color: '#F53F3F', marker: true, title: tipTitle });
           }
           tipItems.splice(0, tipItems.length);
@@ -392,8 +477,9 @@ app.controller('MetricCtl', ['$scope', '$stateParams', 'MetricService', '$interv
         if (Math.abs(cur - startX) < 5) {
           return;
         }
-        var t1 = Math.round(pxToTime(Math.min(startX, cur)));
-        var t2 = Math.round(pxToTime(Math.max(startX, cur)));
+        // 拖拽结果对齐到整秒: 与查询组件的秒级显示及图表横轴完全一致
+        var t1 = Math.floor(pxToTime(Math.min(startX, cur)) / 1000) * 1000;
+        var t2 = Math.floor(pxToTime(Math.max(startX, cur)) / 1000) * 1000;
         if (t2 - t1 < 1000) {
           return;
         }
@@ -657,6 +743,8 @@ app.directive('mrtDatetime', function () {
       + '      <select ng-model="view.hour" ng-options="h for h in hours" ng-change="pickTime()"></select>'
       + '      <span class="mrt-dt-colon">:</span>'
       + '      <select ng-model="view.minute" ng-options="m for m in minutes" ng-change="pickTime()"></select>'
+      + '      <span class="mrt-dt-colon">:</span>'
+      + '      <select ng-model="view.second" ng-options="s for s in seconds" ng-change="pickTime()"></select>'
       + '    </div>'
       + '    <div class="mrt-dt-foot">'
       + '      <button type="button" class="mrt-dt-btn" ng-click="setNow()">此刻</button>'
@@ -669,11 +757,15 @@ app.directive('mrtDatetime', function () {
       scope.weekNames = ['日', '一', '二', '三', '四', '五', '六'];
       scope.hours = [];
       scope.minutes = [];
+      scope.seconds = [];
       for (var h = 0; h < 24; h++) {
         scope.hours.push(h < 10 ? '0' + h : '' + h);
       }
       for (var m = 0; m < 60; m++) {
         scope.minutes.push(m < 10 ? '0' + m : '' + m);
+      }
+      for (var s = 0; s < 60; s++) {
+        scope.seconds.push(s < 10 ? '0' + s : '' + s);
       }
 
       function pad(n) {
@@ -682,7 +774,7 @@ app.directive('mrtDatetime', function () {
 
       function fmt(d) {
         return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
-          + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+          + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
       }
 
       function validDate(d) {
@@ -697,6 +789,7 @@ app.directive('mrtDatetime', function () {
           scope.view.month = d.getMonth();
           scope.view.hour = pad(d.getHours());
           scope.view.minute = pad(d.getMinutes());
+          scope.view.second = pad(d.getSeconds());
           buildDays(d);
         }
       });
@@ -730,7 +823,8 @@ app.directive('mrtDatetime', function () {
           year: d.getFullYear(),
           month: d.getMonth(),
           hour: pad(d.getHours()),
-          minute: pad(d.getMinutes())
+          minute: pad(d.getMinutes()),
+          second: pad(d.getSeconds())
         };
         buildDays(d);
       }
@@ -738,9 +832,9 @@ app.directive('mrtDatetime', function () {
       scope.selected = null;
 
       function applyPick(date) {
-        // 分钟精度, 秒/毫秒清零
+        // 秒级精度, 毫秒清零
         var picked = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
-          parseInt(scope.view.hour, 10), parseInt(scope.view.minute, 10), 0, 0);
+          parseInt(scope.view.hour, 10), parseInt(scope.view.minute, 10), parseInt(scope.view.second, 10), 0);
         scope.selected = picked;
         // 通过双向绑定写回父作用域的 startTime/endTime
         scope.ngModel = new Date(picked.getTime());
@@ -766,6 +860,7 @@ app.directive('mrtDatetime', function () {
         var n = new Date();
         scope.view.hour = pad(n.getHours());
         scope.view.minute = pad(n.getMinutes());
+        scope.view.second = pad(n.getSeconds());
         applyPick(n);
       };
       // 注意: 这里不 stopPropagation, 让事件冒泡到 document 监听器,

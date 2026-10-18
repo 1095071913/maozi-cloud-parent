@@ -91,6 +91,7 @@ public class MetricController {
             startTime = endTime - DEFAULT_QUERY_INTERVAL_MS;
         }
         startTime = alignToBucket(startTime);
+        endTime = alignToBucketEnd(endTime);
         // 严格按查询区间列出资源: 区间内没有数据点的资源不展示
         List<String> resources = metricStore.listResourcesOfApp(app, startTime, endTime);
         logger.debug("queryTopResourceMetric(), resources.size()={}", resources.size());
@@ -161,7 +162,7 @@ public class MetricController {
             startTime = endTime - DEFAULT_QUERY_INTERVAL_MS;
         }
         List<MetricEntity> entities = metricStore.queryByAppAndResourceBetween(
-            app, identity, alignToBucket(startTime), endTime);
+            app, identity, alignToBucket(startTime), alignToBucketEnd(endTime));
         List<MetricVo> vos = MetricVo.fromMetricEntities(entities, identity);
         return Result.ofSuccess(sortMetricVoAndDistinct(vos));
     }
@@ -177,6 +178,20 @@ public class MetricController {
     private long alignToBucket(long startTime) {
         long bucketMs = Math.max(1, aggregateSeconds) * 1000L;
         return startTime / bucketMs * bucketMs;
+    }
+
+    /**
+     * Align the query end time UP to the N-second bucket grid, symmetric to
+     * {@link #alignToBucket(long)}: a window ending mid-bucket also makes the bucket
+     * starting right after {@code endTime} visible (e.g. 05:05:25 -> 05:05:30 with N=10),
+     * so both edges of the window resolve to complete buckets.
+     */
+    private long alignToBucketEnd(long endTime) {
+        long bucketMs = Math.max(1, aggregateSeconds) * 1000L;
+        if (endTime % bucketMs == 0) {
+            return endTime;
+        }
+        return (endTime / bucketMs + 1) * bucketMs;
     }
 
     private Iterable<MetricVo> sortMetricVoAndDistinct(List<MetricVo> vos) {

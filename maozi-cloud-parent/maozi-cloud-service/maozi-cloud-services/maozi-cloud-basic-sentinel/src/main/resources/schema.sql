@@ -2,6 +2,12 @@
 -- The database itself is auto-created by the JDBC url parameter `createDatabaseIfNotExist=true`,
 -- and this script (spring.sql.init.mode=always) is executed on every startup to create the table
 -- and indexes automatically (idempotent DDL).
+--
+-- The auto-created database inherits the server default collation (utf8mb4_0900_ai_ci on MySQL 8),
+-- so normalize the database default charset/collation to the project standard utf8mb4_general_ci.
+-- "ALTER DATABASE" without a name applies to the current (default) database of this connection.
+
+ALTER DATABASE CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `sentinel_metric` (
   `id`            BIGINT       NOT NULL AUTO_INCREMENT COMMENT '自增主键',

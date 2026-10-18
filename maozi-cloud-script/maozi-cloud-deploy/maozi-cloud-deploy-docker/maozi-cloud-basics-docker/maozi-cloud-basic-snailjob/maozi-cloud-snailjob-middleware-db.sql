@@ -1,7 +1,7 @@
-SET NAMES utf8mb4;
+SET NAMES utf8mb4 COLLATE utf8mb4_general_ci;
 
 DROP DATABASE IF EXISTS `maozi-cloud-snailjob-middleware-db`;
-CREATE DATABASE `maozi-cloud-snailjob-middleware-db`;
+CREATE DATABASE `maozi-cloud-snailjob-middleware-db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `maozi-cloud-snailjob-middleware-db`;
 
 CREATE TABLE `sj_namespace`
@@ -17,7 +17,7 @@ CREATE TABLE `sj_namespace`
     KEY `idx_name` (`name`),
     UNIQUE KEY `uk_unique_id` (`unique_id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='命名空间';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='命名空间';
 
 INSERT INTO `sj_namespace` (`id`, `name`, `unique_id`, `create_dt`, `update_dt`, `deleted`)
 VALUES (1, 'Default', '764d604ec6fc45f68cd92514c40e9e1a', now(), now(), 0);
@@ -41,7 +41,7 @@ CREATE TABLE `sj_group_config`
     UNIQUE KEY `uk_namespace_id_group_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='组配置'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='组配置'
 ;
 
 CREATE TABLE `sj_notify_config`
@@ -64,7 +64,7 @@ CREATE TABLE `sj_notify_config`
     KEY `idx_namespace_id_group_name_scene_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='通知配置'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='通知配置'
 ;
 
 CREATE TABLE `sj_notify_recipient`
@@ -81,7 +81,7 @@ CREATE TABLE `sj_notify_recipient`
     KEY `idx_namespace_id` (`namespace_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='告警通知接收人'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='告警通知接收人'
 ;
 
 CREATE TABLE `sj_retry_dead_letter`
@@ -107,7 +107,7 @@ CREATE TABLE `sj_retry_dead_letter`
     KEY `idx_create_dt` (`create_dt`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='死信队列表'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='死信队列表'
 ;
 
 CREATE TABLE `sj_retry`
@@ -143,7 +143,7 @@ CREATE TABLE `sj_retry`
     UNIQUE KEY `uk_scene_tasktype_idempotentid_deleted` (`scene_id`, `task_type`, `idempotent_id`, `deleted`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='重试信息表'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='重试信息表'
 ;
 
 CREATE TABLE `sj_retry_task`
@@ -167,7 +167,7 @@ CREATE TABLE `sj_retry_task`
     KEY `idx_retry_id` (`retry_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='重试任务表'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='重试任务表'
 ;
 
 CREATE TABLE `sj_retry_task_log_message`
@@ -186,7 +186,7 @@ CREATE TABLE `sj_retry_task_log_message`
     KEY `idx_create_dt` (`create_dt`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='任务调度日志信息记录表'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='任务调度日志信息记录表'
 ;
 
 CREATE TABLE `sj_retry_scene_config`
@@ -217,7 +217,7 @@ CREATE TABLE `sj_retry_scene_config`
     UNIQUE KEY `uk_namespace_id_group_name_scene_name` (`namespace_id`, `group_name`, `scene_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='场景配置'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='场景配置'
 ;
 
 CREATE TABLE `sj_server_node`
@@ -240,7 +240,7 @@ CREATE TABLE `sj_server_node`
     UNIQUE KEY `uk_host_id_host_ip` (`host_id`, `host_ip`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='服务器节点'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='服务器节点'
 ;
 
 CREATE TABLE `sj_distributed_lock`
@@ -254,7 +254,7 @@ CREATE TABLE `sj_distributed_lock`
     PRIMARY KEY (`name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='锁定表'
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='锁定表'
 ;
 
 CREATE TABLE `sj_system_user`
@@ -268,7 +268,7 @@ CREATE TABLE `sj_system_user`
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_username` (`username`) USING BTREE
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户表';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='系统用户表';
 
 -- pwd: admin
 INSERT INTO `sj_system_user` (username, password, role)
@@ -285,7 +285,7 @@ CREATE TABLE `sj_system_user_permission`
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_namespace_id_group_name_system_user_id` (`namespace_id`, `group_name`, `system_user_id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户权限表';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='系统用户权限表';
 
 -- 分布式调度DDL
 CREATE TABLE `sj_job`
@@ -327,7 +327,7 @@ CREATE TABLE `sj_job`
     UNIQUE KEY `uk_sj_job_01` (`namespace_id`, `biz_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='任务信息';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='任务信息';
 
 CREATE TABLE `sj_job_log_message`
 (
@@ -348,7 +348,7 @@ CREATE TABLE `sj_job_log_message`
     KEY `idx_namespace_id_group_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='调度日志';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='调度日志';
 
 CREATE TABLE `sj_job_task`
 (
@@ -377,7 +377,7 @@ CREATE TABLE `sj_job_task`
     KEY `idx_namespace_id_group_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='任务实例';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='任务实例';
 
 CREATE TABLE `sj_job_task_batch`
 (
@@ -404,7 +404,7 @@ CREATE TABLE `sj_job_task_batch`
     KEY `idx_workflow_task_batch_id_workflow_node_id` (`workflow_task_batch_id`, `workflow_node_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='任务批次';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='任务批次';
 
 CREATE TABLE `sj_job_summary`
 (
@@ -428,7 +428,7 @@ CREATE TABLE `sj_job_summary`
     UNIQUE KEY `uk_trigger_at_system_task_type_business_id` (`trigger_at`, `system_task_type`, `business_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='DashBoard_Job';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='DashBoard_Job';
 
 CREATE TABLE `sj_retry_summary`
 (
@@ -448,7 +448,7 @@ CREATE TABLE `sj_retry_summary`
     UNIQUE KEY `uk_scene_name_trigger_at` (`namespace_id`, `group_name`, `scene_name`, `trigger_at`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='DashBoard_Retry';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='DashBoard_Retry';
 
 CREATE TABLE `sj_workflow`
 (
@@ -480,7 +480,7 @@ CREATE TABLE `sj_workflow`
     UNIQUE KEY `uk_sj_workflow_01` (`namespace_id`, `biz_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='工作流';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='工作流';
 
 CREATE TABLE `sj_workflow_node`
 (
@@ -506,7 +506,7 @@ CREATE TABLE `sj_workflow_node`
     KEY `idx_namespace_id_group_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='工作流节点';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='工作流节点';
 
 CREATE TABLE `sj_workflow_task_batch`
 (
@@ -530,7 +530,7 @@ CREATE TABLE `sj_workflow_task_batch`
     KEY `idx_namespace_id_group_name` (`namespace_id`, `group_name`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='工作流批次';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='工作流批次';
 
 CREATE TABLE `sj_job_executor`
 (
@@ -546,4 +546,4 @@ CREATE TABLE `sj_job_executor`
     KEY `idx_create_dt` (`create_dt`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 0
-  DEFAULT CHARSET = utf8mb4 COMMENT ='任务执行器信息';
+  DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT ='任务执行器信息';

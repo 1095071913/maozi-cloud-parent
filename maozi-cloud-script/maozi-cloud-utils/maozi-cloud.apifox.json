@@ -20767,20 +20767,6 @@
           "description": "",
           "initialValue": "",
           "isSync": true
-        },
-        {
-          "name": "oauth_refresh_token",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
-        },
-        {
-          "name": "oauth_access_token",
-          "value": "",
-          "description": "",
-          "initialValue": "",
-          "isSync": true
         }
       ],
       "parameters": {

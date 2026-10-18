@@ -25,6 +25,86 @@
 		<maven.deploy.skip>true</maven.deploy.skip>
 
 	</properties>
+
+	<dependencies>
+
+		<!-- ============ 项目内部依赖 Begin ============ -->
+
+		<!-- 通用工具类库，包含 JSON、对象操作等工具 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-utils</artifactId>
+			<version>${maozi-cloud-utils.version}</version>
+		</dependency>
+
+		<!-- 服务基础运行库，提供 BaseApplication、通用启动逻辑 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-service-run</artifactId>
+			<version>${maozi-cloud-service-run.version}</version>
+		</dependency>
+
+		<!-- 监控配置模块，集成 Spring Boot Admin 相关配置 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-monitor</artifactId>
+			<version>${maozi-cloud-config-monitor.version}</version>
+		</dependency>
+
+		<!-- 服务发现配置模块，提供灰度负载均衡器等 -->
+		<dependency>
+			<groupId>com.maozi</groupId>
+			<artifactId>maozi-cloud-config-nacos</artifactId>
+			<version>${maozi-cloud-config-nacos.version}</version>
+		</dependency>
+		<!-- ============ 项目内部依赖 End ============ -->
+
+
+
+
+
+		<!-- Spring Cloud Gateway 核心依赖，基于 WebFlux 的响应式网关 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+		<!-- Sentinel 网关适配，提供网关级别的限流熔断能力 -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
+		</dependency>
+
+		<!-- Spring Cloud Alibaba Sentinel 核心依赖，提供限流熔断能力 -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+		</dependency>
+
+		<!-- Sentinel 数据源 Nacos 扩展，将限流规则持久化到 Nacos 配置中心 -->
+		<dependency>
+			<groupId>com.alibaba.csp</groupId>
+			<artifactId>sentinel-datasource-nacos</artifactId>
+		</dependency>
+
+		<!-- SpringDoc OpenAPI WebFlux 支持，用于聚合各服务的 Swagger 文档 -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+			<version>${springdoc-openapi.version}</version>
+		</dependency>
+
+		<!-- Netty macOS ARM64 DNS 解析器，解决 Apple Silicon 芯片下 DNS 解析问题 -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<version>4.1.84.Final</version>
+			<classifier>osx-aarch_64</classifier>
+		</dependency>
+
+	</dependencies>
+
+
 	<!-- Spring Boot 打包配置 Begin -->
 	<build>
 		<!-- 打包后的文件名 -->
@@ -67,86 +147,5 @@
 		</plugins>
 	</build>
 	<!-- Spring Boot 打包配置 End -->
-
-	<dependencies>
-
-		<!-- ============ 项目内部依赖 Begin ============ -->
-
-		<!-- 通用工具类库，包含 JSON、对象操作等工具 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-utils</artifactId>
-			<version>${maozi-cloud-utils.version}</version>
-		</dependency>
-
-		<!-- 服务基础运行库，提供 BaseApplication、通用启动逻辑 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-service-run</artifactId>
-			<version>${maozi-cloud-service-run.version}</version>
-		</dependency>
-
-		<!-- 监控配置模块，集成 Spring Boot Admin 相关配置 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-monitor</artifactId>
-			<version>${maozi-cloud-config-monitor.version}</version>
-		</dependency>
-
-		<!-- 服务发现配置模块，提供灰度负载均衡器等 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-nacos</artifactId>
-			<version>${maozi-cloud-config-nacos.version}</version>
-		</dependency>
-
-		<!-- Sentinel 限流配置模块，集成网关限流规则 -->
-		<dependency>
-			<groupId>com.maozi</groupId>
-			<artifactId>maozi-cloud-config-sentinel</artifactId>
-			<version>${maozi-cloud-config-sentinel.version}</version>
-		</dependency>
-
-		<!-- ============ 项目内部依赖 End ============ -->
-
-
-
-
-
-		<!-- Spring Cloud Gateway 核心依赖，基于 WebFlux 的响应式网关 -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-gateway</artifactId>
-		</dependency>
-
-		<!-- Sentinel 网关适配，提供网关级别的限流熔断能力 -->
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
-		</dependency>
-
-		<!-- SpringDoc OpenAPI WebFlux 支持，用于聚合各服务的 Swagger 文档 -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webflux-api</artifactId>
-			<version>${springdoc-openapi.version}</version>
-		</dependency>
-
-		<!-- Netty macOS ARM64 DNS 解析器，解决 Apple Silicon 芯片下 DNS 解析问题 -->
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-resolver-dns-native-macos</artifactId>
-			<version>4.1.84.Final</version>
-			<classifier>osx-aarch_64</classifier>
-		</dependency>
-
-	</dependencies>
-
-
-
-
-
-
-
 
 </project>
