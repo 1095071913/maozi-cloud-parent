@@ -85,5 +85,5 @@
 
 ### 其他
 
-- [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)加入该项目社区，12群
-- issues发送到xxx.maozi@gmail.com，承诺24小时内回复 ...
+- [加入项目社区](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)(1365人)
+- issues发送xxx.maozi@gmail.com邮箱自动发送禅道管理，承诺24小时内回复 ...
