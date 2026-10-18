@@ -4,7 +4,7 @@
 
 ## 🔧 工程项目
 
-- [maozi-cloud-develop-admin](maozi-cloud-develop-admin) - 快速开发项目控制台
+- [maozi-cloud-develop-admin](maozi-cloud-develop-admin) - 开发者控制台项目
 
 - [maozi-cloud-admin](maozi-cloud-admin) - 后台前端系统项目
 
@@ -12,7 +12,7 @@
 
 ## ✨ 核心特性
 
-- **开发测试控制台** — 开发测试阶段快速部署调试控制台
+- **开发者控制台** — 开发测试阶段快速部署调试控制台
 
 - **全链路灰度发布** — 精细化流量管控，平滑版本迭代
 

@@ -17,7 +17,7 @@ mac:
   category: public.app-category.developer-tools
   # Finder/启动台中显示的中文名（写入 Info.plist）
   extendInfo:
-    CFBundleDisplayName: 个人开发管理
+    CFBundleDisplayName: 开发者控制台
   icon: build/icon.icns
   # 同时构建 Apple Silicon 与 Intel 架构；dmg 用于分发，zip 备用
   target:

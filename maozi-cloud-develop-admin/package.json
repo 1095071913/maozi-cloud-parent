@@ -1,7 +1,7 @@
 {
   "name": "maozi-cloud-develop-admin",
   "version": "1.0.0",
-  "description": "个人开发管理 - 开发环境管理工具（环境变量 / hosts）",
+  "description": "开发者控制台 - 开发环境管理工具（环境变量 / hosts）",
   "main": "dist-electron/main.js",
   "author": "maozi",
   "license": "MIT",

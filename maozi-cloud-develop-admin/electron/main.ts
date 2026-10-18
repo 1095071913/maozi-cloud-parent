@@ -19,7 +19,7 @@ function createWindow(): void {
     height: 840,
     minWidth: 960,
     minHeight: 640,
-    title: '个人开发管理',
+    title: '开发者控制台',
     // macOS 无缝标题栏：去掉原生标题栏与重复的应用名，红绿灯悬浮在深色侧栏上；
     // 窗口拖拽由侧栏 / 页面头部的 drag 区域承担（Windows 不受影响，保留系统标题栏）
     titleBarStyle: 'hiddenInset',

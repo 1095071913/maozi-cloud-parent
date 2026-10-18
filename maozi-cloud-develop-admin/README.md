@@ -1,4 +1,4 @@
-# 个人开发管理（maozi-cloud-develop-admin）
+# 开发者控制台（maozi-cloud-develop-admin）
 
 一个面向开发者的本机开发环境管理工具（桌面应用）：
 
@@ -82,7 +82,7 @@ release/
 └── mac-arm64/maozi-cloud-develop-admin.app     # 直接可用的应用
 ```
 
-`dmg` 双击拖入「应用程序」即完成安装；`displayName` 在 Finder / 启动台中显示为「个人开发管理」。
+`dmg` 双击拖入「应用程序」即完成安装；`displayName` 在 Finder / 启动台中显示为「开发者控制台」。
 
 **首次打开提示“无法验证开发者”怎么办？**
 

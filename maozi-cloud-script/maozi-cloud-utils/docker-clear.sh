@@ -30,6 +30,8 @@ WHITE_LIST=(
     "maozi-cloud-admin-distributeds:*"
     "maozi-cloud-service-monomer:*"
     "maozi-cloud-*-service:*"
+    "maozi-cloud-basic-*:*"
+
 )
 
 # 网络白名单，保留不删除

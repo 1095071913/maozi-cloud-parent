@@ -224,7 +224,7 @@ export const darwinPlatform: Platform = {
     }
     await runAsAdmin(
       'dscacheutil -flushcache && killall -HUP mDNSResponder',
-      '个人开发管理 请求刷新 DNS 缓存'
+      '开发者控制台 请求刷新 DNS 缓存'
     )
   },
 
@@ -303,7 +303,7 @@ async function writeHostsText(text: string): Promise<void> {
           `umask 022 && echo '${SUDOERS_LINE}' > /etc/sudoers.d/.maozi-tmp && ` +
           `visudo -cf /etc/sudoers.d/.maozi-tmp && ` +
           `mv /etc/sudoers.d/.maozi-tmp ${q(SUDOERS_PATH)} && chmod 440 ${q(SUDOERS_PATH)}`,
-        '个人开发管理 请求修改 hosts 文件（首次授权后将安装免密写入助手，后续不再弹窗）'
+        '开发者控制台 请求修改 hosts 文件（首次授权后将安装免密写入助手，后续不再弹窗）'
       )
     } finally {
       fs.rmSync(helperTmp, { force: true })

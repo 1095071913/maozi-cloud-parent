@@ -19,7 +19,7 @@
           </svg>
         </div>
         <div class="brand-text">
-          <div class="brand-name">个人开发管理</div>
+          <div class="brand-name">开发者控制台</div>
         </div>
       </div>
 
