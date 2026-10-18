@@ -1,10 +1,10 @@
-import { execFile, spawn } from 'node:child_process'
-import { promisify } from 'node:util'
+import {execFile, spawn} from 'node:child_process'
+import {promisify} from 'node:util'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { listConfigs } from '../configs/store'
-import type { ConfigEntry } from '../configs/types'
+import {listConfigs} from '../configs/store'
+import type {ConfigEntry} from '../configs/types'
 
 const exec = promisify(execFile)
 

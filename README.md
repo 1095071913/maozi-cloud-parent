@@ -85,4 +85,5 @@
 
 ### 其他
 
-- [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)
+- [联系作者](https://github.com/1095071913/1095071913/blob/release/wechat_qrcode.jpg)加入该项目社区，12群
+- issues发送到xxx.maozi@gmail.com，承诺24小时内回复 ...
